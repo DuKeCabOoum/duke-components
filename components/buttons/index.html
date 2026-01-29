@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buttons — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+</head>
+<body>
+  <div class="app">
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+      <a href="../../index.html" class="sidebar__logo">
+        <span>Duke</span>-components
+      </a>
+
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Buttons</h3>
+        <ul class="sidebar__nav">
+          <li><a href="#classic" class="sidebar__link sidebar__link--active">Classic</a></li>
+          <li><a href="#modern" class="sidebar__link">Modern</a></li>
+          <li><a href="#3d" class="sidebar__link">3D</a></li>
+          <li><a href="#animated" class="sidebar__link">Animated</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar__section">
+        <a href="../../index.html" class="sidebar__link">← Retour</a>
+      </div>
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main">
+      <header class="main__header">
+        <h1 class="main__title">🔘 Buttons</h1>
+        <p class="main__subtitle">Boutons de tous styles — Classic, Modern, 3D, Animated</p>
+      </header>
+
+      <!-- ========== CLASSIC SECTION ========== -->
+      <section id="classic" class="section">
+        <h2 class="section__title">Classic</h2>
+        <p class="section__desc">Boutons simples, épurés, intemporels.</p>
+
+        <div class="components-grid">
+          <!-- BTN PRIMARY -->
+          <article class="component-card">
+            <div class="component-card__preview">
+              <button class="btn-primary">Click me</button>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Primary Button</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">classic</span>
+                <span class="tag">simple</span>
+              </div>
+            </div>
+            <!-- Code Viewer -->
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="btn-primary-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="btn-primary-html"><code>&lt;button class="btn-primary"&gt;Click me&lt;/button&gt;</code></pre>
+                <pre class="code-viewer__code" id="btn-primary-css" style="display:none"><code>.btn-primary {
+  padding: 12px 24px;
+  background: #6366f1;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: #4f46e5;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- BTN SECONDARY -->
+          <article class="component-card">
+            <div class="component-card__preview">
+              <button class="btn-secondary">Secondary</button>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Secondary Button</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">classic</span>
+                <span class="tag">outline</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="btn-secondary-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="btn-secondary-html"><code>&lt;button class="btn-secondary"&gt;Secondary&lt;/button&gt;</code></pre>
+                <pre class="code-viewer__code" id="btn-secondary-css" style="display:none"><code>.btn-secondary {
+  padding: 12px 24px;
+  background: transparent;
+  color: #6366f1;
+  border: 2px solid #6366f1;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background: #6366f1;
+  color: white;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- Placeholder sections -->
+      <section id="modern" class="section">
+        <h2 class="section__title">Modern</h2>
+        <p class="text-muted">Composants à venir...</p>
+      </section>
+
+      <section id="3d" class="section">
+        <h2 class="section__title">3D</h2>
+        <p class="text-muted">Composants à venir...</p>
+      </section>
+
+      <section id="animated" class="section">
+        <h2 class="section__title">Animated</h2>
+        <p class="text-muted">Composants à venir...</p>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Component Styles (inline for demo) -->
+  <style>
+    .btn-primary {
+      padding: 12px 24px;
+      background: #6366f1;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-primary:hover {
+      background: #4f46e5;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+    }
+
+    .btn-secondary {
+      padding: 12px 24px;
+      background: transparent;
+      color: #6366f1;
+      border: 2px solid #6366f1;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-secondary:hover {
+      background: #6366f1;
+      color: white;
+    }
+
+    .section {
+      margin-bottom: 48px;
+    }
+    .section__title {
+      font-size: 1.5rem;
+      margin-bottom: 8px;
+    }
+    .section__desc {
+      color: #a1a1aa;
+      margin-bottom: 24px;
+    }
+  </style>
+
+  <script src="../../assets/js/copy-code.js"></script>
+</body>
+</html>

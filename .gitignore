@@ -1,0 +1,42 @@
+# Symlinks vers Google Drive (hors Git)
+CLAUDE.md
+cloud_docs
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node (si ajout futur)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Python (si ajout futur)
+__pycache__/
+*.py[cod]
+.env
+venv/
+.venv/
+
+# Build
+dist/
+build/
+*.min.js
+*.min.css
+
+# Logs
+*.log
+
+# Secrets (ne jamais commit)
+*.env
+*.env.local
+.env.*
+secrets/
+credentials/
