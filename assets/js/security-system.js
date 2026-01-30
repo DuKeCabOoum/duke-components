@@ -19,9 +19,56 @@ class SecuritySystem {
    */
   init() {
     this.createToastContainer();
+    this.initSecurityBadges();
     this.loadAdminState();
     this.bindAdminToggle();
     this.bindCopyButtons();
+  }
+
+  /* ===========================================
+     AUTO-CRÉATION DES BADGES
+     =========================================== */
+
+  /**
+   * Ajoute automatiquement les badges aux éléments avec data-security
+   * mais qui n'ont pas encore de badge visuel
+   */
+  initSecurityBadges() {
+    // Sélectionne tous les éléments avec data-security
+    const securedElements = document.querySelectorAll('[data-security]');
+
+    securedElements.forEach(element => {
+      // Vérifie si le badge existe déjà
+      if (element.querySelector('.security-badge')) return;
+
+      const level = element.dataset.security;
+      if (!level || !['safe', 'caution', 'sensitive'].includes(level)) return;
+
+      // Assure que l'élément est positionné (pour le badge absolu)
+      if (getComputedStyle(element).position === 'static') {
+        element.style.position = 'relative';
+      }
+
+      // Crée le badge
+      const badge = document.createElement('span');
+      badge.className = `security-badge security-badge--${level}`;
+      badge.textContent = level.toUpperCase();
+
+      // Ajoute le badge au début de l'élément
+      element.insertBefore(badge, element.firstChild);
+
+      // Si sensible, ajoute l'overlay
+      if (level === 'sensitive' && !element.querySelector('.sensitive-overlay')) {
+        const overlay = document.createElement('div');
+        overlay.className = 'sensitive-overlay';
+        overlay.innerHTML = `
+          <span class="sensitive-overlay__icon">🔒</span>
+          <span class="sensitive-overlay__text">Admin only</span>
+          <span class="sensitive-overlay__hint">Activez le mode Admin pour voir ce code</span>
+        `;
+        element.insertBefore(overlay, element.firstChild.nextSibling);
+      }
+    });
   }
 
   /* ===========================================

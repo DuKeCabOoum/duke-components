@@ -166,7 +166,8 @@
    INDICATEUR MODE ADMIN — Badge dans le header
    =========================================== */
 
-.admin-indicator {
+.admin-indicator,
+.admin-mode-indicator {
   display: none;
   align-items: center;
   gap: var(--spacing-xs);
@@ -179,7 +180,8 @@
   font-weight: 600;
 }
 
-.admin-mode .admin-indicator {
+.admin-mode .admin-indicator,
+.admin-mode .admin-mode-indicator {
   display: flex;
 }
 

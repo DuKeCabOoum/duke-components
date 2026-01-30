@@ -451,6 +451,290 @@
     }
 
     /* ===========================================
+       CAROUSEL 7 — VERTICAL
+       =========================================== */
+
+    .carousel-vertical {
+      position: relative;
+      height: 300px;
+      overflow: hidden;
+      border-radius: 16px;
+    }
+
+    .carousel-vertical__track {
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .carousel-vertical__slide {
+      flex: 0 0 100%;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: 700;
+      color: white;
+    }
+
+    .carousel-vertical__slide:nth-child(1) { background: linear-gradient(180deg, #6366f1, #4f46e5); }
+    .carousel-vertical__slide:nth-child(2) { background: linear-gradient(180deg, #ec4899, #db2777); }
+    .carousel-vertical__slide:nth-child(3) { background: linear-gradient(180deg, #22c55e, #16a34a); }
+
+    .carousel-vertical__nav {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .carousel-vertical__btn {
+      width: 40px;
+      height: 40px;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(8px);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .carousel-vertical__btn:hover {
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    /* ===========================================
+       CAROUSEL 8 — THUMBNAILS
+       =========================================== */
+
+    .carousel-thumbs {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .carousel-thumbs__main {
+      position: relative;
+      height: 280px;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .carousel-thumbs__slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: 700;
+      color: white;
+    }
+
+    .carousel-thumbs__slide:nth-child(1) { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
+    .carousel-thumbs__slide:nth-child(2) { background: linear-gradient(135deg, #f43f5e, #ec4899); }
+    .carousel-thumbs__slide:nth-child(3) { background: linear-gradient(135deg, #10b981, #22c55e); }
+    .carousel-thumbs__slide:nth-child(4) { background: linear-gradient(135deg, #f59e0b, #ea580c); }
+    .carousel-thumbs__slide:nth-child(5) { background: linear-gradient(135deg, #06b6d4, #3b82f6); }
+
+    .carousel-thumbs__slide--active {
+      position: relative;
+      opacity: 1;
+    }
+
+    .carousel-thumbs__nav {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .carousel-thumbs__thumb {
+      width: 80px;
+      height: 50px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 3px solid transparent;
+      opacity: 0.5;
+    }
+
+    .carousel-thumbs__thumb:nth-child(1) { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
+    .carousel-thumbs__thumb:nth-child(2) { background: linear-gradient(135deg, #f43f5e, #ec4899); }
+    .carousel-thumbs__thumb:nth-child(3) { background: linear-gradient(135deg, #10b981, #22c55e); }
+    .carousel-thumbs__thumb:nth-child(4) { background: linear-gradient(135deg, #f59e0b, #ea580c); }
+    .carousel-thumbs__thumb:nth-child(5) { background: linear-gradient(135deg, #06b6d4, #3b82f6); }
+
+    .carousel-thumbs__thumb:hover {
+      opacity: 0.8;
+    }
+
+    .carousel-thumbs__thumb--active {
+      opacity: 1;
+      border-color: white;
+      transform: scale(1.05);
+    }
+
+    /* ===========================================
+       CAROUSEL 9 — BEFORE/AFTER
+       =========================================== */
+
+    .carousel-compare {
+      position: relative;
+      height: 300px;
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: ew-resize;
+    }
+
+    .carousel-compare__before,
+    .carousel-compare__after {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: white;
+    }
+
+    .carousel-compare__before {
+      background: linear-gradient(135deg, #374151, #1f2937);
+      clip-path: inset(0 50% 0 0);
+    }
+
+    .carousel-compare__after {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    }
+
+    .carousel-compare__before span,
+    .carousel-compare__after span {
+      position: absolute;
+      padding: 8px 16px;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 8px;
+      font-size: 0.9rem;
+    }
+
+    .carousel-compare__before span { left: 16px; top: 16px; }
+    .carousel-compare__after span { right: 16px; top: 16px; }
+
+    .carousel-compare__slider {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 4px;
+      background: white;
+      cursor: ew-resize;
+      z-index: 10;
+    }
+
+    .carousel-compare__slider::before {
+      content: "⟷";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 40px;
+      height: 40px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #1f2937;
+      font-size: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    /* ===========================================
+       CAROUSEL 10 — 3D CUBE
+       =========================================== */
+
+    .carousel-cube {
+      perspective: 1000px;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .carousel-cube__scene {
+      width: 300px;
+      height: 300px;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 1s ease;
+    }
+
+    .carousel-cube__face {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: 700;
+      color: white;
+      border-radius: 16px;
+      backface-visibility: hidden;
+    }
+
+    .carousel-cube__face--front {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      transform: translateZ(150px);
+    }
+
+    .carousel-cube__face--right {
+      background: linear-gradient(135deg, #f43f5e, #ec4899);
+      transform: rotateY(90deg) translateZ(150px);
+    }
+
+    .carousel-cube__face--back {
+      background: linear-gradient(135deg, #10b981, #22c55e);
+      transform: rotateY(180deg) translateZ(150px);
+    }
+
+    .carousel-cube__face--left {
+      background: linear-gradient(135deg, #f59e0b, #ea580c);
+      transform: rotateY(-90deg) translateZ(150px);
+    }
+
+    .carousel-cube__nav {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 16px;
+    }
+
+    .carousel-cube__btn {
+      padding: 10px 24px;
+      background: rgba(99, 102, 241, 0.2);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      border-radius: 8px;
+      color: white;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .carousel-cube__btn:hover {
+      background: rgba(99, 102, 241, 0.3);
+    }
+
+    /* ===========================================
        CODE BLOCK
        =========================================== */
 
@@ -526,54 +810,29 @@
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sidebar__logo">
-      <a href="../../index.html">Duke<span>UI</span></a>
+      <a href="../../index.html" style="text-decoration: none; color: inherit;">
+        <span>Duke</span>-components
+      </a>
     </div>
 
-    <nav class="sidebar__nav">
-      <div class="sidebar__section">
-        <div class="sidebar__title">Composants</div>
-        <a href="../buttons/index.html" class="sidebar__link">Buttons</a>
-        <a href="../cards/index.html" class="sidebar__link">Cards</a>
-        <a href="index.html" class="sidebar__link sidebar__link--active">Carousels</a>
-        <a href="../forms/index.html" class="sidebar__link">Forms</a>
-        <a href="../loaders/index.html" class="sidebar__link">Loaders</a>
-        <a href="../modals/index.html" class="sidebar__link">Modals</a>
-        <a href="../navigation/index.html" class="sidebar__link">Navigation</a>
-      </div>
+    <div class="sidebar__section">
+      <h3 class="sidebar__title">Composants</h3>
+      <ul class="sidebar__nav">
+        <li><a href="../buttons/index.html" class="sidebar__link"><span>🔘</span> Buttons</a></li>
+        <li><a href="../cards/index.html" class="sidebar__link"><span>🃏</span> Cards</a></li>
+        <li><a href="index.html" class="sidebar__link sidebar__link--active"><span>🎠</span> Carousels</a></li>
+        <li><a href="../forms/index.html" class="sidebar__link"><span>📝</span> Forms</a></li>
+        <li><a href="../loaders/index.html" class="sidebar__link"><span>⏳</span> Loaders</a></li>
+        <li><a href="../modals/index.html" class="sidebar__link"><span>💬</span> Modals</a></li>
+        <li><a href="../navigation/index.html" class="sidebar__link"><span>🧭</span> Navigation</a></li>
+      </ul>
+    </div>
 
-      <div class="sidebar__section">
-        <div class="sidebar__title">Effets</div>
-        <a href="../hovers/index.html" class="sidebar__link">Hovers</a>
-        <a href="../animations/index.html" class="sidebar__link">Animations</a>
-        <a href="../backgrounds/index.html" class="sidebar__link">Backgrounds</a>
-        <a href="../text-effects/index.html" class="sidebar__link">Text Effects</a>
-      </div>
-
-      <div class="sidebar__section">
-        <div class="sidebar__title">Sections</div>
-        <a href="../heroes/index.html" class="sidebar__link">Heroes</a>
-        <a href="../features/index.html" class="sidebar__link">Features</a>
-        <a href="../pricing/index.html" class="sidebar__link">Pricing</a>
-        <a href="../testimonials/index.html" class="sidebar__link">Testimonials</a>
-        <a href="../footers/index.html" class="sidebar__link">Footers</a>
-      </div>
-
-      <div class="sidebar__section">
-        <div class="sidebar__title">Générateurs</div>
-        <a href="../../generators/gradient/index.html" class="sidebar__link">Gradient</a>
-        <a href="../../generators/shadow/index.html" class="sidebar__link">Shadow</a>
-        <a href="../../generators/flexbox/index.html" class="sidebar__link">Flexbox</a>
-        <a href="../../generators/grid/index.html" class="sidebar__link">Grid</a>
-      </div>
-    </nav>
-
-    <!-- Toggle Admin -->
-    <div class="admin-toggle">
-      <span class="admin-toggle__label">Mode Admin</span>
-      <label class="toggle-switch">
-        <input type="checkbox" id="admin-toggle">
-        <span class="toggle-switch__slider"></span>
-      </label>
+    <div class="sidebar__section">
+      <h3 class="sidebar__title">Retour</h3>
+      <ul class="sidebar__nav">
+        <li><a href="../../index.html" class="sidebar__link"><span>🏠</span> Dashboard</a></li>
+      </ul>
     </div>
   </aside>
 
@@ -581,7 +840,7 @@
   <main class="main-content">
     <header class="page-header">
       <h1 class="page-header__title">Carousels</h1>
-      <p class="page-header__desc">Sliders et carrousels modernes en CSS et JavaScript</p>
+      <p class="page-header__desc">10 carrousels modernes en CSS et JavaScript — du basique au 3D</p>
     </header>
 
     <div class="carousels-list">
@@ -611,7 +870,7 @@
 
         <div class="carousel-section__info">
           <div class="carousel-section__header">
-            <h2 class="carousel-section__name">Basic Slider</h2>
+            <h2 class="carousel-section__name">1. Basic Slider</h2>
             <div class="carousel-section__tags">
               <span class="tag tag--primary">Essential</span>
               <span class="tag">Navigation</span>
@@ -675,7 +934,7 @@
 
         <div class="carousel-section__info">
           <div class="carousel-section__header">
-            <h2 class="carousel-section__name">Cards Slider (Scroll Snap)</h2>
+            <h2 class="carousel-section__name">2. Cards Slider (Scroll Snap)</h2>
             <div class="carousel-section__tags">
               <span class="tag tag--primary">CSS Only</span>
               <span class="tag">Scroll</span>
@@ -758,7 +1017,7 @@
 
         <div class="carousel-section__info">
           <div class="carousel-section__header">
-            <h2 class="carousel-section__name">Auto-Scroll Infinite (Logo Wall)</h2>
+            <h2 class="carousel-section__name">3. Auto-Scroll Infinite (Logo Wall)</h2>
             <div class="carousel-section__tags">
               <span class="tag tag--primary">CSS Animation</span>
               <span class="tag">Clients</span>
@@ -770,18 +1029,15 @@
               <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
             </div>
             <div class="code-block__content">
-<pre>.carousel-infinite__track {
-  display: flex;
-  gap: 32px;
-  animation: scroll-infinite 20s linear infinite;
-}
-
-@keyframes scroll-infinite {
+<pre>@keyframes scroll-infinite {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
 
-/* Pause on hover */
+.carousel-infinite__track {
+  animation: scroll-infinite 20s linear infinite;
+}
+
 .carousel-infinite__track:hover {
   animation-play-state: paused;
 }</pre>
@@ -837,27 +1093,10 @@
 
         <div class="carousel-section__info">
           <div class="carousel-section__header">
-            <h2 class="carousel-section__name">Testimonials Carousel</h2>
+            <h2 class="carousel-section__name">4. Testimonials Carousel</h2>
             <div class="carousel-section__tags">
               <span class="tag tag--primary">Social Proof</span>
-              <span class="tag">Centered</span>
-            </div>
-          </div>
-          <div class="code-block">
-            <div class="code-block__header">
-              <span class="code-block__lang">HTML</span>
-              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
-            </div>
-            <div class="code-block__content">
-<pre>&lt;div class="carousel-testimonials__slide"&gt;
-  &lt;div class="carousel-testimonials__quote"&gt;"&lt;/div&gt;
-  &lt;p class="carousel-testimonials__text"&gt;Testimonial text...&lt;/p&gt;
-  &lt;div class="carousel-testimonials__author"&gt;
-    &lt;div class="carousel-testimonials__avatar"&gt;MP&lt;/div&gt;
-    &lt;span class="carousel-testimonials__name"&gt;Name&lt;/span&gt;
-    &lt;span class="carousel-testimonials__role"&gt;Role&lt;/span&gt;
-  &lt;/div&gt;
-&lt;/div&gt;</pre>
+              <span class="tag">Auto-play</span>
             </div>
           </div>
         </div>
@@ -868,18 +1107,18 @@
            ============================================ -->
       <section class="carousel-section">
         <div class="carousel-section__preview">
-          <div class="carousel-coverflow">
-            <div class="carousel-coverflow__slide carousel-coverflow__slide--prev-2">1</div>
-            <div class="carousel-coverflow__slide carousel-coverflow__slide--prev">2</div>
+          <div class="carousel-coverflow" id="carousel-coverflow">
+            <div class="carousel-coverflow__slide carousel-coverflow__slide--prev-2" onclick="rotateCoverflow(-2)">1</div>
+            <div class="carousel-coverflow__slide carousel-coverflow__slide--prev" onclick="rotateCoverflow(-1)">2</div>
             <div class="carousel-coverflow__slide carousel-coverflow__slide--active">3</div>
-            <div class="carousel-coverflow__slide carousel-coverflow__slide--next">4</div>
-            <div class="carousel-coverflow__slide carousel-coverflow__slide--next-2">5</div>
+            <div class="carousel-coverflow__slide carousel-coverflow__slide--next" onclick="rotateCoverflow(1)">4</div>
+            <div class="carousel-coverflow__slide carousel-coverflow__slide--next-2" onclick="rotateCoverflow(2)">5</div>
           </div>
         </div>
 
         <div class="carousel-section__info">
           <div class="carousel-section__header">
-            <h2 class="carousel-section__name">Coverflow Effect</h2>
+            <h2 class="carousel-section__name">5. Coverflow Effect</h2>
             <div class="carousel-section__tags">
               <span class="tag tag--primary">3D</span>
               <span class="tag">Perspective</span>
@@ -927,10 +1166,39 @@
 
         <div class="carousel-section__info">
           <div class="carousel-section__header">
-            <h2 class="carousel-section__name">Fade Transition</h2>
+            <h2 class="carousel-section__name">6. Fade Transition</h2>
             <div class="carousel-section__tags">
               <span class="tag tag--primary">Smooth</span>
               <span class="tag">Opacity</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================
+           CAROUSEL 7 — VERTICAL
+           ============================================ -->
+      <section class="carousel-section">
+        <div class="carousel-section__preview">
+          <div class="carousel-vertical" id="carousel-vertical">
+            <div class="carousel-vertical__track">
+              <div class="carousel-vertical__slide">Slide 1</div>
+              <div class="carousel-vertical__slide">Slide 2</div>
+              <div class="carousel-vertical__slide">Slide 3</div>
+            </div>
+            <div class="carousel-vertical__nav">
+              <button class="carousel-vertical__btn" onclick="prevVertical()">↑</button>
+              <button class="carousel-vertical__btn" onclick="nextVertical()">↓</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-section__info">
+          <div class="carousel-section__header">
+            <h2 class="carousel-section__name">7. Vertical Slider</h2>
+            <div class="carousel-section__tags">
+              <span class="tag tag--primary">Direction</span>
+              <span class="tag">Mobile-friendly</span>
             </div>
           </div>
           <div class="code-block">
@@ -939,17 +1207,139 @@
               <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
             </div>
             <div class="code-block__content">
-<pre>.carousel-fade__slide {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transition: opacity 0.8s ease;
+<pre>.carousel-vertical__track {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.5s ease;
 }
 
-.carousel-fade__slide--active {
-  position: relative;
-  opacity: 1;
-}</pre>
+/* Move vertically with translateY */
+track.style.transform = `translateY(-${index * 100}%)`;</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================
+           CAROUSEL 8 — THUMBNAILS
+           ============================================ -->
+      <section class="carousel-section">
+        <div class="carousel-section__preview">
+          <div class="carousel-thumbs" id="carousel-thumbs">
+            <div class="carousel-thumbs__main">
+              <div class="carousel-thumbs__slide carousel-thumbs__slide--active">Slide 1</div>
+              <div class="carousel-thumbs__slide">Slide 2</div>
+              <div class="carousel-thumbs__slide">Slide 3</div>
+              <div class="carousel-thumbs__slide">Slide 4</div>
+              <div class="carousel-thumbs__slide">Slide 5</div>
+            </div>
+            <div class="carousel-thumbs__nav">
+              <div class="carousel-thumbs__thumb carousel-thumbs__thumb--active" onclick="goToThumb(0)"></div>
+              <div class="carousel-thumbs__thumb" onclick="goToThumb(1)"></div>
+              <div class="carousel-thumbs__thumb" onclick="goToThumb(2)"></div>
+              <div class="carousel-thumbs__thumb" onclick="goToThumb(3)"></div>
+              <div class="carousel-thumbs__thumb" onclick="goToThumb(4)"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-section__info">
+          <div class="carousel-section__header">
+            <h2 class="carousel-section__name">8. Thumbnail Navigation</h2>
+            <div class="carousel-section__tags">
+              <span class="tag tag--primary">Gallery</span>
+              <span class="tag">Preview</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================
+           CAROUSEL 9 — BEFORE/AFTER
+           ============================================ -->
+      <section class="carousel-section">
+        <div class="carousel-section__preview">
+          <div class="carousel-compare" id="carousel-compare">
+            <div class="carousel-compare__after">
+              <span>After</span>
+              ✨ Enhanced
+            </div>
+            <div class="carousel-compare__before">
+              <span>Before</span>
+              Original
+            </div>
+            <div class="carousel-compare__slider"></div>
+          </div>
+        </div>
+
+        <div class="carousel-section__info">
+          <div class="carousel-section__header">
+            <h2 class="carousel-section__name">9. Before/After Comparison</h2>
+            <div class="carousel-section__tags">
+              <span class="tag tag--primary">Interactive</span>
+              <span class="tag">Drag</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.carousel-compare__before {
+  clip-path: inset(0 50% 0 0);
+}
+
+/* Update on drag */
+before.style.clipPath = `inset(0 ${100 - percent}% 0 0)`;
+slider.style.left = `${percent}%`;</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================
+           CAROUSEL 10 — 3D CUBE
+           ============================================ -->
+      <section class="carousel-section">
+        <div class="carousel-section__preview" style="padding: 48px 32px;">
+          <div class="carousel-cube">
+            <div class="carousel-cube__scene" id="cube-scene">
+              <div class="carousel-cube__face carousel-cube__face--front">Front</div>
+              <div class="carousel-cube__face carousel-cube__face--right">Right</div>
+              <div class="carousel-cube__face carousel-cube__face--back">Back</div>
+              <div class="carousel-cube__face carousel-cube__face--left">Left</div>
+            </div>
+            <div class="carousel-cube__nav">
+              <button class="carousel-cube__btn" onclick="rotateCube(-1)">← Prev</button>
+              <button class="carousel-cube__btn" onclick="rotateCube(1)">Next →</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-section__info">
+          <div class="carousel-section__header">
+            <h2 class="carousel-section__name">10. 3D Cube</h2>
+            <div class="carousel-section__tags">
+              <span class="tag tag--primary">3D Transform</span>
+              <span class="tag">Advanced</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.carousel-cube__scene {
+  transform-style: preserve-3d;
+  transition: transform 1s ease;
+}
+
+.carousel-cube__face--front { transform: translateZ(150px); }
+.carousel-cube__face--right { transform: rotateY(90deg) translateZ(150px); }
+.carousel-cube__face--back { transform: rotateY(180deg) translateZ(150px); }
+.carousel-cube__face--left { transform: rotateY(-90deg) translateZ(150px); }</pre>
             </div>
           </div>
         </div>
@@ -959,7 +1349,6 @@
   </main>
   </div>
 
-  <script src="../../assets/js/main.js"></script>
   <script src="../../assets/js/security-system.js"></script>
   <script>
     // ========== BASIC CAROUSEL ==========
@@ -1003,7 +1392,6 @@
       });
     }
 
-    // Init carousels
     initCarousel('carousel-1');
 
     // ========== TESTIMONIALS CAROUSEL ==========
@@ -1021,7 +1409,6 @@
       });
     }
 
-    // Auto-advance testimonials
     setInterval(() => {
       testimonialIndex = (testimonialIndex + 1) % 3;
       goToTestimonial(testimonialIndex);
@@ -1044,18 +1431,121 @@
       slides[fadeIndex].classList.add('carousel-fade__slide--active');
     }
 
+    // ========== VERTICAL CAROUSEL ==========
+    let verticalIndex = 0;
+
+    function nextVertical() {
+      const track = document.querySelector('.carousel-vertical__track');
+      const slides = track.children.length;
+      verticalIndex = (verticalIndex + 1) % slides;
+      track.style.transform = `translateY(-${verticalIndex * 100}%)`;
+    }
+
+    function prevVertical() {
+      const track = document.querySelector('.carousel-vertical__track');
+      const slides = track.children.length;
+      verticalIndex = (verticalIndex - 1 + slides) % slides;
+      track.style.transform = `translateY(-${verticalIndex * 100}%)`;
+    }
+
+    // ========== THUMBNAILS CAROUSEL ==========
+    let thumbIndex = 0;
+
+    function goToThumb(index) {
+      const slides = document.querySelectorAll('.carousel-thumbs__slide');
+      const thumbs = document.querySelectorAll('.carousel-thumbs__thumb');
+
+      slides[thumbIndex].classList.remove('carousel-thumbs__slide--active');
+      thumbs[thumbIndex].classList.remove('carousel-thumbs__thumb--active');
+
+      thumbIndex = index;
+
+      slides[thumbIndex].classList.add('carousel-thumbs__slide--active');
+      thumbs[thumbIndex].classList.add('carousel-thumbs__thumb--active');
+    }
+
+    // ========== COMPARE SLIDER ==========
+    const compareSlider = document.getElementById('carousel-compare');
+    const compareSliderHandle = compareSlider.querySelector('.carousel-compare__slider');
+    const compareBefore = compareSlider.querySelector('.carousel-compare__before');
+
+    let isDragging = false;
+
+    function updateCompare(x) {
+      const rect = compareSlider.getBoundingClientRect();
+      let percent = ((x - rect.left) / rect.width) * 100;
+      percent = Math.max(0, Math.min(100, percent));
+
+      compareBefore.style.clipPath = `inset(0 ${100 - percent}% 0 0)`;
+      compareSliderHandle.style.left = `${percent}%`;
+    }
+
+    compareSlider.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      updateCompare(e.clientX);
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (isDragging) updateCompare(e.clientX);
+    });
+
+    document.addEventListener('mouseup', () => {
+      isDragging = false;
+    });
+
+    // Touch support
+    compareSlider.addEventListener('touchstart', (e) => {
+      isDragging = true;
+      updateCompare(e.touches[0].clientX);
+    });
+
+    compareSlider.addEventListener('touchmove', (e) => {
+      if (isDragging) updateCompare(e.touches[0].clientX);
+    });
+
+    compareSlider.addEventListener('touchend', () => {
+      isDragging = false;
+    });
+
+    // ========== 3D CUBE ==========
+    let cubeRotation = 0;
+
+    function rotateCube(direction) {
+      cubeRotation += direction * 90;
+      const scene = document.getElementById('cube-scene');
+      scene.style.transform = `rotateY(${-cubeRotation}deg)`;
+    }
+
+    // ========== COVERFLOW ==========
+    let coverflowIndex = 2;
+    const coverflowSlides = document.querySelectorAll('.carousel-coverflow__slide');
+
+    function rotateCoverflow(delta) {
+      coverflowIndex = Math.max(0, Math.min(4, coverflowIndex + delta));
+      updateCoverflow();
+    }
+
+    function updateCoverflow() {
+      const positions = ['prev-2', 'prev', 'active', 'next', 'next-2'];
+      coverflowSlides.forEach((slide, i) => {
+        slide.className = 'carousel-coverflow__slide';
+        const pos = i - coverflowIndex + 2;
+        if (pos >= 0 && pos < 5) {
+          slide.classList.add(`carousel-coverflow__slide--${positions[pos]}`);
+        }
+      });
+    }
+
     // ========== COPY CODE ==========
     function copyCode(btn) {
       const codeBlock = btn.closest('.code-block');
       const code = codeBlock.querySelector('pre').textContent;
 
       navigator.clipboard.writeText(code).then(() => {
-        const originalText = btn.textContent;
         btn.textContent = 'Copié !';
         btn.style.color = '#22c55e';
-
         setTimeout(() => {
-          btn.textContent = originalText;
+          btn.textContent = 'Copier';
           btn.style.color = '';
         }, 2000);
       });
