@@ -1,0 +1,344 @@
+/* ===========================================
+   EDITOR PANEL — Live Editor
+   Panneau d'édition en temps réel des composants
+   =========================================== */
+
+/* ===========================================
+   PANNEAU PRINCIPAL
+   =========================================== */
+
+.editor-panel {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 320px;
+  height: 100vh;
+  background: var(--bg-dark);
+  border-left: 1px solid var(--border);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  /* ANIMATION : slide depuis la droite */
+  transform: translateX(100%);
+  transition: transform var(--transition-slow);
+}
+
+/* État ouvert */
+.editor-panel--open {
+  transform: translateX(0);
+}
+
+/* ===========================================
+   HEADER
+   =========================================== */
+
+.editor-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-card);
+}
+
+.editor-panel__title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.editor-panel__close {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: var(--spacing-xs);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.editor-panel__close:hover {
+  color: var(--text-primary);
+  background: var(--bg-card-hover);
+}
+
+/* ===========================================
+   CONTENT — Zone scrollable
+   =========================================== */
+
+.editor-panel__content {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--spacing-md);
+}
+
+/* ===========================================
+   SECTIONS — Groupes de contrôles
+   =========================================== */
+
+.editor-section {
+  margin-bottom: var(--spacing-lg);
+}
+
+.editor-section__title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-xs);
+  border-bottom: 1px solid var(--border);
+}
+
+/* ===========================================
+   CONTRÔLES — Base commune
+   =========================================== */
+
+.editor-control {
+  margin-bottom: var(--spacing-md);
+}
+
+.editor-control__label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-xs);
+}
+
+/* Affichage de la valeur actuelle (ex: "12px") */
+.editor-control__value {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--primary-light);
+  background: var(--bg-card);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+}
+
+/* ===========================================
+   COLOR PICKER — Sélecteur de couleur
+   =========================================== */
+
+.editor-control__input--color {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+}
+
+.color-picker {
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  background: transparent;
+  padding: 0;
+}
+
+/* Style du sélecteur natif Chrome/Safari */
+.color-picker::-webkit-color-swatch-wrapper {
+  padding: 2px;
+}
+
+.color-picker::-webkit-color-swatch {
+  border-radius: var(--radius-sm);
+  border: none;
+}
+
+/* Input texte pour la valeur hex */
+.color-text {
+  flex: 1;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+
+.color-text:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+/* ===========================================
+   SLIDER — Contrôle numérique
+   =========================================== */
+
+.editor-slider {
+  width: 100%;
+  height: 6px;
+  background: var(--bg-card);
+  border-radius: var(--radius-full);
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+
+/* Thumb (le curseur qu'on déplace) */
+.editor-slider::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  background: var(--primary);
+  border-radius: 50%;
+  cursor: grab;
+  transition: transform var(--transition-fast);
+}
+
+.editor-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+}
+
+.editor-slider::-webkit-slider-thumb:active {
+  cursor: grabbing;
+  transform: scale(0.95);
+}
+
+/* Firefox */
+.editor-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: var(--primary);
+  border-radius: 50%;
+  border: none;
+  cursor: grab;
+}
+
+/* ===========================================
+   SELECT — Dropdown
+   =========================================== */
+
+.editor-select {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.editor-select:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+/* ===========================================
+   FOOTER — Boutons d'action
+   =========================================== */
+
+.editor-panel__footer {
+  display: flex;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-top: 1px solid var(--border);
+  background: var(--bg-card);
+}
+
+.editor-btn {
+  flex: 1;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+/* Bouton Reset */
+.editor-btn--reset {
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.editor-btn--reset:hover {
+  background: var(--bg-card-hover);
+  color: var(--text-primary);
+}
+
+/* Bouton primaire (Apply) */
+.editor-btn--primary {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.editor-btn--primary:hover {
+  background: var(--primary-hover);
+}
+
+/* ===========================================
+   OVERLAY — Fond semi-transparent
+   =========================================== */
+
+.editor-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--transition-base);
+}
+
+.editor-overlay--visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ===========================================
+   EDIT BUTTON — Sur les component-cards
+   =========================================== */
+
+.edit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-md);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.edit-btn:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.edit-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Positionner le bouton Edit dans la card */
+.component-card__info {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.component-card__name {
+  flex: 1;
+}
+
+.component-card__tags {
+  order: 1;
+  width: 100%;
+}

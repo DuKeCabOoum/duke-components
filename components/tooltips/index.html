@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tooltips — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ===========================================
+       TOOLTIPS — Styles locaux
+       =========================================== */
+
+    .tooltips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .tooltip-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .tooltip-card:hover {
+      border-color: var(--primary);
+    }
+
+    .tooltip-card__preview {
+      height: 200px;
+      background: #0a0a0a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+    }
+
+    .tooltip-card__info {
+      padding: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .tooltip-card__name {
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .tooltip-card__tags {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* ===========================================
+       BASE TRIGGER BUTTON
+       =========================================== */
+
+    .tooltip-trigger {
+      padding: 12px 24px;
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      border-radius: 8px;
+      color: #a5b4fc;
+      font-weight: 500;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+
+    .tooltip-trigger:hover {
+      background: rgba(99, 102, 241, 0.25);
+      border-color: rgba(99, 102, 241, 0.5);
+    }
+
+    /* ===========================================
+       TOOLTIP 1 — BASIC (Top)
+       =========================================== */
+
+    .tooltip-basic {
+      position: relative;
+    }
+
+    .tooltip-basic__content {
+      position: absolute;
+      bottom: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%) scale(0.9);
+      padding: 8px 16px;
+      background: #18181b;
+      border: 1px solid #27272a;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 0.875rem;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 100;
+    }
+
+    .tooltip-basic__content::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 6px solid transparent;
+      border-top-color: #27272a;
+    }
+
+    .tooltip-basic:hover .tooltip-basic__content {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) scale(1);
+    }
+
+    /* ===========================================
+       TOOLTIP 2 — POSITIONS
+       =========================================== */
+
+    .tooltip-positions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+    }
+
+    .tooltip-pos {
+      position: relative;
+    }
+
+    .tooltip-pos__content {
+      position: absolute;
+      padding: 8px 16px;
+      background: #18181b;
+      border: 1px solid #27272a;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 0.875rem;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 100;
+    }
+
+    .tooltip-pos--top .tooltip-pos__content {
+      bottom: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%) translateY(5px);
+    }
+
+    .tooltip-pos--bottom .tooltip-pos__content {
+      top: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%) translateY(-5px);
+    }
+
+    .tooltip-pos--left .tooltip-pos__content {
+      right: calc(100% + 10px);
+      top: 50%;
+      transform: translateY(-50%) translateX(5px);
+    }
+
+    .tooltip-pos--right .tooltip-pos__content {
+      left: calc(100% + 10px);
+      top: 50%;
+      transform: translateY(-50%) translateX(-5px);
+    }
+
+    .tooltip-pos:hover .tooltip-pos__content {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .tooltip-pos--top:hover .tooltip-pos__content {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .tooltip-pos--bottom:hover .tooltip-pos__content {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .tooltip-pos--left:hover .tooltip-pos__content {
+      transform: translateY(-50%) translateX(0);
+    }
+
+    .tooltip-pos--right:hover .tooltip-pos__content {
+      transform: translateY(-50%) translateX(0);
+    }
+
+    /* ===========================================
+       TOOLTIP 3 — GLASSMORPHISM
+       =========================================== */
+
+    .tooltip-glass {
+      position: relative;
+    }
+
+    .tooltip-glass__content {
+      position: absolute;
+      bottom: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%) scale(0.9);
+      padding: 12px 20px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      color: #fff;
+      font-size: 0.875rem;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 100;
+    }
+
+    .tooltip-glass:hover .tooltip-glass__content {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) scale(1);
+    }
+
+    /* ===========================================
+       TOOLTIP 4 — GRADIENT
+       =========================================== */
+
+    .tooltip-gradient {
+      position: relative;
+    }
+
+    .tooltip-gradient__content {
+      position: absolute;
+      bottom: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%) scale(0.9);
+      padding: 12px 20px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border-radius: 12px;
+      color: #fff;
+      font-size: 0.875rem;
+      font-weight: 500;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
+      z-index: 100;
+    }
+
+    .tooltip-gradient__content::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 8px solid transparent;
+      border-top-color: #8b5cf6;
+    }
+
+    .tooltip-gradient:hover .tooltip-gradient__content {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) scale(1);
+    }
+
+    /* ===========================================
+       TOOLTIP 5 — RICH CONTENT
+       =========================================== */
+
+    .tooltip-rich {
+      position: relative;
+    }
+
+    .tooltip-rich__content {
+      position: absolute;
+      bottom: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%) scale(0.9);
+      width: 280px;
+      padding: 16px;
+      background: #18181b;
+      border: 1px solid #27272a;
+      border-radius: 12px;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 100;
+    }
+
+    .tooltip-rich:hover .tooltip-rich__content {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) scale(1);
+    }
+
+    .tooltip-rich__header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .tooltip-rich__avatar {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: white;
+    }
+
+    .tooltip-rich__name {
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .tooltip-rich__role {
+      font-size: 0.8rem;
+      color: #71717a;
+    }
+
+    .tooltip-rich__text {
+      font-size: 0.875rem;
+      color: #a1a1aa;
+      line-height: 1.5;
+    }
+
+    /* ===========================================
+       TOOLTIP 6 — ANIMATED ARROW
+       =========================================== */
+
+    .tooltip-arrow {
+      position: relative;
+    }
+
+    .tooltip-arrow__content {
+      position: absolute;
+      bottom: calc(100% + 14px);
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 18px;
+      background: #18181b;
+      border: 1px solid #27272a;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 0.875rem;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 100;
+    }
+
+    .tooltip-arrow__pointer {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 12px;
+      height: 12px;
+      background: #18181b;
+      border-right: 1px solid #27272a;
+      border-bottom: 1px solid #27272a;
+      transform: translateX(-50%) rotate(45deg);
+      margin-top: -6px;
+      transition: all 0.3s ease;
+    }
+
+    .tooltip-arrow:hover .tooltip-arrow__content {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(-5px);
+    }
+
+    .tooltip-arrow:hover .tooltip-arrow__pointer {
+      animation: arrow-bounce 0.5s ease infinite alternate;
+    }
+
+    @keyframes arrow-bounce {
+      to {
+        margin-top: -3px;
+      }
+    }
+
+    /* ===========================================
+       CODE BLOCK
+       =========================================== */
+
+    .code-block {
+      background: #1a1a1a;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 16px;
+    }
+
+    .code-block__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .code-block__lang {
+      font-size: 0.75rem;
+      color: #71717a;
+      text-transform: uppercase;
+    }
+
+    .code-block__copy {
+      padding: 6px 12px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: #a1a1aa;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .code-block__copy:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+    }
+
+    .code-block__content {
+      padding: 16px;
+      overflow-x: auto;
+    }
+
+    .code-block__content pre {
+      margin: 0;
+      font-family: "Fira Code", monospace;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: #e0e0e0;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      font-size: 0.75rem;
+      color: #a1a1aa;
+    }
+
+    .tag--primary {
+      background: rgba(99, 102, 241, 0.15);
+      border-color: rgba(99, 102, 241, 0.3);
+      color: #818cf8;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar__logo">
+      <a href="../../index.html">Duke<span>UI</span></a>
+    </div>
+
+    <nav class="sidebar__nav">
+      <div class="sidebar__section">
+        <div class="sidebar__title">Composants</div>
+        <a href="../buttons/index.html" class="sidebar__link">Buttons</a>
+        <a href="../cards/index.html" class="sidebar__link">Cards</a>
+        <a href="../carousels/index.html" class="sidebar__link">Carousels</a>
+        <a href="../forms/index.html" class="sidebar__link">Forms</a>
+        <a href="../loaders/index.html" class="sidebar__link">Loaders</a>
+        <a href="../modals/index.html" class="sidebar__link">Modals</a>
+        <a href="../navigation/index.html" class="sidebar__link">Navigation</a>
+        <a href="index.html" class="sidebar__link sidebar__link--active">Tooltips</a>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__title">Effets</div>
+        <a href="../hovers/index.html" class="sidebar__link">Hovers</a>
+        <a href="../animations/index.html" class="sidebar__link">Animations</a>
+        <a href="../backgrounds/index.html" class="sidebar__link">Backgrounds</a>
+        <a href="../mouse-effects/index.html" class="sidebar__link">Mouse Effects</a>
+        <a href="../text-effects/index.html" class="sidebar__link">Text Effects</a>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__title">Sections</div>
+        <a href="../heroes/index.html" class="sidebar__link">Heroes</a>
+        <a href="../features/index.html" class="sidebar__link">Features</a>
+        <a href="../pricing/index.html" class="sidebar__link">Pricing</a>
+        <a href="../testimonials/index.html" class="sidebar__link">Testimonials</a>
+        <a href="../footers/index.html" class="sidebar__link">Footers</a>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__title">Générateurs</div>
+        <a href="../../generators/gradient/index.html" class="sidebar__link">Gradient</a>
+        <a href="../../generators/shadow/index.html" class="sidebar__link">Shadow</a>
+        <a href="../../generators/flexbox/index.html" class="sidebar__link">Flexbox</a>
+        <a href="../../generators/grid/index.html" class="sidebar__link">Grid</a>
+      </div>
+    </nav>
+
+    <!-- Toggle Admin -->
+    <div class="admin-toggle">
+      <span class="admin-toggle__label">Mode Admin</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="admin-toggle">
+        <span class="toggle-switch__slider"></span>
+      </label>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    <header class="page-header">
+      <h1 class="page-header__title">Tooltips</h1>
+      <p class="page-header__desc">Infobulles élégantes pour afficher des informations contextuelles</p>
+    </header>
+
+    <div class="tooltips-grid">
+
+      <!-- TOOLTIP 1 — BASIC -->
+      <div class="tooltip-card">
+        <div class="tooltip-card__preview">
+          <div class="tooltip-basic">
+            <button class="tooltip-trigger">Hover me</button>
+            <div class="tooltip-basic__content">Hello, I'm a tooltip!</div>
+          </div>
+        </div>
+        <div class="tooltip-card__info">
+          <h3 class="tooltip-card__name">Basic Tooltip</h3>
+          <div class="tooltip-card__tags">
+            <span class="tag tag--primary">CSS Only</span>
+            <span class="tag">Simple</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.tooltip__content {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) scale(0.9);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+}
+
+.tooltip:hover .tooltip__content {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) scale(1);
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOOLTIP 2 — POSITIONS -->
+      <div class="tooltip-card">
+        <div class="tooltip-card__preview">
+          <div class="tooltip-positions">
+            <div class="tooltip-pos tooltip-pos--top">
+              <button class="tooltip-trigger">Top</button>
+              <div class="tooltip-pos__content">Top tooltip</div>
+            </div>
+            <div class="tooltip-pos tooltip-pos--right">
+              <button class="tooltip-trigger">Right</button>
+              <div class="tooltip-pos__content">Right tooltip</div>
+            </div>
+            <div class="tooltip-pos tooltip-pos--bottom">
+              <button class="tooltip-trigger">Bottom</button>
+              <div class="tooltip-pos__content">Bottom tooltip</div>
+            </div>
+            <div class="tooltip-pos tooltip-pos--left">
+              <button class="tooltip-trigger">Left</button>
+              <div class="tooltip-pos__content">Left tooltip</div>
+            </div>
+          </div>
+        </div>
+        <div class="tooltip-card__info">
+          <h3 class="tooltip-card__name">Multiple Positions</h3>
+          <div class="tooltip-card__tags">
+            <span class="tag tag--primary">Directional</span>
+            <span class="tag">Flexible</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>/* Top */
+.tooltip--top .content { bottom: calc(100% + 10px); }
+/* Right */
+.tooltip--right .content { left: calc(100% + 10px); }
+/* Bottom */
+.tooltip--bottom .content { top: calc(100% + 10px); }
+/* Left */
+.tooltip--left .content { right: calc(100% + 10px); }</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOOLTIP 3 — GLASSMORPHISM -->
+      <div class="tooltip-card">
+        <div class="tooltip-card__preview">
+          <div class="tooltip-glass">
+            <button class="tooltip-trigger">Glass Effect</button>
+            <div class="tooltip-glass__content">Frosted glass tooltip</div>
+          </div>
+        </div>
+        <div class="tooltip-card__info">
+          <h3 class="tooltip-card__name">Glassmorphism</h3>
+          <div class="tooltip-card__tags">
+            <span class="tag tag--primary">Blur</span>
+            <span class="tag">Modern</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.tooltip-glass__content {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOOLTIP 4 — GRADIENT -->
+      <div class="tooltip-card">
+        <div class="tooltip-card__preview">
+          <div class="tooltip-gradient">
+            <button class="tooltip-trigger">Gradient</button>
+            <div class="tooltip-gradient__content">Colorful tooltip!</div>
+          </div>
+        </div>
+        <div class="tooltip-card__info">
+          <h3 class="tooltip-card__name">Gradient Style</h3>
+          <div class="tooltip-card__tags">
+            <span class="tag tag--primary">Colorful</span>
+            <span class="tag">Bold</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.tooltip-gradient__content {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOOLTIP 5 — RICH CONTENT -->
+      <div class="tooltip-card">
+        <div class="tooltip-card__preview">
+          <div class="tooltip-rich">
+            <button class="tooltip-trigger">User Info</button>
+            <div class="tooltip-rich__content">
+              <div class="tooltip-rich__header">
+                <div class="tooltip-rich__avatar">JD</div>
+                <div>
+                  <div class="tooltip-rich__name">John Doe</div>
+                  <div class="tooltip-rich__role">Senior Developer</div>
+                </div>
+              </div>
+              <p class="tooltip-rich__text">Building amazing products with passion and precision.</p>
+            </div>
+          </div>
+        </div>
+        <div class="tooltip-card__info">
+          <h3 class="tooltip-card__name">Rich Content</h3>
+          <div class="tooltip-card__tags">
+            <span class="tag tag--primary">Complex</span>
+            <span class="tag">Profile</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">HTML</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>&lt;div class="tooltip-rich__content"&gt;
+  &lt;div class="tooltip-rich__header"&gt;
+    &lt;div class="avatar"&gt;JD&lt;/div&gt;
+    &lt;div class="info"&gt;
+      &lt;div class="name"&gt;John Doe&lt;/div&gt;
+      &lt;div class="role"&gt;Developer&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;p&gt;Description text...&lt;/p&gt;
+&lt;/div&gt;</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOOLTIP 6 — ANIMATED ARROW -->
+      <div class="tooltip-card">
+        <div class="tooltip-card__preview">
+          <div class="tooltip-arrow">
+            <button class="tooltip-trigger">Animated</button>
+            <div class="tooltip-arrow__content">
+              Watch the arrow!
+              <div class="tooltip-arrow__pointer"></div>
+            </div>
+          </div>
+        </div>
+        <div class="tooltip-card__info">
+          <h3 class="tooltip-card__name">Animated Arrow</h3>
+          <div class="tooltip-card__tags">
+            <span class="tag tag--primary">Animation</span>
+            <span class="tag">Playful</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>@keyframes arrow-bounce {
+  to {
+    margin-top: -3px;
+  }
+}
+
+.tooltip:hover .arrow {
+  animation: arrow-bounce 0.5s ease infinite alternate;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+  </div>
+
+  <script src="../../assets/js/main.js"></script>
+  <script src="../../assets/js/security-system.js"></script>
+  <script>
+    function copyCode(btn) {
+      const codeBlock = btn.closest('.code-block');
+      const code = codeBlock.querySelector('pre').textContent;
+
+      navigator.clipboard.writeText(code).then(() => {
+        const originalText = btn.textContent;
+        btn.textContent = 'Copié !';
+        btn.style.color = '#22c55e';
+
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.style.color = '';
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>

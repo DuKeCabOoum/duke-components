@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pagination — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ========== PAGINATION STYLES ========== */
+
+    /* Base Pagination */
+    .pagination {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 14px;
+    }
+
+    .pagination__item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 40px;
+      height: 40px;
+      padding: 0 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .pagination__item:hover {
+      background: var(--surface-hover);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .pagination__item--active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+      pointer-events: none;
+    }
+
+    .pagination__item--disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .pagination__ellipsis {
+      color: var(--text-muted);
+      padding: 0 8px;
+    }
+
+    /* ===== 1. Basic ===== */
+    .pagination--basic .pagination__item {
+      border-radius: 8px;
+    }
+
+    /* ===== 2. Rounded ===== */
+    .pagination--rounded .pagination__item {
+      border-radius: 50%;
+      min-width: 40px;
+      width: 40px;
+      padding: 0;
+    }
+
+    /* ===== 3. Pill ===== */
+    .pagination--pill {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      padding: 4px;
+      gap: 2px;
+    }
+
+    .pagination--pill .pagination__item {
+      border: none;
+      background: transparent;
+      border-radius: 50px;
+      min-width: 36px;
+      height: 36px;
+    }
+
+    .pagination--pill .pagination__item:hover {
+      background: var(--surface-hover);
+    }
+
+    .pagination--pill .pagination__item--active {
+      background: var(--primary);
+      color: white;
+    }
+
+    /* ===== 4. Minimal ===== */
+    .pagination--minimal .pagination__item {
+      border: none;
+      background: transparent;
+      min-width: 36px;
+      height: 36px;
+    }
+
+    .pagination--minimal .pagination__item:hover {
+      color: var(--primary);
+      background: var(--primary-transparent);
+    }
+
+    .pagination--minimal .pagination__item--active {
+      background: transparent;
+      color: var(--primary);
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    /* ===== 5. Outlined ===== */
+    .pagination--outlined .pagination__item {
+      background: transparent;
+    }
+
+    .pagination--outlined .pagination__item:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    .pagination--outlined .pagination__item--active {
+      background: var(--primary);
+      color: white;
+    }
+
+    /* ===== 6. Gradient ===== */
+    .pagination--gradient .pagination__item--active {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border: none;
+    }
+
+    .pagination--gradient .pagination__item:hover:not(.pagination__item--active) {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      opacity: 0.7;
+    }
+
+    /* ===== 7. With Info ===== */
+    .pagination--info {
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .pagination__info {
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    .pagination__info-highlight {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    /* ===== 8. Simple Prev/Next ===== */
+    .pagination--simple {
+      gap: 16px;
+    }
+
+    .pagination--simple .pagination__item {
+      padding: 0 20px;
+    }
+
+    .pagination__current {
+      color: var(--text-secondary);
+    }
+
+    .pagination__current-page {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    /* ===== 9. With Icons ===== */
+    .pagination--icons .pagination__item svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+    }
+
+    .pagination--icons .pagination__prev,
+    .pagination--icons .pagination__next {
+      gap: 6px;
+    }
+
+    /* ===== 10. Jump to Page ===== */
+    .pagination--jump {
+      gap: 12px;
+    }
+
+    .pagination__jump {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-secondary);
+    }
+
+    .pagination__jump-input {
+      width: 60px;
+      height: 40px;
+      padding: 0 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-primary);
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .pagination__jump-input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .pagination__jump-btn {
+      height: 40px;
+      padding: 0 16px;
+      background: var(--primary);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .pagination__jump-btn:hover {
+      background: var(--primary-hover);
+    }
+
+    /* ===== 11. Per Page Selector ===== */
+    .pagination--selector {
+      gap: 24px;
+    }
+
+    .pagination__per-page {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-secondary);
+    }
+
+    .pagination__select {
+      height: 40px;
+      padding: 0 32px 0 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-primary);
+      font-size: 14px;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpolyline points='6,9 12,15 18,9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+    }
+
+    .pagination__select:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    /* ===== 12. Glassmorphism ===== */
+    .pagination--glass {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 8px;
+    }
+
+    .pagination--glass .pagination__item {
+      border: none;
+      background: transparent;
+    }
+
+    .pagination--glass .pagination__item:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .pagination--glass .pagination__item--active {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+    }
+
+    /* ===== 13. Progress Style ===== */
+    .pagination--progress {
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .pagination__progress-bar {
+      width: 100%;
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .pagination__progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      border-radius: 2px;
+      transition: width 0.3s ease;
+    }
+
+    .pagination__progress-info {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .pagination__progress-nav {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* ===== 14. Dot Navigation ===== */
+    .pagination--dots {
+      gap: 8px;
+    }
+
+    .pagination--dots .pagination__dot {
+      width: 10px;
+      height: 10px;
+      padding: 0;
+      min-width: auto;
+      background: var(--border);
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .pagination--dots .pagination__dot:hover {
+      background: var(--text-muted);
+      transform: scale(1.2);
+    }
+
+    .pagination--dots .pagination__dot--active {
+      width: 24px;
+      border-radius: 5px;
+      background: var(--primary);
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+  <aside class="sidebar">
+    <div class="sidebar__logo">
+      <a href="../../index.html"><span>Duke</span>-components</a>
+    </div>
+    <div class="sidebar__section">
+      <h3 class="sidebar__title">Composants</h3>
+      <ul class="sidebar__nav">
+        <li><a href="../accordions/index.html" class="sidebar__link"><span>📂</span> Accordions</a></li>
+        <li><a href="../avatars/index.html" class="sidebar__link"><span>👤</span> Avatars</a></li>
+        <li><a href="../badges/index.html" class="sidebar__link"><span>🏷️</span> Badges</a></li>
+        <li><a href="../breadcrumbs/index.html" class="sidebar__link"><span>🥖</span> Breadcrumbs</a></li>
+        <li><a href="../buttons/index.html" class="sidebar__link"><span>🔘</span> Buttons</a></li>
+        <li><a href="../cards/index.html" class="sidebar__link"><span>🃏</span> Cards</a></li>
+        <li><a href="../carousels/index.html" class="sidebar__link"><span>🎠</span> Carousels</a></li>
+        <li><a href="../forms/index.html" class="sidebar__link"><span>📝</span> Forms</a></li>
+        <li><a href="../loaders/index.html" class="sidebar__link"><span>⏳</span> Loaders</a></li>
+        <li><a href="../modals/index.html" class="sidebar__link"><span>💬</span> Modals</a></li>
+        <li><a href="../navigation/index.html" class="sidebar__link"><span>🧭</span> Navigation</a></li>
+        <li><a href="../notifications/index.html" class="sidebar__link"><span>🔔</span> Notifications</a></li>
+        <li><a href="index.html" class="sidebar__link sidebar__link--active"><span>📄</span> Pagination</a></li>
+        <li><a href="../progress/index.html" class="sidebar__link"><span>📊</span> Progress</a></li>
+        <li><a href="../tabs/index.html" class="sidebar__link"><span>📑</span> Tabs</a></li>
+        <li><a href="../tooltips/index.html" class="sidebar__link"><span>💡</span> Tooltips</a></li>
+      </ul>
+    </div>
+    <div class="admin-toggle">
+      <span class="admin-toggle__label">Mode Admin</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="admin-toggle">
+        <span class="toggle-switch__slider"></span>
+      </label>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="page-header">
+      <h1 class="page-header__title">Pagination</h1>
+      <p class="page-header__desc">Composants de pagination : 14 styles pour naviguer dans tes listes et tableaux.</p>
+    </header>
+
+    <div class="components-grid">
+
+      <!-- 1. Basic -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Basic</h3>
+        </div>
+        <div class="component-card__preview">
+          <nav class="pagination pagination--basic">
+            <a href="#" class="pagination__item">Prev</a>
+            <a href="#" class="pagination__item">1</a>
+            <a href="#" class="pagination__item pagination__item--active">2</a>
+            <a href="#" class="pagination__item">3</a>
+            <span class="pagination__ellipsis">...</span>
+            <a href="#" class="pagination__item">10</a>
+            <a href="#" class="pagination__item">Next</a>
+          </nav>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;nav class="pagination pagination--basic"&gt;
+  &lt;a href="#" class="pagination__item"&gt;Prev&lt;/a&gt;
+  &lt;a href="#" class="pagination__item"&gt;1&lt;/a&gt;
+  &lt;a href="#" class="pagination__item pagination__item--active"&gt;2&lt;/a&gt;
+  &lt;a href="#" class="pagination__item"&gt;3&lt;/a&gt;
+  &lt;span class="pagination__ellipsis"&gt;...&lt;/span&gt;
+  &lt;a href="#" class="pagination__item"&gt;10&lt;/a&gt;
+  &lt;a href="#" class="pagination__item"&gt;Next&lt;/a&gt;
+&lt;/nav&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 2. Rounded -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Rounded</h3>
+        </div>
+        <div class="component-card__preview">
+          <nav class="pagination pagination--rounded">
+            <a href="#" class="pagination__item">&lt;</a>
+            <a href="#" class="pagination__item">1</a>
+            <a href="#" class="pagination__item">2</a>
+            <a href="#" class="pagination__item pagination__item--active">3</a>
+            <a href="#" class="pagination__item">4</a>
+            <a href="#" class="pagination__item">5</a>
+            <a href="#" class="pagination__item">&gt;</a>
+          </nav>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;nav class="pagination pagination--rounded"&gt;
+  &lt;a href="#" class="pagination__item"&gt;&amp;lt;&lt;/a&gt;
+  &lt;a href="#" class="pagination__item"&gt;1&lt;/a&gt;
+  &lt;a href="#" class="pagination__item pagination__item--active"&gt;2&lt;/a&gt;
+  &lt;a href="#" class="pagination__item"&gt;3&lt;/a&gt;
+  &lt;a href="#" class="pagination__item"&gt;&amp;gt;&lt;/a&gt;
+&lt;/nav&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 3. Pill -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Pill Container</h3>
+        </div>
+        <div class="component-card__preview">
+          <nav class="pagination pagination--pill">
+            <a href="#" class="pagination__item">&lt;</a>
+            <a href="#" class="pagination__item">1</a>
+            <a href="#" class="pagination__item pagination__item--active">2</a>
+            <a href="#" class="pagination__item">3</a>
+            <a href="#" class="pagination__item">4</a>
+            <a href="#" class="pagination__item">&gt;</a>
+          </nav>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;nav class="pagination pagination--pill"&gt;
+  &lt;a href="#" class="pagination__item"&gt;&amp;lt;&lt;/a&gt;
+  &lt;a href="#" class="pagination__item pagination__item--active"&gt;1&lt;/a&gt;
+  &lt;a href="#" class="pagination__item"&gt;2&lt;/a&gt;
+  &lt;a href="#" class="pagination__item"&gt;&amp;gt;&lt;/a&gt;
+&lt;/nav&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 4. Minimal -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Minimal</h3>
+        </div>
+        <div class="component-card__preview">
+          <nav class="pagination pagination--minimal">
+            <a href="#" class="pagination__item">1</a>
+            <a href="#" class="pagination__item">2</a>
+            <a href="#" class="pagination__item pagination__item--active">3</a>
+            <a href="#" class="pagination__item">4</a>
+            <a href="#" class="pagination__item">5</a>
+          </nav>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;nav class="pagination pagination--minimal"&gt;
+  &lt;a href="#" class="pagination__item"&gt;1&lt;/a&gt;
+  &lt;a href="#" class="pagination__item pagination__item--active"&gt;2&lt;/a&gt;
+  &lt;a href="#" class="pagination__item"&gt;3&lt;/a&gt;
+&lt;/nav&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 5. Outlined -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Outlined</h3>
+        </div>
+        <div class="component-card__preview">
+          <nav class="pagination pagination--outlined">
+            <a href="#" class="pagination__item">Prev</a>
+            <a href="#" class="pagination__item pagination__item--active">1</a>
+            <a href="#" class="pagination__item">2</a>
+            <a href="#" class="pagination__item">3</a>
+            <a href="#" class="pagination__item">Next</a>
+          </nav>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;nav class="pagination pagination--outlined"&gt;
+  &lt;a href="#" class="pagination__item"&gt;Prev&lt;/a&gt;
+  &lt;a href="#" class="pagination__item pagination__item--active"&gt;1&lt;/a&gt;
+  &lt;a href="#" class="pagination__item"&gt;2&lt;/a&gt;
+  &lt;a href="#" class="pagination__item"&gt;Next&lt;/a&gt;
+&lt;/nav&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 6. Gradient -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Gradient</h3>
+        </div>
+        <div class="component-card__preview">
+          <nav class="pagination pagination--gradient">
+            <a href="#" class="pagination__item">&lt;</a>
+            <a href="#" class="pagination__item">1</a>
+            <a href="#" class="pagination__item pagination__item--active">2</a>
+            <a href="#" class="pagination__item">3</a>
+            <a href="#" class="pagination__item">4</a>
+            <a href="#" class="pagination__item">&gt;</a>
+          </nav>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;nav class="pagination pagination--gradient"&gt;
+  &lt;a href="#" class="pagination__item"&gt;&amp;lt;&lt;/a&gt;
+  &lt;a href="#" class="pagination__item pagination__item--active"&gt;1&lt;/a&gt;
+  &lt;a href="#" class="pagination__item"&gt;2&lt;/a&gt;
+  &lt;a href="#" class="pagination__item"&gt;&amp;gt;&lt;/a&gt;
+&lt;/nav&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 7. With Info -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">With Info</h3>
+        </div>
+        <div class="component-card__preview">
+          <nav class="pagination pagination--info">
+            <span class="pagination__info">
+              Showing <span class="pagination__info-highlight">1-10</span> of <span class="pagination__info-highlight">97</span> results
+            </span>
+            <div style="display: flex; gap: 4px;">
+              <a href="#" class="pagination__item">Prev</a>
+              <a href="#" class="pagination__item pagination__item--active">1</a>
+              <a href="#" class="pagination__item">2</a>
+              <a href="#" class="pagination__item">3</a>
+              <a href="#" class="pagination__item">Next</a>
+            </div>
+          </nav>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;nav class="pagination pagination--info"&gt;
+  &lt;span class="pagination__info"&gt;
+    Showing &lt;span class="pagination__info-highlight"&gt;1-10&lt;/span&gt;
+    of &lt;span class="pagination__info-highlight"&gt;97&lt;/span&gt; results
+  &lt;/span&gt;
+  &lt;div style="display: flex; gap: 4px;"&gt;
+    &lt;a href="#" class="pagination__item"&gt;Prev&lt;/a&gt;
+    &lt;a href="#" class="pagination__item pagination__item--active"&gt;1&lt;/a&gt;
+    &lt;a href="#" class="pagination__item"&gt;Next&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 8. Simple Prev/Next -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Simple Prev/Next</h3>
+        </div>
+        <div class="component-card__preview">
+          <nav class="pagination pagination--simple">
+            <a href="#" class="pagination__item">Previous</a>
+            <span class="pagination__current">
+              Page <span class="pagination__current-page">3</span> of 12
+            </span>
+            <a href="#" class="pagination__item">Next</a>
+          </nav>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;nav class="pagination pagination--simple"&gt;
+  &lt;a href="#" class="pagination__item"&gt;Previous&lt;/a&gt;
+  &lt;span class="pagination__current"&gt;
+    Page &lt;span class="pagination__current-page"&gt;3&lt;/span&gt; of 12
+  &lt;/span&gt;
+  &lt;a href="#" class="pagination__item"&gt;Next&lt;/a&gt;
+&lt;/nav&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 9. With Icons -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">With Icons</h3>
+        </div>
+        <div class="component-card__preview">
+          <nav class="pagination pagination--icons">
+            <a href="#" class="pagination__item pagination__item--disabled">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="11,17 6,12 11,7"></polyline>
+                <polyline points="18,17 13,12 18,7"></polyline>
+              </svg>
+            </a>
+            <a href="#" class="pagination__item pagination__prev">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15,18 9,12 15,6"></polyline>
+              </svg>
+              Prev
+            </a>
+            <a href="#" class="pagination__item">1</a>
+            <a href="#" class="pagination__item pagination__item--active">2</a>
+            <a href="#" class="pagination__item">3</a>
+            <a href="#" class="pagination__item pagination__next">
+              Next
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9,18 15,12 9,6"></polyline>
+              </svg>
+            </a>
+            <a href="#" class="pagination__item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="13,17 18,12 13,7"></polyline>
+                <polyline points="6,17 11,12 6,7"></polyline>
+              </svg>
+            </a>
+          </nav>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;nav class="pagination pagination--icons"&gt;
+  &lt;a href="#" class="pagination__item pagination__prev"&gt;
+    &lt;svg viewBox="0 0 24 24"&gt;
+      &lt;polyline points="15,18 9,12 15,6"&gt;&lt;/polyline&gt;
+    &lt;/svg&gt;
+    Prev
+  &lt;/a&gt;
+  &lt;a href="#" class="pagination__item pagination__item--active"&gt;1&lt;/a&gt;
+  &lt;a href="#" class="pagination__item pagination__next"&gt;
+    Next
+    &lt;svg viewBox="0 0 24 24"&gt;
+      &lt;polyline points="9,18 15,12 9,6"&gt;&lt;/polyline&gt;
+    &lt;/svg&gt;
+  &lt;/a&gt;
+&lt;/nav&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 10. Jump to Page -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Jump to Page</h3>
+        </div>
+        <div class="component-card__preview">
+          <nav class="pagination pagination--jump">
+            <div style="display: flex; gap: 4px;">
+              <a href="#" class="pagination__item">1</a>
+              <a href="#" class="pagination__item pagination__item--active">2</a>
+              <a href="#" class="pagination__item">3</a>
+              <span class="pagination__ellipsis">...</span>
+              <a href="#" class="pagination__item">50</a>
+            </div>
+            <div class="pagination__jump">
+              <span>Go to</span>
+              <input type="number" class="pagination__jump-input" min="1" max="50" placeholder="1">
+              <button class="pagination__jump-btn">Go</button>
+            </div>
+          </nav>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;nav class="pagination pagination--jump"&gt;
+  &lt;div style="display: flex; gap: 4px;"&gt;
+    &lt;a href="#" class="pagination__item pagination__item--active"&gt;1&lt;/a&gt;
+    &lt;a href="#" class="pagination__item"&gt;2&lt;/a&gt;
+    &lt;span class="pagination__ellipsis"&gt;...&lt;/span&gt;
+    &lt;a href="#" class="pagination__item"&gt;50&lt;/a&gt;
+  &lt;/div&gt;
+  &lt;div class="pagination__jump"&gt;
+    &lt;span&gt;Go to&lt;/span&gt;
+    &lt;input type="number" class="pagination__jump-input" min="1" max="50"&gt;
+    &lt;button class="pagination__jump-btn"&gt;Go&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 11. Per Page Selector -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Per Page Selector</h3>
+        </div>
+        <div class="component-card__preview">
+          <nav class="pagination pagination--selector">
+            <div class="pagination__per-page">
+              <span>Show</span>
+              <select class="pagination__select">
+                <option>10</option>
+                <option>25</option>
+                <option>50</option>
+                <option>100</option>
+              </select>
+              <span>per page</span>
+            </div>
+            <div style="display: flex; gap: 4px;">
+              <a href="#" class="pagination__item">Prev</a>
+              <a href="#" class="pagination__item pagination__item--active">1</a>
+              <a href="#" class="pagination__item">2</a>
+              <a href="#" class="pagination__item">3</a>
+              <a href="#" class="pagination__item">Next</a>
+            </div>
+          </nav>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;nav class="pagination pagination--selector"&gt;
+  &lt;div class="pagination__per-page"&gt;
+    &lt;span&gt;Show&lt;/span&gt;
+    &lt;select class="pagination__select"&gt;
+      &lt;option&gt;10&lt;/option&gt;
+      &lt;option&gt;25&lt;/option&gt;
+      &lt;option&gt;50&lt;/option&gt;
+    &lt;/select&gt;
+    &lt;span&gt;per page&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div style="display: flex; gap: 4px;"&gt;
+    &lt;!-- pagination items --&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 12. Glassmorphism -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Glassmorphism</h3>
+        </div>
+        <div class="component-card__preview" style="background: linear-gradient(135deg, var(--primary), var(--secondary)); padding: 24px; border-radius: 8px;">
+          <nav class="pagination pagination--glass">
+            <a href="#" class="pagination__item">&lt;</a>
+            <a href="#" class="pagination__item">1</a>
+            <a href="#" class="pagination__item pagination__item--active">2</a>
+            <a href="#" class="pagination__item">3</a>
+            <a href="#" class="pagination__item">4</a>
+            <a href="#" class="pagination__item">&gt;</a>
+          </nav>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;nav class="pagination pagination--glass"&gt;
+  &lt;a href="#" class="pagination__item"&gt;&amp;lt;&lt;/a&gt;
+  &lt;a href="#" class="pagination__item pagination__item--active"&gt;1&lt;/a&gt;
+  &lt;a href="#" class="pagination__item"&gt;2&lt;/a&gt;
+  &lt;a href="#" class="pagination__item"&gt;&amp;gt;&lt;/a&gt;
+&lt;/nav&gt;
+
+/* Glass Effect */
+.pagination--glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}</code></pre>
+        </div>
+      </article>
+
+      <!-- 13. Progress Style -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Progress Style</h3>
+        </div>
+        <div class="component-card__preview">
+          <nav class="pagination pagination--progress">
+            <div class="pagination__progress-bar">
+              <div class="pagination__progress-fill" style="width: 30%;"></div>
+            </div>
+            <div class="pagination__progress-info">
+              <span class="pagination__info">Page 3 of 10</span>
+              <div class="pagination__progress-nav">
+                <a href="#" class="pagination__item">Prev</a>
+                <a href="#" class="pagination__item">Next</a>
+              </div>
+            </div>
+          </nav>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;nav class="pagination pagination--progress"&gt;
+  &lt;div class="pagination__progress-bar"&gt;
+    &lt;div class="pagination__progress-fill" style="width: 30%;"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="pagination__progress-info"&gt;
+    &lt;span class="pagination__info"&gt;Page 3 of 10&lt;/span&gt;
+    &lt;div class="pagination__progress-nav"&gt;
+      &lt;a href="#" class="pagination__item"&gt;Prev&lt;/a&gt;
+      &lt;a href="#" class="pagination__item"&gt;Next&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 14. Dot Navigation -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Dot Navigation</h3>
+        </div>
+        <div class="component-card__preview">
+          <nav class="pagination pagination--dots">
+            <button class="pagination__dot"></button>
+            <button class="pagination__dot"></button>
+            <button class="pagination__dot pagination__dot--active"></button>
+            <button class="pagination__dot"></button>
+            <button class="pagination__dot"></button>
+          </nav>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;nav class="pagination pagination--dots"&gt;
+  &lt;button class="pagination__dot"&gt;&lt;/button&gt;
+  &lt;button class="pagination__dot pagination__dot--active"&gt;&lt;/button&gt;
+  &lt;button class="pagination__dot"&gt;&lt;/button&gt;
+  &lt;button class="pagination__dot"&gt;&lt;/button&gt;
+&lt;/nav&gt;</code></pre>
+        </div>
+      </article>
+
+    </div>
+  </main>
+  </div>
+
+  <script src="../../assets/js/copy-code.js"></script>
+  <script src="../../assets/js/security-system.js"></script>
+</body>
+</html>

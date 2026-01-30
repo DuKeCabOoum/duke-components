@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Palettes — Duke-components</title>
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <style>
+    /* ========== PALETTES STYLES ========== */
+
+    .palettes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    /* Palette Card */
+    .palette-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .palette-card__colors {
+      display: flex;
+      height: 120px;
+    }
+
+    .palette-card__color {
+      flex: 1;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 8px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+      position: relative;
+    }
+
+    .palette-card__color:hover {
+      transform: scaleY(1.1);
+      transform-origin: bottom;
+      z-index: 1;
+    }
+
+    .palette-card__color:hover .palette-card__hex {
+      opacity: 1;
+    }
+
+    .palette-card__hex {
+      font-size: 10px;
+      font-weight: 600;
+      color: white;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .palette-card__info {
+      padding: 16px;
+    }
+
+    .palette-card__name {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .palette-card__tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .palette-card__tag {
+      font-size: 11px;
+      color: var(--text-muted);
+      background: var(--surface-hover);
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+
+    /* Single Color Card */
+    .color-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .color-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    }
+
+    .color-card__preview {
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    }
+
+    .color-card__info {
+      padding: 12px;
+    }
+
+    .color-card__name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .color-card__values {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .color-card__value {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-family: monospace;
+    }
+
+    /* Color Scale */
+    .color-scale {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+
+    .color-scale__title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+    }
+
+    .color-scale__grid {
+      display: grid;
+      grid-template-columns: repeat(11, 1fr);
+      gap: 4px;
+    }
+
+    .color-scale__item {
+      aspect-ratio: 1;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+      position: relative;
+    }
+
+    .color-scale__item:hover {
+      transform: scale(1.1);
+      z-index: 1;
+    }
+
+    .color-scale__shade {
+      font-size: 10px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .color-scale__hex {
+      font-size: 8px;
+      font-family: monospace;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .color-scale__item:hover .color-scale__hex {
+      opacity: 1;
+    }
+
+    /* Gradient Palettes */
+    .gradient-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .gradient-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    }
+
+    .gradient-card__preview {
+      height: 120px;
+    }
+
+    .gradient-card__info {
+      padding: 12px;
+    }
+
+    .gradient-card__name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .gradient-card__css {
+      font-size: 10px;
+      color: var(--text-muted);
+      font-family: monospace;
+      word-break: break-all;
+    }
+
+    /* Section Headers */
+    .section-header {
+      margin-bottom: 24px;
+    }
+
+    .section-header__title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .section-header__desc {
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    /* Copy Toast */
+    .copy-toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 12px 24px;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      z-index: 1000;
+      transition: transform 0.3s ease;
+    }
+
+    .copy-toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .copy-toast__text {
+      color: var(--text-primary);
+      font-size: 14px;
+    }
+
+    .copy-toast__value {
+      color: var(--primary);
+      font-family: monospace;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+    <div class="sidebar__logo">
+      <a href="../index.html"><span>Duke</span>-components</a>
+    </div>
+    <div class="sidebar__section">
+      <h3 class="sidebar__title">Styles</h3>
+      <ul class="sidebar__nav">
+        <li><a href="index.html" class="sidebar__link sidebar__link--active"><span>🎨</span> Palettes</a></li>
+        <li><a href="../typography/index.html" class="sidebar__link"><span>🔤</span> Typography</a></li>
+      </ul>
+    </div>
+    <div class="admin-toggle">
+      <span class="admin-toggle__label">Mode Admin</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="admin-toggle">
+        <span class="toggle-switch__slider"></span>
+      </label>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="page-header">
+      <h1 class="page-header__title">Palettes de couleurs</h1>
+      <p class="page-header__desc">Palettes harmonieuses et gradients : clique sur une couleur pour copier sa valeur.</p>
+    </header>
+
+    <!-- Color Scales Section -->
+    <section class="section-header">
+      <h2 class="section-header__title">Echelles de couleurs</h2>
+      <p class="section-header__desc">Systeme complet de nuances pour chaque couleur principale.</p>
+    </section>
+
+    <!-- Primary Scale -->
+    <div class="color-scale">
+      <h3 class="color-scale__title">Primary (Indigo)</h3>
+      <div class="color-scale__grid">
+        <div class="color-scale__item" style="background: #eef2ff; color: #333;" onclick="copyColor('#eef2ff')">
+          <span class="color-scale__shade">50</span>
+          <span class="color-scale__hex">#eef2ff</span>
+        </div>
+        <div class="color-scale__item" style="background: #e0e7ff; color: #333;" onclick="copyColor('#e0e7ff')">
+          <span class="color-scale__shade">100</span>
+          <span class="color-scale__hex">#e0e7ff</span>
+        </div>
+        <div class="color-scale__item" style="background: #c7d2fe; color: #333;" onclick="copyColor('#c7d2fe')">
+          <span class="color-scale__shade">200</span>
+          <span class="color-scale__hex">#c7d2fe</span>
+        </div>
+        <div class="color-scale__item" style="background: #a5b4fc; color: #333;" onclick="copyColor('#a5b4fc')">
+          <span class="color-scale__shade">300</span>
+          <span class="color-scale__hex">#a5b4fc</span>
+        </div>
+        <div class="color-scale__item" style="background: #818cf8; color: #fff;" onclick="copyColor('#818cf8')">
+          <span class="color-scale__shade">400</span>
+          <span class="color-scale__hex">#818cf8</span>
+        </div>
+        <div class="color-scale__item" style="background: #6366f1; color: #fff;" onclick="copyColor('#6366f1')">
+          <span class="color-scale__shade">500</span>
+          <span class="color-scale__hex">#6366f1</span>
+        </div>
+        <div class="color-scale__item" style="background: #4f46e5; color: #fff;" onclick="copyColor('#4f46e5')">
+          <span class="color-scale__shade">600</span>
+          <span class="color-scale__hex">#4f46e5</span>
+        </div>
+        <div class="color-scale__item" style="background: #4338ca; color: #fff;" onclick="copyColor('#4338ca')">
+          <span class="color-scale__shade">700</span>
+          <span class="color-scale__hex">#4338ca</span>
+        </div>
+        <div class="color-scale__item" style="background: #3730a3; color: #fff;" onclick="copyColor('#3730a3')">
+          <span class="color-scale__shade">800</span>
+          <span class="color-scale__hex">#3730a3</span>
+        </div>
+        <div class="color-scale__item" style="background: #312e81; color: #fff;" onclick="copyColor('#312e81')">
+          <span class="color-scale__shade">900</span>
+          <span class="color-scale__hex">#312e81</span>
+        </div>
+        <div class="color-scale__item" style="background: #1e1b4b; color: #fff;" onclick="copyColor('#1e1b4b')">
+          <span class="color-scale__shade">950</span>
+          <span class="color-scale__hex">#1e1b4b</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success Scale -->
+    <div class="color-scale">
+      <h3 class="color-scale__title">Success (Emerald)</h3>
+      <div class="color-scale__grid">
+        <div class="color-scale__item" style="background: #ecfdf5; color: #333;" onclick="copyColor('#ecfdf5')">
+          <span class="color-scale__shade">50</span>
+          <span class="color-scale__hex">#ecfdf5</span>
+        </div>
+        <div class="color-scale__item" style="background: #d1fae5; color: #333;" onclick="copyColor('#d1fae5')">
+          <span class="color-scale__shade">100</span>
+          <span class="color-scale__hex">#d1fae5</span>
+        </div>
+        <div class="color-scale__item" style="background: #a7f3d0; color: #333;" onclick="copyColor('#a7f3d0')">
+          <span class="color-scale__shade">200</span>
+          <span class="color-scale__hex">#a7f3d0</span>
+        </div>
+        <div class="color-scale__item" style="background: #6ee7b7; color: #333;" onclick="copyColor('#6ee7b7')">
+          <span class="color-scale__shade">300</span>
+          <span class="color-scale__hex">#6ee7b7</span>
+        </div>
+        <div class="color-scale__item" style="background: #34d399; color: #fff;" onclick="copyColor('#34d399')">
+          <span class="color-scale__shade">400</span>
+          <span class="color-scale__hex">#34d399</span>
+        </div>
+        <div class="color-scale__item" style="background: #10b981; color: #fff;" onclick="copyColor('#10b981')">
+          <span class="color-scale__shade">500</span>
+          <span class="color-scale__hex">#10b981</span>
+        </div>
+        <div class="color-scale__item" style="background: #059669; color: #fff;" onclick="copyColor('#059669')">
+          <span class="color-scale__shade">600</span>
+          <span class="color-scale__hex">#059669</span>
+        </div>
+        <div class="color-scale__item" style="background: #047857; color: #fff;" onclick="copyColor('#047857')">
+          <span class="color-scale__shade">700</span>
+          <span class="color-scale__hex">#047857</span>
+        </div>
+        <div class="color-scale__item" style="background: #065f46; color: #fff;" onclick="copyColor('#065f46')">
+          <span class="color-scale__shade">800</span>
+          <span class="color-scale__hex">#065f46</span>
+        </div>
+        <div class="color-scale__item" style="background: #064e3b; color: #fff;" onclick="copyColor('#064e3b')">
+          <span class="color-scale__shade">900</span>
+          <span class="color-scale__hex">#064e3b</span>
+        </div>
+        <div class="color-scale__item" style="background: #022c22; color: #fff;" onclick="copyColor('#022c22')">
+          <span class="color-scale__shade">950</span>
+          <span class="color-scale__hex">#022c22</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error Scale -->
+    <div class="color-scale">
+      <h3 class="color-scale__title">Error (Red)</h3>
+      <div class="color-scale__grid">
+        <div class="color-scale__item" style="background: #fef2f2; color: #333;" onclick="copyColor('#fef2f2')">
+          <span class="color-scale__shade">50</span>
+          <span class="color-scale__hex">#fef2f2</span>
+        </div>
+        <div class="color-scale__item" style="background: #fee2e2; color: #333;" onclick="copyColor('#fee2e2')">
+          <span class="color-scale__shade">100</span>
+          <span class="color-scale__hex">#fee2e2</span>
+        </div>
+        <div class="color-scale__item" style="background: #fecaca; color: #333;" onclick="copyColor('#fecaca')">
+          <span class="color-scale__shade">200</span>
+          <span class="color-scale__hex">#fecaca</span>
+        </div>
+        <div class="color-scale__item" style="background: #fca5a5; color: #333;" onclick="copyColor('#fca5a5')">
+          <span class="color-scale__shade">300</span>
+          <span class="color-scale__hex">#fca5a5</span>
+        </div>
+        <div class="color-scale__item" style="background: #f87171; color: #fff;" onclick="copyColor('#f87171')">
+          <span class="color-scale__shade">400</span>
+          <span class="color-scale__hex">#f87171</span>
+        </div>
+        <div class="color-scale__item" style="background: #ef4444; color: #fff;" onclick="copyColor('#ef4444')">
+          <span class="color-scale__shade">500</span>
+          <span class="color-scale__hex">#ef4444</span>
+        </div>
+        <div class="color-scale__item" style="background: #dc2626; color: #fff;" onclick="copyColor('#dc2626')">
+          <span class="color-scale__shade">600</span>
+          <span class="color-scale__hex">#dc2626</span>
+        </div>
+        <div class="color-scale__item" style="background: #b91c1c; color: #fff;" onclick="copyColor('#b91c1c')">
+          <span class="color-scale__shade">700</span>
+          <span class="color-scale__hex">#b91c1c</span>
+        </div>
+        <div class="color-scale__item" style="background: #991b1b; color: #fff;" onclick="copyColor('#991b1b')">
+          <span class="color-scale__shade">800</span>
+          <span class="color-scale__hex">#991b1b</span>
+        </div>
+        <div class="color-scale__item" style="background: #7f1d1d; color: #fff;" onclick="copyColor('#7f1d1d')">
+          <span class="color-scale__shade">900</span>
+          <span class="color-scale__hex">#7f1d1d</span>
+        </div>
+        <div class="color-scale__item" style="background: #450a0a; color: #fff;" onclick="copyColor('#450a0a')">
+          <span class="color-scale__shade">950</span>
+          <span class="color-scale__hex">#450a0a</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Warning Scale -->
+    <div class="color-scale">
+      <h3 class="color-scale__title">Warning (Amber)</h3>
+      <div class="color-scale__grid">
+        <div class="color-scale__item" style="background: #fffbeb; color: #333;" onclick="copyColor('#fffbeb')">
+          <span class="color-scale__shade">50</span>
+          <span class="color-scale__hex">#fffbeb</span>
+        </div>
+        <div class="color-scale__item" style="background: #fef3c7; color: #333;" onclick="copyColor('#fef3c7')">
+          <span class="color-scale__shade">100</span>
+          <span class="color-scale__hex">#fef3c7</span>
+        </div>
+        <div class="color-scale__item" style="background: #fde68a; color: #333;" onclick="copyColor('#fde68a')">
+          <span class="color-scale__shade">200</span>
+          <span class="color-scale__hex">#fde68a</span>
+        </div>
+        <div class="color-scale__item" style="background: #fcd34d; color: #333;" onclick="copyColor('#fcd34d')">
+          <span class="color-scale__shade">300</span>
+          <span class="color-scale__hex">#fcd34d</span>
+        </div>
+        <div class="color-scale__item" style="background: #fbbf24; color: #333;" onclick="copyColor('#fbbf24')">
+          <span class="color-scale__shade">400</span>
+          <span class="color-scale__hex">#fbbf24</span>
+        </div>
+        <div class="color-scale__item" style="background: #f59e0b; color: #fff;" onclick="copyColor('#f59e0b')">
+          <span class="color-scale__shade">500</span>
+          <span class="color-scale__hex">#f59e0b</span>
+        </div>
+        <div class="color-scale__item" style="background: #d97706; color: #fff;" onclick="copyColor('#d97706')">
+          <span class="color-scale__shade">600</span>
+          <span class="color-scale__hex">#d97706</span>
+        </div>
+        <div class="color-scale__item" style="background: #b45309; color: #fff;" onclick="copyColor('#b45309')">
+          <span class="color-scale__shade">700</span>
+          <span class="color-scale__hex">#b45309</span>
+        </div>
+        <div class="color-scale__item" style="background: #92400e; color: #fff;" onclick="copyColor('#92400e')">
+          <span class="color-scale__shade">800</span>
+          <span class="color-scale__hex">#92400e</span>
+        </div>
+        <div class="color-scale__item" style="background: #78350f; color: #fff;" onclick="copyColor('#78350f')">
+          <span class="color-scale__shade">900</span>
+          <span class="color-scale__hex">#78350f</span>
+        </div>
+        <div class="color-scale__item" style="background: #451a03; color: #fff;" onclick="copyColor('#451a03')">
+          <span class="color-scale__shade">950</span>
+          <span class="color-scale__hex">#451a03</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Curated Palettes Section -->
+    <section class="section-header" style="margin-top: 48px;">
+      <h2 class="section-header__title">Palettes harmonieuses</h2>
+      <p class="section-header__desc">Combinaisons de couleurs selectionnees pour vos projets.</p>
+    </section>
+
+    <div class="palettes-grid">
+      <!-- Ocean Breeze -->
+      <div class="palette-card">
+        <div class="palette-card__colors">
+          <div class="palette-card__color" style="background: #0ea5e9;" onclick="copyColor('#0ea5e9')">
+            <span class="palette-card__hex">#0ea5e9</span>
+          </div>
+          <div class="palette-card__color" style="background: #06b6d4;" onclick="copyColor('#06b6d4')">
+            <span class="palette-card__hex">#06b6d4</span>
+          </div>
+          <div class="palette-card__color" style="background: #14b8a6;" onclick="copyColor('#14b8a6')">
+            <span class="palette-card__hex">#14b8a6</span>
+          </div>
+          <div class="palette-card__color" style="background: #10b981;" onclick="copyColor('#10b981')">
+            <span class="palette-card__hex">#10b981</span>
+          </div>
+          <div class="palette-card__color" style="background: #22c55e;" onclick="copyColor('#22c55e')">
+            <span class="palette-card__hex">#22c55e</span>
+          </div>
+        </div>
+        <div class="palette-card__info">
+          <h4 class="palette-card__name">Ocean Breeze</h4>
+          <div class="palette-card__tags">
+            <span class="palette-card__tag">Fresh</span>
+            <span class="palette-card__tag">Nature</span>
+            <span class="palette-card__tag">Calm</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sunset Glow -->
+      <div class="palette-card">
+        <div class="palette-card__colors">
+          <div class="palette-card__color" style="background: #f43f5e;" onclick="copyColor('#f43f5e')">
+            <span class="palette-card__hex">#f43f5e</span>
+          </div>
+          <div class="palette-card__color" style="background: #f97316;" onclick="copyColor('#f97316')">
+            <span class="palette-card__hex">#f97316</span>
+          </div>
+          <div class="palette-card__color" style="background: #fbbf24;" onclick="copyColor('#fbbf24')">
+            <span class="palette-card__hex">#fbbf24</span>
+          </div>
+          <div class="palette-card__color" style="background: #facc15;" onclick="copyColor('#facc15')">
+            <span class="palette-card__hex">#facc15</span>
+          </div>
+          <div class="palette-card__color" style="background: #fde047;" onclick="copyColor('#fde047')">
+            <span class="palette-card__hex">#fde047</span>
+          </div>
+        </div>
+        <div class="palette-card__info">
+          <h4 class="palette-card__name">Sunset Glow</h4>
+          <div class="palette-card__tags">
+            <span class="palette-card__tag">Warm</span>
+            <span class="palette-card__tag">Energy</span>
+            <span class="palette-card__tag">Bold</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Purple Dreams -->
+      <div class="palette-card">
+        <div class="palette-card__colors">
+          <div class="palette-card__color" style="background: #6366f1;" onclick="copyColor('#6366f1')">
+            <span class="palette-card__hex">#6366f1</span>
+          </div>
+          <div class="palette-card__color" style="background: #8b5cf6;" onclick="copyColor('#8b5cf6')">
+            <span class="palette-card__hex">#8b5cf6</span>
+          </div>
+          <div class="palette-card__color" style="background: #a855f7;" onclick="copyColor('#a855f7')">
+            <span class="palette-card__hex">#a855f7</span>
+          </div>
+          <div class="palette-card__color" style="background: #d946ef;" onclick="copyColor('#d946ef')">
+            <span class="palette-card__hex">#d946ef</span>
+          </div>
+          <div class="palette-card__color" style="background: #ec4899;" onclick="copyColor('#ec4899')">
+            <span class="palette-card__hex">#ec4899</span>
+          </div>
+        </div>
+        <div class="palette-card__info">
+          <h4 class="palette-card__name">Purple Dreams</h4>
+          <div class="palette-card__tags">
+            <span class="palette-card__tag">Creative</span>
+            <span class="palette-card__tag">Modern</span>
+            <span class="palette-card__tag">Tech</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Forest Vibes -->
+      <div class="palette-card">
+        <div class="palette-card__colors">
+          <div class="palette-card__color" style="background: #166534;" onclick="copyColor('#166534')">
+            <span class="palette-card__hex">#166534</span>
+          </div>
+          <div class="palette-card__color" style="background: #15803d;" onclick="copyColor('#15803d')">
+            <span class="palette-card__hex">#15803d</span>
+          </div>
+          <div class="palette-card__color" style="background: #22c55e;" onclick="copyColor('#22c55e')">
+            <span class="palette-card__hex">#22c55e</span>
+          </div>
+          <div class="palette-card__color" style="background: #86efac;" onclick="copyColor('#86efac')">
+            <span class="palette-card__hex">#86efac</span>
+          </div>
+          <div class="palette-card__color" style="background: #dcfce7;" onclick="copyColor('#dcfce7')">
+            <span class="palette-card__hex">#dcfce7</span>
+          </div>
+        </div>
+        <div class="palette-card__info">
+          <h4 class="palette-card__name">Forest Vibes</h4>
+          <div class="palette-card__tags">
+            <span class="palette-card__tag">Organic</span>
+            <span class="palette-card__tag">Eco</span>
+            <span class="palette-card__tag">Natural</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Midnight Blue -->
+      <div class="palette-card">
+        <div class="palette-card__colors">
+          <div class="palette-card__color" style="background: #1e1b4b;" onclick="copyColor('#1e1b4b')">
+            <span class="palette-card__hex">#1e1b4b</span>
+          </div>
+          <div class="palette-card__color" style="background: #312e81;" onclick="copyColor('#312e81')">
+            <span class="palette-card__hex">#312e81</span>
+          </div>
+          <div class="palette-card__color" style="background: #3730a3;" onclick="copyColor('#3730a3')">
+            <span class="palette-card__hex">#3730a3</span>
+          </div>
+          <div class="palette-card__color" style="background: #4f46e5;" onclick="copyColor('#4f46e5')">
+            <span class="palette-card__hex">#4f46e5</span>
+          </div>
+          <div class="palette-card__color" style="background: #818cf8;" onclick="copyColor('#818cf8')">
+            <span class="palette-card__hex">#818cf8</span>
+          </div>
+        </div>
+        <div class="palette-card__info">
+          <h4 class="palette-card__name">Midnight Blue</h4>
+          <div class="palette-card__tags">
+            <span class="palette-card__tag">Dark</span>
+            <span class="palette-card__tag">Premium</span>
+            <span class="palette-card__tag">Pro</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Coral Reef -->
+      <div class="palette-card">
+        <div class="palette-card__colors">
+          <div class="palette-card__color" style="background: #be185d;" onclick="copyColor('#be185d')">
+            <span class="palette-card__hex">#be185d</span>
+          </div>
+          <div class="palette-card__color" style="background: #ec4899;" onclick="copyColor('#ec4899')">
+            <span class="palette-card__hex">#ec4899</span>
+          </div>
+          <div class="palette-card__color" style="background: #f472b6;" onclick="copyColor('#f472b6')">
+            <span class="palette-card__hex">#f472b6</span>
+          </div>
+          <div class="palette-card__color" style="background: #f9a8d4;" onclick="copyColor('#f9a8d4')">
+            <span class="palette-card__hex">#f9a8d4</span>
+          </div>
+          <div class="palette-card__color" style="background: #fce7f3;" onclick="copyColor('#fce7f3')">
+            <span class="palette-card__hex">#fce7f3</span>
+          </div>
+        </div>
+        <div class="palette-card__info">
+          <h4 class="palette-card__name">Coral Reef</h4>
+          <div class="palette-card__tags">
+            <span class="palette-card__tag">Feminine</span>
+            <span class="palette-card__tag">Soft</span>
+            <span class="palette-card__tag">Elegant</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gradient Section -->
+    <section class="section-header" style="margin-top: 48px;">
+      <h2 class="section-header__title">Gradients</h2>
+      <p class="section-header__desc">Degrades tendance pour vos interfaces.</p>
+    </section>
+
+    <div class="palettes-grid">
+      <!-- Gradient 1 -->
+      <div class="gradient-card" onclick="copyGradient('linear-gradient(135deg, #667eea 0%, #764ba2 100%)')">
+        <div class="gradient-card__preview" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+        <div class="gradient-card__info">
+          <h4 class="gradient-card__name">Royal Purple</h4>
+          <p class="gradient-card__css">linear-gradient(135deg, #667eea, #764ba2)</p>
+        </div>
+      </div>
+
+      <!-- Gradient 2 -->
+      <div class="gradient-card" onclick="copyGradient('linear-gradient(135deg, #f093fb 0%, #f5576c 100%)')">
+        <div class="gradient-card__preview" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
+        <div class="gradient-card__info">
+          <h4 class="gradient-card__name">Pink Sunset</h4>
+          <p class="gradient-card__css">linear-gradient(135deg, #f093fb, #f5576c)</p>
+        </div>
+      </div>
+
+      <!-- Gradient 3 -->
+      <div class="gradient-card" onclick="copyGradient('linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)')">
+        <div class="gradient-card__preview" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
+        <div class="gradient-card__info">
+          <h4 class="gradient-card__name">Ocean Blue</h4>
+          <p class="gradient-card__css">linear-gradient(135deg, #4facfe, #00f2fe)</p>
+        </div>
+      </div>
+
+      <!-- Gradient 4 -->
+      <div class="gradient-card" onclick="copyGradient('linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)')">
+        <div class="gradient-card__preview" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);"></div>
+        <div class="gradient-card__info">
+          <h4 class="gradient-card__name">Fresh Mint</h4>
+          <p class="gradient-card__css">linear-gradient(135deg, #43e97b, #38f9d7)</p>
+        </div>
+      </div>
+
+      <!-- Gradient 5 -->
+      <div class="gradient-card" onclick="copyGradient('linear-gradient(135deg, #fa709a 0%, #fee140 100%)')">
+        <div class="gradient-card__preview" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);"></div>
+        <div class="gradient-card__info">
+          <h4 class="gradient-card__name">Summer Vibes</h4>
+          <p class="gradient-card__css">linear-gradient(135deg, #fa709a, #fee140)</p>
+        </div>
+      </div>
+
+      <!-- Gradient 6 -->
+      <div class="gradient-card" onclick="copyGradient('linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)')">
+        <div class="gradient-card__preview" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);"></div>
+        <div class="gradient-card__info">
+          <h4 class="gradient-card__name">Cotton Candy</h4>
+          <p class="gradient-card__css">linear-gradient(135deg, #a8edea, #fed6e3)</p>
+        </div>
+      </div>
+
+      <!-- Gradient 7 -->
+      <div class="gradient-card" onclick="copyGradient('linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)')">
+        <div class="gradient-card__preview" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);"></div>
+        <div class="gradient-card__info">
+          <h4 class="gradient-card__name">Dark Night</h4>
+          <p class="gradient-card__css">linear-gradient(135deg, #1a1a2e, #16213e, #0f3460)</p>
+        </div>
+      </div>
+
+      <!-- Gradient 8 -->
+      <div class="gradient-card" onclick="copyGradient('linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%)')">
+        <div class="gradient-card__preview" style="background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);"></div>
+        <div class="gradient-card__info">
+          <h4 class="gradient-card__name">Soft Rose</h4>
+          <p class="gradient-card__css">linear-gradient(135deg, #ff9a9e, #fecfef)</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Copy Toast -->
+    <div class="copy-toast" id="copyToast">
+      <span class="copy-toast__text">Copie : <span class="copy-toast__value" id="copiedValue"></span></span>
+    </div>
+  </main>
+  </div>
+
+  <script src="../assets/js/security-system.js"></script>
+  <script>
+    function copyColor(color) {
+      navigator.clipboard.writeText(color);
+      showCopyToast(color);
+    }
+
+    function copyGradient(gradient) {
+      navigator.clipboard.writeText(gradient);
+      showCopyToast(gradient.substring(0, 40) + '...');
+    }
+
+    function showCopyToast(value) {
+      const toast = document.getElementById('copyToast');
+      const valueSpan = document.getElementById('copiedValue');
+      valueSpan.textContent = value;
+      toast.classList.add('show');
+
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2000);
+    }
+  </script>
+</body>
+</html>

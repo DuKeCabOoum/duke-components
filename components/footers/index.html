@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Footers — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ===========================================
+       FOOTERS — Styles locaux
+       =========================================== */
+
+    .footers-list {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    .footer-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .footer-section__preview {
+      background: #0a0a0a;
+    }
+
+    .footer-section__info {
+      padding: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-section__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .footer-section__name {
+      font-weight: 600;
+      font-size: 1.25rem;
+    }
+
+    .footer-section__tags {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* ===========================================
+       FOOTER 1 — MULTI-COLONNES
+       =========================================== */
+
+    .footer-multi {
+      padding: 64px 48px 32px;
+      background: linear-gradient(180deg, #0f0f0f 0%, #0a0a0a 100%);
+    }
+
+    .footer-multi__grid {
+      display: grid;
+      grid-template-columns: 2fr repeat(3, 1fr);
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+
+    .footer-multi__brand {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .footer-multi__logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+
+    .footer-multi__logo span {
+      color: #6366f1;
+    }
+
+    .footer-multi__desc {
+      color: #71717a;
+      line-height: 1.6;
+      font-size: 0.9rem;
+      margin-bottom: 24px;
+      max-width: 300px;
+    }
+
+    .footer-multi__socials {
+      display: flex;
+      gap: 12px;
+    }
+
+    .footer-multi__social {
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #a1a1aa;
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+    }
+
+    .footer-multi__social:hover {
+      background: #6366f1;
+      border-color: #6366f1;
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    .footer-multi__column {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .footer-multi__title {
+      font-weight: 600;
+      color: #fff;
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .footer-multi__links {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-multi__link {
+      color: #71717a;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    .footer-multi__link:hover {
+      color: #fff;
+    }
+
+    .footer-multi__bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 32px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .footer-multi__copyright {
+      color: #52525b;
+      font-size: 0.85rem;
+    }
+
+    .footer-multi__legal {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-multi__legal-link {
+      color: #52525b;
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.2s;
+    }
+
+    .footer-multi__legal-link:hover {
+      color: #a1a1aa;
+    }
+
+    /* ===========================================
+       FOOTER 2 — AVEC NEWSLETTER
+       =========================================== */
+
+    .footer-newsletter {
+      padding: 48px;
+      background: linear-gradient(180deg, #0f0f0f 0%, #0a0a0a 100%);
+    }
+
+    .footer-newsletter__top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      margin-bottom: 32px;
+    }
+
+    .footer-newsletter__cta {
+      max-width: 400px;
+    }
+
+    .footer-newsletter__title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+
+    .footer-newsletter__subtitle {
+      color: #71717a;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .footer-newsletter__form {
+      display: flex;
+      gap: 12px;
+    }
+
+    .footer-newsletter__input {
+      flex: 1;
+      padding: 14px 18px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 0.9rem;
+    }
+
+    .footer-newsletter__input::placeholder {
+      color: #71717a;
+    }
+
+    .footer-newsletter__input:focus {
+      outline: none;
+      border-color: #6366f1;
+    }
+
+    .footer-newsletter__btn {
+      padding: 14px 24px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .footer-newsletter__btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+    }
+
+    .footer-newsletter__links-grid {
+      display: flex;
+      gap: 64px;
+    }
+
+    .footer-newsletter__column {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .footer-newsletter__column-title {
+      font-weight: 600;
+      color: #fff;
+      font-size: 0.85rem;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .footer-newsletter__link {
+      color: #71717a;
+      text-decoration: none;
+      font-size: 0.9rem;
+      padding: 6px 0;
+      transition: color 0.2s;
+    }
+
+    .footer-newsletter__link:hover {
+      color: #fff;
+    }
+
+    .footer-newsletter__bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-newsletter__logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .footer-newsletter__logo span {
+      color: #6366f1;
+    }
+
+    .footer-newsletter__copyright {
+      color: #52525b;
+      font-size: 0.85rem;
+    }
+
+    /* ===========================================
+       FOOTER 3 — MINIMAL
+       =========================================== */
+
+    .footer-minimal {
+      padding: 32px 48px;
+      background: #0a0a0a;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-minimal__left {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .footer-minimal__logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .footer-minimal__logo span {
+      color: #6366f1;
+    }
+
+    .footer-minimal__links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-minimal__link {
+      color: #71717a;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    .footer-minimal__link:hover {
+      color: #fff;
+    }
+
+    .footer-minimal__right {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .footer-minimal__copyright {
+      color: #52525b;
+      font-size: 0.85rem;
+    }
+
+    .footer-minimal__socials {
+      display: flex;
+      gap: 16px;
+    }
+
+    .footer-minimal__social {
+      color: #71717a;
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: color 0.2s;
+    }
+
+    .footer-minimal__social:hover {
+      color: #6366f1;
+    }
+
+    /* ===========================================
+       FOOTER 4 — CENTERED
+       =========================================== */
+
+    .footer-centered {
+      padding: 64px 48px;
+      background: linear-gradient(180deg, #0f0f0f 0%, #0a0a0a 100%);
+      text-align: center;
+    }
+
+    .footer-centered__logo {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 24px;
+    }
+
+    .footer-centered__logo span {
+      color: #6366f1;
+    }
+
+    .footer-centered__nav {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+
+    .footer-centered__link {
+      color: #a1a1aa;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+
+    .footer-centered__link:hover {
+      color: #fff;
+    }
+
+    .footer-centered__divider {
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #6366f1, transparent);
+      margin: 0 auto 32px;
+    }
+
+    .footer-centered__socials {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .footer-centered__social {
+      width: 44px;
+      height: 44px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #a1a1aa;
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+    }
+
+    .footer-centered__social:hover {
+      background: #6366f1;
+      border-color: #6366f1;
+      color: #fff;
+      transform: scale(1.1);
+    }
+
+    .footer-centered__copyright {
+      color: #52525b;
+      font-size: 0.85rem;
+    }
+
+    /* ===========================================
+       FOOTER 5 — DARK GRADIENT
+       =========================================== */
+
+    .footer-gradient {
+      padding: 64px 48px 32px;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .footer-gradient::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.5), transparent);
+    }
+
+    .footer-gradient__grid {
+      display: grid;
+      grid-template-columns: 1.5fr repeat(4, 1fr);
+      gap: 40px;
+      margin-bottom: 48px;
+    }
+
+    .footer-gradient__brand {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .footer-gradient__logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+
+    .footer-gradient__logo span {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .footer-gradient__desc {
+      color: #94a3b8;
+      line-height: 1.6;
+      font-size: 0.9rem;
+      max-width: 280px;
+    }
+
+    .footer-gradient__column {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .footer-gradient__title {
+      font-weight: 600;
+      color: #fff;
+      font-size: 0.85rem;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .footer-gradient__links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-gradient__link {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .footer-gradient__link::before {
+      content: "";
+      width: 0;
+      height: 1px;
+      background: #6366f1;
+      transition: width 0.2s;
+    }
+
+    .footer-gradient__link:hover {
+      color: #fff;
+    }
+
+    .footer-gradient__link:hover::before {
+      width: 8px;
+    }
+
+    .footer-gradient__bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 32px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-gradient__copyright {
+      color: #64748b;
+      font-size: 0.85rem;
+    }
+
+    .footer-gradient__socials {
+      display: flex;
+      gap: 12px;
+    }
+
+    .footer-gradient__social {
+      width: 36px;
+      height: 36px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #94a3b8;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .footer-gradient__social:hover {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: #fff;
+      transform: translateY(-3px);
+    }
+
+    /* ===========================================
+       CODE BLOCK
+       =========================================== */
+
+    .code-block {
+      background: #1a1a1a;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .code-block__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .code-block__lang {
+      font-size: 0.75rem;
+      color: #71717a;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .code-block__copy {
+      padding: 6px 12px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: #a1a1aa;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .code-block__copy:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+    }
+
+    .code-block__content {
+      padding: 16px;
+      overflow-x: auto;
+    }
+
+    .code-block__content pre {
+      margin: 0;
+      font-family: "Fira Code", monospace;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: #e0e0e0;
+    }
+
+    /* ===========================================
+       TAG
+       =========================================== */
+
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      font-size: 0.75rem;
+      color: #a1a1aa;
+    }
+
+    .tag--primary {
+      background: rgba(99, 102, 241, 0.15);
+      border-color: rgba(99, 102, 241, 0.3);
+      color: #818cf8;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar__logo">
+      <a href="../../index.html">Duke<span>UI</span></a>
+    </div>
+
+    <nav class="sidebar__nav">
+      <div class="sidebar__section">
+        <div class="sidebar__title">Composants</div>
+        <a href="../buttons/index.html" class="sidebar__link">Buttons</a>
+        <a href="../cards/index.html" class="sidebar__link">Cards</a>
+        <a href="../forms/index.html" class="sidebar__link">Forms</a>
+        <a href="../loaders/index.html" class="sidebar__link">Loaders</a>
+        <a href="../modals/index.html" class="sidebar__link">Modals</a>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__title">Effets</div>
+        <a href="../hovers/index.html" class="sidebar__link">Hovers</a>
+        <a href="../animations/index.html" class="sidebar__link">Animations</a>
+        <a href="../backgrounds/index.html" class="sidebar__link">Backgrounds</a>
+        <a href="../text-effects/index.html" class="sidebar__link">Text Effects</a>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__title">Sections</div>
+        <a href="../heroes/index.html" class="sidebar__link">Heroes</a>
+        <a href="../features/index.html" class="sidebar__link">Features</a>
+        <a href="../pricing/index.html" class="sidebar__link">Pricing</a>
+        <a href="../testimonials/index.html" class="sidebar__link">Testimonials</a>
+        <a href="index.html" class="sidebar__link sidebar__link--active">Footers</a>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__title">Générateurs</div>
+        <a href="../../generators/gradient/index.html" class="sidebar__link">Gradient</a>
+        <a href="../../generators/shadow/index.html" class="sidebar__link">Shadow</a>
+        <a href="../../generators/flexbox/index.html" class="sidebar__link">Flexbox</a>
+        <a href="../../generators/grid/index.html" class="sidebar__link">Grid</a>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    <header class="page-header">
+      <h1 class="page-header__title">Footers</h1>
+      <p class="page-header__desc">Pieds de page modernes avec liens, newsletter et réseaux sociaux</p>
+    </header>
+
+    <div class="footers-list">
+
+      <!-- ============================================
+           FOOTER 1 — MULTI-COLONNES
+           ============================================ -->
+      <section class="footer-section">
+        <div class="footer-section__preview">
+          <footer class="footer-multi">
+            <div class="footer-multi__grid">
+              <!-- Brand -->
+              <div class="footer-multi__brand">
+                <div class="footer-multi__logo">Duke<span>UI</span></div>
+                <p class="footer-multi__desc">La bibliothèque de composants UI la plus complète pour créer des interfaces modernes et performantes.</p>
+                <div class="footer-multi__socials">
+                  <a href="#" class="footer-multi__social">𝕏</a>
+                  <a href="#" class="footer-multi__social">in</a>
+                  <a href="#" class="footer-multi__social">◎</a>
+                  <a href="#" class="footer-multi__social">▶</a>
+                </div>
+              </div>
+
+              <!-- Produit -->
+              <div class="footer-multi__column">
+                <h4 class="footer-multi__title">Produit</h4>
+                <div class="footer-multi__links">
+                  <a href="#" class="footer-multi__link">Fonctionnalités</a>
+                  <a href="#" class="footer-multi__link">Tarifs</a>
+                  <a href="#" class="footer-multi__link">Changelog</a>
+                  <a href="#" class="footer-multi__link">Roadmap</a>
+                </div>
+              </div>
+
+              <!-- Ressources -->
+              <div class="footer-multi__column">
+                <h4 class="footer-multi__title">Ressources</h4>
+                <div class="footer-multi__links">
+                  <a href="#" class="footer-multi__link">Documentation</a>
+                  <a href="#" class="footer-multi__link">Tutoriels</a>
+                  <a href="#" class="footer-multi__link">Blog</a>
+                  <a href="#" class="footer-multi__link">Exemples</a>
+                </div>
+              </div>
+
+              <!-- Entreprise -->
+              <div class="footer-multi__column">
+                <h4 class="footer-multi__title">Entreprise</h4>
+                <div class="footer-multi__links">
+                  <a href="#" class="footer-multi__link">À propos</a>
+                  <a href="#" class="footer-multi__link">Carrières</a>
+                  <a href="#" class="footer-multi__link">Contact</a>
+                  <a href="#" class="footer-multi__link">Presse</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="footer-multi__bottom">
+              <p class="footer-multi__copyright">© 2026 DukeUI. Tous droits réservés.</p>
+              <div class="footer-multi__legal">
+                <a href="#" class="footer-multi__legal-link">Confidentialité</a>
+                <a href="#" class="footer-multi__legal-link">Conditions</a>
+                <a href="#" class="footer-multi__legal-link">Cookies</a>
+              </div>
+            </div>
+          </footer>
+        </div>
+
+        <div class="footer-section__info">
+          <div class="footer-section__header">
+            <h2 class="footer-section__name">Footer Multi-colonnes</h2>
+            <div class="footer-section__tags">
+              <span class="tag">CSS Grid</span>
+              <span class="tag tag--primary">Complet</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">HTML</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>&lt;footer class="footer-multi"&gt;
+  &lt;div class="footer-multi__grid"&gt;
+    &lt;div class="footer-multi__brand"&gt;
+      &lt;div class="footer-multi__logo"&gt;Duke&lt;span&gt;UI&lt;/span&gt;&lt;/div&gt;
+      &lt;p class="footer-multi__desc"&gt;Description...&lt;/p&gt;
+      &lt;div class="footer-multi__socials"&gt;...&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="footer-multi__column"&gt;
+      &lt;h4 class="footer-multi__title"&gt;Produit&lt;/h4&gt;
+      &lt;div class="footer-multi__links"&gt;
+        &lt;a href="#" class="footer-multi__link"&gt;Fonctionnalités&lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="footer-multi__bottom"&gt;...&lt;/div&gt;
+&lt;/footer&gt;</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================
+           FOOTER 2 — AVEC NEWSLETTER
+           ============================================ -->
+      <section class="footer-section">
+        <div class="footer-section__preview">
+          <footer class="footer-newsletter">
+            <div class="footer-newsletter__top">
+              <div class="footer-newsletter__cta">
+                <h3 class="footer-newsletter__title">Restez informé</h3>
+                <p class="footer-newsletter__subtitle">Recevez nos dernières mises à jour et nouveaux composants directement dans votre boîte mail.</p>
+                <form class="footer-newsletter__form">
+                  <input type="email" class="footer-newsletter__input" placeholder="votre@email.com">
+                  <button type="submit" class="footer-newsletter__btn">S'inscrire</button>
+                </form>
+              </div>
+
+              <div class="footer-newsletter__links-grid">
+                <div class="footer-newsletter__column">
+                  <h4 class="footer-newsletter__column-title">Produit</h4>
+                  <a href="#" class="footer-newsletter__link">Composants</a>
+                  <a href="#" class="footer-newsletter__link">Templates</a>
+                  <a href="#" class="footer-newsletter__link">Tarifs</a>
+                </div>
+                <div class="footer-newsletter__column">
+                  <h4 class="footer-newsletter__column-title">Support</h4>
+                  <a href="#" class="footer-newsletter__link">Documentation</a>
+                  <a href="#" class="footer-newsletter__link">FAQ</a>
+                  <a href="#" class="footer-newsletter__link">Contact</a>
+                </div>
+                <div class="footer-newsletter__column">
+                  <h4 class="footer-newsletter__column-title">Légal</h4>
+                  <a href="#" class="footer-newsletter__link">Confidentialité</a>
+                  <a href="#" class="footer-newsletter__link">CGU</a>
+                  <a href="#" class="footer-newsletter__link">Licences</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="footer-newsletter__bottom">
+              <div class="footer-newsletter__logo">Duke<span>UI</span></div>
+              <p class="footer-newsletter__copyright">© 2026 DukeUI. Tous droits réservés.</p>
+            </div>
+          </footer>
+        </div>
+
+        <div class="footer-section__info">
+          <div class="footer-section__header">
+            <h2 class="footer-section__name">Footer avec Newsletter</h2>
+            <div class="footer-section__tags">
+              <span class="tag">CTA</span>
+              <span class="tag tag--primary">Conversion</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">HTML</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>&lt;form class="footer-newsletter__form"&gt;
+  &lt;input type="email" class="footer-newsletter__input" placeholder="votre@email.com"&gt;
+  &lt;button type="submit" class="footer-newsletter__btn"&gt;S'inscrire&lt;/button&gt;
+&lt;/form&gt;</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================
+           FOOTER 3 — MINIMAL
+           ============================================ -->
+      <section class="footer-section">
+        <div class="footer-section__preview">
+          <footer class="footer-minimal">
+            <div class="footer-minimal__left">
+              <div class="footer-minimal__logo">Duke<span>UI</span></div>
+              <nav class="footer-minimal__links">
+                <a href="#" class="footer-minimal__link">Produit</a>
+                <a href="#" class="footer-minimal__link">Tarifs</a>
+                <a href="#" class="footer-minimal__link">Docs</a>
+                <a href="#" class="footer-minimal__link">Blog</a>
+                <a href="#" class="footer-minimal__link">Contact</a>
+              </nav>
+            </div>
+            <div class="footer-minimal__right">
+              <p class="footer-minimal__copyright">© 2026 DukeUI</p>
+              <div class="footer-minimal__socials">
+                <a href="#" class="footer-minimal__social">𝕏</a>
+                <a href="#" class="footer-minimal__social">◎</a>
+                <a href="#" class="footer-minimal__social">▶</a>
+              </div>
+            </div>
+          </footer>
+        </div>
+
+        <div class="footer-section__info">
+          <div class="footer-section__header">
+            <h2 class="footer-section__name">Footer Minimal</h2>
+            <div class="footer-section__tags">
+              <span class="tag">Simple</span>
+              <span class="tag tag--primary">Clean</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">HTML</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>&lt;footer class="footer-minimal"&gt;
+  &lt;div class="footer-minimal__left"&gt;
+    &lt;div class="footer-minimal__logo"&gt;Duke&lt;span&gt;UI&lt;/span&gt;&lt;/div&gt;
+    &lt;nav class="footer-minimal__links"&gt;
+      &lt;a href="#"&gt;Produit&lt;/a&gt;
+      &lt;a href="#"&gt;Tarifs&lt;/a&gt;
+    &lt;/nav&gt;
+  &lt;/div&gt;
+  &lt;div class="footer-minimal__right"&gt;
+    &lt;p&gt;© 2026 DukeUI&lt;/p&gt;
+    &lt;div class="footer-minimal__socials"&gt;...&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/footer&gt;</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================
+           FOOTER 4 — CENTERED
+           ============================================ -->
+      <section class="footer-section">
+        <div class="footer-section__preview">
+          <footer class="footer-centered">
+            <div class="footer-centered__logo">Duke<span>UI</span></div>
+            <nav class="footer-centered__nav">
+              <a href="#" class="footer-centered__link">Accueil</a>
+              <a href="#" class="footer-centered__link">Composants</a>
+              <a href="#" class="footer-centered__link">Générateurs</a>
+              <a href="#" class="footer-centered__link">Documentation</a>
+              <a href="#" class="footer-centered__link">Blog</a>
+              <a href="#" class="footer-centered__link">Contact</a>
+            </nav>
+            <div class="footer-centered__divider"></div>
+            <div class="footer-centered__socials">
+              <a href="#" class="footer-centered__social">𝕏</a>
+              <a href="#" class="footer-centered__social">in</a>
+              <a href="#" class="footer-centered__social">◎</a>
+              <a href="#" class="footer-centered__social">▶</a>
+            </div>
+            <p class="footer-centered__copyright">© 2026 DukeUI. Fait avec ❤️ par Julien</p>
+          </footer>
+        </div>
+
+        <div class="footer-section__info">
+          <div class="footer-section__header">
+            <h2 class="footer-section__name">Footer Centered</h2>
+            <div class="footer-section__tags">
+              <span class="tag">Centré</span>
+              <span class="tag tag--primary">Élégant</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">HTML</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>&lt;footer class="footer-centered"&gt;
+  &lt;div class="footer-centered__logo"&gt;Duke&lt;span&gt;UI&lt;/span&gt;&lt;/div&gt;
+  &lt;nav class="footer-centered__nav"&gt;
+    &lt;a href="#" class="footer-centered__link"&gt;Accueil&lt;/a&gt;
+    &lt;a href="#" class="footer-centered__link"&gt;Composants&lt;/a&gt;
+  &lt;/nav&gt;
+  &lt;div class="footer-centered__divider"&gt;&lt;/div&gt;
+  &lt;div class="footer-centered__socials"&gt;...&lt;/div&gt;
+  &lt;p class="footer-centered__copyright"&gt;© 2026 DukeUI&lt;/p&gt;
+&lt;/footer&gt;</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================
+           FOOTER 5 — DARK GRADIENT
+           ============================================ -->
+      <section class="footer-section">
+        <div class="footer-section__preview">
+          <footer class="footer-gradient">
+            <div class="footer-gradient__grid">
+              <!-- Brand -->
+              <div class="footer-gradient__brand">
+                <div class="footer-gradient__logo">Duke<span>UI</span></div>
+                <p class="footer-gradient__desc">Construisez des interfaces exceptionnelles avec notre collection de composants premium.</p>
+              </div>
+
+              <!-- Produit -->
+              <div class="footer-gradient__column">
+                <h4 class="footer-gradient__title">Produit</h4>
+                <div class="footer-gradient__links">
+                  <a href="#" class="footer-gradient__link">Composants</a>
+                  <a href="#" class="footer-gradient__link">Générateurs</a>
+                  <a href="#" class="footer-gradient__link">Templates</a>
+                  <a href="#" class="footer-gradient__link">Tarifs</a>
+                </div>
+              </div>
+
+              <!-- Ressources -->
+              <div class="footer-gradient__column">
+                <h4 class="footer-gradient__title">Ressources</h4>
+                <div class="footer-gradient__links">
+                  <a href="#" class="footer-gradient__link">Documentation</a>
+                  <a href="#" class="footer-gradient__link">Guides</a>
+                  <a href="#" class="footer-gradient__link">Blog</a>
+                  <a href="#" class="footer-gradient__link">Changelog</a>
+                </div>
+              </div>
+
+              <!-- Communauté -->
+              <div class="footer-gradient__column">
+                <h4 class="footer-gradient__title">Communauté</h4>
+                <div class="footer-gradient__links">
+                  <a href="#" class="footer-gradient__link">Discord</a>
+                  <a href="#" class="footer-gradient__link">GitHub</a>
+                  <a href="#" class="footer-gradient__link">Twitter</a>
+                  <a href="#" class="footer-gradient__link">YouTube</a>
+                </div>
+              </div>
+
+              <!-- Légal -->
+              <div class="footer-gradient__column">
+                <h4 class="footer-gradient__title">Légal</h4>
+                <div class="footer-gradient__links">
+                  <a href="#" class="footer-gradient__link">Confidentialité</a>
+                  <a href="#" class="footer-gradient__link">Conditions</a>
+                  <a href="#" class="footer-gradient__link">Licences</a>
+                  <a href="#" class="footer-gradient__link">Cookies</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="footer-gradient__bottom">
+              <p class="footer-gradient__copyright">© 2026 DukeUI. Tous droits réservés.</p>
+              <div class="footer-gradient__socials">
+                <a href="#" class="footer-gradient__social">𝕏</a>
+                <a href="#" class="footer-gradient__social">in</a>
+                <a href="#" class="footer-gradient__social">◎</a>
+                <a href="#" class="footer-gradient__social">▶</a>
+              </div>
+            </div>
+          </footer>
+        </div>
+
+        <div class="footer-section__info">
+          <div class="footer-section__header">
+            <h2 class="footer-section__name">Footer Dark Gradient</h2>
+            <div class="footer-section__tags">
+              <span class="tag">Gradient</span>
+              <span class="tag tag--primary">Premium</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.footer-gradient {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  position: relative;
+}
+
+.footer-gradient::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.5), transparent);
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+  </div>
+
+  <script src="../../assets/js/main.js"></script>
+  <script>
+    function copyCode(btn) {
+      const codeBlock = btn.closest('.code-block');
+      const code = codeBlock.querySelector('pre').textContent;
+
+      navigator.clipboard.writeText(code).then(() => {
+        const originalText = btn.textContent;
+        btn.textContent = 'Copié !';
+        btn.style.color = '#22c55e';
+
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.style.color = '';
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>

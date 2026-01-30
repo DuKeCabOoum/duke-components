@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hover Effects — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ===========================================
+       HOVER EFFECTS — Styles locaux
+       =========================================== */
+
+    .hovers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .hover-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .hover-card__preview {
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #0f0f0f;
+      padding: 24px;
+    }
+
+    .hover-card__info {
+      padding: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .hover-card__name {
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .hover-card__tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    /* ===========================================
+       HOVER BOX — Élément de base pour les démos
+       =========================================== */
+
+    .hover-box {
+      width: 120px;
+      height: 120px;
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    /* ===========================================
+       1. SCALE EFFECTS
+       =========================================== */
+
+    .hover-scale:hover {
+      transform: scale(1.1);
+    }
+
+    .hover-scale-down:hover {
+      transform: scale(0.95);
+    }
+
+    .hover-scale-bounce {
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .hover-scale-bounce:hover {
+      transform: scale(1.15);
+    }
+
+    /* ===========================================
+       2. ROTATE EFFECTS
+       =========================================== */
+
+    .hover-rotate:hover {
+      transform: rotate(10deg);
+    }
+
+    .hover-rotate-3d:hover {
+      transform: perspective(500px) rotateY(15deg);
+    }
+
+    .hover-flip {
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+    }
+    .hover-flip:hover {
+      transform: rotateY(180deg);
+    }
+
+    /* ===========================================
+       3. TRANSLATE EFFECTS
+       =========================================== */
+
+    .hover-lift:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(99, 102, 241, 0.3);
+    }
+
+    .hover-slide-right:hover {
+      transform: translateX(10px);
+    }
+
+    .hover-float {
+      animation: none;
+    }
+    .hover-float:hover {
+      animation: float 2s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* ===========================================
+       4. SHADOW EFFECTS
+       =========================================== */
+
+    .hover-shadow:hover {
+      box-shadow: 0 10px 40px rgba(99, 102, 241, 0.4);
+    }
+
+    .hover-glow:hover {
+      box-shadow: 0 0 30px rgba(99, 102, 241, 0.6),
+                  0 0 60px rgba(99, 102, 241, 0.3);
+    }
+
+    .hover-neon {
+      box-shadow: 0 0 5px rgba(99, 102, 241, 0.5);
+    }
+    .hover-neon:hover {
+      box-shadow: 0 0 10px rgba(99, 102, 241, 0.8),
+                  0 0 20px rgba(99, 102, 241, 0.6),
+                  0 0 40px rgba(99, 102, 241, 0.4),
+                  0 0 80px rgba(99, 102, 241, 0.2);
+    }
+
+    /* ===========================================
+       5. BORDER EFFECTS
+       =========================================== */
+
+    .hover-border {
+      border: 2px solid transparent;
+    }
+    .hover-border:hover {
+      border-color: #fff;
+    }
+
+    .hover-border-gradient {
+      position: relative;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      z-index: 1;
+    }
+    .hover-border-gradient::before {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      background: linear-gradient(135deg, #6366f1, #ec4899, #8b5cf6);
+      border-radius: 14px;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .hover-border-gradient:hover::before {
+      opacity: 1;
+    }
+
+    .hover-outline {
+      outline: 3px solid transparent;
+      outline-offset: 0;
+    }
+    .hover-outline:hover {
+      outline-color: #6366f1;
+      outline-offset: 4px;
+    }
+
+    /* ===========================================
+       6. COLOR EFFECTS
+       =========================================== */
+
+    .hover-color-shift:hover {
+      background: linear-gradient(135deg, #ec4899 0%, #f59e0b 100%);
+    }
+
+    .hover-grayscale {
+      filter: grayscale(100%);
+    }
+    .hover-grayscale:hover {
+      filter: grayscale(0%);
+    }
+
+    .hover-brightness:hover {
+      filter: brightness(1.2);
+    }
+
+    /* ===========================================
+       7. OVERLAY EFFECTS
+       =========================================== */
+
+    .hover-overlay {
+      position: relative;
+      overflow: hidden;
+    }
+    .hover-overlay::after {
+      content: 'HOVER';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .hover-overlay:hover::after {
+      opacity: 1;
+    }
+
+    .hover-shine {
+      position: relative;
+      overflow: hidden;
+    }
+    .hover-shine::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+      );
+      transition: left 0.5s ease;
+    }
+    .hover-shine:hover::before {
+      left: 100%;
+    }
+
+    .hover-ripple {
+      position: relative;
+      overflow: hidden;
+    }
+    .hover-ripple::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.4s ease, height 0.4s ease;
+    }
+    .hover-ripple:hover::after {
+      width: 200px;
+      height: 200px;
+    }
+
+    /* ===========================================
+       8. TEXT EFFECTS
+       =========================================== */
+
+    .hover-text-slide {
+      position: relative;
+      overflow: hidden;
+    }
+    .hover-text-slide span {
+      display: block;
+      transition: transform 0.3s ease;
+    }
+    .hover-text-slide::after {
+      content: 'NICE!';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, 100%);
+      transition: transform 0.3s ease;
+    }
+    .hover-text-slide:hover span {
+      transform: translateY(-100%);
+    }
+    .hover-text-slide:hover::after {
+      transform: translate(-50%, -50%);
+    }
+
+    /* ===========================================
+       9. MORPH EFFECTS
+       =========================================== */
+
+    .hover-morph:hover {
+      border-radius: 50%;
+    }
+
+    .hover-morph-blob {
+      border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    }
+    .hover-morph-blob:hover {
+      border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+    }
+
+    /* ===========================================
+       10. COMBINED EFFECTS
+       =========================================== */
+
+    .hover-combined:hover {
+      transform: translateY(-8px) scale(1.05);
+      box-shadow: 0 20px 40px rgba(99, 102, 241, 0.4);
+      filter: brightness(1.1);
+    }
+
+    .hover-ultimate {
+      position: relative;
+      overflow: hidden;
+    }
+    .hover-ultimate::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+      );
+    }
+    .hover-ultimate:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 15px 35px rgba(99, 102, 241, 0.4);
+    }
+    .hover-ultimate:hover::before {
+      animation: shine 0.6s ease;
+    }
+    @keyframes shine {
+      to { left: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+      <div class="sidebar__logo">
+        <a href="../../index.html"><span>Duke</span>-components</a>
+      </div>
+
+      <!-- Admin Toggle -->
+      <div class="admin-toggle">
+        <span class="admin-toggle__label">Mode Admin</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="admin-toggle">
+          <span class="toggle-switch__slider"></span>
+        </label>
+      </div>
+
+      <!-- Components -->
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Composants</h3>
+        <ul class="sidebar__nav">
+          <li><a href="../buttons/index.html" class="sidebar__link">
+            <span>🔘</span> Buttons
+          </a></li>
+          <li><a href="../cards/index.html" class="sidebar__link">
+            <span>🃏</span> Cards
+          </a></li>
+          <li><a href="../forms/index.html" class="sidebar__link">
+            <span>📝</span> Forms
+          </a></li>
+          <li><a href="../loaders/index.html" class="sidebar__link">
+            <span>⏳</span> Loaders
+          </a></li>
+          <li><a href="index.html" class="sidebar__link sidebar__link--active">
+            <span>👆</span> Hovers
+          </a></li>
+          <li><a href="../animations/index.html" class="sidebar__link">
+            <span>✨</span> Animations
+          </a></li>
+        </ul>
+      </div>
+
+      <!-- Generators -->
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Générateurs</h3>
+        <ul class="sidebar__nav">
+          <li><a href="../../generators/gradient/index.html" class="sidebar__link">
+            <span>🌈</span> Gradient
+          </a></li>
+          <li><a href="../../generators/shadow/index.html" class="sidebar__link">
+            <span>🌑</span> Shadow
+          </a></li>
+          <li><a href="../../generators/flexbox/index.html" class="sidebar__link">
+            <span>📐</span> Flexbox
+          </a></li>
+          <li><a href="../../generators/grid/index.html" class="sidebar__link">
+            <span>🔲</span> Grid
+          </a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main">
+      <header class="main__header">
+        <h1 class="main__title">👆 Hover Effects</h1>
+        <p class="main__subtitle">Collection d'effets au survol — Passe ta souris pour voir la magie !</p>
+      </header>
+
+      <!-- Section: Scale -->
+      <section class="component-section">
+        <h2>Scale Effects</h2>
+        <div class="hovers-grid">
+          <!-- Scale Up -->
+          <article class="hover-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="hover-card__preview">
+              <div class="hover-box hover-scale">Scale Up</div>
+            </div>
+            <div class="hover-card__info">
+              <h3 class="hover-card__name">Scale Up</h3>
+              <div class="hover-card__tags">
+                <span class="tag tag--primary">scale</span>
+                <span class="tag">simple</span>
+              </div>
+              <div class="code-viewer">
+                <div class="code-viewer__header">
+                  <span>CSS</span>
+                  <button class="copy-btn" data-target="code-scale-up">Copier</button>
+                </div>
+                <div class="code-viewer__content">
+                  <pre><code id="code-scale-up">.hover-scale:hover {
+  transform: scale(1.1);
+}</code></pre>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Scale Bounce -->
+          <article class="hover-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="hover-card__preview">
+              <div class="hover-box hover-scale-bounce">Bounce</div>
+            </div>
+            <div class="hover-card__info">
+              <h3 class="hover-card__name">Scale Bounce</h3>
+              <div class="hover-card__tags">
+                <span class="tag tag--primary">scale</span>
+                <span class="tag">cubic-bezier</span>
+              </div>
+              <div class="code-viewer">
+                <div class="code-viewer__header">
+                  <span>CSS</span>
+                  <button class="copy-btn" data-target="code-scale-bounce">Copier</button>
+                </div>
+                <div class="code-viewer__content">
+                  <pre><code id="code-scale-bounce">.hover-scale-bounce {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.hover-scale-bounce:hover {
+  transform: scale(1.15);
+}</code></pre>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Lift -->
+          <article class="hover-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="hover-card__preview">
+              <div class="hover-box hover-lift">Lift</div>
+            </div>
+            <div class="hover-card__info">
+              <h3 class="hover-card__name">Lift Effect</h3>
+              <div class="hover-card__tags">
+                <span class="tag tag--primary">translate</span>
+                <span class="tag">shadow</span>
+              </div>
+              <div class="code-viewer">
+                <div class="code-viewer__header">
+                  <span>CSS</span>
+                  <button class="copy-btn" data-target="code-lift">Copier</button>
+                </div>
+                <div class="code-viewer__content">
+                  <pre><code id="code-lift">.hover-lift:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(99, 102, 241, 0.3);
+}</code></pre>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Section: Glow & Shadow -->
+      <section class="component-section">
+        <h2>Glow & Shadow Effects</h2>
+        <div class="hovers-grid">
+          <!-- Shadow -->
+          <article class="hover-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="hover-card__preview">
+              <div class="hover-box hover-shadow">Shadow</div>
+            </div>
+            <div class="hover-card__info">
+              <h3 class="hover-card__name">Shadow</h3>
+              <div class="hover-card__tags">
+                <span class="tag tag--primary">shadow</span>
+              </div>
+              <div class="code-viewer">
+                <div class="code-viewer__header">
+                  <span>CSS</span>
+                  <button class="copy-btn" data-target="code-shadow">Copier</button>
+                </div>
+                <div class="code-viewer__content">
+                  <pre><code id="code-shadow">.hover-shadow:hover {
+  box-shadow: 0 10px 40px rgba(99, 102, 241, 0.4);
+}</code></pre>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Glow -->
+          <article class="hover-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="hover-card__preview">
+              <div class="hover-box hover-glow">Glow</div>
+            </div>
+            <div class="hover-card__info">
+              <h3 class="hover-card__name">Glow</h3>
+              <div class="hover-card__tags">
+                <span class="tag tag--primary">glow</span>
+                <span class="tag">shadow</span>
+              </div>
+              <div class="code-viewer">
+                <div class="code-viewer__header">
+                  <span>CSS</span>
+                  <button class="copy-btn" data-target="code-glow">Copier</button>
+                </div>
+                <div class="code-viewer__content">
+                  <pre><code id="code-glow">.hover-glow:hover {
+  box-shadow: 0 0 30px rgba(99, 102, 241, 0.6),
+              0 0 60px rgba(99, 102, 241, 0.3);
+}</code></pre>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Neon -->
+          <article class="hover-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="hover-card__preview">
+              <div class="hover-box hover-neon">Neon</div>
+            </div>
+            <div class="hover-card__info">
+              <h3 class="hover-card__name">Neon Glow</h3>
+              <div class="hover-card__tags">
+                <span class="tag tag--primary">neon</span>
+                <span class="tag">glow</span>
+              </div>
+              <div class="code-viewer">
+                <div class="code-viewer__header">
+                  <span>CSS</span>
+                  <button class="copy-btn" data-target="code-neon">Copier</button>
+                </div>
+                <div class="code-viewer__content">
+                  <pre><code id="code-neon">.hover-neon {
+  box-shadow: 0 0 5px rgba(99, 102, 241, 0.5);
+}
+.hover-neon:hover {
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.8),
+              0 0 20px rgba(99, 102, 241, 0.6),
+              0 0 40px rgba(99, 102, 241, 0.4),
+              0 0 80px rgba(99, 102, 241, 0.2);
+}</code></pre>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Section: Overlay Effects -->
+      <section class="component-section">
+        <h2>Overlay Effects</h2>
+        <div class="hovers-grid">
+          <!-- Shine -->
+          <article class="hover-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="hover-card__preview">
+              <div class="hover-box hover-shine"><span>Shine</span></div>
+            </div>
+            <div class="hover-card__info">
+              <h3 class="hover-card__name">Shine Effect</h3>
+              <div class="hover-card__tags">
+                <span class="tag tag--primary">shine</span>
+                <span class="tag">pseudo</span>
+              </div>
+              <div class="code-viewer">
+                <div class="code-viewer__header">
+                  <span>CSS</span>
+                  <button class="copy-btn" data-target="code-shine">Copier</button>
+                </div>
+                <div class="code-viewer__content">
+                  <pre><code id="code-shine">.hover-shine {
+  position: relative;
+  overflow: hidden;
+}
+.hover-shine::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+.hover-shine:hover::before {
+  left: 100%;
+}</code></pre>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Overlay -->
+          <article class="hover-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="hover-card__preview">
+              <div class="hover-box hover-overlay"><span>Overlay</span></div>
+            </div>
+            <div class="hover-card__info">
+              <h3 class="hover-card__name">Overlay</h3>
+              <div class="hover-card__tags">
+                <span class="tag tag--primary">overlay</span>
+                <span class="tag">pseudo</span>
+              </div>
+              <div class="code-viewer">
+                <div class="code-viewer__header">
+                  <span>CSS</span>
+                  <button class="copy-btn" data-target="code-overlay">Copier</button>
+                </div>
+                <div class="code-viewer__content">
+                  <pre><code id="code-overlay">.hover-overlay {
+  position: relative;
+  overflow: hidden;
+}
+.hover-overlay::after {
+  content: 'HOVER';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.hover-overlay:hover::after {
+  opacity: 1;
+}</code></pre>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Ripple -->
+          <article class="hover-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="hover-card__preview">
+              <div class="hover-box hover-ripple"><span>Ripple</span></div>
+            </div>
+            <div class="hover-card__info">
+              <h3 class="hover-card__name">Ripple Effect</h3>
+              <div class="hover-card__tags">
+                <span class="tag tag--primary">ripple</span>
+                <span class="tag">pseudo</span>
+              </div>
+              <div class="code-viewer">
+                <div class="code-viewer__header">
+                  <span>CSS</span>
+                  <button class="copy-btn" data-target="code-ripple">Copier</button>
+                </div>
+                <div class="code-viewer__content">
+                  <pre><code id="code-ripple">.hover-ripple {
+  position: relative;
+  overflow: hidden;
+}
+.hover-ripple::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.4s, height 0.4s;
+}
+.hover-ripple:hover::after {
+  width: 200px;
+  height: 200px;
+}</code></pre>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Section: Morph & Combined -->
+      <section class="component-section">
+        <h2>Morph & Combined</h2>
+        <div class="hovers-grid">
+          <!-- Morph Circle -->
+          <article class="hover-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="hover-card__preview">
+              <div class="hover-box hover-morph">Morph</div>
+            </div>
+            <div class="hover-card__info">
+              <h3 class="hover-card__name">Morph Circle</h3>
+              <div class="hover-card__tags">
+                <span class="tag tag--primary">morph</span>
+                <span class="tag">border-radius</span>
+              </div>
+              <div class="code-viewer">
+                <div class="code-viewer__header">
+                  <span>CSS</span>
+                  <button class="copy-btn" data-target="code-morph">Copier</button>
+                </div>
+                <div class="code-viewer__content">
+                  <pre><code id="code-morph">.hover-morph:hover {
+  border-radius: 50%;
+}</code></pre>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Morph Blob -->
+          <article class="hover-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="hover-card__preview">
+              <div class="hover-box hover-morph-blob">Blob</div>
+            </div>
+            <div class="hover-card__info">
+              <h3 class="hover-card__name">Morph Blob</h3>
+              <div class="hover-card__tags">
+                <span class="tag tag--primary">blob</span>
+                <span class="tag">organic</span>
+              </div>
+              <div class="code-viewer">
+                <div class="code-viewer__header">
+                  <span>CSS</span>
+                  <button class="copy-btn" data-target="code-blob">Copier</button>
+                </div>
+                <div class="code-viewer__content">
+                  <pre><code id="code-blob">.hover-morph-blob {
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+}
+.hover-morph-blob:hover {
+  border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+}</code></pre>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Ultimate -->
+          <article class="hover-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="hover-card__preview">
+              <div class="hover-box hover-ultimate">Ultimate</div>
+            </div>
+            <div class="hover-card__info">
+              <h3 class="hover-card__name">Ultimate Effect</h3>
+              <div class="hover-card__tags">
+                <span class="tag tag--primary">combined</span>
+                <span class="tag">premium</span>
+              </div>
+              <div class="code-viewer">
+                <div class="code-viewer__header">
+                  <span>CSS</span>
+                  <button class="copy-btn" data-target="code-ultimate">Copier</button>
+                </div>
+                <div class="code-viewer__content">
+                  <pre><code id="code-ultimate">.hover-ultimate {
+  position: relative;
+  overflow: hidden;
+}
+.hover-ultimate::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+}
+.hover-ultimate:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 15px 35px rgba(99, 102, 241, 0.4);
+}
+.hover-ultimate:hover::before {
+  animation: shine 0.6s ease;
+}
+@keyframes shine {
+  to { left: 100%; }
+}</code></pre>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="../../assets/js/copy-code.js"></script>
+  <script src="../../assets/js/security-system.js"></script>
+</body>
+</html>

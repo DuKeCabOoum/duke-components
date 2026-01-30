@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Backgrounds — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ===========================================
+       BACKGROUNDS — Styles locaux
+       =========================================== */
+
+    .backgrounds-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 24px;
+    }
+
+    .bg-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .bg-card__preview {
+      height: 250px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bg-card__info {
+      padding: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .bg-card__name {
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .bg-card__tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .component-section {
+      margin-bottom: 48px;
+    }
+
+    .component-section h2 {
+      margin-bottom: 24px;
+      font-size: 1.5rem;
+      color: var(--text-primary);
+    }
+
+    /* ===========================================
+       1. ANIMATED GRADIENTS
+       =========================================== */
+
+    .bg-gradient-animated {
+      background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .bg-gradient-rotate {
+      background: conic-gradient(from 0deg, #6366f1, #ec4899, #f59e0b, #10b981, #6366f1);
+      animation: gradientRotate 4s linear infinite;
+    }
+    @keyframes gradientRotate {
+      to { background: conic-gradient(from 360deg, #6366f1, #ec4899, #f59e0b, #10b981, #6366f1); }
+    }
+
+    .bg-gradient-pulse {
+      background: radial-gradient(circle at center, #6366f1 0%, #0f0f0f 70%);
+      animation: gradientPulse 3s ease-in-out infinite;
+    }
+    @keyframes gradientPulse {
+      0%, 100% { background: radial-gradient(circle at center, #6366f1 0%, #0f0f0f 70%); }
+      50% { background: radial-gradient(circle at center, #6366f1 0%, #0f0f0f 50%); }
+    }
+
+    /* ===========================================
+       2. MESH GRADIENTS
+       =========================================== */
+
+    .bg-mesh {
+      background-color: #0f0f0f;
+      background-image:
+        radial-gradient(at 40% 20%, #6366f1 0px, transparent 50%),
+        radial-gradient(at 80% 0%, #ec4899 0px, transparent 50%),
+        radial-gradient(at 0% 50%, #10b981 0px, transparent 50%),
+        radial-gradient(at 80% 50%, #f59e0b 0px, transparent 50%),
+        radial-gradient(at 0% 100%, #6366f1 0px, transparent 50%);
+    }
+
+    .bg-mesh-animated {
+      background-color: #0f0f0f;
+      background-image:
+        radial-gradient(at 40% 20%, #6366f1 0px, transparent 50%),
+        radial-gradient(at 80% 0%, #ec4899 0px, transparent 50%),
+        radial-gradient(at 0% 50%, #10b981 0px, transparent 50%);
+      animation: meshMove 10s ease-in-out infinite;
+    }
+    @keyframes meshMove {
+      0%, 100% {
+        background-image:
+          radial-gradient(at 40% 20%, #6366f1 0px, transparent 50%),
+          radial-gradient(at 80% 0%, #ec4899 0px, transparent 50%),
+          radial-gradient(at 0% 50%, #10b981 0px, transparent 50%);
+      }
+      50% {
+        background-image:
+          radial-gradient(at 60% 80%, #6366f1 0px, transparent 50%),
+          radial-gradient(at 20% 100%, #ec4899 0px, transparent 50%),
+          radial-gradient(at 100% 50%, #10b981 0px, transparent 50%);
+      }
+    }
+
+    /* ===========================================
+       3. PATTERNS
+       =========================================== */
+
+    .bg-dots {
+      background-color: #0f0f0f;
+      background-image: radial-gradient(#333 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    .bg-grid {
+      background-color: #0f0f0f;
+      background-image:
+        linear-gradient(rgba(99, 102, 241, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99, 102, 241, 0.1) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    .bg-grid-glow {
+      background-color: #0f0f0f;
+      background-image:
+        linear-gradient(rgba(99, 102, 241, 0.2) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99, 102, 241, 0.2) 1px, transparent 1px);
+      background-size: 40px 40px;
+      position: relative;
+    }
+    .bg-grid-glow::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+    }
+
+    .bg-stripes {
+      background: repeating-linear-gradient(
+        45deg,
+        #0f0f0f,
+        #0f0f0f 10px,
+        #1a1a1a 10px,
+        #1a1a1a 20px
+      );
+    }
+
+    .bg-checkerboard {
+      background-color: #0f0f0f;
+      background-image:
+        linear-gradient(45deg, #1a1a1a 25%, transparent 25%),
+        linear-gradient(-45deg, #1a1a1a 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #1a1a1a 75%),
+        linear-gradient(-45deg, transparent 75%, #1a1a1a 75%);
+      background-size: 40px 40px;
+      background-position: 0 0, 0 20px, 20px -20px, -20px 0px;
+    }
+
+    /* ===========================================
+       4. NOISE & TEXTURE
+       =========================================== */
+
+    .bg-noise {
+      background-color: #0f0f0f;
+      position: relative;
+    }
+    .bg-noise::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      opacity: 0.05;
+    }
+
+    /* ===========================================
+       5. ANIMATED SHAPES
+       =========================================== */
+
+    .bg-floating-shapes {
+      background: #0f0f0f;
+      position: relative;
+      overflow: hidden;
+    }
+    .bg-floating-shapes .shape {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.3;
+      animation: floatShape 20s ease-in-out infinite;
+    }
+    .bg-floating-shapes .shape:nth-child(1) {
+      width: 80px;
+      height: 80px;
+      background: #6366f1;
+      top: 20%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+    .bg-floating-shapes .shape:nth-child(2) {
+      width: 60px;
+      height: 60px;
+      background: #ec4899;
+      top: 60%;
+      left: 70%;
+      animation-delay: -5s;
+    }
+    .bg-floating-shapes .shape:nth-child(3) {
+      width: 100px;
+      height: 100px;
+      background: #10b981;
+      top: 80%;
+      left: 30%;
+      animation-delay: -10s;
+    }
+    @keyframes floatShape {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      25% { transform: translate(30px, -30px) rotate(90deg); }
+      50% { transform: translate(-20px, 20px) rotate(180deg); }
+      75% { transform: translate(20px, 30px) rotate(270deg); }
+    }
+
+    .bg-blobs {
+      background: #0f0f0f;
+      position: relative;
+      overflow: hidden;
+    }
+    .bg-blobs .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.5;
+      animation: blobMove 15s ease-in-out infinite;
+    }
+    .bg-blobs .blob:nth-child(1) {
+      width: 200px;
+      height: 200px;
+      background: #6366f1;
+      top: -50px;
+      left: -50px;
+    }
+    .bg-blobs .blob:nth-child(2) {
+      width: 150px;
+      height: 150px;
+      background: #ec4899;
+      bottom: -30px;
+      right: -30px;
+      animation-delay: -5s;
+    }
+    @keyframes blobMove {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(30px, 20px) scale(1.1); }
+      66% { transform: translate(-20px, -10px) scale(0.9); }
+    }
+
+    /* ===========================================
+       6. AURORA
+       =========================================== */
+
+    .bg-aurora {
+      background: #0f0f0f;
+      position: relative;
+      overflow: hidden;
+    }
+    .bg-aurora::before,
+    .bg-aurora::after {
+      content: '';
+      position: absolute;
+      width: 150%;
+      height: 150%;
+      top: -25%;
+      left: -25%;
+      background: conic-gradient(
+        from 0deg,
+        transparent,
+        #6366f1 10%,
+        transparent 20%,
+        #10b981 30%,
+        transparent 40%,
+        #ec4899 50%,
+        transparent 60%
+      );
+      animation: auroraRotate 20s linear infinite;
+      opacity: 0.3;
+      filter: blur(40px);
+    }
+    .bg-aurora::after {
+      animation-direction: reverse;
+      animation-duration: 25s;
+    }
+    @keyframes auroraRotate {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ===========================================
+       7. WAVES
+       =========================================== */
+
+    .bg-waves {
+      background: linear-gradient(180deg, #0f0f0f 0%, #1a1a2e 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .bg-waves::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 200%;
+      height: 100px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%236366f1' fill-opacity='0.3' d='M0,160L48,176C96,192,192,224,288,213.3C384,203,480,149,576,149.3C672,149,768,203,864,208C960,213,1056,171,1152,154.7C1248,139,1344,149,1392,154.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E") repeat-x;
+      background-size: 1440px 100px;
+      animation: wave 10s linear infinite;
+    }
+    @keyframes wave {
+      to { transform: translateX(-1440px); }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+      <div class="sidebar__logo">
+        <a href="../../index.html"><span>Duke</span>-components</a>
+      </div>
+
+      <!-- Admin Toggle -->
+      <div class="admin-toggle">
+        <span class="admin-toggle__label">Mode Admin</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="admin-toggle">
+          <span class="toggle-switch__slider"></span>
+        </label>
+      </div>
+
+      <!-- Components -->
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Composants</h3>
+        <ul class="sidebar__nav">
+          <li><a href="../buttons/index.html" class="sidebar__link">
+            <span>🔘</span> Buttons
+          </a></li>
+          <li><a href="../cards/index.html" class="sidebar__link">
+            <span>🃏</span> Cards
+          </a></li>
+          <li><a href="../forms/index.html" class="sidebar__link">
+            <span>📝</span> Forms
+          </a></li>
+          <li><a href="../loaders/index.html" class="sidebar__link">
+            <span>⏳</span> Loaders
+          </a></li>
+          <li><a href="../hovers/index.html" class="sidebar__link">
+            <span>👆</span> Hovers
+          </a></li>
+          <li><a href="../animations/index.html" class="sidebar__link">
+            <span>✨</span> Animations
+          </a></li>
+          <li><a href="index.html" class="sidebar__link sidebar__link--active">
+            <span>🎨</span> Backgrounds
+          </a></li>
+        </ul>
+      </div>
+
+      <!-- Generators -->
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Générateurs</h3>
+        <ul class="sidebar__nav">
+          <li><a href="../../generators/gradient/index.html" class="sidebar__link">
+            <span>🌈</span> Gradient
+          </a></li>
+          <li><a href="../../generators/shadow/index.html" class="sidebar__link">
+            <span>🌑</span> Shadow
+          </a></li>
+          <li><a href="../../generators/flexbox/index.html" class="sidebar__link">
+            <span>📐</span> Flexbox
+          </a></li>
+          <li><a href="../../generators/grid/index.html" class="sidebar__link">
+            <span>🔲</span> Grid
+          </a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main">
+      <header class="main__header">
+        <h1 class="main__title">🎨 Backgrounds</h1>
+        <p class="main__subtitle">Collection de fonds animés et patterns CSS</p>
+      </header>
+
+      <!-- Section: Animated Gradients -->
+      <section class="component-section">
+        <h2>Animated Gradients</h2>
+        <div class="backgrounds-grid">
+          <!-- Gradient Shift -->
+          <article class="bg-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="bg-card__preview bg-gradient-animated"></div>
+            <div class="bg-card__info">
+              <h3 class="bg-card__name">Gradient Shift</h3>
+              <div class="bg-card__tags">
+                <span class="tag tag--primary">gradient</span>
+                <span class="tag">animated</span>
+              </div>
+              <div class="code-viewer">
+                <div class="code-viewer__header">
+                  <span>CSS</span>
+                  <button class="copy-btn" data-target="code-gradient-shift">Copier</button>
+                </div>
+                <div class="code-viewer__content">
+                  <pre><code id="code-gradient-shift">.bg-gradient-animated {
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+}
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}</code></pre>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Mesh Gradient -->
+          <article class="bg-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="bg-card__preview bg-mesh"></div>
+            <div class="bg-card__info">
+              <h3 class="bg-card__name">Mesh Gradient</h3>
+              <div class="bg-card__tags">
+                <span class="tag tag--primary">mesh</span>
+                <span class="tag">modern</span>
+              </div>
+              <div class="code-viewer">
+                <div class="code-viewer__header">
+                  <span>CSS</span>
+                  <button class="copy-btn" data-target="code-mesh">Copier</button>
+                </div>
+                <div class="code-viewer__content">
+                  <pre><code id="code-mesh">.bg-mesh {
+  background-color: #0f0f0f;
+  background-image:
+    radial-gradient(at 40% 20%, #6366f1 0px, transparent 50%),
+    radial-gradient(at 80% 0%, #ec4899 0px, transparent 50%),
+    radial-gradient(at 0% 50%, #10b981 0px, transparent 50%),
+    radial-gradient(at 80% 50%, #f59e0b 0px, transparent 50%),
+    radial-gradient(at 0% 100%, #6366f1 0px, transparent 50%);
+}</code></pre>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Section: Patterns -->
+      <section class="component-section">
+        <h2>Patterns</h2>
+        <div class="backgrounds-grid">
+          <!-- Dots -->
+          <article class="bg-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="bg-card__preview bg-dots"></div>
+            <div class="bg-card__info">
+              <h3 class="bg-card__name">Dots Pattern</h3>
+              <div class="bg-card__tags">
+                <span class="tag tag--primary">dots</span>
+                <span class="tag">pattern</span>
+              </div>
+              <div class="code-viewer">
+                <div class="code-viewer__header">
+                  <span>CSS</span>
+                  <button class="copy-btn" data-target="code-dots">Copier</button>
+                </div>
+                <div class="code-viewer__content">
+                  <pre><code id="code-dots">.bg-dots {
+  background-color: #0f0f0f;
+  background-image: radial-gradient(#333 1px, transparent 1px);
+  background-size: 20px 20px;
+}</code></pre>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Grid -->
+          <article class="bg-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="bg-card__preview bg-grid"></div>
+            <div class="bg-card__info">
+              <h3 class="bg-card__name">Grid Pattern</h3>
+              <div class="bg-card__tags">
+                <span class="tag tag--primary">grid</span>
+                <span class="tag">pattern</span>
+              </div>
+              <div class="code-viewer">
+                <div class="code-viewer__header">
+                  <span>CSS</span>
+                  <button class="copy-btn" data-target="code-grid-bg">Copier</button>
+                </div>
+                <div class="code-viewer__content">
+                  <pre><code id="code-grid-bg">.bg-grid {
+  background-color: #0f0f0f;
+  background-image:
+    linear-gradient(rgba(99, 102, 241, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99, 102, 241, 0.1) 1px, transparent 1px);
+  background-size: 40px 40px;
+}</code></pre>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Stripes -->
+          <article class="bg-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="bg-card__preview bg-stripes"></div>
+            <div class="bg-card__info">
+              <h3 class="bg-card__name">Stripes</h3>
+              <div class="bg-card__tags">
+                <span class="tag tag--primary">stripes</span>
+                <span class="tag">diagonal</span>
+              </div>
+              <div class="code-viewer">
+                <div class="code-viewer__header">
+                  <span>CSS</span>
+                  <button class="copy-btn" data-target="code-stripes">Copier</button>
+                </div>
+                <div class="code-viewer__content">
+                  <pre><code id="code-stripes">.bg-stripes {
+  background: repeating-linear-gradient(
+    45deg,
+    #0f0f0f,
+    #0f0f0f 10px,
+    #1a1a1a 10px,
+    #1a1a1a 20px
+  );
+}</code></pre>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Section: Animated Effects -->
+      <section class="component-section">
+        <h2>Animated Effects</h2>
+        <div class="backgrounds-grid">
+          <!-- Blobs -->
+          <article class="bg-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="bg-card__preview bg-blobs">
+              <div class="blob"></div>
+              <div class="blob"></div>
+            </div>
+            <div class="bg-card__info">
+              <h3 class="bg-card__name">Floating Blobs</h3>
+              <div class="bg-card__tags">
+                <span class="tag tag--primary">blobs</span>
+                <span class="tag">blur</span>
+              </div>
+              <div class="code-viewer">
+                <div class="code-viewer__header">
+                  <span>CSS</span>
+                  <button class="copy-btn" data-target="code-blobs">Copier</button>
+                </div>
+                <div class="code-viewer__content">
+                  <pre><code id="code-blobs">.bg-blobs {
+  background: #0f0f0f;
+  position: relative;
+  overflow: hidden;
+}
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.5;
+  animation: blobMove 15s ease-in-out infinite;
+}
+.blob:nth-child(1) {
+  width: 200px; height: 200px;
+  background: #6366f1;
+  top: -50px; left: -50px;
+}
+.blob:nth-child(2) {
+  width: 150px; height: 150px;
+  background: #ec4899;
+  bottom: -30px; right: -30px;
+  animation-delay: -5s;
+}
+@keyframes blobMove {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, 20px) scale(1.1); }
+  66% { transform: translate(-20px, -10px) scale(0.9); }
+}</code></pre>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Aurora -->
+          <article class="bg-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="bg-card__preview bg-aurora"></div>
+            <div class="bg-card__info">
+              <h3 class="bg-card__name">Aurora Effect</h3>
+              <div class="bg-card__tags">
+                <span class="tag tag--primary">aurora</span>
+                <span class="tag">conic</span>
+              </div>
+              <div class="code-viewer">
+                <div class="code-viewer__header">
+                  <span>CSS</span>
+                  <button class="copy-btn" data-target="code-aurora">Copier</button>
+                </div>
+                <div class="code-viewer__content">
+                  <pre><code id="code-aurora">.bg-aurora {
+  background: #0f0f0f;
+  position: relative;
+  overflow: hidden;
+}
+.bg-aurora::before {
+  content: '';
+  position: absolute;
+  width: 150%; height: 150%;
+  top: -25%; left: -25%;
+  background: conic-gradient(
+    from 0deg,
+    transparent,
+    #6366f1 10%,
+    transparent 20%,
+    #10b981 30%,
+    transparent 40%,
+    #ec4899 50%,
+    transparent 60%
+  );
+  animation: auroraRotate 20s linear infinite;
+  opacity: 0.3;
+  filter: blur(40px);
+}
+@keyframes auroraRotate {
+  to { transform: rotate(360deg); }
+}</code></pre>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Waves -->
+          <article class="bg-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="bg-card__preview bg-waves"></div>
+            <div class="bg-card__info">
+              <h3 class="bg-card__name">Waves</h3>
+              <div class="bg-card__tags">
+                <span class="tag tag--primary">waves</span>
+                <span class="tag">svg</span>
+              </div>
+              <div class="code-viewer">
+                <div class="code-viewer__header">
+                  <span>CSS</span>
+                  <button class="copy-btn" data-target="code-waves">Copier</button>
+                </div>
+                <div class="code-viewer__content">
+                  <pre><code id="code-waves">.bg-waves {
+  background: linear-gradient(180deg, #0f0f0f 0%, #1a1a2e 100%);
+  position: relative;
+  overflow: hidden;
+}
+.bg-waves::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 200%; height: 100px;
+  background: url("data:image/svg+xml,...") repeat-x;
+  background-size: 1440px 100px;
+  animation: wave 10s linear infinite;
+}
+@keyframes wave {
+  to { transform: translateX(-1440px); }
+}</code></pre>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="../../assets/js/copy-code.js"></script>
+  <script src="../../assets/js/security-system.js"></script>
+</body>
+</html>

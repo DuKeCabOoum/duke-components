@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sliders — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ========== SLIDERS STYLES ========== */
+
+    /* Reset for range inputs */
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    input[type="range"]:focus {
+      outline: none;
+    }
+
+    /* ===== 1. Basic Slider ===== */
+    .slider-basic {
+      height: 8px;
+    }
+
+    .slider-basic::-webkit-slider-runnable-track {
+      height: 8px;
+      background: var(--border);
+      border-radius: 4px;
+    }
+
+    .slider-basic::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      background: var(--primary);
+      border-radius: 50%;
+      margin-top: -6px;
+      transition: transform 0.2s ease;
+    }
+
+    .slider-basic::-webkit-slider-thumb:hover {
+      transform: scale(1.1);
+    }
+
+    .slider-basic::-moz-range-track {
+      height: 8px;
+      background: var(--border);
+      border-radius: 4px;
+    }
+
+    .slider-basic::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      background: var(--primary);
+      border-radius: 50%;
+      border: none;
+    }
+
+    /* ===== 2. Gradient Track ===== */
+    .slider-gradient::-webkit-slider-runnable-track {
+      height: 8px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      border-radius: 4px;
+    }
+
+    .slider-gradient::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 24px;
+      height: 24px;
+      background: white;
+      border: 3px solid var(--primary);
+      border-radius: 50%;
+      margin-top: -8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .slider-gradient::-moz-range-track {
+      height: 8px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      border-radius: 4px;
+    }
+
+    .slider-gradient::-moz-range-thumb {
+      width: 24px;
+      height: 24px;
+      background: white;
+      border: 3px solid var(--primary);
+      border-radius: 50%;
+    }
+
+    /* ===== 3. Thin Slider ===== */
+    .slider-thin::-webkit-slider-runnable-track {
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+    }
+
+    .slider-thin::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      background: var(--primary);
+      border-radius: 50%;
+      margin-top: -6px;
+    }
+
+    .slider-thin::-moz-range-track {
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+    }
+
+    .slider-thin::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      background: var(--primary);
+      border-radius: 50%;
+      border: none;
+    }
+
+    /* ===== 4. Thick Slider ===== */
+    .slider-thick::-webkit-slider-runnable-track {
+      height: 16px;
+      background: var(--surface);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .slider-thick::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(145deg, var(--primary), #4f46e5);
+      border-radius: 50%;
+      margin-top: -7px;
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+    }
+
+    .slider-thick::-moz-range-track {
+      height: 16px;
+      background: var(--surface);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .slider-thick::-moz-range-thumb {
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(145deg, var(--primary), #4f46e5);
+      border-radius: 50%;
+      border: none;
+    }
+
+    /* ===== 5. Square Thumb ===== */
+    .slider-square::-webkit-slider-runnable-track {
+      height: 8px;
+      background: var(--border);
+      border-radius: 4px;
+    }
+
+    .slider-square::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      background: var(--primary);
+      border-radius: 4px;
+      margin-top: -6px;
+    }
+
+    .slider-square::-moz-range-track {
+      height: 8px;
+      background: var(--border);
+      border-radius: 4px;
+    }
+
+    .slider-square::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      background: var(--primary);
+      border-radius: 4px;
+      border: none;
+    }
+
+    /* ===== 6. With Tooltip ===== */
+    .slider-tooltip-wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    .slider-tooltip {
+      position: absolute;
+      top: -35px;
+      background: var(--primary);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      transform: translateX(-50%);
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .slider-tooltip::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: var(--primary);
+    }
+
+    .slider-tooltip-wrapper:hover .slider-tooltip {
+      opacity: 1;
+    }
+
+    .slider-with-tooltip::-webkit-slider-runnable-track {
+      height: 8px;
+      background: var(--border);
+      border-radius: 4px;
+    }
+
+    .slider-with-tooltip::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 22px;
+      height: 22px;
+      background: var(--primary);
+      border-radius: 50%;
+      margin-top: -7px;
+    }
+
+    /* ===== 7. Volume Slider ===== */
+    .slider-volume-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .slider-volume-icon {
+      font-size: 20px;
+      color: var(--text-secondary);
+    }
+
+    .slider-volume {
+      flex: 1;
+    }
+
+    .slider-volume::-webkit-slider-runnable-track {
+      height: 6px;
+      background: var(--border);
+      border-radius: 3px;
+    }
+
+    .slider-volume::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      background: var(--primary);
+      border-radius: 50%;
+      margin-top: -6px;
+    }
+
+    /* ===== 8. Temperature Slider ===== */
+    .slider-temp::-webkit-slider-runnable-track {
+      height: 10px;
+      background: linear-gradient(90deg, #3b82f6, #22c55e, #f59e0b, #ef4444);
+      border-radius: 5px;
+    }
+
+    .slider-temp::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 24px;
+      height: 24px;
+      background: white;
+      border: 3px solid var(--bg);
+      border-radius: 50%;
+      margin-top: -7px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .slider-temp::-moz-range-track {
+      height: 10px;
+      background: linear-gradient(90deg, #3b82f6, #22c55e, #f59e0b, #ef4444);
+      border-radius: 5px;
+    }
+
+    .slider-temp::-moz-range-thumb {
+      width: 24px;
+      height: 24px;
+      background: white;
+      border: 3px solid var(--bg);
+      border-radius: 50%;
+    }
+
+    /* ===== 9. Step Slider ===== */
+    .slider-step-wrapper {
+      width: 100%;
+    }
+
+    .slider-step::-webkit-slider-runnable-track {
+      height: 8px;
+      background: var(--border);
+      border-radius: 4px;
+    }
+
+    .slider-step::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      background: var(--primary);
+      border-radius: 50%;
+      margin-top: -6px;
+    }
+
+    .slider-step-marks {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+      padding: 0 8px;
+    }
+
+    .slider-step-mark {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* ===== 10. Rating Slider ===== */
+    .slider-rating-wrapper {
+      text-align: center;
+    }
+
+    .slider-rating-value {
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 16px;
+    }
+
+    .slider-rating::-webkit-slider-runnable-track {
+      height: 12px;
+      background: linear-gradient(90deg, #ef4444, #f59e0b, #22c55e);
+      border-radius: 6px;
+    }
+
+    .slider-rating::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 28px;
+      height: 28px;
+      background: white;
+      border: 4px solid var(--bg-darker);
+      border-radius: 50%;
+      margin-top: -8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    /* ===== 11. Vertical Slider ===== */
+    .slider-vertical-wrapper {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      height: 150px;
+    }
+
+    .slider-vertical {
+      writing-mode: vertical-lr;
+      direction: rtl;
+      width: 8px;
+      height: 150px;
+    }
+
+    .slider-vertical::-webkit-slider-runnable-track {
+      width: 8px;
+      background: var(--border);
+      border-radius: 4px;
+    }
+
+    .slider-vertical::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      background: var(--primary);
+      border-radius: 50%;
+      margin-left: -6px;
+    }
+
+    /* ===== 12. Progress Slider ===== */
+    .slider-progress-wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    .slider-progress-track {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      height: 8px;
+      background: var(--primary);
+      border-radius: 4px;
+      transform: translateY(-50%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .slider-progress::-webkit-slider-runnable-track {
+      height: 8px;
+      background: var(--border);
+      border-radius: 4px;
+    }
+
+    .slider-progress::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      background: var(--primary);
+      border-radius: 50%;
+      margin-top: -6px;
+      position: relative;
+      z-index: 2;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+  <aside class="sidebar">
+    <div class="sidebar__logo">
+      <a href="../../index.html"><span>Duke</span>-components</a>
+    </div>
+    <div class="sidebar__section">
+      <h3 class="sidebar__title">Composants</h3>
+      <ul class="sidebar__nav">
+        <li><a href="../accordions/index.html" class="sidebar__link"><span>📂</span> Accordions</a></li>
+        <li><a href="../buttons/index.html" class="sidebar__link"><span>🔘</span> Buttons</a></li>
+        <li><a href="../cards/index.html" class="sidebar__link"><span>🃏</span> Cards</a></li>
+        <li><a href="../forms/index.html" class="sidebar__link"><span>📝</span> Forms</a></li>
+        <li><a href="../progress/index.html" class="sidebar__link"><span>📊</span> Progress</a></li>
+        <li><a href="index.html" class="sidebar__link sidebar__link--active"><span>🎚️</span> Sliders</a></li>
+        <li><a href="../tabs/index.html" class="sidebar__link"><span>📑</span> Tabs</a></li>
+      </ul>
+    </div>
+    <div class="admin-toggle">
+      <span class="admin-toggle__label">Mode Admin</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="admin-toggle">
+        <span class="toggle-switch__slider"></span>
+      </label>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="page-header">
+      <h1 class="page-header__title">Sliders</h1>
+      <p class="page-header__desc">Range inputs personnalises : 12 styles pour les curseurs de valeur.</p>
+    </header>
+
+    <div class="components-grid">
+
+      <!-- 1. Basic Slider -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Basic Slider</h3>
+        </div>
+        <div class="component-card__preview">
+          <input type="range" class="slider-basic" min="0" max="100" value="50">
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;input type="range" class="slider-basic" min="0" max="100" value="50"&gt;
+
+/* CSS */
+.slider-basic::-webkit-slider-runnable-track {
+  height: 8px;
+  background: var(--border);
+  border-radius: 4px;
+}
+
+.slider-basic::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  background: var(--primary);
+  border-radius: 50%;
+  margin-top: -6px;
+}</code></pre>
+        </div>
+      </article>
+
+      <!-- 2. Gradient Track -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Gradient Track</h3>
+        </div>
+        <div class="component-card__preview">
+          <input type="range" class="slider-gradient" min="0" max="100" value="60">
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>.slider-gradient::-webkit-slider-runnable-track {
+  height: 8px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  border-radius: 4px;
+}
+
+.slider-gradient::-webkit-slider-thumb {
+  width: 24px;
+  height: 24px;
+  background: white;
+  border: 3px solid var(--primary);
+  border-radius: 50%;
+}</code></pre>
+        </div>
+      </article>
+
+      <!-- 3. Thin Slider -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Thin Slider</h3>
+        </div>
+        <div class="component-card__preview">
+          <input type="range" class="slider-thin" min="0" max="100" value="40">
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>.slider-thin::-webkit-slider-runnable-track {
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+}
+
+.slider-thin::-webkit-slider-thumb {
+  width: 16px;
+  height: 16px;
+  background: var(--primary);
+  border-radius: 50%;
+  margin-top: -6px;
+}</code></pre>
+        </div>
+      </article>
+
+      <!-- 4. Thick Slider -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Thick Slider</h3>
+        </div>
+        <div class="component-card__preview">
+          <input type="range" class="slider-thick" min="0" max="100" value="70">
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>.slider-thick::-webkit-slider-runnable-track {
+  height: 16px;
+  background: var(--surface);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.slider-thick::-webkit-slider-thumb {
+  width: 28px;
+  height: 28px;
+  background: linear-gradient(145deg, var(--primary), #4f46e5);
+  border-radius: 50%;
+}</code></pre>
+        </div>
+      </article>
+
+      <!-- 5. Square Thumb -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Square Thumb</h3>
+        </div>
+        <div class="component-card__preview">
+          <input type="range" class="slider-square" min="0" max="100" value="50">
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>.slider-square::-webkit-slider-thumb {
+  width: 20px;
+  height: 20px;
+  background: var(--primary);
+  border-radius: 4px;
+  margin-top: -6px;
+}</code></pre>
+        </div>
+      </article>
+
+      <!-- 6. With Tooltip -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">With Tooltip</h3>
+        </div>
+        <div class="component-card__preview">
+          <div class="slider-tooltip-wrapper">
+            <span class="slider-tooltip" id="tooltipValue">50</span>
+            <input type="range" class="slider-with-tooltip" min="0" max="100" value="50" id="tooltipSlider">
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;div class="slider-tooltip-wrapper"&gt;
+  &lt;span class="slider-tooltip" id="tooltip"&gt;50&lt;/span&gt;
+  &lt;input type="range" id="slider" value="50"&gt;
+&lt;/div&gt;
+
+/* JavaScript */
+slider.addEventListener('input', (e) => {
+  tooltip.textContent = e.target.value;
+  const percent = e.target.value / 100;
+  tooltip.style.left = `calc(${percent * 100}% - ${percent * 20}px)`;
+});</code></pre>
+        </div>
+      </article>
+
+      <!-- 7. Volume Slider -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Volume Slider</h3>
+        </div>
+        <div class="component-card__preview">
+          <div class="slider-volume-wrapper">
+            <span class="slider-volume-icon">🔈</span>
+            <input type="range" class="slider-volume" min="0" max="100" value="60">
+            <span class="slider-volume-icon">🔊</span>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;div class="slider-volume-wrapper"&gt;
+  &lt;span class="slider-volume-icon"&gt;🔈&lt;/span&gt;
+  &lt;input type="range" class="slider-volume" min="0" max="100" value="60"&gt;
+  &lt;span class="slider-volume-icon"&gt;🔊&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 8. Temperature Slider -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Temperature Slider</h3>
+        </div>
+        <div class="component-card__preview">
+          <input type="range" class="slider-temp" min="0" max="100" value="50">
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>.slider-temp::-webkit-slider-runnable-track {
+  height: 10px;
+  background: linear-gradient(90deg, #3b82f6, #22c55e, #f59e0b, #ef4444);
+  border-radius: 5px;
+}
+
+.slider-temp::-webkit-slider-thumb {
+  width: 24px;
+  height: 24px;
+  background: white;
+  border-radius: 50%;
+}</code></pre>
+        </div>
+      </article>
+
+      <!-- 9. Step Slider -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Step Slider</h3>
+        </div>
+        <div class="component-card__preview">
+          <div class="slider-step-wrapper">
+            <input type="range" class="slider-step" min="0" max="100" step="25" value="50">
+            <div class="slider-step-marks">
+              <span class="slider-step-mark">0</span>
+              <span class="slider-step-mark">25</span>
+              <span class="slider-step-mark">50</span>
+              <span class="slider-step-mark">75</span>
+              <span class="slider-step-mark">100</span>
+            </div>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;input type="range" class="slider-step" min="0" max="100" step="25" value="50"&gt;
+&lt;div class="slider-step-marks"&gt;
+  &lt;span class="slider-step-mark"&gt;0&lt;/span&gt;
+  &lt;span class="slider-step-mark"&gt;25&lt;/span&gt;
+  &lt;span class="slider-step-mark"&gt;50&lt;/span&gt;
+  &lt;span class="slider-step-mark"&gt;75&lt;/span&gt;
+  &lt;span class="slider-step-mark"&gt;100&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 10. Rating Slider -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Rating Slider</h3>
+        </div>
+        <div class="component-card__preview">
+          <div class="slider-rating-wrapper">
+            <div class="slider-rating-value" id="ratingValue">7.5</div>
+            <input type="range" class="slider-rating" min="0" max="10" step="0.5" value="7.5" id="ratingSlider">
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;div class="slider-rating-wrapper"&gt;
+  &lt;div class="slider-rating-value" id="ratingValue"&gt;7.5&lt;/div&gt;
+  &lt;input type="range" class="slider-rating" min="0" max="10" step="0.5" value="7.5"&gt;
+&lt;/div&gt;
+
+/* JavaScript */
+slider.addEventListener('input', (e) => {
+  display.textContent = e.target.value;
+});</code></pre>
+        </div>
+      </article>
+
+      <!-- 11. Vertical Sliders -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Vertical Sliders</h3>
+        </div>
+        <div class="component-card__preview">
+          <div class="slider-vertical-wrapper">
+            <input type="range" class="slider-vertical" min="0" max="100" value="80">
+            <input type="range" class="slider-vertical" min="0" max="100" value="50">
+            <input type="range" class="slider-vertical" min="0" max="100" value="30">
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;input type="range" class="slider-vertical" value="50"&gt;
+
+/* CSS */
+.slider-vertical {
+  writing-mode: vertical-lr;
+  direction: rtl;
+  width: 8px;
+  height: 150px;
+}</code></pre>
+        </div>
+      </article>
+
+      <!-- 12. Progress Slider -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Progress Slider</h3>
+        </div>
+        <div class="component-card__preview">
+          <div class="slider-progress-wrapper">
+            <div class="slider-progress-track" id="progressTrack" style="width: 60%;"></div>
+            <input type="range" class="slider-progress" min="0" max="100" value="60" id="progressSlider">
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;div class="slider-progress-wrapper"&gt;
+  &lt;div class="slider-progress-track" id="progressTrack"&gt;&lt;/div&gt;
+  &lt;input type="range" class="slider-progress" id="progressSlider"&gt;
+&lt;/div&gt;
+
+/* JavaScript */
+slider.addEventListener('input', (e) => {
+  track.style.width = e.target.value + '%';
+});</code></pre>
+        </div>
+      </article>
+
+    </div>
+  </main>
+  </div>
+
+  <script src="../../assets/js/copy-code.js"></script>
+  <script src="../../assets/js/security-system.js"></script>
+  <script>
+    // Tooltip Slider
+    const tooltipSlider = document.getElementById('tooltipSlider');
+    const tooltipValue = document.getElementById('tooltipValue');
+
+    tooltipSlider.addEventListener('input', (e) => {
+      tooltipValue.textContent = e.target.value;
+      const percent = e.target.value / 100;
+      const thumbWidth = 22;
+      const trackWidth = tooltipSlider.offsetWidth - thumbWidth;
+      tooltipValue.style.left = `calc(${percent * trackWidth + thumbWidth/2}px)`;
+    });
+
+    // Initialize tooltip position
+    const initPercent = tooltipSlider.value / 100;
+    tooltipValue.style.left = `calc(${initPercent * 100}%)`;
+
+    // Rating Slider
+    const ratingSlider = document.getElementById('ratingSlider');
+    const ratingValue = document.getElementById('ratingValue');
+
+    ratingSlider.addEventListener('input', (e) => {
+      ratingValue.textContent = e.target.value;
+    });
+
+    // Progress Slider
+    const progressSlider = document.getElementById('progressSlider');
+    const progressTrack = document.getElementById('progressTrack');
+
+    progressSlider.addEventListener('input', (e) => {
+      progressTrack.style.width = e.target.value + '%';
+    });
+  </script>
+</body>
+</html>

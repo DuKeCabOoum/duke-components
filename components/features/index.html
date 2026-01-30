@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Features — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ===========================================
+       FEATURES — Styles locaux
+       =========================================== */
+
+    .features-list {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    .feature-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .feature-section__preview {
+      padding: 48px;
+      background: #0f0f0f;
+    }
+
+    .feature-section__info {
+      padding: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .feature-section__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .feature-section__name {
+      font-weight: 600;
+      font-size: 1.25rem;
+    }
+
+    .feature-section__tags {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* ===========================================
+       FEATURES 1 — GRID 3 COLONNES
+       =========================================== */
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .feature-card {
+      padding: 32px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(99, 102, 241, 0.3);
+      transform: translateY(-4px);
+    }
+
+    .feature-card__icon {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.2));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+
+    .feature-card__title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+
+    .feature-card__text {
+      color: #a1a1aa;
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    /* ===========================================
+       FEATURES 2 — BENTO GRID
+       =========================================== */
+
+    .features-bento {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(2, 200px);
+      gap: 16px;
+    }
+
+    .bento-item {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s ease;
+    }
+
+    .bento-item:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(99, 102, 241, 0.3);
+    }
+
+    .bento-item--large {
+      grid-column: span 2;
+    }
+
+    .bento-item--tall {
+      grid-row: span 2;
+    }
+
+    .bento-item__icon {
+      font-size: 2rem;
+      margin-bottom: 16px;
+    }
+
+    .bento-item__title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .bento-item__text {
+      color: #71717a;
+      font-size: 0.875rem;
+      line-height: 1.5;
+    }
+
+    /* ===========================================
+       FEATURES 3 — ALTERNATING
+       =========================================== */
+
+    .features-alternating {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    .feature-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .feature-row--reverse {
+      direction: rtl;
+    }
+
+    .feature-row--reverse > * {
+      direction: ltr;
+    }
+
+    .feature-row__content {
+      padding: 24px;
+    }
+
+    .feature-row__eyebrow {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #6366f1;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+
+    .feature-row__title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+
+    .feature-row__text {
+      color: #a1a1aa;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    .feature-row__list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .feature-row__list li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #d1d5db;
+      margin-bottom: 12px;
+    }
+
+    .feature-row__list li::before {
+      content: '✓';
+      color: #10b981;
+      font-weight: bold;
+    }
+
+    .feature-row__visual {
+      height: 250px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.1));
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+    }
+
+    /* ===========================================
+       FEATURES 4 — CENTERED WITH ICONS
+       =========================================== */
+
+    .features-centered {
+      text-align: center;
+    }
+
+    .features-centered__header {
+      margin-bottom: 48px;
+    }
+
+    .features-centered__title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+
+    .features-centered__subtitle {
+      color: #71717a;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .features-centered__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+    }
+
+    .centered-feature {
+      text-align: center;
+    }
+
+    .centered-feature__icon {
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin: 0 auto 16px;
+      box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
+    }
+
+    .centered-feature__title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .centered-feature__text {
+      font-size: 0.875rem;
+      color: #71717a;
+    }
+
+    /* ===========================================
+       FEATURES 5 — WITH NUMBERS
+       =========================================== */
+
+    .features-numbered {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+
+    .numbered-feature {
+      display: flex;
+      gap: 20px;
+      padding: 24px;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.3s ease;
+    }
+
+    .numbered-feature:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(99, 102, 241, 0.2);
+    }
+
+    .numbered-feature__number {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .numbered-feature__content {
+      flex: 1;
+    }
+
+    .numbered-feature__title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .numbered-feature__text {
+      color: #71717a;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+      <div class="sidebar__logo">
+        <a href="../../index.html"><span>Duke</span>-components</a>
+      </div>
+
+      <div class="admin-toggle">
+        <span class="admin-toggle__label">Mode Admin</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="admin-toggle">
+          <span class="toggle-switch__slider"></span>
+        </label>
+      </div>
+
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Sections</h3>
+        <ul class="sidebar__nav">
+          <li><a href="../heroes/index.html" class="sidebar__link"><span>🦸</span> Heroes</a></li>
+          <li><a href="index.html" class="sidebar__link sidebar__link--active"><span>⭐</span> Features</a></li>
+          <li><a href="../pricing/index.html" class="sidebar__link"><span>💰</span> Pricing</a></li>
+          <li><a href="../testimonials/index.html" class="sidebar__link"><span>💬</span> Testimonials</a></li>
+          <li><a href="../footers/index.html" class="sidebar__link"><span>📋</span> Footers</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Composants</h3>
+        <ul class="sidebar__nav">
+          <li><a href="../buttons/index.html" class="sidebar__link"><span>🔘</span> Buttons</a></li>
+          <li><a href="../cards/index.html" class="sidebar__link"><span>🃏</span> Cards</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main">
+      <header class="main__header">
+        <h1 class="main__title">⭐ Feature Sections</h1>
+        <p class="main__subtitle">Sections pour présenter tes fonctionnalités</p>
+      </header>
+
+      <div class="features-list">
+        <!-- Features 1: Grid -->
+        <article class="feature-section" data-security="safe">
+          <span class="security-badge security-badge--safe">SAFE</span>
+          <div class="feature-section__preview">
+            <div class="features-grid">
+              <div class="feature-card">
+                <div class="feature-card__icon">⚡</div>
+                <h3 class="feature-card__title">Ultra rapide</h3>
+                <p class="feature-card__text">Performance optimisée pour une expérience utilisateur fluide et réactive.</p>
+              </div>
+              <div class="feature-card">
+                <div class="feature-card__icon">🔒</div>
+                <h3 class="feature-card__title">Sécurisé</h3>
+                <p class="feature-card__text">Protection de niveau entreprise avec chiffrement de bout en bout.</p>
+              </div>
+              <div class="feature-card">
+                <div class="feature-card__icon">🎨</div>
+                <h3 class="feature-card__title">Personnalisable</h3>
+                <p class="feature-card__text">Adapte chaque aspect à ton image de marque facilement.</p>
+              </div>
+            </div>
+          </div>
+          <div class="feature-section__info">
+            <div class="feature-section__header">
+              <h3 class="feature-section__name">Grid Features</h3>
+              <div class="feature-section__tags">
+                <span class="tag tag--primary">grid</span>
+                <span class="tag">cards</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <span>HTML</span>
+                <button class="copy-btn" data-target="code-features-grid">Copier</button>
+              </div>
+              <div class="code-viewer__content">
+                <pre><code id="code-features-grid">&lt;div class="features-grid"&gt;
+  &lt;div class="feature-card"&gt;
+    &lt;div class="feature-card__icon"&gt;⚡&lt;/div&gt;
+    &lt;h3 class="feature-card__title"&gt;Ultra rapide&lt;/h3&gt;
+    &lt;p class="feature-card__text"&gt;Description...&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;!-- Répéter pour chaque feature --&gt;
+&lt;/div&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Features 2: Bento -->
+        <article class="feature-section" data-security="safe">
+          <span class="security-badge security-badge--safe">SAFE</span>
+          <div class="feature-section__preview">
+            <div class="features-bento">
+              <div class="bento-item bento-item--large">
+                <span class="bento-item__icon">📊</span>
+                <h3 class="bento-item__title">Analytics avancés</h3>
+                <p class="bento-item__text">Visualise tes données en temps réel avec des graphiques interactifs.</p>
+              </div>
+              <div class="bento-item">
+                <span class="bento-item__icon">🔔</span>
+                <h3 class="bento-item__title">Notifications</h3>
+                <p class="bento-item__text">Alertes intelligentes.</p>
+              </div>
+              <div class="bento-item bento-item--tall">
+                <span class="bento-item__icon">🤖</span>
+                <h3 class="bento-item__title">IA intégrée</h3>
+                <p class="bento-item__text">Automatise tes tâches répétitives grâce à l'intelligence artificielle.</p>
+              </div>
+              <div class="bento-item">
+                <span class="bento-item__icon">🌍</span>
+                <h3 class="bento-item__title">Global</h3>
+                <p class="bento-item__text">Multi-langues</p>
+              </div>
+              <div class="bento-item bento-item--large">
+                <span class="bento-item__icon">🔗</span>
+                <h3 class="bento-item__title">Intégrations</h3>
+                <p class="bento-item__text">Connecte avec tes outils préférés : Slack, Notion, GitHub...</p>
+              </div>
+            </div>
+          </div>
+          <div class="feature-section__info">
+            <div class="feature-section__header">
+              <h3 class="feature-section__name">Bento Grid</h3>
+              <div class="feature-section__tags">
+                <span class="tag tag--primary">bento</span>
+                <span class="tag">modern</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <span>CSS</span>
+                <button class="copy-btn" data-target="code-bento">Copier</button>
+              </div>
+              <div class="code-viewer__content">
+                <pre><code id="code-bento">.features-bento {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 200px);
+  gap: 16px;
+}
+.bento-item--large { grid-column: span 2; }
+.bento-item--tall { grid-row: span 2; }</code></pre>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Features 3: Centered -->
+        <article class="feature-section" data-security="safe">
+          <span class="security-badge security-badge--safe">SAFE</span>
+          <div class="feature-section__preview">
+            <div class="features-centered">
+              <div class="features-centered__header">
+                <h2 class="features-centered__title">Tout ce dont tu as besoin</h2>
+                <p class="features-centered__subtitle">Une suite complète d'outils pour booster ta productivité.</p>
+              </div>
+              <div class="features-centered__grid">
+                <div class="centered-feature">
+                  <div class="centered-feature__icon">🚀</div>
+                  <h3 class="centered-feature__title">Déploiement</h3>
+                  <p class="centered-feature__text">En un clic</p>
+                </div>
+                <div class="centered-feature">
+                  <div class="centered-feature__icon">📱</div>
+                  <h3 class="centered-feature__title">Responsive</h3>
+                  <p class="centered-feature__text">Tous écrans</p>
+                </div>
+                <div class="centered-feature">
+                  <div class="centered-feature__icon">🔧</div>
+                  <h3 class="centered-feature__title">API</h3>
+                  <p class="centered-feature__text">RESTful</p>
+                </div>
+                <div class="centered-feature">
+                  <div class="centered-feature__icon">💾</div>
+                  <h3 class="centered-feature__title">Backup</h3>
+                  <p class="centered-feature__text">Automatique</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="feature-section__info">
+            <div class="feature-section__header">
+              <h3 class="feature-section__name">Centered Features</h3>
+              <div class="feature-section__tags">
+                <span class="tag tag--primary">centered</span>
+                <span class="tag">icons</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <span>HTML</span>
+                <button class="copy-btn" data-target="code-centered">Copier</button>
+              </div>
+              <div class="code-viewer__content">
+                <pre><code id="code-centered">&lt;div class="features-centered"&gt;
+  &lt;div class="features-centered__header"&gt;
+    &lt;h2&gt;Titre&lt;/h2&gt;
+    &lt;p&gt;Sous-titre&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class="features-centered__grid"&gt;
+    &lt;div class="centered-feature"&gt;
+      &lt;div class="centered-feature__icon"&gt;🚀&lt;/div&gt;
+      &lt;h3&gt;Titre&lt;/h3&gt;
+      &lt;p&gt;Description&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Features 4: Numbered -->
+        <article class="feature-section" data-security="safe">
+          <span class="security-badge security-badge--safe">SAFE</span>
+          <div class="feature-section__preview">
+            <div class="features-numbered">
+              <div class="numbered-feature">
+                <div class="numbered-feature__number">1</div>
+                <div class="numbered-feature__content">
+                  <h3 class="numbered-feature__title">Crée ton compte</h3>
+                  <p class="numbered-feature__text">Inscription gratuite en moins de 30 secondes.</p>
+                </div>
+              </div>
+              <div class="numbered-feature">
+                <div class="numbered-feature__number">2</div>
+                <div class="numbered-feature__content">
+                  <h3 class="numbered-feature__title">Configure ton projet</h3>
+                  <p class="numbered-feature__text">Personnalise selon tes besoins.</p>
+                </div>
+              </div>
+              <div class="numbered-feature">
+                <div class="numbered-feature__number">3</div>
+                <div class="numbered-feature__content">
+                  <h3 class="numbered-feature__title">Invite ton équipe</h3>
+                  <p class="numbered-feature__text">Collabore en temps réel.</p>
+                </div>
+              </div>
+              <div class="numbered-feature">
+                <div class="numbered-feature__number">4</div>
+                <div class="numbered-feature__content">
+                  <h3 class="numbered-feature__title">Lance ton projet</h3>
+                  <p class="numbered-feature__text">Déploie en production en un clic.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="feature-section__info">
+            <div class="feature-section__header">
+              <h3 class="feature-section__name">Numbered Steps</h3>
+              <div class="feature-section__tags">
+                <span class="tag tag--primary">steps</span>
+                <span class="tag">numbered</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <span>HTML</span>
+                <button class="copy-btn" data-target="code-numbered">Copier</button>
+              </div>
+              <div class="code-viewer__content">
+                <pre><code id="code-numbered">&lt;div class="numbered-feature"&gt;
+  &lt;div class="numbered-feature__number"&gt;1&lt;/div&gt;
+  &lt;div class="numbered-feature__content"&gt;
+    &lt;h3&gt;Titre étape&lt;/h3&gt;
+    &lt;p&gt;Description...&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="../../assets/js/copy-code.js"></script>
+  <script src="../../assets/js/security-system.js"></script>
+</body>
+</html>

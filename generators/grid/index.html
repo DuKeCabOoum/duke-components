@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grid Generator — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/_generators.css">
+</head>
+<body>
+  <div class="app">
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+      <div class="sidebar__logo">
+        <a href="../../index.html"><span>Duke</span>-components</a>
+      </div>
+
+      <!-- Admin Toggle -->
+      <div class="admin-toggle">
+        <span class="admin-toggle__label">Mode Admin</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="admin-toggle">
+          <span class="toggle-switch__slider"></span>
+        </label>
+      </div>
+
+      <!-- Components -->
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Composants</h3>
+        <ul class="sidebar__nav">
+          <li><a href="../../components/buttons/index.html" class="sidebar__link">
+            <span>🔘</span> Buttons
+          </a></li>
+          <li><a href="../../components/cards/index.html" class="sidebar__link">
+            <span>🃏</span> Cards
+          </a></li>
+          <li><a href="../../components/forms/index.html" class="sidebar__link">
+            <span>📝</span> Forms
+          </a></li>
+          <li><a href="../../components/loaders/index.html" class="sidebar__link">
+            <span>⏳</span> Loaders
+          </a></li>
+        </ul>
+      </div>
+
+      <!-- Generators -->
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Générateurs</h3>
+        <ul class="sidebar__nav">
+          <li><a href="../gradient/index.html" class="sidebar__link">
+            <span>🌈</span> Gradient
+          </a></li>
+          <li><a href="../shadow/index.html" class="sidebar__link">
+            <span>🌑</span> Shadow
+          </a></li>
+          <li><a href="../flexbox/index.html" class="sidebar__link">
+            <span>📐</span> Flexbox
+          </a></li>
+          <li><a href="index.html" class="sidebar__link sidebar__link--active">
+            <span>🔲</span> Grid
+          </a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main">
+      <header class="main__header">
+        <h1 class="main__title">🔲 Grid Generator</h1>
+        <p class="main__subtitle">Visualise et génère du code CSS Grid en temps réel</p>
+      </header>
+
+      <!-- Generator Container -->
+      <div class="generator">
+        <!-- Preview Area -->
+        <div class="generator__preview">
+          <div class="grid-preview" id="grid-preview">
+            <!-- Items générés dynamiquement -->
+          </div>
+        </div>
+
+        <!-- Controls Panel -->
+        <div class="generator__controls">
+          <!-- Colonnes -->
+          <div class="control-group">
+            <label class="control-label">Colonnes <span class="control-value" id="cols-value">3</span></label>
+            <input type="range" class="control-slider" id="cols-slider" min="1" max="6" value="3">
+          </div>
+
+          <!-- Rangées -->
+          <div class="control-group">
+            <label class="control-label">Rangées <span class="control-value" id="rows-value">3</span></label>
+            <input type="range" class="control-slider" id="rows-slider" min="1" max="6" value="3">
+          </div>
+
+          <!-- Taille des colonnes -->
+          <div class="control-group">
+            <label class="control-label">Taille des colonnes</label>
+            <select class="flex-control-select" id="col-size">
+              <option value="1fr" selected>1fr (égales)</option>
+              <option value="auto">auto</option>
+              <option value="minmax(100px, 1fr)">minmax(100px, 1fr)</option>
+              <option value="repeat(auto-fill, minmax(100px, 1fr))">auto-fill responsive</option>
+            </select>
+          </div>
+
+          <!-- Taille des rangées -->
+          <div class="control-group">
+            <label class="control-label">Taille des rangées</label>
+            <select class="flex-control-select" id="row-size">
+              <option value="1fr" selected>1fr (égales)</option>
+              <option value="auto">auto</option>
+              <option value="minmax(80px, auto)">minmax(80px, auto)</option>
+            </select>
+          </div>
+
+          <!-- Gap -->
+          <div class="control-group">
+            <label class="control-label">gap <span class="control-value" id="gap-value">16px</span></label>
+            <input type="range" class="control-slider" id="gap-slider" min="0" max="50" value="16">
+          </div>
+
+          <!-- justify-items -->
+          <div class="control-group">
+            <label class="control-label">justify-items</label>
+            <select class="flex-control-select" id="justify-items">
+              <option value="stretch" selected>stretch</option>
+              <option value="start">start</option>
+              <option value="end">end</option>
+              <option value="center">center</option>
+            </select>
+          </div>
+
+          <!-- align-items -->
+          <div class="control-group">
+            <label class="control-label">align-items</label>
+            <select class="flex-control-select" id="align-items">
+              <option value="stretch" selected>stretch</option>
+              <option value="start">start</option>
+              <option value="end">end</option>
+              <option value="center">center</option>
+            </select>
+          </div>
+
+          <!-- Presets -->
+          <div class="control-group">
+            <label class="control-label">Presets</label>
+            <div class="grid-presets">
+              <button class="preset-grid" data-preset="dashboard">Dashboard</button>
+              <button class="preset-grid" data-preset="gallery">Galerie</button>
+              <button class="preset-grid" data-preset="sidebar">Sidebar + Content</button>
+              <button class="preset-grid" data-preset="holy-grail">Holy Grail</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Code Output -->
+        <div class="generator__output">
+          <div class="output-header">
+            <span class="output-title">CSS</span>
+            <button class="copy-btn" id="copy-grid-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+              </svg>
+              Copier
+            </button>
+          </div>
+          <pre class="output-code"><code id="grid-code">display: grid;
+grid-template-columns: repeat(3, 1fr);
+grid-template-rows: repeat(3, 1fr);
+gap: 16px;</code></pre>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../../assets/js/security-system.js"></script>
+  <script src="../../assets/js/grid-generator.js"></script>
+</body>
+</html>

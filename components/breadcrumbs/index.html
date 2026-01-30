@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Breadcrumbs — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ========== BREADCRUMBS STYLES ========== */
+
+    /* Base Breadcrumb */
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      font-size: 14px;
+      flex-wrap: wrap;
+    }
+
+    .breadcrumb__item {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .breadcrumb__item:hover {
+      color: var(--primary);
+    }
+
+    .breadcrumb__item--active {
+      color: var(--text-primary);
+      font-weight: 500;
+      pointer-events: none;
+    }
+
+    .breadcrumb__separator {
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    /* ===== 1. Basic Breadcrumb ===== */
+    .breadcrumb--basic {
+      background: var(--surface);
+      border-radius: 8px;
+    }
+
+    /* ===== 2. Arrow Separator ===== */
+    .breadcrumb--arrow .breadcrumb__separator {
+      font-size: 10px;
+    }
+
+    .breadcrumb--arrow .breadcrumb__separator::before {
+      content: ">";
+    }
+
+    /* ===== 3. Slash Separator ===== */
+    .breadcrumb--slash .breadcrumb__separator::before {
+      content: "/";
+    }
+
+    /* ===== 4. Chevron Separator ===== */
+    .breadcrumb--chevron .breadcrumb__separator {
+      display: flex;
+      align-items: center;
+    }
+
+    .breadcrumb--chevron .breadcrumb__separator svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--text-muted);
+    }
+
+    /* ===== 5. Pill Style ===== */
+    .breadcrumb--pill {
+      gap: 4px;
+    }
+
+    .breadcrumb--pill .breadcrumb__item {
+      padding: 6px 12px;
+      background: var(--surface);
+      border-radius: 20px;
+      border: 1px solid var(--border);
+    }
+
+    .breadcrumb--pill .breadcrumb__item:hover {
+      background: var(--surface-hover);
+      border-color: var(--primary);
+    }
+
+    .breadcrumb--pill .breadcrumb__item--active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .breadcrumb--pill .breadcrumb__separator {
+      display: none;
+    }
+
+    /* ===== 6. With Icons ===== */
+    .breadcrumb--icons .breadcrumb__item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .breadcrumb--icons .breadcrumb__icon {
+      font-size: 14px;
+    }
+
+    /* ===== 7. Gradient Underline ===== */
+    .breadcrumb--gradient .breadcrumb__item {
+      position: relative;
+    }
+
+    .breadcrumb--gradient .breadcrumb__item::after {
+      content: "";
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      transition: width 0.3s ease;
+    }
+
+    .breadcrumb--gradient .breadcrumb__item:hover::after {
+      width: 100%;
+    }
+
+    .breadcrumb--gradient .breadcrumb__item--active::after {
+      width: 100%;
+    }
+
+    /* ===== 8. Boxed Style ===== */
+    .breadcrumb--boxed {
+      gap: 0;
+    }
+
+    .breadcrumb--boxed .breadcrumb__item {
+      padding: 10px 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      margin-left: -1px;
+    }
+
+    .breadcrumb--boxed .breadcrumb__item:first-child {
+      border-radius: 8px 0 0 8px;
+      margin-left: 0;
+    }
+
+    .breadcrumb--boxed .breadcrumb__item:last-child {
+      border-radius: 0 8px 8px 0;
+    }
+
+    .breadcrumb--boxed .breadcrumb__item:hover {
+      background: var(--surface-hover);
+      z-index: 1;
+    }
+
+    .breadcrumb--boxed .breadcrumb__item--active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+      z-index: 2;
+    }
+
+    .breadcrumb--boxed .breadcrumb__separator {
+      display: none;
+    }
+
+    /* ===== 9. Step Progress ===== */
+    .breadcrumb--steps {
+      gap: 0;
+      counter-reset: step;
+    }
+
+    .breadcrumb--steps .breadcrumb__item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: var(--surface);
+      position: relative;
+      clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%, 12px 50%);
+      margin-left: -12px;
+    }
+
+    .breadcrumb--steps .breadcrumb__item:first-child {
+      clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%);
+      margin-left: 0;
+    }
+
+    .breadcrumb--steps .breadcrumb__item::before {
+      counter-increment: step;
+      content: counter(step);
+      width: 24px;
+      height: 24px;
+      background: var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .breadcrumb--steps .breadcrumb__item--active {
+      background: var(--primary);
+      color: white;
+    }
+
+    .breadcrumb--steps .breadcrumb__item--active::before {
+      background: white;
+      color: var(--primary);
+    }
+
+    .breadcrumb--steps .breadcrumb__item--completed {
+      background: var(--success);
+      color: white;
+    }
+
+    .breadcrumb--steps .breadcrumb__item--completed::before {
+      content: "✓";
+      background: white;
+      color: var(--success);
+    }
+
+    .breadcrumb--steps .breadcrumb__separator {
+      display: none;
+    }
+
+    /* ===== 10. Animated Breadcrumb ===== */
+    .breadcrumb--animated .breadcrumb__item {
+      opacity: 0;
+      transform: translateX(-10px);
+      animation: breadcrumbSlide 0.4s ease forwards;
+    }
+
+    .breadcrumb--animated .breadcrumb__item:nth-child(1) { animation-delay: 0s; }
+    .breadcrumb--animated .breadcrumb__item:nth-child(2),
+    .breadcrumb--animated .breadcrumb__separator:nth-child(2) { animation-delay: 0.1s; }
+    .breadcrumb--animated .breadcrumb__item:nth-child(3),
+    .breadcrumb--animated .breadcrumb__separator:nth-child(3) { animation-delay: 0.2s; }
+    .breadcrumb--animated .breadcrumb__item:nth-child(4),
+    .breadcrumb--animated .breadcrumb__separator:nth-child(4) { animation-delay: 0.3s; }
+    .breadcrumb--animated .breadcrumb__item:nth-child(5),
+    .breadcrumb--animated .breadcrumb__separator:nth-child(5) { animation-delay: 0.4s; }
+
+    .breadcrumb--animated .breadcrumb__separator {
+      opacity: 0;
+      animation: breadcrumbSlide 0.4s ease forwards;
+    }
+
+    @keyframes breadcrumbSlide {
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* ===== 11. Dark Glass ===== */
+    .breadcrumb--glass {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+    }
+
+    .breadcrumb--glass .breadcrumb__item:hover {
+      color: white;
+    }
+
+    /* ===== 12. Dropdown Breadcrumb ===== */
+    .breadcrumb--dropdown .breadcrumb__collapse {
+      position: relative;
+    }
+
+    .breadcrumb--dropdown .breadcrumb__collapse-btn {
+      padding: 4px 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .breadcrumb--dropdown .breadcrumb__collapse-btn:hover {
+      background: var(--surface-hover);
+      color: var(--primary);
+    }
+
+    .breadcrumb--dropdown .breadcrumb__collapse-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      margin-top: 4px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 0;
+      min-width: 150px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.2s ease;
+      z-index: 100;
+    }
+
+    .breadcrumb--dropdown .breadcrumb__collapse:hover .breadcrumb__collapse-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .breadcrumb--dropdown .breadcrumb__collapse-menu a {
+      display: block;
+      padding: 8px 16px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .breadcrumb--dropdown .breadcrumb__collapse-menu a:hover {
+      background: var(--surface-hover);
+      color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+  <aside class="sidebar">
+    <div class="sidebar__logo">
+      <a href="../../index.html"><span>Duke</span>-components</a>
+    </div>
+    <div class="sidebar__section">
+      <h3 class="sidebar__title">Composants</h3>
+      <ul class="sidebar__nav">
+        <li><a href="../accordions/index.html" class="sidebar__link"><span>📂</span> Accordions</a></li>
+        <li><a href="../avatars/index.html" class="sidebar__link"><span>👤</span> Avatars</a></li>
+        <li><a href="../badges/index.html" class="sidebar__link"><span>🏷️</span> Badges</a></li>
+        <li><a href="index.html" class="sidebar__link sidebar__link--active"><span>🥖</span> Breadcrumbs</a></li>
+        <li><a href="../buttons/index.html" class="sidebar__link"><span>🔘</span> Buttons</a></li>
+        <li><a href="../cards/index.html" class="sidebar__link"><span>🃏</span> Cards</a></li>
+        <li><a href="../carousels/index.html" class="sidebar__link"><span>🎠</span> Carousels</a></li>
+        <li><a href="../forms/index.html" class="sidebar__link"><span>📝</span> Forms</a></li>
+        <li><a href="../loaders/index.html" class="sidebar__link"><span>⏳</span> Loaders</a></li>
+        <li><a href="../modals/index.html" class="sidebar__link"><span>💬</span> Modals</a></li>
+        <li><a href="../navigation/index.html" class="sidebar__link"><span>🧭</span> Navigation</a></li>
+        <li><a href="../notifications/index.html" class="sidebar__link"><span>🔔</span> Notifications</a></li>
+        <li><a href="../progress/index.html" class="sidebar__link"><span>📊</span> Progress</a></li>
+        <li><a href="../tabs/index.html" class="sidebar__link"><span>📑</span> Tabs</a></li>
+        <li><a href="../tooltips/index.html" class="sidebar__link"><span>💡</span> Tooltips</a></li>
+      </ul>
+    </div>
+    <div class="admin-toggle">
+      <span class="admin-toggle__label">Mode Admin</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="admin-toggle">
+        <span class="toggle-switch__slider"></span>
+      </label>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="page-header">
+      <h1 class="page-header__title">Breadcrumbs</h1>
+      <p class="page-header__desc">Fils d'Ariane pour la navigation : 12 styles variés pour guider tes utilisateurs.</p>
+    </header>
+
+    <div class="components-grid">
+
+      <!-- 1. Basic -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Basic</h3>
+        </div>
+        <div class="component-card__preview">
+          <nav class="breadcrumb breadcrumb--basic">
+            <a href="#" class="breadcrumb__item">Home</a>
+            <span class="breadcrumb__separator">•</span>
+            <a href="#" class="breadcrumb__item">Products</a>
+            <span class="breadcrumb__separator">•</span>
+            <a href="#" class="breadcrumb__item">Electronics</a>
+            <span class="breadcrumb__separator">•</span>
+            <span class="breadcrumb__item breadcrumb__item--active">Smartphones</span>
+          </nav>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;nav class="breadcrumb breadcrumb--basic"&gt;
+  &lt;a href="#" class="breadcrumb__item"&gt;Home&lt;/a&gt;
+  &lt;span class="breadcrumb__separator"&gt;•&lt;/span&gt;
+  &lt;a href="#" class="breadcrumb__item"&gt;Products&lt;/a&gt;
+  &lt;span class="breadcrumb__separator"&gt;•&lt;/span&gt;
+  &lt;span class="breadcrumb__item breadcrumb__item--active"&gt;Current&lt;/span&gt;
+&lt;/nav&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 2. Arrow Separator -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Arrow Separator</h3>
+        </div>
+        <div class="component-card__preview">
+          <nav class="breadcrumb breadcrumb--arrow">
+            <a href="#" class="breadcrumb__item">Dashboard</a>
+            <span class="breadcrumb__separator"></span>
+            <a href="#" class="breadcrumb__item">Settings</a>
+            <span class="breadcrumb__separator"></span>
+            <span class="breadcrumb__item breadcrumb__item--active">Profile</span>
+          </nav>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;nav class="breadcrumb breadcrumb--arrow"&gt;
+  &lt;a href="#" class="breadcrumb__item"&gt;Dashboard&lt;/a&gt;
+  &lt;span class="breadcrumb__separator"&gt;&lt;/span&gt;
+  &lt;a href="#" class="breadcrumb__item"&gt;Settings&lt;/a&gt;
+  &lt;span class="breadcrumb__separator"&gt;&lt;/span&gt;
+  &lt;span class="breadcrumb__item breadcrumb__item--active"&gt;Profile&lt;/span&gt;
+&lt;/nav&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 3. Slash Separator -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Slash Separator</h3>
+        </div>
+        <div class="component-card__preview">
+          <nav class="breadcrumb breadcrumb--slash">
+            <a href="#" class="breadcrumb__item">Blog</a>
+            <span class="breadcrumb__separator"></span>
+            <a href="#" class="breadcrumb__item">Technology</a>
+            <span class="breadcrumb__separator"></span>
+            <span class="breadcrumb__item breadcrumb__item--active">AI News</span>
+          </nav>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;nav class="breadcrumb breadcrumb--slash"&gt;
+  &lt;a href="#" class="breadcrumb__item"&gt;Blog&lt;/a&gt;
+  &lt;span class="breadcrumb__separator"&gt;&lt;/span&gt;
+  &lt;a href="#" class="breadcrumb__item"&gt;Category&lt;/a&gt;
+  &lt;span class="breadcrumb__separator"&gt;&lt;/span&gt;
+  &lt;span class="breadcrumb__item breadcrumb__item--active"&gt;Article&lt;/span&gt;
+&lt;/nav&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 4. Chevron Separator -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Chevron SVG</h3>
+        </div>
+        <div class="component-card__preview">
+          <nav class="breadcrumb breadcrumb--chevron">
+            <a href="#" class="breadcrumb__item">Shop</a>
+            <span class="breadcrumb__separator">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9,18 15,12 9,6"></polyline>
+              </svg>
+            </span>
+            <a href="#" class="breadcrumb__item">Clothing</a>
+            <span class="breadcrumb__separator">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9,18 15,12 9,6"></polyline>
+              </svg>
+            </span>
+            <span class="breadcrumb__item breadcrumb__item--active">T-Shirts</span>
+          </nav>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;nav class="breadcrumb breadcrumb--chevron"&gt;
+  &lt;a href="#" class="breadcrumb__item"&gt;Shop&lt;/a&gt;
+  &lt;span class="breadcrumb__separator"&gt;
+    &lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;
+      &lt;polyline points="9,18 15,12 9,6"&gt;&lt;/polyline&gt;
+    &lt;/svg&gt;
+  &lt;/span&gt;
+  &lt;span class="breadcrumb__item breadcrumb__item--active"&gt;Current&lt;/span&gt;
+&lt;/nav&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 5. Pill Style -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Pill Style</h3>
+        </div>
+        <div class="component-card__preview">
+          <nav class="breadcrumb breadcrumb--pill">
+            <a href="#" class="breadcrumb__item">Home</a>
+            <a href="#" class="breadcrumb__item">Category</a>
+            <a href="#" class="breadcrumb__item">Subcategory</a>
+            <span class="breadcrumb__item breadcrumb__item--active">Item</span>
+          </nav>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;nav class="breadcrumb breadcrumb--pill"&gt;
+  &lt;a href="#" class="breadcrumb__item"&gt;Home&lt;/a&gt;
+  &lt;a href="#" class="breadcrumb__item"&gt;Category&lt;/a&gt;
+  &lt;span class="breadcrumb__item breadcrumb__item--active"&gt;Current&lt;/span&gt;
+&lt;/nav&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 6. With Icons -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">With Icons</h3>
+        </div>
+        <div class="component-card__preview">
+          <nav class="breadcrumb breadcrumb--icons">
+            <a href="#" class="breadcrumb__item">
+              <span class="breadcrumb__icon">🏠</span>
+              Home
+            </a>
+            <span class="breadcrumb__separator">/</span>
+            <a href="#" class="breadcrumb__item">
+              <span class="breadcrumb__icon">📁</span>
+              Documents
+            </a>
+            <span class="breadcrumb__separator">/</span>
+            <span class="breadcrumb__item breadcrumb__item--active">
+              <span class="breadcrumb__icon">📄</span>
+              Report.pdf
+            </span>
+          </nav>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;nav class="breadcrumb breadcrumb--icons"&gt;
+  &lt;a href="#" class="breadcrumb__item"&gt;
+    &lt;span class="breadcrumb__icon"&gt;🏠&lt;/span&gt;
+    Home
+  &lt;/a&gt;
+  &lt;span class="breadcrumb__separator"&gt;/&lt;/span&gt;
+  &lt;span class="breadcrumb__item breadcrumb__item--active"&gt;
+    &lt;span class="breadcrumb__icon"&gt;📄&lt;/span&gt;
+    File.pdf
+  &lt;/span&gt;
+&lt;/nav&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 7. Gradient Underline -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Gradient Underline</h3>
+        </div>
+        <div class="component-card__preview">
+          <nav class="breadcrumb breadcrumb--gradient">
+            <a href="#" class="breadcrumb__item">Portfolio</a>
+            <span class="breadcrumb__separator">→</span>
+            <a href="#" class="breadcrumb__item">Projects</a>
+            <span class="breadcrumb__separator">→</span>
+            <span class="breadcrumb__item breadcrumb__item--active">Duke Components</span>
+          </nav>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;nav class="breadcrumb breadcrumb--gradient"&gt;
+  &lt;a href="#" class="breadcrumb__item"&gt;Portfolio&lt;/a&gt;
+  &lt;span class="breadcrumb__separator"&gt;→&lt;/span&gt;
+  &lt;a href="#" class="breadcrumb__item"&gt;Projects&lt;/a&gt;
+  &lt;span class="breadcrumb__separator"&gt;→&lt;/span&gt;
+  &lt;span class="breadcrumb__item breadcrumb__item--active"&gt;Current&lt;/span&gt;
+&lt;/nav&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 8. Boxed Style -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Boxed Style</h3>
+        </div>
+        <div class="component-card__preview">
+          <nav class="breadcrumb breadcrumb--boxed">
+            <a href="#" class="breadcrumb__item">Account</a>
+            <a href="#" class="breadcrumb__item">Security</a>
+            <span class="breadcrumb__item breadcrumb__item--active">Password</span>
+          </nav>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;nav class="breadcrumb breadcrumb--boxed"&gt;
+  &lt;a href="#" class="breadcrumb__item"&gt;Account&lt;/a&gt;
+  &lt;a href="#" class="breadcrumb__item"&gt;Security&lt;/a&gt;
+  &lt;span class="breadcrumb__item breadcrumb__item--active"&gt;Password&lt;/span&gt;
+&lt;/nav&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 9. Step Progress -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Step Progress</h3>
+        </div>
+        <div class="component-card__preview">
+          <nav class="breadcrumb breadcrumb--steps">
+            <span class="breadcrumb__item breadcrumb__item--completed">Cart</span>
+            <span class="breadcrumb__item breadcrumb__item--completed">Shipping</span>
+            <span class="breadcrumb__item breadcrumb__item--active">Payment</span>
+            <span class="breadcrumb__item">Confirmation</span>
+          </nav>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;nav class="breadcrumb breadcrumb--steps"&gt;
+  &lt;span class="breadcrumb__item breadcrumb__item--completed"&gt;Cart&lt;/span&gt;
+  &lt;span class="breadcrumb__item breadcrumb__item--completed"&gt;Shipping&lt;/span&gt;
+  &lt;span class="breadcrumb__item breadcrumb__item--active"&gt;Payment&lt;/span&gt;
+  &lt;span class="breadcrumb__item"&gt;Confirmation&lt;/span&gt;
+&lt;/nav&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 10. Animated -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Animated</h3>
+        </div>
+        <div class="component-card__preview">
+          <nav class="breadcrumb breadcrumb--animated" id="animatedBreadcrumb">
+            <a href="#" class="breadcrumb__item">Home</a>
+            <span class="breadcrumb__separator">/</span>
+            <a href="#" class="breadcrumb__item">Library</a>
+            <span class="breadcrumb__separator">/</span>
+            <span class="breadcrumb__item breadcrumb__item--active">Data</span>
+          </nav>
+          <button class="demo-btn" onclick="replayAnimation()" style="margin-top: 12px;">Replay Animation</button>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;nav class="breadcrumb breadcrumb--animated"&gt;
+  &lt;a href="#" class="breadcrumb__item"&gt;Home&lt;/a&gt;
+  &lt;span class="breadcrumb__separator"&gt;/&lt;/span&gt;
+  &lt;a href="#" class="breadcrumb__item"&gt;Library&lt;/a&gt;
+  &lt;span class="breadcrumb__separator"&gt;/&lt;/span&gt;
+  &lt;span class="breadcrumb__item breadcrumb__item--active"&gt;Data&lt;/span&gt;
+&lt;/nav&gt;
+
+/* CSS Animation */
+@keyframes breadcrumbSlide {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}</code></pre>
+        </div>
+      </article>
+
+      <!-- 11. Glass Effect -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Glass Effect</h3>
+        </div>
+        <div class="component-card__preview" style="background: linear-gradient(135deg, var(--primary), var(--secondary)); padding: 24px; border-radius: 8px;">
+          <nav class="breadcrumb breadcrumb--glass">
+            <a href="#" class="breadcrumb__item">Admin</a>
+            <span class="breadcrumb__separator">›</span>
+            <a href="#" class="breadcrumb__item">Users</a>
+            <span class="breadcrumb__separator">›</span>
+            <span class="breadcrumb__item breadcrumb__item--active">Edit Profile</span>
+          </nav>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;nav class="breadcrumb breadcrumb--glass"&gt;
+  &lt;a href="#" class="breadcrumb__item"&gt;Admin&lt;/a&gt;
+  &lt;span class="breadcrumb__separator"&gt;›&lt;/span&gt;
+  &lt;a href="#" class="breadcrumb__item"&gt;Users&lt;/a&gt;
+  &lt;span class="breadcrumb__separator"&gt;›&lt;/span&gt;
+  &lt;span class="breadcrumb__item breadcrumb__item--active"&gt;Edit Profile&lt;/span&gt;
+&lt;/nav&gt;
+
+/* Glass Effect */
+.breadcrumb--glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+}</code></pre>
+        </div>
+      </article>
+
+      <!-- 12. Dropdown Collapse -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Dropdown Collapse</h3>
+        </div>
+        <div class="component-card__preview">
+          <nav class="breadcrumb breadcrumb--dropdown">
+            <a href="#" class="breadcrumb__item">Home</a>
+            <span class="breadcrumb__separator">/</span>
+            <div class="breadcrumb__collapse">
+              <button class="breadcrumb__collapse-btn">...</button>
+              <div class="breadcrumb__collapse-menu">
+                <a href="#">Products</a>
+                <a href="#">Electronics</a>
+                <a href="#">Computers</a>
+              </div>
+            </div>
+            <span class="breadcrumb__separator">/</span>
+            <a href="#" class="breadcrumb__item">Laptops</a>
+            <span class="breadcrumb__separator">/</span>
+            <span class="breadcrumb__item breadcrumb__item--active">MacBook Pro</span>
+          </nav>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;nav class="breadcrumb breadcrumb--dropdown"&gt;
+  &lt;a href="#" class="breadcrumb__item"&gt;Home&lt;/a&gt;
+  &lt;span class="breadcrumb__separator"&gt;/&lt;/span&gt;
+  &lt;div class="breadcrumb__collapse"&gt;
+    &lt;button class="breadcrumb__collapse-btn"&gt;...&lt;/button&gt;
+    &lt;div class="breadcrumb__collapse-menu"&gt;
+      &lt;a href="#"&gt;Hidden Item 1&lt;/a&gt;
+      &lt;a href="#"&gt;Hidden Item 2&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;span class="breadcrumb__separator"&gt;/&lt;/span&gt;
+  &lt;span class="breadcrumb__item breadcrumb__item--active"&gt;Current&lt;/span&gt;
+&lt;/nav&gt;</code></pre>
+        </div>
+      </article>
+
+    </div>
+  </main>
+  </div>
+
+  <script src="../../assets/js/copy-code.js"></script>
+  <script src="../../assets/js/security-system.js"></script>
+  <script>
+    function replayAnimation() {
+      const breadcrumb = document.getElementById('animatedBreadcrumb');
+      breadcrumb.style.animation = 'none';
+      breadcrumb.offsetHeight; // Trigger reflow
+      breadcrumb.style.animation = null;
+
+      // Reset all children animations
+      const children = breadcrumb.querySelectorAll('.breadcrumb__item, .breadcrumb__separator');
+      children.forEach(child => {
+        child.style.animation = 'none';
+        child.offsetHeight;
+        child.style.animation = null;
+      });
+    }
+  </script>
+</body>
+</html>

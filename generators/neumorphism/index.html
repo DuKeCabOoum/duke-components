@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neumorphism Generator — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ========== GENERATOR LAYOUT ========== */
+    .generator {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 32px;
+      min-height: calc(100vh - 200px);
+    }
+
+    /* ========== PREVIEW AREA ========== */
+    .preview-area {
+      background: #e0e5ec;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .preview-area--dark {
+      background: #2d2d2d;
+    }
+
+    /* Neumorphic preview element */
+    .neu-preview {
+      width: 200px;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .neu-preview__icon {
+      font-size: 48px;
+    }
+
+    .neu-preview__text {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #6b7280;
+    }
+
+    .preview-area--dark .neu-preview__text {
+      color: #9ca3af;
+    }
+
+    /* ========== CONTROLS PANEL ========== */
+    .controls {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      overflow-y: auto;
+    }
+
+    .controls__title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 4px;
+    }
+
+    /* Control group */
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .control-group__label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    .control-group__value {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--primary-light);
+      background: rgba(99, 102, 241, 0.1);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    /* Slider */
+    .slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 6px;
+      background: var(--bg-dark);
+      border-radius: 3px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      background: var(--primary);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+
+    .slider::-webkit-slider-thumb:hover {
+      transform: scale(1.1);
+    }
+
+    .slider::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      background: var(--primary);
+      border-radius: 50%;
+      cursor: pointer;
+      border: none;
+    }
+
+    /* Color picker row */
+    .color-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .color-picker {
+      width: 48px;
+      height: 36px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: none;
+    }
+
+    .color-picker::-webkit-color-swatch-wrapper {
+      padding: 0;
+    }
+
+    .color-picker::-webkit-color-swatch {
+      border: 2px solid var(--border);
+      border-radius: 8px;
+    }
+
+    .color-input {
+      flex: 1;
+      padding: 8px 12px;
+      background: var(--bg-dark);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+    }
+
+    .color-input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    /* Shape selector */
+    .shape-selector {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .shape-btn {
+      padding: 10px;
+      background: var(--bg-dark);
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+
+    .shape-btn:hover {
+      border-color: var(--primary);
+      color: var(--text-primary);
+    }
+
+    .shape-btn--active {
+      border-color: var(--primary);
+      background: rgba(99, 102, 241, 0.1);
+      color: var(--primary-light);
+    }
+
+    .shape-btn__icon {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 4px;
+    }
+
+    /* Direction selector */
+    .direction-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px;
+      width: 120px;
+      margin: 0 auto;
+    }
+
+    .direction-btn {
+      aspect-ratio: 1;
+      background: var(--bg-dark);
+      border: 2px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    .direction-btn:hover {
+      border-color: var(--primary);
+    }
+
+    .direction-btn--active {
+      border-color: var(--primary);
+      background: rgba(99, 102, 241, 0.2);
+    }
+
+    .direction-btn--center {
+      background: var(--bg-card);
+      pointer-events: none;
+    }
+
+    /* Section label */
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    /* ========== CODE OUTPUT ========== */
+    .code-output {
+      margin-top: auto;
+      background: var(--bg-dark);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .code-output__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .code-output__lang {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .code-output__copy {
+      padding: 6px 14px;
+      background: var(--primary);
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .code-output__copy:hover {
+      background: var(--primary-hover);
+    }
+
+    .code-output__copy--success {
+      background: var(--accent-green);
+    }
+
+    .code-output__content {
+      padding: 16px;
+      max-height: 180px;
+      overflow-y: auto;
+    }
+
+    .code-output__content pre {
+      margin: 0;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      white-space: pre-wrap;
+    }
+
+    /* Presets row */
+    .presets-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .preset-chip {
+      padding: 6px 12px;
+      background: var(--bg-dark);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .preset-chip:hover {
+      border-color: var(--primary);
+      color: var(--primary-light);
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="sidebar__logo">
+        <a href="../../index.html" style="text-decoration: none; color: inherit;">
+          <span>Duke</span>-components
+        </a>
+      </div>
+
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Generateurs</h3>
+        <ul class="sidebar__nav">
+          <li><a href="../gradient/index.html" class="sidebar__link"><span>🌈</span> Gradient</a></li>
+          <li><a href="../shadow/index.html" class="sidebar__link"><span>🌑</span> Shadow</a></li>
+          <li><a href="../flexbox/index.html" class="sidebar__link"><span>📐</span> Flexbox</a></li>
+          <li><a href="../grid/index.html" class="sidebar__link"><span>🔲</span> Grid</a></li>
+          <li><a href="../border-radius/index.html" class="sidebar__link"><span>⬜</span> Border Radius</a></li>
+          <li><a href="../animation/index.html" class="sidebar__link"><span>🎬</span> Animation</a></li>
+          <li><a href="../clip-path/index.html" class="sidebar__link"><span>✂️</span> Clip Path</a></li>
+          <li><a href="../glassmorphism/index.html" class="sidebar__link"><span>🪟</span> Glassmorphism</a></li>
+          <li><a href="index.html" class="sidebar__link sidebar__link--active"><span>🔘</span> Neumorphism</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Retour</h3>
+        <ul class="sidebar__nav">
+          <li><a href="../../index.html" class="sidebar__link"><span>🏠</span> Dashboard</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="page-header">
+        <h1 class="page-header__title">Neumorphism Generator</h1>
+        <p class="page-header__desc">Cree des effets de relief doux avec des ombres interieures et exterieures.</p>
+      </header>
+
+      <div class="generator">
+        <!-- Preview Area -->
+        <div class="preview-area" id="previewArea">
+          <div class="neu-preview" id="neuPreview">
+            <span class="neu-preview__icon">🔘</span>
+            <span class="neu-preview__text">Neumorphic</span>
+          </div>
+        </div>
+
+        <!-- Controls Panel -->
+        <div class="controls">
+          <h2 class="controls__title">Parametres</h2>
+
+          <!-- Quick Presets -->
+          <div class="control-group">
+            <span class="section-label">Presets rapides</span>
+            <div class="presets-row">
+              <button class="preset-chip" onclick="applyPreset('soft')">Soft</button>
+              <button class="preset-chip" onclick="applyPreset('medium')">Medium</button>
+              <button class="preset-chip" onclick="applyPreset('hard')">Hard</button>
+              <button class="preset-chip" onclick="applyPreset('dark')">Dark</button>
+            </div>
+          </div>
+
+          <!-- Shape Type -->
+          <div class="control-group">
+            <span class="section-label">Type de forme</span>
+            <div class="shape-selector">
+              <button class="shape-btn shape-btn--active" id="shape-flat" onclick="setShape('flat')">
+                <span class="shape-btn__icon">◻️</span>
+                Flat
+              </button>
+              <button class="shape-btn" id="shape-concave" onclick="setShape('concave')">
+                <span class="shape-btn__icon">🔽</span>
+                Concave
+              </button>
+              <button class="shape-btn" id="shape-convex" onclick="setShape('convex')">
+                <span class="shape-btn__icon">🔼</span>
+                Convex
+              </button>
+              <button class="shape-btn" id="shape-pressed" onclick="setShape('pressed')">
+                <span class="shape-btn__icon">⏺️</span>
+                Pressed
+              </button>
+            </div>
+          </div>
+
+          <!-- Light Direction -->
+          <div class="control-group">
+            <span class="section-label">Direction de la lumiere</span>
+            <div class="direction-grid">
+              <button class="direction-btn direction-btn--active" id="dir-tl" onclick="setDirection('tl')">↖</button>
+              <button class="direction-btn" id="dir-t" onclick="setDirection('t')">↑</button>
+              <button class="direction-btn" id="dir-tr" onclick="setDirection('tr')">↗</button>
+              <button class="direction-btn" id="dir-l" onclick="setDirection('l')">←</button>
+              <button class="direction-btn direction-btn--center">☀️</button>
+              <button class="direction-btn" id="dir-r" onclick="setDirection('r')">→</button>
+              <button class="direction-btn" id="dir-bl" onclick="setDirection('bl')">↙</button>
+              <button class="direction-btn" id="dir-b" onclick="setDirection('b')">↓</button>
+              <button class="direction-btn" id="dir-br" onclick="setDirection('br')">↘</button>
+            </div>
+          </div>
+
+          <!-- Background Color -->
+          <div class="control-group">
+            <label class="control-group__label">
+              <span>Couleur de fond</span>
+            </label>
+            <div class="color-row">
+              <input type="color" class="color-picker" id="bgColorPicker" value="#e0e5ec" oninput="syncBgColor('picker')">
+              <input type="text" class="color-input" id="bgColorInput" value="#e0e5ec" oninput="syncBgColor('input')">
+            </div>
+          </div>
+
+          <!-- Size -->
+          <div class="control-group">
+            <label class="control-group__label">
+              <span>Taille</span>
+              <span class="control-group__value" id="sizeValue">200px</span>
+            </label>
+            <input type="range" class="slider" id="sizeSlider" min="100" max="300" value="200" oninput="updateNeu()">
+          </div>
+
+          <!-- Distance -->
+          <div class="control-group">
+            <label class="control-group__label">
+              <span>Distance</span>
+              <span class="control-group__value" id="distanceValue">20px</span>
+            </label>
+            <input type="range" class="slider" id="distanceSlider" min="5" max="50" value="20" oninput="updateNeu()">
+          </div>
+
+          <!-- Intensity -->
+          <div class="control-group">
+            <label class="control-group__label">
+              <span>Intensite</span>
+              <span class="control-group__value" id="intensityValue">15%</span>
+            </label>
+            <input type="range" class="slider" id="intensitySlider" min="5" max="40" value="15" oninput="updateNeu()">
+          </div>
+
+          <!-- Blur -->
+          <div class="control-group">
+            <label class="control-group__label">
+              <span>Blur</span>
+              <span class="control-group__value" id="blurValue">40px</span>
+            </label>
+            <input type="range" class="slider" id="blurSlider" min="10" max="80" value="40" oninput="updateNeu()">
+          </div>
+
+          <!-- Border Radius -->
+          <div class="control-group">
+            <label class="control-group__label">
+              <span>Border Radius</span>
+              <span class="control-group__value" id="radiusValue">50px</span>
+            </label>
+            <input type="range" class="slider" id="radiusSlider" min="0" max="100" value="50" oninput="updateNeu()">
+          </div>
+
+          <!-- Code Output -->
+          <div class="code-output">
+            <div class="code-output__header">
+              <span class="code-output__lang">CSS</span>
+              <button class="code-output__copy" id="copyBtn" onclick="copyCode()">Copier</button>
+            </div>
+            <div class="code-output__content">
+              <pre id="codeOutput"></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // State
+    let currentShape = 'flat';
+    let currentDirection = 'tl';
+
+    // DOM Elements
+    const previewArea = document.getElementById('previewArea');
+    const neuPreview = document.getElementById('neuPreview');
+    const codeOutput = document.getElementById('codeOutput');
+    const copyBtn = document.getElementById('copyBtn');
+
+    // Sliders
+    const sizeSlider = document.getElementById('sizeSlider');
+    const distanceSlider = document.getElementById('distanceSlider');
+    const intensitySlider = document.getElementById('intensitySlider');
+    const blurSlider = document.getElementById('blurSlider');
+    const radiusSlider = document.getElementById('radiusSlider');
+
+    // Color inputs
+    const bgColorPicker = document.getElementById('bgColorPicker');
+    const bgColorInput = document.getElementById('bgColorInput');
+
+    // Value displays
+    const sizeValue = document.getElementById('sizeValue');
+    const distanceValue = document.getElementById('distanceValue');
+    const intensityValue = document.getElementById('intensityValue');
+    const blurValue = document.getElementById('blurValue');
+    const radiusValue = document.getElementById('radiusValue');
+
+    // Direction offsets
+    const directions = {
+      'tl': { x: -1, y: -1 },
+      't':  { x: 0,  y: -1 },
+      'tr': { x: 1,  y: -1 },
+      'l':  { x: -1, y: 0 },
+      'r':  { x: 1,  y: 0 },
+      'bl': { x: -1, y: 1 },
+      'b':  { x: 0,  y: 1 },
+      'br': { x: 1,  y: 1 }
+    };
+
+    // Hex to RGB
+    function hexToRgb(hex) {
+      const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+      } : { r: 224, g: 229, b: 236 };
+    }
+
+    // Adjust color brightness
+    function adjustColor(hex, percent) {
+      const rgb = hexToRgb(hex);
+      const adjust = (val) => Math.min(255, Math.max(0, Math.round(val + (255 * percent / 100))));
+      return `rgb(${adjust(rgb.r)}, ${adjust(rgb.g)}, ${adjust(rgb.b)})`;
+    }
+
+    // Sync color inputs
+    function syncBgColor(source) {
+      if (source === 'picker') {
+        bgColorInput.value = bgColorPicker.value;
+      } else {
+        const val = bgColorInput.value;
+        if (/^#[0-9A-Fa-f]{6}$/.test(val)) {
+          bgColorPicker.value = val;
+        }
+      }
+      updateNeu();
+    }
+
+    // Set shape
+    function setShape(shape) {
+      currentShape = shape;
+      document.querySelectorAll('.shape-btn').forEach(btn => btn.classList.remove('shape-btn--active'));
+      document.getElementById('shape-' + shape).classList.add('shape-btn--active');
+      updateNeu();
+    }
+
+    // Set direction
+    function setDirection(dir) {
+      currentDirection = dir;
+      document.querySelectorAll('.direction-btn').forEach(btn => btn.classList.remove('direction-btn--active'));
+      document.getElementById('dir-' + dir).classList.add('direction-btn--active');
+      updateNeu();
+    }
+
+    // Update neumorphism
+    function updateNeu() {
+      const size = parseInt(sizeSlider.value);
+      const distance = parseInt(distanceSlider.value);
+      const intensity = parseInt(intensitySlider.value);
+      const blur = parseInt(blurSlider.value);
+      const radius = parseInt(radiusSlider.value);
+      const bgColor = bgColorPicker.value;
+
+      // Update displays
+      sizeValue.textContent = size + 'px';
+      distanceValue.textContent = distance + 'px';
+      intensityValue.textContent = intensity + '%';
+      blurValue.textContent = blur + 'px';
+      radiusValue.textContent = radius + 'px';
+
+      // Calculate shadow colors
+      const lightColor = adjustColor(bgColor, intensity);
+      const darkColor = adjustColor(bgColor, -intensity);
+
+      // Direction
+      const dir = directions[currentDirection];
+      const offsetX = distance * dir.x;
+      const offsetY = distance * dir.y;
+
+      // Build shadow based on shape
+      let boxShadow = '';
+      let background = bgColor;
+
+      if (currentShape === 'flat') {
+        boxShadow = `${offsetX}px ${offsetY}px ${blur}px ${darkColor}, ${-offsetX}px ${-offsetY}px ${blur}px ${lightColor}`;
+      } else if (currentShape === 'concave') {
+        boxShadow = `${offsetX}px ${offsetY}px ${blur}px ${darkColor}, ${-offsetX}px ${-offsetY}px ${blur}px ${lightColor}, inset ${offsetX}px ${offsetY}px ${blur}px ${darkColor}, inset ${-offsetX}px ${-offsetY}px ${blur}px ${lightColor}`;
+        background = `linear-gradient(145deg, ${adjustColor(bgColor, -5)}, ${adjustColor(bgColor, 5)})`;
+      } else if (currentShape === 'convex') {
+        boxShadow = `${offsetX}px ${offsetY}px ${blur}px ${darkColor}, ${-offsetX}px ${-offsetY}px ${blur}px ${lightColor}`;
+        background = `linear-gradient(145deg, ${adjustColor(bgColor, 5)}, ${adjustColor(bgColor, -5)})`;
+      } else if (currentShape === 'pressed') {
+        boxShadow = `inset ${offsetX}px ${offsetY}px ${blur}px ${darkColor}, inset ${-offsetX}px ${-offsetY}px ${blur}px ${lightColor}`;
+      }
+
+      // Apply to preview area and element
+      previewArea.style.background = bgColor;
+      neuPreview.style.width = size + 'px';
+      neuPreview.style.height = size + 'px';
+      neuPreview.style.borderRadius = radius + 'px';
+      neuPreview.style.background = background;
+      neuPreview.style.boxShadow = boxShadow;
+
+      // Check if dark mode
+      const rgb = hexToRgb(bgColor);
+      const isDark = (rgb.r + rgb.g + rgb.b) / 3 < 128;
+      previewArea.classList.toggle('preview-area--dark', isDark);
+
+      // Generate code
+      generateCode(background, boxShadow, radius);
+    }
+
+    // Generate CSS code
+    function generateCode(bg, shadow, radius) {
+      const code = `.neumorphic {
+  background: ${bg};
+  border-radius: ${radius}px;
+  box-shadow: ${shadow};
+}`;
+      codeOutput.textContent = code;
+    }
+
+    // Copy code
+    function copyCode() {
+      const code = codeOutput.textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        copyBtn.textContent = 'Copie !';
+        copyBtn.classList.add('code-output__copy--success');
+        setTimeout(() => {
+          copyBtn.textContent = 'Copier';
+          copyBtn.classList.remove('code-output__copy--success');
+        }, 2000);
+      });
+    }
+
+    // Presets
+    function applyPreset(preset) {
+      switch(preset) {
+        case 'soft':
+          bgColorPicker.value = '#e0e5ec';
+          bgColorInput.value = '#e0e5ec';
+          distanceSlider.value = 15;
+          intensitySlider.value = 10;
+          blurSlider.value = 30;
+          radiusSlider.value = 30;
+          setShape('flat');
+          break;
+        case 'medium':
+          bgColorPicker.value = '#e0e5ec';
+          bgColorInput.value = '#e0e5ec';
+          distanceSlider.value = 20;
+          intensitySlider.value = 15;
+          blurSlider.value = 40;
+          radiusSlider.value = 50;
+          setShape('flat');
+          break;
+        case 'hard':
+          bgColorPicker.value = '#e0e5ec';
+          bgColorInput.value = '#e0e5ec';
+          distanceSlider.value = 30;
+          intensitySlider.value = 25;
+          blurSlider.value = 60;
+          radiusSlider.value = 20;
+          setShape('convex');
+          break;
+        case 'dark':
+          bgColorPicker.value = '#2d2d2d';
+          bgColorInput.value = '#2d2d2d';
+          distanceSlider.value = 20;
+          intensitySlider.value = 20;
+          blurSlider.value = 40;
+          radiusSlider.value = 50;
+          setShape('flat');
+          break;
+      }
+      updateNeu();
+    }
+
+    // Initialize
+    updateNeu();
+  </script>
+</body>
+</html>

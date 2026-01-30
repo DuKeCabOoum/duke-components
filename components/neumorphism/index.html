@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neumorphism — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ========== NEUMORPHISM STYLES ========== */
+
+    /* Preview container with neumorphic background */
+    .neu-preview {
+      background: #e0e5ec;
+      padding: 40px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 180px;
+    }
+
+    .neu-preview--dark {
+      background: #1e1e2e;
+    }
+
+    /* Base shadows for light theme */
+    :root {
+      --neu-light: #ffffff;
+      --neu-dark: #a3b1c6;
+      --neu-bg: #e0e5ec;
+      --neu-text: #333;
+      --neu-text-muted: #666;
+    }
+
+    /* ===== 1. Raised Card ===== */
+    .neu-card {
+      background: #e0e5ec;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow:
+        8px 8px 16px #a3b1c6,
+        -8px -8px 16px #ffffff;
+    }
+
+    .neu-card__title {
+      color: var(--neu-text);
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .neu-card__text {
+      color: var(--neu-text-muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* ===== 2. Pressed/Inset Card ===== */
+    .neu-card--inset {
+      box-shadow:
+        inset 8px 8px 16px #a3b1c6,
+        inset -8px -8px 16px #ffffff;
+    }
+
+    /* ===== 3. Flat Card ===== */
+    .neu-card--flat {
+      box-shadow:
+        6px 6px 12px #a3b1c6,
+        -6px -6px 12px #ffffff,
+        inset 1px 1px 2px rgba(255,255,255,0.5),
+        inset -1px -1px 2px rgba(163,177,198,0.3);
+    }
+
+    /* ===== 4. Neumorphic Button ===== */
+    .neu-btn {
+      background: #e0e5ec;
+      border: none;
+      border-radius: 12px;
+      padding: 14px 28px;
+      color: var(--neu-text);
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      box-shadow:
+        6px 6px 12px #a3b1c6,
+        -6px -6px 12px #ffffff;
+      transition: all 0.2s ease;
+    }
+
+    .neu-btn:hover {
+      box-shadow:
+        4px 4px 8px #a3b1c6,
+        -4px -4px 8px #ffffff;
+    }
+
+    .neu-btn:active {
+      box-shadow:
+        inset 4px 4px 8px #a3b1c6,
+        inset -4px -4px 8px #ffffff;
+    }
+
+    /* ===== 5. Icon Button ===== */
+    .neu-icon-btn {
+      width: 56px;
+      height: 56px;
+      background: #e0e5ec;
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow:
+        6px 6px 12px #a3b1c6,
+        -6px -6px 12px #ffffff;
+      transition: all 0.2s ease;
+    }
+
+    .neu-icon-btn:active {
+      box-shadow:
+        inset 4px 4px 8px #a3b1c6,
+        inset -4px -4px 8px #ffffff;
+    }
+
+    /* ===== 6. Toggle Switch ===== */
+    .neu-toggle {
+      width: 70px;
+      height: 36px;
+      background: #e0e5ec;
+      border-radius: 50px;
+      position: relative;
+      cursor: pointer;
+      box-shadow:
+        inset 4px 4px 8px #a3b1c6,
+        inset -4px -4px 8px #ffffff;
+      transition: all 0.3s ease;
+    }
+
+    .neu-toggle__slider {
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      background: #e0e5ec;
+      border-radius: 50%;
+      top: 4px;
+      left: 4px;
+      box-shadow:
+        3px 3px 6px #a3b1c6,
+        -3px -3px 6px #ffffff;
+      transition: all 0.3s ease;
+    }
+
+    .neu-toggle.active .neu-toggle__slider {
+      left: 38px;
+      background: linear-gradient(145deg, #6366f1, #4f46e5);
+    }
+
+    /* ===== 7. Input Field ===== */
+    .neu-input {
+      background: #e0e5ec;
+      border: none;
+      border-radius: 12px;
+      padding: 14px 20px;
+      color: var(--neu-text);
+      font-size: 16px;
+      width: 100%;
+      max-width: 280px;
+      box-shadow:
+        inset 4px 4px 8px #a3b1c6,
+        inset -4px -4px 8px #ffffff;
+      transition: all 0.3s ease;
+    }
+
+    .neu-input::placeholder {
+      color: #999;
+    }
+
+    .neu-input:focus {
+      outline: none;
+      box-shadow:
+        inset 6px 6px 12px #a3b1c6,
+        inset -6px -6px 12px #ffffff;
+    }
+
+    /* ===== 8. Checkbox ===== */
+    .neu-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+
+    .neu-checkbox__box {
+      width: 28px;
+      height: 28px;
+      background: #e0e5ec;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow:
+        4px 4px 8px #a3b1c6,
+        -4px -4px 8px #ffffff;
+      transition: all 0.2s ease;
+    }
+
+    .neu-checkbox__box--checked {
+      box-shadow:
+        inset 4px 4px 8px #a3b1c6,
+        inset -4px -4px 8px #ffffff;
+      color: #6366f1;
+    }
+
+    .neu-checkbox__label {
+      color: var(--neu-text);
+      font-size: 14px;
+    }
+
+    /* ===== 9. Radio Buttons ===== */
+    .neu-radio-group {
+      display: flex;
+      gap: 16px;
+    }
+
+    .neu-radio {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .neu-radio__circle {
+      width: 24px;
+      height: 24px;
+      background: #e0e5ec;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow:
+        4px 4px 8px #a3b1c6,
+        -4px -4px 8px #ffffff;
+    }
+
+    .neu-radio__circle--active {
+      box-shadow:
+        inset 4px 4px 8px #a3b1c6,
+        inset -4px -4px 8px #ffffff;
+    }
+
+    .neu-radio__circle--active::after {
+      content: "";
+      width: 10px;
+      height: 10px;
+      background: linear-gradient(145deg, #6366f1, #4f46e5);
+      border-radius: 50%;
+    }
+
+    .neu-radio__label {
+      color: var(--neu-text);
+      font-size: 14px;
+    }
+
+    /* ===== 10. Progress Bar ===== */
+    .neu-progress {
+      width: 100%;
+      max-width: 300px;
+      height: 20px;
+      background: #e0e5ec;
+      border-radius: 50px;
+      box-shadow:
+        inset 4px 4px 8px #a3b1c6,
+        inset -4px -4px 8px #ffffff;
+      padding: 4px;
+    }
+
+    .neu-progress__fill {
+      height: 100%;
+      background: linear-gradient(90deg, #6366f1, #8b5cf6);
+      border-radius: 50px;
+      box-shadow: 2px 2px 4px rgba(99, 102, 241, 0.4);
+      transition: width 0.5s ease;
+    }
+
+    /* ===== 11. Slider/Range ===== */
+    .neu-slider {
+      width: 100%;
+      max-width: 280px;
+      height: 12px;
+      background: #e0e5ec;
+      border-radius: 50px;
+      box-shadow:
+        inset 3px 3px 6px #a3b1c6,
+        inset -3px -3px 6px #ffffff;
+      position: relative;
+    }
+
+    .neu-slider__track {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      background: linear-gradient(90deg, #6366f1, #8b5cf6);
+      border-radius: 50px;
+      width: 60%;
+    }
+
+    .neu-slider__thumb {
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      background: #e0e5ec;
+      border-radius: 50%;
+      top: 50%;
+      left: 60%;
+      transform: translate(-50%, -50%);
+      box-shadow:
+        4px 4px 8px #a3b1c6,
+        -4px -4px 8px #ffffff;
+      cursor: grab;
+    }
+
+    /* ===== 12. Tabs ===== */
+    .neu-tabs {
+      display: flex;
+      gap: 8px;
+      background: #e0e5ec;
+      padding: 8px;
+      border-radius: 16px;
+      box-shadow:
+        inset 4px 4px 8px #a3b1c6,
+        inset -4px -4px 8px #ffffff;
+    }
+
+    .neu-tab {
+      padding: 12px 24px;
+      background: transparent;
+      border: none;
+      border-radius: 12px;
+      color: var(--neu-text-muted);
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .neu-tab:hover {
+      color: var(--neu-text);
+    }
+
+    .neu-tab--active {
+      background: #e0e5ec;
+      color: #6366f1;
+      font-weight: 500;
+      box-shadow:
+        4px 4px 8px #a3b1c6,
+        -4px -4px 8px #ffffff;
+    }
+
+    /* ===== 13. Dark Theme Card ===== */
+    .neu-card--dark {
+      background: #1e1e2e;
+      box-shadow:
+        8px 8px 16px #161622,
+        -8px -8px 16px #26263a;
+    }
+
+    .neu-card--dark .neu-card__title {
+      color: #fff;
+    }
+
+    .neu-card--dark .neu-card__text {
+      color: #888;
+    }
+
+    /* ===== 14. Clock/Circular Element ===== */
+    .neu-clock {
+      width: 150px;
+      height: 150px;
+      background: #e0e5ec;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow:
+        12px 12px 24px #a3b1c6,
+        -12px -12px 24px #ffffff,
+        inset 2px 2px 4px rgba(255,255,255,0.5);
+    }
+
+    .neu-clock__inner {
+      width: 120px;
+      height: 120px;
+      background: #e0e5ec;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      box-shadow:
+        inset 6px 6px 12px #a3b1c6,
+        inset -6px -6px 12px #ffffff;
+    }
+
+    .neu-clock__time {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--neu-text);
+    }
+
+    .neu-clock__label {
+      font-size: 12px;
+      color: var(--neu-text-muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+  <aside class="sidebar">
+    <div class="sidebar__logo">
+      <a href="../../index.html"><span>Duke</span>-components</a>
+    </div>
+    <div class="sidebar__section">
+      <h3 class="sidebar__title">Effets</h3>
+      <ul class="sidebar__nav">
+        <li><a href="../animations/index.html" class="sidebar__link"><span>✨</span> Animations</a></li>
+        <li><a href="../backgrounds/index.html" class="sidebar__link"><span>🎨</span> Backgrounds</a></li>
+        <li><a href="../glassmorphism/index.html" class="sidebar__link"><span>🪟</span> Glassmorphism</a></li>
+        <li><a href="../hovers/index.html" class="sidebar__link"><span>👆</span> Hovers</a></li>
+        <li><a href="../mouse-effects/index.html" class="sidebar__link"><span>🖱️</span> Mouse Effects</a></li>
+        <li><a href="index.html" class="sidebar__link sidebar__link--active"><span>🔘</span> Neumorphism</a></li>
+        <li><a href="../text-effects/index.html" class="sidebar__link"><span>🔤</span> Text Effects</a></li>
+      </ul>
+    </div>
+    <div class="admin-toggle">
+      <span class="admin-toggle__label">Mode Admin</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="admin-toggle">
+        <span class="toggle-switch__slider"></span>
+      </label>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="page-header">
+      <h1 class="page-header__title">Neumorphism</h1>
+      <p class="page-header__desc">Soft UI avec ombres douces : 14 composants avec effet de relief extrudé.</p>
+    </header>
+
+    <div class="components-grid">
+
+      <!-- 1. Raised Card -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Raised Card</h3>
+        </div>
+        <div class="component-card__preview neu-preview">
+          <div class="neu-card">
+            <h4 class="neu-card__title">Neumorphic Card</h4>
+            <p class="neu-card__text">Soft shadows create a raised effect.</p>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>.neu-card {
+  background: #e0e5ec;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow:
+    8px 8px 16px #a3b1c6,
+    -8px -8px 16px #ffffff;
+}</code></pre>
+        </div>
+      </article>
+
+      <!-- 2. Inset Card -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Inset/Pressed Card</h3>
+        </div>
+        <div class="component-card__preview neu-preview">
+          <div class="neu-card neu-card--inset">
+            <h4 class="neu-card__title">Pressed Effect</h4>
+            <p class="neu-card__text">Inner shadows for a pressed look.</p>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>.neu-card--inset {
+  box-shadow:
+    inset 8px 8px 16px #a3b1c6,
+    inset -8px -8px 16px #ffffff;
+}</code></pre>
+        </div>
+      </article>
+
+      <!-- 3. Button -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Neumorphic Button</h3>
+        </div>
+        <div class="component-card__preview neu-preview">
+          <div style="display: flex; gap: 16px;">
+            <button class="neu-btn">Click Me</button>
+            <button class="neu-btn">Submit</button>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;button class="neu-btn"&gt;Click Me&lt;/button&gt;
+
+/* CSS */
+.neu-btn {
+  background: #e0e5ec;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 28px;
+  box-shadow:
+    6px 6px 12px #a3b1c6,
+    -6px -6px 12px #ffffff;
+}
+
+.neu-btn:active {
+  box-shadow:
+    inset 4px 4px 8px #a3b1c6,
+    inset -4px -4px 8px #ffffff;
+}</code></pre>
+        </div>
+      </article>
+
+      <!-- 4. Icon Buttons -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Icon Buttons</h3>
+        </div>
+        <div class="component-card__preview neu-preview">
+          <div style="display: flex; gap: 20px;">
+            <button class="neu-icon-btn">🏠</button>
+            <button class="neu-icon-btn">⚙️</button>
+            <button class="neu-icon-btn">❤️</button>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;button class="neu-icon-btn"&gt;🏠&lt;/button&gt;
+
+/* CSS */
+.neu-icon-btn {
+  width: 56px;
+  height: 56px;
+  background: #e0e5ec;
+  border-radius: 50%;
+  box-shadow:
+    6px 6px 12px #a3b1c6,
+    -6px -6px 12px #ffffff;
+}</code></pre>
+        </div>
+      </article>
+
+      <!-- 5. Toggle Switch -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Toggle Switch</h3>
+        </div>
+        <div class="component-card__preview neu-preview">
+          <div style="display: flex; gap: 20px;">
+            <div class="neu-toggle" onclick="this.classList.toggle('active')">
+              <div class="neu-toggle__slider"></div>
+            </div>
+            <div class="neu-toggle active" onclick="this.classList.toggle('active')">
+              <div class="neu-toggle__slider"></div>
+            </div>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;div class="neu-toggle" onclick="this.classList.toggle('active')"&gt;
+  &lt;div class="neu-toggle__slider"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 6. Input Field -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Input Field</h3>
+        </div>
+        <div class="component-card__preview neu-preview">
+          <input type="text" class="neu-input" placeholder="Enter your email...">
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;input type="text" class="neu-input" placeholder="Email..."&gt;
+
+/* CSS */
+.neu-input {
+  background: #e0e5ec;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 20px;
+  box-shadow:
+    inset 4px 4px 8px #a3b1c6,
+    inset -4px -4px 8px #ffffff;
+}</code></pre>
+        </div>
+      </article>
+
+      <!-- 7. Checkbox -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Checkbox</h3>
+        </div>
+        <div class="component-card__preview neu-preview">
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <label class="neu-checkbox">
+              <span class="neu-checkbox__box">✓</span>
+              <span class="neu-checkbox__label">Unchecked</span>
+            </label>
+            <label class="neu-checkbox">
+              <span class="neu-checkbox__box neu-checkbox__box--checked">✓</span>
+              <span class="neu-checkbox__label">Checked</span>
+            </label>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;label class="neu-checkbox"&gt;
+  &lt;span class="neu-checkbox__box neu-checkbox__box--checked"&gt;✓&lt;/span&gt;
+  &lt;span class="neu-checkbox__label"&gt;Option&lt;/span&gt;
+&lt;/label&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 8. Radio Buttons -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Radio Buttons</h3>
+        </div>
+        <div class="component-card__preview neu-preview">
+          <div class="neu-radio-group">
+            <label class="neu-radio">
+              <span class="neu-radio__circle neu-radio__circle--active"></span>
+              <span class="neu-radio__label">Option A</span>
+            </label>
+            <label class="neu-radio">
+              <span class="neu-radio__circle"></span>
+              <span class="neu-radio__label">Option B</span>
+            </label>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;label class="neu-radio"&gt;
+  &lt;span class="neu-radio__circle neu-radio__circle--active"&gt;&lt;/span&gt;
+  &lt;span class="neu-radio__label"&gt;Option&lt;/span&gt;
+&lt;/label&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 9. Progress Bar -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Progress Bar</h3>
+        </div>
+        <div class="component-card__preview neu-preview">
+          <div class="neu-progress">
+            <div class="neu-progress__fill" style="width: 70%;"></div>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;div class="neu-progress"&gt;
+  &lt;div class="neu-progress__fill" style="width: 70%;"&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+/* CSS */
+.neu-progress {
+  background: #e0e5ec;
+  border-radius: 50px;
+  box-shadow:
+    inset 4px 4px 8px #a3b1c6,
+    inset -4px -4px 8px #ffffff;
+  padding: 4px;
+}</code></pre>
+        </div>
+      </article>
+
+      <!-- 10. Slider/Range -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Slider</h3>
+        </div>
+        <div class="component-card__preview neu-preview">
+          <div class="neu-slider">
+            <div class="neu-slider__track"></div>
+            <div class="neu-slider__thumb"></div>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;div class="neu-slider"&gt;
+  &lt;div class="neu-slider__track"&gt;&lt;/div&gt;
+  &lt;div class="neu-slider__thumb"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 11. Tabs -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Tabs</h3>
+        </div>
+        <div class="component-card__preview neu-preview">
+          <div class="neu-tabs">
+            <button class="neu-tab neu-tab--active">Home</button>
+            <button class="neu-tab">Profile</button>
+            <button class="neu-tab">Settings</button>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;div class="neu-tabs"&gt;
+  &lt;button class="neu-tab neu-tab--active"&gt;Home&lt;/button&gt;
+  &lt;button class="neu-tab"&gt;Profile&lt;/button&gt;
+  &lt;button class="neu-tab"&gt;Settings&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 12. Dark Theme -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Dark Theme</h3>
+        </div>
+        <div class="component-card__preview neu-preview neu-preview--dark">
+          <div class="neu-card neu-card--dark">
+            <h4 class="neu-card__title">Dark Neumorphism</h4>
+            <p class="neu-card__text">Same technique, different colors.</p>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>.neu-card--dark {
+  background: #1e1e2e;
+  box-shadow:
+    8px 8px 16px #161622,
+    -8px -8px 16px #26263a;
+}</code></pre>
+        </div>
+      </article>
+
+      <!-- 13. Flat Style -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Flat Style</h3>
+        </div>
+        <div class="component-card__preview neu-preview">
+          <div class="neu-card neu-card--flat">
+            <h4 class="neu-card__title">Flat Effect</h4>
+            <p class="neu-card__text">Combines raised and inset shadows.</p>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>.neu-card--flat {
+  box-shadow:
+    6px 6px 12px #a3b1c6,
+    -6px -6px 12px #ffffff,
+    inset 1px 1px 2px rgba(255,255,255,0.5),
+    inset -1px -1px 2px rgba(163,177,198,0.3);
+}</code></pre>
+        </div>
+      </article>
+
+      <!-- 14. Clock Display -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Clock Display</h3>
+        </div>
+        <div class="component-card__preview neu-preview">
+          <div class="neu-clock">
+            <div class="neu-clock__inner">
+              <span class="neu-clock__time" id="neuClock">12:30</span>
+              <span class="neu-clock__label">AM</span>
+            </div>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;div class="neu-clock"&gt;
+  &lt;div class="neu-clock__inner"&gt;
+    &lt;span class="neu-clock__time"&gt;12:30&lt;/span&gt;
+    &lt;span class="neu-clock__label"&gt;AM&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+      </article>
+
+    </div>
+  </main>
+  </div>
+
+  <script src="../../assets/js/copy-code.js"></script>
+  <script src="../../assets/js/security-system.js"></script>
+  <script>
+    // Update clock
+    function updateClock() {
+      const now = new Date();
+      const hours = now.getHours().toString().padStart(2, '0');
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      document.getElementById('neuClock').textContent = `${hours}:${minutes}`;
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+  </script>
+</body>
+</html>

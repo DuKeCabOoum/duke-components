@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cursors — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ========== CURSORS STYLES ========== */
+
+    /* Preview areas */
+    .cursor-preview {
+      padding: 60px 40px;
+      background: var(--surface);
+      border-radius: 12px;
+      text-align: center;
+      transition: all 0.3s ease;
+      border: 2px dashed var(--border);
+    }
+
+    .cursor-preview:hover {
+      border-color: var(--primary);
+      background: var(--surface-hover);
+    }
+
+    .cursor-preview__text {
+      color: var(--text-secondary);
+      font-size: 14px;
+      pointer-events: none;
+    }
+
+    /* ===== 1. Default Cursors ===== */
+    .cursor-default { cursor: default; }
+    .cursor-pointer { cursor: pointer; }
+    .cursor-crosshair { cursor: crosshair; }
+    .cursor-move { cursor: move; }
+    .cursor-text { cursor: text; }
+    .cursor-wait { cursor: wait; }
+    .cursor-help { cursor: help; }
+    .cursor-not-allowed { cursor: not-allowed; }
+    .cursor-grab { cursor: grab; }
+    .cursor-grabbing { cursor: grabbing; }
+    .cursor-zoom-in { cursor: zoom-in; }
+    .cursor-zoom-out { cursor: zoom-out; }
+
+    /* ===== 2. Resize Cursors ===== */
+    .cursor-n-resize { cursor: n-resize; }
+    .cursor-s-resize { cursor: s-resize; }
+    .cursor-e-resize { cursor: e-resize; }
+    .cursor-w-resize { cursor: w-resize; }
+    .cursor-ne-resize { cursor: ne-resize; }
+    .cursor-nw-resize { cursor: nw-resize; }
+    .cursor-se-resize { cursor: se-resize; }
+    .cursor-sw-resize { cursor: sw-resize; }
+    .cursor-ew-resize { cursor: ew-resize; }
+    .cursor-ns-resize { cursor: ns-resize; }
+    .cursor-col-resize { cursor: col-resize; }
+    .cursor-row-resize { cursor: row-resize; }
+
+    /* ===== 3. Custom Emoji Cursor ===== */
+    .cursor-emoji-pointer {
+      cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><text y='24' font-size='24'>👆</text></svg>") 16 0, pointer;
+    }
+
+    .cursor-emoji-sparkle {
+      cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><text y='24' font-size='24'>✨</text></svg>") 16 16, auto;
+    }
+
+    .cursor-emoji-rocket {
+      cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><text y='24' font-size='24'>🚀</text></svg>") 16 16, auto;
+    }
+
+    .cursor-emoji-fire {
+      cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><text y='24' font-size='24'>🔥</text></svg>") 16 16, auto;
+    }
+
+    /* ===== 4. Custom SVG Cursors ===== */
+    .cursor-custom-circle {
+      cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><circle cx='12' cy='12' r='10' fill='%236366f1' opacity='0.8'/></svg>") 12 12, auto;
+    }
+
+    .cursor-custom-ring {
+      cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><circle cx='12' cy='12' r='10' fill='none' stroke='%236366f1' stroke-width='2'/></svg>") 12 12, auto;
+    }
+
+    .cursor-custom-dot {
+      cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><circle cx='8' cy='8' r='4' fill='%23ef4444'/></svg>") 8 8, auto;
+    }
+
+    .cursor-custom-crosshair {
+      cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><line x1='12' y1='0' x2='12' y2='24' stroke='%2322c55e' stroke-width='2'/><line x1='0' y1='12' x2='24' y2='12' stroke='%2322c55e' stroke-width='2'/><circle cx='12' cy='12' r='4' fill='none' stroke='%2322c55e' stroke-width='2'/></svg>") 12 12, crosshair;
+    }
+
+    /* ===== 5. Animated Cursor Trail (JS needed) ===== */
+    .cursor-trail-area {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cursor-trail {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      background: var(--primary);
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.3s ease;
+      z-index: 9999;
+    }
+
+    .cursor-trail.active {
+      opacity: 0.6;
+    }
+
+    /* ===== 6. Custom Cursor with Blend Mode ===== */
+    .cursor-blend-area {
+      position: relative;
+    }
+
+    .cursor-blend {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      background: white;
+      border-radius: 50%;
+      pointer-events: none;
+      mix-blend-mode: difference;
+      transform: translate(-50%, -50%);
+      z-index: 9999;
+      transition: transform 0.1s ease;
+    }
+
+    /* ===== 7. Cursor with Ring Animation ===== */
+    .cursor-ring-area {
+      cursor: none;
+    }
+
+    .cursor-ring {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      border: 2px solid var(--primary);
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      transition: all 0.15s ease;
+      z-index: 9998;
+    }
+
+    .cursor-ring__dot {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      background: var(--primary);
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 9999;
+    }
+
+    .cursor-ring-area:hover .cursor-ring {
+      width: 60px;
+      height: 60px;
+      border-color: var(--secondary);
+    }
+
+    /* ===== 8. Magnetic Cursor Effect ===== */
+    .cursor-magnetic-btn {
+      padding: 16px 32px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .cursor-magnetic-btn:hover {
+      transform: scale(1.05);
+    }
+
+    /* ===== Preview Grid ===== */
+    .cursor-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .cursor-item {
+      padding: 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+
+    .cursor-item:hover {
+      border-color: var(--primary);
+      background: var(--surface-hover);
+    }
+
+    .cursor-item__name {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+  <aside class="sidebar">
+    <div class="sidebar__logo">
+      <a href="../../index.html"><span>Duke</span>-components</a>
+    </div>
+    <div class="sidebar__section">
+      <h3 class="sidebar__title">Effets</h3>
+      <ul class="sidebar__nav">
+        <li><a href="../animations/index.html" class="sidebar__link"><span>✨</span> Animations</a></li>
+        <li><a href="../backgrounds/index.html" class="sidebar__link"><span>🎨</span> Backgrounds</a></li>
+        <li><a href="index.html" class="sidebar__link sidebar__link--active"><span>🎯</span> Cursors</a></li>
+        <li><a href="../glassmorphism/index.html" class="sidebar__link"><span>🪟</span> Glassmorphism</a></li>
+        <li><a href="../hovers/index.html" class="sidebar__link"><span>👆</span> Hovers</a></li>
+        <li><a href="../mouse-effects/index.html" class="sidebar__link"><span>🖱️</span> Mouse Effects</a></li>
+        <li><a href="../neumorphism/index.html" class="sidebar__link"><span>🔘</span> Neumorphism</a></li>
+        <li><a href="../text-effects/index.html" class="sidebar__link"><span>🔤</span> Text Effects</a></li>
+      </ul>
+    </div>
+    <div class="admin-toggle">
+      <span class="admin-toggle__label">Mode Admin</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="admin-toggle">
+        <span class="toggle-switch__slider"></span>
+      </label>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="page-header">
+      <h1 class="page-header__title">Cursors</h1>
+      <p class="page-header__desc">Curseurs personnalises : 8 categories de styles CSS natifs et custom.</p>
+    </header>
+
+    <div class="components-grid">
+
+      <!-- 1. Default CSS Cursors -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">CSS Cursor Values</h3>
+        </div>
+        <div class="component-card__preview">
+          <div class="cursor-grid">
+            <div class="cursor-item cursor-default">
+              <span>🖱️</span>
+              <p class="cursor-item__name">default</p>
+            </div>
+            <div class="cursor-item cursor-pointer">
+              <span>👆</span>
+              <p class="cursor-item__name">pointer</p>
+            </div>
+            <div class="cursor-item cursor-crosshair">
+              <span>➕</span>
+              <p class="cursor-item__name">crosshair</p>
+            </div>
+            <div class="cursor-item cursor-move">
+              <span>✥</span>
+              <p class="cursor-item__name">move</p>
+            </div>
+            <div class="cursor-item cursor-text">
+              <span>📝</span>
+              <p class="cursor-item__name">text</p>
+            </div>
+            <div class="cursor-item cursor-wait">
+              <span>⏳</span>
+              <p class="cursor-item__name">wait</p>
+            </div>
+            <div class="cursor-item cursor-help">
+              <span>❓</span>
+              <p class="cursor-item__name">help</p>
+            </div>
+            <div class="cursor-item cursor-not-allowed">
+              <span>🚫</span>
+              <p class="cursor-item__name">not-allowed</p>
+            </div>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>.cursor-default { cursor: default; }
+.cursor-pointer { cursor: pointer; }
+.cursor-crosshair { cursor: crosshair; }
+.cursor-move { cursor: move; }
+.cursor-text { cursor: text; }
+.cursor-wait { cursor: wait; }
+.cursor-help { cursor: help; }
+.cursor-not-allowed { cursor: not-allowed; }</code></pre>
+        </div>
+      </article>
+
+      <!-- 2. Grab Cursors -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Grab & Zoom Cursors</h3>
+        </div>
+        <div class="component-card__preview">
+          <div class="cursor-grid">
+            <div class="cursor-item cursor-grab">
+              <span>✋</span>
+              <p class="cursor-item__name">grab</p>
+            </div>
+            <div class="cursor-item cursor-grabbing">
+              <span>✊</span>
+              <p class="cursor-item__name">grabbing</p>
+            </div>
+            <div class="cursor-item cursor-zoom-in">
+              <span>🔍</span>
+              <p class="cursor-item__name">zoom-in</p>
+            </div>
+            <div class="cursor-item cursor-zoom-out">
+              <span>🔎</span>
+              <p class="cursor-item__name">zoom-out</p>
+            </div>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>.cursor-grab { cursor: grab; }
+.cursor-grabbing { cursor: grabbing; }
+.cursor-zoom-in { cursor: zoom-in; }
+.cursor-zoom-out { cursor: zoom-out; }
+
+/* Usage for draggable elements */
+.draggable {
+  cursor: grab;
+}
+.draggable:active {
+  cursor: grabbing;
+}</code></pre>
+        </div>
+      </article>
+
+      <!-- 3. Resize Cursors -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Resize Cursors</h3>
+        </div>
+        <div class="component-card__preview">
+          <div class="cursor-grid">
+            <div class="cursor-item cursor-n-resize">
+              <span>↑</span>
+              <p class="cursor-item__name">n-resize</p>
+            </div>
+            <div class="cursor-item cursor-s-resize">
+              <span>↓</span>
+              <p class="cursor-item__name">s-resize</p>
+            </div>
+            <div class="cursor-item cursor-e-resize">
+              <span>→</span>
+              <p class="cursor-item__name">e-resize</p>
+            </div>
+            <div class="cursor-item cursor-w-resize">
+              <span>←</span>
+              <p class="cursor-item__name">w-resize</p>
+            </div>
+            <div class="cursor-item cursor-ne-resize">
+              <span>↗</span>
+              <p class="cursor-item__name">ne-resize</p>
+            </div>
+            <div class="cursor-item cursor-nw-resize">
+              <span>↖</span>
+              <p class="cursor-item__name">nw-resize</p>
+            </div>
+            <div class="cursor-item cursor-se-resize">
+              <span>↘</span>
+              <p class="cursor-item__name">se-resize</p>
+            </div>
+            <div class="cursor-item cursor-sw-resize">
+              <span>↙</span>
+              <p class="cursor-item__name">sw-resize</p>
+            </div>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>.cursor-n-resize { cursor: n-resize; }
+.cursor-s-resize { cursor: s-resize; }
+.cursor-e-resize { cursor: e-resize; }
+.cursor-w-resize { cursor: w-resize; }
+.cursor-ne-resize { cursor: ne-resize; }
+.cursor-se-resize { cursor: se-resize; }
+.cursor-ew-resize { cursor: ew-resize; }
+.cursor-ns-resize { cursor: ns-resize; }
+.cursor-col-resize { cursor: col-resize; }
+.cursor-row-resize { cursor: row-resize; }</code></pre>
+        </div>
+      </article>
+
+      <!-- 4. Emoji Cursors -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Emoji Cursors</h3>
+        </div>
+        <div class="component-card__preview">
+          <div class="cursor-grid">
+            <div class="cursor-item cursor-emoji-pointer">
+              <span>👆</span>
+              <p class="cursor-item__name">pointer</p>
+            </div>
+            <div class="cursor-item cursor-emoji-sparkle">
+              <span>✨</span>
+              <p class="cursor-item__name">sparkle</p>
+            </div>
+            <div class="cursor-item cursor-emoji-rocket">
+              <span>🚀</span>
+              <p class="cursor-item__name">rocket</p>
+            </div>
+            <div class="cursor-item cursor-emoji-fire">
+              <span>🔥</span>
+              <p class="cursor-item__name">fire</p>
+            </div>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>.cursor-emoji-pointer {
+  cursor: url("data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'&gt;&lt;text y='24' font-size='24'&gt;👆&lt;/text&gt;&lt;/svg&gt;") 16 0, pointer;
+}
+
+.cursor-emoji-sparkle {
+  cursor: url("data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'&gt;&lt;text y='24' font-size='24'&gt;✨&lt;/text&gt;&lt;/svg&gt;") 16 16, auto;
+}</code></pre>
+        </div>
+      </article>
+
+      <!-- 5. Custom SVG Cursors -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Custom SVG Cursors</h3>
+        </div>
+        <div class="component-card__preview">
+          <div class="cursor-grid">
+            <div class="cursor-item cursor-custom-circle">
+              <span style="color: var(--primary);">●</span>
+              <p class="cursor-item__name">circle</p>
+            </div>
+            <div class="cursor-item cursor-custom-ring">
+              <span style="color: var(--primary);">○</span>
+              <p class="cursor-item__name">ring</p>
+            </div>
+            <div class="cursor-item cursor-custom-dot">
+              <span style="color: #ef4444;">•</span>
+              <p class="cursor-item__name">dot</p>
+            </div>
+            <div class="cursor-item cursor-custom-crosshair">
+              <span style="color: #22c55e;">+</span>
+              <p class="cursor-item__name">crosshair</p>
+            </div>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>.cursor-custom-circle {
+  cursor: url("data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' width='24' height='24'&gt;&lt;circle cx='12' cy='12' r='10' fill='%236366f1'/&gt;&lt;/svg&gt;") 12 12, auto;
+}
+
+.cursor-custom-ring {
+  cursor: url("data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' width='24' height='24'&gt;&lt;circle cx='12' cy='12' r='10' fill='none' stroke='%236366f1' stroke-width='2'/&gt;&lt;/svg&gt;") 12 12, auto;
+}</code></pre>
+        </div>
+      </article>
+
+      <!-- 6. Cursor Trail Effect -->
+      <article class="component-card" data-security="caution">
+        <span class="security-badge security-badge--caution">CAUTION</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Cursor Trail (JS)</h3>
+        </div>
+        <div class="component-card__preview">
+          <div class="cursor-preview cursor-trail-area" id="trailArea">
+            <p class="cursor-preview__text">Move your mouse here to see the trail effect</p>
+            <div class="cursor-trail" id="cursorTrail"></div>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;div class="trail-area" id="trailArea"&gt;
+  &lt;div class="cursor-trail" id="cursorTrail"&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+/* JavaScript */
+const area = document.getElementById('trailArea');
+const trail = document.getElementById('cursorTrail');
+
+area.addEventListener('mousemove', (e) => {
+  trail.style.left = e.clientX + 'px';
+  trail.style.top = e.clientY + 'px';
+  trail.classList.add('active');
+});
+
+area.addEventListener('mouseleave', () => {
+  trail.classList.remove('active');
+});</code></pre>
+        </div>
+      </article>
+
+      <!-- 7. Blend Mode Cursor -->
+      <article class="component-card" data-security="caution">
+        <span class="security-badge security-badge--caution">CAUTION</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Blend Mode Cursor (JS)</h3>
+        </div>
+        <div class="component-card__preview">
+          <div class="cursor-preview cursor-blend-area" id="blendArea" style="background: linear-gradient(135deg, var(--primary), var(--secondary)); cursor: none;">
+            <p class="cursor-preview__text" style="color: white;">Move mouse for blend mode effect</p>
+            <div class="cursor-blend" id="cursorBlend"></div>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>.cursor-blend {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  background: white;
+  border-radius: 50%;
+  pointer-events: none;
+  mix-blend-mode: difference;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+}
+
+/* JavaScript */
+document.addEventListener('mousemove', (e) => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+});</code></pre>
+        </div>
+      </article>
+
+      <!-- 8. Ring Cursor -->
+      <article class="component-card" data-security="caution">
+        <span class="security-badge security-badge--caution">CAUTION</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Ring Cursor (JS)</h3>
+        </div>
+        <div class="component-card__preview">
+          <div class="cursor-preview cursor-ring-area" id="ringArea">
+            <p class="cursor-preview__text">Hover to see the ring expand</p>
+            <div class="cursor-ring" id="cursorRing"></div>
+            <div class="cursor-ring__dot" id="cursorDot"></div>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;div class="cursor-ring-area"&gt;
+  &lt;div class="cursor-ring"&gt;&lt;/div&gt;
+  &lt;div class="cursor-ring__dot"&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+/* CSS */
+.cursor-ring-area { cursor: none; }
+
+.cursor-ring {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--primary);
+  border-radius: 50%;
+  pointer-events: none;
+  transition: all 0.15s ease;
+}
+
+.cursor-ring-area:hover .cursor-ring {
+  width: 60px;
+  height: 60px;
+}</code></pre>
+        </div>
+      </article>
+
+    </div>
+  </main>
+  </div>
+
+  <script src="../../assets/js/copy-code.js"></script>
+  <script src="../../assets/js/security-system.js"></script>
+  <script>
+    // Cursor Trail Effect
+    const trailArea = document.getElementById('trailArea');
+    const cursorTrail = document.getElementById('cursorTrail');
+
+    trailArea.addEventListener('mousemove', (e) => {
+      const rect = trailArea.getBoundingClientRect();
+      cursorTrail.style.left = e.clientX + 'px';
+      cursorTrail.style.top = e.clientY + 'px';
+      cursorTrail.classList.add('active');
+    });
+
+    trailArea.addEventListener('mouseleave', () => {
+      cursorTrail.classList.remove('active');
+    });
+
+    // Blend Mode Cursor
+    const blendArea = document.getElementById('blendArea');
+    const cursorBlend = document.getElementById('cursorBlend');
+
+    blendArea.addEventListener('mousemove', (e) => {
+      cursorBlend.style.left = e.clientX + 'px';
+      cursorBlend.style.top = e.clientY + 'px';
+      cursorBlend.style.opacity = '1';
+    });
+
+    blendArea.addEventListener('mouseleave', () => {
+      cursorBlend.style.opacity = '0';
+    });
+
+    blendArea.addEventListener('mouseenter', () => {
+      cursorBlend.style.opacity = '1';
+    });
+
+    // Ring Cursor
+    const ringArea = document.getElementById('ringArea');
+    const cursorRing = document.getElementById('cursorRing');
+    const cursorDot = document.getElementById('cursorDot');
+
+    ringArea.addEventListener('mousemove', (e) => {
+      cursorRing.style.left = e.clientX + 'px';
+      cursorRing.style.top = e.clientY + 'px';
+      cursorDot.style.left = e.clientX + 'px';
+      cursorDot.style.top = e.clientY + 'px';
+      cursorRing.style.opacity = '1';
+      cursorDot.style.opacity = '1';
+    });
+
+    ringArea.addEventListener('mouseleave', () => {
+      cursorRing.style.opacity = '0';
+      cursorDot.style.opacity = '0';
+    });
+  </script>
+</body>
+</html>

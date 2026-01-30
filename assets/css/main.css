@@ -5,6 +5,9 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
 @import url('variables.css');
+@import url('_editor-panel.css');
+@import url('_security-badges.css');
+@import url('_generators.css');
 
 /* Reset */
 *, *::before, *::after {
@@ -125,10 +128,12 @@ a:hover {
    MAIN CONTENT
    =========================================== */
 
-.main {
+.main,
+.main-content {
   margin-left: var(--sidebar-width);
   flex: 1;
   padding: var(--spacing-xl);
+  min-height: 100vh;
 }
 
 .main__header {
@@ -144,6 +149,29 @@ a:hover {
 .main__subtitle {
   color: var(--text-secondary);
   font-size: 1.1rem;
+}
+
+/* ===========================================
+   PAGE HEADER (Component pages)
+   =========================================== */
+
+.page-header {
+  margin-bottom: var(--spacing-2xl);
+  padding-bottom: var(--spacing-lg);
+  border-bottom: 1px solid var(--border);
+}
+
+.page-header__title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: var(--spacing-sm);
+  color: var(--text-primary);
+}
+
+.page-header__desc {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  max-width: 600px;
 }
 
 /* ===========================================
@@ -368,6 +396,96 @@ a:hover {
 }
 
 .text-muted {
+  color: var(--text-muted);
+}
+
+/* ===========================================
+   RECENT SECTION — Dashboard
+   =========================================== */
+
+.recent__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.recent__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-lg);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  transition: all var(--transition-base);
+}
+
+.recent__card:hover {
+  border-color: var(--primary);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.recent__icon {
+  font-size: 2rem;
+}
+
+.recent__title {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.recent__count {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* ===========================================
+   GENERATORS SECTION — Dashboard
+   =========================================== */
+
+.generators-section {
+  margin-top: var(--spacing-2xl);
+}
+
+.generators__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.generator-card {
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-lg);
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  transition: all var(--transition-base);
+}
+
+.generator-card:hover {
+  border-color: var(--primary);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.2);
+}
+
+.generator-card__icon {
+  font-size: 2rem;
+  margin-bottom: var(--spacing-sm);
+}
+
+.generator-card__title {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.generator-card__desc {
+  font-size: 0.85rem;
   color: var(--text-muted);
 }
 

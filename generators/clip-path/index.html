@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clip Path Generator — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ========== GENERATOR LAYOUT ========== */
+    .generator {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 32px;
+      margin-top: 32px;
+    }
+
+    /* ========== PREVIEW AREA ========== */
+    .preview-area {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 500px;
+      position: relative;
+    }
+
+    .preview-container {
+      position: relative;
+      width: 350px;
+      height: 350px;
+    }
+
+    .preview-box {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--primary) 0%, #a855f7 100%);
+      transition: clip-path 0.3s ease;
+    }
+
+    .preview-outline {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 2px dashed var(--border);
+      pointer-events: none;
+    }
+
+    /* ========== CONTROLS ========== */
+    .controls {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .controls__title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ========== SHAPE SELECTOR ========== */
+    .shapes-section {
+      margin-bottom: 24px;
+    }
+
+    .shapes-section__title {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .shapes-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .shape-btn {
+      aspect-ratio: 1;
+      background: var(--bg);
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+    }
+
+    .shape-btn:hover {
+      border-color: var(--primary);
+    }
+
+    .shape-btn.active {
+      border-color: var(--primary);
+      background: rgba(99, 102, 241, 0.1);
+    }
+
+    .shape-btn__icon {
+      width: 100%;
+      height: 100%;
+      background: var(--primary);
+    }
+
+    /* ========== CONTROL GROUP ========== */
+    .control-group {
+      margin-bottom: 20px;
+    }
+
+    .control-group__label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 0.875rem;
+    }
+
+    .control-group__name {
+      color: var(--text-secondary);
+    }
+
+    .control-group__value {
+      color: var(--primary);
+      font-family: 'Fira Code', monospace;
+      font-size: 0.75rem;
+      background: rgba(99, 102, 241, 0.1);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .control-group__slider {
+      width: 100%;
+      height: 8px;
+      border-radius: 4px;
+      background: var(--border);
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    .control-group__slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--primary);
+      cursor: pointer;
+    }
+
+    /* ========== POLYGON POINTS ========== */
+    .points-section {
+      margin-bottom: 24px;
+      padding: 16px;
+      background: var(--bg);
+      border-radius: 12px;
+    }
+
+    .points-section__title {
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-bottom: 16px;
+    }
+
+    .point-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .point-row__label {
+      width: 30px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .point-row__input {
+      flex: 1;
+      padding: 6px 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text);
+      font-size: 0.75rem;
+      font-family: 'Fira Code', monospace;
+    }
+
+    .point-row__delete {
+      padding: 6px 10px;
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid transparent;
+      border-radius: 4px;
+      color: #ef4444;
+      cursor: pointer;
+      font-size: 0.75rem;
+    }
+
+    .add-point-btn {
+      width: 100%;
+      padding: 8px;
+      background: transparent;
+      border: 1px dashed var(--border);
+      border-radius: 4px;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.75rem;
+      margin-top: 8px;
+    }
+
+    .add-point-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    /* ========== OUTPUT ========== */
+    .output {
+      background: var(--bg);
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 24px;
+    }
+
+    .output__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .output__title {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .output__copy {
+      padding: 6px 12px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+
+    .output__code {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.8rem;
+      color: var(--primary);
+      line-height: 1.6;
+      word-break: break-all;
+    }
+
+    /* ========== EXAMPLES ========== */
+    .examples {
+      margin-top: 48px;
+    }
+
+    .examples__title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+
+    .examples__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 24px;
+    }
+
+    .example-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .example-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .example-card__shape {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 12px;
+      background: linear-gradient(135deg, var(--primary) 0%, #a855f7 100%);
+    }
+
+    .example-card__name {
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    /* ========== TOAST ========== */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      padding: 12px 24px;
+      background: var(--surface);
+      border: 1px solid var(--success);
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 1000;
+      color: var(--success);
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* ========== CLIP PATH SHAPES ========== */
+    .clip-triangle { clip-path: polygon(50% 0%, 0% 100%, 100% 100%); }
+    .clip-trapezoid { clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%); }
+    .clip-parallelogram { clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%); }
+    .clip-rhombus { clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); }
+    .clip-pentagon { clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%); }
+    .clip-hexagon { clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); }
+    .clip-heptagon { clip-path: polygon(50% 0%, 90% 20%, 100% 60%, 75% 100%, 25% 100%, 0% 60%, 10% 20%); }
+    .clip-octagon { clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%); }
+    .clip-star { clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }
+    .clip-cross { clip-path: polygon(10% 25%, 35% 25%, 35% 0%, 65% 0%, 65% 25%, 90% 25%, 90% 50%, 65% 50%, 65% 100%, 35% 100%, 35% 50%, 10% 50%); }
+    .clip-arrow { clip-path: polygon(0% 20%, 60% 20%, 60% 0%, 100% 50%, 60% 100%, 60% 80%, 0% 80%); }
+    .clip-chevron { clip-path: polygon(100% 0%, 75% 50%, 100% 100%, 25% 100%, 0% 50%, 25% 0%); }
+    .clip-circle { clip-path: circle(50% at 50% 50%); }
+    .clip-ellipse { clip-path: ellipse(50% 35% at 50% 50%); }
+    .clip-inset { clip-path: inset(10% 20% 10% 20% round 10px); }
+    .clip-message { clip-path: polygon(0% 0%, 100% 0%, 100% 75%, 75% 75%, 75% 100%, 50% 75%, 0% 75%); }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+      <div class="sidebar__logo">
+        <a href="../../index.html" style="text-decoration: none; color: inherit;">
+          <span>Duke</span>-components
+        </a>
+      </div>
+
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Générateurs</h3>
+        <ul class="sidebar__nav">
+          <li><a href="../gradient/index.html" class="sidebar__link">
+            <span>🌈</span> Gradient
+          </a></li>
+          <li><a href="../flexbox/index.html" class="sidebar__link">
+            <span>📐</span> Flexbox
+          </a></li>
+          <li><a href="../grid/index.html" class="sidebar__link">
+            <span>🔲</span> Grid
+          </a></li>
+          <li><a href="../shadow/index.html" class="sidebar__link">
+            <span>🌑</span> Shadow
+          </a></li>
+          <li><a href="../border-radius/index.html" class="sidebar__link">
+            <span>⬜</span> Border Radius
+          </a></li>
+          <li><a href="../animation/index.html" class="sidebar__link">
+            <span>🎬</span> Animation
+          </a></li>
+          <li><a href="index.html" class="sidebar__link sidebar__link--active">
+            <span>✂️</span> Clip Path
+          </a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Retour</h3>
+        <ul class="sidebar__nav">
+          <li><a href="../../index.html" class="sidebar__link">
+            <span>🏠</span> Dashboard
+          </a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main">
+      <header class="main__header">
+        <h1 class="main__title">Clip Path Generator</h1>
+        <p class="main__subtitle">Créez des formes de découpe CSS personnalisées</p>
+      </header>
+
+      <div class="generator">
+        <!-- Preview -->
+        <div class="preview-area">
+          <div class="preview-container">
+            <div class="preview-outline"></div>
+            <div class="preview-box" id="preview"></div>
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+          <h3 class="controls__title">Paramètres</h3>
+
+          <!-- Shape Type -->
+          <div class="shapes-section">
+            <div class="shapes-section__title">Type de forme</div>
+            <div class="shapes-grid">
+              <button class="shape-btn active" data-shape="polygon" title="Polygon">
+                <div class="shape-btn__icon" style="clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);"></div>
+              </button>
+              <button class="shape-btn" data-shape="circle" title="Circle">
+                <div class="shape-btn__icon" style="clip-path: circle(50% at 50% 50%);"></div>
+              </button>
+              <button class="shape-btn" data-shape="ellipse" title="Ellipse">
+                <div class="shape-btn__icon" style="clip-path: ellipse(50% 35% at 50% 50%);"></div>
+              </button>
+              <button class="shape-btn" data-shape="inset" title="Inset">
+                <div class="shape-btn__icon" style="clip-path: inset(15% 15% 15% 15% round 8px);"></div>
+              </button>
+            </div>
+          </div>
+
+          <!-- Polygon Controls -->
+          <div id="polygon-controls">
+            <div class="shapes-section">
+              <div class="shapes-section__title">Formes prédéfinies</div>
+              <div class="shapes-grid" style="grid-template-columns: repeat(4, 1fr);">
+                <button class="shape-btn" data-preset="triangle" title="Triangle">
+                  <div class="shape-btn__icon clip-triangle"></div>
+                </button>
+                <button class="shape-btn" data-preset="rhombus" title="Losange">
+                  <div class="shape-btn__icon clip-rhombus"></div>
+                </button>
+                <button class="shape-btn" data-preset="pentagon" title="Pentagone">
+                  <div class="shape-btn__icon clip-pentagon"></div>
+                </button>
+                <button class="shape-btn" data-preset="hexagon" title="Hexagone">
+                  <div class="shape-btn__icon clip-hexagon"></div>
+                </button>
+                <button class="shape-btn" data-preset="octagon" title="Octogone">
+                  <div class="shape-btn__icon clip-octagon"></div>
+                </button>
+                <button class="shape-btn" data-preset="star" title="Étoile">
+                  <div class="shape-btn__icon clip-star"></div>
+                </button>
+                <button class="shape-btn" data-preset="cross" title="Croix">
+                  <div class="shape-btn__icon clip-cross"></div>
+                </button>
+                <button class="shape-btn" data-preset="arrow" title="Flèche">
+                  <div class="shape-btn__icon clip-arrow"></div>
+                </button>
+                <button class="shape-btn" data-preset="chevron" title="Chevron">
+                  <div class="shape-btn__icon clip-chevron"></div>
+                </button>
+                <button class="shape-btn" data-preset="trapezoid" title="Trapèze">
+                  <div class="shape-btn__icon clip-trapezoid"></div>
+                </button>
+                <button class="shape-btn" data-preset="parallelogram" title="Parallélogramme">
+                  <div class="shape-btn__icon clip-parallelogram"></div>
+                </button>
+                <button class="shape-btn" data-preset="message" title="Message">
+                  <div class="shape-btn__icon clip-message"></div>
+                </button>
+              </div>
+            </div>
+
+            <!-- Polygon Points -->
+            <div class="points-section">
+              <div class="points-section__title">Points du polygone</div>
+              <div id="points-list"></div>
+              <button class="add-point-btn" id="add-point">+ Ajouter un point</button>
+            </div>
+          </div>
+
+          <!-- Circle Controls -->
+          <div id="circle-controls" style="display: none;">
+            <div class="control-group">
+              <div class="control-group__label">
+                <span class="control-group__name">Rayon</span>
+                <span class="control-group__value" id="circle-radius-value">50%</span>
+              </div>
+              <input type="range" class="control-group__slider" id="circle-radius" min="0" max="100" value="50">
+            </div>
+            <div class="control-group">
+              <div class="control-group__label">
+                <span class="control-group__name">Position X</span>
+                <span class="control-group__value" id="circle-x-value">50%</span>
+              </div>
+              <input type="range" class="control-group__slider" id="circle-x" min="0" max="100" value="50">
+            </div>
+            <div class="control-group">
+              <div class="control-group__label">
+                <span class="control-group__name">Position Y</span>
+                <span class="control-group__value" id="circle-y-value">50%</span>
+              </div>
+              <input type="range" class="control-group__slider" id="circle-y" min="0" max="100" value="50">
+            </div>
+          </div>
+
+          <!-- Ellipse Controls -->
+          <div id="ellipse-controls" style="display: none;">
+            <div class="control-group">
+              <div class="control-group__label">
+                <span class="control-group__name">Rayon X</span>
+                <span class="control-group__value" id="ellipse-rx-value">50%</span>
+              </div>
+              <input type="range" class="control-group__slider" id="ellipse-rx" min="0" max="100" value="50">
+            </div>
+            <div class="control-group">
+              <div class="control-group__label">
+                <span class="control-group__name">Rayon Y</span>
+                <span class="control-group__value" id="ellipse-ry-value">35%</span>
+              </div>
+              <input type="range" class="control-group__slider" id="ellipse-ry" min="0" max="100" value="35">
+            </div>
+            <div class="control-group">
+              <div class="control-group__label">
+                <span class="control-group__name">Position X</span>
+                <span class="control-group__value" id="ellipse-x-value">50%</span>
+              </div>
+              <input type="range" class="control-group__slider" id="ellipse-x" min="0" max="100" value="50">
+            </div>
+            <div class="control-group">
+              <div class="control-group__label">
+                <span class="control-group__name">Position Y</span>
+                <span class="control-group__value" id="ellipse-y-value">50%</span>
+              </div>
+              <input type="range" class="control-group__slider" id="ellipse-y" min="0" max="100" value="50">
+            </div>
+          </div>
+
+          <!-- Inset Controls -->
+          <div id="inset-controls" style="display: none;">
+            <div class="control-group">
+              <div class="control-group__label">
+                <span class="control-group__name">Haut</span>
+                <span class="control-group__value" id="inset-top-value">10%</span>
+              </div>
+              <input type="range" class="control-group__slider" id="inset-top" min="0" max="50" value="10">
+            </div>
+            <div class="control-group">
+              <div class="control-group__label">
+                <span class="control-group__name">Droite</span>
+                <span class="control-group__value" id="inset-right-value">10%</span>
+              </div>
+              <input type="range" class="control-group__slider" id="inset-right" min="0" max="50" value="10">
+            </div>
+            <div class="control-group">
+              <div class="control-group__label">
+                <span class="control-group__name">Bas</span>
+                <span class="control-group__value" id="inset-bottom-value">10%</span>
+              </div>
+              <input type="range" class="control-group__slider" id="inset-bottom" min="0" max="50" value="10">
+            </div>
+            <div class="control-group">
+              <div class="control-group__label">
+                <span class="control-group__name">Gauche</span>
+                <span class="control-group__value" id="inset-left-value">10%</span>
+              </div>
+              <input type="range" class="control-group__slider" id="inset-left" min="0" max="50" value="10">
+            </div>
+            <div class="control-group">
+              <div class="control-group__label">
+                <span class="control-group__name">Border Radius</span>
+                <span class="control-group__value" id="inset-radius-value">0px</span>
+              </div>
+              <input type="range" class="control-group__slider" id="inset-radius" min="0" max="50" value="0">
+            </div>
+          </div>
+
+          <!-- Output -->
+          <div class="output">
+            <div class="output__header">
+              <span class="output__title">CSS Output</span>
+              <button class="output__copy" id="copy-btn">Copier</button>
+            </div>
+            <code class="output__code" id="output">clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);</code>
+          </div>
+        </div>
+      </div>
+
+      <!-- Examples -->
+      <section class="examples">
+        <h2 class="examples__title">Exemples de formes</h2>
+        <div class="examples__grid">
+          <div class="example-card" data-clip="polygon(50% 0%, 0% 100%, 100% 100%)">
+            <div class="example-card__shape clip-triangle"></div>
+            <div class="example-card__name">Triangle</div>
+          </div>
+          <div class="example-card" data-clip="polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)">
+            <div class="example-card__shape clip-rhombus"></div>
+            <div class="example-card__name">Losange</div>
+          </div>
+          <div class="example-card" data-clip="polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%)">
+            <div class="example-card__shape clip-pentagon"></div>
+            <div class="example-card__name">Pentagone</div>
+          </div>
+          <div class="example-card" data-clip="polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)">
+            <div class="example-card__shape clip-hexagon"></div>
+            <div class="example-card__name">Hexagone</div>
+          </div>
+          <div class="example-card" data-clip="polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)">
+            <div class="example-card__shape clip-octagon"></div>
+            <div class="example-card__name">Octogone</div>
+          </div>
+          <div class="example-card" data-clip="polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)">
+            <div class="example-card__shape clip-star"></div>
+            <div class="example-card__name">Étoile</div>
+          </div>
+          <div class="example-card" data-clip="polygon(10% 25%, 35% 25%, 35% 0%, 65% 0%, 65% 25%, 90% 25%, 90% 50%, 65% 50%, 65% 100%, 35% 100%, 35% 50%, 10% 50%)">
+            <div class="example-card__shape clip-cross"></div>
+            <div class="example-card__name">Croix</div>
+          </div>
+          <div class="example-card" data-clip="polygon(0% 20%, 60% 20%, 60% 0%, 100% 50%, 60% 100%, 60% 80%, 0% 80%)">
+            <div class="example-card__shape clip-arrow"></div>
+            <div class="example-card__name">Flèche</div>
+          </div>
+          <div class="example-card" data-clip="circle(50% at 50% 50%)">
+            <div class="example-card__shape clip-circle"></div>
+            <div class="example-card__name">Cercle</div>
+          </div>
+          <div class="example-card" data-clip="ellipse(50% 35% at 50% 50%)">
+            <div class="example-card__shape clip-ellipse"></div>
+            <div class="example-card__name">Ellipse</div>
+          </div>
+          <div class="example-card" data-clip="inset(10% 20% 10% 20% round 10px)">
+            <div class="example-card__shape clip-inset"></div>
+            <div class="example-card__name">Inset</div>
+          </div>
+          <div class="example-card" data-clip="polygon(0% 0%, 100% 0%, 100% 75%, 75% 75%, 75% 100%, 50% 75%, 0% 75%)">
+            <div class="example-card__shape clip-message"></div>
+            <div class="example-card__name">Message</div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">CSS copié !</div>
+
+  <script>
+    // Preset polygons
+    const presets = {
+      triangle: [[50, 0], [0, 100], [100, 100]],
+      rhombus: [[50, 0], [100, 50], [50, 100], [0, 50]],
+      pentagon: [[50, 0], [100, 38], [82, 100], [18, 100], [0, 38]],
+      hexagon: [[25, 0], [75, 0], [100, 50], [75, 100], [25, 100], [0, 50]],
+      octagon: [[30, 0], [70, 0], [100, 30], [100, 70], [70, 100], [30, 100], [0, 70], [0, 30]],
+      star: [[50, 0], [61, 35], [98, 35], [68, 57], [79, 91], [50, 70], [21, 91], [32, 57], [2, 35], [39, 35]],
+      cross: [[10, 25], [35, 25], [35, 0], [65, 0], [65, 25], [90, 25], [90, 50], [65, 50], [65, 100], [35, 100], [35, 50], [10, 50]],
+      arrow: [[0, 20], [60, 20], [60, 0], [100, 50], [60, 100], [60, 80], [0, 80]],
+      chevron: [[100, 0], [75, 50], [100, 100], [25, 100], [0, 50], [25, 0]],
+      trapezoid: [[20, 0], [80, 0], [100, 100], [0, 100]],
+      parallelogram: [[25, 0], [100, 0], [75, 100], [0, 100]],
+      message: [[0, 0], [100, 0], [100, 75], [75, 75], [75, 100], [50, 75], [0, 75]]
+    };
+
+    // State
+    let shapeType = 'polygon';
+    let polygonPoints = [[50, 0], [100, 50], [50, 100], [0, 50]];
+
+    // Elements
+    const preview = document.getElementById('preview');
+    const output = document.getElementById('output');
+    const pointsList = document.getElementById('points-list');
+
+    // Update preview
+    function updatePreview() {
+      let clipPath = '';
+
+      if (shapeType === 'polygon') {
+        const points = polygonPoints.map(p => `${p[0]}% ${p[1]}%`).join(', ');
+        clipPath = `polygon(${points})`;
+      } else if (shapeType === 'circle') {
+        const r = document.getElementById('circle-radius').value;
+        const x = document.getElementById('circle-x').value;
+        const y = document.getElementById('circle-y').value;
+        clipPath = `circle(${r}% at ${x}% ${y}%)`;
+      } else if (shapeType === 'ellipse') {
+        const rx = document.getElementById('ellipse-rx').value;
+        const ry = document.getElementById('ellipse-ry').value;
+        const x = document.getElementById('ellipse-x').value;
+        const y = document.getElementById('ellipse-y').value;
+        clipPath = `ellipse(${rx}% ${ry}% at ${x}% ${y}%)`;
+      } else if (shapeType === 'inset') {
+        const top = document.getElementById('inset-top').value;
+        const right = document.getElementById('inset-right').value;
+        const bottom = document.getElementById('inset-bottom').value;
+        const left = document.getElementById('inset-left').value;
+        const radius = document.getElementById('inset-radius').value;
+        clipPath = radius > 0
+          ? `inset(${top}% ${right}% ${bottom}% ${left}% round ${radius}px)`
+          : `inset(${top}% ${right}% ${bottom}% ${left}%)`;
+      }
+
+      preview.style.clipPath = clipPath;
+      output.textContent = `clip-path: ${clipPath};`;
+    }
+
+    // Render polygon points
+    function renderPoints() {
+      pointsList.innerHTML = polygonPoints.map((point, i) => `
+        <div class="point-row">
+          <span class="point-row__label">${i + 1}</span>
+          <input type="number" class="point-row__input" data-index="${i}" data-axis="x" value="${point[0]}" min="0" max="100">
+          <input type="number" class="point-row__input" data-index="${i}" data-axis="y" value="${point[1]}" min="0" max="100">
+          <button class="point-row__delete" data-index="${i}">×</button>
+        </div>
+      `).join('');
+
+      // Add event listeners
+      pointsList.querySelectorAll('.point-row__input').forEach(input => {
+        input.addEventListener('input', (e) => {
+          const index = parseInt(e.target.dataset.index);
+          const axis = e.target.dataset.axis === 'x' ? 0 : 1;
+          polygonPoints[index][axis] = parseInt(e.target.value) || 0;
+          updatePreview();
+        });
+      });
+
+      pointsList.querySelectorAll('.point-row__delete').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          if (polygonPoints.length > 3) {
+            const index = parseInt(e.target.dataset.index);
+            polygonPoints.splice(index, 1);
+            renderPoints();
+            updatePreview();
+          }
+        });
+      });
+    }
+
+    // Shape type selector
+    document.querySelectorAll('.shape-btn[data-shape]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.shape-btn[data-shape]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        shapeType = btn.dataset.shape;
+
+        // Show/hide controls
+        document.getElementById('polygon-controls').style.display = shapeType === 'polygon' ? 'block' : 'none';
+        document.getElementById('circle-controls').style.display = shapeType === 'circle' ? 'block' : 'none';
+        document.getElementById('ellipse-controls').style.display = shapeType === 'ellipse' ? 'block' : 'none';
+        document.getElementById('inset-controls').style.display = shapeType === 'inset' ? 'block' : 'none';
+
+        updatePreview();
+      });
+    });
+
+    // Preset buttons
+    document.querySelectorAll('.shape-btn[data-preset]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const preset = btn.dataset.preset;
+        polygonPoints = presets[preset].map(p => [...p]);
+        renderPoints();
+        updatePreview();
+      });
+    });
+
+    // Add point
+    document.getElementById('add-point').addEventListener('click', () => {
+      polygonPoints.push([50, 50]);
+      renderPoints();
+      updatePreview();
+    });
+
+    // Circle controls
+    ['circle-radius', 'circle-x', 'circle-y'].forEach(id => {
+      const el = document.getElementById(id);
+      el.addEventListener('input', () => {
+        document.getElementById(`${id}-value`).textContent = `${el.value}%`;
+        updatePreview();
+      });
+    });
+
+    // Ellipse controls
+    ['ellipse-rx', 'ellipse-ry', 'ellipse-x', 'ellipse-y'].forEach(id => {
+      const el = document.getElementById(id);
+      el.addEventListener('input', () => {
+        document.getElementById(`${id}-value`).textContent = `${el.value}%`;
+        updatePreview();
+      });
+    });
+
+    // Inset controls
+    ['inset-top', 'inset-right', 'inset-bottom', 'inset-left'].forEach(id => {
+      const el = document.getElementById(id);
+      el.addEventListener('input', () => {
+        document.getElementById(`${id}-value`).textContent = `${el.value}%`;
+        updatePreview();
+      });
+    });
+
+    document.getElementById('inset-radius').addEventListener('input', (e) => {
+      document.getElementById('inset-radius-value').textContent = `${e.target.value}px`;
+      updatePreview();
+    });
+
+    // Example cards
+    document.querySelectorAll('.example-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const clip = card.dataset.clip;
+        preview.style.clipPath = clip;
+        output.textContent = `clip-path: ${clip};`;
+        navigator.clipboard.writeText(`clip-path: ${clip};`);
+        showToast();
+      });
+    });
+
+    // Copy button
+    document.getElementById('copy-btn').addEventListener('click', () => {
+      navigator.clipboard.writeText(output.textContent);
+      showToast();
+    });
+
+    // Toast
+    function showToast() {
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+
+    // Initial render
+    renderPoints();
+    updatePreview();
+  </script>
+</body>
+</html>

@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Glassmorphism Generator — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ========== GENERATOR LAYOUT ========== */
+    .generator {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 32px;
+      min-height: calc(100vh - 200px);
+    }
+
+    /* ========== PREVIEW AREA ========== */
+    .preview-area {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Animated background for glass effect demo */
+    .preview-bg {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    .preview-bg__shape {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.7;
+      animation: float 8s ease-in-out infinite;
+    }
+
+    .preview-bg__shape--1 {
+      width: 300px;
+      height: 300px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      top: -50px;
+      left: -50px;
+      animation-delay: 0s;
+    }
+
+    .preview-bg__shape--2 {
+      width: 250px;
+      height: 250px;
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      bottom: -30px;
+      right: -30px;
+      animation-delay: -2s;
+    }
+
+    .preview-bg__shape--3 {
+      width: 200px;
+      height: 200px;
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation-delay: -4s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      25% { transform: translate(20px, -20px) scale(1.05); }
+      50% { transform: translate(-10px, 20px) scale(0.95); }
+      75% { transform: translate(-20px, -10px) scale(1.02); }
+    }
+
+    /* Glass card preview */
+    .glass-preview {
+      position: relative;
+      z-index: 1;
+      width: 320px;
+      padding: 32px;
+      border-radius: 16px;
+      text-align: center;
+    }
+
+    .glass-preview__icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+
+    .glass-preview__title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 8px;
+    }
+
+    .glass-preview__text {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 20px;
+    }
+
+    .glass-preview__btn {
+      padding: 10px 24px;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+      color: white;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .glass-preview__btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    /* ========== CONTROLS PANEL ========== */
+    .controls {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .controls__title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 4px;
+    }
+
+    /* Control group */
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .control-group__label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    .control-group__value {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--primary-light);
+      background: rgba(99, 102, 241, 0.1);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    /* Slider */
+    .slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 6px;
+      background: var(--bg-dark);
+      border-radius: 3px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      background: var(--primary);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+
+    .slider::-webkit-slider-thumb:hover {
+      transform: scale(1.1);
+    }
+
+    .slider::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      background: var(--primary);
+      border-radius: 50%;
+      cursor: pointer;
+      border: none;
+    }
+
+    /* Color picker row */
+    .color-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .color-picker {
+      width: 48px;
+      height: 36px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: none;
+    }
+
+    .color-picker::-webkit-color-swatch-wrapper {
+      padding: 0;
+    }
+
+    .color-picker::-webkit-color-swatch {
+      border: 2px solid var(--border);
+      border-radius: 8px;
+    }
+
+    .color-input {
+      flex: 1;
+      padding: 8px 12px;
+      background: var(--bg-dark);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+    }
+
+    .color-input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    /* Presets */
+    .presets {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .preset-btn {
+      aspect-ratio: 1;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .preset-btn::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      opacity: 0.5;
+    }
+
+    .preset-btn::after {
+      content: "";
+      position: absolute;
+      inset: 4px;
+      border-radius: 4px;
+    }
+
+    .preset-btn:hover {
+      border-color: var(--primary);
+      transform: scale(1.05);
+    }
+
+    .preset-btn--1::after { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(4px); }
+    .preset-btn--2::after { background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); }
+    .preset-btn--3::after { background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(16px); }
+    .preset-btn--4::after { background: rgba(0, 0, 0, 0.2); backdrop-filter: blur(20px); }
+    .preset-btn--5::after { background: rgba(99, 102, 241, 0.15); backdrop-filter: blur(12px); }
+    .preset-btn--6::after { background: rgba(16, 185, 129, 0.15); backdrop-filter: blur(12px); }
+    .preset-btn--7::after { background: rgba(239, 68, 68, 0.15); backdrop-filter: blur(12px); }
+    .preset-btn--8::after { background: rgba(245, 158, 11, 0.15); backdrop-filter: blur(12px); }
+
+    /* ========== CODE OUTPUT ========== */
+    .code-output {
+      margin-top: auto;
+      background: var(--bg-dark);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .code-output__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .code-output__lang {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .code-output__copy {
+      padding: 6px 14px;
+      background: var(--primary);
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .code-output__copy:hover {
+      background: var(--primary-hover);
+    }
+
+    .code-output__copy--success {
+      background: var(--accent-green);
+    }
+
+    .code-output__content {
+      padding: 16px;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .code-output__content pre {
+      margin: 0;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      white-space: pre-wrap;
+    }
+
+    /* Syntax highlighting */
+    .code-property { color: #9cdcfe; }
+    .code-value { color: #ce9178; }
+    .code-number { color: #b5cea8; }
+    .code-unit { color: #dcdcaa; }
+
+    /* ========== SECTION LABEL ========== */
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="sidebar__logo">
+        <a href="../../index.html" style="text-decoration: none; color: inherit;">
+          <span>Duke</span>-components
+        </a>
+      </div>
+
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Generateurs</h3>
+        <ul class="sidebar__nav">
+          <li><a href="../gradient/index.html" class="sidebar__link"><span>🌈</span> Gradient</a></li>
+          <li><a href="../shadow/index.html" class="sidebar__link"><span>🌑</span> Shadow</a></li>
+          <li><a href="../flexbox/index.html" class="sidebar__link"><span>📐</span> Flexbox</a></li>
+          <li><a href="../grid/index.html" class="sidebar__link"><span>🔲</span> Grid</a></li>
+          <li><a href="../border-radius/index.html" class="sidebar__link"><span>⬜</span> Border Radius</a></li>
+          <li><a href="../animation/index.html" class="sidebar__link"><span>🎬</span> Animation</a></li>
+          <li><a href="../clip-path/index.html" class="sidebar__link"><span>✂️</span> Clip Path</a></li>
+          <li><a href="index.html" class="sidebar__link sidebar__link--active"><span>🪟</span> Glassmorphism</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Retour</h3>
+        <ul class="sidebar__nav">
+          <li><a href="../../index.html" class="sidebar__link"><span>🏠</span> Dashboard</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="page-header">
+        <h1 class="page-header__title">Glassmorphism Generator</h1>
+        <p class="page-header__desc">Cree des effets de verre depoli avec blur, transparence et bordures lumineuses.</p>
+      </header>
+
+      <div class="generator">
+        <!-- Preview Area -->
+        <div class="preview-area">
+          <div class="preview-bg">
+            <div class="preview-bg__shape preview-bg__shape--1"></div>
+            <div class="preview-bg__shape preview-bg__shape--2"></div>
+            <div class="preview-bg__shape preview-bg__shape--3"></div>
+          </div>
+          <div class="glass-preview" id="glassPreview">
+            <div class="glass-preview__icon">🪟</div>
+            <h3 class="glass-preview__title">Glass Card</h3>
+            <p class="glass-preview__text">Un effet de verre moderne et elegant pour vos interfaces.</p>
+            <button class="glass-preview__btn">En savoir plus</button>
+          </div>
+        </div>
+
+        <!-- Controls Panel -->
+        <div class="controls">
+          <h2 class="controls__title">Parametres</h2>
+
+          <!-- Presets -->
+          <div class="control-group">
+            <span class="section-label">Presets</span>
+            <div class="presets">
+              <button class="preset-btn preset-btn--1" onclick="applyPreset(1)" title="Light Frost"></button>
+              <button class="preset-btn preset-btn--2" onclick="applyPreset(2)" title="Medium Glass"></button>
+              <button class="preset-btn preset-btn--3" onclick="applyPreset(3)" title="Heavy Blur"></button>
+              <button class="preset-btn preset-btn--4" onclick="applyPreset(4)" title="Dark Glass"></button>
+              <button class="preset-btn preset-btn--5" onclick="applyPreset(5)" title="Purple Tint"></button>
+              <button class="preset-btn preset-btn--6" onclick="applyPreset(6)" title="Green Tint"></button>
+              <button class="preset-btn preset-btn--7" onclick="applyPreset(7)" title="Red Tint"></button>
+              <button class="preset-btn preset-btn--8" onclick="applyPreset(8)" title="Orange Tint"></button>
+            </div>
+          </div>
+
+          <!-- Blur -->
+          <div class="control-group">
+            <label class="control-group__label">
+              <span>Blur</span>
+              <span class="control-group__value" id="blurValue">12px</span>
+            </label>
+            <input type="range" class="slider" id="blurSlider" min="0" max="30" value="12" oninput="updateGlass()">
+          </div>
+
+          <!-- Transparency -->
+          <div class="control-group">
+            <label class="control-group__label">
+              <span>Transparence</span>
+              <span class="control-group__value" id="transparencyValue">20%</span>
+            </label>
+            <input type="range" class="slider" id="transparencySlider" min="0" max="100" value="20" oninput="updateGlass()">
+          </div>
+
+          <!-- Background Color -->
+          <div class="control-group">
+            <label class="control-group__label">
+              <span>Couleur de fond</span>
+            </label>
+            <div class="color-row">
+              <input type="color" class="color-picker" id="bgColorPicker" value="#ffffff" oninput="syncBgColor('picker')">
+              <input type="text" class="color-input" id="bgColorInput" value="#ffffff" oninput="syncBgColor('input')">
+            </div>
+          </div>
+
+          <!-- Border Opacity -->
+          <div class="control-group">
+            <label class="control-group__label">
+              <span>Bordure</span>
+              <span class="control-group__value" id="borderValue">30%</span>
+            </label>
+            <input type="range" class="slider" id="borderSlider" min="0" max="100" value="30" oninput="updateGlass()">
+          </div>
+
+          <!-- Shadow -->
+          <div class="control-group">
+            <label class="control-group__label">
+              <span>Ombre</span>
+              <span class="control-group__value" id="shadowValue">25%</span>
+            </label>
+            <input type="range" class="slider" id="shadowSlider" min="0" max="100" value="25" oninput="updateGlass()">
+          </div>
+
+          <!-- Border Radius -->
+          <div class="control-group">
+            <label class="control-group__label">
+              <span>Border Radius</span>
+              <span class="control-group__value" id="radiusValue">16px</span>
+            </label>
+            <input type="range" class="slider" id="radiusSlider" min="0" max="50" value="16" oninput="updateGlass()">
+          </div>
+
+          <!-- Code Output -->
+          <div class="code-output">
+            <div class="code-output__header">
+              <span class="code-output__lang">CSS</span>
+              <button class="code-output__copy" id="copyBtn" onclick="copyCode()">Copier</button>
+            </div>
+            <div class="code-output__content">
+              <pre id="codeOutput"></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // DOM Elements
+    const glassPreview = document.getElementById('glassPreview');
+    const codeOutput = document.getElementById('codeOutput');
+    const copyBtn = document.getElementById('copyBtn');
+
+    // Sliders
+    const blurSlider = document.getElementById('blurSlider');
+    const transparencySlider = document.getElementById('transparencySlider');
+    const borderSlider = document.getElementById('borderSlider');
+    const shadowSlider = document.getElementById('shadowSlider');
+    const radiusSlider = document.getElementById('radiusSlider');
+
+    // Color inputs
+    const bgColorPicker = document.getElementById('bgColorPicker');
+    const bgColorInput = document.getElementById('bgColorInput');
+
+    // Value displays
+    const blurValue = document.getElementById('blurValue');
+    const transparencyValue = document.getElementById('transparencyValue');
+    const borderValue = document.getElementById('borderValue');
+    const shadowValue = document.getElementById('shadowValue');
+    const radiusValue = document.getElementById('radiusValue');
+
+    // Hex to RGB conversion
+    function hexToRgb(hex) {
+      const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+      } : { r: 255, g: 255, b: 255 };
+    }
+
+    // Sync color inputs
+    function syncBgColor(source) {
+      if (source === 'picker') {
+        bgColorInput.value = bgColorPicker.value;
+      } else {
+        const val = bgColorInput.value;
+        if (/^#[0-9A-Fa-f]{6}$/.test(val)) {
+          bgColorPicker.value = val;
+        }
+      }
+      updateGlass();
+    }
+
+    // Update glass preview
+    function updateGlass() {
+      const blur = blurSlider.value;
+      const transparency = transparencySlider.value / 100;
+      const border = borderSlider.value / 100;
+      const shadow = shadowSlider.value / 100;
+      const radius = radiusSlider.value;
+      const bgColor = hexToRgb(bgColorPicker.value);
+
+      // Update value displays
+      blurValue.textContent = blur + 'px';
+      transparencyValue.textContent = Math.round(transparency * 100) + '%';
+      borderValue.textContent = Math.round(border * 100) + '%';
+      shadowValue.textContent = Math.round(shadow * 100) + '%';
+      radiusValue.textContent = radius + 'px';
+
+      // Build CSS
+      const bgRgba = `rgba(${bgColor.r}, ${bgColor.g}, ${bgColor.b}, ${transparency.toFixed(2)})`;
+      const borderRgba = `rgba(${bgColor.r}, ${bgColor.g}, ${bgColor.b}, ${border.toFixed(2)})`;
+      const shadowRgba = `rgba(0, 0, 0, ${(shadow * 0.4).toFixed(2)})`;
+
+      // Apply to preview
+      glassPreview.style.background = bgRgba;
+      glassPreview.style.backdropFilter = `blur(${blur}px)`;
+      glassPreview.style.webkitBackdropFilter = `blur(${blur}px)`;
+      glassPreview.style.border = `1px solid ${borderRgba}`;
+      glassPreview.style.boxShadow = `0 8px 32px ${shadowRgba}`;
+      glassPreview.style.borderRadius = radius + 'px';
+
+      // Generate code
+      generateCode(bgRgba, blur, borderRgba, shadowRgba, radius);
+    }
+
+    // Generate CSS code
+    function generateCode(bg, blur, border, shadow, radius) {
+      const code = `.glass {
+  background: ${bg};
+  backdrop-filter: blur(${blur}px);
+  -webkit-backdrop-filter: blur(${blur}px);
+  border: 1px solid ${border};
+  box-shadow: 0 8px 32px ${shadow};
+  border-radius: ${radius}px;
+}`;
+      codeOutput.textContent = code;
+    }
+
+    // Copy code
+    function copyCode() {
+      const code = codeOutput.textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        copyBtn.textContent = 'Copie !';
+        copyBtn.classList.add('code-output__copy--success');
+        setTimeout(() => {
+          copyBtn.textContent = 'Copier';
+          copyBtn.classList.remove('code-output__copy--success');
+        }, 2000);
+      });
+    }
+
+    // Presets
+    const presets = {
+      1: { blur: 4, transparency: 10, border: 20, shadow: 15, radius: 12, color: '#ffffff' },
+      2: { blur: 10, transparency: 20, border: 30, shadow: 25, radius: 16, color: '#ffffff' },
+      3: { blur: 20, transparency: 25, border: 40, shadow: 30, radius: 20, color: '#ffffff' },
+      4: { blur: 16, transparency: 30, border: 20, shadow: 40, radius: 16, color: '#000000' },
+      5: { blur: 12, transparency: 15, border: 25, shadow: 20, radius: 16, color: '#6366f1' },
+      6: { blur: 12, transparency: 15, border: 25, shadow: 20, radius: 16, color: '#10b981' },
+      7: { blur: 12, transparency: 15, border: 25, shadow: 20, radius: 16, color: '#ef4444' },
+      8: { blur: 12, transparency: 15, border: 25, shadow: 20, radius: 16, color: '#f59e0b' }
+    };
+
+    function applyPreset(num) {
+      const p = presets[num];
+      blurSlider.value = p.blur;
+      transparencySlider.value = p.transparency;
+      borderSlider.value = p.border;
+      shadowSlider.value = p.shadow;
+      radiusSlider.value = p.radius;
+      bgColorPicker.value = p.color;
+      bgColorInput.value = p.color;
+      updateGlass();
+    }
+
+    // Initialize
+    updateGlass();
+  </script>
+</body>
+</html>

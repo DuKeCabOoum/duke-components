@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tabs — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ===========================================
+       TABS — Styles locaux
+       =========================================== */
+
+    .tabs-list {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    .tabs-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .tabs-section__preview {
+      padding: 32px;
+      background: #0a0a0a;
+    }
+
+    .tabs-section__info {
+      padding: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .tabs-section__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .tabs-section__name {
+      font-weight: 600;
+      font-size: 1.25rem;
+    }
+
+    .tabs-section__tags {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* ===========================================
+       TABS 1 — BASIC UNDERLINE
+       =========================================== */
+
+    .tabs-basic {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .tabs-basic__nav {
+      display: flex;
+      gap: 8px;
+      border-bottom: 1px solid #27272a;
+      margin-bottom: 24px;
+    }
+
+    .tabs-basic__btn {
+      padding: 12px 20px;
+      background: transparent;
+      border: none;
+      color: #71717a;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      position: relative;
+      transition: color 0.2s;
+    }
+
+    .tabs-basic__btn::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: #6366f1;
+      transform: scaleX(0);
+      transition: transform 0.2s ease;
+    }
+
+    .tabs-basic__btn:hover {
+      color: #a1a1aa;
+    }
+
+    .tabs-basic__btn--active {
+      color: #fff;
+    }
+
+    .tabs-basic__btn--active::after {
+      transform: scaleX(1);
+    }
+
+    .tabs-basic__panel {
+      display: none;
+      color: #a1a1aa;
+      line-height: 1.7;
+    }
+
+    .tabs-basic__panel--active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===========================================
+       TABS 2 — PILLS
+       =========================================== */
+
+    .tabs-pills {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .tabs-pills__nav {
+      display: flex;
+      gap: 8px;
+      background: #18181b;
+      padding: 6px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+    }
+
+    .tabs-pills__btn {
+      flex: 1;
+      padding: 12px 20px;
+      background: transparent;
+      border: none;
+      color: #71717a;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .tabs-pills__btn:hover {
+      color: #a1a1aa;
+    }
+
+    .tabs-pills__btn--active {
+      background: #6366f1;
+      color: #fff;
+    }
+
+    .tabs-pills__panel {
+      display: none;
+      color: #a1a1aa;
+      line-height: 1.7;
+    }
+
+    .tabs-pills__panel--active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    /* ===========================================
+       TABS 3 — BORDERED
+       =========================================== */
+
+    .tabs-bordered {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .tabs-bordered__nav {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .tabs-bordered__btn {
+      padding: 12px 24px;
+      background: transparent;
+      border: 1px solid #27272a;
+      color: #71717a;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .tabs-bordered__btn:hover {
+      border-color: #6366f1;
+      color: #a1a1aa;
+    }
+
+    .tabs-bordered__btn--active {
+      background: rgba(99, 102, 241, 0.1);
+      border-color: #6366f1;
+      color: #a5b4fc;
+    }
+
+    .tabs-bordered__panel {
+      display: none;
+      padding: 24px;
+      background: #18181b;
+      border-radius: 12px;
+      color: #a1a1aa;
+      line-height: 1.7;
+    }
+
+    .tabs-bordered__panel--active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    /* ===========================================
+       TABS 4 — ICONS
+       =========================================== */
+
+    .tabs-icons {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .tabs-icons__nav {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .tabs-icons__btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      background: #18181b;
+      border: 1px solid #27272a;
+      color: #71717a;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: 10px;
+      transition: all 0.2s ease;
+    }
+
+    .tabs-icons__btn:hover {
+      background: #1f1f23;
+      color: #a1a1aa;
+    }
+
+    .tabs-icons__btn--active {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border-color: transparent;
+      color: #fff;
+    }
+
+    .tabs-icons__icon {
+      font-size: 1.1rem;
+    }
+
+    .tabs-icons__panel {
+      display: none;
+      color: #a1a1aa;
+      line-height: 1.7;
+    }
+
+    .tabs-icons__panel--active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    /* ===========================================
+       TABS 5 — VERTICAL
+       =========================================== */
+
+    .tabs-vertical {
+      max-width: 700px;
+      margin: 0 auto;
+      display: flex;
+      gap: 24px;
+    }
+
+    .tabs-vertical__nav {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-width: 200px;
+    }
+
+    .tabs-vertical__btn {
+      padding: 14px 20px;
+      background: transparent;
+      border: none;
+      border-left: 3px solid #27272a;
+      color: #71717a;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s ease;
+    }
+
+    .tabs-vertical__btn:hover {
+      background: rgba(99, 102, 241, 0.05);
+      color: #a1a1aa;
+    }
+
+    .tabs-vertical__btn--active {
+      border-left-color: #6366f1;
+      background: rgba(99, 102, 241, 0.1);
+      color: #a5b4fc;
+    }
+
+    .tabs-vertical__content {
+      flex: 1;
+    }
+
+    .tabs-vertical__panel {
+      display: none;
+      padding: 20px;
+      background: #18181b;
+      border-radius: 12px;
+      color: #a1a1aa;
+      line-height: 1.7;
+    }
+
+    .tabs-vertical__panel--active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    /* ===========================================
+       TABS 6 — ANIMATED SLIDER
+       =========================================== */
+
+    .tabs-slider {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .tabs-slider__nav {
+      display: flex;
+      position: relative;
+      background: #18181b;
+      padding: 4px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+    }
+
+    .tabs-slider__indicator {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      height: calc(100% - 8px);
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border-radius: 10px;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 0;
+    }
+
+    .tabs-slider__btn {
+      flex: 1;
+      padding: 12px 20px;
+      background: transparent;
+      border: none;
+      color: #71717a;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      position: relative;
+      z-index: 1;
+      transition: color 0.2s;
+    }
+
+    .tabs-slider__btn--active {
+      color: #fff;
+    }
+
+    .tabs-slider__panel {
+      display: none;
+      color: #a1a1aa;
+      line-height: 1.7;
+    }
+
+    .tabs-slider__panel--active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    /* ===========================================
+       CODE BLOCK
+       =========================================== */
+
+    .code-block {
+      background: #1a1a1a;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .code-block__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .code-block__lang {
+      font-size: 0.75rem;
+      color: #71717a;
+      text-transform: uppercase;
+    }
+
+    .code-block__copy {
+      padding: 6px 12px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: #a1a1aa;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .code-block__copy:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+    }
+
+    .code-block__content {
+      padding: 16px;
+      overflow-x: auto;
+    }
+
+    .code-block__content pre {
+      margin: 0;
+      font-family: "Fira Code", monospace;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: #e0e0e0;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      font-size: 0.75rem;
+      color: #a1a1aa;
+    }
+
+    .tag--primary {
+      background: rgba(99, 102, 241, 0.15);
+      border-color: rgba(99, 102, 241, 0.3);
+      color: #818cf8;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar__logo">
+      <a href="../../index.html">Duke<span>UI</span></a>
+    </div>
+
+    <nav class="sidebar__nav">
+      <div class="sidebar__section">
+        <div class="sidebar__title">Composants</div>
+        <a href="../accordions/index.html" class="sidebar__link">Accordions</a>
+        <a href="../buttons/index.html" class="sidebar__link">Buttons</a>
+        <a href="../cards/index.html" class="sidebar__link">Cards</a>
+        <a href="../carousels/index.html" class="sidebar__link">Carousels</a>
+        <a href="../forms/index.html" class="sidebar__link">Forms</a>
+        <a href="../loaders/index.html" class="sidebar__link">Loaders</a>
+        <a href="../modals/index.html" class="sidebar__link">Modals</a>
+        <a href="../navigation/index.html" class="sidebar__link">Navigation</a>
+        <a href="index.html" class="sidebar__link sidebar__link--active">Tabs</a>
+        <a href="../tooltips/index.html" class="sidebar__link">Tooltips</a>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__title">Effets</div>
+        <a href="../hovers/index.html" class="sidebar__link">Hovers</a>
+        <a href="../animations/index.html" class="sidebar__link">Animations</a>
+        <a href="../backgrounds/index.html" class="sidebar__link">Backgrounds</a>
+        <a href="../mouse-effects/index.html" class="sidebar__link">Mouse Effects</a>
+        <a href="../text-effects/index.html" class="sidebar__link">Text Effects</a>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__title">Sections</div>
+        <a href="../heroes/index.html" class="sidebar__link">Heroes</a>
+        <a href="../features/index.html" class="sidebar__link">Features</a>
+        <a href="../pricing/index.html" class="sidebar__link">Pricing</a>
+        <a href="../testimonials/index.html" class="sidebar__link">Testimonials</a>
+        <a href="../footers/index.html" class="sidebar__link">Footers</a>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__title">Générateurs</div>
+        <a href="../../generators/gradient/index.html" class="sidebar__link">Gradient</a>
+        <a href="../../generators/shadow/index.html" class="sidebar__link">Shadow</a>
+        <a href="../../generators/flexbox/index.html" class="sidebar__link">Flexbox</a>
+        <a href="../../generators/grid/index.html" class="sidebar__link">Grid</a>
+      </div>
+    </nav>
+
+    <!-- Toggle Admin -->
+    <div class="admin-toggle">
+      <span class="admin-toggle__label">Mode Admin</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="admin-toggle">
+        <span class="toggle-switch__slider"></span>
+      </label>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    <header class="page-header">
+      <h1 class="page-header__title">Tabs</h1>
+      <p class="page-header__desc">Navigation par onglets pour organiser le contenu en sections</p>
+    </header>
+
+    <div class="tabs-list">
+
+      <!-- TABS 1 — BASIC UNDERLINE -->
+      <section class="tabs-section">
+        <div class="tabs-section__preview">
+          <div class="tabs-basic" id="tabs-basic">
+            <div class="tabs-basic__nav">
+              <button class="tabs-basic__btn tabs-basic__btn--active" onclick="switchTab('basic', 0)">Overview</button>
+              <button class="tabs-basic__btn" onclick="switchTab('basic', 1)">Features</button>
+              <button class="tabs-basic__btn" onclick="switchTab('basic', 2)">Pricing</button>
+            </div>
+            <div class="tabs-basic__panel tabs-basic__panel--active">
+              Welcome to our platform! This is the overview section where you'll find a summary of all the key features and benefits.
+            </div>
+            <div class="tabs-basic__panel">
+              Our features include advanced analytics, real-time collaboration, and seamless integrations with your favorite tools.
+            </div>
+            <div class="tabs-basic__panel">
+              Choose from our flexible pricing plans starting at just $9/month. Enterprise solutions available on request.
+            </div>
+          </div>
+        </div>
+        <div class="tabs-section__info">
+          <div class="tabs-section__header">
+            <h2 class="tabs-section__name">Basic Underline</h2>
+            <div class="tabs-section__tags">
+              <span class="tag tag--primary">Essential</span>
+              <span class="tag">Classic</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">JavaScript</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>function switchTab(type, index) {
+  const container = document.getElementById(`tabs-${type}`);
+  const btns = container.querySelectorAll(`.tabs-${type}__btn`);
+  const panels = container.querySelectorAll(`.tabs-${type}__panel`);
+
+  btns.forEach(btn => btn.classList.remove(`tabs-${type}__btn--active`));
+  panels.forEach(panel => panel.classList.remove(`tabs-${type}__panel--active`));
+
+  btns[index].classList.add(`tabs-${type}__btn--active`);
+  panels[index].classList.add(`tabs-${type}__panel--active`);
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TABS 2 — PILLS -->
+      <section class="tabs-section">
+        <div class="tabs-section__preview">
+          <div class="tabs-pills" id="tabs-pills">
+            <div class="tabs-pills__nav">
+              <button class="tabs-pills__btn tabs-pills__btn--active" onclick="switchTab('pills', 0)">Daily</button>
+              <button class="tabs-pills__btn" onclick="switchTab('pills', 1)">Weekly</button>
+              <button class="tabs-pills__btn" onclick="switchTab('pills', 2)">Monthly</button>
+            </div>
+            <div class="tabs-pills__panel tabs-pills__panel--active">
+              Daily statistics show an average of 1,250 active users with 45% engagement rate.
+            </div>
+            <div class="tabs-pills__panel">
+              Weekly data reveals consistent growth with 15% increase in user acquisition.
+            </div>
+            <div class="tabs-pills__panel">
+              Monthly reports indicate strong performance across all key metrics.
+            </div>
+          </div>
+        </div>
+        <div class="tabs-section__info">
+          <div class="tabs-section__header">
+            <h2 class="tabs-section__name">Pills Style</h2>
+            <div class="tabs-section__tags">
+              <span class="tag tag--primary">Modern</span>
+              <span class="tag">Filled</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.tabs-pills__nav {
+  display: flex;
+  background: #18181b;
+  padding: 6px;
+  border-radius: 12px;
+}
+
+.tabs-pills__btn--active {
+  background: #6366f1;
+  color: #fff;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TABS 3 — BORDERED -->
+      <section class="tabs-section">
+        <div class="tabs-section__preview">
+          <div class="tabs-bordered" id="tabs-bordered">
+            <div class="tabs-bordered__nav">
+              <button class="tabs-bordered__btn tabs-bordered__btn--active" onclick="switchTab('bordered', 0)">Profile</button>
+              <button class="tabs-bordered__btn" onclick="switchTab('bordered', 1)">Settings</button>
+              <button class="tabs-bordered__btn" onclick="switchTab('bordered', 2)">Billing</button>
+            </div>
+            <div class="tabs-bordered__panel tabs-bordered__panel--active">
+              Manage your profile information, update your avatar, and customize your public presence.
+            </div>
+            <div class="tabs-bordered__panel">
+              Configure application settings, notifications preferences, and privacy options.
+            </div>
+            <div class="tabs-bordered__panel">
+              View your billing history, manage payment methods, and download invoices.
+            </div>
+          </div>
+        </div>
+        <div class="tabs-section__info">
+          <div class="tabs-section__header">
+            <h2 class="tabs-section__name">Bordered Style</h2>
+            <div class="tabs-section__tags">
+              <span class="tag tag--primary">Clean</span>
+              <span class="tag">Outlined</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.tabs-bordered__btn {
+  border: 1px solid #27272a;
+  border-radius: 8px;
+}
+
+.tabs-bordered__btn--active {
+  background: rgba(99, 102, 241, 0.1);
+  border-color: #6366f1;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TABS 4 — ICONS -->
+      <section class="tabs-section">
+        <div class="tabs-section__preview">
+          <div class="tabs-icons" id="tabs-icons">
+            <div class="tabs-icons__nav">
+              <button class="tabs-icons__btn tabs-icons__btn--active" onclick="switchTab('icons', 0)">
+                <span class="tabs-icons__icon">🏠</span>
+                <span>Home</span>
+              </button>
+              <button class="tabs-icons__btn" onclick="switchTab('icons', 1)">
+                <span class="tabs-icons__icon">📊</span>
+                <span>Analytics</span>
+              </button>
+              <button class="tabs-icons__btn" onclick="switchTab('icons', 2)">
+                <span class="tabs-icons__icon">⚙️</span>
+                <span>Settings</span>
+              </button>
+            </div>
+            <div class="tabs-icons__panel tabs-icons__panel--active">
+              Welcome home! Here you'll find your dashboard with quick access to all features.
+            </div>
+            <div class="tabs-icons__panel">
+              Dive deep into your analytics with interactive charts and detailed reports.
+            </div>
+            <div class="tabs-icons__panel">
+              Fine-tune your experience with comprehensive settings and configurations.
+            </div>
+          </div>
+        </div>
+        <div class="tabs-section__info">
+          <div class="tabs-section__header">
+            <h2 class="tabs-section__name">With Icons</h2>
+            <div class="tabs-section__tags">
+              <span class="tag tag--primary">Visual</span>
+              <span class="tag">Gradient</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">HTML</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>&lt;button class="tabs-icons__btn"&gt;
+  &lt;span class="tabs-icons__icon"&gt;🏠&lt;/span&gt;
+  &lt;span&gt;Home&lt;/span&gt;
+&lt;/button&gt;</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TABS 5 — VERTICAL -->
+      <section class="tabs-section">
+        <div class="tabs-section__preview">
+          <div class="tabs-vertical" id="tabs-vertical">
+            <div class="tabs-vertical__nav">
+              <button class="tabs-vertical__btn tabs-vertical__btn--active" onclick="switchTab('vertical', 0)">Account</button>
+              <button class="tabs-vertical__btn" onclick="switchTab('vertical', 1)">Security</button>
+              <button class="tabs-vertical__btn" onclick="switchTab('vertical', 2)">Notifications</button>
+              <button class="tabs-vertical__btn" onclick="switchTab('vertical', 3)">Integrations</button>
+            </div>
+            <div class="tabs-vertical__content">
+              <div class="tabs-vertical__panel tabs-vertical__panel--active">
+                Manage your account details, personal information, and profile settings in one place.
+              </div>
+              <div class="tabs-vertical__panel">
+                Configure security settings including two-factor authentication and session management.
+              </div>
+              <div class="tabs-vertical__panel">
+                Customize how and when you receive notifications across all channels.
+              </div>
+              <div class="tabs-vertical__panel">
+                Connect with third-party services and manage your API access tokens.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tabs-section__info">
+          <div class="tabs-section__header">
+            <h2 class="tabs-section__name">Vertical Layout</h2>
+            <div class="tabs-section__tags">
+              <span class="tag tag--primary">Sidebar</span>
+              <span class="tag">Settings</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.tabs-vertical {
+  display: flex;
+  gap: 24px;
+}
+
+.tabs-vertical__nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.tabs-vertical__btn {
+  border-left: 3px solid #27272a;
+}
+
+.tabs-vertical__btn--active {
+  border-left-color: #6366f1;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TABS 6 — ANIMATED SLIDER -->
+      <section class="tabs-section">
+        <div class="tabs-section__preview">
+          <div class="tabs-slider" id="tabs-slider">
+            <div class="tabs-slider__nav">
+              <div class="tabs-slider__indicator" id="slider-indicator"></div>
+              <button class="tabs-slider__btn tabs-slider__btn--active" onclick="switchSliderTab(0)">All</button>
+              <button class="tabs-slider__btn" onclick="switchSliderTab(1)">Active</button>
+              <button class="tabs-slider__btn" onclick="switchSliderTab(2)">Completed</button>
+            </div>
+            <div class="tabs-slider__panel tabs-slider__panel--active">
+              Showing all items in your list including pending, active, and completed tasks.
+            </div>
+            <div class="tabs-slider__panel">
+              Currently active items that require your attention and action.
+            </div>
+            <div class="tabs-slider__panel">
+              Completed items archived for your reference and tracking purposes.
+            </div>
+          </div>
+        </div>
+        <div class="tabs-section__info">
+          <div class="tabs-section__header">
+            <h2 class="tabs-section__name">Animated Slider</h2>
+            <div class="tabs-section__tags">
+              <span class="tag tag--primary">Smooth</span>
+              <span class="tag">Dynamic</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">JavaScript</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>function switchSliderTab(index) {
+  const indicator = document.getElementById('slider-indicator');
+  const btns = document.querySelectorAll('.tabs-slider__btn');
+  const width = btns[0].offsetWidth;
+
+  indicator.style.width = width + 'px';
+  indicator.style.left = (4 + index * width) + 'px';
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+  </div>
+
+  <script src="../../assets/js/main.js"></script>
+  <script src="../../assets/js/security-system.js"></script>
+  <script>
+    function switchTab(type, index) {
+      const container = document.getElementById(`tabs-${type}`);
+      const btns = container.querySelectorAll(`.tabs-${type}__btn`);
+      const panels = container.querySelectorAll(`.tabs-${type}__panel`);
+
+      btns.forEach(btn => btn.classList.remove(`tabs-${type}__btn--active`));
+      panels.forEach(panel => panel.classList.remove(`tabs-${type}__panel--active`));
+
+      btns[index].classList.add(`tabs-${type}__btn--active`);
+      panels[index].classList.add(`tabs-${type}__panel--active`);
+    }
+
+    function switchSliderTab(index) {
+      const container = document.getElementById('tabs-slider');
+      const indicator = document.getElementById('slider-indicator');
+      const btns = container.querySelectorAll('.tabs-slider__btn');
+      const panels = container.querySelectorAll('.tabs-slider__panel');
+
+      btns.forEach(btn => btn.classList.remove('tabs-slider__btn--active'));
+      panels.forEach(panel => panel.classList.remove('tabs-slider__panel--active'));
+
+      btns[index].classList.add('tabs-slider__btn--active');
+      panels[index].classList.add('tabs-slider__panel--active');
+
+      // Animate indicator
+      const width = btns[0].offsetWidth;
+      indicator.style.width = width + 'px';
+      indicator.style.left = (4 + index * width) + 'px';
+    }
+
+    // Initialize slider indicator
+    document.addEventListener('DOMContentLoaded', () => {
+      const btns = document.querySelectorAll('.tabs-slider__btn');
+      const indicator = document.getElementById('slider-indicator');
+      if (btns.length > 0 && indicator) {
+        indicator.style.width = btns[0].offsetWidth + 'px';
+      }
+    });
+
+    function copyCode(btn) {
+      const codeBlock = btn.closest('.code-block');
+      const code = codeBlock.querySelector('pre').textContent;
+
+      navigator.clipboard.writeText(code).then(() => {
+        const originalText = btn.textContent;
+        btn.textContent = 'Copié !';
+        btn.style.color = '#22c55e';
+
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.style.color = '';
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>

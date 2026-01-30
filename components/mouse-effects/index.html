@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mouse Effects — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ===========================================
+       MOUSE EFFECTS — Styles locaux
+       =========================================== */
+
+    .effects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 24px;
+    }
+
+    .effect-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .effect-card:hover {
+      border-color: var(--primary);
+    }
+
+    .effect-card__preview {
+      height: 250px;
+      background: #0a0a0a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      cursor: none;
+    }
+
+    .effect-card__info {
+      padding: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .effect-card__name {
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .effect-card__tags {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* ===========================================
+       EFFECT 1 — SPOTLIGHT
+       =========================================== */
+
+    .effect-spotlight {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: #0a0a0a;
+    }
+
+    .effect-spotlight::before {
+      content: "Hover me";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #333;
+      font-size: 1.25rem;
+      font-weight: 600;
+      pointer-events: none;
+    }
+
+    .effect-spotlight__light {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.3) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .effect-spotlight:hover .effect-spotlight__light {
+      opacity: 1;
+    }
+
+    /* ===========================================
+       EFFECT 2 — MAGNETIC BUTTON
+       =========================================== */
+
+    .effect-magnetic {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .effect-magnetic__btn {
+      padding: 16px 32px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s;
+    }
+
+    .effect-magnetic__btn:hover {
+      box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
+    }
+
+    /* ===========================================
+       EFFECT 3 — TILT CARD
+       =========================================== */
+
+    .effect-tilt {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      perspective: 1000px;
+    }
+
+    .effect-tilt__card {
+      width: 200px;
+      height: 150px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.1));
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: #fff;
+      transition: transform 0.1s ease-out, box-shadow 0.3s;
+      transform-style: preserve-3d;
+    }
+
+    .effect-tilt__card:hover {
+      box-shadow: 0 20px 40px rgba(99, 102, 241, 0.3);
+    }
+
+    .effect-tilt__inner {
+      transform: translateZ(30px);
+    }
+
+    /* ===========================================
+       EFFECT 4 — TRAIL CURSOR
+       =========================================== */
+
+    .effect-trail {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: #0a0a0a;
+    }
+
+    .effect-trail::before {
+      content: "Move mouse";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #333;
+      font-size: 1.25rem;
+      font-weight: 600;
+      pointer-events: none;
+    }
+
+    .trail-dot {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background: #6366f1;
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0;
+      transform: translate(-50%, -50%);
+    }
+
+    /* ===========================================
+       EFFECT 5 — GLOW FOLLOW
+       =========================================== */
+
+    .effect-glow {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: #0a0a0a;
+      overflow: hidden;
+    }
+
+    .effect-glow__content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff;
+      font-size: 1.25rem;
+      font-weight: 600;
+      text-align: center;
+      z-index: 2;
+    }
+
+    .effect-glow__orb {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.4) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      filter: blur(40px);
+      transition: transform 0.1s ease-out;
+    }
+
+    /* ===========================================
+       EFFECT 6 — RIPPLE
+       =========================================== */
+
+    .effect-ripple {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: #0a0a0a;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .effect-ripple::before {
+      content: "Click me";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff;
+      font-size: 1.25rem;
+      font-weight: 600;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .ripple {
+      position: absolute;
+      background: rgba(99, 102, 241, 0.5);
+      border-radius: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      animation: ripple-effect 0.6s ease-out forwards;
+      pointer-events: none;
+    }
+
+    @keyframes ripple-effect {
+      to {
+        transform: translate(-50%, -50%) scale(4);
+        opacity: 0;
+      }
+    }
+
+    /* ===========================================
+       EFFECT 7 — PARALLAX LAYERS
+       =========================================== */
+
+    .effect-parallax {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 100%);
+      overflow: hidden;
+    }
+
+    .effect-parallax__layer {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      transition: transform 0.1s ease-out;
+    }
+
+    .effect-parallax__layer--1 {
+      top: 20%;
+      left: 20%;
+      background: rgba(99, 102, 241, 0.2);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+    }
+
+    .effect-parallax__layer--2 {
+      top: 60%;
+      left: 70%;
+      background: rgba(236, 72, 153, 0.2);
+      border: 1px solid rgba(236, 72, 153, 0.3);
+    }
+
+    .effect-parallax__layer--3 {
+      top: 30%;
+      left: 60%;
+      background: rgba(34, 197, 94, 0.2);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+    }
+
+    .effect-parallax__layer--4 {
+      top: 70%;
+      left: 25%;
+      background: rgba(251, 191, 36, 0.2);
+      border: 1px solid rgba(251, 191, 36, 0.3);
+    }
+
+    /* ===========================================
+       EFFECT 8 — CUSTOM CURSOR
+       =========================================== */
+
+    .effect-cursor {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: #0a0a0a;
+    }
+
+    .effect-cursor::before {
+      content: "Custom cursor";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #333;
+      font-size: 1.25rem;
+      font-weight: 600;
+      pointer-events: none;
+    }
+
+    .custom-cursor {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #6366f1;
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      transition: transform 0.15s ease-out, width 0.2s, height 0.2s, background 0.2s;
+      z-index: 100;
+    }
+
+    .custom-cursor--hover {
+      width: 40px;
+      height: 40px;
+      background: rgba(99, 102, 241, 0.2);
+    }
+
+    .custom-cursor__dot {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: #6366f1;
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 101;
+    }
+
+    /* ===========================================
+       CODE BLOCK
+       =========================================== */
+
+    .code-block {
+      background: #1a1a1a;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 16px;
+    }
+
+    .code-block__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .code-block__lang {
+      font-size: 0.75rem;
+      color: #71717a;
+      text-transform: uppercase;
+    }
+
+    .code-block__copy {
+      padding: 6px 12px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: #a1a1aa;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .code-block__copy:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+    }
+
+    .code-block__content {
+      padding: 16px;
+      overflow-x: auto;
+    }
+
+    .code-block__content pre {
+      margin: 0;
+      font-family: "Fira Code", monospace;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: #e0e0e0;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      font-size: 0.75rem;
+      color: #a1a1aa;
+    }
+
+    .tag--primary {
+      background: rgba(99, 102, 241, 0.15);
+      border-color: rgba(99, 102, 241, 0.3);
+      color: #818cf8;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar__logo">
+      <a href="../../index.html">Duke<span>UI</span></a>
+    </div>
+
+    <nav class="sidebar__nav">
+      <div class="sidebar__section">
+        <div class="sidebar__title">Composants</div>
+        <a href="../buttons/index.html" class="sidebar__link">Buttons</a>
+        <a href="../cards/index.html" class="sidebar__link">Cards</a>
+        <a href="../carousels/index.html" class="sidebar__link">Carousels</a>
+        <a href="../forms/index.html" class="sidebar__link">Forms</a>
+        <a href="../loaders/index.html" class="sidebar__link">Loaders</a>
+        <a href="../modals/index.html" class="sidebar__link">Modals</a>
+        <a href="../navigation/index.html" class="sidebar__link">Navigation</a>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__title">Effets</div>
+        <a href="../hovers/index.html" class="sidebar__link">Hovers</a>
+        <a href="../animations/index.html" class="sidebar__link">Animations</a>
+        <a href="../backgrounds/index.html" class="sidebar__link">Backgrounds</a>
+        <a href="index.html" class="sidebar__link sidebar__link--active">Mouse Effects</a>
+        <a href="../text-effects/index.html" class="sidebar__link">Text Effects</a>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__title">Sections</div>
+        <a href="../heroes/index.html" class="sidebar__link">Heroes</a>
+        <a href="../features/index.html" class="sidebar__link">Features</a>
+        <a href="../pricing/index.html" class="sidebar__link">Pricing</a>
+        <a href="../testimonials/index.html" class="sidebar__link">Testimonials</a>
+        <a href="../footers/index.html" class="sidebar__link">Footers</a>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__title">Générateurs</div>
+        <a href="../../generators/gradient/index.html" class="sidebar__link">Gradient</a>
+        <a href="../../generators/shadow/index.html" class="sidebar__link">Shadow</a>
+        <a href="../../generators/flexbox/index.html" class="sidebar__link">Flexbox</a>
+        <a href="../../generators/grid/index.html" class="sidebar__link">Grid</a>
+      </div>
+    </nav>
+
+    <!-- Toggle Admin -->
+    <div class="admin-toggle">
+      <span class="admin-toggle__label">Mode Admin</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="admin-toggle">
+        <span class="toggle-switch__slider"></span>
+      </label>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    <header class="page-header">
+      <h1 class="page-header__title">Mouse Effects</h1>
+      <p class="page-header__desc">Effets interactifs qui suivent le curseur de la souris</p>
+    </header>
+
+    <div class="effects-grid">
+
+      <!-- EFFECT 1 — SPOTLIGHT -->
+      <div class="effect-card">
+        <div class="effect-card__preview" id="spotlight-container">
+          <div class="effect-spotlight">
+            <div class="effect-spotlight__light" id="spotlight"></div>
+          </div>
+        </div>
+        <div class="effect-card__info">
+          <h3 class="effect-card__name">Spotlight Effect</h3>
+          <div class="effect-card__tags">
+            <span class="tag tag--primary">Cursor Follow</span>
+            <span class="tag">Gradient</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">JS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>container.addEventListener('mousemove', (e) => {
+  const rect = container.getBoundingClientRect();
+  spotlight.style.left = e.clientX - rect.left + 'px';
+  spotlight.style.top = e.clientY - rect.top + 'px';
+});</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EFFECT 2 — MAGNETIC -->
+      <div class="effect-card">
+        <div class="effect-card__preview" id="magnetic-container">
+          <div class="effect-magnetic">
+            <button class="effect-magnetic__btn" id="magnetic-btn">Magnetic Button</button>
+          </div>
+        </div>
+        <div class="effect-card__info">
+          <h3 class="effect-card__name">Magnetic Button</h3>
+          <div class="effect-card__tags">
+            <span class="tag tag--primary">Interactive</span>
+            <span class="tag">Attraction</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">JS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>btn.addEventListener('mousemove', (e) => {
+  const rect = btn.getBoundingClientRect();
+  const x = e.clientX - rect.left - rect.width / 2;
+  const y = e.clientY - rect.top - rect.height / 2;
+  btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+});</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EFFECT 3 — TILT -->
+      <div class="effect-card">
+        <div class="effect-card__preview" id="tilt-container">
+          <div class="effect-tilt">
+            <div class="effect-tilt__card" id="tilt-card">
+              <span class="effect-tilt__inner">3D Tilt</span>
+            </div>
+          </div>
+        </div>
+        <div class="effect-card__info">
+          <h3 class="effect-card__name">3D Tilt Card</h3>
+          <div class="effect-card__tags">
+            <span class="tag tag--primary">3D</span>
+            <span class="tag">Perspective</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">JS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>card.addEventListener('mousemove', (e) => {
+  const rect = card.getBoundingClientRect();
+  const x = (e.clientX - rect.left) / rect.width - 0.5;
+  const y = (e.clientY - rect.top) / rect.height - 0.5;
+  card.style.transform = `
+    rotateY(${x * 20}deg) rotateX(${-y * 20}deg)
+  `;
+});</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EFFECT 4 — TRAIL -->
+      <div class="effect-card">
+        <div class="effect-card__preview" id="trail-container">
+          <div class="effect-trail" id="trail-area"></div>
+        </div>
+        <div class="effect-card__info">
+          <h3 class="effect-card__name">Cursor Trail</h3>
+          <div class="effect-card__tags">
+            <span class="tag tag--primary">Animation</span>
+            <span class="tag">Particles</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">JS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>// Create trail dots with decreasing opacity
+for (let i = 0; i < 10; i++) {
+  const dot = document.createElement('div');
+  dot.className = 'trail-dot';
+  dot.style.opacity = 1 - i * 0.1;
+  container.appendChild(dot);
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EFFECT 5 — GLOW -->
+      <div class="effect-card">
+        <div class="effect-card__preview" id="glow-container">
+          <div class="effect-glow">
+            <div class="effect-glow__orb" id="glow-orb"></div>
+            <div class="effect-glow__content">Glow Follow</div>
+          </div>
+        </div>
+        <div class="effect-card__info">
+          <h3 class="effect-card__name">Glow Follow</h3>
+          <div class="effect-card__tags">
+            <span class="tag tag--primary">Blur</span>
+            <span class="tag">Ambient</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.effect-glow__orb {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(
+    circle,
+    rgba(99, 102, 241, 0.4) 0%,
+    transparent 70%
+  );
+  filter: blur(40px);
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EFFECT 6 — RIPPLE -->
+      <div class="effect-card">
+        <div class="effect-card__preview">
+          <div class="effect-ripple" id="ripple-area"></div>
+        </div>
+        <div class="effect-card__info">
+          <h3 class="effect-card__name">Ripple Click</h3>
+          <div class="effect-card__tags">
+            <span class="tag tag--primary">Click</span>
+            <span class="tag">Material</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">JS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>area.addEventListener('click', (e) => {
+  const ripple = document.createElement('span');
+  ripple.className = 'ripple';
+  ripple.style.left = e.offsetX + 'px';
+  ripple.style.top = e.offsetY + 'px';
+  area.appendChild(ripple);
+  setTimeout(() => ripple.remove(), 600);
+});</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EFFECT 7 — PARALLAX -->
+      <div class="effect-card">
+        <div class="effect-card__preview" id="parallax-container">
+          <div class="effect-parallax">
+            <div class="effect-parallax__layer effect-parallax__layer--1" data-speed="0.05">🚀</div>
+            <div class="effect-parallax__layer effect-parallax__layer--2" data-speed="0.08">💎</div>
+            <div class="effect-parallax__layer effect-parallax__layer--3" data-speed="0.03">⭐</div>
+            <div class="effect-parallax__layer effect-parallax__layer--4" data-speed="0.06">🔥</div>
+          </div>
+        </div>
+        <div class="effect-card__info">
+          <h3 class="effect-card__name">Parallax Layers</h3>
+          <div class="effect-card__tags">
+            <span class="tag tag--primary">Depth</span>
+            <span class="tag">Movement</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">JS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>layers.forEach(layer => {
+  const speed = layer.dataset.speed;
+  const x = (centerX - mouseX) * speed;
+  const y = (centerY - mouseY) * speed;
+  layer.style.transform = `translate(${x}px, ${y}px)`;
+});</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EFFECT 8 — CUSTOM CURSOR -->
+      <div class="effect-card">
+        <div class="effect-card__preview" id="cursor-container">
+          <div class="effect-cursor">
+            <div class="custom-cursor" id="custom-cursor"></div>
+            <div class="custom-cursor__dot" id="custom-dot"></div>
+          </div>
+        </div>
+        <div class="effect-card__info">
+          <h3 class="effect-card__name">Custom Cursor</h3>
+          <div class="effect-card__tags">
+            <span class="tag tag--primary">Cursor</span>
+            <span class="tag">Smooth</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.custom-cursor {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #6366f1;
+  border-radius: 50%;
+  transition: transform 0.15s ease-out;
+}
+
+.custom-cursor--hover {
+  width: 40px;
+  height: 40px;
+  background: rgba(99, 102, 241, 0.2);
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+  </div>
+
+  <script src="../../assets/js/main.js"></script>
+  <script src="../../assets/js/security-system.js"></script>
+  <script>
+    // ========== SPOTLIGHT ==========
+    const spotlightContainer = document.getElementById('spotlight-container');
+    const spotlight = document.getElementById('spotlight');
+
+    spotlightContainer.addEventListener('mousemove', (e) => {
+      const rect = spotlightContainer.getBoundingClientRect();
+      spotlight.style.left = (e.clientX - rect.left) + 'px';
+      spotlight.style.top = (e.clientY - rect.top) + 'px';
+    });
+
+    // ========== MAGNETIC BUTTON ==========
+    const magneticBtn = document.getElementById('magnetic-btn');
+    const magneticContainer = document.getElementById('magnetic-container');
+
+    magneticContainer.addEventListener('mousemove', (e) => {
+      const rect = magneticBtn.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      const deltaX = e.clientX - centerX;
+      const deltaY = e.clientY - centerY;
+      const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+      if (distance < 100) {
+        magneticBtn.style.transform = `translate(${deltaX * 0.3}px, ${deltaY * 0.3}px)`;
+      }
+    });
+
+    magneticContainer.addEventListener('mouseleave', () => {
+      magneticBtn.style.transform = 'translate(0, 0)';
+    });
+
+    // ========== TILT CARD ==========
+    const tiltCard = document.getElementById('tilt-card');
+
+    tiltCard.addEventListener('mousemove', (e) => {
+      const rect = tiltCard.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      tiltCard.style.transform = `rotateY(${x * 20}deg) rotateX(${-y * 20}deg)`;
+    });
+
+    tiltCard.addEventListener('mouseleave', () => {
+      tiltCard.style.transform = 'rotateY(0deg) rotateX(0deg)';
+    });
+
+    // ========== TRAIL ==========
+    const trailArea = document.getElementById('trail-area');
+    const trailDots = [];
+
+    for (let i = 0; i < 10; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'trail-dot';
+      dot.style.opacity = 1 - i * 0.1;
+      dot.style.width = (12 - i) + 'px';
+      dot.style.height = (12 - i) + 'px';
+      trailArea.appendChild(dot);
+      trailDots.push({ el: dot, x: 0, y: 0 });
+    }
+
+    trailArea.addEventListener('mousemove', (e) => {
+      const rect = trailArea.getBoundingClientRect();
+      trailDots[0].x = e.clientX - rect.left;
+      trailDots[0].y = e.clientY - rect.top;
+    });
+
+    function animateTrail() {
+      for (let i = trailDots.length - 1; i > 0; i--) {
+        trailDots[i].x += (trailDots[i - 1].x - trailDots[i].x) * 0.3;
+        trailDots[i].y += (trailDots[i - 1].y - trailDots[i].y) * 0.3;
+      }
+
+      trailDots.forEach(dot => {
+        dot.el.style.left = dot.x + 'px';
+        dot.el.style.top = dot.y + 'px';
+        dot.el.style.opacity = dot.x > 0 ? dot.el.style.opacity : 0;
+      });
+
+      requestAnimationFrame(animateTrail);
+    }
+    animateTrail();
+
+    // ========== GLOW ==========
+    const glowContainer = document.getElementById('glow-container');
+    const glowOrb = document.getElementById('glow-orb');
+
+    glowContainer.addEventListener('mousemove', (e) => {
+      const rect = glowContainer.getBoundingClientRect();
+      glowOrb.style.left = (e.clientX - rect.left) + 'px';
+      glowOrb.style.top = (e.clientY - rect.top) + 'px';
+    });
+
+    // ========== RIPPLE ==========
+    const rippleArea = document.getElementById('ripple-area');
+
+    rippleArea.addEventListener('click', (e) => {
+      const ripple = document.createElement('span');
+      ripple.className = 'ripple';
+      ripple.style.left = e.offsetX + 'px';
+      ripple.style.top = e.offsetY + 'px';
+      ripple.style.width = '100px';
+      ripple.style.height = '100px';
+      rippleArea.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 600);
+    });
+
+    // ========== PARALLAX ==========
+    const parallaxContainer = document.getElementById('parallax-container');
+    const parallaxLayers = parallaxContainer.querySelectorAll('.effect-parallax__layer');
+
+    parallaxContainer.addEventListener('mousemove', (e) => {
+      const rect = parallaxContainer.getBoundingClientRect();
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+
+      parallaxLayers.forEach(layer => {
+        const speed = parseFloat(layer.dataset.speed);
+        const x = (centerX - mouseX) * speed;
+        const y = (centerY - mouseY) * speed;
+        layer.style.transform = `translate(${x}px, ${y}px)`;
+      });
+    });
+
+    // ========== CUSTOM CURSOR ==========
+    const cursorContainer = document.getElementById('cursor-container');
+    const customCursor = document.getElementById('custom-cursor');
+    const customDot = document.getElementById('custom-dot');
+
+    let cursorX = 0, cursorY = 0;
+    let dotX = 0, dotY = 0;
+
+    cursorContainer.addEventListener('mousemove', (e) => {
+      const rect = cursorContainer.getBoundingClientRect();
+      cursorX = e.clientX - rect.left;
+      cursorY = e.clientY - rect.top;
+    });
+
+    function animateCursor() {
+      dotX += (cursorX - dotX) * 0.2;
+      dotY += (cursorY - dotY) * 0.2;
+
+      customCursor.style.left = dotX + 'px';
+      customCursor.style.top = dotY + 'px';
+      customDot.style.left = cursorX + 'px';
+      customDot.style.top = cursorY + 'px';
+
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    // ========== COPY CODE ==========
+    function copyCode(btn) {
+      const codeBlock = btn.closest('.code-block');
+      const code = codeBlock.querySelector('pre').textContent;
+
+      navigator.clipboard.writeText(code).then(() => {
+        const originalText = btn.textContent;
+        btn.textContent = 'Copié !';
+        btn.style.color = '#22c55e';
+
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.style.color = '';
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>

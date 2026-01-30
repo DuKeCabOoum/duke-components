@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Forms — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+</head>
+<body>
+  <div class="app">
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+      <a href="../../index.html" class="sidebar__logo">
+        <span>Duke</span>-components
+      </a>
+
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Forms</h3>
+        <ul class="sidebar__nav">
+          <li><a href="#inputs" class="sidebar__link sidebar__link--active">Inputs</a></li>
+          <li><a href="#checkboxes" class="sidebar__link">Checkboxes</a></li>
+          <li><a href="#toggles" class="sidebar__link">Toggles</a></li>
+          <li><a href="#selects" class="sidebar__link">Selects</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar__section">
+        <a href="../../index.html" class="sidebar__link">← Retour</a>
+      </div>
+
+      <!-- Toggle Admin -->
+      <div class="admin-toggle">
+        <span class="admin-toggle__label">Mode Admin</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="admin-toggle">
+          <span class="toggle-switch__slider"></span>
+        </label>
+      </div>
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main">
+      <header class="main__header">
+        <h1 class="main__title">📝 Forms</h1>
+        <p class="main__subtitle">Composants de formulaire — Inputs, Checkboxes, Toggles, Selects.</p>
+      </header>
+
+      <!-- ========== INPUTS SECTION ========== -->
+      <section id="inputs" class="section">
+        <h2 class="section__title">Inputs</h2>
+        <p class="section__desc">Champs de saisie stylisés.</p>
+
+        <div class="components-grid">
+          <!-- INPUT SIMPLE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="input-group">
+                <input type="text" class="input-simple" placeholder="Enter text...">
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Simple Input</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">input</span>
+                <span class="tag">minimal</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="input-simple-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="input-simple-html"><code>&lt;input type="text" class="input-simple" placeholder="Enter text..."&gt;</code></pre>
+                <pre class="code-viewer__code" id="input-simple-css" style="display:none"><code>.input-simple {
+  width: 100%;
+  padding: 12px 16px;
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.input-simple::placeholder {
+  color: #71717a;
+}
+
+.input-simple:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- INPUT FLOATING LABEL -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="input-floating">
+                <input type="text" id="float-input" placeholder=" ">
+                <label for="float-input">Email address</label>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Floating Label</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">input</span>
+                <span class="tag">floating</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="input-floating-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="input-floating-html"><code>&lt;div class="input-floating"&gt;
+  &lt;input type="text" id="email" placeholder=" "&gt;
+  &lt;label for="email"&gt;Email address&lt;/label&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="input-floating-css" style="display:none"><code>.input-floating {
+  position: relative;
+}
+
+.input-floating input {
+  width: 100%;
+  padding: 16px;
+  padding-top: 24px;
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.input-floating label {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #71717a;
+  font-size: 1rem;
+  pointer-events: none;
+  transition: all 0.2s ease;
+}
+
+.input-floating input:focus,
+.input-floating input:not(:placeholder-shown) {
+  border-color: #6366f1;
+}
+
+.input-floating input:focus + label,
+.input-floating input:not(:placeholder-shown) + label {
+  top: 12px;
+  font-size: 0.75rem;
+  color: #6366f1;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- INPUT WITH ICON -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="input-icon">
+                <span class="input-icon__icon">🔍</span>
+                <input type="text" placeholder="Search...">
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Input with Icon</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">input</span>
+                <span class="tag">icon</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="input-icon-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="input-icon-html"><code>&lt;div class="input-icon"&gt;
+  &lt;span class="input-icon__icon"&gt;🔍&lt;/span&gt;
+  &lt;input type="text" placeholder="Search..."&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="input-icon-css" style="display:none"><code>.input-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon__icon {
+  position: absolute;
+  left: 12px;
+  font-size: 1rem;
+}
+
+.input-icon input {
+  width: 100%;
+  padding: 12px 16px 12px 40px;
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.input-icon input:focus {
+  outline: none;
+  border-color: #6366f1;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== CHECKBOXES SECTION ========== -->
+      <section id="checkboxes" class="section">
+        <h2 class="section__title">Checkboxes</h2>
+        <p class="section__desc">Cases à cocher personnalisées.</p>
+
+        <div class="components-grid">
+          <!-- CHECKBOX SIMPLE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <label class="checkbox-custom">
+                <input type="checkbox" checked>
+                <span class="checkbox-custom__box"></span>
+                <span class="checkbox-custom__label">Accept terms</span>
+              </label>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Custom Checkbox</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">checkbox</span>
+                <span class="tag">custom</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="checkbox-custom-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="checkbox-custom-html"><code>&lt;label class="checkbox-custom"&gt;
+  &lt;input type="checkbox"&gt;
+  &lt;span class="checkbox-custom__box"&gt;&lt;/span&gt;
+  &lt;span class="checkbox-custom__label"&gt;Label&lt;/span&gt;
+&lt;/label&gt;</code></pre>
+                <pre class="code-viewer__code" id="checkbox-custom-css" style="display:none"><code>.checkbox-custom {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.checkbox-custom input {
+  display: none;
+}
+
+.checkbox-custom__box {
+  width: 20px;
+  height: 20px;
+  background: #1a1a1a;
+  border: 2px solid #2a2a2a;
+  border-radius: 4px;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.checkbox-custom input:checked + .checkbox-custom__box {
+  background: #6366f1;
+  border-color: #6366f1;
+}
+
+.checkbox-custom input:checked + .checkbox-custom__box::after {
+  content: '✓';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 12px;
+}
+
+.checkbox-custom__label {
+  color: #a1a1aa;
+  font-size: 0.875rem;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- RADIO BUTTONS -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="radio-group">
+                <label class="radio-custom">
+                  <input type="radio" name="demo-radio" checked>
+                  <span class="radio-custom__circle"></span>
+                  <span class="radio-custom__label">Option A</span>
+                </label>
+                <label class="radio-custom">
+                  <input type="radio" name="demo-radio">
+                  <span class="radio-custom__circle"></span>
+                  <span class="radio-custom__label">Option B</span>
+                </label>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Radio Buttons</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">radio</span>
+                <span class="tag">custom</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="radio-custom-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="radio-custom-html"><code>&lt;label class="radio-custom"&gt;
+  &lt;input type="radio" name="group"&gt;
+  &lt;span class="radio-custom__circle"&gt;&lt;/span&gt;
+  &lt;span class="radio-custom__label"&gt;Option&lt;/span&gt;
+&lt;/label&gt;</code></pre>
+                <pre class="code-viewer__code" id="radio-custom-css" style="display:none"><code>.radio-custom {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.radio-custom input {
+  display: none;
+}
+
+.radio-custom__circle {
+  width: 20px;
+  height: 20px;
+  background: #1a1a1a;
+  border: 2px solid #2a2a2a;
+  border-radius: 50%;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.radio-custom input:checked + .radio-custom__circle {
+  border-color: #6366f1;
+}
+
+.radio-custom input:checked + .radio-custom__circle::after {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  background: #6366f1;
+  border-radius: 50%;
+}
+
+.radio-custom__label {
+  color: #a1a1aa;
+  font-size: 0.875rem;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== TOGGLES SECTION ========== -->
+      <section id="toggles" class="section">
+        <h2 class="section__title">Toggles</h2>
+        <p class="section__desc">Interrupteurs on/off.</p>
+
+        <div class="components-grid">
+          <!-- TOGGLE SWITCH -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <label class="toggle-demo">
+                <input type="checkbox" checked>
+                <span class="toggle-demo__slider"></span>
+              </label>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Toggle Switch</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">toggle</span>
+                <span class="tag">switch</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="toggle-demo-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="toggle-demo-html"><code>&lt;label class="toggle"&gt;
+  &lt;input type="checkbox"&gt;
+  &lt;span class="toggle__slider"&gt;&lt;/span&gt;
+&lt;/label&gt;</code></pre>
+                <pre class="code-viewer__code" id="toggle-demo-css" style="display:none"><code>.toggle {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 28px;
+}
+
+.toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle__slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background: #2a2a2a;
+  border-radius: 28px;
+  transition: all 0.3s ease;
+}
+
+.toggle__slider::before {
+  content: '';
+  position: absolute;
+  height: 22px;
+  width: 22px;
+  left: 3px;
+  bottom: 3px;
+  background: white;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.toggle input:checked + .toggle__slider {
+  background: #6366f1;
+}
+
+.toggle input:checked + .toggle__slider::before {
+  transform: translateX(22px);
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- TOGGLE ICON -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <label class="toggle-icon">
+                <input type="checkbox">
+                <span class="toggle-icon__track">
+                  <span class="toggle-icon__sun">☀️</span>
+                  <span class="toggle-icon__moon">🌙</span>
+                </span>
+              </label>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Icon Toggle</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">toggle</span>
+                <span class="tag">theme</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="toggle-icon-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="toggle-icon-html"><code>&lt;label class="toggle-icon"&gt;
+  &lt;input type="checkbox"&gt;
+  &lt;span class="toggle-icon__track"&gt;
+    &lt;span&gt;☀️&lt;/span&gt;
+    &lt;span&gt;🌙&lt;/span&gt;
+  &lt;/span&gt;
+&lt;/label&gt;</code></pre>
+                <pre class="code-viewer__code" id="toggle-icon-css" style="display:none"><code>.toggle-icon {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 32px;
+  cursor: pointer;
+}
+
+.toggle-icon input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-icon__track {
+  position: absolute;
+  inset: 0;
+  background: #2a2a2a;
+  border-radius: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 6px;
+  transition: background 0.3s ease;
+}
+
+.toggle-icon__track span {
+  font-size: 14px;
+  transition: opacity 0.3s ease;
+}
+
+.toggle-icon__sun { opacity: 1; }
+.toggle-icon__moon { opacity: 0.3; }
+
+.toggle-icon input:checked ~ .toggle-icon__track {
+  background: #1e3a5f;
+}
+
+.toggle-icon input:checked ~ .toggle-icon__track .toggle-icon__sun {
+  opacity: 0.3;
+}
+
+.toggle-icon input:checked ~ .toggle-icon__track .toggle-icon__moon {
+  opacity: 1;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== SELECTS SECTION ========== -->
+      <section id="selects" class="section">
+        <h2 class="section__title">Selects</h2>
+        <p class="section__desc">Menus déroulants personnalisés.</p>
+
+        <div class="components-grid">
+          <!-- SELECT CUSTOM -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <select class="select-custom">
+                <option>Select option...</option>
+                <option>Option 1</option>
+                <option>Option 2</option>
+                <option>Option 3</option>
+              </select>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Custom Select</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">select</span>
+                <span class="tag">dropdown</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="select-custom-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="select-custom-html"><code>&lt;select class="select-custom"&gt;
+  &lt;option&gt;Select option...&lt;/option&gt;
+  &lt;option&gt;Option 1&lt;/option&gt;
+  &lt;option&gt;Option 2&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+                <pre class="code-viewer__code" id="select-custom-css" style="display:none"><code>.select-custom {
+  width: 100%;
+  padding: 12px 40px 12px 16px;
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2371717a' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  transition: all 0.2s ease;
+}
+
+.select-custom:focus {
+  outline: none;
+  border-color: #6366f1;
+}
+
+.select-custom option {
+  background: #1a1a1a;
+  color: white;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Component Styles -->
+  <style>
+    /* ========== INPUTS ========== */
+    .input-group {
+      width: 200px;
+    }
+    .input-simple {
+      width: 100%;
+      padding: 12px 16px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      color: white;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+    }
+    .input-simple::placeholder {
+      color: #71717a;
+    }
+    .input-simple:focus {
+      outline: none;
+      border-color: #6366f1;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+    }
+
+    .input-floating {
+      position: relative;
+      width: 200px;
+    }
+    .input-floating input {
+      width: 100%;
+      padding: 20px 16px 8px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      color: white;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+    }
+    .input-floating label {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #71717a;
+      font-size: 0.9rem;
+      pointer-events: none;
+      transition: all 0.2s ease;
+    }
+    .input-floating input:focus,
+    .input-floating input:not(:placeholder-shown) {
+      border-color: #6366f1;
+    }
+    .input-floating input:focus + label,
+    .input-floating input:not(:placeholder-shown) + label {
+      top: 10px;
+      font-size: 0.7rem;
+      color: #6366f1;
+    }
+
+    .input-icon {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 200px;
+    }
+    .input-icon__icon {
+      position: absolute;
+      left: 12px;
+      font-size: 0.9rem;
+    }
+    .input-icon input {
+      width: 100%;
+      padding: 12px 16px 12px 38px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      color: white;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+    }
+    .input-icon input::placeholder {
+      color: #71717a;
+    }
+    .input-icon input:focus {
+      outline: none;
+      border-color: #6366f1;
+    }
+
+    /* ========== CHECKBOXES ========== */
+    .checkbox-custom {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+    .checkbox-custom input {
+      display: none;
+    }
+    .checkbox-custom__box {
+      width: 20px;
+      height: 20px;
+      background: #1a1a1a;
+      border: 2px solid #2a2a2a;
+      border-radius: 4px;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+    .checkbox-custom input:checked + .checkbox-custom__box {
+      background: #6366f1;
+      border-color: #6366f1;
+    }
+    .checkbox-custom input:checked + .checkbox-custom__box::after {
+      content: '✓';
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 12px;
+    }
+    .checkbox-custom__label {
+      color: #a1a1aa;
+      font-size: 0.875rem;
+    }
+
+    .radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .radio-custom {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+    .radio-custom input {
+      display: none;
+    }
+    .radio-custom__circle {
+      width: 20px;
+      height: 20px;
+      background: #1a1a1a;
+      border: 2px solid #2a2a2a;
+      border-radius: 50%;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+    .radio-custom input:checked + .radio-custom__circle {
+      border-color: #6366f1;
+    }
+    .radio-custom input:checked + .radio-custom__circle::after {
+      content: '';
+      position: absolute;
+      inset: 4px;
+      background: #6366f1;
+      border-radius: 50%;
+    }
+    .radio-custom__label {
+      color: #a1a1aa;
+      font-size: 0.875rem;
+    }
+
+    /* ========== TOGGLES ========== */
+    .toggle-demo {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 28px;
+    }
+    .toggle-demo input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .toggle-demo__slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background: #2a2a2a;
+      border-radius: 28px;
+      transition: all 0.3s ease;
+    }
+    .toggle-demo__slider::before {
+      content: '';
+      position: absolute;
+      height: 22px;
+      width: 22px;
+      left: 3px;
+      bottom: 3px;
+      background: white;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+    .toggle-demo input:checked + .toggle-demo__slider {
+      background: #6366f1;
+    }
+    .toggle-demo input:checked + .toggle-demo__slider::before {
+      transform: translateX(22px);
+    }
+
+    .toggle-icon {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 32px;
+      cursor: pointer;
+    }
+    .toggle-icon input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .toggle-icon__track {
+      position: absolute;
+      inset: 0;
+      background: #2a2a2a;
+      border-radius: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 6px;
+      transition: background 0.3s ease;
+    }
+    .toggle-icon__track span {
+      font-size: 14px;
+      transition: opacity 0.3s ease;
+    }
+    .toggle-icon__sun { opacity: 1; }
+    .toggle-icon__moon { opacity: 0.3; }
+    .toggle-icon input:checked ~ .toggle-icon__track {
+      background: #1e3a5f;
+    }
+    .toggle-icon input:checked ~ .toggle-icon__track .toggle-icon__sun {
+      opacity: 0.3;
+    }
+    .toggle-icon input:checked ~ .toggle-icon__track .toggle-icon__moon {
+      opacity: 1;
+    }
+
+    /* ========== SELECTS ========== */
+    .select-custom {
+      width: 200px;
+      padding: 12px 40px 12px 16px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      color: white;
+      font-size: 0.9rem;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2371717a' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      transition: all 0.2s ease;
+    }
+    .select-custom:focus {
+      outline: none;
+      border-color: #6366f1;
+    }
+    .select-custom option {
+      background: #1a1a1a;
+      color: white;
+    }
+
+    /* ========== SECTION ========== */
+    .section {
+      margin-bottom: 48px;
+    }
+    .section__title {
+      font-size: 1.5rem;
+      margin-bottom: 8px;
+    }
+    .section__desc {
+      color: #a1a1aa;
+      margin-bottom: 24px;
+    }
+  </style>
+
+  <script src="../../assets/js/copy-code.js"></script>
+  <script src="../../assets/js/live-editor.js"></script>
+  <script src="../../assets/js/security-system.js"></script>
+</body>
+</html>

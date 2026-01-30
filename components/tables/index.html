@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tables — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ========== TABLES STYLES ========== */
+
+    /* Base Table */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      border-radius: 12px;
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .table th,
+    .table td {
+      padding: 12px 16px;
+      text-align: left;
+    }
+
+    .table th {
+      font-weight: 600;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+
+    .table td {
+      color: var(--text-secondary);
+    }
+
+    /* ===== 1. Basic Table ===== */
+    .table--basic {
+      background: var(--surface);
+    }
+
+    .table--basic th {
+      background: var(--surface-hover);
+      border-bottom: 2px solid var(--border);
+    }
+
+    .table--basic td {
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ===== 2. Striped ===== */
+    .table--striped th {
+      background: var(--surface-hover);
+      border-bottom: 2px solid var(--border);
+    }
+
+    .table--striped tbody tr:nth-child(odd) {
+      background: var(--surface);
+    }
+
+    .table--striped tbody tr:nth-child(even) {
+      background: var(--surface-hover);
+    }
+
+    /* ===== 3. Bordered ===== */
+    .table--bordered {
+      border: 1px solid var(--border);
+    }
+
+    .table--bordered th,
+    .table--bordered td {
+      border: 1px solid var(--border);
+    }
+
+    .table--bordered th {
+      background: var(--surface-hover);
+    }
+
+    /* ===== 4. Hover Effect ===== */
+    .table--hover th {
+      background: var(--surface-hover);
+      border-bottom: 2px solid var(--border);
+    }
+
+    .table--hover td {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.2s ease;
+    }
+
+    .table--hover tbody tr:hover {
+      background: var(--primary-transparent);
+    }
+
+    .table--hover tbody tr:hover td {
+      color: var(--text-primary);
+    }
+
+    /* ===== 5. Compact ===== */
+    .table--compact th,
+    .table--compact td {
+      padding: 8px 12px;
+      font-size: 13px;
+    }
+
+    .table--compact th {
+      background: var(--surface-hover);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .table--compact td {
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ===== 6. Dark Header ===== */
+    .table--dark-header th {
+      background: var(--bg-darker);
+      color: white;
+      border-bottom: none;
+    }
+
+    .table--dark-header td {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ===== 7. Rounded ===== */
+    .table-container--rounded {
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .table--rounded th {
+      background: var(--surface-hover);
+    }
+
+    .table--rounded td {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .table--rounded tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* ===== 8. Gradient Header ===== */
+    .table--gradient th {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+    }
+
+    .table--gradient td {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ===== 9. Card Style ===== */
+    .table--card {
+      border-spacing: 0 8px;
+      border-collapse: separate;
+    }
+
+    .table--card th {
+      background: transparent;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .table--card tbody tr {
+      background: var(--surface);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+
+    .table--card td {
+      border: none;
+    }
+
+    .table--card td:first-child {
+      border-radius: 8px 0 0 8px;
+    }
+
+    .table--card td:last-child {
+      border-radius: 0 8px 8px 0;
+    }
+
+    /* ===== 10. With Actions ===== */
+    .table__actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .table__action-btn {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 14px;
+    }
+
+    .table__action-btn--edit {
+      background: var(--primary-transparent);
+      color: var(--primary);
+    }
+
+    .table__action-btn--edit:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    .table__action-btn--delete {
+      background: rgba(239, 68, 68, 0.1);
+      color: #ef4444;
+    }
+
+    .table__action-btn--delete:hover {
+      background: #ef4444;
+      color: white;
+    }
+
+    .table__action-btn--view {
+      background: rgba(34, 197, 94, 0.1);
+      color: #22c55e;
+    }
+
+    .table__action-btn--view:hover {
+      background: #22c55e;
+      color: white;
+    }
+
+    /* ===== 11. With Status ===== */
+    .table__status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .table__status--active {
+      background: rgba(34, 197, 94, 0.1);
+      color: #22c55e;
+    }
+
+    .table__status--pending {
+      background: rgba(251, 191, 36, 0.1);
+      color: #f59e0b;
+    }
+
+    .table__status--inactive {
+      background: rgba(239, 68, 68, 0.1);
+      color: #ef4444;
+    }
+
+    .table__status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    /* ===== 12. Sortable Header ===== */
+    .table__sortable {
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.2s ease;
+    }
+
+    .table__sortable:hover {
+      color: var(--primary);
+    }
+
+    .table__sort-icon {
+      display: inline-flex;
+      flex-direction: column;
+      margin-left: 4px;
+      font-size: 8px;
+      line-height: 1;
+      vertical-align: middle;
+    }
+
+    .table__sort-icon span {
+      opacity: 0.3;
+      transition: opacity 0.2s ease;
+    }
+
+    .table__sortable--asc .table__sort-icon span:first-child,
+    .table__sortable--desc .table__sort-icon span:last-child {
+      opacity: 1;
+    }
+
+    /* ===== 13. Selectable ===== */
+    .table__checkbox {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    .table--selectable tbody tr.selected {
+      background: var(--primary-transparent);
+    }
+
+    /* ===== 14. Expandable ===== */
+    .table__expand-btn {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      background: var(--surface-hover);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: var(--text-secondary);
+    }
+
+    .table__expand-btn:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    .table__expand-btn.expanded {
+      transform: rotate(90deg);
+    }
+
+    .table__expanded-row {
+      background: var(--surface-hover);
+    }
+
+    .table__expanded-content {
+      padding: 16px 48px;
+      color: var(--text-secondary);
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+  <aside class="sidebar">
+    <div class="sidebar__logo">
+      <a href="../../index.html"><span>Duke</span>-components</a>
+    </div>
+    <div class="sidebar__section">
+      <h3 class="sidebar__title">Composants</h3>
+      <ul class="sidebar__nav">
+        <li><a href="../accordions/index.html" class="sidebar__link"><span>📂</span> Accordions</a></li>
+        <li><a href="../avatars/index.html" class="sidebar__link"><span>👤</span> Avatars</a></li>
+        <li><a href="../badges/index.html" class="sidebar__link"><span>🏷️</span> Badges</a></li>
+        <li><a href="../breadcrumbs/index.html" class="sidebar__link"><span>🥖</span> Breadcrumbs</a></li>
+        <li><a href="../buttons/index.html" class="sidebar__link"><span>🔘</span> Buttons</a></li>
+        <li><a href="../cards/index.html" class="sidebar__link"><span>🃏</span> Cards</a></li>
+        <li><a href="../carousels/index.html" class="sidebar__link"><span>🎠</span> Carousels</a></li>
+        <li><a href="../forms/index.html" class="sidebar__link"><span>📝</span> Forms</a></li>
+        <li><a href="../loaders/index.html" class="sidebar__link"><span>⏳</span> Loaders</a></li>
+        <li><a href="../modals/index.html" class="sidebar__link"><span>💬</span> Modals</a></li>
+        <li><a href="../navigation/index.html" class="sidebar__link"><span>🧭</span> Navigation</a></li>
+        <li><a href="../notifications/index.html" class="sidebar__link"><span>🔔</span> Notifications</a></li>
+        <li><a href="../pagination/index.html" class="sidebar__link"><span>📄</span> Pagination</a></li>
+        <li><a href="../progress/index.html" class="sidebar__link"><span>📊</span> Progress</a></li>
+        <li><a href="index.html" class="sidebar__link sidebar__link--active"><span>📋</span> Tables</a></li>
+        <li><a href="../tabs/index.html" class="sidebar__link"><span>📑</span> Tabs</a></li>
+        <li><a href="../tooltips/index.html" class="sidebar__link"><span>💡</span> Tooltips</a></li>
+      </ul>
+    </div>
+    <div class="admin-toggle">
+      <span class="admin-toggle__label">Mode Admin</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="admin-toggle">
+        <span class="toggle-switch__slider"></span>
+      </label>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="page-header">
+      <h1 class="page-header__title">Tables</h1>
+      <p class="page-header__desc">Composants de tableaux : 10 styles pour afficher tes donnees de facon claire et organise.</p>
+    </header>
+
+    <div class="components-grid">
+
+      <!-- 1. Basic Table -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Basic Table</h3>
+        </div>
+        <div class="component-card__preview">
+          <div class="table-container">
+            <table class="table table--basic">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Role</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>John Doe</td>
+                  <td>john@example.com</td>
+                  <td>Admin</td>
+                </tr>
+                <tr>
+                  <td>Jane Smith</td>
+                  <td>jane@example.com</td>
+                  <td>Editor</td>
+                </tr>
+                <tr>
+                  <td>Bob Wilson</td>
+                  <td>bob@example.com</td>
+                  <td>User</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;table class="table table--basic"&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Name&lt;/th&gt;
+      &lt;th&gt;Email&lt;/th&gt;
+      &lt;th&gt;Role&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;John Doe&lt;/td&gt;
+      &lt;td&gt;john@example.com&lt;/td&gt;
+      &lt;td&gt;Admin&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 2. Striped -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Striped Rows</h3>
+        </div>
+        <div class="component-card__preview">
+          <div class="table-container">
+            <table class="table table--striped">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Price</th>
+                  <th>Stock</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>MacBook Pro</td>
+                  <td>$2,499</td>
+                  <td>12</td>
+                </tr>
+                <tr>
+                  <td>iPhone 15</td>
+                  <td>$999</td>
+                  <td>45</td>
+                </tr>
+                <tr>
+                  <td>AirPods Pro</td>
+                  <td>$249</td>
+                  <td>89</td>
+                </tr>
+                <tr>
+                  <td>iPad Air</td>
+                  <td>$599</td>
+                  <td>23</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;table class="table table--striped"&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Product&lt;/th&gt;
+      &lt;th&gt;Price&lt;/th&gt;
+      &lt;th&gt;Stock&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;&lt;td&gt;Item 1&lt;/td&gt;&lt;td&gt;$99&lt;/td&gt;&lt;td&gt;10&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Item 2&lt;/td&gt;&lt;td&gt;$149&lt;/td&gt;&lt;td&gt;25&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 3. Bordered -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Bordered</h3>
+        </div>
+        <div class="component-card__preview">
+          <div class="table-container">
+            <table class="table table--bordered">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Event</th>
+                  <th>Location</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Jan 15</td>
+                  <td>Conference</td>
+                  <td>Paris</td>
+                </tr>
+                <tr>
+                  <td>Feb 20</td>
+                  <td>Workshop</td>
+                  <td>London</td>
+                </tr>
+                <tr>
+                  <td>Mar 10</td>
+                  <td>Meetup</td>
+                  <td>Berlin</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;table class="table table--bordered"&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Date&lt;/th&gt;
+      &lt;th&gt;Event&lt;/th&gt;
+      &lt;th&gt;Location&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Jan 15&lt;/td&gt;
+      &lt;td&gt;Conference&lt;/td&gt;
+      &lt;td&gt;Paris&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 4. Hover Effect -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Hover Effect</h3>
+        </div>
+        <div class="component-card__preview">
+          <div class="table-container">
+            <table class="table table--hover">
+              <thead>
+                <tr>
+                  <th>User</th>
+                  <th>Status</th>
+                  <th>Last Login</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Alice</td>
+                  <td>Online</td>
+                  <td>Just now</td>
+                </tr>
+                <tr>
+                  <td>Bob</td>
+                  <td>Offline</td>
+                  <td>2 hours ago</td>
+                </tr>
+                <tr>
+                  <td>Charlie</td>
+                  <td>Away</td>
+                  <td>1 day ago</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;table class="table table--hover"&gt;
+  ...
+&lt;/table&gt;
+
+/* CSS */
+.table--hover tbody tr:hover {
+  background: var(--primary-transparent);
+}</code></pre>
+        </div>
+      </article>
+
+      <!-- 5. Gradient Header -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Gradient Header</h3>
+        </div>
+        <div class="component-card__preview">
+          <div class="table-container table-container--rounded">
+            <table class="table table--gradient">
+              <thead>
+                <tr>
+                  <th>Project</th>
+                  <th>Progress</th>
+                  <th>Deadline</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Website Redesign</td>
+                  <td>75%</td>
+                  <td>Feb 28</td>
+                </tr>
+                <tr>
+                  <td>Mobile App</td>
+                  <td>45%</td>
+                  <td>Mar 15</td>
+                </tr>
+                <tr>
+                  <td>API Integration</td>
+                  <td>90%</td>
+                  <td>Feb 10</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;table class="table table--gradient"&gt;
+  ...
+&lt;/table&gt;
+
+/* CSS */
+.table--gradient th {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+}</code></pre>
+        </div>
+      </article>
+
+      <!-- 6. With Status Badges -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">With Status</h3>
+        </div>
+        <div class="component-card__preview">
+          <div class="table-container">
+            <table class="table table--basic">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Customer</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>#12345</td>
+                  <td>John Doe</td>
+                  <td>
+                    <span class="table__status table__status--active">
+                      <span class="table__status-dot"></span>
+                      Completed
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>#12346</td>
+                  <td>Jane Smith</td>
+                  <td>
+                    <span class="table__status table__status--pending">
+                      <span class="table__status-dot"></span>
+                      Pending
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>#12347</td>
+                  <td>Bob Wilson</td>
+                  <td>
+                    <span class="table__status table__status--inactive">
+                      <span class="table__status-dot"></span>
+                      Cancelled
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;span class="table__status table__status--active"&gt;
+  &lt;span class="table__status-dot"&gt;&lt;/span&gt;
+  Completed
+&lt;/span&gt;
+
+&lt;span class="table__status table__status--pending"&gt;
+  &lt;span class="table__status-dot"&gt;&lt;/span&gt;
+  Pending
+&lt;/span&gt;
+
+&lt;span class="table__status table__status--inactive"&gt;
+  &lt;span class="table__status-dot"&gt;&lt;/span&gt;
+  Cancelled
+&lt;/span&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 7. With Actions -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">With Actions</h3>
+        </div>
+        <div class="component-card__preview">
+          <div class="table-container">
+            <table class="table table--hover">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>John Doe</td>
+                  <td>john@example.com</td>
+                  <td>
+                    <div class="table__actions">
+                      <button class="table__action-btn table__action-btn--view" title="View">👁</button>
+                      <button class="table__action-btn table__action-btn--edit" title="Edit">✏️</button>
+                      <button class="table__action-btn table__action-btn--delete" title="Delete">🗑️</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Jane Smith</td>
+                  <td>jane@example.com</td>
+                  <td>
+                    <div class="table__actions">
+                      <button class="table__action-btn table__action-btn--view" title="View">👁</button>
+                      <button class="table__action-btn table__action-btn--edit" title="Edit">✏️</button>
+                      <button class="table__action-btn table__action-btn--delete" title="Delete">🗑️</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;div class="table__actions"&gt;
+  &lt;button class="table__action-btn table__action-btn--view"&gt;
+    View
+  &lt;/button&gt;
+  &lt;button class="table__action-btn table__action-btn--edit"&gt;
+    Edit
+  &lt;/button&gt;
+  &lt;button class="table__action-btn table__action-btn--delete"&gt;
+    Delete
+  &lt;/button&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 8. Selectable -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Selectable Rows</h3>
+        </div>
+        <div class="component-card__preview">
+          <div class="table-container">
+            <table class="table table--basic table--selectable">
+              <thead>
+                <tr>
+                  <th><input type="checkbox" class="table__checkbox" id="selectAll"></th>
+                  <th>File Name</th>
+                  <th>Size</th>
+                  <th>Modified</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input type="checkbox" class="table__checkbox"></td>
+                  <td>document.pdf</td>
+                  <td>2.4 MB</td>
+                  <td>Today</td>
+                </tr>
+                <tr class="selected">
+                  <td><input type="checkbox" class="table__checkbox" checked></td>
+                  <td>image.png</td>
+                  <td>1.2 MB</td>
+                  <td>Yesterday</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="table__checkbox"></td>
+                  <td>video.mp4</td>
+                  <td>45 MB</td>
+                  <td>Last week</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;table class="table table--basic table--selectable"&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;&lt;input type="checkbox" class="table__checkbox"&gt;&lt;/th&gt;
+      &lt;th&gt;File Name&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr class="selected"&gt;
+      &lt;td&gt;&lt;input type="checkbox" class="table__checkbox" checked&gt;&lt;/td&gt;
+      &lt;td&gt;file.pdf&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 9. Sortable -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Sortable Headers</h3>
+        </div>
+        <div class="component-card__preview">
+          <div class="table-container">
+            <table class="table table--basic">
+              <thead>
+                <tr>
+                  <th class="table__sortable table__sortable--asc">
+                    Name
+                    <span class="table__sort-icon">
+                      <span>▲</span>
+                      <span>▼</span>
+                    </span>
+                  </th>
+                  <th class="table__sortable">
+                    Price
+                    <span class="table__sort-icon">
+                      <span>▲</span>
+                      <span>▼</span>
+                    </span>
+                  </th>
+                  <th class="table__sortable table__sortable--desc">
+                    Date
+                    <span class="table__sort-icon">
+                      <span>▲</span>
+                      <span>▼</span>
+                    </span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Alpha</td>
+                  <td>$99</td>
+                  <td>Jan 10</td>
+                </tr>
+                <tr>
+                  <td>Beta</td>
+                  <td>$149</td>
+                  <td>Jan 5</td>
+                </tr>
+                <tr>
+                  <td>Gamma</td>
+                  <td>$79</td>
+                  <td>Jan 15</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;th class="table__sortable table__sortable--asc"&gt;
+  Name
+  &lt;span class="table__sort-icon"&gt;
+    &lt;span&gt;▲&lt;/span&gt;
+    &lt;span&gt;▼&lt;/span&gt;
+  &lt;/span&gt;
+&lt;/th&gt;
+
+/* Ajouter --asc ou --desc pour indiquer le tri */</code></pre>
+        </div>
+      </article>
+
+      <!-- 10. Card Style -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Card Style</h3>
+        </div>
+        <div class="component-card__preview">
+          <div class="table-container">
+            <table class="table table--card">
+              <thead>
+                <tr>
+                  <th>Team</th>
+                  <th>Members</th>
+                  <th>Projects</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Design</td>
+                  <td>5</td>
+                  <td>12</td>
+                  <td>
+                    <span class="table__status table__status--active">
+                      <span class="table__status-dot"></span>
+                      Active
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Development</td>
+                  <td>8</td>
+                  <td>24</td>
+                  <td>
+                    <span class="table__status table__status--active">
+                      <span class="table__status-dot"></span>
+                      Active
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Marketing</td>
+                  <td>3</td>
+                  <td>6</td>
+                  <td>
+                    <span class="table__status table__status--pending">
+                      <span class="table__status-dot"></span>
+                      Pending
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;table class="table table--card"&gt;
+  ...
+&lt;/table&gt;
+
+/* CSS */
+.table--card {
+  border-spacing: 0 8px;
+  border-collapse: separate;
+}
+
+.table--card tbody tr {
+  background: var(--surface);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}</code></pre>
+        </div>
+      </article>
+
+    </div>
+  </main>
+  </div>
+
+  <script src="../../assets/js/copy-code.js"></script>
+  <script src="../../assets/js/security-system.js"></script>
+</body>
+</html>

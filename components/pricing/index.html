@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ===========================================
+       PRICING — Styles locaux
+       =========================================== */
+
+    .pricing-list {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    .pricing-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .pricing-section__preview {
+      padding: 48px;
+      background: #0f0f0f;
+    }
+
+    .pricing-section__info {
+      padding: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .pricing-section__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .pricing-section__name {
+      font-weight: 600;
+      font-size: 1.25rem;
+    }
+
+    .pricing-section__tags {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* ===========================================
+       PRICING 1 — CARDS CLASSIQUES
+       =========================================== */
+
+    .pricing-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .pricing-card {
+      padding: 32px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .pricing-card:hover {
+      background: rgba(255, 255, 255, 0.04);
+      transform: translateY(-4px);
+    }
+
+    .pricing-card--popular {
+      border-color: #6366f1;
+      background: linear-gradient(180deg, rgba(99, 102, 241, 0.1) 0%, transparent 50%);
+    }
+
+    .pricing-card__badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .pricing-card__name {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #a1a1aa;
+      margin-bottom: 16px;
+    }
+
+    .pricing-card__price {
+      margin-bottom: 8px;
+    }
+
+    .pricing-card__amount {
+      font-size: 3rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .pricing-card__currency {
+      font-size: 1.5rem;
+      color: #a1a1aa;
+      vertical-align: super;
+    }
+
+    .pricing-card__period {
+      color: #71717a;
+      font-size: 0.9rem;
+      margin-bottom: 24px;
+    }
+
+    .pricing-card__features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 32px 0;
+      text-align: left;
+    }
+
+    .pricing-card__feature {
+      padding: 10px 0;
+      color: #a1a1aa;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .pricing-card__feature:last-child {
+      border-bottom: none;
+    }
+
+    .pricing-card__feature::before {
+      content: "✓";
+      color: #22c55e;
+      font-weight: 700;
+    }
+
+    .pricing-card__feature--disabled {
+      color: #52525b;
+    }
+
+    .pricing-card__feature--disabled::before {
+      content: "✕";
+      color: #ef4444;
+    }
+
+    .pricing-card__btn {
+      width: 100%;
+      padding: 14px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .pricing-card__btn--outline {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+    }
+
+    .pricing-card__btn--outline:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .pricing-card__btn--primary {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+    }
+
+    .pricing-card__btn--primary:hover {
+      transform: scale(1.02);
+      box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
+    }
+
+    /* ===========================================
+       PRICING 2 — AVEC TOGGLE MENSUEL/ANNUEL
+       =========================================== */
+
+    .pricing-toggle-container {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .pricing-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 6px;
+      border-radius: 30px;
+    }
+
+    .pricing-toggle__label {
+      color: #71717a;
+      font-size: 0.9rem;
+      padding: 8px 16px;
+      cursor: pointer;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .pricing-toggle__label--active {
+      color: #fff;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    }
+
+    .pricing-toggle__badge {
+      background: rgba(34, 197, 94, 0.2);
+      color: #22c55e;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    /* ===========================================
+       PRICING 3 — TABLE COMPARISON
+       =========================================== */
+
+    .pricing-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .pricing-table th,
+    .pricing-table td {
+      padding: 16px 24px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .pricing-table th {
+      color: #71717a;
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    .pricing-table th:first-child {
+      text-align: left;
+    }
+
+    .pricing-table td:first-child {
+      text-align: left;
+      color: #a1a1aa;
+    }
+
+    .pricing-table__header {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .pricing-table__header th {
+      padding: 24px;
+    }
+
+    .pricing-table__plan-name {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .pricing-table__plan-price {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #6366f1;
+    }
+
+    .pricing-table__check {
+      color: #22c55e;
+      font-size: 1.25rem;
+    }
+
+    .pricing-table__cross {
+      color: #52525b;
+      font-size: 1.25rem;
+    }
+
+    .pricing-table__category {
+      background: rgba(99, 102, 241, 0.1);
+    }
+
+    .pricing-table__category td {
+      color: #6366f1;
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* ===========================================
+       PRICING 4 — HORIZONTAL CARDS
+       =========================================== */
+
+    .pricing-horizontal {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .pricing-horizontal__card {
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr;
+      align-items: center;
+      gap: 32px;
+      padding: 24px 32px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .pricing-horizontal__card:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(99, 102, 241, 0.3);
+    }
+
+    .pricing-horizontal__card--featured {
+      border-color: #6366f1;
+      background: linear-gradient(90deg, rgba(99, 102, 241, 0.1) 0%, transparent 50%);
+    }
+
+    .pricing-horizontal__info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .pricing-horizontal__name {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .pricing-horizontal__desc {
+      color: #71717a;
+      font-size: 0.9rem;
+    }
+
+    .pricing-horizontal__features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .pricing-horizontal__feature {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #a1a1aa;
+      font-size: 0.85rem;
+    }
+
+    .pricing-horizontal__feature::before {
+      content: "✓";
+      color: #22c55e;
+      font-weight: 700;
+    }
+
+    .pricing-horizontal__action {
+      text-align: right;
+    }
+
+    .pricing-horizontal__price {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .pricing-horizontal__price span {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: #71717a;
+    }
+
+    /* ===========================================
+       PRICING 5 — GLASSMORPHISM
+       =========================================== */
+
+    .pricing-glass-container {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      padding: 48px;
+      border-radius: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pricing-glass-container::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.3) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .pricing-glass-container::after {
+      content: "";
+      position: absolute;
+      bottom: -30%;
+      left: -10%;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .pricing-glass-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .pricing-glass-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 32px;
+      text-align: center;
+      transition: all 0.4s ease;
+    }
+
+    .pricing-glass-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .pricing-glass-card--featured {
+      background: rgba(99, 102, 241, 0.15);
+      border-color: rgba(99, 102, 241, 0.4);
+      transform: scale(1.05);
+    }
+
+    .pricing-glass-card--featured:hover {
+      transform: scale(1.05) translateY(-8px);
+    }
+
+    .pricing-glass-card__icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 20px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(139, 92, 246, 0.3));
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+    }
+
+    .pricing-glass-card__name {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: #a1a1aa;
+      margin-bottom: 12px;
+    }
+
+    .pricing-glass-card__price {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .pricing-glass-card__period {
+      color: #71717a;
+      font-size: 0.85rem;
+      margin-bottom: 24px;
+    }
+
+    .pricing-glass-card__divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      margin: 24px 0;
+    }
+
+    .pricing-glass-card__features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 24px 0;
+      text-align: left;
+    }
+
+    .pricing-glass-card__feature {
+      padding: 8px 0;
+      color: #a1a1aa;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.9rem;
+    }
+
+    .pricing-glass-card__feature::before {
+      content: "◆";
+      color: #6366f1;
+      font-size: 0.6rem;
+    }
+
+    .pricing-glass-card__btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .pricing-glass-card__btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .pricing-glass-card--featured .pricing-glass-card__btn {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border: none;
+    }
+
+    .pricing-glass-card--featured .pricing-glass-card__btn:hover {
+      box-shadow: 0 8px 24px rgba(99, 102, 241, 0.5);
+    }
+
+    /* ===========================================
+       CODE BLOCK
+       =========================================== */
+
+    .code-block {
+      background: #1a1a1a;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .code-block__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .code-block__lang {
+      font-size: 0.75rem;
+      color: #71717a;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .code-block__copy {
+      padding: 6px 12px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: #a1a1aa;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .code-block__copy:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+    }
+
+    .code-block__content {
+      padding: 16px;
+      overflow-x: auto;
+    }
+
+    .code-block__content pre {
+      margin: 0;
+      font-family: "Fira Code", monospace;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: #e0e0e0;
+    }
+
+    /* ===========================================
+       TAG
+       =========================================== */
+
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      font-size: 0.75rem;
+      color: #a1a1aa;
+    }
+
+    .tag--primary {
+      background: rgba(99, 102, 241, 0.15);
+      border-color: rgba(99, 102, 241, 0.3);
+      color: #818cf8;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar__logo">
+        <a href="../../index.html" style="text-decoration: none; color: inherit;">
+          <span>Duke</span>-components
+        </a>
+      </div>
+
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Sections</h3>
+        <ul class="sidebar__nav">
+          <li><a href="../cta/index.html" class="sidebar__link"><span>📢</span> CTA</a></li>
+          <li><a href="../features/index.html" class="sidebar__link"><span>⭐</span> Features</a></li>
+          <li><a href="../heroes/index.html" class="sidebar__link"><span>🦸</span> Heroes</a></li>
+          <li><a href="index.html" class="sidebar__link sidebar__link--active"><span>💰</span> Pricing</a></li>
+          <li><a href="../testimonials/index.html" class="sidebar__link"><span>💬</span> Testimonials</a></li>
+          <li><a href="../footers/index.html" class="sidebar__link"><span>🦶</span> Footers</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Retour</h3>
+        <ul class="sidebar__nav">
+          <li><a href="../../index.html" class="sidebar__link"><span>🏠</span> Dashboard</a></li>
+        </ul>
+      </div>
+    </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    <header class="page-header">
+      <h1 class="page-header__title">Pricing Tables</h1>
+      <p class="page-header__desc">Tables de prix modernes et conversion-focused pour vos landing pages</p>
+    </header>
+
+    <div class="pricing-list">
+
+      <!-- ============================================
+           PRICING 1 — CARDS CLASSIQUES
+           ============================================ -->
+      <section class="pricing-section">
+        <div class="pricing-section__preview">
+          <div class="pricing-cards">
+            <!-- FREE -->
+            <div class="pricing-card">
+              <h3 class="pricing-card__name">Free</h3>
+              <div class="pricing-card__price">
+                <span class="pricing-card__currency">$</span>
+                <span class="pricing-card__amount">0</span>
+              </div>
+              <p class="pricing-card__period">par mois</p>
+              <ul class="pricing-card__features">
+                <li class="pricing-card__feature">5 projets</li>
+                <li class="pricing-card__feature">1 Go de stockage</li>
+                <li class="pricing-card__feature">Support email</li>
+                <li class="pricing-card__feature pricing-card__feature--disabled">Analytics avancés</li>
+                <li class="pricing-card__feature pricing-card__feature--disabled">API Access</li>
+              </ul>
+              <button class="pricing-card__btn pricing-card__btn--outline">Commencer</button>
+            </div>
+
+            <!-- PRO -->
+            <div class="pricing-card pricing-card--popular">
+              <span class="pricing-card__badge">Populaire</span>
+              <h3 class="pricing-card__name">Pro</h3>
+              <div class="pricing-card__price">
+                <span class="pricing-card__currency">$</span>
+                <span class="pricing-card__amount">29</span>
+              </div>
+              <p class="pricing-card__period">par mois</p>
+              <ul class="pricing-card__features">
+                <li class="pricing-card__feature">Projets illimités</li>
+                <li class="pricing-card__feature">100 Go de stockage</li>
+                <li class="pricing-card__feature">Support prioritaire</li>
+                <li class="pricing-card__feature">Analytics avancés</li>
+                <li class="pricing-card__feature pricing-card__feature--disabled">API Access</li>
+              </ul>
+              <button class="pricing-card__btn pricing-card__btn--primary">Commencer</button>
+            </div>
+
+            <!-- ENTERPRISE -->
+            <div class="pricing-card">
+              <h3 class="pricing-card__name">Enterprise</h3>
+              <div class="pricing-card__price">
+                <span class="pricing-card__currency">$</span>
+                <span class="pricing-card__amount">99</span>
+              </div>
+              <p class="pricing-card__period">par mois</p>
+              <ul class="pricing-card__features">
+                <li class="pricing-card__feature">Projets illimités</li>
+                <li class="pricing-card__feature">Stockage illimité</li>
+                <li class="pricing-card__feature">Support 24/7</li>
+                <li class="pricing-card__feature">Analytics avancés</li>
+                <li class="pricing-card__feature">API Access</li>
+              </ul>
+              <button class="pricing-card__btn pricing-card__btn--outline">Contacter</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="pricing-section__info">
+          <div class="pricing-section__header">
+            <h2 class="pricing-section__name">Pricing Cards Classique</h2>
+            <div class="pricing-section__tags">
+              <span class="tag">CSS Grid</span>
+              <span class="tag tag--primary">Conversion</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">HTML</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>&lt;div class="pricing-cards"&gt;
+  &lt;div class="pricing-card pricing-card--popular"&gt;
+    &lt;span class="pricing-card__badge"&gt;Populaire&lt;/span&gt;
+    &lt;h3 class="pricing-card__name"&gt;Pro&lt;/h3&gt;
+    &lt;div class="pricing-card__price"&gt;
+      &lt;span class="pricing-card__currency"&gt;$&lt;/span&gt;
+      &lt;span class="pricing-card__amount"&gt;29&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;p class="pricing-card__period"&gt;par mois&lt;/p&gt;
+    &lt;ul class="pricing-card__features"&gt;
+      &lt;li class="pricing-card__feature"&gt;Projets illimités&lt;/li&gt;
+      &lt;li class="pricing-card__feature--disabled"&gt;API Access&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;button class="pricing-card__btn pricing-card__btn--primary"&gt;Commencer&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================
+           PRICING 2 — AVEC TOGGLE
+           ============================================ -->
+      <section class="pricing-section">
+        <div class="pricing-section__preview">
+          <div class="pricing-toggle-container">
+            <div class="pricing-toggle">
+              <span class="pricing-toggle__label pricing-toggle__label--active">Mensuel</span>
+              <span class="pricing-toggle__label">Annuel</span>
+              <span class="pricing-toggle__badge">-20%</span>
+            </div>
+          </div>
+
+          <div class="pricing-cards">
+            <!-- STARTER -->
+            <div class="pricing-card">
+              <h3 class="pricing-card__name">Starter</h3>
+              <div class="pricing-card__price">
+                <span class="pricing-card__currency">$</span>
+                <span class="pricing-card__amount">9</span>
+              </div>
+              <p class="pricing-card__period">par mois</p>
+              <ul class="pricing-card__features">
+                <li class="pricing-card__feature">10 utilisateurs</li>
+                <li class="pricing-card__feature">2 Go de stockage</li>
+                <li class="pricing-card__feature">Intégrations basiques</li>
+              </ul>
+              <button class="pricing-card__btn pricing-card__btn--outline">Choisir</button>
+            </div>
+
+            <!-- TEAM -->
+            <div class="pricing-card pricing-card--popular">
+              <span class="pricing-card__badge">Best Value</span>
+              <h3 class="pricing-card__name">Team</h3>
+              <div class="pricing-card__price">
+                <span class="pricing-card__currency">$</span>
+                <span class="pricing-card__amount">39</span>
+              </div>
+              <p class="pricing-card__period">par mois</p>
+              <ul class="pricing-card__features">
+                <li class="pricing-card__feature">50 utilisateurs</li>
+                <li class="pricing-card__feature">50 Go de stockage</li>
+                <li class="pricing-card__feature">Toutes intégrations</li>
+              </ul>
+              <button class="pricing-card__btn pricing-card__btn--primary">Choisir</button>
+            </div>
+
+            <!-- BUSINESS -->
+            <div class="pricing-card">
+              <h3 class="pricing-card__name">Business</h3>
+              <div class="pricing-card__price">
+                <span class="pricing-card__currency">$</span>
+                <span class="pricing-card__amount">79</span>
+              </div>
+              <p class="pricing-card__period">par mois</p>
+              <ul class="pricing-card__features">
+                <li class="pricing-card__feature">Utilisateurs illimités</li>
+                <li class="pricing-card__feature">Stockage illimité</li>
+                <li class="pricing-card__feature">SSO + Admin avancé</li>
+              </ul>
+              <button class="pricing-card__btn pricing-card__btn--outline">Choisir</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="pricing-section__info">
+          <div class="pricing-section__header">
+            <h2 class="pricing-section__name">Pricing avec Toggle Mensuel/Annuel</h2>
+            <div class="pricing-section__tags">
+              <span class="tag">Toggle</span>
+              <span class="tag tag--primary">SaaS</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">HTML</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>&lt;div class="pricing-toggle"&gt;
+  &lt;span class="pricing-toggle__label pricing-toggle__label--active"&gt;Mensuel&lt;/span&gt;
+  &lt;span class="pricing-toggle__label"&gt;Annuel&lt;/span&gt;
+  &lt;span class="pricing-toggle__badge"&gt;-20%&lt;/span&gt;
+&lt;/div&gt;</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================
+           PRICING 3 — TABLE COMPARISON
+           ============================================ -->
+      <section class="pricing-section">
+        <div class="pricing-section__preview">
+          <table class="pricing-table">
+            <thead>
+              <tr class="pricing-table__header">
+                <th></th>
+                <th>
+                  <div class="pricing-table__plan-name">Basic</div>
+                  <div class="pricing-table__plan-price">$0</div>
+                </th>
+                <th>
+                  <div class="pricing-table__plan-name">Pro</div>
+                  <div class="pricing-table__plan-price">$29</div>
+                </th>
+                <th>
+                  <div class="pricing-table__plan-name">Enterprise</div>
+                  <div class="pricing-table__plan-price">$99</div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="pricing-table__category">
+                <td colspan="4">Fonctionnalités de base</td>
+              </tr>
+              <tr>
+                <td>Utilisateurs</td>
+                <td>1</td>
+                <td>10</td>
+                <td>Illimité</td>
+              </tr>
+              <tr>
+                <td>Stockage</td>
+                <td>1 Go</td>
+                <td>100 Go</td>
+                <td>Illimité</td>
+              </tr>
+              <tr>
+                <td>Projets</td>
+                <td>5</td>
+                <td>50</td>
+                <td>Illimité</td>
+              </tr>
+              <tr class="pricing-table__category">
+                <td colspan="4">Support</td>
+              </tr>
+              <tr>
+                <td>Email</td>
+                <td><span class="pricing-table__check">✓</span></td>
+                <td><span class="pricing-table__check">✓</span></td>
+                <td><span class="pricing-table__check">✓</span></td>
+              </tr>
+              <tr>
+                <td>Chat live</td>
+                <td><span class="pricing-table__cross">✕</span></td>
+                <td><span class="pricing-table__check">✓</span></td>
+                <td><span class="pricing-table__check">✓</span></td>
+              </tr>
+              <tr>
+                <td>Support téléphone</td>
+                <td><span class="pricing-table__cross">✕</span></td>
+                <td><span class="pricing-table__cross">✕</span></td>
+                <td><span class="pricing-table__check">✓</span></td>
+              </tr>
+              <tr class="pricing-table__category">
+                <td colspan="4">Intégrations</td>
+              </tr>
+              <tr>
+                <td>API Access</td>
+                <td><span class="pricing-table__cross">✕</span></td>
+                <td><span class="pricing-table__check">✓</span></td>
+                <td><span class="pricing-table__check">✓</span></td>
+              </tr>
+              <tr>
+                <td>Webhooks</td>
+                <td><span class="pricing-table__cross">✕</span></td>
+                <td><span class="pricing-table__check">✓</span></td>
+                <td><span class="pricing-table__check">✓</span></td>
+              </tr>
+              <tr>
+                <td>SSO (Single Sign-On)</td>
+                <td><span class="pricing-table__cross">✕</span></td>
+                <td><span class="pricing-table__cross">✕</span></td>
+                <td><span class="pricing-table__check">✓</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="pricing-section__info">
+          <div class="pricing-section__header">
+            <h2 class="pricing-section__name">Table de Comparaison</h2>
+            <div class="pricing-section__tags">
+              <span class="tag">Table</span>
+              <span class="tag tag--primary">Détaillé</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">HTML</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>&lt;table class="pricing-table"&gt;
+  &lt;thead&gt;
+    &lt;tr class="pricing-table__header"&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;
+        &lt;div class="pricing-table__plan-name"&gt;Basic&lt;/div&gt;
+        &lt;div class="pricing-table__plan-price"&gt;$0&lt;/div&gt;
+      &lt;/th&gt;
+      ...
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr class="pricing-table__category"&gt;
+      &lt;td colspan="4"&gt;Fonctionnalités&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Stockage&lt;/td&gt;
+      &lt;td&gt;1 Go&lt;/td&gt;
+      &lt;td&gt;100 Go&lt;/td&gt;
+      &lt;td&gt;Illimité&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================
+           PRICING 4 — HORIZONTAL
+           ============================================ -->
+      <section class="pricing-section">
+        <div class="pricing-section__preview">
+          <div class="pricing-horizontal">
+            <div class="pricing-horizontal__card">
+              <div class="pricing-horizontal__info">
+                <h3 class="pricing-horizontal__name">Hobby</h3>
+                <p class="pricing-horizontal__desc">Pour les projets personnels</p>
+              </div>
+              <div class="pricing-horizontal__features">
+                <span class="pricing-horizontal__feature">3 sites</span>
+                <span class="pricing-horizontal__feature">SSL gratuit</span>
+                <span class="pricing-horizontal__feature">100 Go bandwidth</span>
+              </div>
+              <div class="pricing-horizontal__action">
+                <div class="pricing-horizontal__price">$0 <span>/mois</span></div>
+                <button class="pricing-card__btn pricing-card__btn--outline">Démarrer</button>
+              </div>
+            </div>
+
+            <div class="pricing-horizontal__card pricing-horizontal__card--featured">
+              <div class="pricing-horizontal__info">
+                <h3 class="pricing-horizontal__name">Pro</h3>
+                <p class="pricing-horizontal__desc">Pour les freelances et agences</p>
+              </div>
+              <div class="pricing-horizontal__features">
+                <span class="pricing-horizontal__feature">Sites illimités</span>
+                <span class="pricing-horizontal__feature">Analytics</span>
+                <span class="pricing-horizontal__feature">Support prioritaire</span>
+              </div>
+              <div class="pricing-horizontal__action">
+                <div class="pricing-horizontal__price">$19 <span>/mois</span></div>
+                <button class="pricing-card__btn pricing-card__btn--primary">Choisir</button>
+              </div>
+            </div>
+
+            <div class="pricing-horizontal__card">
+              <div class="pricing-horizontal__info">
+                <h3 class="pricing-horizontal__name">Business</h3>
+                <p class="pricing-horizontal__desc">Pour les entreprises</p>
+              </div>
+              <div class="pricing-horizontal__features">
+                <span class="pricing-horizontal__feature">Tout Pro +</span>
+                <span class="pricing-horizontal__feature">SLA 99.99%</span>
+                <span class="pricing-horizontal__feature">Dedicated support</span>
+              </div>
+              <div class="pricing-horizontal__action">
+                <div class="pricing-horizontal__price">$49 <span>/mois</span></div>
+                <button class="pricing-card__btn pricing-card__btn--outline">Contacter</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pricing-section__info">
+          <div class="pricing-section__header">
+            <h2 class="pricing-section__name">Pricing Horizontal</h2>
+            <div class="pricing-section__tags">
+              <span class="tag">Compact</span>
+              <span class="tag tag--primary">Clean</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">HTML</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>&lt;div class="pricing-horizontal__card pricing-horizontal__card--featured"&gt;
+  &lt;div class="pricing-horizontal__info"&gt;
+    &lt;h3 class="pricing-horizontal__name"&gt;Pro&lt;/h3&gt;
+    &lt;p class="pricing-horizontal__desc"&gt;Pour les freelances&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class="pricing-horizontal__features"&gt;
+    &lt;span class="pricing-horizontal__feature"&gt;Sites illimités&lt;/span&gt;
+    &lt;span class="pricing-horizontal__feature"&gt;Analytics&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="pricing-horizontal__action"&gt;
+    &lt;div class="pricing-horizontal__price"&gt;$19 &lt;span&gt;/mois&lt;/span&gt;&lt;/div&gt;
+    &lt;button class="pricing-card__btn pricing-card__btn--primary"&gt;Choisir&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================
+           PRICING 5 — GLASSMORPHISM
+           ============================================ -->
+      <section class="pricing-section">
+        <div class="pricing-section__preview">
+          <div class="pricing-glass-container">
+            <div class="pricing-glass-cards">
+              <!-- BASIC -->
+              <div class="pricing-glass-card">
+                <div class="pricing-glass-card__icon">🌱</div>
+                <h3 class="pricing-glass-card__name">Basic</h3>
+                <div class="pricing-glass-card__price">$9</div>
+                <p class="pricing-glass-card__period">par mois</p>
+                <div class="pricing-glass-card__divider"></div>
+                <ul class="pricing-glass-card__features">
+                  <li class="pricing-glass-card__feature">5 projets actifs</li>
+                  <li class="pricing-glass-card__feature">10 Go stockage</li>
+                  <li class="pricing-glass-card__feature">Support email</li>
+                  <li class="pricing-glass-card__feature">Exports PDF</li>
+                </ul>
+                <button class="pricing-glass-card__btn">Commencer</button>
+              </div>
+
+              <!-- PRO -->
+              <div class="pricing-glass-card pricing-glass-card--featured">
+                <div class="pricing-glass-card__icon">🚀</div>
+                <h3 class="pricing-glass-card__name">Pro</h3>
+                <div class="pricing-glass-card__price">$29</div>
+                <p class="pricing-glass-card__period">par mois</p>
+                <div class="pricing-glass-card__divider"></div>
+                <ul class="pricing-glass-card__features">
+                  <li class="pricing-glass-card__feature">Projets illimités</li>
+                  <li class="pricing-glass-card__feature">100 Go stockage</li>
+                  <li class="pricing-glass-card__feature">Support prioritaire</li>
+                  <li class="pricing-glass-card__feature">Analytics avancés</li>
+                  <li class="pricing-glass-card__feature">API Access</li>
+                </ul>
+                <button class="pricing-glass-card__btn">Choisir Pro</button>
+              </div>
+
+              <!-- ENTERPRISE -->
+              <div class="pricing-glass-card">
+                <div class="pricing-glass-card__icon">🏢</div>
+                <h3 class="pricing-glass-card__name">Enterprise</h3>
+                <div class="pricing-glass-card__price">$99</div>
+                <p class="pricing-glass-card__period">par mois</p>
+                <div class="pricing-glass-card__divider"></div>
+                <ul class="pricing-glass-card__features">
+                  <li class="pricing-glass-card__feature">Tout illimité</li>
+                  <li class="pricing-glass-card__feature">Support 24/7</li>
+                  <li class="pricing-glass-card__feature">SSO & Admin</li>
+                  <li class="pricing-glass-card__feature">SLA garanti</li>
+                </ul>
+                <button class="pricing-glass-card__btn">Contacter</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pricing-section__info">
+          <div class="pricing-section__header">
+            <h2 class="pricing-section__name">Pricing Glassmorphism</h2>
+            <div class="pricing-section__tags">
+              <span class="tag">Glass</span>
+              <span class="tag tag--primary">Premium</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.pricing-glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 32px;
+}
+
+.pricing-glass-card--featured {
+  background: rgba(99, 102, 241, 0.15);
+  border-color: rgba(99, 102, 241, 0.4);
+  transform: scale(1.05);
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+  </div>
+
+  <script src="../../assets/js/copy-code.js"></script>
+  <script>
+    function copyCode(btn) {
+      const codeBlock = btn.closest('.code-block');
+      const code = codeBlock.querySelector('pre').textContent;
+
+      navigator.clipboard.writeText(code).then(() => {
+        const originalText = btn.textContent;
+        btn.textContent = 'Copié !';
+        btn.style.color = '#22c55e';
+
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.style.color = '';
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cards — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+</head>
+<body>
+  <div class="app">
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+      <a href="../../index.html" class="sidebar__logo">
+        <span>Duke</span>-components
+      </a>
+
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Cards</h3>
+        <ul class="sidebar__nav">
+          <li><a href="#classic" class="sidebar__link sidebar__link--active">Classic</a></li>
+          <li><a href="#profile" class="sidebar__link">Profile</a></li>
+          <li><a href="#product" class="sidebar__link">Product</a></li>
+          <li><a href="#glass" class="sidebar__link">Glass</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar__section">
+        <a href="../../index.html" class="sidebar__link">← Retour</a>
+      </div>
+
+      <!-- Toggle Admin -->
+      <div class="admin-toggle">
+        <span class="admin-toggle__label">Mode Admin</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="admin-toggle">
+          <span class="toggle-switch__slider"></span>
+        </label>
+      </div>
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main">
+      <header class="main__header">
+        <h1 class="main__title">🃏 Cards</h1>
+        <p class="main__subtitle">Cards de tous styles — Classic, Profile, Product, Glass.</p>
+      </header>
+
+      <!-- ========== CLASSIC SECTION ========== -->
+      <section id="classic" class="section">
+        <h2 class="section__title">Classic</h2>
+        <p class="section__desc">Cards simples et polyvalentes.</p>
+
+        <div class="components-grid">
+          <!-- CARD SIMPLE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="card-simple">
+                <h3 class="card-simple__title">Card Title</h3>
+                <p class="card-simple__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <button class="card-simple__btn">Learn more</button>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Simple Card</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">classic</span>
+                <span class="tag">minimal</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="card-simple-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="card-simple-html"><code>&lt;div class="card-simple"&gt;
+  &lt;h3 class="card-simple__title"&gt;Card Title&lt;/h3&gt;
+  &lt;p class="card-simple__text"&gt;Lorem ipsum...&lt;/p&gt;
+  &lt;button class="card-simple__btn"&gt;Learn more&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="card-simple-css" style="display:none"><code>.card-simple {
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 280px;
+  transition: all 0.3s ease;
+}
+
+.card-simple:hover {
+  border-color: #6366f1;
+  transform: translateY(-4px);
+}
+
+.card-simple__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: white;
+}
+
+.card-simple__text {
+  color: #a1a1aa;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.card-simple__btn {
+  background: #6366f1;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: background 0.2s ease;
+}
+
+.card-simple__btn:hover {
+  background: #4f46e5;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- CARD IMAGE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="card-image">
+                <div class="card-image__img"></div>
+                <div class="card-image__content">
+                  <h3 class="card-image__title">Beautiful Place</h3>
+                  <p class="card-image__text">Discover amazing destinations.</p>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Image Card</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">classic</span>
+                <span class="tag">image</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="card-image-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="card-image-html"><code>&lt;div class="card-image"&gt;
+  &lt;img src="image.jpg" class="card-image__img" alt="..."&gt;
+  &lt;div class="card-image__content"&gt;
+    &lt;h3 class="card-image__title"&gt;Title&lt;/h3&gt;
+    &lt;p class="card-image__text"&gt;Description&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="card-image-css" style="display:none"><code>.card-image {
+  background: #1a1a1a;
+  border-radius: 12px;
+  overflow: hidden;
+  max-width: 280px;
+  transition: transform 0.3s ease;
+}
+
+.card-image:hover {
+  transform: translateY(-4px);
+}
+
+.card-image__img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+.card-image__content {
+  padding: 20px;
+}
+
+.card-image__title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 8px;
+}
+
+.card-image__text {
+  color: #a1a1aa;
+  font-size: 0.875rem;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== PROFILE SECTION ========== -->
+      <section id="profile" class="section">
+        <h2 class="section__title">Profile</h2>
+        <p class="section__desc">Cards pour profils utilisateurs et équipes.</p>
+
+        <div class="components-grid">
+          <!-- CARD PROFILE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="card-profile">
+                <div class="card-profile__avatar">JD</div>
+                <h3 class="card-profile__name">John Doe</h3>
+                <p class="card-profile__role">Senior Developer</p>
+                <div class="card-profile__stats">
+                  <div class="card-profile__stat">
+                    <span class="card-profile__stat-value">142</span>
+                    <span class="card-profile__stat-label">Posts</span>
+                  </div>
+                  <div class="card-profile__stat">
+                    <span class="card-profile__stat-value">8.5k</span>
+                    <span class="card-profile__stat-label">Followers</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Profile Card</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">profile</span>
+                <span class="tag">avatar</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="card-profile-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="card-profile-html"><code>&lt;div class="card-profile"&gt;
+  &lt;div class="card-profile__avatar"&gt;JD&lt;/div&gt;
+  &lt;h3 class="card-profile__name"&gt;John Doe&lt;/h3&gt;
+  &lt;p class="card-profile__role"&gt;Developer&lt;/p&gt;
+  &lt;div class="card-profile__stats"&gt;...&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="card-profile-css" style="display:none"><code>.card-profile {
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 16px;
+  padding: 32px;
+  text-align: center;
+  max-width: 260px;
+}
+
+.card-profile__avatar {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  margin: 0 auto 16px;
+}
+
+.card-profile__name {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 4px;
+}
+
+.card-profile__role {
+  color: #6366f1;
+  font-size: 0.875rem;
+  margin-bottom: 20px;
+}
+
+.card-profile__stats {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  padding-top: 20px;
+  border-top: 1px solid #2a2a2a;
+}
+
+.card-profile__stat {
+  text-align: center;
+}
+
+.card-profile__stat-value {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: white;
+}
+
+.card-profile__stat-label {
+  font-size: 0.75rem;
+  color: #71717a;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- CARD TEAM -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="card-team">
+                <div class="card-team__header"></div>
+                <div class="card-team__avatar">AB</div>
+                <div class="card-team__body">
+                  <h3 class="card-team__name">Alice Brown</h3>
+                  <p class="card-team__role">UI Designer</p>
+                  <div class="card-team__socials">
+                    <span class="card-team__social">𝕏</span>
+                    <span class="card-team__social">in</span>
+                    <span class="card-team__social">◉</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Team Card</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">profile</span>
+                <span class="tag">team</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="card-team-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="card-team-html"><code>&lt;div class="card-team"&gt;
+  &lt;div class="card-team__header"&gt;&lt;/div&gt;
+  &lt;div class="card-team__avatar"&gt;AB&lt;/div&gt;
+  &lt;div class="card-team__body"&gt;...&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="card-team-css" style="display:none"><code>.card-team {
+  background: #1a1a1a;
+  border-radius: 16px;
+  overflow: hidden;
+  max-width: 260px;
+  position: relative;
+}
+
+.card-team__header {
+  height: 80px;
+  background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.card-team__avatar {
+  width: 70px;
+  height: 70px;
+  background: #1a1a1a;
+  border: 4px solid #1a1a1a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #10b981;
+  margin: -35px auto 0;
+  position: relative;
+}
+
+.card-team__body {
+  padding: 16px 24px 24px;
+  text-align: center;
+}
+
+.card-team__name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+}
+
+.card-team__role {
+  color: #71717a;
+  font-size: 0.875rem;
+  margin-bottom: 16px;
+}
+
+.card-team__socials {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.card-team__social {
+  width: 32px;
+  height: 32px;
+  background: #2a2a2a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: #a1a1aa;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.card-team__social:hover {
+  background: #10b981;
+  color: white;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== PRODUCT SECTION ========== -->
+      <section id="product" class="section">
+        <h2 class="section__title">Product</h2>
+        <p class="section__desc">Cards pour e-commerce et produits.</p>
+
+        <div class="components-grid">
+          <!-- CARD PRODUCT -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="card-product">
+                <div class="card-product__badge">-20%</div>
+                <div class="card-product__img"></div>
+                <div class="card-product__content">
+                  <span class="card-product__category">Electronics</span>
+                  <h3 class="card-product__title">Wireless Headphones</h3>
+                  <div class="card-product__price">
+                    <span class="card-product__price-new">€79</span>
+                    <span class="card-product__price-old">€99</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Product Card</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">product</span>
+                <span class="tag">e-commerce</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="card-product-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="card-product-html"><code>&lt;div class="card-product"&gt;
+  &lt;div class="card-product__badge"&gt;-20%&lt;/div&gt;
+  &lt;img src="..." class="card-product__img"&gt;
+  &lt;div class="card-product__content"&gt;...&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="card-product-css" style="display:none"><code>.card-product {
+  background: #1a1a1a;
+  border-radius: 12px;
+  overflow: hidden;
+  max-width: 260px;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.card-product:hover {
+  transform: translateY(-4px);
+}
+
+.card-product__badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: #ef4444;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  z-index: 1;
+}
+
+.card-product__img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+}
+
+.card-product__content {
+  padding: 16px;
+}
+
+.card-product__category {
+  font-size: 0.75rem;
+  color: #6366f1;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.card-product__title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  margin: 8px 0;
+}
+
+.card-product__price {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card-product__price-new {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #10b981;
+}
+
+.card-product__price-old {
+  font-size: 0.875rem;
+  color: #71717a;
+  text-decoration: line-through;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== GLASS SECTION ========== -->
+      <section id="glass" class="section">
+        <h2 class="section__title">Glass</h2>
+        <p class="section__desc">Cards avec effet glassmorphism.</p>
+
+        <div class="components-grid">
+          <!-- CARD GLASS -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview component-card__preview--gradient">
+              <div class="card-glass">
+                <div class="card-glass__icon">✨</div>
+                <h3 class="card-glass__title">Premium Feature</h3>
+                <p class="card-glass__text">Experience the future of design with glassmorphism.</p>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Glass Card</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">glass</span>
+                <span class="tag">blur</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="card-glass-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="card-glass-html"><code>&lt;div class="card-glass"&gt;
+  &lt;div class="card-glass__icon"&gt;✨&lt;/div&gt;
+  &lt;h3 class="card-glass__title"&gt;Title&lt;/h3&gt;
+  &lt;p class="card-glass__text"&gt;Description&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="card-glass-css" style="display:none"><code>.card-glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  padding: 28px;
+  max-width: 280px;
+  color: white;
+}
+
+.card-glass__icon {
+  font-size: 2rem;
+  margin-bottom: 16px;
+}
+
+.card-glass__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.card-glass__text {
+  font-size: 0.875rem;
+  opacity: 0.9;
+  line-height: 1.6;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Component Styles -->
+  <style>
+    /* ========== CLASSIC ========== */
+    .card-simple {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 24px;
+      max-width: 240px;
+      transition: all 0.3s ease;
+    }
+    .card-simple:hover {
+      border-color: #6366f1;
+      transform: translateY(-4px);
+    }
+    .card-simple__title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: white;
+    }
+    .card-simple__text {
+      color: #a1a1aa;
+      font-size: 0.8rem;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+    .card-simple__btn {
+      background: #6366f1;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      transition: background 0.2s ease;
+    }
+    .card-simple__btn:hover {
+      background: #4f46e5;
+    }
+
+    .card-image {
+      background: #1a1a1a;
+      border-radius: 12px;
+      overflow: hidden;
+      max-width: 240px;
+      transition: transform 0.3s ease;
+    }
+    .card-image:hover {
+      transform: translateY(-4px);
+    }
+    .card-image__img {
+      width: 100%;
+      height: 120px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+    }
+    .card-image__content {
+      padding: 16px;
+    }
+    .card-image__title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 4px;
+    }
+    .card-image__text {
+      color: #a1a1aa;
+      font-size: 0.8rem;
+    }
+
+    /* ========== PROFILE ========== */
+    .card-profile {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      max-width: 220px;
+    }
+    .card-profile__avatar {
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: white;
+      margin: 0 auto 12px;
+    }
+    .card-profile__name {
+      font-size: 1rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 2px;
+    }
+    .card-profile__role {
+      color: #6366f1;
+      font-size: 0.75rem;
+      margin-bottom: 16px;
+    }
+    .card-profile__stats {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      padding-top: 16px;
+      border-top: 1px solid #2a2a2a;
+    }
+    .card-profile__stat-value {
+      display: block;
+      font-size: 1rem;
+      font-weight: 700;
+      color: white;
+    }
+    .card-profile__stat-label {
+      font-size: 0.65rem;
+      color: #71717a;
+    }
+
+    .card-team {
+      background: #1a1a1a;
+      border-radius: 12px;
+      overflow: hidden;
+      max-width: 200px;
+      position: relative;
+    }
+    .card-team__header {
+      height: 60px;
+      background: linear-gradient(135deg, #10b981, #059669);
+    }
+    .card-team__avatar {
+      width: 56px;
+      height: 56px;
+      background: #1a1a1a;
+      border: 3px solid #1a1a1a;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #10b981;
+      margin: -28px auto 0;
+      position: relative;
+    }
+    .card-team__body {
+      padding: 12px 16px 20px;
+      text-align: center;
+    }
+    .card-team__name {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: white;
+    }
+    .card-team__role {
+      color: #71717a;
+      font-size: 0.75rem;
+      margin-bottom: 12px;
+    }
+    .card-team__socials {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+    .card-team__social {
+      width: 28px;
+      height: 28px;
+      background: #2a2a2a;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      color: #a1a1aa;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .card-team__social:hover {
+      background: #10b981;
+      color: white;
+    }
+
+    /* ========== PRODUCT ========== */
+    .card-product {
+      background: #1a1a1a;
+      border-radius: 12px;
+      overflow: hidden;
+      max-width: 220px;
+      position: relative;
+      transition: transform 0.3s ease;
+    }
+    .card-product:hover {
+      transform: translateY(-4px);
+    }
+    .card-product__badge {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: #ef4444;
+      color: white;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      z-index: 1;
+    }
+    .card-product__img {
+      width: 100%;
+      height: 140px;
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    }
+    .card-product__content {
+      padding: 12px;
+    }
+    .card-product__category {
+      font-size: 0.65rem;
+      color: #6366f1;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .card-product__title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: white;
+      margin: 6px 0;
+    }
+    .card-product__price {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .card-product__price-new {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #10b981;
+    }
+    .card-product__price-old {
+      font-size: 0.8rem;
+      color: #71717a;
+      text-decoration: line-through;
+    }
+
+    /* ========== GLASS ========== */
+    .component-card__preview--gradient {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    .card-glass {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      padding: 20px;
+      max-width: 220px;
+      color: white;
+    }
+    .card-glass__icon {
+      font-size: 1.5rem;
+      margin-bottom: 12px;
+    }
+    .card-glass__title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .card-glass__text {
+      font-size: 0.8rem;
+      opacity: 0.9;
+      line-height: 1.5;
+    }
+
+    /* ========== SECTION ========== */
+    .section {
+      margin-bottom: 48px;
+    }
+    .section__title {
+      font-size: 1.5rem;
+      margin-bottom: 8px;
+    }
+    .section__desc {
+      color: #a1a1aa;
+      margin-bottom: 24px;
+    }
+  </style>
+
+  <script src="../../assets/js/copy-code.js"></script>
+  <script src="../../assets/js/live-editor.js"></script>
+  <script src="../../assets/js/security-system.js"></script>
+</body>
+</html>

@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loaders — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+</head>
+<body>
+  <div class="app">
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+      <a href="../../index.html" class="sidebar__logo">
+        <span>Duke</span>-components
+      </a>
+
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Loaders</h3>
+        <ul class="sidebar__nav">
+          <li><a href="#spinners" class="sidebar__link sidebar__link--active">Spinners</a></li>
+          <li><a href="#dots" class="sidebar__link">Dots</a></li>
+          <li><a href="#bars" class="sidebar__link">Bars</a></li>
+          <li><a href="#progress" class="sidebar__link">Progress</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar__section">
+        <a href="../../index.html" class="sidebar__link">← Retour</a>
+      </div>
+
+      <!-- Toggle Admin -->
+      <div class="admin-toggle">
+        <span class="admin-toggle__label">Mode Admin</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="admin-toggle">
+          <span class="toggle-switch__slider"></span>
+        </label>
+      </div>
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main">
+      <header class="main__header">
+        <h1 class="main__title">⏳ Loaders</h1>
+        <p class="main__subtitle">Indicateurs de chargement — Spinners, Dots, Bars, Progress.</p>
+      </header>
+
+      <!-- ========== SPINNERS SECTION ========== -->
+      <section id="spinners" class="section">
+        <h2 class="section__title">Spinners</h2>
+        <p class="section__desc">Spinners circulaires classiques et modernes.</p>
+
+        <div class="components-grid">
+          <!-- SPINNER SIMPLE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="spinner-simple"></div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Simple Spinner</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">spinner</span>
+                <span class="tag">minimal</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="spinner-simple-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="spinner-simple-html"><code>&lt;div class="spinner-simple"&gt;&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="spinner-simple-css" style="display:none"><code>.spinner-simple {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #2a2a2a;
+  border-top-color: #6366f1;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- SPINNER DUAL -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="spinner-dual"></div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Dual Ring</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">spinner</span>
+                <span class="tag">dual</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="spinner-dual-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="spinner-dual-html"><code>&lt;div class="spinner-dual"&gt;&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="spinner-dual-css" style="display:none"><code>.spinner-dual {
+  width: 40px;
+  height: 40px;
+  border: 3px solid transparent;
+  border-top-color: #6366f1;
+  border-bottom-color: #6366f1;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- SPINNER GRADIENT -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="spinner-gradient"></div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Gradient Spinner</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">spinner</span>
+                <span class="tag">gradient</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="spinner-gradient-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="spinner-gradient-html"><code>&lt;div class="spinner-gradient"&gt;&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="spinner-gradient-css" style="display:none"><code>.spinner-gradient {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, transparent, #6366f1);
+  mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #000 0);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #000 0);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== DOTS SECTION ========== -->
+      <section id="dots" class="section">
+        <h2 class="section__title">Dots</h2>
+        <p class="section__desc">Indicateurs à points animés.</p>
+
+        <div class="components-grid">
+          <!-- DOTS BOUNCE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="dots-bounce">
+                <span></span><span></span><span></span>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Bounce Dots</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">dots</span>
+                <span class="tag">bounce</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="dots-bounce-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="dots-bounce-html"><code>&lt;div class="dots-bounce"&gt;
+  &lt;span&gt;&lt;/span&gt;
+  &lt;span&gt;&lt;/span&gt;
+  &lt;span&gt;&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="dots-bounce-css" style="display:none"><code>.dots-bounce {
+  display: flex;
+  gap: 8px;
+}
+
+.dots-bounce span {
+  width: 12px;
+  height: 12px;
+  background: #6366f1;
+  border-radius: 50%;
+  animation: bounce 1.4s ease-in-out infinite;
+}
+
+.dots-bounce span:nth-child(1) { animation-delay: 0s; }
+.dots-bounce span:nth-child(2) { animation-delay: 0.2s; }
+.dots-bounce span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes bounce {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; }
+  40% { transform: scale(1); opacity: 1; }
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- DOTS PULSE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="dots-pulse">
+                <span></span><span></span><span></span>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Pulse Dots</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">dots</span>
+                <span class="tag">pulse</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="dots-pulse-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="dots-pulse-html"><code>&lt;div class="dots-pulse"&gt;
+  &lt;span&gt;&lt;/span&gt;
+  &lt;span&gt;&lt;/span&gt;
+  &lt;span&gt;&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="dots-pulse-css" style="display:none"><code>.dots-pulse {
+  display: flex;
+  gap: 6px;
+}
+
+.dots-pulse span {
+  width: 10px;
+  height: 10px;
+  background: #10b981;
+  border-radius: 50%;
+  animation: pulse-dot 1s ease-in-out infinite;
+}
+
+.dots-pulse span:nth-child(2) { animation-delay: 0.15s; }
+.dots-pulse span:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- DOTS TYPING -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="dots-typing">
+                <span></span><span></span><span></span>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Typing Dots</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">dots</span>
+                <span class="tag">typing</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="dots-typing-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="dots-typing-html"><code>&lt;div class="dots-typing"&gt;
+  &lt;span&gt;&lt;/span&gt;
+  &lt;span&gt;&lt;/span&gt;
+  &lt;span&gt;&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="dots-typing-css" style="display:none"><code>.dots-typing {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 20px;
+}
+
+.dots-typing span {
+  width: 8px;
+  height: 8px;
+  background: #a1a1aa;
+  border-radius: 50%;
+  animation: typing 1.2s ease-in-out infinite;
+}
+
+.dots-typing span:nth-child(2) { animation-delay: 0.15s; }
+.dots-typing span:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes typing {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-8px); }
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== BARS SECTION ========== -->
+      <section id="bars" class="section">
+        <h2 class="section__title">Bars</h2>
+        <p class="section__desc">Barres de chargement animées.</p>
+
+        <div class="components-grid">
+          <!-- BARS WAVE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="bars-wave">
+                <span></span><span></span><span></span><span></span><span></span>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Wave Bars</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">bars</span>
+                <span class="tag">wave</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="bars-wave-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="bars-wave-html"><code>&lt;div class="bars-wave"&gt;
+  &lt;span&gt;&lt;/span&gt;
+  &lt;span&gt;&lt;/span&gt;
+  &lt;span&gt;&lt;/span&gt;
+  &lt;span&gt;&lt;/span&gt;
+  &lt;span&gt;&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="bars-wave-css" style="display:none"><code>.bars-wave {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 32px;
+}
+
+.bars-wave span {
+  width: 4px;
+  height: 100%;
+  background: #6366f1;
+  border-radius: 2px;
+  animation: wave 1.2s ease-in-out infinite;
+}
+
+.bars-wave span:nth-child(1) { animation-delay: 0s; }
+.bars-wave span:nth-child(2) { animation-delay: 0.1s; }
+.bars-wave span:nth-child(3) { animation-delay: 0.2s; }
+.bars-wave span:nth-child(4) { animation-delay: 0.3s; }
+.bars-wave span:nth-child(5) { animation-delay: 0.4s; }
+
+@keyframes wave {
+  0%, 40%, 100% { transform: scaleY(0.4); }
+  20% { transform: scaleY(1); }
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- BARS EQUALIZER -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="bars-equalizer">
+                <span></span><span></span><span></span><span></span>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Equalizer</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">bars</span>
+                <span class="tag">audio</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="bars-equalizer-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="bars-equalizer-html"><code>&lt;div class="bars-equalizer"&gt;
+  &lt;span&gt;&lt;/span&gt;
+  &lt;span&gt;&lt;/span&gt;
+  &lt;span&gt;&lt;/span&gt;
+  &lt;span&gt;&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="bars-equalizer-css" style="display:none"><code>.bars-equalizer {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 28px;
+}
+
+.bars-equalizer span {
+  width: 6px;
+  background: #10b981;
+  border-radius: 2px;
+  animation: equalizer 0.8s ease-in-out infinite;
+}
+
+.bars-equalizer span:nth-child(1) { animation-delay: 0s; }
+.bars-equalizer span:nth-child(2) { animation-delay: 0.2s; }
+.bars-equalizer span:nth-child(3) { animation-delay: 0.1s; }
+.bars-equalizer span:nth-child(4) { animation-delay: 0.3s; }
+
+@keyframes equalizer {
+  0%, 100% { height: 8px; }
+  50% { height: 28px; }
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== PROGRESS SECTION ========== -->
+      <section id="progress" class="section">
+        <h2 class="section__title">Progress</h2>
+        <p class="section__desc">Barres de progression.</p>
+
+        <div class="components-grid">
+          <!-- PROGRESS BAR -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="progress-bar">
+                <div class="progress-bar__fill"></div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Progress Bar</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">progress</span>
+                <span class="tag">animated</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="progress-bar-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="progress-bar-html"><code>&lt;div class="progress-bar"&gt;
+  &lt;div class="progress-bar__fill"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="progress-bar-css" style="display:none"><code>.progress-bar {
+  width: 200px;
+  height: 6px;
+  background: #2a2a2a;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-bar__fill {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  border-radius: 3px;
+  animation: progress 2s ease-in-out infinite;
+}
+
+@keyframes progress {
+  0% { width: 0; }
+  50% { width: 100%; }
+  100% { width: 0; }
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- PROGRESS INDETERMINATE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="progress-indeterminate">
+                <div class="progress-indeterminate__fill"></div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Indeterminate</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">progress</span>
+                <span class="tag">sliding</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="progress-indeterminate-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="progress-indeterminate-html"><code>&lt;div class="progress-indeterminate"&gt;
+  &lt;div class="progress-indeterminate__fill"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="progress-indeterminate-css" style="display:none"><code>.progress-indeterminate {
+  width: 200px;
+  height: 4px;
+  background: #2a2a2a;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-indeterminate__fill {
+  height: 100%;
+  width: 40%;
+  background: #6366f1;
+  border-radius: 2px;
+  animation: indeterminate 1.5s ease-in-out infinite;
+}
+
+@keyframes indeterminate {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(350%); }
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Component Styles -->
+  <style>
+    /* ========== SPINNERS ========== */
+    .spinner-simple {
+      width: 40px;
+      height: 40px;
+      border: 3px solid #2a2a2a;
+      border-top-color: #6366f1;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    .spinner-dual {
+      width: 40px;
+      height: 40px;
+      border: 3px solid transparent;
+      border-top-color: #6366f1;
+      border-bottom-color: #6366f1;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    .spinner-gradient {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, transparent, #6366f1);
+      mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #000 0);
+      -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #000 0);
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ========== DOTS ========== */
+    .dots-bounce {
+      display: flex;
+      gap: 8px;
+    }
+    .dots-bounce span {
+      width: 12px;
+      height: 12px;
+      background: #6366f1;
+      border-radius: 50%;
+      animation: bounce-dot 1.4s ease-in-out infinite;
+    }
+    .dots-bounce span:nth-child(1) { animation-delay: 0s; }
+    .dots-bounce span:nth-child(2) { animation-delay: 0.2s; }
+    .dots-bounce span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes bounce-dot {
+      0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; }
+      40% { transform: scale(1); opacity: 1; }
+    }
+
+    .dots-pulse {
+      display: flex;
+      gap: 6px;
+    }
+    .dots-pulse span {
+      width: 10px;
+      height: 10px;
+      background: #10b981;
+      border-radius: 50%;
+      animation: pulse-dot 1s ease-in-out infinite;
+    }
+    .dots-pulse span:nth-child(2) { animation-delay: 0.15s; }
+    .dots-pulse span:nth-child(3) { animation-delay: 0.3s; }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    .dots-typing {
+      display: flex;
+      align-items: flex-end;
+      gap: 4px;
+      height: 20px;
+    }
+    .dots-typing span {
+      width: 8px;
+      height: 8px;
+      background: #a1a1aa;
+      border-radius: 50%;
+      animation: typing 1.2s ease-in-out infinite;
+    }
+    .dots-typing span:nth-child(2) { animation-delay: 0.15s; }
+    .dots-typing span:nth-child(3) { animation-delay: 0.3s; }
+    @keyframes typing {
+      0%, 60%, 100% { transform: translateY(0); }
+      30% { transform: translateY(-8px); }
+    }
+
+    /* ========== BARS ========== */
+    .bars-wave {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      height: 32px;
+    }
+    .bars-wave span {
+      width: 4px;
+      height: 100%;
+      background: #6366f1;
+      border-radius: 2px;
+      animation: wave 1.2s ease-in-out infinite;
+    }
+    .bars-wave span:nth-child(1) { animation-delay: 0s; }
+    .bars-wave span:nth-child(2) { animation-delay: 0.1s; }
+    .bars-wave span:nth-child(3) { animation-delay: 0.2s; }
+    .bars-wave span:nth-child(4) { animation-delay: 0.3s; }
+    .bars-wave span:nth-child(5) { animation-delay: 0.4s; }
+    @keyframes wave {
+      0%, 40%, 100% { transform: scaleY(0.4); }
+      20% { transform: scaleY(1); }
+    }
+
+    .bars-equalizer {
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 28px;
+    }
+    .bars-equalizer span {
+      width: 6px;
+      background: #10b981;
+      border-radius: 2px;
+      animation: equalizer 0.8s ease-in-out infinite;
+    }
+    .bars-equalizer span:nth-child(1) { animation-delay: 0s; }
+    .bars-equalizer span:nth-child(2) { animation-delay: 0.2s; }
+    .bars-equalizer span:nth-child(3) { animation-delay: 0.1s; }
+    .bars-equalizer span:nth-child(4) { animation-delay: 0.3s; }
+    @keyframes equalizer {
+      0%, 100% { height: 8px; }
+      50% { height: 28px; }
+    }
+
+    /* ========== PROGRESS ========== */
+    .progress-bar {
+      width: 180px;
+      height: 6px;
+      background: #2a2a2a;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .progress-bar__fill {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, #6366f1, #8b5cf6);
+      border-radius: 3px;
+      animation: progress 2s ease-in-out infinite;
+    }
+    @keyframes progress {
+      0% { width: 0; }
+      50% { width: 100%; }
+      100% { width: 0; }
+    }
+
+    .progress-indeterminate {
+      width: 180px;
+      height: 4px;
+      background: #2a2a2a;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .progress-indeterminate__fill {
+      height: 100%;
+      width: 40%;
+      background: #6366f1;
+      border-radius: 2px;
+      animation: indeterminate 1.5s ease-in-out infinite;
+    }
+    @keyframes indeterminate {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(350%); }
+    }
+
+    /* ========== SECTION ========== */
+    .section {
+      margin-bottom: 48px;
+    }
+    .section__title {
+      font-size: 1.5rem;
+      margin-bottom: 8px;
+    }
+    .section__desc {
+      color: #a1a1aa;
+      margin-bottom: 24px;
+    }
+  </style>
+
+  <script src="../../assets/js/copy-code.js"></script>
+  <script src="../../assets/js/live-editor.js"></script>
+  <script src="../../assets/js/security-system.js"></script>
+</body>
+</html>

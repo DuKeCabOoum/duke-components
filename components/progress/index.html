@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Progress — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ===========================================
+       PROGRESS — Styles locaux
+       =========================================== */
+
+    .progress-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 24px;
+    }
+
+    .progress-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .progress-card:hover {
+      border-color: var(--primary);
+    }
+
+    .progress-card__preview {
+      padding: 32px;
+      background: #0a0a0a;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .progress-card__info {
+      padding: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .progress-card__name {
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .progress-card__tags {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* ===========================================
+       PROGRESS 1 — BASIC
+       =========================================== */
+
+    .progress-basic {
+      width: 100%;
+    }
+
+    .progress-basic__bar {
+      height: 8px;
+      background: #27272a;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-basic__fill {
+      height: 100%;
+      background: #6366f1;
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+
+    .progress-basic__label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 0.875rem;
+      color: #a1a1aa;
+    }
+
+    /* ===========================================
+       PROGRESS 2 — GRADIENT
+       =========================================== */
+
+    .progress-gradient {
+      width: 100%;
+    }
+
+    .progress-gradient__bar {
+      height: 12px;
+      background: #27272a;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .progress-gradient__fill {
+      height: 100%;
+      background: linear-gradient(90deg, #6366f1, #8b5cf6, #ec4899);
+      background-size: 200% 100%;
+      border-radius: 6px;
+      animation: gradient-shift 2s ease infinite;
+    }
+
+    @keyframes gradient-shift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    /* ===========================================
+       PROGRESS 3 — STRIPED
+       =========================================== */
+
+    .progress-striped {
+      width: 100%;
+    }
+
+    .progress-striped__bar {
+      height: 16px;
+      background: #27272a;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .progress-striped__fill {
+      height: 100%;
+      background: repeating-linear-gradient(
+        45deg,
+        #6366f1,
+        #6366f1 10px,
+        #818cf8 10px,
+        #818cf8 20px
+      );
+      background-size: 200% 100%;
+      border-radius: 8px;
+      animation: stripe-move 1s linear infinite;
+    }
+
+    @keyframes stripe-move {
+      0% { background-position: 0 0; }
+      100% { background-position: 40px 0; }
+    }
+
+    /* ===========================================
+       PROGRESS 4 — CIRCULAR
+       =========================================== */
+
+    .progress-circular {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      margin: 0 auto;
+    }
+
+    .progress-circular__svg {
+      transform: rotate(-90deg);
+    }
+
+    .progress-circular__bg {
+      fill: none;
+      stroke: #27272a;
+      stroke-width: 8;
+    }
+
+    .progress-circular__fill {
+      fill: none;
+      stroke: #6366f1;
+      stroke-width: 8;
+      stroke-linecap: round;
+      stroke-dasharray: 339.292;
+      stroke-dashoffset: 339.292;
+      transition: stroke-dashoffset 1s ease;
+    }
+
+    .progress-circular__text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    /* ===========================================
+       PROGRESS 5 — STEPS
+       =========================================== */
+
+    .progress-steps {
+      width: 100%;
+    }
+
+    .progress-steps__track {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .progress-steps__track::before {
+      content: '';
+      position: absolute;
+      top: 15px;
+      left: 20px;
+      right: 20px;
+      height: 3px;
+      background: #27272a;
+    }
+
+    .progress-steps__line {
+      position: absolute;
+      top: 15px;
+      left: 20px;
+      height: 3px;
+      background: #6366f1;
+      transition: width 0.5s ease;
+    }
+
+    .progress-steps__step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .progress-steps__circle {
+      width: 32px;
+      height: 32px;
+      background: #27272a;
+      border: 3px solid #27272a;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #71717a;
+      transition: all 0.3s ease;
+    }
+
+    .progress-steps__step--active .progress-steps__circle,
+    .progress-steps__step--completed .progress-steps__circle {
+      background: #6366f1;
+      border-color: #6366f1;
+      color: #fff;
+    }
+
+    .progress-steps__label {
+      font-size: 0.75rem;
+      color: #71717a;
+    }
+
+    .progress-steps__step--active .progress-steps__label,
+    .progress-steps__step--completed .progress-steps__label {
+      color: #a1a1aa;
+    }
+
+    /* ===========================================
+       PROGRESS 6 — MULTI-BAR
+       =========================================== */
+
+    .progress-multi {
+      width: 100%;
+    }
+
+    .progress-multi__bar {
+      height: 24px;
+      background: #27272a;
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+    }
+
+    .progress-multi__segment {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: white;
+      transition: width 0.5s ease;
+    }
+
+    .progress-multi__segment--1 { background: #22c55e; }
+    .progress-multi__segment--2 { background: #eab308; }
+    .progress-multi__segment--3 { background: #ef4444; }
+
+    .progress-multi__legend {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 12px;
+    }
+
+    .progress-multi__item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: #a1a1aa;
+    }
+
+    .progress-multi__dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    /* ===========================================
+       PROGRESS 7 — RADIAL GAUGE
+       =========================================== */
+
+    .progress-gauge {
+      position: relative;
+      width: 200px;
+      height: 100px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+
+    .progress-gauge__svg {
+      width: 200px;
+      height: 200px;
+      transform: rotate(180deg);
+    }
+
+    .progress-gauge__bg {
+      fill: none;
+      stroke: #27272a;
+      stroke-width: 12;
+    }
+
+    .progress-gauge__fill {
+      fill: none;
+      stroke: url(#gauge-gradient);
+      stroke-width: 12;
+      stroke-linecap: round;
+      stroke-dasharray: 282.743;
+      stroke-dashoffset: 282.743;
+      transition: stroke-dashoffset 1s ease;
+    }
+
+    .progress-gauge__value {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .progress-gauge__label {
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.75rem;
+      color: #71717a;
+    }
+
+    /* ===========================================
+       PROGRESS 8 — ANIMATED DOTS
+       =========================================== */
+
+    .progress-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .progress-dots__dot {
+      width: 12px;
+      height: 12px;
+      background: #27272a;
+      border-radius: 50%;
+      animation: dot-pulse 1.5s ease-in-out infinite;
+    }
+
+    .progress-dots__dot:nth-child(2) { animation-delay: 0.2s; }
+    .progress-dots__dot:nth-child(3) { animation-delay: 0.4s; }
+    .progress-dots__dot:nth-child(4) { animation-delay: 0.6s; }
+    .progress-dots__dot:nth-child(5) { animation-delay: 0.8s; }
+
+    @keyframes dot-pulse {
+      0%, 100% {
+        background: #27272a;
+        transform: scale(1);
+      }
+      50% {
+        background: #6366f1;
+        transform: scale(1.3);
+      }
+    }
+
+    /* ===========================================
+       CODE BLOCK
+       =========================================== */
+
+    .code-block {
+      background: #1a1a1a;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 16px;
+    }
+
+    .code-block__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .code-block__lang {
+      font-size: 0.75rem;
+      color: #71717a;
+      text-transform: uppercase;
+    }
+
+    .code-block__copy {
+      padding: 6px 12px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: #a1a1aa;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .code-block__copy:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+    }
+
+    .code-block__content {
+      padding: 16px;
+      overflow-x: auto;
+    }
+
+    .code-block__content pre {
+      margin: 0;
+      font-family: "Fira Code", monospace;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: #e0e0e0;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      font-size: 0.75rem;
+      color: #a1a1aa;
+    }
+
+    .tag--primary {
+      background: rgba(99, 102, 241, 0.15);
+      border-color: rgba(99, 102, 241, 0.3);
+      color: #818cf8;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar__logo">
+      <a href="../../index.html">Duke<span>UI</span></a>
+    </div>
+
+    <nav class="sidebar__nav">
+      <div class="sidebar__section">
+        <div class="sidebar__title">Composants</div>
+        <a href="../accordions/index.html" class="sidebar__link">Accordions</a>
+        <a href="../buttons/index.html" class="sidebar__link">Buttons</a>
+        <a href="../cards/index.html" class="sidebar__link">Cards</a>
+        <a href="../carousels/index.html" class="sidebar__link">Carousels</a>
+        <a href="../forms/index.html" class="sidebar__link">Forms</a>
+        <a href="../loaders/index.html" class="sidebar__link">Loaders</a>
+        <a href="../modals/index.html" class="sidebar__link">Modals</a>
+        <a href="../navigation/index.html" class="sidebar__link">Navigation</a>
+        <a href="index.html" class="sidebar__link sidebar__link--active">Progress</a>
+        <a href="../tabs/index.html" class="sidebar__link">Tabs</a>
+        <a href="../tooltips/index.html" class="sidebar__link">Tooltips</a>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__title">Effets</div>
+        <a href="../hovers/index.html" class="sidebar__link">Hovers</a>
+        <a href="../animations/index.html" class="sidebar__link">Animations</a>
+        <a href="../backgrounds/index.html" class="sidebar__link">Backgrounds</a>
+        <a href="../mouse-effects/index.html" class="sidebar__link">Mouse Effects</a>
+        <a href="../text-effects/index.html" class="sidebar__link">Text Effects</a>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__title">Sections</div>
+        <a href="../heroes/index.html" class="sidebar__link">Heroes</a>
+        <a href="../features/index.html" class="sidebar__link">Features</a>
+        <a href="../pricing/index.html" class="sidebar__link">Pricing</a>
+        <a href="../testimonials/index.html" class="sidebar__link">Testimonials</a>
+        <a href="../footers/index.html" class="sidebar__link">Footers</a>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__title">Générateurs</div>
+        <a href="../../generators/gradient/index.html" class="sidebar__link">Gradient</a>
+        <a href="../../generators/shadow/index.html" class="sidebar__link">Shadow</a>
+        <a href="../../generators/flexbox/index.html" class="sidebar__link">Flexbox</a>
+        <a href="../../generators/grid/index.html" class="sidebar__link">Grid</a>
+      </div>
+    </nav>
+
+    <!-- Toggle Admin -->
+    <div class="admin-toggle">
+      <span class="admin-toggle__label">Mode Admin</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="admin-toggle">
+        <span class="toggle-switch__slider"></span>
+      </label>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    <header class="page-header">
+      <h1 class="page-header__title">Progress</h1>
+      <p class="page-header__desc">Barres de progression et indicateurs d'avancement</p>
+    </header>
+
+    <div class="progress-grid">
+
+      <!-- PROGRESS 1 — BASIC -->
+      <div class="progress-card">
+        <div class="progress-card__preview">
+          <div class="progress-basic">
+            <div class="progress-basic__label">
+              <span>Storage used</span>
+              <span>75%</span>
+            </div>
+            <div class="progress-basic__bar">
+              <div class="progress-basic__fill" style="width: 75%;"></div>
+            </div>
+          </div>
+          <div class="progress-basic">
+            <div class="progress-basic__label">
+              <span>Download</span>
+              <span>45%</span>
+            </div>
+            <div class="progress-basic__bar">
+              <div class="progress-basic__fill" style="width: 45%;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="progress-card__info">
+          <h3 class="progress-card__name">Basic Progress</h3>
+          <div class="progress-card__tags">
+            <span class="tag tag--primary">Essential</span>
+            <span class="tag">Simple</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.progress__bar {
+  height: 8px;
+  background: #27272a;
+  border-radius: 4px;
+}
+
+.progress__fill {
+  height: 100%;
+  background: #6366f1;
+  transition: width 0.5s ease;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROGRESS 2 — GRADIENT -->
+      <div class="progress-card">
+        <div class="progress-card__preview">
+          <div class="progress-gradient">
+            <div class="progress-gradient__bar">
+              <div class="progress-gradient__fill" style="width: 80%;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="progress-card__info">
+          <h3 class="progress-card__name">Gradient Animated</h3>
+          <div class="progress-card__tags">
+            <span class="tag tag--primary">Colorful</span>
+            <span class="tag">Animation</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.progress__fill {
+  background: linear-gradient(90deg, #6366f1, #8b5cf6, #ec4899);
+  background-size: 200% 100%;
+  animation: gradient-shift 2s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROGRESS 3 — STRIPED -->
+      <div class="progress-card">
+        <div class="progress-card__preview">
+          <div class="progress-striped">
+            <div class="progress-striped__bar">
+              <div class="progress-striped__fill" style="width: 65%;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="progress-card__info">
+          <h3 class="progress-card__name">Striped Animated</h3>
+          <div class="progress-card__tags">
+            <span class="tag tag--primary">Stripes</span>
+            <span class="tag">Loading</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.progress__fill {
+  background: repeating-linear-gradient(
+    45deg,
+    #6366f1,
+    #6366f1 10px,
+    #818cf8 10px,
+    #818cf8 20px
+  );
+  animation: stripe-move 1s linear infinite;
+}
+
+@keyframes stripe-move {
+  0% { background-position: 0 0; }
+  100% { background-position: 40px 0; }
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROGRESS 4 — CIRCULAR -->
+      <div class="progress-card">
+        <div class="progress-card__preview">
+          <div class="progress-circular" id="circular-progress">
+            <svg class="progress-circular__svg" width="120" height="120">
+              <circle class="progress-circular__bg" cx="60" cy="60" r="54"></circle>
+              <circle class="progress-circular__fill" cx="60" cy="60" r="54" style="stroke-dashoffset: 101.85;"></circle>
+            </svg>
+            <span class="progress-circular__text">70%</span>
+          </div>
+        </div>
+        <div class="progress-card__info">
+          <h3 class="progress-card__name">Circular Progress</h3>
+          <div class="progress-card__tags">
+            <span class="tag tag--primary">SVG</span>
+            <span class="tag">Radial</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">JavaScript</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>// Circumference = 2 * PI * radius
+const circumference = 2 * Math.PI * 54; // 339.292
+
+function setProgress(percent) {
+  const offset = circumference - (percent / 100) * circumference;
+  circle.style.strokeDashoffset = offset;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROGRESS 5 — STEPS -->
+      <div class="progress-card">
+        <div class="progress-card__preview">
+          <div class="progress-steps">
+            <div class="progress-steps__track">
+              <div class="progress-steps__line" style="width: 50%;"></div>
+              <div class="progress-steps__step progress-steps__step--completed">
+                <div class="progress-steps__circle">1</div>
+                <span class="progress-steps__label">Cart</span>
+              </div>
+              <div class="progress-steps__step progress-steps__step--completed">
+                <div class="progress-steps__circle">2</div>
+                <span class="progress-steps__label">Details</span>
+              </div>
+              <div class="progress-steps__step progress-steps__step--active">
+                <div class="progress-steps__circle">3</div>
+                <span class="progress-steps__label">Payment</span>
+              </div>
+              <div class="progress-steps__step">
+                <div class="progress-steps__circle">4</div>
+                <span class="progress-steps__label">Confirm</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="progress-card__info">
+          <h3 class="progress-card__name">Step Progress</h3>
+          <div class="progress-card__tags">
+            <span class="tag tag--primary">Checkout</span>
+            <span class="tag">Wizard</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.progress-steps__step--active .progress-steps__circle,
+.progress-steps__step--completed .progress-steps__circle {
+  background: #6366f1;
+  border-color: #6366f1;
+  color: #fff;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROGRESS 6 — MULTI-BAR -->
+      <div class="progress-card">
+        <div class="progress-card__preview">
+          <div class="progress-multi">
+            <div class="progress-multi__bar">
+              <div class="progress-multi__segment progress-multi__segment--1" style="width: 45%;">45%</div>
+              <div class="progress-multi__segment progress-multi__segment--2" style="width: 30%;">30%</div>
+              <div class="progress-multi__segment progress-multi__segment--3" style="width: 15%;">15%</div>
+            </div>
+            <div class="progress-multi__legend">
+              <div class="progress-multi__item">
+                <div class="progress-multi__dot" style="background: #22c55e;"></div>
+                <span>Success</span>
+              </div>
+              <div class="progress-multi__item">
+                <div class="progress-multi__dot" style="background: #eab308;"></div>
+                <span>Warning</span>
+              </div>
+              <div class="progress-multi__item">
+                <div class="progress-multi__dot" style="background: #ef4444;"></div>
+                <span>Error</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="progress-card__info">
+          <h3 class="progress-card__name">Multi-Segment</h3>
+          <div class="progress-card__tags">
+            <span class="tag tag--primary">Stacked</span>
+            <span class="tag">Analytics</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">HTML</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>&lt;div class="progress-multi__bar"&gt;
+  &lt;div class="segment segment--success" style="width: 45%;"&gt;&lt;/div&gt;
+  &lt;div class="segment segment--warning" style="width: 30%;"&gt;&lt;/div&gt;
+  &lt;div class="segment segment--error" style="width: 15%;"&gt;&lt;/div&gt;
+&lt;/div&gt;</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROGRESS 7 — RADIAL GAUGE -->
+      <div class="progress-card">
+        <div class="progress-card__preview">
+          <div class="progress-gauge">
+            <svg class="progress-gauge__svg" viewBox="0 0 200 200">
+              <defs>
+                <linearGradient id="gauge-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#22c55e" />
+                  <stop offset="50%" stop-color="#eab308" />
+                  <stop offset="100%" stop-color="#ef4444" />
+                </linearGradient>
+              </defs>
+              <path class="progress-gauge__bg" d="M 20 100 A 80 80 0 0 1 180 100"></path>
+              <path class="progress-gauge__fill" d="M 20 100 A 80 80 0 0 1 180 100" style="stroke-dashoffset: 70.68;"></path>
+            </svg>
+            <span class="progress-gauge__value">72</span>
+            <span class="progress-gauge__label">Performance</span>
+          </div>
+        </div>
+        <div class="progress-card__info">
+          <h3 class="progress-card__name">Radial Gauge</h3>
+          <div class="progress-card__tags">
+            <span class="tag tag--primary">Dashboard</span>
+            <span class="tag">Metrics</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">SVG</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>&lt;svg viewBox="0 0 200 200"&gt;
+  &lt;defs&gt;
+    &lt;linearGradient id="gauge-gradient"&gt;
+      &lt;stop offset="0%" stop-color="#22c55e" /&gt;
+      &lt;stop offset="100%" stop-color="#ef4444" /&gt;
+    &lt;/linearGradient&gt;
+  &lt;/defs&gt;
+  &lt;path d="M 20 100 A 80 80 0 0 1 180 100"&gt;&lt;/path&gt;
+&lt;/svg&gt;</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROGRESS 8 — ANIMATED DOTS -->
+      <div class="progress-card">
+        <div class="progress-card__preview">
+          <div class="progress-dots">
+            <div class="progress-dots__dot"></div>
+            <div class="progress-dots__dot"></div>
+            <div class="progress-dots__dot"></div>
+            <div class="progress-dots__dot"></div>
+            <div class="progress-dots__dot"></div>
+          </div>
+        </div>
+        <div class="progress-card__info">
+          <h3 class="progress-card__name">Loading Dots</h3>
+          <div class="progress-card__tags">
+            <span class="tag tag--primary">Loading</span>
+            <span class="tag">Infinite</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>@keyframes dot-pulse {
+  0%, 100% {
+    background: #27272a;
+    transform: scale(1);
+  }
+  50% {
+    background: #6366f1;
+    transform: scale(1.3);
+  }
+}
+
+.dot:nth-child(2) { animation-delay: 0.2s; }
+.dot:nth-child(3) { animation-delay: 0.4s; }</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+  </div>
+
+  <script src="../../assets/js/main.js"></script>
+  <script src="../../assets/js/security-system.js"></script>
+  <script>
+    function copyCode(btn) {
+      const codeBlock = btn.closest('.code-block');
+      const code = codeBlock.querySelector('pre').textContent;
+
+      navigator.clipboard.writeText(code).then(() => {
+        const originalText = btn.textContent;
+        btn.textContent = 'Copié !';
+        btn.style.color = '#22c55e';
+
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.style.color = '';
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>

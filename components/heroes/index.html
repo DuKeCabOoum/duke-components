@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heroes — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ===========================================
+       HEROES — Styles locaux
+       =========================================== */
+
+    .heroes-list {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    .hero-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .hero-card__preview {
+      min-height: 400px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card__info {
+      padding: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .hero-card__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .hero-card__name {
+      font-weight: 600;
+      font-size: 1.25rem;
+    }
+
+    .hero-card__tags {
+      display: flex;
+      gap: 8px;
+    }
+
+    .component-section {
+      margin-bottom: 48px;
+    }
+
+    .component-section h2 {
+      margin-bottom: 24px;
+      font-size: 1.5rem;
+    }
+
+    /* ===========================================
+       HERO 1 — CENTERED MINIMAL
+       =========================================== */
+
+    .hero-centered {
+      min-height: 400px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 40px;
+      background: linear-gradient(180deg, #0f0f0f 0%, #1a1a2e 100%);
+    }
+
+    .hero-centered__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      background: rgba(99, 102, 241, 0.1);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      border-radius: 9999px;
+      color: #818cf8;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-bottom: 24px;
+    }
+
+    .hero-centered__title {
+      font-size: 3rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 16px;
+      line-height: 1.1;
+    }
+
+    .hero-centered__title span {
+      background: linear-gradient(135deg, #6366f1, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-centered__subtitle {
+      font-size: 1.25rem;
+      color: #a1a1aa;
+      max-width: 600px;
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+
+    .hero-centered__buttons {
+      display: flex;
+      gap: 16px;
+    }
+
+    .hero-btn {
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+    }
+
+    .hero-btn--primary {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+      box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+    }
+
+    .hero-btn--primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 30px rgba(99, 102, 241, 0.5);
+    }
+
+    .hero-btn--secondary {
+      background: transparent;
+      color: #fff;
+      border: 1px solid #444;
+    }
+
+    .hero-btn--secondary:hover {
+      border-color: #6366f1;
+      background: rgba(99, 102, 241, 0.1);
+    }
+
+    /* ===========================================
+       HERO 2 — SPLIT WITH IMAGE
+       =========================================== */
+
+    .hero-split {
+      min-height: 400px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: #0f0f0f;
+    }
+
+    .hero-split__content {
+      padding: 60px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .hero-split__title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+
+    .hero-split__text {
+      font-size: 1.125rem;
+      color: #a1a1aa;
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+
+    .hero-split__image {
+      background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 4rem;
+    }
+
+    /* ===========================================
+       HERO 3 — GRADIENT MESH
+       =========================================== */
+
+    .hero-mesh {
+      min-height: 400px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 40px;
+      background-color: #0f0f0f;
+      background-image:
+        radial-gradient(at 40% 20%, rgba(99, 102, 241, 0.3) 0px, transparent 50%),
+        radial-gradient(at 80% 0%, rgba(236, 72, 153, 0.3) 0px, transparent 50%),
+        radial-gradient(at 0% 50%, rgba(16, 185, 129, 0.2) 0px, transparent 50%);
+      position: relative;
+    }
+
+    .hero-mesh__title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 16px;
+      line-height: 1.1;
+    }
+
+    .hero-mesh__subtitle {
+      font-size: 1.25rem;
+      color: #d1d5db;
+      max-width: 550px;
+      margin-bottom: 40px;
+    }
+
+    .hero-mesh__stats {
+      display: flex;
+      gap: 48px;
+      margin-top: 48px;
+    }
+
+    .hero-mesh__stat {
+      text-align: center;
+    }
+
+    .hero-mesh__stat-value {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #6366f1;
+    }
+
+    .hero-mesh__stat-label {
+      font-size: 0.875rem;
+      color: #71717a;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* ===========================================
+       HERO 4 — WITH FLOATING CARDS
+       =========================================== */
+
+    .hero-cards {
+      min-height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 40px;
+      background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-cards__content {
+      text-align: center;
+      z-index: 10;
+      max-width: 600px;
+    }
+
+    .hero-cards__title {
+      font-size: 2.75rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+
+    .hero-cards__subtitle {
+      font-size: 1.125rem;
+      color: #a1a1aa;
+      margin-bottom: 32px;
+    }
+
+    .hero-cards__floating {
+      position: absolute;
+      width: 120px;
+      height: 80px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+    }
+
+    .hero-cards__floating:nth-child(1) { top: 20%; left: 10%; animation: float1 6s ease-in-out infinite; }
+    .hero-cards__floating:nth-child(2) { top: 60%; left: 5%; animation: float2 7s ease-in-out infinite; }
+    .hero-cards__floating:nth-child(3) { top: 30%; right: 10%; animation: float3 5s ease-in-out infinite; }
+    .hero-cards__floating:nth-child(4) { top: 70%; right: 15%; animation: float1 8s ease-in-out infinite; }
+
+    @keyframes float1 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+    @keyframes float2 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(15px); } }
+    @keyframes float3 { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-15px) rotate(5deg); } }
+
+    /* ===========================================
+       HERO 5 — DARK GLASSMORPHISM
+       =========================================== */
+
+    .hero-glass {
+      min-height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 40px;
+      background: #0a0a0a;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-glass::before {
+      content: '';
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.4) 0%, transparent 70%);
+      top: -200px;
+      right: -100px;
+    }
+
+    .hero-glass::after {
+      content: '';
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(236, 72, 153, 0.3) 0%, transparent 70%);
+      bottom: -150px;
+      left: -100px;
+    }
+
+    .hero-glass__card {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 48px;
+      text-align: center;
+      max-width: 600px;
+      z-index: 10;
+    }
+
+    .hero-glass__icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #6366f1, #ec4899);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin: 0 auto 24px;
+    }
+
+    .hero-glass__title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+
+    .hero-glass__text {
+      color: #a1a1aa;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    /* ===========================================
+       HERO 6 — ANIMATED GRADIENT BG
+       =========================================== */
+
+    .hero-animated {
+      min-height: 400px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 40px;
+      background: linear-gradient(-45deg, #0f0f0f, #1a1a2e, #0f172a, #1e1b4b);
+      background-size: 400% 400%;
+      animation: gradientBg 15s ease infinite;
+    }
+
+    @keyframes gradientBg {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .hero-animated__eyebrow {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #6366f1;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+
+    .hero-animated__title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 20px;
+      line-height: 1.1;
+    }
+
+    .hero-animated__subtitle {
+      font-size: 1.25rem;
+      color: #94a3b8;
+      max-width: 500px;
+      margin-bottom: 36px;
+    }
+
+    .hero-animated__input-group {
+      display: flex;
+      gap: 12px;
+      max-width: 450px;
+      width: 100%;
+    }
+
+    .hero-animated__input {
+      flex: 1;
+      padding: 14px 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .hero-animated__input:focus {
+      border-color: #6366f1;
+    }
+
+    .hero-animated__input::placeholder {
+      color: #64748b;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+      <div class="sidebar__logo">
+        <a href="../../index.html"><span>Duke</span>-components</a>
+      </div>
+
+      <div class="admin-toggle">
+        <span class="admin-toggle__label">Mode Admin</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="admin-toggle">
+          <span class="toggle-switch__slider"></span>
+        </label>
+      </div>
+
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Sections</h3>
+        <ul class="sidebar__nav">
+          <li><a href="index.html" class="sidebar__link sidebar__link--active">
+            <span>🦸</span> Heroes
+          </a></li>
+          <li><a href="../features/index.html" class="sidebar__link">
+            <span>⭐</span> Features
+          </a></li>
+          <li><a href="../pricing/index.html" class="sidebar__link">
+            <span>💰</span> Pricing
+          </a></li>
+          <li><a href="../testimonials/index.html" class="sidebar__link">
+            <span>💬</span> Testimonials
+          </a></li>
+          <li><a href="../footers/index.html" class="sidebar__link">
+            <span>📋</span> Footers
+          </a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Composants</h3>
+        <ul class="sidebar__nav">
+          <li><a href="../buttons/index.html" class="sidebar__link"><span>🔘</span> Buttons</a></li>
+          <li><a href="../cards/index.html" class="sidebar__link"><span>🃏</span> Cards</a></li>
+          <li><a href="../hovers/index.html" class="sidebar__link"><span>👆</span> Hovers</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main">
+      <header class="main__header">
+        <h1 class="main__title">🦸 Hero Sections</h1>
+        <p class="main__subtitle">Sections hero prêtes à l'emploi pour tes landing pages</p>
+      </header>
+
+      <div class="heroes-list">
+        <!-- Hero 1: Centered -->
+        <article class="hero-card" data-security="safe">
+          <span class="security-badge security-badge--safe">SAFE</span>
+          <div class="hero-card__preview">
+            <div class="hero-centered">
+              <span class="hero-centered__badge">✨ Nouveau</span>
+              <h1 class="hero-centered__title">Construis des apps <span>incroyables</span></h1>
+              <p class="hero-centered__subtitle">La plateforme tout-en-un pour créer, déployer et scaler tes applications web modernes.</p>
+              <div class="hero-centered__buttons">
+                <button class="hero-btn hero-btn--primary">Commencer gratuit</button>
+                <button class="hero-btn hero-btn--secondary">Voir la démo</button>
+              </div>
+            </div>
+          </div>
+          <div class="hero-card__info">
+            <div class="hero-card__header">
+              <h3 class="hero-card__name">Centered Hero</h3>
+              <div class="hero-card__tags">
+                <span class="tag tag--primary">centered</span>
+                <span class="tag">minimal</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <span>HTML</span>
+                <button class="copy-btn" data-target="code-hero-centered">Copier</button>
+              </div>
+              <div class="code-viewer__content">
+                <pre><code id="code-hero-centered">&lt;section class="hero-centered"&gt;
+  &lt;span class="hero-centered__badge"&gt;✨ Nouveau&lt;/span&gt;
+  &lt;h1 class="hero-centered__title"&gt;
+    Construis des apps &lt;span&gt;incroyables&lt;/span&gt;
+  &lt;/h1&gt;
+  &lt;p class="hero-centered__subtitle"&gt;
+    La plateforme tout-en-un pour créer...
+  &lt;/p&gt;
+  &lt;div class="hero-centered__buttons"&gt;
+    &lt;button class="hero-btn hero-btn--primary"&gt;Commencer&lt;/button&gt;
+    &lt;button class="hero-btn hero-btn--secondary"&gt;Démo&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Hero 2: Split -->
+        <article class="hero-card" data-security="safe">
+          <span class="security-badge security-badge--safe">SAFE</span>
+          <div class="hero-card__preview">
+            <div class="hero-split">
+              <div class="hero-split__content">
+                <h1 class="hero-split__title">Design moderne pour le web de demain</h1>
+                <p class="hero-split__text">Crée des interfaces utilisateur époustouflantes avec notre bibliothèque de composants prêts à l'emploi.</p>
+                <div class="hero-centered__buttons">
+                  <button class="hero-btn hero-btn--primary">Explorer</button>
+                  <button class="hero-btn hero-btn--secondary">En savoir plus</button>
+                </div>
+              </div>
+              <div class="hero-split__image">🎨</div>
+            </div>
+          </div>
+          <div class="hero-card__info">
+            <div class="hero-card__header">
+              <h3 class="hero-card__name">Split Hero</h3>
+              <div class="hero-card__tags">
+                <span class="tag tag--primary">split</span>
+                <span class="tag">image</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <span>HTML</span>
+                <button class="copy-btn" data-target="code-hero-split">Copier</button>
+              </div>
+              <div class="code-viewer__content">
+                <pre><code id="code-hero-split">&lt;section class="hero-split"&gt;
+  &lt;div class="hero-split__content"&gt;
+    &lt;h1 class="hero-split__title"&gt;Design moderne&lt;/h1&gt;
+    &lt;p class="hero-split__text"&gt;Description...&lt;/p&gt;
+    &lt;div class="buttons"&gt;...&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="hero-split__image"&gt;
+    &lt;img src="..." alt="Hero" /&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Hero 3: Mesh -->
+        <article class="hero-card" data-security="safe">
+          <span class="security-badge security-badge--safe">SAFE</span>
+          <div class="hero-card__preview">
+            <div class="hero-mesh">
+              <h1 class="hero-mesh__title">La puissance du cloud</h1>
+              <p class="hero-mesh__subtitle">Scalabilité infinie, performance maximale, sécurité garantie.</p>
+              <div class="hero-centered__buttons">
+                <button class="hero-btn hero-btn--primary">Démarrer</button>
+              </div>
+              <div class="hero-mesh__stats">
+                <div class="hero-mesh__stat">
+                  <div class="hero-mesh__stat-value">99.9%</div>
+                  <div class="hero-mesh__stat-label">Uptime</div>
+                </div>
+                <div class="hero-mesh__stat">
+                  <div class="hero-mesh__stat-value">10M+</div>
+                  <div class="hero-mesh__stat-label">Users</div>
+                </div>
+                <div class="hero-mesh__stat">
+                  <div class="hero-mesh__stat-value">150+</div>
+                  <div class="hero-mesh__stat-label">Pays</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="hero-card__info">
+            <div class="hero-card__header">
+              <h3 class="hero-card__name">Mesh Gradient Hero</h3>
+              <div class="hero-card__tags">
+                <span class="tag tag--primary">mesh</span>
+                <span class="tag">stats</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <span>CSS</span>
+                <button class="copy-btn" data-target="code-hero-mesh">Copier</button>
+              </div>
+              <div class="code-viewer__content">
+                <pre><code id="code-hero-mesh">.hero-mesh {
+  background-color: #0f0f0f;
+  background-image:
+    radial-gradient(at 40% 20%, rgba(99, 102, 241, 0.3) 0px, transparent 50%),
+    radial-gradient(at 80% 0%, rgba(236, 72, 153, 0.3) 0px, transparent 50%),
+    radial-gradient(at 0% 50%, rgba(16, 185, 129, 0.2) 0px, transparent 50%);
+}</code></pre>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Hero 4: Glass -->
+        <article class="hero-card" data-security="safe">
+          <span class="security-badge security-badge--safe">SAFE</span>
+          <div class="hero-card__preview">
+            <div class="hero-glass">
+              <div class="hero-glass__card">
+                <div class="hero-glass__icon">🚀</div>
+                <h1 class="hero-glass__title">Prêt pour le lancement ?</h1>
+                <p class="hero-glass__text">Rejoins des milliers de développeurs qui utilisent déjà notre plateforme pour créer des projets exceptionnels.</p>
+                <button class="hero-btn hero-btn--primary">Commencer maintenant</button>
+              </div>
+            </div>
+          </div>
+          <div class="hero-card__info">
+            <div class="hero-card__header">
+              <h3 class="hero-card__name">Glassmorphism Hero</h3>
+              <div class="hero-card__tags">
+                <span class="tag tag--primary">glass</span>
+                <span class="tag">card</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <span>CSS</span>
+                <button class="copy-btn" data-target="code-hero-glass">Copier</button>
+              </div>
+              <div class="code-viewer__content">
+                <pre><code id="code-hero-glass">.hero-glass__card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+}</code></pre>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Hero 5: Animated -->
+        <article class="hero-card" data-security="safe">
+          <span class="security-badge security-badge--safe">SAFE</span>
+          <div class="hero-card__preview">
+            <div class="hero-animated">
+              <span class="hero-animated__eyebrow">Newsletter</span>
+              <h1 class="hero-animated__title">Reste informé</h1>
+              <p class="hero-animated__subtitle">Reçois les dernières actualités et mises à jour directement dans ta boîte mail.</p>
+              <div class="hero-animated__input-group">
+                <input type="email" class="hero-animated__input" placeholder="ton@email.com">
+                <button class="hero-btn hero-btn--primary">S'abonner</button>
+              </div>
+            </div>
+          </div>
+          <div class="hero-card__info">
+            <div class="hero-card__header">
+              <h3 class="hero-card__name">Newsletter Hero</h3>
+              <div class="hero-card__tags">
+                <span class="tag tag--primary">animated</span>
+                <span class="tag">form</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <span>CSS</span>
+                <button class="copy-btn" data-target="code-hero-animated">Copier</button>
+              </div>
+              <div class="code-viewer__content">
+                <pre><code id="code-hero-animated">.hero-animated {
+  background: linear-gradient(-45deg, #0f0f0f, #1a1a2e, #0f172a, #1e1b4b);
+  background-size: 400% 400%;
+  animation: gradientBg 15s ease infinite;
+}
+@keyframes gradientBg {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}</code></pre>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="../../assets/js/copy-code.js"></script>
+  <script src="../../assets/js/security-system.js"></script>
+</body>
+</html>

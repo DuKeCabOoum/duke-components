@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CTA — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ========== CTA STYLES ========== */
+
+    /* ===== 1. Basic CTA ===== */
+    .cta {
+      padding: 60px 40px;
+      text-align: center;
+      border-radius: 16px;
+    }
+
+    .cta__title {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+    }
+
+    .cta__desc {
+      font-size: 16px;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta__btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .cta__btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+    }
+
+    .cta__btn--secondary {
+      background: transparent;
+      border: 2px solid var(--border);
+      color: var(--text-primary);
+    }
+
+    .cta__btn--secondary:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .cta__actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* ===== 2. Gradient CTA ===== */
+    .cta--gradient {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+    }
+
+    .cta--gradient .cta__title,
+    .cta--gradient .cta__desc {
+      color: white;
+    }
+
+    .cta--gradient .cta__desc {
+      opacity: 0.9;
+    }
+
+    .cta--gradient .cta__btn {
+      background: white;
+      color: var(--primary);
+    }
+
+    .cta--gradient .cta__btn:hover {
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    /* ===== 3. Split CTA ===== */
+    .cta--split {
+      display: flex;
+      align-items: center;
+      text-align: left;
+      gap: 40px;
+      padding: 40px;
+    }
+
+    .cta--split .cta__content {
+      flex: 1;
+    }
+
+    .cta--split .cta__visual {
+      width: 200px;
+      height: 200px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 64px;
+    }
+
+    .cta--split .cta__desc {
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    .cta--split .cta__actions {
+      justify-content: flex-start;
+    }
+
+    /* ===== 4. Newsletter CTA ===== */
+    .cta--newsletter {
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+
+    .cta__form {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .cta__input {
+      flex: 1;
+      padding: 14px 20px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--text-primary);
+      font-size: 16px;
+    }
+
+    .cta__input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .cta__input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    /* ===== 5. Bordered CTA ===== */
+    .cta--bordered {
+      background: transparent;
+      border: 2px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta--bordered::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.1), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .cta--bordered:hover::before {
+      left: 100%;
+    }
+
+    /* ===== 6. With Stats ===== */
+    .cta__stats {
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+      margin-bottom: 32px;
+    }
+
+    .cta__stat {
+      text-align: center;
+    }
+
+    .cta__stat-value {
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--primary);
+      display: block;
+    }
+
+    .cta__stat-label {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    /* ===== 7. Banner CTA ===== */
+    .cta--banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 32px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+
+    .cta--banner .cta__title {
+      font-size: 20px;
+      margin-bottom: 4px;
+    }
+
+    .cta--banner .cta__desc {
+      margin-bottom: 0;
+      max-width: none;
+    }
+
+    /* ===== 8. Card CTA ===== */
+    .cta--card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .cta--card .cta__icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      margin: 0 auto 20px;
+    }
+
+    /* ===== 9. Floating CTA ===== */
+    .cta--floating {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      position: relative;
+    }
+
+    .cta--floating::before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 18px;
+      z-index: -1;
+      opacity: 0.5;
+      filter: blur(20px);
+    }
+
+    /* ===== 10. Minimal CTA ===== */
+    .cta--minimal {
+      padding: 40px;
+      background: transparent;
+    }
+
+    .cta--minimal .cta__title {
+      font-size: 24px;
+    }
+
+    .cta--minimal .cta__link {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: gap 0.3s ease;
+    }
+
+    .cta--minimal .cta__link:hover {
+      gap: 12px;
+    }
+
+    /* ===== 11. Full Width CTA ===== */
+    .cta--fullwidth {
+      padding: 80px 40px;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      border-radius: 0;
+    }
+
+    .cta--fullwidth .cta__title {
+      font-size: 36px;
+      color: white;
+    }
+
+    .cta--fullwidth .cta__desc {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 18px;
+      max-width: 600px;
+    }
+
+    /* ===== 12. With Badge ===== */
+    .cta__badge {
+      display: inline-block;
+      padding: 6px 16px;
+      background: var(--primary-transparent);
+      color: var(--primary);
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+
+    .cta--with-badge {
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+  <aside class="sidebar">
+    <div class="sidebar__logo">
+      <a href="../../index.html"><span>Duke</span>-components</a>
+    </div>
+    <div class="sidebar__section">
+      <h3 class="sidebar__title">Sections</h3>
+      <ul class="sidebar__nav">
+        <li><a href="index.html" class="sidebar__link sidebar__link--active"><span>📢</span> CTA</a></li>
+        <li><a href="../features/index.html" class="sidebar__link"><span>⭐</span> Features</a></li>
+        <li><a href="../footers/index.html" class="sidebar__link"><span>🦶</span> Footers</a></li>
+        <li><a href="../heroes/index.html" class="sidebar__link"><span>🦸</span> Heroes</a></li>
+        <li><a href="../pricing/index.html" class="sidebar__link"><span>💰</span> Pricing</a></li>
+        <li><a href="../testimonials/index.html" class="sidebar__link"><span>💬</span> Testimonials</a></li>
+      </ul>
+    </div>
+    <div class="admin-toggle">
+      <span class="admin-toggle__label">Mode Admin</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="admin-toggle">
+        <span class="toggle-switch__slider"></span>
+      </label>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="page-header">
+      <h1 class="page-header__title">Call to Action (CTA)</h1>
+      <p class="page-header__desc">Sections d'appel a l'action : 12 styles pour inciter tes utilisateurs a agir.</p>
+    </header>
+
+    <div class="components-grid">
+
+      <!-- 1. Basic CTA -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Basic CTA</h3>
+        </div>
+        <div class="component-card__preview" style="padding: 0;">
+          <div class="cta" style="background: var(--surface);">
+            <h2 class="cta__title">Ready to Get Started?</h2>
+            <p class="cta__desc">Join thousands of users who already trust our platform.</p>
+            <a href="#" class="cta__btn">Start Free Trial</a>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;div class="cta"&gt;
+  &lt;h2 class="cta__title"&gt;Ready to Get Started?&lt;/h2&gt;
+  &lt;p class="cta__desc"&gt;Join thousands of users...&lt;/p&gt;
+  &lt;a href="#" class="cta__btn"&gt;Start Free Trial&lt;/a&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 2. Gradient CTA -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Gradient CTA</h3>
+        </div>
+        <div class="component-card__preview" style="padding: 0;">
+          <div class="cta cta--gradient">
+            <h2 class="cta__title">Upgrade Your Experience</h2>
+            <p class="cta__desc">Unlock all premium features and take your project to the next level.</p>
+            <a href="#" class="cta__btn">Upgrade Now</a>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;div class="cta cta--gradient"&gt;
+  &lt;h2 class="cta__title"&gt;Upgrade Your Experience&lt;/h2&gt;
+  &lt;p class="cta__desc"&gt;Unlock all premium features...&lt;/p&gt;
+  &lt;a href="#" class="cta__btn"&gt;Upgrade Now&lt;/a&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 3. Split CTA -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Split CTA</h3>
+        </div>
+        <div class="component-card__preview" style="padding: 0;">
+          <div class="cta cta--split" style="background: var(--surface);">
+            <div class="cta__content">
+              <h2 class="cta__title">Build Something Amazing</h2>
+              <p class="cta__desc">Get access to 100+ components and start building your next project today.</p>
+              <div class="cta__actions">
+                <a href="#" class="cta__btn">Get Started</a>
+                <a href="#" class="cta__btn cta__btn--secondary">Learn More</a>
+              </div>
+            </div>
+            <div class="cta__visual">🚀</div>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;div class="cta cta--split"&gt;
+  &lt;div class="cta__content"&gt;
+    &lt;h2 class="cta__title"&gt;Build Something Amazing&lt;/h2&gt;
+    &lt;p class="cta__desc"&gt;Get access to 100+ components...&lt;/p&gt;
+    &lt;div class="cta__actions"&gt;
+      &lt;a href="#" class="cta__btn"&gt;Get Started&lt;/a&gt;
+      &lt;a href="#" class="cta__btn cta__btn--secondary"&gt;Learn More&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="cta__visual"&gt;🚀&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 4. Newsletter CTA -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Newsletter CTA</h3>
+        </div>
+        <div class="component-card__preview" style="padding: 0;">
+          <div class="cta cta--newsletter">
+            <h2 class="cta__title">Stay Updated</h2>
+            <p class="cta__desc">Subscribe to our newsletter and get the latest updates.</p>
+            <form class="cta__form">
+              <input type="email" class="cta__input" placeholder="Enter your email">
+              <button type="submit" class="cta__btn">Subscribe</button>
+            </form>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;div class="cta cta--newsletter"&gt;
+  &lt;h2 class="cta__title"&gt;Stay Updated&lt;/h2&gt;
+  &lt;p class="cta__desc"&gt;Subscribe to our newsletter...&lt;/p&gt;
+  &lt;form class="cta__form"&gt;
+    &lt;input type="email" class="cta__input" placeholder="Email"&gt;
+    &lt;button type="submit" class="cta__btn"&gt;Subscribe&lt;/button&gt;
+  &lt;/form&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 5. With Stats -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">With Stats</h3>
+        </div>
+        <div class="component-card__preview" style="padding: 0;">
+          <div class="cta" style="background: var(--surface);">
+            <div class="cta__stats">
+              <div class="cta__stat">
+                <span class="cta__stat-value">10K+</span>
+                <span class="cta__stat-label">Users</span>
+              </div>
+              <div class="cta__stat">
+                <span class="cta__stat-value">500+</span>
+                <span class="cta__stat-label">Components</span>
+              </div>
+              <div class="cta__stat">
+                <span class="cta__stat-value">99%</span>
+                <span class="cta__stat-label">Satisfaction</span>
+              </div>
+            </div>
+            <h2 class="cta__title">Join Our Community</h2>
+            <p class="cta__desc">Thousands of developers trust us for their projects.</p>
+            <a href="#" class="cta__btn">Join Now</a>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;div class="cta__stats"&gt;
+  &lt;div class="cta__stat"&gt;
+    &lt;span class="cta__stat-value"&gt;10K+&lt;/span&gt;
+    &lt;span class="cta__stat-label"&gt;Users&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 6. Banner CTA -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Banner CTA</h3>
+        </div>
+        <div class="component-card__preview" style="padding: 0;">
+          <div class="cta cta--banner">
+            <div>
+              <h2 class="cta__title">Limited Time Offer</h2>
+              <p class="cta__desc">Get 50% off on all premium plans this week only!</p>
+            </div>
+            <a href="#" class="cta__btn">Claim Offer</a>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;div class="cta cta--banner"&gt;
+  &lt;div&gt;
+    &lt;h2 class="cta__title"&gt;Limited Time Offer&lt;/h2&gt;
+    &lt;p class="cta__desc"&gt;Get 50% off...&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;a href="#" class="cta__btn"&gt;Claim Offer&lt;/a&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 7. Card CTA -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Card CTA</h3>
+        </div>
+        <div class="component-card__preview" style="padding: 20px;">
+          <div class="cta cta--card">
+            <div class="cta__icon">💎</div>
+            <h2 class="cta__title">Go Premium</h2>
+            <p class="cta__desc">Unlock all features and get priority support.</p>
+            <a href="#" class="cta__btn">Upgrade</a>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;div class="cta cta--card"&gt;
+  &lt;div class="cta__icon"&gt;💎&lt;/div&gt;
+  &lt;h2 class="cta__title"&gt;Go Premium&lt;/h2&gt;
+  &lt;p class="cta__desc"&gt;Unlock all features...&lt;/p&gt;
+  &lt;a href="#" class="cta__btn"&gt;Upgrade&lt;/a&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 8. Floating CTA -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Floating CTA</h3>
+        </div>
+        <div class="component-card__preview" style="padding: 40px;">
+          <div class="cta cta--floating">
+            <h2 class="cta__title">Ready to Launch?</h2>
+            <p class="cta__desc">Deploy your project in minutes with our platform.</p>
+            <a href="#" class="cta__btn">Deploy Now</a>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;div class="cta cta--floating"&gt;
+  &lt;h2 class="cta__title"&gt;Ready to Launch?&lt;/h2&gt;
+  &lt;p class="cta__desc"&gt;Deploy your project...&lt;/p&gt;
+  &lt;a href="#" class="cta__btn"&gt;Deploy Now&lt;/a&gt;
+&lt;/div&gt;
+
+/* Glow effect */
+.cta--floating::before {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  filter: blur(20px);
+  opacity: 0.5;
+}</code></pre>
+        </div>
+      </article>
+
+      <!-- 9. Minimal CTA -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Minimal CTA</h3>
+        </div>
+        <div class="component-card__preview" style="padding: 0;">
+          <div class="cta cta--minimal">
+            <h2 class="cta__title">Interested in learning more?</h2>
+            <a href="#" class="cta__link">
+              Read our documentation
+              <span>→</span>
+            </a>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;div class="cta cta--minimal"&gt;
+  &lt;h2 class="cta__title"&gt;Interested in learning more?&lt;/h2&gt;
+  &lt;a href="#" class="cta__link"&gt;
+    Read our documentation
+    &lt;span&gt;→&lt;/span&gt;
+  &lt;/a&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 10. With Badge -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">With Badge</h3>
+        </div>
+        <div class="component-card__preview" style="padding: 0;">
+          <div class="cta cta--with-badge">
+            <span class="cta__badge">New Feature</span>
+            <h2 class="cta__title">Introducing Dark Mode</h2>
+            <p class="cta__desc">Experience a new way to work with our beautiful dark theme.</p>
+            <a href="#" class="cta__btn">Try It Now</a>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;div class="cta cta--with-badge"&gt;
+  &lt;span class="cta__badge"&gt;New Feature&lt;/span&gt;
+  &lt;h2 class="cta__title"&gt;Introducing Dark Mode&lt;/h2&gt;
+  &lt;p class="cta__desc"&gt;Experience a new way...&lt;/p&gt;
+  &lt;a href="#" class="cta__btn"&gt;Try It Now&lt;/a&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 11. Two Buttons -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Two Buttons</h3>
+        </div>
+        <div class="component-card__preview" style="padding: 0;">
+          <div class="cta cta--gradient">
+            <h2 class="cta__title">Start Building Today</h2>
+            <p class="cta__desc">Choose your plan and start creating amazing projects.</p>
+            <div class="cta__actions">
+              <a href="#" class="cta__btn">Get Started Free</a>
+              <a href="#" class="cta__btn" style="background: transparent; border: 2px solid white;">View Pricing</a>
+            </div>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;div class="cta__actions"&gt;
+  &lt;a href="#" class="cta__btn"&gt;Get Started Free&lt;/a&gt;
+  &lt;a href="#" class="cta__btn cta__btn--outline"&gt;View Pricing&lt;/a&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 12. Bordered CTA -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Bordered CTA</h3>
+        </div>
+        <div class="component-card__preview" style="padding: 0;">
+          <div class="cta cta--bordered">
+            <h2 class="cta__title">Have Questions?</h2>
+            <p class="cta__desc">Our team is here to help you with anything you need.</p>
+            <a href="#" class="cta__btn">Contact Us</a>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;div class="cta cta--bordered"&gt;
+  &lt;h2 class="cta__title"&gt;Have Questions?&lt;/h2&gt;
+  &lt;p class="cta__desc"&gt;Our team is here to help...&lt;/p&gt;
+  &lt;a href="#" class="cta__btn"&gt;Contact Us&lt;/a&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+      </article>
+
+    </div>
+  </main>
+  </div>
+
+  <script src="../../assets/js/copy-code.js"></script>
+  <script src="../../assets/js/security-system.js"></script>
+</body>
+</html>

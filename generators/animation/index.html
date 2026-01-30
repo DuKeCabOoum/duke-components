@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animation Generator — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ========== GENERATOR LAYOUT ========== */
+    .generator {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 32px;
+      margin-top: 32px;
+    }
+
+    /* ========== PREVIEW AREA ========== */
+    .preview-area {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 500px;
+      position: relative;
+    }
+
+    .preview-box {
+      width: 120px;
+      height: 120px;
+      background: linear-gradient(135deg, var(--primary) 0%, #a855f7 100%);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+    }
+
+    .preview-controls {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 12px;
+    }
+
+    .preview-btn {
+      padding: 8px 16px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      cursor: pointer;
+      font-size: 0.875rem;
+      transition: all 0.2s ease;
+    }
+
+    .preview-btn:hover {
+      border-color: var(--primary);
+    }
+
+    .preview-btn.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+    }
+
+    /* ========== CONTROLS ========== */
+    .controls {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .controls__title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .control-group {
+      margin-bottom: 20px;
+    }
+
+    .control-group__label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 0.875rem;
+    }
+
+    .control-group__name {
+      color: var(--text-secondary);
+    }
+
+    .control-group__value {
+      color: var(--primary);
+      font-family: 'Fira Code', monospace;
+      font-size: 0.75rem;
+      background: rgba(99, 102, 241, 0.1);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .control-group__slider {
+      width: 100%;
+      height: 8px;
+      border-radius: 4px;
+      background: var(--border);
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    .control-group__slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--primary);
+      cursor: pointer;
+    }
+
+    .control-group__select {
+      width: 100%;
+      padding: 10px 12px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 0.875rem;
+      cursor: pointer;
+    }
+
+    .control-group__select:focus {
+      border-color: var(--primary);
+      outline: none;
+    }
+
+    /* ========== ANIMATION PRESETS ========== */
+    .presets-section {
+      margin-bottom: 24px;
+    }
+
+    .presets-section__title {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .presets-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .preset-btn {
+      padding: 10px 8px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .preset-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .preset-btn.active {
+      background: rgba(99, 102, 241, 0.1);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    /* ========== KEYFRAMES EDITOR ========== */
+    .keyframes-section {
+      margin-bottom: 24px;
+      padding: 16px;
+      background: var(--bg);
+      border-radius: 12px;
+    }
+
+    .keyframes-section__title {
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-bottom: 16px;
+    }
+
+    .keyframe-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .keyframe-row__percent {
+      width: 50px;
+      padding: 6px 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text);
+      font-size: 0.75rem;
+      text-align: center;
+    }
+
+    .keyframe-row__value {
+      flex: 1;
+      padding: 6px 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text);
+      font-size: 0.75rem;
+      font-family: 'Fira Code', monospace;
+    }
+
+    .keyframe-row__delete {
+      padding: 6px 10px;
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid transparent;
+      border-radius: 4px;
+      color: #ef4444;
+      cursor: pointer;
+      font-size: 0.75rem;
+    }
+
+    .keyframe-row__delete:hover {
+      background: rgba(239, 68, 68, 0.2);
+    }
+
+    .add-keyframe-btn {
+      width: 100%;
+      padding: 8px;
+      background: transparent;
+      border: 1px dashed var(--border);
+      border-radius: 4px;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.75rem;
+      margin-top: 8px;
+    }
+
+    .add-keyframe-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    /* ========== OUTPUT ========== */
+    .output {
+      background: var(--bg);
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 24px;
+    }
+
+    .output__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .output__title {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .output__copy {
+      padding: 6px 12px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+
+    .output__code {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.75rem;
+      color: var(--primary);
+      line-height: 1.8;
+      white-space: pre-wrap;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    /* ========== EXAMPLES ========== */
+    .examples {
+      margin-top: 48px;
+    }
+
+    .examples__title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+
+    .examples__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 24px;
+    }
+
+    .example-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s ease;
+    }
+
+    .example-card:hover {
+      border-color: var(--primary);
+    }
+
+    .example-card__box {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 16px;
+      background: linear-gradient(135deg, var(--primary) 0%, #a855f7 100%);
+      border-radius: 8px;
+    }
+
+    .example-card__name {
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    /* ========== ANIMATIONS ========== */
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-30px); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.1); opacity: 0.8; }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      75% { transform: translateX(10px); }
+    }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes fadeInOut {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      0%, 100% { transform: translateY(20px); opacity: 0.5; }
+      50% { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes swing {
+      0%, 100% { transform: rotate(-10deg); }
+      50% { transform: rotate(10deg); }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      25% { transform: translateY(-10px) rotate(2deg); }
+      75% { transform: translateY(10px) rotate(-2deg); }
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      25% { transform: scale(1.1); }
+      40% { transform: scale(1); }
+      60% { transform: scale(1.1); }
+    }
+
+    @keyframes jello {
+      0%, 100% { transform: skewX(0deg) skewY(0deg); }
+      25% { transform: skewX(-5deg) skewY(-5deg); }
+      50% { transform: skewX(4deg) skewY(4deg); }
+      75% { transform: skewX(-3deg) skewY(-3deg); }
+    }
+
+    @keyframes rubberBand {
+      0%, 100% { transform: scaleX(1) scaleY(1); }
+      30% { transform: scaleX(1.25) scaleY(0.75); }
+      40% { transform: scaleX(0.75) scaleY(1.25); }
+      50% { transform: scaleX(1.15) scaleY(0.85); }
+      65% { transform: scaleX(0.95) scaleY(1.05); }
+      75% { transform: scaleX(1.05) scaleY(0.95); }
+    }
+
+    @keyframes wobble {
+      0%, 100% { transform: translateX(0) rotate(0deg); }
+      15% { transform: translateX(-25px) rotate(-5deg); }
+      30% { transform: translateX(20px) rotate(3deg); }
+      45% { transform: translateX(-15px) rotate(-3deg); }
+      60% { transform: translateX(10px) rotate(2deg); }
+      75% { transform: translateX(-5px) rotate(-1deg); }
+    }
+
+    .anim-bounce { animation: bounce 1s ease-in-out infinite; }
+    .anim-pulse { animation: pulse 1s ease-in-out infinite; }
+    .anim-shake { animation: shake 0.5s ease-in-out infinite; }
+    .anim-rotate { animation: rotate 2s linear infinite; }
+    .anim-fadeInOut { animation: fadeInOut 2s ease-in-out infinite; }
+    .anim-slideUp { animation: slideUp 1.5s ease-in-out infinite; }
+    .anim-swing { animation: swing 1s ease-in-out infinite; }
+    .anim-float { animation: float 3s ease-in-out infinite; }
+    .anim-heartbeat { animation: heartbeat 1.5s ease-in-out infinite; }
+    .anim-jello { animation: jello 1s ease-in-out infinite; }
+    .anim-rubberBand { animation: rubberBand 1s ease-in-out infinite; }
+    .anim-wobble { animation: wobble 1s ease-in-out infinite; }
+
+    /* ========== TOAST ========== */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      padding: 12px 24px;
+      background: var(--surface);
+      border: 1px solid var(--success);
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 1000;
+      color: var(--success);
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+      <div class="sidebar__logo">
+        <a href="../../index.html" style="text-decoration: none; color: inherit;">
+          <span>Duke</span>-components
+        </a>
+      </div>
+
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Générateurs</h3>
+        <ul class="sidebar__nav">
+          <li><a href="../gradient/index.html" class="sidebar__link">
+            <span>🌈</span> Gradient
+          </a></li>
+          <li><a href="../flexbox/index.html" class="sidebar__link">
+            <span>📐</span> Flexbox
+          </a></li>
+          <li><a href="../grid/index.html" class="sidebar__link">
+            <span>🔲</span> Grid
+          </a></li>
+          <li><a href="../shadow/index.html" class="sidebar__link">
+            <span>🌑</span> Shadow
+          </a></li>
+          <li><a href="../border-radius/index.html" class="sidebar__link">
+            <span>⬜</span> Border Radius
+          </a></li>
+          <li><a href="index.html" class="sidebar__link sidebar__link--active">
+            <span>🎬</span> Animation
+          </a></li>
+          <li><a href="../clip-path/index.html" class="sidebar__link">
+            <span>✂️</span> Clip Path
+          </a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Retour</h3>
+        <ul class="sidebar__nav">
+          <li><a href="../../index.html" class="sidebar__link">
+            <span>🏠</span> Dashboard
+          </a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main">
+      <header class="main__header">
+        <h1 class="main__title">Animation Generator</h1>
+        <p class="main__subtitle">Créez des animations CSS personnalisées avec keyframes</p>
+      </header>
+
+      <div class="generator">
+        <!-- Preview -->
+        <div class="preview-area">
+          <div class="preview-box" id="preview">Box</div>
+          <div class="preview-controls">
+            <button class="preview-btn active" id="play-btn">Play</button>
+            <button class="preview-btn" id="pause-btn">Pause</button>
+            <button class="preview-btn" id="reset-btn">Reset</button>
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+          <h3 class="controls__title">Paramètres</h3>
+
+          <!-- Animation Presets -->
+          <div class="presets-section">
+            <div class="presets-section__title">Animations prédéfinies</div>
+            <div class="presets-grid">
+              <button class="preset-btn active" data-anim="bounce">Bounce</button>
+              <button class="preset-btn" data-anim="pulse">Pulse</button>
+              <button class="preset-btn" data-anim="shake">Shake</button>
+              <button class="preset-btn" data-anim="rotate">Rotate</button>
+              <button class="preset-btn" data-anim="fadeInOut">Fade</button>
+              <button class="preset-btn" data-anim="slideUp">Slide</button>
+              <button class="preset-btn" data-anim="swing">Swing</button>
+              <button class="preset-btn" data-anim="float">Float</button>
+              <button class="preset-btn" data-anim="heartbeat">Heartbeat</button>
+              <button class="preset-btn" data-anim="jello">Jello</button>
+              <button class="preset-btn" data-anim="rubberBand">Rubber</button>
+              <button class="preset-btn" data-anim="wobble">Wobble</button>
+            </div>
+          </div>
+
+          <!-- Animation Name -->
+          <div class="control-group">
+            <div class="control-group__label">
+              <span class="control-group__name">Nom de l'animation</span>
+            </div>
+            <input type="text" class="control-group__select" id="anim-name" value="myAnimation" style="font-family: 'Fira Code', monospace;">
+          </div>
+
+          <!-- Duration -->
+          <div class="control-group">
+            <div class="control-group__label">
+              <span class="control-group__name">Durée</span>
+              <span class="control-group__value" id="duration-value">1s</span>
+            </div>
+            <input type="range" class="control-group__slider" id="duration" min="0.1" max="5" step="0.1" value="1">
+          </div>
+
+          <!-- Timing Function -->
+          <div class="control-group">
+            <div class="control-group__label">
+              <span class="control-group__name">Timing Function</span>
+            </div>
+            <select class="control-group__select" id="timing">
+              <option value="ease">ease</option>
+              <option value="ease-in">ease-in</option>
+              <option value="ease-out">ease-out</option>
+              <option value="ease-in-out" selected>ease-in-out</option>
+              <option value="linear">linear</option>
+              <option value="cubic-bezier(0.68, -0.55, 0.265, 1.55)">elastic</option>
+              <option value="cubic-bezier(0.175, 0.885, 0.32, 1.275)">bounce</option>
+            </select>
+          </div>
+
+          <!-- Delay -->
+          <div class="control-group">
+            <div class="control-group__label">
+              <span class="control-group__name">Délai</span>
+              <span class="control-group__value" id="delay-value">0s</span>
+            </div>
+            <input type="range" class="control-group__slider" id="delay" min="0" max="2" step="0.1" value="0">
+          </div>
+
+          <!-- Iteration Count -->
+          <div class="control-group">
+            <div class="control-group__label">
+              <span class="control-group__name">Répétitions</span>
+            </div>
+            <select class="control-group__select" id="iterations">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="5">5</option>
+              <option value="infinite" selected>infinite</option>
+            </select>
+          </div>
+
+          <!-- Direction -->
+          <div class="control-group">
+            <div class="control-group__label">
+              <span class="control-group__name">Direction</span>
+            </div>
+            <select class="control-group__select" id="direction">
+              <option value="normal">normal</option>
+              <option value="reverse">reverse</option>
+              <option value="alternate">alternate</option>
+              <option value="alternate-reverse">alternate-reverse</option>
+            </select>
+          </div>
+
+          <!-- Fill Mode -->
+          <div class="control-group">
+            <div class="control-group__label">
+              <span class="control-group__name">Fill Mode</span>
+            </div>
+            <select class="control-group__select" id="fill-mode">
+              <option value="none">none</option>
+              <option value="forwards">forwards</option>
+              <option value="backwards">backwards</option>
+              <option value="both">both</option>
+            </select>
+          </div>
+
+          <!-- Output -->
+          <div class="output">
+            <div class="output__header">
+              <span class="output__title">CSS Output</span>
+              <button class="output__copy" id="copy-btn">Copier</button>
+            </div>
+            <code class="output__code" id="output"></code>
+          </div>
+        </div>
+      </div>
+
+      <!-- Examples -->
+      <section class="examples">
+        <h2 class="examples__title">Exemples d'animations</h2>
+        <div class="examples__grid">
+          <div class="example-card" data-anim="bounce">
+            <div class="example-card__box anim-bounce"></div>
+            <div class="example-card__name">Bounce</div>
+          </div>
+          <div class="example-card" data-anim="pulse">
+            <div class="example-card__box anim-pulse"></div>
+            <div class="example-card__name">Pulse</div>
+          </div>
+          <div class="example-card" data-anim="shake">
+            <div class="example-card__box anim-shake"></div>
+            <div class="example-card__name">Shake</div>
+          </div>
+          <div class="example-card" data-anim="rotate">
+            <div class="example-card__box anim-rotate"></div>
+            <div class="example-card__name">Rotate</div>
+          </div>
+          <div class="example-card" data-anim="fadeInOut">
+            <div class="example-card__box anim-fadeInOut"></div>
+            <div class="example-card__name">Fade In/Out</div>
+          </div>
+          <div class="example-card" data-anim="float">
+            <div class="example-card__box anim-float"></div>
+            <div class="example-card__name">Float</div>
+          </div>
+          <div class="example-card" data-anim="heartbeat">
+            <div class="example-card__box anim-heartbeat"></div>
+            <div class="example-card__name">Heartbeat</div>
+          </div>
+          <div class="example-card" data-anim="jello">
+            <div class="example-card__box anim-jello"></div>
+            <div class="example-card__name">Jello</div>
+          </div>
+          <div class="example-card" data-anim="rubberBand">
+            <div class="example-card__box anim-rubberBand"></div>
+            <div class="example-card__name">Rubber Band</div>
+          </div>
+          <div class="example-card" data-anim="wobble">
+            <div class="example-card__box anim-wobble"></div>
+            <div class="example-card__name">Wobble</div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">CSS copié !</div>
+
+  <script>
+    // Keyframes definitions
+    const keyframesData = {
+      bounce: {
+        name: 'bounce',
+        keyframes: `@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-30px); }
+}`
+      },
+      pulse: {
+        name: 'pulse',
+        keyframes: `@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+}`
+      },
+      shake: {
+        name: 'shake',
+        keyframes: `@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
+}`
+      },
+      rotate: {
+        name: 'rotate',
+        keyframes: `@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}`
+      },
+      fadeInOut: {
+        name: 'fadeInOut',
+        keyframes: `@keyframes fadeInOut {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}`
+      },
+      slideUp: {
+        name: 'slideUp',
+        keyframes: `@keyframes slideUp {
+  0%, 100% { transform: translateY(20px); opacity: 0.5; }
+  50% { transform: translateY(0); opacity: 1; }
+}`
+      },
+      swing: {
+        name: 'swing',
+        keyframes: `@keyframes swing {
+  0%, 100% { transform: rotate(-10deg); }
+  50% { transform: rotate(10deg); }
+}`
+      },
+      float: {
+        name: 'float',
+        keyframes: `@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-10px) rotate(2deg); }
+  75% { transform: translateY(10px) rotate(-2deg); }
+}`
+      },
+      heartbeat: {
+        name: 'heartbeat',
+        keyframes: `@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.1); }
+  40% { transform: scale(1); }
+  60% { transform: scale(1.1); }
+}`
+      },
+      jello: {
+        name: 'jello',
+        keyframes: `@keyframes jello {
+  0%, 100% { transform: skewX(0deg) skewY(0deg); }
+  25% { transform: skewX(-5deg) skewY(-5deg); }
+  50% { transform: skewX(4deg) skewY(4deg); }
+  75% { transform: skewX(-3deg) skewY(-3deg); }
+}`
+      },
+      rubberBand: {
+        name: 'rubberBand',
+        keyframes: `@keyframes rubberBand {
+  0%, 100% { transform: scaleX(1) scaleY(1); }
+  30% { transform: scaleX(1.25) scaleY(0.75); }
+  40% { transform: scaleX(0.75) scaleY(1.25); }
+  50% { transform: scaleX(1.15) scaleY(0.85); }
+  65% { transform: scaleX(0.95) scaleY(1.05); }
+  75% { transform: scaleX(1.05) scaleY(0.95); }
+}`
+      },
+      wobble: {
+        name: 'wobble',
+        keyframes: `@keyframes wobble {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  15% { transform: translateX(-25px) rotate(-5deg); }
+  30% { transform: translateX(20px) rotate(3deg); }
+  45% { transform: translateX(-15px) rotate(-3deg); }
+  60% { transform: translateX(10px) rotate(2deg); }
+  75% { transform: translateX(-5px) rotate(-1deg); }
+}`
+      }
+    };
+
+    // State
+    let currentAnim = 'bounce';
+    let isPlaying = true;
+
+    // Elements
+    const preview = document.getElementById('preview');
+    const output = document.getElementById('output');
+    const durationSlider = document.getElementById('duration');
+    const delaySlider = document.getElementById('delay');
+    const timingSelect = document.getElementById('timing');
+    const iterationsSelect = document.getElementById('iterations');
+    const directionSelect = document.getElementById('direction');
+    const fillModeSelect = document.getElementById('fill-mode');
+    const animNameInput = document.getElementById('anim-name');
+
+    // Update animation
+    function updateAnimation() {
+      const duration = durationSlider.value;
+      const delay = delaySlider.value;
+      const timing = timingSelect.value;
+      const iterations = iterationsSelect.value;
+      const direction = directionSelect.value;
+      const fillMode = fillModeSelect.value;
+      const animName = animNameInput.value || 'myAnimation';
+
+      // Update value displays
+      document.getElementById('duration-value').textContent = `${duration}s`;
+      document.getElementById('delay-value').textContent = `${delay}s`;
+
+      // Apply animation to preview
+      if (isPlaying) {
+        preview.style.animation = `${currentAnim} ${duration}s ${timing} ${delay}s ${iterations} ${direction} ${fillMode}`;
+      } else {
+        preview.style.animationPlayState = 'paused';
+      }
+
+      // Generate output
+      const keyframes = keyframesData[currentAnim].keyframes.replace(currentAnim, animName);
+      const animationCSS = `animation: ${animName} ${duration}s ${timing} ${delay}s ${iterations} ${direction} ${fillMode};`;
+
+      output.textContent = `${keyframes}\n\n.element {\n  ${animationCSS}\n}`;
+    }
+
+    // Preset buttons
+    document.querySelectorAll('.preset-btn[data-anim]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.preset-btn[data-anim]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentAnim = btn.dataset.anim;
+        animNameInput.value = currentAnim;
+        updateAnimation();
+      });
+    });
+
+    // Example cards
+    document.querySelectorAll('.example-card[data-anim]').forEach(card => {
+      card.addEventListener('click', () => {
+        currentAnim = card.dataset.anim;
+        animNameInput.value = currentAnim;
+        document.querySelectorAll('.preset-btn[data-anim]').forEach(b => {
+          b.classList.toggle('active', b.dataset.anim === currentAnim);
+        });
+        updateAnimation();
+      });
+    });
+
+    // Control listeners
+    [durationSlider, delaySlider, timingSelect, iterationsSelect, directionSelect, fillModeSelect, animNameInput].forEach(el => {
+      el.addEventListener('input', updateAnimation);
+      el.addEventListener('change', updateAnimation);
+    });
+
+    // Play/Pause/Reset
+    document.getElementById('play-btn').addEventListener('click', () => {
+      isPlaying = true;
+      preview.style.animationPlayState = 'running';
+      document.getElementById('play-btn').classList.add('active');
+      document.getElementById('pause-btn').classList.remove('active');
+    });
+
+    document.getElementById('pause-btn').addEventListener('click', () => {
+      isPlaying = false;
+      preview.style.animationPlayState = 'paused';
+      document.getElementById('pause-btn').classList.add('active');
+      document.getElementById('play-btn').classList.remove('active');
+    });
+
+    document.getElementById('reset-btn').addEventListener('click', () => {
+      preview.style.animation = 'none';
+      preview.offsetHeight; // Trigger reflow
+      isPlaying = true;
+      document.getElementById('play-btn').classList.add('active');
+      document.getElementById('pause-btn').classList.remove('active');
+      updateAnimation();
+    });
+
+    // Copy button
+    document.getElementById('copy-btn').addEventListener('click', () => {
+      navigator.clipboard.writeText(output.textContent);
+      showToast();
+    });
+
+    // Toast
+    function showToast() {
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+
+    // Initial render
+    updateAnimation();
+  </script>
+</body>
+</html>

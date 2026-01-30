@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navigation — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ===========================================
+       NAVIGATION — Styles locaux
+       =========================================== */
+
+    .nav-list {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    .nav-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .nav-section__preview {
+      padding: 0;
+      background: #0a0a0a;
+    }
+
+    .nav-section__info {
+      padding: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .nav-section__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .nav-section__name {
+      font-weight: 600;
+      font-size: 1.25rem;
+    }
+
+    .nav-section__tags {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* ===========================================
+       NAVBAR 1 — CLASSIC
+       =========================================== */
+
+    .navbar-classic {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 32px;
+      background: #0f0f0f;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .navbar-classic__logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .navbar-classic__logo span {
+      color: #6366f1;
+    }
+
+    .navbar-classic__menu {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .navbar-classic__link {
+      color: #a1a1aa;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    .navbar-classic__link:hover,
+    .navbar-classic__link--active {
+      color: #fff;
+    }
+
+    .navbar-classic__btn {
+      padding: 10px 20px;
+      background: #6366f1;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .navbar-classic__btn:hover {
+      background: #4f46e5;
+    }
+
+    /* ===========================================
+       NAVBAR 2 — CENTERED
+       =========================================== */
+
+    .navbar-centered {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 32px;
+      background: #0f0f0f;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      position: relative;
+    }
+
+    .navbar-centered__logo {
+      position: absolute;
+      left: 32px;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .navbar-centered__logo span {
+      color: #6366f1;
+    }
+
+    .navbar-centered__menu {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .navbar-centered__link {
+      color: #a1a1aa;
+      text-decoration: none;
+      font-size: 0.9rem;
+      padding: 8px 0;
+      position: relative;
+      transition: color 0.2s;
+    }
+
+    .navbar-centered__link::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #6366f1;
+      transition: width 0.3s ease;
+    }
+
+    .navbar-centered__link:hover,
+    .navbar-centered__link--active {
+      color: #fff;
+    }
+
+    .navbar-centered__link:hover::after,
+    .navbar-centered__link--active::after {
+      width: 100%;
+    }
+
+    .navbar-centered__actions {
+      position: absolute;
+      right: 32px;
+      display: flex;
+      gap: 12px;
+    }
+
+    /* ===========================================
+       NAVBAR 3 — GLASSMORPHISM
+       =========================================== */
+
+    .navbar-glass-wrapper {
+      padding: 16px 32px;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    }
+
+    .navbar-glass {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 24px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .navbar-glass__logo {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .navbar-glass__menu {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .navbar-glass__link {
+      color: #a1a1aa;
+      text-decoration: none;
+      font-size: 0.85rem;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .navbar-glass__link:hover,
+    .navbar-glass__link--active {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .navbar-glass__btn {
+      padding: 8px 16px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    /* ===========================================
+       NAVBAR 4 — MINIMAL
+       =========================================== */
+
+    .navbar-minimal {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 32px;
+      background: transparent;
+    }
+
+    .navbar-minimal__logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .navbar-minimal__menu {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .navbar-minimal__link {
+      color: #71717a;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    .navbar-minimal__link:hover {
+      color: #fff;
+    }
+
+    .navbar-minimal__divider {
+      width: 1px;
+      height: 20px;
+      background: #333;
+    }
+
+    /* ===========================================
+       NAVBAR 5 — AVEC DROPDOWN
+       =========================================== */
+
+    .navbar-dropdown {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 32px;
+      background: #0f0f0f;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .navbar-dropdown__logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .navbar-dropdown__menu {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .navbar-dropdown__item {
+      position: relative;
+    }
+
+    .navbar-dropdown__link {
+      color: #a1a1aa;
+      text-decoration: none;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: color 0.2s;
+    }
+
+    .navbar-dropdown__link:hover {
+      color: #fff;
+    }
+
+    .navbar-dropdown__arrow {
+      font-size: 0.7rem;
+      transition: transform 0.2s;
+    }
+
+    .navbar-dropdown__item:hover .navbar-dropdown__arrow {
+      transform: rotate(180deg);
+    }
+
+    .navbar-dropdown__submenu {
+      position: absolute;
+      top: 100%;
+      left: -16px;
+      padding-top: 12px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.2s ease;
+    }
+
+    .navbar-dropdown__item:hover .navbar-dropdown__submenu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .navbar-dropdown__submenu-inner {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 8px;
+      min-width: 180px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    .navbar-dropdown__sublink {
+      display: block;
+      padding: 10px 16px;
+      color: #a1a1aa;
+      text-decoration: none;
+      font-size: 0.85rem;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .navbar-dropdown__sublink:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+    }
+
+    /* ===========================================
+       NAVBAR 6 — DARK GRADIENT
+       =========================================== */
+
+    .navbar-gradient-wrapper {
+      background: linear-gradient(180deg, rgba(99, 102, 241, 0.15) 0%, transparent 100%);
+      padding-bottom: 40px;
+    }
+
+    .navbar-gradient {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 32px;
+    }
+
+    .navbar-gradient__logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .navbar-gradient__logo span {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .navbar-gradient__menu {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .navbar-gradient__link {
+      color: #a1a1aa;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    .navbar-gradient__link:hover {
+      color: #fff;
+    }
+
+    .navbar-gradient__actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .navbar-gradient__btn-ghost {
+      padding: 10px 20px;
+      background: transparent;
+      border: none;
+      color: #a1a1aa;
+      font-weight: 500;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .navbar-gradient__btn-ghost:hover {
+      color: #fff;
+    }
+
+    .navbar-gradient__btn-primary {
+      padding: 10px 20px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .navbar-gradient__btn-primary:hover {
+      box-shadow: 0 4px 16px rgba(99, 102, 241, 0.4);
+    }
+
+    /* ===========================================
+       CODE BLOCK
+       =========================================== */
+
+    .code-block {
+      background: #1a1a1a;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .code-block__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .code-block__lang {
+      font-size: 0.75rem;
+      color: #71717a;
+      text-transform: uppercase;
+    }
+
+    .code-block__copy {
+      padding: 6px 12px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: #a1a1aa;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .code-block__copy:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+    }
+
+    .code-block__content {
+      padding: 16px;
+      overflow-x: auto;
+    }
+
+    .code-block__content pre {
+      margin: 0;
+      font-family: "Fira Code", monospace;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: #e0e0e0;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      font-size: 0.75rem;
+      color: #a1a1aa;
+    }
+
+    .tag--primary {
+      background: rgba(99, 102, 241, 0.15);
+      border-color: rgba(99, 102, 241, 0.3);
+      color: #818cf8;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar__logo">
+      <a href="../../index.html">Duke<span>UI</span></a>
+    </div>
+
+    <nav class="sidebar__nav">
+      <div class="sidebar__section">
+        <div class="sidebar__title">Composants</div>
+        <a href="../buttons/index.html" class="sidebar__link">Buttons</a>
+        <a href="../cards/index.html" class="sidebar__link">Cards</a>
+        <a href="../forms/index.html" class="sidebar__link">Forms</a>
+        <a href="../loaders/index.html" class="sidebar__link">Loaders</a>
+        <a href="../modals/index.html" class="sidebar__link">Modals</a>
+        <a href="index.html" class="sidebar__link sidebar__link--active">Navigation</a>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__title">Effets</div>
+        <a href="../hovers/index.html" class="sidebar__link">Hovers</a>
+        <a href="../animations/index.html" class="sidebar__link">Animations</a>
+        <a href="../backgrounds/index.html" class="sidebar__link">Backgrounds</a>
+        <a href="../text-effects/index.html" class="sidebar__link">Text Effects</a>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__title">Sections</div>
+        <a href="../heroes/index.html" class="sidebar__link">Heroes</a>
+        <a href="../features/index.html" class="sidebar__link">Features</a>
+        <a href="../pricing/index.html" class="sidebar__link">Pricing</a>
+        <a href="../testimonials/index.html" class="sidebar__link">Testimonials</a>
+        <a href="../footers/index.html" class="sidebar__link">Footers</a>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__title">Générateurs</div>
+        <a href="../../generators/gradient/index.html" class="sidebar__link">Gradient</a>
+        <a href="../../generators/shadow/index.html" class="sidebar__link">Shadow</a>
+        <a href="../../generators/flexbox/index.html" class="sidebar__link">Flexbox</a>
+        <a href="../../generators/grid/index.html" class="sidebar__link">Grid</a>
+      </div>
+    </nav>
+
+    <!-- Toggle Admin -->
+    <div class="admin-toggle">
+      <span class="admin-toggle__label">Mode Admin</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="admin-toggle">
+        <span class="toggle-switch__slider"></span>
+      </label>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    <header class="page-header">
+      <h1 class="page-header__title">Navigation</h1>
+      <p class="page-header__desc">Navbars, menus et composants de navigation modernes</p>
+    </header>
+
+    <div class="nav-list">
+
+      <!-- ============================================
+           NAVBAR 1 — CLASSIC
+           ============================================ -->
+      <section class="nav-section">
+        <div class="nav-section__preview">
+          <nav class="navbar-classic">
+            <div class="navbar-classic__logo">Duke<span>UI</span></div>
+            <div class="navbar-classic__menu">
+              <a href="#" class="navbar-classic__link navbar-classic__link--active">Home</a>
+              <a href="#" class="navbar-classic__link">Products</a>
+              <a href="#" class="navbar-classic__link">Pricing</a>
+              <a href="#" class="navbar-classic__link">About</a>
+              <a href="#" class="navbar-classic__link">Contact</a>
+            </div>
+            <button class="navbar-classic__btn">Get Started</button>
+          </nav>
+        </div>
+
+        <div class="nav-section__info">
+          <div class="nav-section__header">
+            <h2 class="nav-section__name">Classic Navbar</h2>
+            <div class="nav-section__tags">
+              <span class="tag tag--primary">Essential</span>
+              <span class="tag">Simple</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">HTML</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>&lt;nav class="navbar-classic"&gt;
+  &lt;div class="navbar-classic__logo"&gt;Duke&lt;span&gt;UI&lt;/span&gt;&lt;/div&gt;
+  &lt;div class="navbar-classic__menu"&gt;
+    &lt;a href="#" class="navbar-classic__link navbar-classic__link--active"&gt;Home&lt;/a&gt;
+    &lt;a href="#" class="navbar-classic__link"&gt;Products&lt;/a&gt;
+    &lt;a href="#" class="navbar-classic__link"&gt;Pricing&lt;/a&gt;
+  &lt;/div&gt;
+  &lt;button class="navbar-classic__btn"&gt;Get Started&lt;/button&gt;
+&lt;/nav&gt;</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================
+           NAVBAR 2 — CENTERED
+           ============================================ -->
+      <section class="nav-section">
+        <div class="nav-section__preview">
+          <nav class="navbar-centered">
+            <div class="navbar-centered__logo">Duke<span>UI</span></div>
+            <div class="navbar-centered__menu">
+              <a href="#" class="navbar-centered__link navbar-centered__link--active">Home</a>
+              <a href="#" class="navbar-centered__link">Features</a>
+              <a href="#" class="navbar-centered__link">Pricing</a>
+              <a href="#" class="navbar-centered__link">Docs</a>
+              <a href="#" class="navbar-centered__link">Blog</a>
+            </div>
+            <div class="navbar-centered__actions">
+              <button class="navbar-classic__btn">Sign Up</button>
+            </div>
+          </nav>
+        </div>
+
+        <div class="nav-section__info">
+          <div class="nav-section__header">
+            <h2 class="nav-section__name">Centered Navbar</h2>
+            <div class="nav-section__tags">
+              <span class="tag tag--primary">Modern</span>
+              <span class="tag">Underline</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.navbar-centered__link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #6366f1;
+  transition: width 0.3s ease;
+}
+
+.navbar-centered__link:hover::after {
+  width: 100%;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================
+           NAVBAR 3 — GLASSMORPHISM
+           ============================================ -->
+      <section class="nav-section">
+        <div class="nav-section__preview">
+          <div class="navbar-glass-wrapper">
+            <nav class="navbar-glass">
+              <div class="navbar-glass__logo">DukeUI</div>
+              <div class="navbar-glass__menu">
+                <a href="#" class="navbar-glass__link navbar-glass__link--active">Home</a>
+                <a href="#" class="navbar-glass__link">Components</a>
+                <a href="#" class="navbar-glass__link">Templates</a>
+                <a href="#" class="navbar-glass__link">Pricing</a>
+              </div>
+              <button class="navbar-glass__btn">Get Pro</button>
+            </nav>
+          </div>
+        </div>
+
+        <div class="nav-section__info">
+          <div class="nav-section__header">
+            <h2 class="nav-section__name">Glassmorphism Navbar</h2>
+            <div class="nav-section__tags">
+              <span class="tag tag--primary">Glass</span>
+              <span class="tag">Blur</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.navbar-glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================
+           NAVBAR 4 — MINIMAL
+           ============================================ -->
+      <section class="nav-section">
+        <div class="nav-section__preview">
+          <nav class="navbar-minimal">
+            <div class="navbar-minimal__logo">DukeUI</div>
+            <div class="navbar-minimal__menu">
+              <a href="#" class="navbar-minimal__link">Work</a>
+              <a href="#" class="navbar-minimal__link">About</a>
+              <a href="#" class="navbar-minimal__link">Services</a>
+              <div class="navbar-minimal__divider"></div>
+              <a href="#" class="navbar-minimal__link">Contact</a>
+            </div>
+          </nav>
+        </div>
+
+        <div class="nav-section__info">
+          <div class="nav-section__header">
+            <h2 class="nav-section__name">Minimal Navbar</h2>
+            <div class="nav-section__tags">
+              <span class="tag tag--primary">Clean</span>
+              <span class="tag">Portfolio</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">HTML</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>&lt;nav class="navbar-minimal"&gt;
+  &lt;div class="navbar-minimal__logo"&gt;DukeUI&lt;/div&gt;
+  &lt;div class="navbar-minimal__menu"&gt;
+    &lt;a href="#"&gt;Work&lt;/a&gt;
+    &lt;a href="#"&gt;About&lt;/a&gt;
+    &lt;div class="navbar-minimal__divider"&gt;&lt;/div&gt;
+    &lt;a href="#"&gt;Contact&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================
+           NAVBAR 5 — AVEC DROPDOWN
+           ============================================ -->
+      <section class="nav-section">
+        <div class="nav-section__preview">
+          <nav class="navbar-dropdown">
+            <div class="navbar-dropdown__logo">DukeUI</div>
+            <div class="navbar-dropdown__menu">
+              <a href="#" class="navbar-dropdown__link">Home</a>
+              <div class="navbar-dropdown__item">
+                <a href="#" class="navbar-dropdown__link">
+                  Products <span class="navbar-dropdown__arrow">▼</span>
+                </a>
+                <div class="navbar-dropdown__submenu">
+                  <div class="navbar-dropdown__submenu-inner">
+                    <a href="#" class="navbar-dropdown__sublink">Components</a>
+                    <a href="#" class="navbar-dropdown__sublink">Templates</a>
+                    <a href="#" class="navbar-dropdown__sublink">Icons</a>
+                    <a href="#" class="navbar-dropdown__sublink">Illustrations</a>
+                  </div>
+                </div>
+              </div>
+              <div class="navbar-dropdown__item">
+                <a href="#" class="navbar-dropdown__link">
+                  Resources <span class="navbar-dropdown__arrow">▼</span>
+                </a>
+                <div class="navbar-dropdown__submenu">
+                  <div class="navbar-dropdown__submenu-inner">
+                    <a href="#" class="navbar-dropdown__sublink">Documentation</a>
+                    <a href="#" class="navbar-dropdown__sublink">Tutorials</a>
+                    <a href="#" class="navbar-dropdown__sublink">Blog</a>
+                  </div>
+                </div>
+              </div>
+              <a href="#" class="navbar-dropdown__link">Pricing</a>
+            </div>
+            <button class="navbar-classic__btn">Sign Up</button>
+          </nav>
+        </div>
+
+        <div class="nav-section__info">
+          <div class="nav-section__header">
+            <h2 class="nav-section__name">Navbar with Dropdown</h2>
+            <div class="nav-section__tags">
+              <span class="tag tag--primary">Dropdown</span>
+              <span class="tag">Animated</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.navbar-dropdown__submenu {
+  position: absolute;
+  top: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.2s ease;
+}
+
+.navbar-dropdown__item:hover .navbar-dropdown__submenu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================
+           NAVBAR 6 — DARK GRADIENT
+           ============================================ -->
+      <section class="nav-section">
+        <div class="nav-section__preview">
+          <div class="navbar-gradient-wrapper">
+            <nav class="navbar-gradient">
+              <div class="navbar-gradient__logo">Duke<span>UI</span></div>
+              <div class="navbar-gradient__menu">
+                <a href="#" class="navbar-gradient__link">Features</a>
+                <a href="#" class="navbar-gradient__link">Pricing</a>
+                <a href="#" class="navbar-gradient__link">Docs</a>
+                <a href="#" class="navbar-gradient__link">Blog</a>
+              </div>
+              <div class="navbar-gradient__actions">
+                <button class="navbar-gradient__btn-ghost">Sign In</button>
+                <button class="navbar-gradient__btn-primary">Get Started</button>
+              </div>
+            </nav>
+          </div>
+        </div>
+
+        <div class="nav-section__info">
+          <div class="nav-section__header">
+            <h2 class="nav-section__name">Gradient Header</h2>
+            <div class="nav-section__tags">
+              <span class="tag tag--primary">Hero</span>
+              <span class="tag">Gradient</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.navbar-gradient-wrapper {
+  background: linear-gradient(180deg,
+    rgba(99, 102, 241, 0.15) 0%,
+    transparent 100%);
+}
+
+.navbar-gradient__logo span {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+  </div>
+
+  <script src="../../assets/js/main.js"></script>
+  <script src="../../assets/js/security-system.js"></script>
+  <script>
+    function copyCode(btn) {
+      const codeBlock = btn.closest('.code-block');
+      const code = codeBlock.querySelector('pre').textContent;
+
+      navigator.clipboard.writeText(code).then(() => {
+        const originalText = btn.textContent;
+        btn.textContent = 'Copié !';
+        btn.style.color = '#22c55e';
+
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.style.color = '';
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Badges — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ===========================================
+       BADGES — Styles locaux
+       =========================================== */
+
+    .badges-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .badge-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .badge-card:hover {
+      border-color: var(--primary);
+    }
+
+    .badge-card__preview {
+      padding: 32px;
+      background: #0a0a0a;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      min-height: 120px;
+    }
+
+    .badge-card__info {
+      padding: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .badge-card__name {
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .badge-card__tags {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* ===========================================
+       BADGE 1 — BASIC
+       =========================================== */
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .badge--default {
+      background: #27272a;
+      color: #a1a1aa;
+    }
+
+    .badge--primary {
+      background: rgba(99, 102, 241, 0.2);
+      color: #a5b4fc;
+    }
+
+    .badge--success {
+      background: rgba(34, 197, 94, 0.2);
+      color: #4ade80;
+    }
+
+    .badge--warning {
+      background: rgba(234, 179, 8, 0.2);
+      color: #facc15;
+    }
+
+    .badge--danger {
+      background: rgba(239, 68, 68, 0.2);
+      color: #f87171;
+    }
+
+    .badge--info {
+      background: rgba(6, 182, 212, 0.2);
+      color: #22d3ee;
+    }
+
+    /* ===========================================
+       BADGE 2 — SOLID
+       =========================================== */
+
+    .badge--solid-primary {
+      background: #6366f1;
+      color: #fff;
+    }
+
+    .badge--solid-success {
+      background: #22c55e;
+      color: #fff;
+    }
+
+    .badge--solid-warning {
+      background: #eab308;
+      color: #000;
+    }
+
+    .badge--solid-danger {
+      background: #ef4444;
+      color: #fff;
+    }
+
+    /* ===========================================
+       BADGE 3 — OUTLINED
+       =========================================== */
+
+    .badge--outline-primary {
+      background: transparent;
+      border: 1px solid #6366f1;
+      color: #a5b4fc;
+    }
+
+    .badge--outline-success {
+      background: transparent;
+      border: 1px solid #22c55e;
+      color: #4ade80;
+    }
+
+    .badge--outline-warning {
+      background: transparent;
+      border: 1px solid #eab308;
+      color: #facc15;
+    }
+
+    .badge--outline-danger {
+      background: transparent;
+      border: 1px solid #ef4444;
+      color: #f87171;
+    }
+
+    /* ===========================================
+       BADGE 4 — WITH DOT
+       =========================================== */
+
+    .badge--dot {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .badge__dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+
+    .badge--dot-success .badge__dot { background: #22c55e; }
+    .badge--dot-warning .badge__dot { background: #eab308; }
+    .badge--dot-danger .badge__dot { background: #ef4444; }
+    .badge--dot-primary .badge__dot { background: #6366f1; }
+
+    /* ===========================================
+       BADGE 5 — WITH ICON
+       =========================================== */
+
+    .badge--icon {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .badge__icon {
+      font-size: 0.85rem;
+    }
+
+    /* ===========================================
+       BADGE 6 — PILL COUNTER
+       =========================================== */
+
+    .badge--counter {
+      min-width: 20px;
+      height: 20px;
+      padding: 0 6px;
+      font-size: 0.7rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ===========================================
+       BADGE 7 — GRADIENT
+       =========================================== */
+
+    .badge--gradient-purple {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: #fff;
+    }
+
+    .badge--gradient-pink {
+      background: linear-gradient(135deg, #ec4899, #f43f5e);
+      color: #fff;
+    }
+
+    .badge--gradient-green {
+      background: linear-gradient(135deg, #22c55e, #10b981);
+      color: #fff;
+    }
+
+    .badge--gradient-orange {
+      background: linear-gradient(135deg, #f59e0b, #ef4444);
+      color: #fff;
+    }
+
+    /* ===========================================
+       BADGE 8 — ANIMATED
+       =========================================== */
+
+    .badge--pulse {
+      position: relative;
+    }
+
+    .badge--pulse::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: inherit;
+      animation: badge-pulse 2s ease-out infinite;
+      z-index: -1;
+    }
+
+    @keyframes badge-pulse {
+      0% { transform: scale(1); opacity: 0.5; }
+      100% { transform: scale(1.5); opacity: 0; }
+    }
+
+    /* ===========================================
+       BADGE 9 — STATUS
+       =========================================== */
+
+    .badge--status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      font-size: 0.8rem;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+
+    .badge--status-online {
+      background: rgba(34, 197, 94, 0.15);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: #4ade80;
+    }
+
+    .badge--status-offline {
+      background: rgba(113, 113, 122, 0.15);
+      border: 1px solid rgba(113, 113, 122, 0.3);
+      color: #a1a1aa;
+    }
+
+    .badge--status-maintenance {
+      background: rgba(234, 179, 8, 0.15);
+      border: 1px solid rgba(234, 179, 8, 0.3);
+      color: #facc15;
+    }
+
+    .badge__status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      animation: status-blink 2s ease-in-out infinite;
+    }
+
+    @keyframes status-blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    /* ===========================================
+       BADGE 10 — TAG STYLE
+       =========================================== */
+
+    .badge--tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      background: #18181b;
+      border: 1px solid #27272a;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      text-transform: none;
+      letter-spacing: normal;
+      color: #a1a1aa;
+    }
+
+    .badge--tag-close {
+      width: 16px;
+      height: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #27272a;
+      border: none;
+      border-radius: 50%;
+      color: #71717a;
+      font-size: 0.7rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .badge--tag-close:hover {
+      background: #ef4444;
+      color: white;
+    }
+
+    /* ===========================================
+       CODE BLOCK
+       =========================================== */
+
+    .code-block {
+      background: #1a1a1a;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 16px;
+    }
+
+    .code-block__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .code-block__lang {
+      font-size: 0.75rem;
+      color: #71717a;
+      text-transform: uppercase;
+    }
+
+    .code-block__copy {
+      padding: 6px 12px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: #a1a1aa;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .code-block__copy:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+    }
+
+    .code-block__content {
+      padding: 16px;
+      overflow-x: auto;
+    }
+
+    .code-block__content pre {
+      margin: 0;
+      font-family: "Fira Code", monospace;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: #e0e0e0;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      font-size: 0.75rem;
+      color: #a1a1aa;
+    }
+
+    .tag--primary {
+      background: rgba(99, 102, 241, 0.15);
+      border-color: rgba(99, 102, 241, 0.3);
+      color: #818cf8;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar__logo">
+      <a href="../../index.html">Duke<span>UI</span></a>
+    </div>
+
+    <nav class="sidebar__nav">
+      <div class="sidebar__section">
+        <div class="sidebar__title">Composants</div>
+        <a href="../accordions/index.html" class="sidebar__link">Accordions</a>
+        <a href="../avatars/index.html" class="sidebar__link">Avatars</a>
+        <a href="index.html" class="sidebar__link sidebar__link--active">Badges</a>
+        <a href="../buttons/index.html" class="sidebar__link">Buttons</a>
+        <a href="../cards/index.html" class="sidebar__link">Cards</a>
+        <a href="../carousels/index.html" class="sidebar__link">Carousels</a>
+        <a href="../forms/index.html" class="sidebar__link">Forms</a>
+        <a href="../loaders/index.html" class="sidebar__link">Loaders</a>
+        <a href="../modals/index.html" class="sidebar__link">Modals</a>
+        <a href="../navigation/index.html" class="sidebar__link">Navigation</a>
+        <a href="../notifications/index.html" class="sidebar__link">Notifications</a>
+        <a href="../progress/index.html" class="sidebar__link">Progress</a>
+        <a href="../tabs/index.html" class="sidebar__link">Tabs</a>
+        <a href="../tooltips/index.html" class="sidebar__link">Tooltips</a>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__title">Effets</div>
+        <a href="../hovers/index.html" class="sidebar__link">Hovers</a>
+        <a href="../animations/index.html" class="sidebar__link">Animations</a>
+        <a href="../backgrounds/index.html" class="sidebar__link">Backgrounds</a>
+        <a href="../mouse-effects/index.html" class="sidebar__link">Mouse Effects</a>
+        <a href="../text-effects/index.html" class="sidebar__link">Text Effects</a>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__title">Sections</div>
+        <a href="../heroes/index.html" class="sidebar__link">Heroes</a>
+        <a href="../features/index.html" class="sidebar__link">Features</a>
+        <a href="../pricing/index.html" class="sidebar__link">Pricing</a>
+        <a href="../testimonials/index.html" class="sidebar__link">Testimonials</a>
+        <a href="../footers/index.html" class="sidebar__link">Footers</a>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__title">Générateurs</div>
+        <a href="../../generators/gradient/index.html" class="sidebar__link">Gradient</a>
+        <a href="../../generators/shadow/index.html" class="sidebar__link">Shadow</a>
+        <a href="../../generators/flexbox/index.html" class="sidebar__link">Flexbox</a>
+        <a href="../../generators/grid/index.html" class="sidebar__link">Grid</a>
+      </div>
+    </nav>
+
+    <!-- Toggle Admin -->
+    <div class="admin-toggle">
+      <span class="admin-toggle__label">Mode Admin</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="admin-toggle">
+        <span class="toggle-switch__slider"></span>
+      </label>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    <header class="page-header">
+      <h1 class="page-header__title">Badges</h1>
+      <p class="page-header__desc">Étiquettes et badges pour mettre en valeur du contenu</p>
+    </header>
+
+    <div class="badges-grid">
+
+      <!-- BADGE 1 — BASIC COLORS -->
+      <div class="badge-card">
+        <div class="badge-card__preview">
+          <span class="badge badge--default">Default</span>
+          <span class="badge badge--primary">Primary</span>
+          <span class="badge badge--success">Success</span>
+          <span class="badge badge--warning">Warning</span>
+          <span class="badge badge--danger">Danger</span>
+          <span class="badge badge--info">Info</span>
+        </div>
+        <div class="badge-card__info">
+          <h3 class="badge-card__name">Basic Colors</h3>
+          <div class="badge-card__tags">
+            <span class="tag tag--primary">Essential</span>
+            <span class="tag">Semantic</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.badge--primary {
+  background: rgba(99, 102, 241, 0.2);
+  color: #a5b4fc;
+}
+
+.badge--success {
+  background: rgba(34, 197, 94, 0.2);
+  color: #4ade80;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BADGE 2 — SOLID -->
+      <div class="badge-card">
+        <div class="badge-card__preview">
+          <span class="badge badge--solid-primary">Primary</span>
+          <span class="badge badge--solid-success">Success</span>
+          <span class="badge badge--solid-warning">Warning</span>
+          <span class="badge badge--solid-danger">Danger</span>
+        </div>
+        <div class="badge-card__info">
+          <h3 class="badge-card__name">Solid</h3>
+          <div class="badge-card__tags">
+            <span class="tag tag--primary">Filled</span>
+            <span class="tag">Bold</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.badge--solid-primary {
+  background: #6366f1;
+  color: #fff;
+}
+
+.badge--solid-success {
+  background: #22c55e;
+  color: #fff;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BADGE 3 — OUTLINED -->
+      <div class="badge-card">
+        <div class="badge-card__preview">
+          <span class="badge badge--outline-primary">Primary</span>
+          <span class="badge badge--outline-success">Success</span>
+          <span class="badge badge--outline-warning">Warning</span>
+          <span class="badge badge--outline-danger">Danger</span>
+        </div>
+        <div class="badge-card__info">
+          <h3 class="badge-card__name">Outlined</h3>
+          <div class="badge-card__tags">
+            <span class="tag tag--primary">Border</span>
+            <span class="tag">Subtle</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.badge--outline-primary {
+  background: transparent;
+  border: 1px solid #6366f1;
+  color: #a5b4fc;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BADGE 4 — WITH DOT -->
+      <div class="badge-card">
+        <div class="badge-card__preview">
+          <span class="badge badge--default badge--dot badge--dot-success">
+            <span class="badge__dot"></span>
+            Active
+          </span>
+          <span class="badge badge--default badge--dot badge--dot-warning">
+            <span class="badge__dot"></span>
+            Pending
+          </span>
+          <span class="badge badge--default badge--dot badge--dot-danger">
+            <span class="badge__dot"></span>
+            Inactive
+          </span>
+        </div>
+        <div class="badge-card__info">
+          <h3 class="badge-card__name">With Dot</h3>
+          <div class="badge-card__tags">
+            <span class="tag tag--primary">Status</span>
+            <span class="tag">Indicator</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">HTML</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>&lt;span class="badge badge--dot"&gt;
+  &lt;span class="badge__dot"&gt;&lt;/span&gt;
+  Active
+&lt;/span&gt;</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BADGE 5 — WITH ICON -->
+      <div class="badge-card">
+        <div class="badge-card__preview">
+          <span class="badge badge--primary badge--icon">
+            <span class="badge__icon">&#x2713;</span>
+            Verified
+          </span>
+          <span class="badge badge--success badge--icon">
+            <span class="badge__icon">&#x2605;</span>
+            Featured
+          </span>
+          <span class="badge badge--warning badge--icon">
+            <span class="badge__icon">&#x26A0;</span>
+            Beta
+          </span>
+        </div>
+        <div class="badge-card__info">
+          <h3 class="badge-card__name">With Icon</h3>
+          <div class="badge-card__tags">
+            <span class="tag tag--primary">Icons</span>
+            <span class="tag">Visual</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">HTML</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>&lt;span class="badge badge--icon"&gt;
+  &lt;span class="badge__icon"&gt;&amp;#x2713;&lt;/span&gt;
+  Verified
+&lt;/span&gt;</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BADGE 6 — COUNTER -->
+      <div class="badge-card">
+        <div class="badge-card__preview">
+          <span class="badge badge--solid-primary badge--counter">3</span>
+          <span class="badge badge--solid-danger badge--counter">99+</span>
+          <span class="badge badge--solid-success badge--counter">1</span>
+          <span class="badge badge--default badge--counter">0</span>
+        </div>
+        <div class="badge-card__info">
+          <h3 class="badge-card__name">Counter</h3>
+          <div class="badge-card__tags">
+            <span class="tag tag--primary">Number</span>
+            <span class="tag">Notification</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.badge--counter {
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  font-size: 0.7rem;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BADGE 7 — GRADIENT -->
+      <div class="badge-card">
+        <div class="badge-card__preview">
+          <span class="badge badge--gradient-purple">Premium</span>
+          <span class="badge badge--gradient-pink">New</span>
+          <span class="badge badge--gradient-green">Eco</span>
+          <span class="badge badge--gradient-orange">Hot</span>
+        </div>
+        <div class="badge-card__info">
+          <h3 class="badge-card__name">Gradient</h3>
+          <div class="badge-card__tags">
+            <span class="tag tag--primary">Colorful</span>
+            <span class="tag">Modern</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.badge--gradient-purple {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: #fff;
+}
+
+.badge--gradient-pink {
+  background: linear-gradient(135deg, #ec4899, #f43f5e);
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BADGE 8 — ANIMATED PULSE -->
+      <div class="badge-card">
+        <div class="badge-card__preview">
+          <span class="badge badge--solid-primary badge--pulse">Live</span>
+          <span class="badge badge--solid-danger badge--pulse">Recording</span>
+        </div>
+        <div class="badge-card__info">
+          <h3 class="badge-card__name">Animated Pulse</h3>
+          <div class="badge-card__tags">
+            <span class="tag tag--primary">Animation</span>
+            <span class="tag">Attention</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>@keyframes badge-pulse {
+  0% { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+.badge--pulse::before {
+  animation: badge-pulse 2s ease-out infinite;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BADGE 9 — STATUS -->
+      <div class="badge-card">
+        <div class="badge-card__preview">
+          <span class="badge badge--status badge--status-online">
+            <span class="badge__status-dot" style="background: #22c55e;"></span>
+            Online
+          </span>
+          <span class="badge badge--status badge--status-offline">
+            <span class="badge__status-dot" style="background: #71717a;"></span>
+            Offline
+          </span>
+          <span class="badge badge--status badge--status-maintenance">
+            <span class="badge__status-dot" style="background: #eab308;"></span>
+            Maintenance
+          </span>
+        </div>
+        <div class="badge-card__info">
+          <h3 class="badge-card__name">Status Badge</h3>
+          <div class="badge-card__tags">
+            <span class="tag tag--primary">System</span>
+            <span class="tag">Uptime</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.badge--status-online {
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.badge__status-dot {
+  animation: status-blink 2s ease-in-out infinite;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BADGE 10 — REMOVABLE TAG -->
+      <div class="badge-card">
+        <div class="badge-card__preview">
+          <span class="badge badge--tag">
+            JavaScript
+            <button class="badge--tag-close">&times;</button>
+          </span>
+          <span class="badge badge--tag">
+            React
+            <button class="badge--tag-close">&times;</button>
+          </span>
+          <span class="badge badge--tag">
+            CSS
+            <button class="badge--tag-close">&times;</button>
+          </span>
+        </div>
+        <div class="badge-card__info">
+          <h3 class="badge-card__name">Removable Tag</h3>
+          <div class="badge-card__tags">
+            <span class="tag tag--primary">Filter</span>
+            <span class="tag">Chip</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">HTML</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>&lt;span class="badge badge--tag"&gt;
+  JavaScript
+  &lt;button class="badge--tag-close"&gt;&amp;times;&lt;/button&gt;
+&lt;/span&gt;</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+  </div>
+
+  <script src="../../assets/js/main.js"></script>
+  <script src="../../assets/js/security-system.js"></script>
+  <script>
+    function copyCode(btn) {
+      const codeBlock = btn.closest('.code-block');
+      const code = codeBlock.querySelector('pre').textContent;
+
+      navigator.clipboard.writeText(code).then(() => {
+        const originalText = btn.textContent;
+        btn.textContent = 'Copié !';
+        btn.style.color = '#22c55e';
+
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.style.color = '';
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>

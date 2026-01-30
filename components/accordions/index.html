@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accordions — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ===========================================
+       ACCORDIONS — Styles locaux
+       =========================================== */
+
+    .accordions-list {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    .accordion-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .accordion-section__preview {
+      padding: 32px;
+      background: #0a0a0a;
+    }
+
+    .accordion-section__info {
+      padding: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .accordion-section__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .accordion-section__name {
+      font-weight: 600;
+      font-size: 1.25rem;
+    }
+
+    .accordion-section__tags {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* ===========================================
+       ACCORDION 1 — BASIC
+       =========================================== */
+
+    .accordion-basic {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .accordion-basic__item {
+      border: 1px solid #27272a;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      overflow: hidden;
+    }
+
+    .accordion-basic__header {
+      width: 100%;
+      padding: 16px 20px;
+      background: #18181b;
+      border: none;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 500;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.2s;
+    }
+
+    .accordion-basic__header:hover {
+      background: #1f1f23;
+    }
+
+    .accordion-basic__icon {
+      width: 20px;
+      height: 20px;
+      position: relative;
+      transition: transform 0.3s ease;
+    }
+
+    .accordion-basic__icon::before,
+    .accordion-basic__icon::after {
+      content: '';
+      position: absolute;
+      background: #a1a1aa;
+      transition: all 0.3s ease;
+    }
+
+    .accordion-basic__icon::before {
+      width: 100%;
+      height: 2px;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+    }
+
+    .accordion-basic__icon::after {
+      width: 2px;
+      height: 100%;
+      left: 50%;
+      top: 0;
+      transform: translateX(-50%);
+    }
+
+    .accordion-basic__item--open .accordion-basic__icon::after {
+      transform: translateX(-50%) rotate(90deg);
+      opacity: 0;
+    }
+
+    .accordion-basic__content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .accordion-basic__item--open .accordion-basic__content {
+      max-height: 200px;
+    }
+
+    .accordion-basic__body {
+      padding: 16px 20px;
+      color: #a1a1aa;
+      line-height: 1.6;
+    }
+
+    /* ===========================================
+       ACCORDION 2 — MINIMAL
+       =========================================== */
+
+    .accordion-minimal {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .accordion-minimal__item {
+      border-bottom: 1px solid #27272a;
+    }
+
+    .accordion-minimal__header {
+      width: 100%;
+      padding: 20px 0;
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 500;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .accordion-minimal__arrow {
+      font-size: 1.25rem;
+      color: #6366f1;
+      transition: transform 0.3s ease;
+    }
+
+    .accordion-minimal__item--open .accordion-minimal__arrow {
+      transform: rotate(180deg);
+    }
+
+    .accordion-minimal__content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .accordion-minimal__item--open .accordion-minimal__content {
+      max-height: 200px;
+    }
+
+    .accordion-minimal__body {
+      padding-bottom: 20px;
+      color: #71717a;
+      line-height: 1.6;
+    }
+
+    /* ===========================================
+       ACCORDION 3 — CARDS
+       =========================================== */
+
+    .accordion-cards {
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .accordion-cards__item {
+      background: rgba(99, 102, 241, 0.05);
+      border: 1px solid rgba(99, 102, 241, 0.2);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .accordion-cards__item--open {
+      background: rgba(99, 102, 241, 0.1);
+      border-color: rgba(99, 102, 241, 0.4);
+    }
+
+    .accordion-cards__header {
+      width: 100%;
+      padding: 20px 24px;
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .accordion-cards__icon {
+      width: 24px;
+      height: 24px;
+      background: rgba(99, 102, 241, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.875rem;
+      color: #a5b4fc;
+      transition: all 0.3s ease;
+    }
+
+    .accordion-cards__item--open .accordion-cards__icon {
+      background: #6366f1;
+      color: #fff;
+      transform: rotate(45deg);
+    }
+
+    .accordion-cards__content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .accordion-cards__item--open .accordion-cards__content {
+      max-height: 200px;
+    }
+
+    .accordion-cards__body {
+      padding: 0 24px 20px;
+      color: #a1a1aa;
+      line-height: 1.6;
+    }
+
+    /* ===========================================
+       ACCORDION 4 — SIDE INDICATOR
+       =========================================== */
+
+    .accordion-side {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .accordion-side__item {
+      position: relative;
+      border-left: 3px solid #27272a;
+      margin-bottom: 8px;
+      transition: border-color 0.3s ease;
+    }
+
+    .accordion-side__item--open {
+      border-left-color: #6366f1;
+    }
+
+    .accordion-side__header {
+      width: 100%;
+      padding: 16px 20px;
+      background: #18181b;
+      border: none;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 500;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .accordion-side__item--open .accordion-side__header {
+      background: rgba(99, 102, 241, 0.1);
+    }
+
+    .accordion-side__arrow {
+      color: #71717a;
+      transition: all 0.3s ease;
+    }
+
+    .accordion-side__item--open .accordion-side__arrow {
+      color: #6366f1;
+      transform: rotate(90deg);
+    }
+
+    .accordion-side__content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .accordion-side__item--open .accordion-side__content {
+      max-height: 200px;
+    }
+
+    .accordion-side__body {
+      padding: 16px 20px;
+      background: #18181b;
+      color: #a1a1aa;
+      line-height: 1.6;
+    }
+
+    /* ===========================================
+       ACCORDION 5 — FAQ STYLE
+       =========================================== */
+
+    .accordion-faq {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .accordion-faq__item {
+      background: #18181b;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+
+    .accordion-faq__header {
+      width: 100%;
+      padding: 20px 24px;
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 1rem;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .accordion-faq__q {
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.875rem;
+      flex-shrink: 0;
+    }
+
+    .accordion-faq__question {
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+    .accordion-faq__content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .accordion-faq__item--open .accordion-faq__content {
+      max-height: 300px;
+    }
+
+    .accordion-faq__body {
+      padding: 0 24px 20px;
+      padding-left: 68px;
+      color: #71717a;
+      line-height: 1.7;
+    }
+
+    /* ===========================================
+       ACCORDION 6 — NESTED
+       =========================================== */
+
+    .accordion-nested {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .accordion-nested__item {
+      background: #18181b;
+      border: 1px solid #27272a;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      overflow: hidden;
+    }
+
+    .accordion-nested__header {
+      width: 100%;
+      padding: 16px 20px;
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 500;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .accordion-nested__icon {
+      transition: transform 0.3s ease;
+    }
+
+    .accordion-nested__item--open > .accordion-nested__header .accordion-nested__icon {
+      transform: rotate(180deg);
+    }
+
+    .accordion-nested__content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+
+    .accordion-nested__item--open > .accordion-nested__content {
+      max-height: 500px;
+    }
+
+    .accordion-nested__body {
+      padding: 0 20px 16px;
+      color: #a1a1aa;
+      line-height: 1.6;
+    }
+
+    .accordion-nested__sub {
+      margin: 8px 0;
+      padding-left: 16px;
+      border-left: 2px solid #27272a;
+    }
+
+    .accordion-nested__sub .accordion-nested__header {
+      padding: 12px 16px;
+      font-size: 0.9rem;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* ===========================================
+       CODE BLOCK
+       =========================================== */
+
+    .code-block {
+      background: #1a1a1a;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .code-block__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .code-block__lang {
+      font-size: 0.75rem;
+      color: #71717a;
+      text-transform: uppercase;
+    }
+
+    .code-block__copy {
+      padding: 6px 12px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: #a1a1aa;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .code-block__copy:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+    }
+
+    .code-block__content {
+      padding: 16px;
+      overflow-x: auto;
+    }
+
+    .code-block__content pre {
+      margin: 0;
+      font-family: "Fira Code", monospace;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: #e0e0e0;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      font-size: 0.75rem;
+      color: #a1a1aa;
+    }
+
+    .tag--primary {
+      background: rgba(99, 102, 241, 0.15);
+      border-color: rgba(99, 102, 241, 0.3);
+      color: #818cf8;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar__logo">
+      <a href="../../index.html">Duke<span>UI</span></a>
+    </div>
+
+    <nav class="sidebar__nav">
+      <div class="sidebar__section">
+        <div class="sidebar__title">Composants</div>
+        <a href="index.html" class="sidebar__link sidebar__link--active">Accordions</a>
+        <a href="../buttons/index.html" class="sidebar__link">Buttons</a>
+        <a href="../cards/index.html" class="sidebar__link">Cards</a>
+        <a href="../carousels/index.html" class="sidebar__link">Carousels</a>
+        <a href="../forms/index.html" class="sidebar__link">Forms</a>
+        <a href="../loaders/index.html" class="sidebar__link">Loaders</a>
+        <a href="../modals/index.html" class="sidebar__link">Modals</a>
+        <a href="../navigation/index.html" class="sidebar__link">Navigation</a>
+        <a href="../tooltips/index.html" class="sidebar__link">Tooltips</a>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__title">Effets</div>
+        <a href="../hovers/index.html" class="sidebar__link">Hovers</a>
+        <a href="../animations/index.html" class="sidebar__link">Animations</a>
+        <a href="../backgrounds/index.html" class="sidebar__link">Backgrounds</a>
+        <a href="../mouse-effects/index.html" class="sidebar__link">Mouse Effects</a>
+        <a href="../text-effects/index.html" class="sidebar__link">Text Effects</a>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__title">Sections</div>
+        <a href="../heroes/index.html" class="sidebar__link">Heroes</a>
+        <a href="../features/index.html" class="sidebar__link">Features</a>
+        <a href="../pricing/index.html" class="sidebar__link">Pricing</a>
+        <a href="../testimonials/index.html" class="sidebar__link">Testimonials</a>
+        <a href="../footers/index.html" class="sidebar__link">Footers</a>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__title">Générateurs</div>
+        <a href="../../generators/gradient/index.html" class="sidebar__link">Gradient</a>
+        <a href="../../generators/shadow/index.html" class="sidebar__link">Shadow</a>
+        <a href="../../generators/flexbox/index.html" class="sidebar__link">Flexbox</a>
+        <a href="../../generators/grid/index.html" class="sidebar__link">Grid</a>
+      </div>
+    </nav>
+
+    <!-- Toggle Admin -->
+    <div class="admin-toggle">
+      <span class="admin-toggle__label">Mode Admin</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="admin-toggle">
+        <span class="toggle-switch__slider"></span>
+      </label>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    <header class="page-header">
+      <h1 class="page-header__title">Accordions</h1>
+      <p class="page-header__desc">Composants pliables pour organiser et révéler du contenu</p>
+    </header>
+
+    <div class="accordions-list">
+
+      <!-- ACCORDION 1 — BASIC -->
+      <section class="accordion-section">
+        <div class="accordion-section__preview">
+          <div class="accordion-basic">
+            <div class="accordion-basic__item accordion-basic__item--open">
+              <button class="accordion-basic__header" onclick="toggleAccordion(this, 'basic')">
+                <span>What is Duke-components?</span>
+                <span class="accordion-basic__icon"></span>
+              </button>
+              <div class="accordion-basic__content">
+                <div class="accordion-basic__body">
+                  Duke-components is a comprehensive UI library with beautiful, ready-to-use components for modern web projects.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-basic__item">
+              <button class="accordion-basic__header" onclick="toggleAccordion(this, 'basic')">
+                <span>How do I get started?</span>
+                <span class="accordion-basic__icon"></span>
+              </button>
+              <div class="accordion-basic__content">
+                <div class="accordion-basic__body">
+                  Simply copy the HTML and CSS code from any component and paste it into your project. No dependencies required!
+                </div>
+              </div>
+            </div>
+            <div class="accordion-basic__item">
+              <button class="accordion-basic__header" onclick="toggleAccordion(this, 'basic')">
+                <span>Is it free to use?</span>
+                <span class="accordion-basic__icon"></span>
+              </button>
+              <div class="accordion-basic__content">
+                <div class="accordion-basic__body">
+                  Yes! All components are free to use in personal and commercial projects.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-section__info">
+          <div class="accordion-section__header">
+            <h2 class="accordion-section__name">Basic Accordion</h2>
+            <div class="accordion-section__tags">
+              <span class="tag tag--primary">Essential</span>
+              <span class="tag">Plus/Minus</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">JavaScript</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>function toggleAccordion(btn) {
+  const item = btn.parentElement;
+  item.classList.toggle('accordion__item--open');
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ACCORDION 2 — MINIMAL -->
+      <section class="accordion-section">
+        <div class="accordion-section__preview">
+          <div class="accordion-minimal">
+            <div class="accordion-minimal__item accordion-minimal__item--open">
+              <button class="accordion-minimal__header" onclick="toggleAccordion(this, 'minimal')">
+                <span>Pricing & Plans</span>
+                <span class="accordion-minimal__arrow">&#x25BC;</span>
+              </button>
+              <div class="accordion-minimal__content">
+                <div class="accordion-minimal__body">
+                  We offer flexible pricing plans to suit your needs. Contact us for custom enterprise solutions.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-minimal__item">
+              <button class="accordion-minimal__header" onclick="toggleAccordion(this, 'minimal')">
+                <span>Support & Help</span>
+                <span class="accordion-minimal__arrow">&#x25BC;</span>
+              </button>
+              <div class="accordion-minimal__content">
+                <div class="accordion-minimal__body">
+                  Our support team is available 24/7 to help you with any questions or issues.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-minimal__item">
+              <button class="accordion-minimal__header" onclick="toggleAccordion(this, 'minimal')">
+                <span>Terms of Service</span>
+                <span class="accordion-minimal__arrow">&#x25BC;</span>
+              </button>
+              <div class="accordion-minimal__content">
+                <div class="accordion-minimal__body">
+                  Please read our terms of service carefully before using our products.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-section__info">
+          <div class="accordion-section__header">
+            <h2 class="accordion-section__name">Minimal Style</h2>
+            <div class="accordion-section__tags">
+              <span class="tag tag--primary">Clean</span>
+              <span class="tag">Chevron</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.accordion__content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.accordion__item--open .accordion__content {
+  max-height: 200px;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ACCORDION 3 — CARDS -->
+      <section class="accordion-section">
+        <div class="accordion-section__preview">
+          <div class="accordion-cards">
+            <div class="accordion-cards__item accordion-cards__item--open">
+              <button class="accordion-cards__header" onclick="toggleAccordion(this, 'cards')">
+                <span>Feature Highlights</span>
+                <span class="accordion-cards__icon">+</span>
+              </button>
+              <div class="accordion-cards__content">
+                <div class="accordion-cards__body">
+                  Discover all the powerful features that make our product stand out from the competition.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-cards__item">
+              <button class="accordion-cards__header" onclick="toggleAccordion(this, 'cards')">
+                <span>Integration Options</span>
+                <span class="accordion-cards__icon">+</span>
+              </button>
+              <div class="accordion-cards__content">
+                <div class="accordion-cards__body">
+                  Seamlessly integrate with your favorite tools and platforms.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-cards__item">
+              <button class="accordion-cards__header" onclick="toggleAccordion(this, 'cards')">
+                <span>Security & Privacy</span>
+                <span class="accordion-cards__icon">+</span>
+              </button>
+              <div class="accordion-cards__content">
+                <div class="accordion-cards__body">
+                  Your data is protected with enterprise-grade security measures.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-section__info">
+          <div class="accordion-section__header">
+            <h2 class="accordion-section__name">Card Style</h2>
+            <div class="accordion-section__tags">
+              <span class="tag tag--primary">Modern</span>
+              <span class="tag">Gradient</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.accordion-cards__item {
+  background: rgba(99, 102, 241, 0.05);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.accordion-cards__item--open {
+  background: rgba(99, 102, 241, 0.1);
+  border-color: rgba(99, 102, 241, 0.4);
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ACCORDION 4 — SIDE INDICATOR -->
+      <section class="accordion-section">
+        <div class="accordion-section__preview">
+          <div class="accordion-side">
+            <div class="accordion-side__item accordion-side__item--open">
+              <button class="accordion-side__header" onclick="toggleAccordion(this, 'side')">
+                <span>Getting Started Guide</span>
+                <span class="accordion-side__arrow">&#x25B6;</span>
+              </button>
+              <div class="accordion-side__content">
+                <div class="accordion-side__body">
+                  Follow our step-by-step guide to get up and running in minutes.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-side__item">
+              <button class="accordion-side__header" onclick="toggleAccordion(this, 'side')">
+                <span>API Documentation</span>
+                <span class="accordion-side__arrow">&#x25B6;</span>
+              </button>
+              <div class="accordion-side__content">
+                <div class="accordion-side__body">
+                  Comprehensive API docs with examples and best practices.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-side__item">
+              <button class="accordion-side__header" onclick="toggleAccordion(this, 'side')">
+                <span>Changelog</span>
+                <span class="accordion-side__arrow">&#x25B6;</span>
+              </button>
+              <div class="accordion-side__content">
+                <div class="accordion-side__body">
+                  Stay updated with all the latest features and improvements.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-section__info">
+          <div class="accordion-section__header">
+            <h2 class="accordion-section__name">Side Indicator</h2>
+            <div class="accordion-section__tags">
+              <span class="tag tag--primary">Visual</span>
+              <span class="tag">Border</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.accordion-side__item {
+  border-left: 3px solid #27272a;
+  transition: border-color 0.3s ease;
+}
+
+.accordion-side__item--open {
+  border-left-color: #6366f1;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ACCORDION 5 — FAQ STYLE -->
+      <section class="accordion-section">
+        <div class="accordion-section__preview">
+          <div class="accordion-faq">
+            <div class="accordion-faq__item accordion-faq__item--open">
+              <button class="accordion-faq__header" onclick="toggleAccordion(this, 'faq')">
+                <span class="accordion-faq__q">Q</span>
+                <span class="accordion-faq__question">How do I cancel my subscription?</span>
+              </button>
+              <div class="accordion-faq__content">
+                <div class="accordion-faq__body">
+                  You can cancel your subscription at any time from your account settings. Your access will continue until the end of your billing period.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-faq__item">
+              <button class="accordion-faq__header" onclick="toggleAccordion(this, 'faq')">
+                <span class="accordion-faq__q">Q</span>
+                <span class="accordion-faq__question">Can I upgrade or downgrade my plan?</span>
+              </button>
+              <div class="accordion-faq__content">
+                <div class="accordion-faq__body">
+                  Yes, you can change your plan at any time. The price difference will be prorated accordingly.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-faq__item">
+              <button class="accordion-faq__header" onclick="toggleAccordion(this, 'faq')">
+                <span class="accordion-faq__q">Q</span>
+                <span class="accordion-faq__question">Do you offer refunds?</span>
+              </button>
+              <div class="accordion-faq__content">
+                <div class="accordion-faq__body">
+                  We offer a 30-day money-back guarantee on all plans. Contact support for assistance.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-section__info">
+          <div class="accordion-section__header">
+            <h2 class="accordion-section__name">FAQ Style</h2>
+            <div class="accordion-section__tags">
+              <span class="tag tag--primary">Q&A</span>
+              <span class="tag">Support</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">HTML</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>&lt;div class="accordion-faq__item"&gt;
+  &lt;button class="accordion-faq__header"&gt;
+    &lt;span class="accordion-faq__q"&gt;Q&lt;/span&gt;
+    &lt;span&gt;Question text...&lt;/span&gt;
+  &lt;/button&gt;
+  &lt;div class="accordion-faq__content"&gt;
+    &lt;div class="accordion-faq__body"&gt;Answer...&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+  </div>
+
+  <script src="../../assets/js/main.js"></script>
+  <script src="../../assets/js/security-system.js"></script>
+  <script>
+    function toggleAccordion(btn, type) {
+      const item = btn.parentElement;
+      const isOpen = item.classList.contains(`accordion-${type}__item--open`);
+
+      // Close all items of the same type
+      const container = item.parentElement;
+      container.querySelectorAll(`.accordion-${type}__item--open`).forEach(openItem => {
+        openItem.classList.remove(`accordion-${type}__item--open`);
+      });
+
+      // Open clicked item if it wasn't open
+      if (!isOpen) {
+        item.classList.add(`accordion-${type}__item--open`);
+      }
+    }
+
+    function copyCode(btn) {
+      const codeBlock = btn.closest('.code-block');
+      const code = codeBlock.querySelector('pre').textContent;
+
+      navigator.clipboard.writeText(code).then(() => {
+        const originalText = btn.textContent;
+        btn.textContent = 'Copié !';
+        btn.style.color = '#22c55e';
+
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.style.color = '';
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>

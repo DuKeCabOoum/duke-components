@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carousels — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ===========================================
+       CAROUSELS — Styles locaux
+       =========================================== */
+
+    .carousels-list {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    .carousel-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .carousel-section__preview {
+      padding: 32px;
+      background: #0a0a0a;
+    }
+
+    .carousel-section__info {
+      padding: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .carousel-section__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .carousel-section__name {
+      font-weight: 600;
+      font-size: 1.25rem;
+    }
+
+    .carousel-section__tags {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* ===========================================
+       CAROUSEL 1 — BASIC SLIDER
+       =========================================== */
+
+    .carousel-basic {
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+    }
+
+    .carousel-basic__track {
+      display: flex;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .carousel-basic__slide {
+      flex: 0 0 100%;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .carousel-basic__slide:nth-child(1) { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
+    .carousel-basic__slide:nth-child(2) { background: linear-gradient(135deg, #ec4899, #f43f5e); }
+    .carousel-basic__slide:nth-child(3) { background: linear-gradient(135deg, #22c55e, #10b981); }
+    .carousel-basic__slide:nth-child(4) { background: linear-gradient(135deg, #f59e0b, #ef4444); }
+
+    .carousel-basic__nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(8px);
+      border: none;
+      border-radius: 50%;
+      color: white;
+      font-size: 1.25rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .carousel-basic__nav:hover {
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    .carousel-basic__nav--prev { left: 16px; }
+    .carousel-basic__nav--next { right: 16px; }
+
+    .carousel-basic__dots {
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+    }
+
+    .carousel-basic__dot {
+      width: 10px;
+      height: 10px;
+      background: rgba(255, 255, 255, 0.3);
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .carousel-basic__dot--active {
+      background: #fff;
+      width: 24px;
+      border-radius: 5px;
+    }
+
+    /* ===========================================
+       CAROUSEL 2 — CARDS SLIDER
+       =========================================== */
+
+    .carousel-cards {
+      position: relative;
+      padding: 0 40px;
+    }
+
+    .carousel-cards__track {
+      display: flex;
+      gap: 24px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      padding: 16px 0;
+    }
+
+    .carousel-cards__track::-webkit-scrollbar {
+      display: none;
+    }
+
+    .carousel-cards__card {
+      flex: 0 0 280px;
+      scroll-snap-align: start;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 24px;
+      transition: all 0.3s ease;
+    }
+
+    .carousel-cards__card:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(99, 102, 241, 0.3);
+      transform: translateY(-4px);
+    }
+
+    .carousel-cards__image {
+      width: 100%;
+      height: 160px;
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      border-radius: 12px;
+      margin-bottom: 16px;
+    }
+
+    .carousel-cards__title {
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .carousel-cards__text {
+      color: #71717a;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    /* ===========================================
+       CAROUSEL 3 — AUTO-SCROLL (Infinite)
+       =========================================== */
+
+    .carousel-infinite {
+      overflow: hidden;
+      padding: 16px 0;
+    }
+
+    .carousel-infinite__track {
+      display: flex;
+      gap: 32px;
+      animation: scroll-infinite 20s linear infinite;
+    }
+
+    .carousel-infinite__track:hover {
+      animation-play-state: paused;
+    }
+
+    @keyframes scroll-infinite {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .carousel-infinite__item {
+      flex: 0 0 auto;
+      padding: 16px 32px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .carousel-infinite__logo {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: white;
+    }
+
+    .carousel-infinite__name {
+      font-weight: 500;
+      color: #a1a1aa;
+    }
+
+    /* ===========================================
+       CAROUSEL 4 — TESTIMONIALS
+       =========================================== */
+
+    .carousel-testimonials {
+      position: relative;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .carousel-testimonials__track {
+      overflow: hidden;
+    }
+
+    .carousel-testimonials__slides {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+
+    .carousel-testimonials__slide {
+      flex: 0 0 100%;
+      text-align: center;
+      padding: 32px;
+    }
+
+    .carousel-testimonials__quote {
+      font-size: 3rem;
+      color: #6366f1;
+      margin-bottom: 16px;
+    }
+
+    .carousel-testimonials__text {
+      font-size: 1.1rem;
+      color: #d1d5db;
+      line-height: 1.7;
+      font-style: italic;
+      margin-bottom: 24px;
+    }
+
+    .carousel-testimonials__author {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .carousel-testimonials__avatar {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: white;
+    }
+
+    .carousel-testimonials__name {
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .carousel-testimonials__role {
+      color: #71717a;
+      font-size: 0.9rem;
+    }
+
+    .carousel-testimonials__dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .carousel-testimonials__dot {
+      width: 8px;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .carousel-testimonials__dot--active {
+      background: #6366f1;
+    }
+
+    /* ===========================================
+       CAROUSEL 5 — COVERFLOW
+       =========================================== */
+
+    .carousel-coverflow {
+      position: relative;
+      perspective: 1000px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 280px;
+    }
+
+    .carousel-coverflow__slide {
+      position: absolute;
+      width: 200px;
+      height: 240px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: white;
+      transition: all 0.5s ease;
+      cursor: pointer;
+    }
+
+    .carousel-coverflow__slide--prev-2 {
+      transform: translateX(-280px) scale(0.7) rotateY(30deg);
+      opacity: 0.3;
+      z-index: 1;
+    }
+
+    .carousel-coverflow__slide--prev {
+      transform: translateX(-160px) scale(0.85) rotateY(20deg);
+      opacity: 0.6;
+      z-index: 2;
+    }
+
+    .carousel-coverflow__slide--active {
+      transform: translateX(0) scale(1) rotateY(0deg);
+      opacity: 1;
+      z-index: 3;
+      box-shadow: 0 20px 40px rgba(99, 102, 241, 0.4);
+    }
+
+    .carousel-coverflow__slide--next {
+      transform: translateX(160px) scale(0.85) rotateY(-20deg);
+      opacity: 0.6;
+      z-index: 2;
+    }
+
+    .carousel-coverflow__slide--next-2 {
+      transform: translateX(280px) scale(0.7) rotateY(-30deg);
+      opacity: 0.3;
+      z-index: 1;
+    }
+
+    /* ===========================================
+       CAROUSEL 6 — FADE
+       =========================================== */
+
+    .carousel-fade {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .carousel-fade__slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 300px;
+      font-size: 2rem;
+      font-weight: 700;
+      color: white;
+    }
+
+    .carousel-fade__slide:nth-child(1) { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
+    .carousel-fade__slide:nth-child(2) { background: linear-gradient(135deg, #f43f5e, #ec4899); }
+    .carousel-fade__slide:nth-child(3) { background: linear-gradient(135deg, #10b981, #22c55e); }
+
+    .carousel-fade__slide--active {
+      position: relative;
+      opacity: 1;
+    }
+
+    .carousel-fade__nav {
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 16px;
+    }
+
+    .carousel-fade__btn {
+      padding: 8px 20px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(8px);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .carousel-fade__btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    /* ===========================================
+       CODE BLOCK
+       =========================================== */
+
+    .code-block {
+      background: #1a1a1a;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .code-block__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .code-block__lang {
+      font-size: 0.75rem;
+      color: #71717a;
+      text-transform: uppercase;
+    }
+
+    .code-block__copy {
+      padding: 6px 12px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: #a1a1aa;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .code-block__copy:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+    }
+
+    .code-block__content {
+      padding: 16px;
+      overflow-x: auto;
+    }
+
+    .code-block__content pre {
+      margin: 0;
+      font-family: "Fira Code", monospace;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: #e0e0e0;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      font-size: 0.75rem;
+      color: #a1a1aa;
+    }
+
+    .tag--primary {
+      background: rgba(99, 102, 241, 0.15);
+      border-color: rgba(99, 102, 241, 0.3);
+      color: #818cf8;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar__logo">
+      <a href="../../index.html">Duke<span>UI</span></a>
+    </div>
+
+    <nav class="sidebar__nav">
+      <div class="sidebar__section">
+        <div class="sidebar__title">Composants</div>
+        <a href="../buttons/index.html" class="sidebar__link">Buttons</a>
+        <a href="../cards/index.html" class="sidebar__link">Cards</a>
+        <a href="index.html" class="sidebar__link sidebar__link--active">Carousels</a>
+        <a href="../forms/index.html" class="sidebar__link">Forms</a>
+        <a href="../loaders/index.html" class="sidebar__link">Loaders</a>
+        <a href="../modals/index.html" class="sidebar__link">Modals</a>
+        <a href="../navigation/index.html" class="sidebar__link">Navigation</a>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__title">Effets</div>
+        <a href="../hovers/index.html" class="sidebar__link">Hovers</a>
+        <a href="../animations/index.html" class="sidebar__link">Animations</a>
+        <a href="../backgrounds/index.html" class="sidebar__link">Backgrounds</a>
+        <a href="../text-effects/index.html" class="sidebar__link">Text Effects</a>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__title">Sections</div>
+        <a href="../heroes/index.html" class="sidebar__link">Heroes</a>
+        <a href="../features/index.html" class="sidebar__link">Features</a>
+        <a href="../pricing/index.html" class="sidebar__link">Pricing</a>
+        <a href="../testimonials/index.html" class="sidebar__link">Testimonials</a>
+        <a href="../footers/index.html" class="sidebar__link">Footers</a>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__title">Générateurs</div>
+        <a href="../../generators/gradient/index.html" class="sidebar__link">Gradient</a>
+        <a href="../../generators/shadow/index.html" class="sidebar__link">Shadow</a>
+        <a href="../../generators/flexbox/index.html" class="sidebar__link">Flexbox</a>
+        <a href="../../generators/grid/index.html" class="sidebar__link">Grid</a>
+      </div>
+    </nav>
+
+    <!-- Toggle Admin -->
+    <div class="admin-toggle">
+      <span class="admin-toggle__label">Mode Admin</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="admin-toggle">
+        <span class="toggle-switch__slider"></span>
+      </label>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    <header class="page-header">
+      <h1 class="page-header__title">Carousels</h1>
+      <p class="page-header__desc">Sliders et carrousels modernes en CSS et JavaScript</p>
+    </header>
+
+    <div class="carousels-list">
+
+      <!-- ============================================
+           CAROUSEL 1 — BASIC SLIDER
+           ============================================ -->
+      <section class="carousel-section">
+        <div class="carousel-section__preview">
+          <div class="carousel-basic" id="carousel-1">
+            <div class="carousel-basic__track">
+              <div class="carousel-basic__slide">Slide 1</div>
+              <div class="carousel-basic__slide">Slide 2</div>
+              <div class="carousel-basic__slide">Slide 3</div>
+              <div class="carousel-basic__slide">Slide 4</div>
+            </div>
+            <button class="carousel-basic__nav carousel-basic__nav--prev" onclick="prevSlide('carousel-1')">←</button>
+            <button class="carousel-basic__nav carousel-basic__nav--next" onclick="nextSlide('carousel-1')">→</button>
+            <div class="carousel-basic__dots">
+              <button class="carousel-basic__dot carousel-basic__dot--active" onclick="goToSlide('carousel-1', 0)"></button>
+              <button class="carousel-basic__dot" onclick="goToSlide('carousel-1', 1)"></button>
+              <button class="carousel-basic__dot" onclick="goToSlide('carousel-1', 2)"></button>
+              <button class="carousel-basic__dot" onclick="goToSlide('carousel-1', 3)"></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-section__info">
+          <div class="carousel-section__header">
+            <h2 class="carousel-section__name">Basic Slider</h2>
+            <div class="carousel-section__tags">
+              <span class="tag tag--primary">Essential</span>
+              <span class="tag">Navigation</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">JavaScript</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>function nextSlide(carouselId) {
+  const carousel = document.getElementById(carouselId);
+  const track = carousel.querySelector('.carousel-basic__track');
+  const slides = track.children.length;
+  let current = carousel.dataset.index || 0;
+  current = (parseInt(current) + 1) % slides;
+  track.style.transform = `translateX(-${current * 100}%)`;
+  carousel.dataset.index = current;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================
+           CAROUSEL 2 — CARDS SLIDER
+           ============================================ -->
+      <section class="carousel-section">
+        <div class="carousel-section__preview">
+          <div class="carousel-cards">
+            <div class="carousel-cards__track">
+              <div class="carousel-cards__card">
+                <div class="carousel-cards__image"></div>
+                <h3 class="carousel-cards__title">Card Title 1</h3>
+                <p class="carousel-cards__text">Description courte du contenu de la carte.</p>
+              </div>
+              <div class="carousel-cards__card">
+                <div class="carousel-cards__image" style="background: linear-gradient(135deg, #ec4899, #f43f5e);"></div>
+                <h3 class="carousel-cards__title">Card Title 2</h3>
+                <p class="carousel-cards__text">Description courte du contenu de la carte.</p>
+              </div>
+              <div class="carousel-cards__card">
+                <div class="carousel-cards__image" style="background: linear-gradient(135deg, #22c55e, #10b981);"></div>
+                <h3 class="carousel-cards__title">Card Title 3</h3>
+                <p class="carousel-cards__text">Description courte du contenu de la carte.</p>
+              </div>
+              <div class="carousel-cards__card">
+                <div class="carousel-cards__image" style="background: linear-gradient(135deg, #f59e0b, #ef4444);"></div>
+                <h3 class="carousel-cards__title">Card Title 4</h3>
+                <p class="carousel-cards__text">Description courte du contenu de la carte.</p>
+              </div>
+              <div class="carousel-cards__card">
+                <div class="carousel-cards__image" style="background: linear-gradient(135deg, #06b6d4, #3b82f6);"></div>
+                <h3 class="carousel-cards__title">Card Title 5</h3>
+                <p class="carousel-cards__text">Description courte du contenu de la carte.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-section__info">
+          <div class="carousel-section__header">
+            <h2 class="carousel-section__name">Cards Slider (Scroll Snap)</h2>
+            <div class="carousel-section__tags">
+              <span class="tag tag--primary">CSS Only</span>
+              <span class="tag">Scroll</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.carousel-cards__track {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.carousel-cards__card {
+  flex: 0 0 280px;
+  scroll-snap-align: start;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================
+           CAROUSEL 3 — AUTO-SCROLL (Infinite)
+           ============================================ -->
+      <section class="carousel-section">
+        <div class="carousel-section__preview">
+          <div class="carousel-infinite">
+            <div class="carousel-infinite__track">
+              <div class="carousel-infinite__item">
+                <div class="carousel-infinite__logo">A</div>
+                <span class="carousel-infinite__name">Acme Inc</span>
+              </div>
+              <div class="carousel-infinite__item">
+                <div class="carousel-infinite__logo">B</div>
+                <span class="carousel-infinite__name">Beta Corp</span>
+              </div>
+              <div class="carousel-infinite__item">
+                <div class="carousel-infinite__logo">C</div>
+                <span class="carousel-infinite__name">Creative Co</span>
+              </div>
+              <div class="carousel-infinite__item">
+                <div class="carousel-infinite__logo">D</div>
+                <span class="carousel-infinite__name">Design Lab</span>
+              </div>
+              <div class="carousel-infinite__item">
+                <div class="carousel-infinite__logo">E</div>
+                <span class="carousel-infinite__name">Echo Tech</span>
+              </div>
+              <!-- Duplicated for infinite effect -->
+              <div class="carousel-infinite__item">
+                <div class="carousel-infinite__logo">A</div>
+                <span class="carousel-infinite__name">Acme Inc</span>
+              </div>
+              <div class="carousel-infinite__item">
+                <div class="carousel-infinite__logo">B</div>
+                <span class="carousel-infinite__name">Beta Corp</span>
+              </div>
+              <div class="carousel-infinite__item">
+                <div class="carousel-infinite__logo">C</div>
+                <span class="carousel-infinite__name">Creative Co</span>
+              </div>
+              <div class="carousel-infinite__item">
+                <div class="carousel-infinite__logo">D</div>
+                <span class="carousel-infinite__name">Design Lab</span>
+              </div>
+              <div class="carousel-infinite__item">
+                <div class="carousel-infinite__logo">E</div>
+                <span class="carousel-infinite__name">Echo Tech</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-section__info">
+          <div class="carousel-section__header">
+            <h2 class="carousel-section__name">Auto-Scroll Infinite (Logo Wall)</h2>
+            <div class="carousel-section__tags">
+              <span class="tag tag--primary">CSS Animation</span>
+              <span class="tag">Clients</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.carousel-infinite__track {
+  display: flex;
+  gap: 32px;
+  animation: scroll-infinite 20s linear infinite;
+}
+
+@keyframes scroll-infinite {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Pause on hover */
+.carousel-infinite__track:hover {
+  animation-play-state: paused;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================
+           CAROUSEL 4 — TESTIMONIALS
+           ============================================ -->
+      <section class="carousel-section">
+        <div class="carousel-section__preview">
+          <div class="carousel-testimonials" id="carousel-testimonials">
+            <div class="carousel-testimonials__track">
+              <div class="carousel-testimonials__slides">
+                <div class="carousel-testimonials__slide">
+                  <div class="carousel-testimonials__quote">"</div>
+                  <p class="carousel-testimonials__text">Un produit incroyable qui a transformé notre workflow. Je le recommande à tous !</p>
+                  <div class="carousel-testimonials__author">
+                    <div class="carousel-testimonials__avatar">MP</div>
+                    <span class="carousel-testimonials__name">Marie Dupont</span>
+                    <span class="carousel-testimonials__role">CEO, TechStartup</span>
+                  </div>
+                </div>
+                <div class="carousel-testimonials__slide">
+                  <div class="carousel-testimonials__quote">"</div>
+                  <p class="carousel-testimonials__text">Le support client est exceptionnel. Réponse en moins d'une heure à chaque fois.</p>
+                  <div class="carousel-testimonials__author">
+                    <div class="carousel-testimonials__avatar">JM</div>
+                    <span class="carousel-testimonials__name">Jean Martin</span>
+                    <span class="carousel-testimonials__role">Developer</span>
+                  </div>
+                </div>
+                <div class="carousel-testimonials__slide">
+                  <div class="carousel-testimonials__quote">"</div>
+                  <p class="carousel-testimonials__text">Notre productivité a augmenté de 40% depuis qu'on utilise cette solution.</p>
+                  <div class="carousel-testimonials__author">
+                    <div class="carousel-testimonials__avatar">SL</div>
+                    <span class="carousel-testimonials__name">Sophie Leroy</span>
+                    <span class="carousel-testimonials__role">CTO, Agency</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-testimonials__dots">
+              <button class="carousel-testimonials__dot carousel-testimonials__dot--active" onclick="goToTestimonial(0)"></button>
+              <button class="carousel-testimonials__dot" onclick="goToTestimonial(1)"></button>
+              <button class="carousel-testimonials__dot" onclick="goToTestimonial(2)"></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-section__info">
+          <div class="carousel-section__header">
+            <h2 class="carousel-section__name">Testimonials Carousel</h2>
+            <div class="carousel-section__tags">
+              <span class="tag tag--primary">Social Proof</span>
+              <span class="tag">Centered</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">HTML</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>&lt;div class="carousel-testimonials__slide"&gt;
+  &lt;div class="carousel-testimonials__quote"&gt;"&lt;/div&gt;
+  &lt;p class="carousel-testimonials__text"&gt;Testimonial text...&lt;/p&gt;
+  &lt;div class="carousel-testimonials__author"&gt;
+    &lt;div class="carousel-testimonials__avatar"&gt;MP&lt;/div&gt;
+    &lt;span class="carousel-testimonials__name"&gt;Name&lt;/span&gt;
+    &lt;span class="carousel-testimonials__role"&gt;Role&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================
+           CAROUSEL 5 — COVERFLOW
+           ============================================ -->
+      <section class="carousel-section">
+        <div class="carousel-section__preview">
+          <div class="carousel-coverflow">
+            <div class="carousel-coverflow__slide carousel-coverflow__slide--prev-2">1</div>
+            <div class="carousel-coverflow__slide carousel-coverflow__slide--prev">2</div>
+            <div class="carousel-coverflow__slide carousel-coverflow__slide--active">3</div>
+            <div class="carousel-coverflow__slide carousel-coverflow__slide--next">4</div>
+            <div class="carousel-coverflow__slide carousel-coverflow__slide--next-2">5</div>
+          </div>
+        </div>
+
+        <div class="carousel-section__info">
+          <div class="carousel-section__header">
+            <h2 class="carousel-section__name">Coverflow Effect</h2>
+            <div class="carousel-section__tags">
+              <span class="tag tag--primary">3D</span>
+              <span class="tag">Perspective</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.carousel-coverflow {
+  perspective: 1000px;
+}
+
+.carousel-coverflow__slide--active {
+  transform: translateX(0) scale(1) rotateY(0deg);
+  z-index: 3;
+}
+
+.carousel-coverflow__slide--prev {
+  transform: translateX(-160px) scale(0.85) rotateY(20deg);
+  opacity: 0.6;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================
+           CAROUSEL 6 — FADE
+           ============================================ -->
+      <section class="carousel-section">
+        <div class="carousel-section__preview">
+          <div class="carousel-fade" id="carousel-fade">
+            <div class="carousel-fade__slide carousel-fade__slide--active">Slide 1</div>
+            <div class="carousel-fade__slide">Slide 2</div>
+            <div class="carousel-fade__slide">Slide 3</div>
+            <div class="carousel-fade__nav">
+              <button class="carousel-fade__btn" onclick="prevFade()">← Prev</button>
+              <button class="carousel-fade__btn" onclick="nextFade()">Next →</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-section__info">
+          <div class="carousel-section__header">
+            <h2 class="carousel-section__name">Fade Transition</h2>
+            <div class="carousel-section__tags">
+              <span class="tag tag--primary">Smooth</span>
+              <span class="tag">Opacity</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.carousel-fade__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.carousel-fade__slide--active {
+  position: relative;
+  opacity: 1;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+  </div>
+
+  <script src="../../assets/js/main.js"></script>
+  <script src="../../assets/js/security-system.js"></script>
+  <script>
+    // ========== BASIC CAROUSEL ==========
+    const carousels = {};
+
+    function initCarousel(id) {
+      carousels[id] = { index: 0 };
+    }
+
+    function nextSlide(id) {
+      const carousel = document.getElementById(id);
+      const track = carousel.querySelector('.carousel-basic__track');
+      const slides = track.children.length;
+      carousels[id].index = (carousels[id].index + 1) % slides;
+      updateCarousel(id);
+    }
+
+    function prevSlide(id) {
+      const carousel = document.getElementById(id);
+      const track = carousel.querySelector('.carousel-basic__track');
+      const slides = track.children.length;
+      carousels[id].index = (carousels[id].index - 1 + slides) % slides;
+      updateCarousel(id);
+    }
+
+    function goToSlide(id, index) {
+      carousels[id].index = index;
+      updateCarousel(id);
+    }
+
+    function updateCarousel(id) {
+      const carousel = document.getElementById(id);
+      const track = carousel.querySelector('.carousel-basic__track');
+      const dots = carousel.querySelectorAll('.carousel-basic__dot');
+      const index = carousels[id].index;
+
+      track.style.transform = `translateX(-${index * 100}%)`;
+
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('carousel-basic__dot--active', i === index);
+      });
+    }
+
+    // Init carousels
+    initCarousel('carousel-1');
+
+    // ========== TESTIMONIALS CAROUSEL ==========
+    let testimonialIndex = 0;
+
+    function goToTestimonial(index) {
+      testimonialIndex = index;
+      const slides = document.querySelector('.carousel-testimonials__slides');
+      const dots = document.querySelectorAll('.carousel-testimonials__dot');
+
+      slides.style.transform = `translateX(-${index * 100}%)`;
+
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('carousel-testimonials__dot--active', i === index);
+      });
+    }
+
+    // Auto-advance testimonials
+    setInterval(() => {
+      testimonialIndex = (testimonialIndex + 1) % 3;
+      goToTestimonial(testimonialIndex);
+    }, 5000);
+
+    // ========== FADE CAROUSEL ==========
+    let fadeIndex = 0;
+
+    function nextFade() {
+      const slides = document.querySelectorAll('.carousel-fade__slide');
+      slides[fadeIndex].classList.remove('carousel-fade__slide--active');
+      fadeIndex = (fadeIndex + 1) % slides.length;
+      slides[fadeIndex].classList.add('carousel-fade__slide--active');
+    }
+
+    function prevFade() {
+      const slides = document.querySelectorAll('.carousel-fade__slide');
+      slides[fadeIndex].classList.remove('carousel-fade__slide--active');
+      fadeIndex = (fadeIndex - 1 + slides.length) % slides.length;
+      slides[fadeIndex].classList.add('carousel-fade__slide--active');
+    }
+
+    // ========== COPY CODE ==========
+    function copyCode(btn) {
+      const codeBlock = btn.closest('.code-block');
+      const code = codeBlock.querySelector('pre').textContent;
+
+      navigator.clipboard.writeText(code).then(() => {
+        const originalText = btn.textContent;
+        btn.textContent = 'Copié !';
+        btn.style.color = '#22c55e';
+
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.style.color = '';
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>

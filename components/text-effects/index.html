@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text Effects — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ===========================================
+       TEXT EFFECTS — Styles locaux
+       =========================================== */
+
+    .text-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 24px;
+    }
+
+    .text-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .text-card__preview {
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #0f0f0f;
+      padding: 24px;
+    }
+
+    .text-card__info {
+      padding: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .text-card__name {
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .text-card__tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .component-section {
+      margin-bottom: 48px;
+    }
+
+    .component-section h2 {
+      margin-bottom: 24px;
+      font-size: 1.5rem;
+      color: var(--text-primary);
+    }
+
+    /* ===========================================
+       1. GRADIENT TEXT
+       =========================================== */
+
+    .text-gradient {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #6366f1, #ec4899, #f59e0b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .text-gradient-animated {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, #6366f1, #ec4899, #10b981, #f59e0b, #6366f1);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientText 3s linear infinite;
+    }
+    @keyframes gradientText {
+      to { background-position: 200% center; }
+    }
+
+    .text-gradient-shine {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: linear-gradient(
+        90deg,
+        #6366f1 0%,
+        #fff 50%,
+        #6366f1 100%
+      );
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shineText 2s linear infinite;
+    }
+    @keyframes shineText {
+      to { background-position: 200% center; }
+    }
+
+    /* ===========================================
+       2. GLOW TEXT
+       =========================================== */
+
+    .text-glow {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #6366f1;
+      text-shadow:
+        0 0 10px rgba(99, 102, 241, 0.8),
+        0 0 20px rgba(99, 102, 241, 0.6),
+        0 0 40px rgba(99, 102, 241, 0.4);
+    }
+
+    .text-glow-pulse {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #6366f1;
+      animation: glowPulse 2s ease-in-out infinite;
+    }
+    @keyframes glowPulse {
+      0%, 100% {
+        text-shadow:
+          0 0 5px rgba(99, 102, 241, 0.5),
+          0 0 10px rgba(99, 102, 241, 0.3);
+      }
+      50% {
+        text-shadow:
+          0 0 20px rgba(99, 102, 241, 0.8),
+          0 0 40px rgba(99, 102, 241, 0.6),
+          0 0 60px rgba(99, 102, 241, 0.4);
+      }
+    }
+
+    .text-neon {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #fff;
+      text-shadow:
+        0 0 5px #fff,
+        0 0 10px #fff,
+        0 0 20px #ec4899,
+        0 0 40px #ec4899,
+        0 0 80px #ec4899;
+    }
+
+    /* ===========================================
+       3. STROKE TEXT
+       =========================================== */
+
+    .text-stroke {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: transparent;
+      -webkit-text-stroke: 2px #6366f1;
+    }
+
+    .text-stroke-fill:hover {
+      color: #6366f1;
+      -webkit-text-stroke: 2px #6366f1;
+      transition: color 0.3s ease;
+    }
+    .text-stroke-fill {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: transparent;
+      -webkit-text-stroke: 2px #6366f1;
+      transition: color 0.3s ease;
+    }
+
+    /* ===========================================
+       4. GLITCH TEXT
+       =========================================== */
+
+    .text-glitch {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #fff;
+      position: relative;
+    }
+    .text-glitch::before,
+    .text-glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .text-glitch::before {
+      color: #ff0000;
+      animation: glitch-1 0.3s infinite linear alternate-reverse;
+      clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+    }
+    .text-glitch::after {
+      color: #00ffff;
+      animation: glitch-2 0.3s infinite linear alternate-reverse;
+      clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+    }
+    @keyframes glitch-1 {
+      0% { transform: translateX(-2px); }
+      100% { transform: translateX(2px); }
+    }
+    @keyframes glitch-2 {
+      0% { transform: translateX(2px); }
+      100% { transform: translateX(-2px); }
+    }
+
+    /* ===========================================
+       5. TYPEWRITER
+       =========================================== */
+
+    .text-typewriter {
+      font-size: 1.5rem;
+      font-weight: 600;
+      font-family: monospace;
+      color: #fff;
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 3px solid #6366f1;
+      animation:
+        typing 3s steps(20) infinite,
+        blink 0.5s step-end infinite;
+      width: 20ch;
+    }
+    @keyframes typing {
+      0%, 100% { width: 0; }
+      50%, 90% { width: 20ch; }
+    }
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+
+    /* ===========================================
+       6. WAVE TEXT
+       =========================================== */
+
+    .text-wave {
+      font-size: 2rem;
+      font-weight: 700;
+      display: flex;
+    }
+    .text-wave span {
+      color: #6366f1;
+      animation: wave 1.5s ease-in-out infinite;
+    }
+    .text-wave span:nth-child(1) { animation-delay: 0s; }
+    .text-wave span:nth-child(2) { animation-delay: 0.1s; }
+    .text-wave span:nth-child(3) { animation-delay: 0.2s; }
+    .text-wave span:nth-child(4) { animation-delay: 0.3s; }
+    .text-wave span:nth-child(5) { animation-delay: 0.4s; }
+    .text-wave span:nth-child(6) { animation-delay: 0.5s; }
+    .text-wave span:nth-child(7) { animation-delay: 0.6s; }
+    @keyframes wave {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* ===========================================
+       7. REVEAL TEXT
+       =========================================== */
+
+    .text-reveal {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .text-reveal::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #6366f1;
+      animation: reveal 2s ease-in-out infinite;
+    }
+    @keyframes reveal {
+      0% { transform: translateX(-100%); }
+      50% { transform: translateX(0); }
+      100% { transform: translateX(100%); }
+    }
+
+    /* ===========================================
+       8. 3D TEXT
+       =========================================== */
+
+    .text-3d {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #6366f1;
+      text-shadow:
+        1px 1px 0 #4f46e5,
+        2px 2px 0 #4338ca,
+        3px 3px 0 #3730a3,
+        4px 4px 0 #312e81,
+        5px 5px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .text-3d-float {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #6366f1;
+      animation: float3d 3s ease-in-out infinite;
+    }
+    @keyframes float3d {
+      0%, 100% {
+        text-shadow:
+          1px 1px 0 #4f46e5,
+          2px 2px 0 #4338ca,
+          3px 3px 0 #3730a3,
+          4px 4px 0 #312e81,
+          5px 5px 10px rgba(0, 0, 0, 0.5);
+        transform: translateY(0);
+      }
+      50% {
+        text-shadow:
+          1px 1px 0 #4f46e5,
+          2px 2px 0 #4338ca,
+          3px 3px 0 #3730a3,
+          4px 4px 0 #312e81,
+          5px 5px 10px rgba(0, 0, 0, 0.3),
+          8px 8px 20px rgba(0, 0, 0, 0.2);
+        transform: translateY(-5px);
+      }
+    }
+
+    /* ===========================================
+       9. SHADOW TEXT
+       =========================================== */
+
+    .text-long-shadow {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #6366f1;
+      text-shadow:
+        1px 1px rgba(99, 102, 241, 0.9),
+        2px 2px rgba(99, 102, 241, 0.85),
+        3px 3px rgba(99, 102, 241, 0.8),
+        4px 4px rgba(99, 102, 241, 0.75),
+        5px 5px rgba(99, 102, 241, 0.7),
+        6px 6px rgba(99, 102, 241, 0.65),
+        7px 7px rgba(99, 102, 241, 0.6),
+        8px 8px rgba(99, 102, 241, 0.55),
+        9px 9px rgba(99, 102, 241, 0.5),
+        10px 10px rgba(99, 102, 241, 0.45);
+    }
+
+    /* ===========================================
+       10. BLUR FOCUS
+       =========================================== */
+
+    .text-blur-focus {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      filter: blur(5px);
+      transition: filter 0.3s ease;
+    }
+    .text-blur-focus:hover {
+      filter: blur(0);
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+      <div class="sidebar__logo">
+        <a href="../../index.html"><span>Duke</span>-components</a>
+      </div>
+
+      <!-- Admin Toggle -->
+      <div class="admin-toggle">
+        <span class="admin-toggle__label">Mode Admin</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="admin-toggle">
+          <span class="toggle-switch__slider"></span>
+        </label>
+      </div>
+
+      <!-- Components -->
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Composants</h3>
+        <ul class="sidebar__nav">
+          <li><a href="../buttons/index.html" class="sidebar__link">
+            <span>🔘</span> Buttons
+          </a></li>
+          <li><a href="../cards/index.html" class="sidebar__link">
+            <span>🃏</span> Cards
+          </a></li>
+          <li><a href="../forms/index.html" class="sidebar__link">
+            <span>📝</span> Forms
+          </a></li>
+          <li><a href="../loaders/index.html" class="sidebar__link">
+            <span>⏳</span> Loaders
+          </a></li>
+          <li><a href="../hovers/index.html" class="sidebar__link">
+            <span>👆</span> Hovers
+          </a></li>
+          <li><a href="../animations/index.html" class="sidebar__link">
+            <span>✨</span> Animations
+          </a></li>
+          <li><a href="../backgrounds/index.html" class="sidebar__link">
+            <span>🎨</span> Backgrounds
+          </a></li>
+          <li><a href="index.html" class="sidebar__link sidebar__link--active">
+            <span>🔤</span> Text Effects
+          </a></li>
+        </ul>
+      </div>
+
+      <!-- Generators -->
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Générateurs</h3>
+        <ul class="sidebar__nav">
+          <li><a href="../../generators/gradient/index.html" class="sidebar__link">
+            <span>🌈</span> Gradient
+          </a></li>
+          <li><a href="../../generators/shadow/index.html" class="sidebar__link">
+            <span>🌑</span> Shadow
+          </a></li>
+          <li><a href="../../generators/flexbox/index.html" class="sidebar__link">
+            <span>📐</span> Flexbox
+          </a></li>
+          <li><a href="../../generators/grid/index.html" class="sidebar__link">
+            <span>🔲</span> Grid
+          </a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main">
+      <header class="main__header">
+        <h1 class="main__title">🔤 Text Effects</h1>
+        <p class="main__subtitle">Collection d'effets de texte CSS spectaculaires</p>
+      </header>
+
+      <!-- Section: Gradient -->
+      <section class="component-section">
+        <h2>Gradient Text</h2>
+        <div class="text-grid">
+          <!-- Gradient -->
+          <article class="text-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="text-card__preview">
+              <span class="text-gradient">GRADIENT</span>
+            </div>
+            <div class="text-card__info">
+              <h3 class="text-card__name">Gradient Text</h3>
+              <div class="text-card__tags">
+                <span class="tag tag--primary">gradient</span>
+                <span class="tag">clip</span>
+              </div>
+              <div class="code-viewer">
+                <div class="code-viewer__header">
+                  <span>CSS</span>
+                  <button class="copy-btn" data-target="code-text-gradient">Copier</button>
+                </div>
+                <div class="code-viewer__content">
+                  <pre><code id="code-text-gradient">.text-gradient {
+  background: linear-gradient(135deg, #6366f1, #ec4899, #f59e0b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}</code></pre>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Gradient Animated -->
+          <article class="text-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="text-card__preview">
+              <span class="text-gradient-animated">ANIMATED</span>
+            </div>
+            <div class="text-card__info">
+              <h3 class="text-card__name">Animated Gradient</h3>
+              <div class="text-card__tags">
+                <span class="tag tag--primary">gradient</span>
+                <span class="tag">animated</span>
+              </div>
+              <div class="code-viewer">
+                <div class="code-viewer__header">
+                  <span>CSS</span>
+                  <button class="copy-btn" data-target="code-gradient-anim">Copier</button>
+                </div>
+                <div class="code-viewer__content">
+                  <pre><code id="code-gradient-anim">.text-gradient-animated {
+  background: linear-gradient(90deg, #6366f1, #ec4899, #10b981, #f59e0b, #6366f1);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientText 3s linear infinite;
+}
+@keyframes gradientText {
+  to { background-position: 200% center; }
+}</code></pre>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Shine -->
+          <article class="text-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="text-card__preview">
+              <span class="text-gradient-shine">SHINE</span>
+            </div>
+            <div class="text-card__info">
+              <h3 class="text-card__name">Shine Effect</h3>
+              <div class="text-card__tags">
+                <span class="tag tag--primary">shine</span>
+                <span class="tag">gradient</span>
+              </div>
+              <div class="code-viewer">
+                <div class="code-viewer__header">
+                  <span>CSS</span>
+                  <button class="copy-btn" data-target="code-shine-text">Copier</button>
+                </div>
+                <div class="code-viewer__content">
+                  <pre><code id="code-shine-text">.text-gradient-shine {
+  background: linear-gradient(90deg, #6366f1 0%, #fff 50%, #6366f1 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shineText 2s linear infinite;
+}
+@keyframes shineText {
+  to { background-position: 200% center; }
+}</code></pre>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Section: Glow -->
+      <section class="component-section">
+        <h2>Glow & Neon</h2>
+        <div class="text-grid">
+          <!-- Glow -->
+          <article class="text-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="text-card__preview">
+              <span class="text-glow">GLOW</span>
+            </div>
+            <div class="text-card__info">
+              <h3 class="text-card__name">Glow Text</h3>
+              <div class="text-card__tags">
+                <span class="tag tag--primary">glow</span>
+                <span class="tag">shadow</span>
+              </div>
+              <div class="code-viewer">
+                <div class="code-viewer__header">
+                  <span>CSS</span>
+                  <button class="copy-btn" data-target="code-glow-text">Copier</button>
+                </div>
+                <div class="code-viewer__content">
+                  <pre><code id="code-glow-text">.text-glow {
+  color: #6366f1;
+  text-shadow:
+    0 0 10px rgba(99, 102, 241, 0.8),
+    0 0 20px rgba(99, 102, 241, 0.6),
+    0 0 40px rgba(99, 102, 241, 0.4);
+}</code></pre>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Neon -->
+          <article class="text-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="text-card__preview">
+              <span class="text-neon">NEON</span>
+            </div>
+            <div class="text-card__info">
+              <h3 class="text-card__name">Neon Text</h3>
+              <div class="text-card__tags">
+                <span class="tag tag--primary">neon</span>
+                <span class="tag">glow</span>
+              </div>
+              <div class="code-viewer">
+                <div class="code-viewer__header">
+                  <span>CSS</span>
+                  <button class="copy-btn" data-target="code-neon-text">Copier</button>
+                </div>
+                <div class="code-viewer__content">
+                  <pre><code id="code-neon-text">.text-neon {
+  color: #fff;
+  text-shadow:
+    0 0 5px #fff,
+    0 0 10px #fff,
+    0 0 20px #ec4899,
+    0 0 40px #ec4899,
+    0 0 80px #ec4899;
+}</code></pre>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Glow Pulse -->
+          <article class="text-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="text-card__preview">
+              <span class="text-glow-pulse">PULSE</span>
+            </div>
+            <div class="text-card__info">
+              <h3 class="text-card__name">Glow Pulse</h3>
+              <div class="text-card__tags">
+                <span class="tag tag--primary">pulse</span>
+                <span class="tag">animated</span>
+              </div>
+              <div class="code-viewer">
+                <div class="code-viewer__header">
+                  <span>CSS</span>
+                  <button class="copy-btn" data-target="code-glow-pulse-text">Copier</button>
+                </div>
+                <div class="code-viewer__content">
+                  <pre><code id="code-glow-pulse-text">.text-glow-pulse {
+  color: #6366f1;
+  animation: glowPulse 2s ease-in-out infinite;
+}
+@keyframes glowPulse {
+  0%, 100% {
+    text-shadow: 0 0 5px rgba(99, 102, 241, 0.5);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(99, 102, 241, 0.8),
+                 0 0 40px rgba(99, 102, 241, 0.6);
+  }
+}</code></pre>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Section: Special -->
+      <section class="component-section">
+        <h2>Special Effects</h2>
+        <div class="text-grid">
+          <!-- Glitch -->
+          <article class="text-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="text-card__preview">
+              <span class="text-glitch" data-text="GLITCH">GLITCH</span>
+            </div>
+            <div class="text-card__info">
+              <h3 class="text-card__name">Glitch Effect</h3>
+              <div class="text-card__tags">
+                <span class="tag tag--primary">glitch</span>
+                <span class="tag">cyber</span>
+              </div>
+              <div class="code-viewer">
+                <div class="code-viewer__header">
+                  <span>CSS</span>
+                  <button class="copy-btn" data-target="code-glitch">Copier</button>
+                </div>
+                <div class="code-viewer__content">
+                  <pre><code id="code-glitch">.text-glitch {
+  color: #fff;
+  position: relative;
+}
+.text-glitch::before,
+.text-glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0; left: 0;
+}
+.text-glitch::before {
+  color: #ff0000;
+  animation: glitch-1 0.3s infinite alternate;
+  clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+}
+.text-glitch::after {
+  color: #00ffff;
+  animation: glitch-2 0.3s infinite alternate;
+  clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+}</code></pre>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Typewriter -->
+          <article class="text-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="text-card__preview">
+              <span class="text-typewriter">Hello, World!</span>
+            </div>
+            <div class="text-card__info">
+              <h3 class="text-card__name">Typewriter</h3>
+              <div class="text-card__tags">
+                <span class="tag tag--primary">typewriter</span>
+                <span class="tag">cursor</span>
+              </div>
+              <div class="code-viewer">
+                <div class="code-viewer__header">
+                  <span>CSS</span>
+                  <button class="copy-btn" data-target="code-typewriter">Copier</button>
+                </div>
+                <div class="code-viewer__content">
+                  <pre><code id="code-typewriter">.text-typewriter {
+  font-family: monospace;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 3px solid #6366f1;
+  animation:
+    typing 3s steps(20) infinite,
+    blink 0.5s step-end infinite;
+  width: 20ch;
+}
+@keyframes typing {
+  0%, 100% { width: 0; }
+  50%, 90% { width: 20ch; }
+}
+@keyframes blink {
+  50% { border-color: transparent; }
+}</code></pre>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Wave -->
+          <article class="text-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="text-card__preview">
+              <span class="text-wave">
+                <span>W</span><span>A</span><span>V</span><span>E</span><span>!</span><span>!</span><span>!</span>
+              </span>
+            </div>
+            <div class="text-card__info">
+              <h3 class="text-card__name">Wave Text</h3>
+              <div class="text-card__tags">
+                <span class="tag tag--primary">wave</span>
+                <span class="tag">bounce</span>
+              </div>
+              <div class="code-viewer">
+                <div class="code-viewer__header">
+                  <span>CSS</span>
+                  <button class="copy-btn" data-target="code-wave-text">Copier</button>
+                </div>
+                <div class="code-viewer__content">
+                  <pre><code id="code-wave-text">.text-wave {
+  display: flex;
+}
+.text-wave span {
+  color: #6366f1;
+  animation: wave 1.5s ease-in-out infinite;
+}
+.text-wave span:nth-child(1) { animation-delay: 0s; }
+.text-wave span:nth-child(2) { animation-delay: 0.1s; }
+/* etc... */
+@keyframes wave {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}</code></pre>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Section: 3D -->
+      <section class="component-section">
+        <h2>3D & Shadow</h2>
+        <div class="text-grid">
+          <!-- 3D -->
+          <article class="text-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="text-card__preview">
+              <span class="text-3d">3D TEXT</span>
+            </div>
+            <div class="text-card__info">
+              <h3 class="text-card__name">3D Text</h3>
+              <div class="text-card__tags">
+                <span class="tag tag--primary">3D</span>
+                <span class="tag">shadow</span>
+              </div>
+              <div class="code-viewer">
+                <div class="code-viewer__header">
+                  <span>CSS</span>
+                  <button class="copy-btn" data-target="code-3d-text">Copier</button>
+                </div>
+                <div class="code-viewer__content">
+                  <pre><code id="code-3d-text">.text-3d {
+  color: #6366f1;
+  text-shadow:
+    1px 1px 0 #4f46e5,
+    2px 2px 0 #4338ca,
+    3px 3px 0 #3730a3,
+    4px 4px 0 #312e81,
+    5px 5px 10px rgba(0, 0, 0, 0.5);
+}</code></pre>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Stroke -->
+          <article class="text-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="text-card__preview">
+              <span class="text-stroke-fill">STROKE</span>
+            </div>
+            <div class="text-card__info">
+              <h3 class="text-card__name">Stroke Fill</h3>
+              <div class="text-card__tags">
+                <span class="tag tag--primary">stroke</span>
+                <span class="tag">hover</span>
+              </div>
+              <div class="code-viewer">
+                <div class="code-viewer__header">
+                  <span>CSS</span>
+                  <button class="copy-btn" data-target="code-stroke">Copier</button>
+                </div>
+                <div class="code-viewer__content">
+                  <pre><code id="code-stroke">.text-stroke-fill {
+  color: transparent;
+  -webkit-text-stroke: 2px #6366f1;
+  transition: color 0.3s ease;
+}
+.text-stroke-fill:hover {
+  color: #6366f1;
+}</code></pre>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Blur Focus -->
+          <article class="text-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="text-card__preview">
+              <span class="text-blur-focus">HOVER ME</span>
+            </div>
+            <div class="text-card__info">
+              <h3 class="text-card__name">Blur Focus</h3>
+              <div class="text-card__tags">
+                <span class="tag tag--primary">blur</span>
+                <span class="tag">hover</span>
+              </div>
+              <div class="code-viewer">
+                <div class="code-viewer__header">
+                  <span>CSS</span>
+                  <button class="copy-btn" data-target="code-blur">Copier</button>
+                </div>
+                <div class="code-viewer__content">
+                  <pre><code id="code-blur">.text-blur-focus {
+  color: #fff;
+  filter: blur(5px);
+  transition: filter 0.3s ease;
+}
+.text-blur-focus:hover {
+  filter: blur(0);
+}</code></pre>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="../../assets/js/copy-code.js"></script>
+  <script src="../../assets/js/security-system.js"></script>
+</body>
+</html>

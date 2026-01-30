@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Typography — Duke-components</title>
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&family=Fira+Code:wght@300;400;500;600;700&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    /* ========== TYPOGRAPHY PAGE STYLES ========== */
+
+    .typo-section {
+      margin-bottom: 48px;
+    }
+
+    .typo-section__title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .typo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    /* ========== FONT FAMILIES ========== */
+
+    .font-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .font-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .font-card__name {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .font-card__preview {
+      font-size: 2rem;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .font-card__sample {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .font-card__code {
+      margin-top: 16px;
+      padding: 12px;
+      background: var(--bg);
+      border-radius: 8px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.75rem;
+      color: var(--primary);
+    }
+
+    /* Font families */
+    .font-inter { font-family: 'Inter', sans-serif; }
+    .font-poppins { font-family: 'Poppins', sans-serif; }
+    .font-playfair { font-family: 'Playfair Display', serif; }
+    .font-fira { font-family: 'Fira Code', monospace; }
+    .font-system { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+    .font-georgia { font-family: Georgia, 'Times New Roman', serif; }
+
+    /* ========== FONT SIZES ========== */
+
+    .size-scale {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .size-item {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+      padding: 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: border-color 0.2s ease;
+    }
+
+    .size-item:hover {
+      border-color: var(--primary);
+    }
+
+    .size-item__label {
+      min-width: 80px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-family: 'Fira Code', monospace;
+    }
+
+    .size-item__value {
+      min-width: 60px;
+      font-size: 0.75rem;
+      color: var(--primary);
+      font-family: 'Fira Code', monospace;
+    }
+
+    .size-item__preview {
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .text-xs { font-size: 0.75rem; }     /* 12px */
+    .text-sm { font-size: 0.875rem; }    /* 14px */
+    .text-base { font-size: 1rem; }      /* 16px */
+    .text-lg { font-size: 1.125rem; }    /* 18px */
+    .text-xl { font-size: 1.25rem; }     /* 20px */
+    .text-2xl { font-size: 1.5rem; }     /* 24px */
+    .text-3xl { font-size: 1.875rem; }   /* 30px */
+    .text-4xl { font-size: 2.25rem; }    /* 36px */
+    .text-5xl { font-size: 3rem; }       /* 48px */
+    .text-6xl { font-size: 3.75rem; }    /* 60px */
+
+    /* ========== FONT WEIGHTS ========== */
+
+    .weight-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .weight-item {
+      padding: 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s ease;
+    }
+
+    .weight-item:hover {
+      border-color: var(--primary);
+    }
+
+    .weight-item__preview {
+      font-size: 2rem;
+      margin-bottom: 12px;
+    }
+
+    .weight-item__name {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-family: 'Fira Code', monospace;
+    }
+
+    .weight-item__value {
+      font-size: 0.75rem;
+      color: var(--primary);
+      font-family: 'Fira Code', monospace;
+    }
+
+    .font-thin { font-weight: 100; }
+    .font-extralight { font-weight: 200; }
+    .font-light { font-weight: 300; }
+    .font-normal { font-weight: 400; }
+    .font-medium { font-weight: 500; }
+    .font-semibold { font-weight: 600; }
+    .font-bold { font-weight: 700; }
+    .font-extrabold { font-weight: 800; }
+    .font-black { font-weight: 900; }
+
+    /* ========== LINE HEIGHTS ========== */
+
+    .leading-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .leading-item {
+      padding: 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: border-color 0.2s ease;
+    }
+
+    .leading-item:hover {
+      border-color: var(--primary);
+    }
+
+    .leading-item__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .leading-item__name {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-family: 'Fira Code', monospace;
+    }
+
+    .leading-item__value {
+      font-size: 0.75rem;
+      color: var(--primary);
+      font-family: 'Fira Code', monospace;
+    }
+
+    .leading-item__preview {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    .leading-none { line-height: 1; }
+    .leading-tight { line-height: 1.25; }
+    .leading-snug { line-height: 1.375; }
+    .leading-normal { line-height: 1.5; }
+    .leading-relaxed { line-height: 1.625; }
+    .leading-loose { line-height: 2; }
+
+    /* ========== LETTER SPACING ========== */
+
+    .tracking-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .tracking-item {
+      padding: 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: border-color 0.2s ease;
+    }
+
+    .tracking-item:hover {
+      border-color: var(--primary);
+    }
+
+    .tracking-item__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .tracking-item__name {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-family: 'Fira Code', monospace;
+    }
+
+    .tracking-item__value {
+      font-size: 0.75rem;
+      color: var(--primary);
+      font-family: 'Fira Code', monospace;
+    }
+
+    .tracking-item__preview {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    .tracking-tighter { letter-spacing: -0.05em; }
+    .tracking-tight { letter-spacing: -0.025em; }
+    .tracking-normal { letter-spacing: 0; }
+    .tracking-wide { letter-spacing: 0.025em; }
+    .tracking-wider { letter-spacing: 0.05em; }
+    .tracking-widest { letter-spacing: 0.1em; }
+
+    /* ========== HEADINGS ========== */
+
+    .headings-showcase {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .heading-item {
+      padding: 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: border-color 0.2s ease;
+    }
+
+    .heading-item:hover {
+      border-color: var(--primary);
+    }
+
+    .heading-item__meta {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 12px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-family: 'Fira Code', monospace;
+    }
+
+    .heading-item__meta span {
+      color: var(--primary);
+    }
+
+    .typo-h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+    }
+
+    .typo-h2 {
+      font-size: 2.25rem;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    .typo-h3 {
+      font-size: 1.875rem;
+      font-weight: 600;
+      line-height: 1.25;
+      letter-spacing: -0.015em;
+    }
+
+    .typo-h4 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .typo-h5 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    .typo-h6 {
+      font-size: 1rem;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    /* ========== TEXT STYLES ========== */
+
+    .text-styles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .text-style-card {
+      padding: 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: border-color 0.2s ease;
+    }
+
+    .text-style-card:hover {
+      border-color: var(--primary);
+    }
+
+    .text-style-card__name {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-family: 'Fira Code', monospace;
+      margin-bottom: 12px;
+    }
+
+    .text-style-card__preview {
+      margin-bottom: 16px;
+    }
+
+    .text-style-card__code {
+      padding: 12px;
+      background: var(--bg);
+      border-radius: 8px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.75rem;
+      color: var(--primary);
+      white-space: pre-wrap;
+    }
+
+    /* Text decorations */
+    .text-underline { text-decoration: underline; }
+    .text-line-through { text-decoration: line-through; }
+    .text-overline { text-decoration: overline; }
+    .text-no-underline { text-decoration: none; }
+
+    /* Text transforms */
+    .text-uppercase { text-transform: uppercase; }
+    .text-lowercase { text-transform: lowercase; }
+    .text-capitalize { text-transform: capitalize; }
+
+    /* Text styles */
+    .text-italic { font-style: italic; }
+    .text-not-italic { font-style: normal; }
+
+    /* ========== TEXT UTILITIES ========== */
+
+    .utilities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 24px;
+    }
+
+    .utility-card {
+      padding: 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: border-color 0.2s ease;
+    }
+
+    .utility-card:hover {
+      border-color: var(--primary);
+    }
+
+    .utility-card__name {
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .utility-card__desc {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .utility-card__preview {
+      padding: 16px;
+      background: var(--bg);
+      border-radius: 8px;
+      margin-bottom: 16px;
+    }
+
+    .utility-card__code {
+      padding: 12px;
+      background: var(--bg);
+      border-radius: 8px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.75rem;
+      color: var(--primary);
+      white-space: pre-wrap;
+    }
+
+    /* Truncate */
+    .text-truncate {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* Line clamp */
+    .line-clamp-2 {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .line-clamp-3 {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* Text alignment */
+    .text-left { text-align: left; }
+    .text-center { text-align: center; }
+    .text-right { text-align: right; }
+    .text-justify { text-align: justify; }
+
+    /* ========== GRADIENT TEXT ========== */
+
+    .gradient-text-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .gradient-text-card {
+      padding: 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s ease;
+    }
+
+    .gradient-text-card:hover {
+      border-color: var(--primary);
+    }
+
+    .gradient-text-card__preview {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 16px;
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .gradient-text-card__name {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-family: 'Fira Code', monospace;
+    }
+
+    .gradient-text-1 { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+    .gradient-text-2 { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+    .gradient-text-3 { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+    .gradient-text-4 { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+    .gradient-text-5 { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+    .gradient-text-6 { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
+
+    /* ========== CODE TYPOGRAPHY ========== */
+
+    .code-typo-card {
+      padding: 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: border-color 0.2s ease;
+    }
+
+    .code-typo-card:hover {
+      border-color: var(--primary);
+    }
+
+    .code-typo-card__name {
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .code-inline {
+      padding: 2px 8px;
+      background: rgba(99, 102, 241, 0.1);
+      color: var(--primary);
+      border-radius: 4px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.875em;
+    }
+
+    .code-block {
+      padding: 16px;
+      background: var(--bg);
+      border-radius: 8px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.875rem;
+      line-height: 1.7;
+      overflow-x: auto;
+    }
+
+    .code-block .comment { color: #6b7280; }
+    .code-block .keyword { color: #c084fc; }
+    .code-block .string { color: #34d399; }
+    .code-block .function { color: #60a5fa; }
+    .code-block .number { color: #f472b6; }
+
+    /* ========== TOAST ========== */
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      padding: 12px 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .toast--success {
+      border-color: var(--success);
+      background: rgba(16, 185, 129, 0.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+      <div class="sidebar__logo">
+        <a href="../index.html" style="text-decoration: none; color: inherit;">
+          <span>Duke</span>-components
+        </a>
+      </div>
+
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Styles</h3>
+        <ul class="sidebar__nav">
+          <li><a href="../palettes/index.html" class="sidebar__link">
+            <span>🎨</span> Palettes
+          </a></li>
+          <li><a href="index.html" class="sidebar__link sidebar__link--active">
+            <span>🔤</span> Typography
+          </a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Retour</h3>
+        <ul class="sidebar__nav">
+          <li><a href="../index.html" class="sidebar__link">
+            <span>🏠</span> Dashboard
+          </a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main">
+      <header class="main__header">
+        <h1 class="main__title">Typography</h1>
+        <p class="main__subtitle">Système typographique complet — Cliquez pour copier le CSS</p>
+      </header>
+
+      <!-- ========== FONT FAMILIES ========== -->
+      <section class="typo-section">
+        <h2 class="typo-section__title">Font Families</h2>
+        <div class="typo-grid">
+          <!-- Inter -->
+          <div class="font-card" data-copy="font-family: 'Inter', sans-serif;">
+            <div class="font-card__name">Inter — Sans-serif moderne</div>
+            <div class="font-card__preview font-inter">Aa Bb Cc 123</div>
+            <div class="font-card__sample font-inter">
+              The quick brown fox jumps over the lazy dog.
+              Portez ce vieux whisky au juge blond qui fume.
+            </div>
+            <div class="font-card__code">font-family: 'Inter', sans-serif;</div>
+          </div>
+
+          <!-- Poppins -->
+          <div class="font-card" data-copy="font-family: 'Poppins', sans-serif;">
+            <div class="font-card__name">Poppins — Sans-serif géométrique</div>
+            <div class="font-card__preview font-poppins">Aa Bb Cc 123</div>
+            <div class="font-card__sample font-poppins">
+              The quick brown fox jumps over the lazy dog.
+              Portez ce vieux whisky au juge blond qui fume.
+            </div>
+            <div class="font-card__code">font-family: 'Poppins', sans-serif;</div>
+          </div>
+
+          <!-- Playfair Display -->
+          <div class="font-card" data-copy="font-family: 'Playfair Display', serif;">
+            <div class="font-card__name">Playfair Display — Serif élégante</div>
+            <div class="font-card__preview font-playfair">Aa Bb Cc 123</div>
+            <div class="font-card__sample font-playfair">
+              The quick brown fox jumps over the lazy dog.
+              Portez ce vieux whisky au juge blond qui fume.
+            </div>
+            <div class="font-card__code">font-family: 'Playfair Display', serif;</div>
+          </div>
+
+          <!-- Fira Code -->
+          <div class="font-card" data-copy="font-family: 'Fira Code', monospace;">
+            <div class="font-card__name">Fira Code — Monospace ligatures</div>
+            <div class="font-card__preview font-fira">Aa Bb Cc 123</div>
+            <div class="font-card__sample font-fira">
+              const fn = () => { return true; }
+              // === !== >= <= => ->
+            </div>
+            <div class="font-card__code">font-family: 'Fira Code', monospace;</div>
+          </div>
+
+          <!-- System UI -->
+          <div class="font-card" data-copy="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
+            <div class="font-card__name">System UI — Fonts natives</div>
+            <div class="font-card__preview font-system">Aa Bb Cc 123</div>
+            <div class="font-card__sample font-system">
+              The quick brown fox jumps over the lazy dog.
+              Portez ce vieux whisky au juge blond qui fume.
+            </div>
+            <div class="font-card__code">font-family: system-ui, -apple-system, sans-serif;</div>
+          </div>
+
+          <!-- Georgia -->
+          <div class="font-card" data-copy="font-family: Georgia, 'Times New Roman', serif;">
+            <div class="font-card__name">Georgia — Serif classique</div>
+            <div class="font-card__preview font-georgia">Aa Bb Cc 123</div>
+            <div class="font-card__sample font-georgia">
+              The quick brown fox jumps over the lazy dog.
+              Portez ce vieux whisky au juge blond qui fume.
+            </div>
+            <div class="font-card__code">font-family: Georgia, serif;</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== FONT SIZES ========== -->
+      <section class="typo-section">
+        <h2 class="typo-section__title">Font Sizes</h2>
+        <div class="size-scale">
+          <div class="size-item" data-copy="font-size: 0.75rem; /* 12px */">
+            <span class="size-item__label">text-xs</span>
+            <span class="size-item__value">12px</span>
+            <span class="size-item__preview text-xs">The quick brown fox jumps over the lazy dog</span>
+          </div>
+          <div class="size-item" data-copy="font-size: 0.875rem; /* 14px */">
+            <span class="size-item__label">text-sm</span>
+            <span class="size-item__value">14px</span>
+            <span class="size-item__preview text-sm">The quick brown fox jumps over the lazy dog</span>
+          </div>
+          <div class="size-item" data-copy="font-size: 1rem; /* 16px */">
+            <span class="size-item__label">text-base</span>
+            <span class="size-item__value">16px</span>
+            <span class="size-item__preview text-base">The quick brown fox jumps over the lazy dog</span>
+          </div>
+          <div class="size-item" data-copy="font-size: 1.125rem; /* 18px */">
+            <span class="size-item__label">text-lg</span>
+            <span class="size-item__value">18px</span>
+            <span class="size-item__preview text-lg">The quick brown fox jumps over the lazy dog</span>
+          </div>
+          <div class="size-item" data-copy="font-size: 1.25rem; /* 20px */">
+            <span class="size-item__label">text-xl</span>
+            <span class="size-item__value">20px</span>
+            <span class="size-item__preview text-xl">The quick brown fox jumps over the lazy dog</span>
+          </div>
+          <div class="size-item" data-copy="font-size: 1.5rem; /* 24px */">
+            <span class="size-item__label">text-2xl</span>
+            <span class="size-item__value">24px</span>
+            <span class="size-item__preview text-2xl">The quick brown fox jumps over the lazy dog</span>
+          </div>
+          <div class="size-item" data-copy="font-size: 1.875rem; /* 30px */">
+            <span class="size-item__label">text-3xl</span>
+            <span class="size-item__value">30px</span>
+            <span class="size-item__preview text-3xl">The quick brown fox jumps</span>
+          </div>
+          <div class="size-item" data-copy="font-size: 2.25rem; /* 36px */">
+            <span class="size-item__label">text-4xl</span>
+            <span class="size-item__value">36px</span>
+            <span class="size-item__preview text-4xl">The quick brown fox</span>
+          </div>
+          <div class="size-item" data-copy="font-size: 3rem; /* 48px */">
+            <span class="size-item__label">text-5xl</span>
+            <span class="size-item__value">48px</span>
+            <span class="size-item__preview text-5xl">Quick brown fox</span>
+          </div>
+          <div class="size-item" data-copy="font-size: 3.75rem; /* 60px */">
+            <span class="size-item__label">text-6xl</span>
+            <span class="size-item__value">60px</span>
+            <span class="size-item__preview text-6xl">Typography</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== FONT WEIGHTS ========== -->
+      <section class="typo-section">
+        <h2 class="typo-section__title">Font Weights</h2>
+        <div class="weight-grid">
+          <div class="weight-item" data-copy="font-weight: 100;">
+            <div class="weight-item__preview font-thin font-inter">Thin</div>
+            <div class="weight-item__name">font-thin</div>
+            <div class="weight-item__value">100</div>
+          </div>
+          <div class="weight-item" data-copy="font-weight: 200;">
+            <div class="weight-item__preview font-extralight font-inter">Extra Light</div>
+            <div class="weight-item__name">font-extralight</div>
+            <div class="weight-item__value">200</div>
+          </div>
+          <div class="weight-item" data-copy="font-weight: 300;">
+            <div class="weight-item__preview font-light font-inter">Light</div>
+            <div class="weight-item__name">font-light</div>
+            <div class="weight-item__value">300</div>
+          </div>
+          <div class="weight-item" data-copy="font-weight: 400;">
+            <div class="weight-item__preview font-normal font-inter">Normal</div>
+            <div class="weight-item__name">font-normal</div>
+            <div class="weight-item__value">400</div>
+          </div>
+          <div class="weight-item" data-copy="font-weight: 500;">
+            <div class="weight-item__preview font-medium font-inter">Medium</div>
+            <div class="weight-item__name">font-medium</div>
+            <div class="weight-item__value">500</div>
+          </div>
+          <div class="weight-item" data-copy="font-weight: 600;">
+            <div class="weight-item__preview font-semibold font-inter">Semibold</div>
+            <div class="weight-item__name">font-semibold</div>
+            <div class="weight-item__value">600</div>
+          </div>
+          <div class="weight-item" data-copy="font-weight: 700;">
+            <div class="weight-item__preview font-bold font-inter">Bold</div>
+            <div class="weight-item__name">font-bold</div>
+            <div class="weight-item__value">700</div>
+          </div>
+          <div class="weight-item" data-copy="font-weight: 800;">
+            <div class="weight-item__preview font-extrabold font-inter">Extra Bold</div>
+            <div class="weight-item__name">font-extrabold</div>
+            <div class="weight-item__value">800</div>
+          </div>
+          <div class="weight-item" data-copy="font-weight: 900;">
+            <div class="weight-item__preview font-black font-inter">Black</div>
+            <div class="weight-item__name">font-black</div>
+            <div class="weight-item__value">900</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== LINE HEIGHTS ========== -->
+      <section class="typo-section">
+        <h2 class="typo-section__title">Line Heights</h2>
+        <div class="leading-grid">
+          <div class="leading-item" data-copy="line-height: 1;">
+            <div class="leading-item__header">
+              <span class="leading-item__name">leading-none</span>
+              <span class="leading-item__value">1</span>
+            </div>
+            <p class="leading-item__preview leading-none">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+          </div>
+          <div class="leading-item" data-copy="line-height: 1.25;">
+            <div class="leading-item__header">
+              <span class="leading-item__name">leading-tight</span>
+              <span class="leading-item__value">1.25</span>
+            </div>
+            <p class="leading-item__preview leading-tight">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+          </div>
+          <div class="leading-item" data-copy="line-height: 1.375;">
+            <div class="leading-item__header">
+              <span class="leading-item__name">leading-snug</span>
+              <span class="leading-item__value">1.375</span>
+            </div>
+            <p class="leading-item__preview leading-snug">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+          </div>
+          <div class="leading-item" data-copy="line-height: 1.5;">
+            <div class="leading-item__header">
+              <span class="leading-item__name">leading-normal</span>
+              <span class="leading-item__value">1.5</span>
+            </div>
+            <p class="leading-item__preview leading-normal">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+          </div>
+          <div class="leading-item" data-copy="line-height: 1.625;">
+            <div class="leading-item__header">
+              <span class="leading-item__name">leading-relaxed</span>
+              <span class="leading-item__value">1.625</span>
+            </div>
+            <p class="leading-item__preview leading-relaxed">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+          </div>
+          <div class="leading-item" data-copy="line-height: 2;">
+            <div class="leading-item__header">
+              <span class="leading-item__name">leading-loose</span>
+              <span class="leading-item__value">2</span>
+            </div>
+            <p class="leading-item__preview leading-loose">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== LETTER SPACING ========== -->
+      <section class="typo-section">
+        <h2 class="typo-section__title">Letter Spacing</h2>
+        <div class="tracking-grid">
+          <div class="tracking-item" data-copy="letter-spacing: -0.05em;">
+            <div class="tracking-item__header">
+              <span class="tracking-item__name">tracking-tighter</span>
+              <span class="tracking-item__value">-0.05em</span>
+            </div>
+            <div class="tracking-item__preview tracking-tighter">Typography Design</div>
+          </div>
+          <div class="tracking-item" data-copy="letter-spacing: -0.025em;">
+            <div class="tracking-item__header">
+              <span class="tracking-item__name">tracking-tight</span>
+              <span class="tracking-item__value">-0.025em</span>
+            </div>
+            <div class="tracking-item__preview tracking-tight">Typography Design</div>
+          </div>
+          <div class="tracking-item" data-copy="letter-spacing: 0;">
+            <div class="tracking-item__header">
+              <span class="tracking-item__name">tracking-normal</span>
+              <span class="tracking-item__value">0</span>
+            </div>
+            <div class="tracking-item__preview tracking-normal">Typography Design</div>
+          </div>
+          <div class="tracking-item" data-copy="letter-spacing: 0.025em;">
+            <div class="tracking-item__header">
+              <span class="tracking-item__name">tracking-wide</span>
+              <span class="tracking-item__value">0.025em</span>
+            </div>
+            <div class="tracking-item__preview tracking-wide">Typography Design</div>
+          </div>
+          <div class="tracking-item" data-copy="letter-spacing: 0.05em;">
+            <div class="tracking-item__header">
+              <span class="tracking-item__name">tracking-wider</span>
+              <span class="tracking-item__value">0.05em</span>
+            </div>
+            <div class="tracking-item__preview tracking-wider">Typography Design</div>
+          </div>
+          <div class="tracking-item" data-copy="letter-spacing: 0.1em;">
+            <div class="tracking-item__header">
+              <span class="tracking-item__name">tracking-widest</span>
+              <span class="tracking-item__value">0.1em</span>
+            </div>
+            <div class="tracking-item__preview tracking-widest">Typography Design</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== HEADINGS ========== -->
+      <section class="typo-section">
+        <h2 class="typo-section__title">Headings</h2>
+        <div class="headings-showcase">
+          <div class="heading-item" data-copy="font-size: 3rem; font-weight: 800; line-height: 1.1; letter-spacing: -0.025em;">
+            <div class="heading-item__meta">
+              <span>H1</span> — <span>48px</span> — <span>800</span> — <span>-0.025em</span>
+            </div>
+            <h1 class="typo-h1">Heading Level One</h1>
+          </div>
+          <div class="heading-item" data-copy="font-size: 2.25rem; font-weight: 700; line-height: 1.2; letter-spacing: -0.02em;">
+            <div class="heading-item__meta">
+              <span>H2</span> — <span>36px</span> — <span>700</span> — <span>-0.02em</span>
+            </div>
+            <h2 class="typo-h2">Heading Level Two</h2>
+          </div>
+          <div class="heading-item" data-copy="font-size: 1.875rem; font-weight: 600; line-height: 1.25; letter-spacing: -0.015em;">
+            <div class="heading-item__meta">
+              <span>H3</span> — <span>30px</span> — <span>600</span> — <span>-0.015em</span>
+            </div>
+            <h3 class="typo-h3">Heading Level Three</h3>
+          </div>
+          <div class="heading-item" data-copy="font-size: 1.5rem; font-weight: 600; line-height: 1.3;">
+            <div class="heading-item__meta">
+              <span>H4</span> — <span>24px</span> — <span>600</span>
+            </div>
+            <h4 class="typo-h4">Heading Level Four</h4>
+          </div>
+          <div class="heading-item" data-copy="font-size: 1.25rem; font-weight: 600; line-height: 1.4;">
+            <div class="heading-item__meta">
+              <span>H5</span> — <span>20px</span> — <span>600</span>
+            </div>
+            <h5 class="typo-h5">Heading Level Five</h5>
+          </div>
+          <div class="heading-item" data-copy="font-size: 1rem; font-weight: 600; line-height: 1.5;">
+            <div class="heading-item__meta">
+              <span>H6</span> — <span>16px</span> — <span>600</span>
+            </div>
+            <h6 class="typo-h6">Heading Level Six</h6>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== TEXT STYLES ========== -->
+      <section class="typo-section">
+        <h2 class="typo-section__title">Text Styles</h2>
+        <div class="text-styles-grid">
+          <!-- Underline -->
+          <div class="text-style-card" data-copy="text-decoration: underline;">
+            <div class="text-style-card__name">text-underline</div>
+            <div class="text-style-card__preview">
+              <span class="text-underline">This text is underlined</span>
+            </div>
+            <div class="text-style-card__code">text-decoration: underline;</div>
+          </div>
+
+          <!-- Line Through -->
+          <div class="text-style-card" data-copy="text-decoration: line-through;">
+            <div class="text-style-card__name">text-line-through</div>
+            <div class="text-style-card__preview">
+              <span class="text-line-through">This text has strikethrough</span>
+            </div>
+            <div class="text-style-card__code">text-decoration: line-through;</div>
+          </div>
+
+          <!-- Uppercase -->
+          <div class="text-style-card" data-copy="text-transform: uppercase;">
+            <div class="text-style-card__name">text-uppercase</div>
+            <div class="text-style-card__preview">
+              <span class="text-uppercase">This text is uppercase</span>
+            </div>
+            <div class="text-style-card__code">text-transform: uppercase;</div>
+          </div>
+
+          <!-- Lowercase -->
+          <div class="text-style-card" data-copy="text-transform: lowercase;">
+            <div class="text-style-card__name">text-lowercase</div>
+            <div class="text-style-card__preview">
+              <span class="text-lowercase">THIS TEXT IS LOWERCASE</span>
+            </div>
+            <div class="text-style-card__code">text-transform: lowercase;</div>
+          </div>
+
+          <!-- Capitalize -->
+          <div class="text-style-card" data-copy="text-transform: capitalize;">
+            <div class="text-style-card__name">text-capitalize</div>
+            <div class="text-style-card__preview">
+              <span class="text-capitalize">this text is capitalized</span>
+            </div>
+            <div class="text-style-card__code">text-transform: capitalize;</div>
+          </div>
+
+          <!-- Italic -->
+          <div class="text-style-card" data-copy="font-style: italic;">
+            <div class="text-style-card__name">text-italic</div>
+            <div class="text-style-card__preview">
+              <span class="text-italic">This text is italic</span>
+            </div>
+            <div class="text-style-card__code">font-style: italic;</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== TEXT UTILITIES ========== -->
+      <section class="typo-section">
+        <h2 class="typo-section__title">Text Utilities</h2>
+        <div class="utilities-grid">
+          <!-- Truncate -->
+          <div class="utility-card" data-copy="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+            <div class="utility-card__name">Text Truncate</div>
+            <div class="utility-card__desc">Tronque le texte avec des points de suspension</div>
+            <div class="utility-card__preview">
+              <div class="text-truncate" style="max-width: 250px;">
+                This is a very long text that will be truncated with ellipsis when it overflows
+              </div>
+            </div>
+            <div class="utility-card__code">overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;</div>
+          </div>
+
+          <!-- Line Clamp 2 -->
+          <div class="utility-card" data-copy="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+            <div class="utility-card__name">Line Clamp (2 lines)</div>
+            <div class="utility-card__desc">Limite le texte à 2 lignes maximum</div>
+            <div class="utility-card__preview">
+              <div class="line-clamp-2">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
+              </div>
+            </div>
+            <div class="utility-card__code">display: -webkit-box;
+-webkit-line-clamp: 2;
+-webkit-box-orient: vertical;
+overflow: hidden;</div>
+          </div>
+
+          <!-- Line Clamp 3 -->
+          <div class="utility-card" data-copy="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+            <div class="utility-card__name">Line Clamp (3 lines)</div>
+            <div class="utility-card__desc">Limite le texte à 3 lignes maximum</div>
+            <div class="utility-card__preview">
+              <div class="line-clamp-3">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+              </div>
+            </div>
+            <div class="utility-card__code">display: -webkit-box;
+-webkit-line-clamp: 3;
+-webkit-box-orient: vertical;
+overflow: hidden;</div>
+          </div>
+
+          <!-- Text Align -->
+          <div class="utility-card" data-copy="text-align: center;">
+            <div class="utility-card__name">Text Alignment</div>
+            <div class="utility-card__desc">Alignement du texte</div>
+            <div class="utility-card__preview">
+              <p class="text-left" style="margin-bottom: 8px;">Left aligned text</p>
+              <p class="text-center" style="margin-bottom: 8px;">Center aligned text</p>
+              <p class="text-right">Right aligned text</p>
+            </div>
+            <div class="utility-card__code">text-align: left;
+text-align: center;
+text-align: right;</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== GRADIENT TEXT ========== -->
+      <section class="typo-section">
+        <h2 class="typo-section__title">Gradient Text</h2>
+        <div class="gradient-text-grid">
+          <div class="gradient-text-card" data-copy="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+            <div class="gradient-text-card__preview gradient-text-1">Gradient</div>
+            <div class="gradient-text-card__name">Purple Dream</div>
+          </div>
+          <div class="gradient-text-card" data-copy="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+            <div class="gradient-text-card__preview gradient-text-2">Gradient</div>
+            <div class="gradient-text-card__name">Pink Sunset</div>
+          </div>
+          <div class="gradient-text-card" data-copy="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+            <div class="gradient-text-card__preview gradient-text-3">Gradient</div>
+            <div class="gradient-text-card__name">Ocean Blue</div>
+          </div>
+          <div class="gradient-text-card" data-copy="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+            <div class="gradient-text-card__preview gradient-text-4">Gradient</div>
+            <div class="gradient-text-card__name">Fresh Green</div>
+          </div>
+          <div class="gradient-text-card" data-copy="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+            <div class="gradient-text-card__preview gradient-text-5">Gradient</div>
+            <div class="gradient-text-card__name">Warm Sunset</div>
+          </div>
+          <div class="gradient-text-card" data-copy="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+            <div class="gradient-text-card__preview gradient-text-6">Gradient</div>
+            <div class="gradient-text-card__name">Soft Pastel</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== CODE TYPOGRAPHY ========== -->
+      <section class="typo-section">
+        <h2 class="typo-section__title">Code Typography</h2>
+        <div class="typo-grid">
+          <!-- Inline Code -->
+          <div class="code-typo-card" data-copy="padding: 2px 8px; background: rgba(99, 102, 241, 0.1); color: var(--primary); border-radius: 4px; font-family: 'Fira Code', monospace; font-size: 0.875em;">
+            <div class="code-typo-card__name">Inline Code</div>
+            <p style="margin-bottom: 16px;">
+              Utilisez <code class="code-inline">const</code> pour déclarer une variable constante et <code class="code-inline">let</code> pour une variable modifiable.
+            </p>
+            <div class="code-block">padding: 2px 8px;
+background: rgba(99, 102, 241, 0.1);
+border-radius: 4px;
+font-family: monospace;</div>
+          </div>
+
+          <!-- Code Block -->
+          <div class="code-typo-card" data-copy="padding: 16px; background: var(--bg); border-radius: 8px; font-family: 'Fira Code', monospace; font-size: 0.875rem; line-height: 1.7;">
+            <div class="code-typo-card__name">Code Block</div>
+            <div class="code-block">
+<span class="comment">// Fonction de salutation</span>
+<span class="keyword">const</span> <span class="function">greet</span> = (name) => {
+  <span class="keyword">return</span> <span class="string">`Hello, ${name}!`</span>;
+};
+
+<span class="function">console.log</span>(<span class="function">greet</span>(<span class="string">'World'</span>));</div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Toast notification -->
+  <div class="toast toast--success" id="toast">
+    CSS copié !
+  </div>
+
+  <script>
+    // Copy to clipboard functionality
+    document.querySelectorAll('[data-copy]').forEach(element => {
+      element.addEventListener('click', () => {
+        const textToCopy = element.dataset.copy;
+        navigator.clipboard.writeText(textToCopy).then(() => {
+          showToast();
+        });
+      });
+    });
+
+    function showToast() {
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2000);
+    }
+  </script>
+</body>
+</html>

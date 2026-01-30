@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modals — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ===========================================
+       MODALS — Styles locaux
+       =========================================== */
+
+    .modals-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .modal-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .modal-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-4px);
+    }
+
+    .modal-card__preview {
+      padding: 32px;
+      background: #0a0a0a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 180px;
+    }
+
+    .modal-card__info {
+      padding: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .modal-card__name {
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .modal-card__tags {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* ===========================================
+       TRIGGER BUTTONS
+       =========================================== */
+
+    .modal-trigger {
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .modal-trigger:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
+    }
+
+    /* ===========================================
+       MODAL OVERLAY (Base)
+       =========================================== */
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .modal-overlay--active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* ===========================================
+       MODAL 1 — BASIC
+       =========================================== */
+
+    .modal-basic {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 16px;
+      padding: 32px;
+      max-width: 480px;
+      width: 90%;
+      transform: scale(0.9) translateY(20px);
+      transition: transform 0.3s ease;
+    }
+
+    .modal-overlay--active .modal-basic {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-basic__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .modal-basic__title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .modal-basic__close {
+      width: 32px;
+      height: 32px;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      border-radius: 8px;
+      color: #a1a1aa;
+      font-size: 1.25rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .modal-basic__close:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+    }
+
+    .modal-basic__body {
+      color: #a1a1aa;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .modal-basic__footer {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+    }
+
+    .modal-basic__btn {
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .modal-basic__btn--secondary {
+      background: transparent;
+      border: 1px solid #333;
+      color: #a1a1aa;
+    }
+
+    .modal-basic__btn--secondary:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+    }
+
+    .modal-basic__btn--primary {
+      background: #6366f1;
+      border: none;
+      color: white;
+    }
+
+    .modal-basic__btn--primary:hover {
+      background: #4f46e5;
+    }
+
+    /* ===========================================
+       MODAL 2 — GLASSMORPHISM
+       =========================================== */
+
+    .modal-glass {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 32px;
+      max-width: 480px;
+      width: 90%;
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+    }
+
+    .modal-overlay--active .modal-glass {
+      transform: scale(1);
+    }
+
+    /* ===========================================
+       MODAL 3 — SLIDE UP
+       =========================================== */
+
+    .modal-slide {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 24px 24px 0 0;
+      padding: 32px;
+      max-width: 600px;
+      width: 100%;
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%) translateY(100%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .modal-overlay--active .modal-slide {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .modal-slide__handle {
+      width: 40px;
+      height: 4px;
+      background: #333;
+      border-radius: 2px;
+      margin: 0 auto 24px;
+    }
+
+    /* ===========================================
+       MODAL 4 — CONFIRMATION
+       =========================================== */
+
+    .modal-confirm {
+      background: #1a1a1a;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 16px;
+      padding: 32px;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+    }
+
+    .modal-overlay--active .modal-confirm {
+      transform: scale(1);
+    }
+
+    .modal-confirm__icon {
+      width: 64px;
+      height: 64px;
+      background: rgba(239, 68, 68, 0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin: 0 auto 20px;
+    }
+
+    .modal-confirm__title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+
+    .modal-confirm__text {
+      color: #71717a;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .modal-confirm__actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .modal-confirm__btn {
+      flex: 1;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .modal-confirm__btn--cancel {
+      background: transparent;
+      border: 1px solid #333;
+      color: #a1a1aa;
+    }
+
+    .modal-confirm__btn--cancel:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .modal-confirm__btn--danger {
+      background: #ef4444;
+      border: none;
+      color: white;
+    }
+
+    .modal-confirm__btn--danger:hover {
+      background: #dc2626;
+    }
+
+    /* ===========================================
+       MODAL 5 — SUCCESS
+       =========================================== */
+
+    .modal-success {
+      background: #1a1a1a;
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      border-radius: 16px;
+      padding: 40px;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+    }
+
+    .modal-overlay--active .modal-success {
+      transform: scale(1);
+    }
+
+    .modal-success__icon {
+      width: 80px;
+      height: 80px;
+      background: rgba(34, 197, 94, 0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      margin: 0 auto 24px;
+      animation: success-pulse 2s ease infinite;
+    }
+
+    @keyframes success-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
+      50% { box-shadow: 0 0 0 15px rgba(34, 197, 94, 0); }
+    }
+
+    .modal-success__title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #22c55e;
+      margin-bottom: 12px;
+    }
+
+    .modal-success__text {
+      color: #71717a;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .modal-success__btn {
+      padding: 12px 32px;
+      background: #22c55e;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .modal-success__btn:hover {
+      background: #16a34a;
+    }
+
+    /* ===========================================
+       MODAL 6 — FORM
+       =========================================== */
+
+    .modal-form {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 16px;
+      padding: 32px;
+      max-width: 480px;
+      width: 90%;
+      transform: translateY(-30px);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .modal-overlay--active .modal-form {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .modal-form__header {
+      margin-bottom: 24px;
+    }
+
+    .modal-form__title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .modal-form__subtitle {
+      color: #71717a;
+      font-size: 0.9rem;
+    }
+
+    .modal-form__group {
+      margin-bottom: 16px;
+    }
+
+    .modal-form__label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #a1a1aa;
+      margin-bottom: 8px;
+    }
+
+    .modal-form__input {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid #333;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 0.95rem;
+      transition: border-color 0.2s;
+    }
+
+    .modal-form__input:focus {
+      outline: none;
+      border-color: #6366f1;
+    }
+
+    .modal-form__input::placeholder {
+      color: #52525b;
+    }
+
+    .modal-form__footer {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    /* ===========================================
+       CODE BLOCK
+       =========================================== */
+
+    .code-block {
+      background: #1a1a1a;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 16px;
+    }
+
+    .code-block__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .code-block__lang {
+      font-size: 0.75rem;
+      color: #71717a;
+      text-transform: uppercase;
+    }
+
+    .code-block__copy {
+      padding: 6px 12px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: #a1a1aa;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .code-block__copy:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+    }
+
+    .code-block__content {
+      padding: 16px;
+      overflow-x: auto;
+    }
+
+    .code-block__content pre {
+      margin: 0;
+      font-family: "Fira Code", monospace;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: #e0e0e0;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      font-size: 0.75rem;
+      color: #a1a1aa;
+    }
+
+    .tag--primary {
+      background: rgba(99, 102, 241, 0.15);
+      border-color: rgba(99, 102, 241, 0.3);
+      color: #818cf8;
+    }
+
+    /* Section styling */
+    .section {
+      margin-bottom: 48px;
+    }
+
+    .section__title {
+      font-size: 1.5rem;
+      margin-bottom: 8px;
+    }
+
+    .section__desc {
+      color: #a1a1aa;
+      margin-bottom: 24px;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar__logo">
+      <a href="../../index.html">Duke<span>UI</span></a>
+    </div>
+
+    <nav class="sidebar__nav">
+      <div class="sidebar__section">
+        <div class="sidebar__title">Composants</div>
+        <a href="../buttons/index.html" class="sidebar__link">Buttons</a>
+        <a href="../cards/index.html" class="sidebar__link">Cards</a>
+        <a href="../forms/index.html" class="sidebar__link">Forms</a>
+        <a href="../loaders/index.html" class="sidebar__link">Loaders</a>
+        <a href="index.html" class="sidebar__link sidebar__link--active">Modals</a>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__title">Effets</div>
+        <a href="../hovers/index.html" class="sidebar__link">Hovers</a>
+        <a href="../animations/index.html" class="sidebar__link">Animations</a>
+        <a href="../backgrounds/index.html" class="sidebar__link">Backgrounds</a>
+        <a href="../text-effects/index.html" class="sidebar__link">Text Effects</a>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__title">Sections</div>
+        <a href="../heroes/index.html" class="sidebar__link">Heroes</a>
+        <a href="../features/index.html" class="sidebar__link">Features</a>
+        <a href="../pricing/index.html" class="sidebar__link">Pricing</a>
+        <a href="../testimonials/index.html" class="sidebar__link">Testimonials</a>
+        <a href="../footers/index.html" class="sidebar__link">Footers</a>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__title">Générateurs</div>
+        <a href="../../generators/gradient/index.html" class="sidebar__link">Gradient</a>
+        <a href="../../generators/shadow/index.html" class="sidebar__link">Shadow</a>
+        <a href="../../generators/flexbox/index.html" class="sidebar__link">Flexbox</a>
+        <a href="../../generators/grid/index.html" class="sidebar__link">Grid</a>
+      </div>
+    </nav>
+
+    <!-- Toggle Admin -->
+    <div class="admin-toggle">
+      <span class="admin-toggle__label">Mode Admin</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="admin-toggle">
+        <span class="toggle-switch__slider"></span>
+      </label>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    <header class="page-header">
+      <h1 class="page-header__title">Modals</h1>
+      <p class="page-header__desc">Popups, dialogues et overlays pour interactions utilisateur</p>
+    </header>
+
+    <!-- SECTION: MODALS -->
+    <section class="section">
+      <h2 class="section__title">Modals & Dialogs</h2>
+      <p class="section__desc">Cliquez sur les boutons pour voir les modals en action</p>
+
+      <div class="modals-grid">
+
+        <!-- MODAL 1 — BASIC -->
+        <div class="modal-card">
+          <div class="modal-card__preview">
+            <button class="modal-trigger" onclick="openModal('modal-1')">Open Basic Modal</button>
+          </div>
+          <div class="modal-card__info">
+            <h3 class="modal-card__name">Basic Modal</h3>
+            <div class="modal-card__tags">
+              <span class="tag tag--primary">Essential</span>
+              <span class="tag">Animated</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">HTML</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>&lt;div class="modal-overlay" id="modal-1"&gt;
+  &lt;div class="modal-basic"&gt;
+    &lt;div class="modal-basic__header"&gt;
+      &lt;h2 class="modal-basic__title"&gt;Modal Title&lt;/h2&gt;
+      &lt;button class="modal-basic__close"&gt;&times;&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div class="modal-basic__body"&gt;Content...&lt;/div&gt;
+    &lt;div class="modal-basic__footer"&gt;
+      &lt;button class="modal-basic__btn--secondary"&gt;Cancel&lt;/button&gt;
+      &lt;button class="modal-basic__btn--primary"&gt;Confirm&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- MODAL 2 — GLASSMORPHISM -->
+        <div class="modal-card">
+          <div class="modal-card__preview">
+            <button class="modal-trigger" onclick="openModal('modal-2')">Open Glass Modal</button>
+          </div>
+          <div class="modal-card__info">
+            <h3 class="modal-card__name">Glassmorphism Modal</h3>
+            <div class="modal-card__tags">
+              <span class="tag tag--primary">Modern</span>
+              <span class="tag">Blur</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.modal-glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+}</pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- MODAL 3 — SLIDE UP -->
+        <div class="modal-card">
+          <div class="modal-card__preview">
+            <button class="modal-trigger" onclick="openModal('modal-3')">Open Slide Modal</button>
+          </div>
+          <div class="modal-card__info">
+            <h3 class="modal-card__name">Slide Up Modal</h3>
+            <div class="modal-card__tags">
+              <span class="tag tag--primary">Mobile</span>
+              <span class="tag">Bottom Sheet</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.modal-slide {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-overlay--active .modal-slide {
+  transform: translateX(-50%) translateY(0);
+}</pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- MODAL 4 — CONFIRMATION -->
+        <div class="modal-card">
+          <div class="modal-card__preview">
+            <button class="modal-trigger" onclick="openModal('modal-4')">Open Confirm Modal</button>
+          </div>
+          <div class="modal-card__info">
+            <h3 class="modal-card__name">Confirmation Modal</h3>
+            <div class="modal-card__tags">
+              <span class="tag tag--primary">Danger</span>
+              <span class="tag">Delete</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">HTML</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>&lt;div class="modal-confirm"&gt;
+  &lt;div class="modal-confirm__icon"&gt;⚠️&lt;/div&gt;
+  &lt;h2 class="modal-confirm__title"&gt;Delete item?&lt;/h2&gt;
+  &lt;p class="modal-confirm__text"&gt;This action cannot be undone.&lt;/p&gt;
+  &lt;div class="modal-confirm__actions"&gt;
+    &lt;button class="modal-confirm__btn--cancel"&gt;Cancel&lt;/button&gt;
+    &lt;button class="modal-confirm__btn--danger"&gt;Delete&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- MODAL 5 — SUCCESS -->
+        <div class="modal-card">
+          <div class="modal-card__preview">
+            <button class="modal-trigger" onclick="openModal('modal-5')">Open Success Modal</button>
+          </div>
+          <div class="modal-card__info">
+            <h3 class="modal-card__name">Success Modal</h3>
+            <div class="modal-card__tags">
+              <span class="tag tag--primary">Feedback</span>
+              <span class="tag">Animated</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>@keyframes success-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 15px rgba(34, 197, 94, 0);
+  }
+}</pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- MODAL 6 — FORM -->
+        <div class="modal-card">
+          <div class="modal-card__preview">
+            <button class="modal-trigger" onclick="openModal('modal-6')">Open Form Modal</button>
+          </div>
+          <div class="modal-card__info">
+            <h3 class="modal-card__name">Form Modal</h3>
+            <div class="modal-card__tags">
+              <span class="tag tag--primary">Input</span>
+              <span class="tag">Login</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">HTML</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>&lt;div class="modal-form"&gt;
+  &lt;div class="modal-form__header"&gt;
+    &lt;h2 class="modal-form__title"&gt;Login&lt;/h2&gt;
+  &lt;/div&gt;
+  &lt;div class="modal-form__group"&gt;
+    &lt;label class="modal-form__label"&gt;Email&lt;/label&gt;
+    &lt;input class="modal-form__input" type="email"&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+  </div>
+
+  <!-- ========== MODAL OVERLAYS ========== -->
+
+  <!-- MODAL 1 — BASIC -->
+  <div class="modal-overlay" id="modal-1" onclick="closeModalOnOverlay(event, 'modal-1')">
+    <div class="modal-basic">
+      <div class="modal-basic__header">
+        <h2 class="modal-basic__title">Basic Modal</h2>
+        <button class="modal-basic__close" onclick="closeModal('modal-1')">&times;</button>
+      </div>
+      <div class="modal-basic__body">
+        <p>This is a basic modal dialog. It appears with a smooth scale and fade animation. You can add any content here.</p>
+      </div>
+      <div class="modal-basic__footer">
+        <button class="modal-basic__btn modal-basic__btn--secondary" onclick="closeModal('modal-1')">Cancel</button>
+        <button class="modal-basic__btn modal-basic__btn--primary" onclick="closeModal('modal-1')">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2 — GLASSMORPHISM -->
+  <div class="modal-overlay" id="modal-2" onclick="closeModalOnOverlay(event, 'modal-2')">
+    <div class="modal-glass">
+      <div class="modal-basic__header">
+        <h2 class="modal-basic__title">Glassmorphism Modal</h2>
+        <button class="modal-basic__close" onclick="closeModal('modal-2')">&times;</button>
+      </div>
+      <div class="modal-basic__body">
+        <p>A modern glassmorphism modal with blur effect and semi-transparent background. Perfect for modern UI designs.</p>
+      </div>
+      <div class="modal-basic__footer">
+        <button class="modal-basic__btn modal-basic__btn--secondary" onclick="closeModal('modal-2')">Close</button>
+        <button class="modal-basic__btn modal-basic__btn--primary" onclick="closeModal('modal-2')">Got it</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 3 — SLIDE UP -->
+  <div class="modal-overlay" id="modal-3" onclick="closeModalOnOverlay(event, 'modal-3')">
+    <div class="modal-slide">
+      <div class="modal-slide__handle"></div>
+      <div class="modal-basic__header">
+        <h2 class="modal-basic__title">Bottom Sheet</h2>
+        <button class="modal-basic__close" onclick="closeModal('modal-3')">&times;</button>
+      </div>
+      <div class="modal-basic__body">
+        <p>This modal slides up from the bottom, perfect for mobile interfaces. It's also called a "bottom sheet" or "action sheet".</p>
+      </div>
+      <div class="modal-basic__footer">
+        <button class="modal-basic__btn modal-basic__btn--primary" style="width: 100%;" onclick="closeModal('modal-3')">Continue</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 4 — CONFIRMATION -->
+  <div class="modal-overlay" id="modal-4" onclick="closeModalOnOverlay(event, 'modal-4')">
+    <div class="modal-confirm">
+      <div class="modal-confirm__icon">⚠️</div>
+      <h2 class="modal-confirm__title">Delete this item?</h2>
+      <p class="modal-confirm__text">This action cannot be undone. The item will be permanently removed from your account.</p>
+      <div class="modal-confirm__actions">
+        <button class="modal-confirm__btn modal-confirm__btn--cancel" onclick="closeModal('modal-4')">Cancel</button>
+        <button class="modal-confirm__btn modal-confirm__btn--danger" onclick="closeModal('modal-4')">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 5 — SUCCESS -->
+  <div class="modal-overlay" id="modal-5" onclick="closeModalOnOverlay(event, 'modal-5')">
+    <div class="modal-success">
+      <div class="modal-success__icon">✓</div>
+      <h2 class="modal-success__title">Success!</h2>
+      <p class="modal-success__text">Your changes have been saved successfully. You can now continue working on your project.</p>
+      <button class="modal-success__btn" onclick="closeModal('modal-5')">Continue</button>
+    </div>
+  </div>
+
+  <!-- MODAL 6 — FORM -->
+  <div class="modal-overlay" id="modal-6" onclick="closeModalOnOverlay(event, 'modal-6')">
+    <div class="modal-form">
+      <div class="modal-form__header">
+        <h2 class="modal-form__title">Sign In</h2>
+        <p class="modal-form__subtitle">Enter your credentials to continue</p>
+      </div>
+      <div class="modal-form__group">
+        <label class="modal-form__label">Email</label>
+        <input type="email" class="modal-form__input" placeholder="you@example.com">
+      </div>
+      <div class="modal-form__group">
+        <label class="modal-form__label">Password</label>
+        <input type="password" class="modal-form__input" placeholder="••••••••">
+      </div>
+      <div class="modal-form__footer">
+        <button class="modal-basic__btn modal-basic__btn--secondary" onclick="closeModal('modal-6')">Cancel</button>
+        <button class="modal-basic__btn modal-basic__btn--primary" onclick="closeModal('modal-6')">Sign In</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../../assets/js/main.js"></script>
+  <script src="../../assets/js/security-system.js"></script>
+  <script>
+    // Open modal
+    function openModal(id) {
+      document.getElementById(id).classList.add('modal-overlay--active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Close modal
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('modal-overlay--active');
+      document.body.style.overflow = '';
+    }
+
+    // Close on overlay click
+    function closeModalOnOverlay(event, id) {
+      if (event.target.classList.contains('modal-overlay')) {
+        closeModal(id);
+      }
+    }
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-overlay--active').forEach(modal => {
+          modal.classList.remove('modal-overlay--active');
+        });
+        document.body.style.overflow = '';
+      }
+    });
+
+    // Copy code
+    function copyCode(btn) {
+      const codeBlock = btn.closest('.code-block');
+      const code = codeBlock.querySelector('pre').textContent;
+
+      navigator.clipboard.writeText(code).then(() => {
+        const originalText = btn.textContent;
+        btn.textContent = 'Copié !';
+        btn.style.color = '#22c55e';
+
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.style.color = '';
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>

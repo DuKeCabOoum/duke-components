@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Timelines — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ========== TIMELINES STYLES ========== */
+
+    /* Base Timeline */
+    .timeline {
+      position: relative;
+      padding: 0;
+      list-style: none;
+    }
+
+    .timeline__item {
+      position: relative;
+      padding-left: 40px;
+      padding-bottom: 32px;
+    }
+
+    .timeline__item:last-child {
+      padding-bottom: 0;
+    }
+
+    .timeline__item::before {
+      content: "";
+      position: absolute;
+      left: 7px;
+      top: 24px;
+      bottom: 0;
+      width: 2px;
+      background: var(--border);
+    }
+
+    .timeline__item:last-child::before {
+      display: none;
+    }
+
+    .timeline__marker {
+      position: absolute;
+      left: 0;
+      top: 4px;
+      width: 16px;
+      height: 16px;
+      background: var(--primary);
+      border-radius: 50%;
+      border: 3px solid var(--bg);
+      box-shadow: 0 0 0 2px var(--primary);
+    }
+
+    .timeline__content {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+    }
+
+    .timeline__title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .timeline__date {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .timeline__desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* ===== 1. Basic Timeline ===== */
+    .timeline--basic .timeline__marker {
+      background: var(--primary);
+    }
+
+    /* ===== 2. Alternating ===== */
+    .timeline--alternating {
+      max-width: 600px;
+    }
+
+    .timeline--alternating .timeline__item {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .timeline--alternating .timeline__item::before {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .timeline--alternating .timeline__marker {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .timeline--alternating .timeline__content {
+      width: calc(50% - 30px);
+    }
+
+    .timeline--alternating .timeline__item:nth-child(odd) .timeline__content {
+      margin-left: auto;
+      text-align: left;
+    }
+
+    .timeline--alternating .timeline__item:nth-child(even) .timeline__content {
+      margin-right: auto;
+      text-align: right;
+    }
+
+    /* ===== 3. With Icons ===== */
+    .timeline--icons .timeline__marker {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      background: var(--surface);
+      border: 2px solid var(--primary);
+      box-shadow: none;
+    }
+
+    .timeline--icons .timeline__item {
+      padding-left: 60px;
+    }
+
+    .timeline--icons .timeline__item::before {
+      left: 19px;
+    }
+
+    /* ===== 4. Colored Markers ===== */
+    .timeline--colored .timeline__marker--success {
+      background: #22c55e;
+      box-shadow: 0 0 0 2px #22c55e;
+    }
+
+    .timeline--colored .timeline__marker--warning {
+      background: #f59e0b;
+      box-shadow: 0 0 0 2px #f59e0b;
+    }
+
+    .timeline--colored .timeline__marker--error {
+      background: #ef4444;
+      box-shadow: 0 0 0 2px #ef4444;
+    }
+
+    .timeline--colored .timeline__marker--info {
+      background: #3b82f6;
+      box-shadow: 0 0 0 2px #3b82f6;
+    }
+
+    /* ===== 5. Minimal ===== */
+    .timeline--minimal .timeline__content {
+      background: transparent;
+      border: none;
+      padding: 0;
+      padding-left: 8px;
+    }
+
+    .timeline--minimal .timeline__marker {
+      width: 10px;
+      height: 10px;
+      background: var(--text-muted);
+      box-shadow: none;
+      border: none;
+    }
+
+    .timeline--minimal .timeline__item::before {
+      left: 4px;
+      background: var(--border);
+    }
+
+    /* ===== 6. Card Style ===== */
+    .timeline--card .timeline__content {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      border: none;
+    }
+
+    .timeline--card .timeline__content::before {
+      content: "";
+      position: absolute;
+      left: 32px;
+      top: 12px;
+      width: 12px;
+      height: 12px;
+      background: var(--surface);
+      transform: rotate(45deg);
+      box-shadow: -2px -2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .timeline--card .timeline__marker {
+      z-index: 1;
+    }
+
+    /* ===== 7. Gradient Line ===== */
+    .timeline--gradient .timeline__item::before {
+      background: linear-gradient(180deg, var(--primary), var(--secondary));
+    }
+
+    .timeline--gradient .timeline__marker {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--primary);
+    }
+
+    /* ===== 8. Horizontal ===== */
+    .timeline--horizontal {
+      display: flex;
+      overflow-x: auto;
+      padding: 40px 0;
+      gap: 0;
+    }
+
+    .timeline--horizontal .timeline__item {
+      flex: 0 0 200px;
+      padding-left: 0;
+      padding-bottom: 0;
+      padding-right: 20px;
+    }
+
+    .timeline--horizontal .timeline__item::before {
+      left: 0;
+      right: 0;
+      top: -32px;
+      bottom: auto;
+      width: 100%;
+      height: 2px;
+    }
+
+    .timeline--horizontal .timeline__item:last-child::before {
+      display: block;
+    }
+
+    .timeline--horizontal .timeline__marker {
+      left: 0;
+      top: -40px;
+    }
+
+    /* ===== 9. With Images ===== */
+    .timeline--images .timeline__image {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+    }
+
+    /* ===== 10. Progress Style ===== */
+    .timeline--progress .timeline__item--completed .timeline__marker {
+      background: #22c55e;
+      box-shadow: 0 0 0 2px #22c55e;
+    }
+
+    .timeline--progress .timeline__item--completed::before {
+      background: #22c55e;
+    }
+
+    .timeline--progress .timeline__item--active .timeline__marker {
+      background: var(--primary);
+      box-shadow: 0 0 0 2px var(--primary);
+      animation: pulse 2s infinite;
+    }
+
+    .timeline--progress .timeline__item--pending .timeline__marker {
+      background: var(--border);
+      box-shadow: 0 0 0 2px var(--border);
+    }
+
+    .timeline--progress .timeline__item--pending .timeline__content {
+      opacity: 0.5;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+
+    /* ===== 11. Animated ===== */
+    .timeline--animated .timeline__item {
+      opacity: 0;
+      transform: translateX(-20px);
+      animation: slideIn 0.5s ease forwards;
+    }
+
+    .timeline--animated .timeline__item:nth-child(1) { animation-delay: 0s; }
+    .timeline--animated .timeline__item:nth-child(2) { animation-delay: 0.2s; }
+    .timeline--animated .timeline__item:nth-child(3) { animation-delay: 0.4s; }
+    .timeline--animated .timeline__item:nth-child(4) { animation-delay: 0.6s; }
+
+    @keyframes slideIn {
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* ===== 12. Glassmorphism ===== */
+    .timeline--glass .timeline__content {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .timeline--glass .timeline__marker {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      box-shadow: none;
+    }
+
+    .timeline--glass .timeline__item::before {
+      background: rgba(255, 255, 255, 0.2);
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+  <aside class="sidebar">
+    <div class="sidebar__logo">
+      <a href="../../index.html"><span>Duke</span>-components</a>
+    </div>
+    <div class="sidebar__section">
+      <h3 class="sidebar__title">Composants</h3>
+      <ul class="sidebar__nav">
+        <li><a href="../accordions/index.html" class="sidebar__link"><span>📂</span> Accordions</a></li>
+        <li><a href="../avatars/index.html" class="sidebar__link"><span>👤</span> Avatars</a></li>
+        <li><a href="../badges/index.html" class="sidebar__link"><span>🏷️</span> Badges</a></li>
+        <li><a href="../breadcrumbs/index.html" class="sidebar__link"><span>🥖</span> Breadcrumbs</a></li>
+        <li><a href="../buttons/index.html" class="sidebar__link"><span>🔘</span> Buttons</a></li>
+        <li><a href="../cards/index.html" class="sidebar__link"><span>🃏</span> Cards</a></li>
+        <li><a href="../carousels/index.html" class="sidebar__link"><span>🎠</span> Carousels</a></li>
+        <li><a href="../forms/index.html" class="sidebar__link"><span>📝</span> Forms</a></li>
+        <li><a href="../loaders/index.html" class="sidebar__link"><span>⏳</span> Loaders</a></li>
+        <li><a href="../modals/index.html" class="sidebar__link"><span>💬</span> Modals</a></li>
+        <li><a href="../navigation/index.html" class="sidebar__link"><span>🧭</span> Navigation</a></li>
+        <li><a href="../notifications/index.html" class="sidebar__link"><span>🔔</span> Notifications</a></li>
+        <li><a href="../pagination/index.html" class="sidebar__link"><span>📄</span> Pagination</a></li>
+        <li><a href="../progress/index.html" class="sidebar__link"><span>📊</span> Progress</a></li>
+        <li><a href="../tables/index.html" class="sidebar__link"><span>📋</span> Tables</a></li>
+        <li><a href="../tabs/index.html" class="sidebar__link"><span>📑</span> Tabs</a></li>
+        <li><a href="index.html" class="sidebar__link sidebar__link--active"><span>📅</span> Timelines</a></li>
+        <li><a href="../tooltips/index.html" class="sidebar__link"><span>💡</span> Tooltips</a></li>
+      </ul>
+    </div>
+    <div class="admin-toggle">
+      <span class="admin-toggle__label">Mode Admin</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="admin-toggle">
+        <span class="toggle-switch__slider"></span>
+      </label>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="page-header">
+      <h1 class="page-header__title">Timelines</h1>
+      <p class="page-header__desc">Composants de timeline : 10 styles pour afficher des evenements chronologiques.</p>
+    </header>
+
+    <div class="components-grid">
+
+      <!-- 1. Basic Timeline -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Basic Timeline</h3>
+        </div>
+        <div class="component-card__preview">
+          <ul class="timeline timeline--basic">
+            <li class="timeline__item">
+              <span class="timeline__marker"></span>
+              <div class="timeline__content">
+                <h4 class="timeline__title">Project Started</h4>
+                <span class="timeline__date">January 2024</span>
+                <p class="timeline__desc">Initial planning and requirements gathering.</p>
+              </div>
+            </li>
+            <li class="timeline__item">
+              <span class="timeline__marker"></span>
+              <div class="timeline__content">
+                <h4 class="timeline__title">Development Phase</h4>
+                <span class="timeline__date">March 2024</span>
+                <p class="timeline__desc">Core features implementation.</p>
+              </div>
+            </li>
+            <li class="timeline__item">
+              <span class="timeline__marker"></span>
+              <div class="timeline__content">
+                <h4 class="timeline__title">Launch</h4>
+                <span class="timeline__date">June 2024</span>
+                <p class="timeline__desc">Product released to production.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;ul class="timeline timeline--basic"&gt;
+  &lt;li class="timeline__item"&gt;
+    &lt;span class="timeline__marker"&gt;&lt;/span&gt;
+    &lt;div class="timeline__content"&gt;
+      &lt;h4 class="timeline__title"&gt;Event Title&lt;/h4&gt;
+      &lt;span class="timeline__date"&gt;Date&lt;/span&gt;
+      &lt;p class="timeline__desc"&gt;Description&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 2. With Icons -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">With Icons</h3>
+        </div>
+        <div class="component-card__preview">
+          <ul class="timeline timeline--icons">
+            <li class="timeline__item">
+              <span class="timeline__marker">📋</span>
+              <div class="timeline__content">
+                <h4 class="timeline__title">Task Created</h4>
+                <span class="timeline__date">9:00 AM</span>
+                <p class="timeline__desc">New task added to backlog.</p>
+              </div>
+            </li>
+            <li class="timeline__item">
+              <span class="timeline__marker">🔧</span>
+              <div class="timeline__content">
+                <h4 class="timeline__title">In Progress</h4>
+                <span class="timeline__date">10:30 AM</span>
+                <p class="timeline__desc">Developer started working.</p>
+              </div>
+            </li>
+            <li class="timeline__item">
+              <span class="timeline__marker">✅</span>
+              <div class="timeline__content">
+                <h4 class="timeline__title">Completed</h4>
+                <span class="timeline__date">2:00 PM</span>
+                <p class="timeline__desc">Task marked as done.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;ul class="timeline timeline--icons"&gt;
+  &lt;li class="timeline__item"&gt;
+    &lt;span class="timeline__marker"&gt;📋&lt;/span&gt;
+    &lt;div class="timeline__content"&gt;
+      &lt;h4 class="timeline__title"&gt;Task Created&lt;/h4&gt;
+      &lt;span class="timeline__date"&gt;9:00 AM&lt;/span&gt;
+      &lt;p class="timeline__desc"&gt;Description&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 3. Colored Markers -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Colored Markers</h3>
+        </div>
+        <div class="component-card__preview">
+          <ul class="timeline timeline--colored">
+            <li class="timeline__item">
+              <span class="timeline__marker timeline__marker--success"></span>
+              <div class="timeline__content">
+                <h4 class="timeline__title">Build Successful</h4>
+                <span class="timeline__date">Today, 14:32</span>
+              </div>
+            </li>
+            <li class="timeline__item">
+              <span class="timeline__marker timeline__marker--warning"></span>
+              <div class="timeline__content">
+                <h4 class="timeline__title">Warning: Low Memory</h4>
+                <span class="timeline__date">Today, 13:15</span>
+              </div>
+            </li>
+            <li class="timeline__item">
+              <span class="timeline__marker timeline__marker--error"></span>
+              <div class="timeline__content">
+                <h4 class="timeline__title">Deploy Failed</h4>
+                <span class="timeline__date">Today, 12:00</span>
+              </div>
+            </li>
+            <li class="timeline__item">
+              <span class="timeline__marker timeline__marker--info"></span>
+              <div class="timeline__content">
+                <h4 class="timeline__title">New PR Created</h4>
+                <span class="timeline__date">Today, 10:45</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;span class="timeline__marker timeline__marker--success"&gt;&lt;/span&gt;
+&lt;span class="timeline__marker timeline__marker--warning"&gt;&lt;/span&gt;
+&lt;span class="timeline__marker timeline__marker--error"&gt;&lt;/span&gt;
+&lt;span class="timeline__marker timeline__marker--info"&gt;&lt;/span&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 4. Minimal -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Minimal</h3>
+        </div>
+        <div class="component-card__preview">
+          <ul class="timeline timeline--minimal">
+            <li class="timeline__item">
+              <span class="timeline__marker"></span>
+              <div class="timeline__content">
+                <h4 class="timeline__title">Version 2.0 Released</h4>
+                <span class="timeline__date">December 2024</span>
+              </div>
+            </li>
+            <li class="timeline__item">
+              <span class="timeline__marker"></span>
+              <div class="timeline__content">
+                <h4 class="timeline__title">Beta Testing</h4>
+                <span class="timeline__date">October 2024</span>
+              </div>
+            </li>
+            <li class="timeline__item">
+              <span class="timeline__marker"></span>
+              <div class="timeline__content">
+                <h4 class="timeline__title">Alpha Build</h4>
+                <span class="timeline__date">August 2024</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;ul class="timeline timeline--minimal"&gt;
+  &lt;li class="timeline__item"&gt;
+    &lt;span class="timeline__marker"&gt;&lt;/span&gt;
+    &lt;div class="timeline__content"&gt;
+      &lt;h4 class="timeline__title"&gt;Event&lt;/h4&gt;
+      &lt;span class="timeline__date"&gt;Date&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 5. Gradient Line -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Gradient Line</h3>
+        </div>
+        <div class="component-card__preview">
+          <ul class="timeline timeline--gradient">
+            <li class="timeline__item">
+              <span class="timeline__marker"></span>
+              <div class="timeline__content">
+                <h4 class="timeline__title">Concept Design</h4>
+                <span class="timeline__date">Week 1</span>
+                <p class="timeline__desc">Initial wireframes and mockups.</p>
+              </div>
+            </li>
+            <li class="timeline__item">
+              <span class="timeline__marker"></span>
+              <div class="timeline__content">
+                <h4 class="timeline__title">Prototyping</h4>
+                <span class="timeline__date">Week 2-3</span>
+                <p class="timeline__desc">Interactive prototype creation.</p>
+              </div>
+            </li>
+            <li class="timeline__item">
+              <span class="timeline__marker"></span>
+              <div class="timeline__content">
+                <h4 class="timeline__title">User Testing</h4>
+                <span class="timeline__date">Week 4</span>
+                <p class="timeline__desc">Feedback collection and iteration.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;ul class="timeline timeline--gradient"&gt;
+  ...
+&lt;/ul&gt;
+
+/* CSS */
+.timeline--gradient .timeline__item::before {
+  background: linear-gradient(180deg, var(--primary), var(--secondary));
+}</code></pre>
+        </div>
+      </article>
+
+      <!-- 6. Progress Style -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Progress Style</h3>
+        </div>
+        <div class="component-card__preview">
+          <ul class="timeline timeline--progress">
+            <li class="timeline__item timeline__item--completed">
+              <span class="timeline__marker"></span>
+              <div class="timeline__content">
+                <h4 class="timeline__title">Order Placed</h4>
+                <span class="timeline__date">Jan 15, 10:00 AM</span>
+              </div>
+            </li>
+            <li class="timeline__item timeline__item--completed">
+              <span class="timeline__marker"></span>
+              <div class="timeline__content">
+                <h4 class="timeline__title">Payment Confirmed</h4>
+                <span class="timeline__date">Jan 15, 10:05 AM</span>
+              </div>
+            </li>
+            <li class="timeline__item timeline__item--active">
+              <span class="timeline__marker"></span>
+              <div class="timeline__content">
+                <h4 class="timeline__title">Shipping</h4>
+                <span class="timeline__date">In Progress</span>
+              </div>
+            </li>
+            <li class="timeline__item timeline__item--pending">
+              <span class="timeline__marker"></span>
+              <div class="timeline__content">
+                <h4 class="timeline__title">Delivered</h4>
+                <span class="timeline__date">Pending</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;ul class="timeline timeline--progress"&gt;
+  &lt;li class="timeline__item timeline__item--completed"&gt;...&lt;/li&gt;
+  &lt;li class="timeline__item timeline__item--active"&gt;...&lt;/li&gt;
+  &lt;li class="timeline__item timeline__item--pending"&gt;...&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 7. Horizontal -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Horizontal</h3>
+        </div>
+        <div class="component-card__preview" style="overflow-x: auto;">
+          <ul class="timeline timeline--horizontal">
+            <li class="timeline__item">
+              <span class="timeline__marker"></span>
+              <div class="timeline__content">
+                <h4 class="timeline__title">2020</h4>
+                <p class="timeline__desc">Company founded</p>
+              </div>
+            </li>
+            <li class="timeline__item">
+              <span class="timeline__marker"></span>
+              <div class="timeline__content">
+                <h4 class="timeline__title">2021</h4>
+                <p class="timeline__desc">First product launch</p>
+              </div>
+            </li>
+            <li class="timeline__item">
+              <span class="timeline__marker"></span>
+              <div class="timeline__content">
+                <h4 class="timeline__title">2022</h4>
+                <p class="timeline__desc">Series A funding</p>
+              </div>
+            </li>
+            <li class="timeline__item">
+              <span class="timeline__marker"></span>
+              <div class="timeline__content">
+                <h4 class="timeline__title">2024</h4>
+                <p class="timeline__desc">Global expansion</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;ul class="timeline timeline--horizontal"&gt;
+  &lt;li class="timeline__item"&gt;
+    &lt;span class="timeline__marker"&gt;&lt;/span&gt;
+    &lt;div class="timeline__content"&gt;
+      &lt;h4 class="timeline__title"&gt;2020&lt;/h4&gt;
+      &lt;p class="timeline__desc"&gt;Event description&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 8. Animated -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Animated</h3>
+        </div>
+        <div class="component-card__preview">
+          <ul class="timeline timeline--animated" id="animatedTimeline">
+            <li class="timeline__item">
+              <span class="timeline__marker"></span>
+              <div class="timeline__content">
+                <h4 class="timeline__title">Step 1</h4>
+                <span class="timeline__date">Getting started</span>
+              </div>
+            </li>
+            <li class="timeline__item">
+              <span class="timeline__marker"></span>
+              <div class="timeline__content">
+                <h4 class="timeline__title">Step 2</h4>
+                <span class="timeline__date">Configuration</span>
+              </div>
+            </li>
+            <li class="timeline__item">
+              <span class="timeline__marker"></span>
+              <div class="timeline__content">
+                <h4 class="timeline__title">Step 3</h4>
+                <span class="timeline__date">Implementation</span>
+              </div>
+            </li>
+          </ul>
+          <button class="demo-btn" onclick="replayAnimation()" style="margin-top: 12px;">Replay Animation</button>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;ul class="timeline timeline--animated"&gt;
+  ...
+&lt;/ul&gt;
+
+/* CSS */
+@keyframes slideIn {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}</code></pre>
+        </div>
+      </article>
+
+      <!-- 9. Glassmorphism -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Glassmorphism</h3>
+        </div>
+        <div class="component-card__preview" style="background: linear-gradient(135deg, var(--primary), var(--secondary)); padding: 24px; border-radius: 12px;">
+          <ul class="timeline timeline--glass">
+            <li class="timeline__item">
+              <span class="timeline__marker"></span>
+              <div class="timeline__content">
+                <h4 class="timeline__title">Event One</h4>
+                <span class="timeline__date">Morning</span>
+                <p class="timeline__desc">First event of the day.</p>
+              </div>
+            </li>
+            <li class="timeline__item">
+              <span class="timeline__marker"></span>
+              <div class="timeline__content">
+                <h4 class="timeline__title">Event Two</h4>
+                <span class="timeline__date">Afternoon</span>
+                <p class="timeline__desc">Second event details.</p>
+              </div>
+            </li>
+            <li class="timeline__item">
+              <span class="timeline__marker"></span>
+              <div class="timeline__content">
+                <h4 class="timeline__title">Event Three</h4>
+                <span class="timeline__date">Evening</span>
+                <p class="timeline__desc">Final event of the day.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;ul class="timeline timeline--glass"&gt;
+  ...
+&lt;/ul&gt;
+
+/* CSS */
+.timeline--glass .timeline__content {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}</code></pre>
+        </div>
+      </article>
+
+      <!-- 10. Card Style -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Card Style</h3>
+        </div>
+        <div class="component-card__preview">
+          <ul class="timeline timeline--card">
+            <li class="timeline__item">
+              <span class="timeline__marker"></span>
+              <div class="timeline__content">
+                <h4 class="timeline__title">Meeting Scheduled</h4>
+                <span class="timeline__date">Today at 3:00 PM</span>
+                <p class="timeline__desc">Team sync to discuss Q4 planning and roadmap updates.</p>
+              </div>
+            </li>
+            <li class="timeline__item">
+              <span class="timeline__marker"></span>
+              <div class="timeline__content">
+                <h4 class="timeline__title">Code Review</h4>
+                <span class="timeline__date">Yesterday</span>
+                <p class="timeline__desc">PR #456 merged after review and testing.</p>
+              </div>
+            </li>
+            <li class="timeline__item">
+              <span class="timeline__marker"></span>
+              <div class="timeline__content">
+                <h4 class="timeline__title">Sprint Started</h4>
+                <span class="timeline__date">Monday</span>
+                <p class="timeline__desc">New sprint with 12 story points planned.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;ul class="timeline timeline--card"&gt;
+  ...
+&lt;/ul&gt;
+
+/* CSS */
+.timeline--card .timeline__content {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border: none;
+}</code></pre>
+        </div>
+      </article>
+
+    </div>
+  </main>
+  </div>
+
+  <script src="../../assets/js/copy-code.js"></script>
+  <script src="../../assets/js/security-system.js"></script>
+  <script>
+    function replayAnimation() {
+      const timeline = document.getElementById('animatedTimeline');
+      const items = timeline.querySelectorAll('.timeline__item');
+
+      items.forEach(item => {
+        item.style.animation = 'none';
+        item.offsetHeight;
+        item.style.animation = null;
+      });
+    }
+  </script>
+</body>
+</html>

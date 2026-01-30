@@ -27,6 +27,15 @@
       <div class="sidebar__section">
         <a href="../../index.html" class="sidebar__link">← Retour</a>
       </div>
+
+      <!-- Toggle Admin -->
+      <div class="admin-toggle">
+        <span class="admin-toggle__label">Mode Admin</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="admin-toggle">
+          <span class="toggle-switch__slider"></span>
+        </label>
+      </div>
     </aside>
 
     <!-- ========== MAIN CONTENT ========== -->
@@ -42,13 +51,21 @@
         <p class="section__desc">Boutons simples, épurés, intemporels.</p>
 
         <div class="components-grid">
-          <!-- BTN PRIMARY -->
-          <article class="component-card">
+          <!-- BTN PRIMARY — SAFE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
             <div class="component-card__preview">
               <button class="btn-primary">Click me</button>
             </div>
             <div class="component-card__info">
               <h3 class="component-card__name">Primary Button</h3>
+              <button class="edit-btn" data-component="btn-primary" data-type="button" data-code="btn-primary-css">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                </svg>
+                Edit
+              </button>
               <div class="component-card__tags">
                 <span class="tag tag--primary">classic</span>
                 <span class="tag">simple</span>
@@ -91,13 +108,21 @@
             </div>
           </article>
 
-          <!-- BTN SECONDARY -->
-          <article class="component-card">
+          <!-- BTN SECONDARY — CAUTION -->
+          <article class="component-card" data-security="caution">
+            <span class="security-badge security-badge--caution">CAUTION</span>
             <div class="component-card__preview">
               <button class="btn-secondary">Secondary</button>
             </div>
             <div class="component-card__info">
               <h3 class="component-card__name">Secondary Button</h3>
+              <button class="edit-btn" data-component="btn-secondary" data-type="button" data-code="btn-secondary-css">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                </svg>
+                Edit
+              </button>
               <div class="component-card__tags">
                 <span class="tag tag--primary">classic</span>
                 <span class="tag">outline</span>
@@ -141,20 +166,543 @@
         </div>
       </section>
 
-      <!-- Placeholder sections -->
+      <!-- ========== MODERN SECTION ========== -->
       <section id="modern" class="section">
         <h2 class="section__title">Modern</h2>
-        <p class="text-muted">Composants à venir...</p>
+        <p class="section__desc">Boutons tendance — Gradients, Glassmorphism, Neon.</p>
+
+        <div class="components-grid">
+          <!-- BTN GRADIENT -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <button class="btn-gradient">Gradient</button>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Gradient Button</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">modern</span>
+                <span class="tag">gradient</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="btn-gradient-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="btn-gradient-html"><code>&lt;button class="btn-gradient"&gt;Gradient&lt;/button&gt;</code></pre>
+                <pre class="code-viewer__code" id="btn-gradient-css" style="display:none"><code>.btn-gradient {
+  padding: 12px 28px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-gradient:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- BTN GLASS -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview component-card__preview--gradient">
+              <button class="btn-glass">Glassmorphism</button>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Glass Button</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">modern</span>
+                <span class="tag">glass</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="btn-glass-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="btn-glass-html"><code>&lt;button class="btn-glass"&gt;Glassmorphism&lt;/button&gt;</code></pre>
+                <pre class="code-viewer__code" id="btn-glass-css" style="display:none"><code>.btn-glass {
+  padding: 12px 28px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-glass:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- BTN NEON -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <button class="btn-neon">Neon</button>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Neon Button</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">modern</span>
+                <span class="tag">glow</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="btn-neon-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="btn-neon-html"><code>&lt;button class="btn-neon"&gt;Neon&lt;/button&gt;</code></pre>
+                <pre class="code-viewer__code" id="btn-neon-css" style="display:none"><code>.btn-neon {
+  padding: 12px 28px;
+  background: transparent;
+  color: #0ff;
+  border: 2px solid #0ff;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-shadow: 0 0 10px #0ff;
+  box-shadow: 0 0 10px #0ff, inset 0 0 10px rgba(0, 255, 255, 0.1);
+}
+
+.btn-neon:hover {
+  background: #0ff;
+  color: #0a0a0a;
+  text-shadow: none;
+  box-shadow: 0 0 20px #0ff, 0 0 40px #0ff;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
       </section>
 
+      <!-- ========== 3D SECTION ========== -->
       <section id="3d" class="section">
         <h2 class="section__title">3D</h2>
-        <p class="text-muted">Composants à venir...</p>
+        <p class="section__desc">Boutons avec profondeur — Push, Layer, Perspective.</p>
+
+        <div class="components-grid">
+          <!-- BTN PUSH 3D -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <button class="btn-push">Push me</button>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Push Button</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">3d</span>
+                <span class="tag">push</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="btn-push-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="btn-push-html"><code>&lt;button class="btn-push"&gt;Push me&lt;/button&gt;</code></pre>
+                <pre class="code-viewer__code" id="btn-push-css" style="display:none"><code>.btn-push {
+  padding: 12px 28px;
+  background: #6366f1;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 0 #4338ca;
+  transition: all 0.1s ease;
+}
+
+.btn-push:hover {
+  transform: translateY(2px);
+  box-shadow: 0 4px 0 #4338ca;
+}
+
+.btn-push:active {
+  transform: translateY(6px);
+  box-shadow: 0 0 0 #4338ca;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- BTN LAYER -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <button class="btn-layer">Layer</button>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Layer Button</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">3d</span>
+                <span class="tag">layer</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="btn-layer-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="btn-layer-html"><code>&lt;button class="btn-layer"&gt;Layer&lt;/button&gt;</code></pre>
+                <pre class="code-viewer__code" id="btn-layer-css" style="display:none"><code>.btn-layer {
+  position: relative;
+  padding: 12px 28px;
+  background: #6366f1;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.btn-layer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #4338ca;
+  border-radius: 8px;
+  transform: translate(4px, 4px);
+  z-index: -1;
+  transition: transform 0.2s ease;
+}
+
+.btn-layer:hover {
+  transform: translate(2px, 2px);
+}
+
+.btn-layer:hover::before {
+  transform: translate(2px, 2px);
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- BTN FLIP -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <button class="btn-flip" data-front="Hover me" data-back="Click!"></button>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Flip Button</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">3d</span>
+                <span class="tag">flip</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="btn-flip-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="btn-flip-html"><code>&lt;button class="btn-flip" data-front="Hover me" data-back="Click!"&gt;&lt;/button&gt;</code></pre>
+                <pre class="code-viewer__code" id="btn-flip-css" style="display:none"><code>.btn-flip {
+  position: relative;
+  padding: 12px 28px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  perspective: 1000px;
+}
+
+.btn-flip::before,
+.btn-flip::after {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: transform 0.4s ease;
+  backface-visibility: hidden;
+}
+
+.btn-flip::before {
+  content: attr(data-front);
+  background: #6366f1;
+  color: white;
+}
+
+.btn-flip::after {
+  content: attr(data-back);
+  background: #10b981;
+  color: white;
+  transform: rotateX(180deg);
+}
+
+.btn-flip:hover::before {
+  transform: rotateX(-180deg);
+}
+
+.btn-flip:hover::after {
+  transform: rotateX(0);
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
       </section>
 
+      <!-- ========== ANIMATED SECTION ========== -->
       <section id="animated" class="section">
         <h2 class="section__title">Animated</h2>
-        <p class="text-muted">Composants à venir...</p>
+        <p class="section__desc">Boutons dynamiques — Pulse, Slide, Ripple.</p>
+
+        <div class="components-grid">
+          <!-- BTN PULSE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <button class="btn-pulse">Pulse</button>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Pulse Button</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">animated</span>
+                <span class="tag">pulse</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="btn-pulse-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="btn-pulse-html"><code>&lt;button class="btn-pulse"&gt;Pulse&lt;/button&gt;</code></pre>
+                <pre class="code-viewer__code" id="btn-pulse-css" style="display:none"><code>.btn-pulse {
+  padding: 12px 28px;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 15px rgba(239, 68, 68, 0);
+  }
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- BTN SLIDE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <button class="btn-slide"><span>Slide</span></button>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Slide Button</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">animated</span>
+                <span class="tag">slide</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="btn-slide-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="btn-slide-html"><code>&lt;button class="btn-slide"&gt;&lt;span&gt;Slide&lt;/span&gt;&lt;/button&gt;</code></pre>
+                <pre class="code-viewer__code" id="btn-slide-css" style="display:none"><code>.btn-slide {
+  position: relative;
+  padding: 12px 28px;
+  background: #6366f1;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.btn-slide span {
+  position: relative;
+  z-index: 1;
+  transition: color 0.3s ease;
+}
+
+.btn-slide::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: #10b981;
+  transition: left 0.3s ease;
+}
+
+.btn-slide:hover::before {
+  left: 0;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- BTN BOUNCE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <button class="btn-bounce">Bounce</button>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Bounce Button</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">animated</span>
+                <span class="tag">bounce</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="btn-bounce-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="btn-bounce-html"><code>&lt;button class="btn-bounce"&gt;Bounce&lt;/button&gt;</code></pre>
+                <pre class="code-viewer__code" id="btn-bounce-css" style="display:none"><code>.btn-bounce {
+  padding: 12px 28px;
+  background: #f59e0b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.btn-bounce:hover {
+  animation: bounce 0.5s ease;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  25% { transform: translateY(-8px); }
+  50% { transform: translateY(0); }
+  75% { transform: translateY(-4px); }
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
       </section>
 
     </main>
@@ -162,6 +710,7 @@
 
   <!-- Component Styles (inline for demo) -->
   <style>
+    /* ========== CLASSIC ========== */
     .btn-primary {
       padding: 12px 24px;
       background: #6366f1;
@@ -195,6 +744,229 @@
       color: white;
     }
 
+    /* ========== MODERN ========== */
+    .btn-gradient {
+      padding: 12px 28px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+    .btn-gradient:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+    }
+
+    .component-card__preview--gradient {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .btn-glass {
+      padding: 12px 28px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .btn-glass:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .btn-neon {
+      padding: 12px 28px;
+      background: transparent;
+      color: #0ff;
+      border: 2px solid #0ff;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-shadow: 0 0 10px #0ff;
+      box-shadow: 0 0 10px #0ff, inset 0 0 10px rgba(0, 255, 255, 0.1);
+    }
+    .btn-neon:hover {
+      background: #0ff;
+      color: #0a0a0a;
+      text-shadow: none;
+      box-shadow: 0 0 20px #0ff, 0 0 40px #0ff;
+    }
+
+    /* ========== 3D ========== */
+    .btn-push {
+      padding: 12px 28px;
+      background: #6366f1;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 6px 0 #4338ca;
+      transition: all 0.1s ease;
+    }
+    .btn-push:hover {
+      transform: translateY(2px);
+      box-shadow: 0 4px 0 #4338ca;
+    }
+    .btn-push:active {
+      transform: translateY(6px);
+      box-shadow: 0 0 0 #4338ca;
+    }
+
+    .btn-layer {
+      position: relative;
+      padding: 12px 28px;
+      background: #6366f1;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    .btn-layer::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: #4338ca;
+      border-radius: 8px;
+      transform: translate(4px, 4px);
+      z-index: -1;
+      transition: transform 0.2s ease;
+    }
+    .btn-layer:hover {
+      transform: translate(2px, 2px);
+    }
+    .btn-layer:hover::before {
+      transform: translate(2px, 2px);
+    }
+
+    .btn-flip {
+      position: relative;
+      padding: 12px 28px;
+      min-width: 120px;
+      min-height: 44px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      perspective: 1000px;
+    }
+    .btn-flip::before,
+    .btn-flip::after {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: transform 0.4s ease;
+      backface-visibility: hidden;
+    }
+    .btn-flip::before {
+      content: attr(data-front);
+      background: #6366f1;
+      color: white;
+    }
+    .btn-flip::after {
+      content: attr(data-back);
+      background: #10b981;
+      color: white;
+      transform: rotateX(180deg);
+    }
+    .btn-flip:hover::before {
+      transform: rotateX(-180deg);
+    }
+    .btn-flip:hover::after {
+      transform: rotateX(0);
+    }
+
+    /* ========== ANIMATED ========== */
+    .btn-pulse {
+      padding: 12px 28px;
+      background: #ef4444;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+      50% { box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); }
+    }
+
+    .btn-slide {
+      position: relative;
+      padding: 12px 28px;
+      background: #6366f1;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      overflow: hidden;
+    }
+    .btn-slide span {
+      position: relative;
+      z-index: 1;
+      transition: color 0.3s ease;
+    }
+    .btn-slide::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: #10b981;
+      transition: left 0.3s ease;
+    }
+    .btn-slide:hover::before {
+      left: 0;
+    }
+
+    .btn-bounce {
+      padding: 12px 28px;
+      background: #f59e0b;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    .btn-bounce:hover {
+      animation: bounce 0.5s ease;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      25% { transform: translateY(-8px); }
+      50% { transform: translateY(0); }
+      75% { transform: translateY(-4px); }
+    }
+
+    /* ========== SECTION ========== */
     .section {
       margin-bottom: 48px;
     }
@@ -209,5 +981,7 @@
   </style>
 
   <script src="../../assets/js/copy-code.js"></script>
+  <script src="../../assets/js/live-editor.js"></script>
+  <script src="../../assets/js/security-system.js"></script>
 </body>
 </html>

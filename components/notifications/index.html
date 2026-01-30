@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notifications — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ===========================================
+       NOTIFICATIONS — Styles locaux
+       =========================================== */
+
+    .notifications-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 24px;
+    }
+
+    .notification-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .notification-card:hover {
+      border-color: var(--primary);
+    }
+
+    .notification-card__preview {
+      padding: 32px;
+      background: #0a0a0a;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      min-height: 200px;
+    }
+
+    .notification-card__info {
+      padding: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .notification-card__name {
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .notification-card__tags {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* ===========================================
+       TOAST 1 — BASIC
+       =========================================== */
+
+    .toast-basic {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 20px;
+      background: #18181b;
+      border: 1px solid #27272a;
+      border-radius: 12px;
+      color: #fff;
+      font-size: 0.95rem;
+    }
+
+    .toast-basic__icon {
+      font-size: 1.25rem;
+    }
+
+    .toast-basic__close {
+      margin-left: auto;
+      background: none;
+      border: none;
+      color: #71717a;
+      font-size: 1.25rem;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .toast-basic__close:hover {
+      color: #fff;
+    }
+
+    /* ===========================================
+       TOAST 2 — STATUS VARIANTS
+       =========================================== */
+
+    .toast-status {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .toast-status--success {
+      background: rgba(34, 197, 94, 0.15);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: #4ade80;
+    }
+
+    .toast-status--error {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #f87171;
+    }
+
+    .toast-status--warning {
+      background: rgba(234, 179, 8, 0.15);
+      border: 1px solid rgba(234, 179, 8, 0.3);
+      color: #facc15;
+    }
+
+    .toast-status--info {
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      color: #60a5fa;
+    }
+
+    /* ===========================================
+       TOAST 3 — WITH ACTION
+       =========================================== */
+
+    .toast-action {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 20px;
+      background: #18181b;
+      border: 1px solid #27272a;
+      border-radius: 12px;
+    }
+
+    .toast-action__content {
+      flex: 1;
+    }
+
+    .toast-action__title {
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .toast-action__text {
+      font-size: 0.875rem;
+      color: #71717a;
+    }
+
+    .toast-action__btn {
+      padding: 8px 16px;
+      background: #6366f1;
+      border: none;
+      border-radius: 6px;
+      color: #fff;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .toast-action__btn:hover {
+      background: #4f46e5;
+    }
+
+    /* ===========================================
+       TOAST 4 — PROGRESS
+       =========================================== */
+
+    .toast-progress {
+      background: #18181b;
+      border: 1px solid #27272a;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .toast-progress__content {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 20px;
+    }
+
+    .toast-progress__icon {
+      font-size: 1.25rem;
+    }
+
+    .toast-progress__text {
+      flex: 1;
+      color: #fff;
+      font-size: 0.95rem;
+    }
+
+    .toast-progress__bar {
+      height: 3px;
+      background: #6366f1;
+      animation: progress-shrink 5s linear forwards;
+    }
+
+    @keyframes progress-shrink {
+      from { width: 100%; }
+      to { width: 0%; }
+    }
+
+    /* ===========================================
+       TOAST 5 — AVATAR
+       =========================================== */
+
+    .toast-avatar {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 20px;
+      background: #18181b;
+      border: 1px solid #27272a;
+      border-radius: 12px;
+    }
+
+    .toast-avatar__img {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: white;
+    }
+
+    .toast-avatar__content {
+      flex: 1;
+    }
+
+    .toast-avatar__title {
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 2px;
+    }
+
+    .toast-avatar__text {
+      font-size: 0.875rem;
+      color: #71717a;
+    }
+
+    .toast-avatar__time {
+      font-size: 0.75rem;
+      color: #52525b;
+    }
+
+    /* ===========================================
+       TOAST 6 — GLASSMORPHISM
+       =========================================== */
+
+    .toast-glass {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 20px;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      color: #fff;
+      font-size: 0.95rem;
+    }
+
+    .toast-glass__icon {
+      font-size: 1.25rem;
+    }
+
+    /* ===========================================
+       NOTIFICATION 7 — STACKED
+       =========================================== */
+
+    .notification-stack {
+      position: relative;
+      padding-top: 12px;
+    }
+
+    .notification-stack__item {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      background: #18181b;
+      border: 1px solid #27272a;
+      border-radius: 10px;
+      margin-bottom: 8px;
+    }
+
+    .notification-stack__item::before {
+      content: '';
+      position: absolute;
+      top: -8px;
+      left: 10%;
+      right: 10%;
+      height: 6px;
+      background: #27272a;
+      border-radius: 4px 4px 0 0;
+      z-index: -1;
+    }
+
+    .notification-stack__dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .notification-stack__text {
+      flex: 1;
+      font-size: 0.9rem;
+      color: #a1a1aa;
+    }
+
+    .notification-stack__time {
+      font-size: 0.75rem;
+      color: #52525b;
+    }
+
+    /* ===========================================
+       NOTIFICATION 8 — BANNER
+       =========================================== */
+
+    .notification-banner {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 24px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.1));
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      border-radius: 12px;
+    }
+
+    .notification-banner__icon {
+      font-size: 1.5rem;
+    }
+
+    .notification-banner__content {
+      flex: 1;
+    }
+
+    .notification-banner__title {
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .notification-banner__text {
+      font-size: 0.875rem;
+      color: #a1a1aa;
+    }
+
+    .notification-banner__actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .notification-banner__btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .notification-banner__btn--primary {
+      background: #6366f1;
+      color: #fff;
+    }
+
+    .notification-banner__btn--primary:hover {
+      background: #4f46e5;
+    }
+
+    .notification-banner__btn--secondary {
+      background: transparent;
+      border: 1px solid #6366f1;
+      color: #a5b4fc;
+    }
+
+    .notification-banner__btn--secondary:hover {
+      background: rgba(99, 102, 241, 0.1);
+    }
+
+    /* ===========================================
+       DEMO CONTAINER
+       =========================================== */
+
+    .demo-toasts {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      z-index: 1000;
+    }
+
+    .demo-toast {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 20px;
+      background: #18181b;
+      border: 1px solid #27272a;
+      border-radius: 12px;
+      color: #fff;
+      font-size: 0.95rem;
+      animation: slide-in 0.3s ease;
+      transform-origin: right;
+    }
+
+    @keyframes slide-in {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    .demo-toast.removing {
+      animation: slide-out 0.3s ease forwards;
+    }
+
+    @keyframes slide-out {
+      to {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+    }
+
+    /* ===========================================
+       CODE BLOCK
+       =========================================== */
+
+    .code-block {
+      background: #1a1a1a;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 16px;
+    }
+
+    .code-block__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .code-block__lang {
+      font-size: 0.75rem;
+      color: #71717a;
+      text-transform: uppercase;
+    }
+
+    .code-block__copy {
+      padding: 6px 12px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: #a1a1aa;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .code-block__copy:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+    }
+
+    .code-block__content {
+      padding: 16px;
+      overflow-x: auto;
+    }
+
+    .code-block__content pre {
+      margin: 0;
+      font-family: "Fira Code", monospace;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: #e0e0e0;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      font-size: 0.75rem;
+      color: #a1a1aa;
+    }
+
+    .tag--primary {
+      background: rgba(99, 102, 241, 0.15);
+      border-color: rgba(99, 102, 241, 0.3);
+      color: #818cf8;
+    }
+
+    /* Demo button */
+    .demo-btn {
+      padding: 10px 20px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .demo-btn:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar__logo">
+      <a href="../../index.html">Duke<span>UI</span></a>
+    </div>
+
+    <nav class="sidebar__nav">
+      <div class="sidebar__section">
+        <div class="sidebar__title">Composants</div>
+        <a href="../accordions/index.html" class="sidebar__link">Accordions</a>
+        <a href="../buttons/index.html" class="sidebar__link">Buttons</a>
+        <a href="../cards/index.html" class="sidebar__link">Cards</a>
+        <a href="../carousels/index.html" class="sidebar__link">Carousels</a>
+        <a href="../forms/index.html" class="sidebar__link">Forms</a>
+        <a href="../loaders/index.html" class="sidebar__link">Loaders</a>
+        <a href="../modals/index.html" class="sidebar__link">Modals</a>
+        <a href="../navigation/index.html" class="sidebar__link">Navigation</a>
+        <a href="index.html" class="sidebar__link sidebar__link--active">Notifications</a>
+        <a href="../progress/index.html" class="sidebar__link">Progress</a>
+        <a href="../tabs/index.html" class="sidebar__link">Tabs</a>
+        <a href="../tooltips/index.html" class="sidebar__link">Tooltips</a>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__title">Effets</div>
+        <a href="../hovers/index.html" class="sidebar__link">Hovers</a>
+        <a href="../animations/index.html" class="sidebar__link">Animations</a>
+        <a href="../backgrounds/index.html" class="sidebar__link">Backgrounds</a>
+        <a href="../mouse-effects/index.html" class="sidebar__link">Mouse Effects</a>
+        <a href="../text-effects/index.html" class="sidebar__link">Text Effects</a>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__title">Sections</div>
+        <a href="../heroes/index.html" class="sidebar__link">Heroes</a>
+        <a href="../features/index.html" class="sidebar__link">Features</a>
+        <a href="../pricing/index.html" class="sidebar__link">Pricing</a>
+        <a href="../testimonials/index.html" class="sidebar__link">Testimonials</a>
+        <a href="../footers/index.html" class="sidebar__link">Footers</a>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__title">Générateurs</div>
+        <a href="../../generators/gradient/index.html" class="sidebar__link">Gradient</a>
+        <a href="../../generators/shadow/index.html" class="sidebar__link">Shadow</a>
+        <a href="../../generators/flexbox/index.html" class="sidebar__link">Flexbox</a>
+        <a href="../../generators/grid/index.html" class="sidebar__link">Grid</a>
+      </div>
+    </nav>
+
+    <!-- Toggle Admin -->
+    <div class="admin-toggle">
+      <span class="admin-toggle__label">Mode Admin</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="admin-toggle">
+        <span class="toggle-switch__slider"></span>
+      </label>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    <header class="page-header">
+      <h1 class="page-header__title">Notifications</h1>
+      <p class="page-header__desc">Toasts et notifications pour informer les utilisateurs</p>
+    </header>
+
+    <div style="margin-bottom: 32px;">
+      <button class="demo-btn" onclick="showDemoToast()">Afficher un toast de démo</button>
+    </div>
+
+    <div class="notifications-grid">
+
+      <!-- TOAST 1 — BASIC -->
+      <div class="notification-card">
+        <div class="notification-card__preview">
+          <div class="toast-basic">
+            <span class="toast-basic__icon">&#x2139;</span>
+            <span>This is a notification message</span>
+            <button class="toast-basic__close">&times;</button>
+          </div>
+        </div>
+        <div class="notification-card__info">
+          <h3 class="notification-card__name">Basic Toast</h3>
+          <div class="notification-card__tags">
+            <span class="tag tag--primary">Essential</span>
+            <span class="tag">Simple</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">HTML</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>&lt;div class="toast"&gt;
+  &lt;span class="toast__icon"&gt;&amp;#x2139;&lt;/span&gt;
+  &lt;span&gt;Message&lt;/span&gt;
+  &lt;button class="toast__close"&gt;&amp;times;&lt;/button&gt;
+&lt;/div&gt;</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOAST 2 — STATUS VARIANTS -->
+      <div class="notification-card">
+        <div class="notification-card__preview">
+          <div class="toast-status toast-status--success">
+            <span>&#x2713;</span>
+            <span>Action completed successfully!</span>
+          </div>
+          <div class="toast-status toast-status--error">
+            <span>&#x2717;</span>
+            <span>Something went wrong</span>
+          </div>
+          <div class="toast-status toast-status--warning">
+            <span>&#x26A0;</span>
+            <span>Please review before continuing</span>
+          </div>
+          <div class="toast-status toast-status--info">
+            <span>&#x2139;</span>
+            <span>New updates available</span>
+          </div>
+        </div>
+        <div class="notification-card__info">
+          <h3 class="notification-card__name">Status Variants</h3>
+          <div class="notification-card__tags">
+            <span class="tag tag--primary">States</span>
+            <span class="tag">Semantic</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.toast--success {
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  color: #4ade80;
+}
+
+.toast--error {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #f87171;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOAST 3 — WITH ACTION -->
+      <div class="notification-card">
+        <div class="notification-card__preview">
+          <div class="toast-action">
+            <div class="toast-action__content">
+              <div class="toast-action__title">File uploaded</div>
+              <div class="toast-action__text">document.pdf was uploaded successfully</div>
+            </div>
+            <button class="toast-action__btn">View</button>
+          </div>
+        </div>
+        <div class="notification-card__info">
+          <h3 class="notification-card__name">With Action</h3>
+          <div class="notification-card__tags">
+            <span class="tag tag--primary">Interactive</span>
+            <span class="tag">CTA</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">HTML</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>&lt;div class="toast-action"&gt;
+  &lt;div class="toast-action__content"&gt;
+    &lt;div class="toast-action__title"&gt;Title&lt;/div&gt;
+    &lt;div class="toast-action__text"&gt;Description&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;button class="toast-action__btn"&gt;Action&lt;/button&gt;
+&lt;/div&gt;</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOAST 4 — PROGRESS -->
+      <div class="notification-card">
+        <div class="notification-card__preview">
+          <div class="toast-progress">
+            <div class="toast-progress__content">
+              <span class="toast-progress__icon">&#x23F3;</span>
+              <span class="toast-progress__text">Auto-closing in 5 seconds...</span>
+            </div>
+            <div class="toast-progress__bar"></div>
+          </div>
+        </div>
+        <div class="notification-card__info">
+          <h3 class="notification-card__name">Progress Bar</h3>
+          <div class="notification-card__tags">
+            <span class="tag tag--primary">Timer</span>
+            <span class="tag">Auto-close</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>@keyframes progress-shrink {
+  from { width: 100%; }
+  to { width: 0%; }
+}
+
+.toast-progress__bar {
+  height: 3px;
+  background: #6366f1;
+  animation: progress-shrink 5s linear forwards;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOAST 5 — AVATAR -->
+      <div class="notification-card">
+        <div class="notification-card__preview">
+          <div class="toast-avatar">
+            <div class="toast-avatar__img">JD</div>
+            <div class="toast-avatar__content">
+              <div class="toast-avatar__title">John Doe</div>
+              <div class="toast-avatar__text">Sent you a message</div>
+            </div>
+            <span class="toast-avatar__time">2m ago</span>
+          </div>
+        </div>
+        <div class="notification-card__info">
+          <h3 class="notification-card__name">With Avatar</h3>
+          <div class="notification-card__tags">
+            <span class="tag tag--primary">Social</span>
+            <span class="tag">User</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">HTML</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>&lt;div class="toast-avatar"&gt;
+  &lt;div class="toast-avatar__img"&gt;JD&lt;/div&gt;
+  &lt;div class="toast-avatar__content"&gt;
+    &lt;div class="toast-avatar__title"&gt;Name&lt;/div&gt;
+    &lt;div class="toast-avatar__text"&gt;Message&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;span class="toast-avatar__time"&gt;2m ago&lt;/span&gt;
+&lt;/div&gt;</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOAST 6 — GLASSMORPHISM -->
+      <div class="notification-card">
+        <div class="notification-card__preview">
+          <div class="toast-glass">
+            <span class="toast-glass__icon">&#x2728;</span>
+            <span>Frosted glass notification effect</span>
+          </div>
+        </div>
+        <div class="notification-card__info">
+          <h3 class="notification-card__name">Glassmorphism</h3>
+          <div class="notification-card__tags">
+            <span class="tag tag--primary">Blur</span>
+            <span class="tag">Modern</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.toast-glass {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- NOTIFICATION 7 — STACKED -->
+      <div class="notification-card">
+        <div class="notification-card__preview">
+          <div class="notification-stack">
+            <div class="notification-stack__item">
+              <div class="notification-stack__dot" style="background: #22c55e;"></div>
+              <span class="notification-stack__text">Payment received</span>
+              <span class="notification-stack__time">Just now</span>
+            </div>
+            <div class="notification-stack__item">
+              <div class="notification-stack__dot" style="background: #6366f1;"></div>
+              <span class="notification-stack__text">New comment on your post</span>
+              <span class="notification-stack__time">5m ago</span>
+            </div>
+          </div>
+        </div>
+        <div class="notification-card__info">
+          <h3 class="notification-card__name">Stacked</h3>
+          <div class="notification-card__tags">
+            <span class="tag tag--primary">Queue</span>
+            <span class="tag">Multiple</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.notification-stack__item::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 10%;
+  right: 10%;
+  height: 6px;
+  background: #27272a;
+  z-index: -1;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- NOTIFICATION 8 — BANNER -->
+      <div class="notification-card">
+        <div class="notification-card__preview">
+          <div class="notification-banner">
+            <span class="notification-banner__icon">&#x1F389;</span>
+            <div class="notification-banner__content">
+              <div class="notification-banner__title">New feature available!</div>
+              <div class="notification-banner__text">Check out our latest updates and improvements.</div>
+            </div>
+            <div class="notification-banner__actions">
+              <button class="notification-banner__btn notification-banner__btn--primary">Learn more</button>
+              <button class="notification-banner__btn notification-banner__btn--secondary">Dismiss</button>
+            </div>
+          </div>
+        </div>
+        <div class="notification-card__info">
+          <h3 class="notification-card__name">Banner</h3>
+          <div class="notification-card__tags">
+            <span class="tag tag--primary">Announcement</span>
+            <span class="tag">Full-width</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.notification-banner {
+  background: linear-gradient(
+    135deg,
+    rgba(99, 102, 241, 0.15),
+    rgba(139, 92, 246, 0.1)
+  );
+  border: 1px solid rgba(99, 102, 241, 0.3);
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+  </div>
+
+  <!-- Demo Toast Container -->
+  <div class="demo-toasts" id="demo-toasts"></div>
+
+  <script src="../../assets/js/main.js"></script>
+  <script src="../../assets/js/security-system.js"></script>
+  <script>
+    const messages = [
+      { icon: '&#x2713;', text: 'Action completed successfully!' },
+      { icon: '&#x1F680;', text: 'Your project is ready!' },
+      { icon: '&#x2728;', text: 'New features unlocked!' },
+      { icon: '&#x1F4E8;', text: 'You have a new message' },
+      { icon: '&#x2764;', text: 'Someone liked your post' }
+    ];
+
+    function showDemoToast() {
+      const container = document.getElementById('demo-toasts');
+      const msg = messages[Math.floor(Math.random() * messages.length)];
+
+      const toast = document.createElement('div');
+      toast.className = 'demo-toast';
+      toast.innerHTML = `
+        <span>${msg.icon}</span>
+        <span>${msg.text}</span>
+      `;
+
+      container.appendChild(toast);
+
+      // Auto remove after 4 seconds
+      setTimeout(() => {
+        toast.classList.add('removing');
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+
+    function copyCode(btn) {
+      const codeBlock = btn.closest('.code-block');
+      const code = codeBlock.querySelector('pre').textContent;
+
+      navigator.clipboard.writeText(code).then(() => {
+        const originalText = btn.textContent;
+        btn.textContent = 'Copié !';
+        btn.style.color = '#22c55e';
+
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.style.color = '';
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>

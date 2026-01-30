@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Glassmorphism — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ========== GLASSMORPHISM STYLES ========== */
+
+    /* Preview backgrounds for glass effect visibility */
+    .glass-preview {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+      padding: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 200px;
+    }
+
+    .glass-preview--dark {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    }
+
+    .glass-preview--nature {
+      background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    }
+
+    .glass-preview--sunset {
+      background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+    }
+
+    .glass-preview--ocean {
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    }
+
+    /* ===== 1. Basic Glass Card ===== */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 24px;
+      color: white;
+    }
+
+    .glass-card__title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .glass-card__text {
+      font-size: 14px;
+      opacity: 0.9;
+      line-height: 1.6;
+    }
+
+    /* ===== 2. Frosted Glass ===== */
+    .glass-frosted {
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 32px;
+      color: white;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    /* ===== 3. Dark Glass ===== */
+    .glass-dark {
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 24px;
+      color: white;
+    }
+
+    /* ===== 4. Glass Button ===== */
+    .glass-btn {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
+      padding: 14px 28px;
+      color: white;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .glass-btn:hover {
+      background: rgba(255, 255, 255, 0.35);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .glass-btn:active {
+      transform: translateY(0);
+    }
+
+    /* ===== 5. Glass Input ===== */
+    .glass-input {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 14px 20px;
+      color: white;
+      font-size: 16px;
+      width: 100%;
+      max-width: 300px;
+      transition: all 0.3s ease;
+    }
+
+    .glass-input::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .glass-input:focus {
+      outline: none;
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.4);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+
+    /* ===== 6. Glass Navigation ===== */
+    .glass-nav {
+      display: flex;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 50px;
+      padding: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .glass-nav__item {
+      padding: 10px 20px;
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+      font-size: 14px;
+    }
+
+    .glass-nav__item:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+    }
+
+    .glass-nav__item--active {
+      background: rgba(255, 255, 255, 0.25);
+      color: white;
+    }
+
+    /* ===== 7. Glass Modal ===== */
+    .glass-modal {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 32px;
+      color: white;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+    }
+
+    .glass-modal__icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+
+    .glass-modal__title {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .glass-modal__text {
+      font-size: 14px;
+      opacity: 0.8;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    .glass-modal__actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    /* ===== 8. Glass Badge ===== */
+    .glass-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50px;
+      padding: 6px 14px;
+      color: white;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .glass-badge__dot {
+      width: 6px;
+      height: 6px;
+      background: #4ade80;
+      border-radius: 50%;
+    }
+
+    /* ===== 9. Glass Avatar ===== */
+    .glass-avatar {
+      width: 80px;
+      height: 80px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      color: white;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    .glass-avatar--ring {
+      position: relative;
+    }
+
+    .glass-avatar--ring::before {
+      content: "";
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      animation: pulseRing 2s ease-out infinite;
+    }
+
+    @keyframes pulseRing {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(1.2); opacity: 0; }
+    }
+
+    /* ===== 10. Glass Stats Card ===== */
+    .glass-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .glass-stat {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      color: white;
+    }
+
+    .glass-stat__value {
+      font-size: 28px;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .glass-stat__label {
+      font-size: 12px;
+      opacity: 0.7;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* ===== 11. Glass Tooltip ===== */
+    .glass-tooltip-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    .glass-tooltip {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      margin-bottom: 10px;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 8px 14px;
+      color: white;
+      font-size: 13px;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .glass-tooltip::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 6px solid transparent;
+      border-top-color: rgba(0, 0, 0, 0.6);
+    }
+
+    .glass-tooltip-wrapper:hover .glass-tooltip {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* ===== 12. Glass Profile Card ===== */
+    .glass-profile {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 24px;
+      padding: 32px;
+      text-align: center;
+      color: white;
+      max-width: 280px;
+    }
+
+    .glass-profile__avatar {
+      width: 100px;
+      height: 100px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.3), rgba(255,255,255,0.1));
+      border-radius: 50%;
+      margin: 0 auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .glass-profile__name {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .glass-profile__role {
+      font-size: 14px;
+      opacity: 0.7;
+      margin-bottom: 20px;
+    }
+
+    .glass-profile__stats {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .glass-profile__stat-value {
+      font-size: 18px;
+      font-weight: 600;
+      display: block;
+    }
+
+    .glass-profile__stat-label {
+      font-size: 11px;
+      opacity: 0.6;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+  <aside class="sidebar">
+    <div class="sidebar__logo">
+      <a href="../../index.html"><span>Duke</span>-components</a>
+    </div>
+    <div class="sidebar__section">
+      <h3 class="sidebar__title">Effets</h3>
+      <ul class="sidebar__nav">
+        <li><a href="../animations/index.html" class="sidebar__link"><span>✨</span> Animations</a></li>
+        <li><a href="../backgrounds/index.html" class="sidebar__link"><span>🎨</span> Backgrounds</a></li>
+        <li><a href="index.html" class="sidebar__link sidebar__link--active"><span>🪟</span> Glassmorphism</a></li>
+        <li><a href="../hovers/index.html" class="sidebar__link"><span>👆</span> Hovers</a></li>
+        <li><a href="../mouse-effects/index.html" class="sidebar__link"><span>🖱️</span> Mouse Effects</a></li>
+        <li><a href="../neumorphism/index.html" class="sidebar__link"><span>🔘</span> Neumorphism</a></li>
+        <li><a href="../text-effects/index.html" class="sidebar__link"><span>🔤</span> Text Effects</a></li>
+      </ul>
+    </div>
+    <div class="admin-toggle">
+      <span class="admin-toggle__label">Mode Admin</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="admin-toggle">
+        <span class="toggle-switch__slider"></span>
+      </label>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="page-header">
+      <h1 class="page-header__title">Glassmorphism</h1>
+      <p class="page-header__desc">Effet verre depoli moderne : 12 composants avec backdrop-filter et transparence.</p>
+    </header>
+
+    <div class="components-grid">
+
+      <!-- 1. Basic Glass Card -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Basic Glass Card</h3>
+        </div>
+        <div class="component-card__preview glass-preview">
+          <div class="glass-card">
+            <h4 class="glass-card__title">Glass Card</h4>
+            <p class="glass-card__text">Beautiful frosted glass effect with blur and transparency.</p>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;div class="glass-card"&gt;
+  &lt;h4 class="glass-card__title"&gt;Title&lt;/h4&gt;
+  &lt;p class="glass-card__text"&gt;Content&lt;/p&gt;
+&lt;/div&gt;
+
+/* CSS */
+.glass-card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 24px;
+  color: white;
+}</code></pre>
+        </div>
+      </article>
+
+      <!-- 2. Frosted Glass -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Frosted Glass</h3>
+        </div>
+        <div class="component-card__preview glass-preview glass-preview--nature">
+          <div class="glass-frosted">
+            <h4 class="glass-card__title">Frosted Effect</h4>
+            <p class="glass-card__text">Higher blur with saturation for extra depth.</p>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>.glass-frosted {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}</code></pre>
+        </div>
+      </article>
+
+      <!-- 3. Dark Glass -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Dark Glass</h3>
+        </div>
+        <div class="component-card__preview glass-preview glass-preview--sunset">
+          <div class="glass-dark">
+            <h4 class="glass-card__title">Dark Mode Glass</h4>
+            <p class="glass-card__text">Darker variant for light backgrounds.</p>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>.glass-dark {
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(15px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}</code></pre>
+        </div>
+      </article>
+
+      <!-- 4. Glass Button -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Glass Button</h3>
+        </div>
+        <div class="component-card__preview glass-preview">
+          <div style="display: flex; gap: 12px;">
+            <button class="glass-btn">Click Me</button>
+            <button class="glass-btn">Learn More</button>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;button class="glass-btn"&gt;Click Me&lt;/button&gt;
+
+/* CSS */
+.glass-btn {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  padding: 14px 28px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.glass-btn:hover {
+  background: rgba(255, 255, 255, 0.35);
+  transform: translateY(-2px);
+}</code></pre>
+        </div>
+      </article>
+
+      <!-- 5. Glass Input -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Glass Input</h3>
+        </div>
+        <div class="component-card__preview glass-preview glass-preview--ocean">
+          <input type="text" class="glass-input" placeholder="Enter your email...">
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;input type="text" class="glass-input" placeholder="Email..."&gt;
+
+/* CSS */
+.glass-input {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 14px 20px;
+  color: white;
+}
+
+.glass-input:focus {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+}</code></pre>
+        </div>
+      </article>
+
+      <!-- 6. Glass Navigation -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Glass Navigation</h3>
+        </div>
+        <div class="component-card__preview glass-preview">
+          <nav class="glass-nav">
+            <a href="#" class="glass-nav__item glass-nav__item--active">Home</a>
+            <a href="#" class="glass-nav__item">About</a>
+            <a href="#" class="glass-nav__item">Services</a>
+            <a href="#" class="glass-nav__item">Contact</a>
+          </nav>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;nav class="glass-nav"&gt;
+  &lt;a href="#" class="glass-nav__item glass-nav__item--active"&gt;Home&lt;/a&gt;
+  &lt;a href="#" class="glass-nav__item"&gt;About&lt;/a&gt;
+  &lt;a href="#" class="glass-nav__item"&gt;Services&lt;/a&gt;
+&lt;/nav&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 7. Glass Modal -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Glass Modal</h3>
+        </div>
+        <div class="component-card__preview glass-preview glass-preview--dark">
+          <div class="glass-modal">
+            <div class="glass-modal__icon">✨</div>
+            <h4 class="glass-modal__title">Welcome!</h4>
+            <p class="glass-modal__text">This is a beautiful glass modal dialog with blur effect.</p>
+            <div class="glass-modal__actions">
+              <button class="glass-btn">Accept</button>
+              <button class="glass-btn" style="background: rgba(255,255,255,0.05);">Cancel</button>
+            </div>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;div class="glass-modal"&gt;
+  &lt;div class="glass-modal__icon"&gt;✨&lt;/div&gt;
+  &lt;h4 class="glass-modal__title"&gt;Title&lt;/h4&gt;
+  &lt;p class="glass-modal__text"&gt;Description&lt;/p&gt;
+  &lt;div class="glass-modal__actions"&gt;
+    &lt;button class="glass-btn"&gt;Accept&lt;/button&gt;
+    &lt;button class="glass-btn"&gt;Cancel&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 8. Glass Badge -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Glass Badge</h3>
+        </div>
+        <div class="component-card__preview glass-preview glass-preview--nature">
+          <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+            <span class="glass-badge"><span class="glass-badge__dot"></span> Online</span>
+            <span class="glass-badge">Premium</span>
+            <span class="glass-badge">New Feature</span>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;span class="glass-badge"&gt;
+  &lt;span class="glass-badge__dot"&gt;&lt;/span&gt;
+  Online
+&lt;/span&gt;
+
+/* CSS */
+.glass-badge {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50px;
+  padding: 6px 14px;
+}</code></pre>
+        </div>
+      </article>
+
+      <!-- 9. Glass Avatar -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Glass Avatar</h3>
+        </div>
+        <div class="component-card__preview glass-preview glass-preview--sunset">
+          <div style="display: flex; gap: 20px;">
+            <div class="glass-avatar">👤</div>
+            <div class="glass-avatar glass-avatar--ring">🚀</div>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;div class="glass-avatar"&gt;👤&lt;/div&gt;
+&lt;div class="glass-avatar glass-avatar--ring"&gt;🚀&lt;/div&gt;
+
+/* Ring animation */
+.glass-avatar--ring::before {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  animation: pulseRing 2s ease-out infinite;
+}</code></pre>
+        </div>
+      </article>
+
+      <!-- 10. Glass Stats -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Glass Stats</h3>
+        </div>
+        <div class="component-card__preview glass-preview">
+          <div class="glass-stats">
+            <div class="glass-stat">
+              <span class="glass-stat__value">2.4K</span>
+              <span class="glass-stat__label">Users</span>
+            </div>
+            <div class="glass-stat">
+              <span class="glass-stat__value">847</span>
+              <span class="glass-stat__label">Sales</span>
+            </div>
+            <div class="glass-stat">
+              <span class="glass-stat__value">99%</span>
+              <span class="glass-stat__label">Rating</span>
+            </div>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;div class="glass-stats"&gt;
+  &lt;div class="glass-stat"&gt;
+    &lt;span class="glass-stat__value"&gt;2.4K&lt;/span&gt;
+    &lt;span class="glass-stat__label"&gt;Users&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+      </article>
+
+      <!-- 11. Glass Tooltip -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Glass Tooltip</h3>
+        </div>
+        <div class="component-card__preview glass-preview glass-preview--ocean">
+          <div class="glass-tooltip-wrapper">
+            <button class="glass-btn">Hover Me</button>
+            <span class="glass-tooltip">This is a glass tooltip!</span>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;div class="glass-tooltip-wrapper"&gt;
+  &lt;button class="glass-btn"&gt;Hover Me&lt;/button&gt;
+  &lt;span class="glass-tooltip"&gt;Tooltip text&lt;/span&gt;
+&lt;/div&gt;
+
+/* CSS */
+.glass-tooltip {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  padding: 8px 14px;
+}</code></pre>
+        </div>
+      </article>
+
+      <!-- 12. Glass Profile Card -->
+      <article class="component-card" data-security="safe">
+        <span class="security-badge security-badge--safe">SAFE</span>
+        <div class="component-card__header">
+          <h3 class="component-card__title">Glass Profile Card</h3>
+        </div>
+        <div class="component-card__preview glass-preview glass-preview--dark">
+          <div class="glass-profile">
+            <div class="glass-profile__avatar">👨‍💻</div>
+            <h4 class="glass-profile__name">John Doe</h4>
+            <p class="glass-profile__role">Senior Developer</p>
+            <div class="glass-profile__stats">
+              <div>
+                <span class="glass-profile__stat-value">128</span>
+                <span class="glass-profile__stat-label">Posts</span>
+              </div>
+              <div>
+                <span class="glass-profile__stat-value">1.2K</span>
+                <span class="glass-profile__stat-label">Followers</span>
+              </div>
+              <div>
+                <span class="glass-profile__stat-value">56</span>
+                <span class="glass-profile__stat-label">Following</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="component-card__code">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <pre><code>&lt;div class="glass-profile"&gt;
+  &lt;div class="glass-profile__avatar"&gt;👨‍💻&lt;/div&gt;
+  &lt;h4 class="glass-profile__name"&gt;John Doe&lt;/h4&gt;
+  &lt;p class="glass-profile__role"&gt;Developer&lt;/p&gt;
+  &lt;div class="glass-profile__stats"&gt;
+    &lt;div&gt;
+      &lt;span class="glass-profile__stat-value"&gt;128&lt;/span&gt;
+      &lt;span class="glass-profile__stat-label"&gt;Posts&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+      </article>
+
+    </div>
+  </main>
+  </div>
+
+  <script src="../../assets/js/copy-code.js"></script>
+  <script src="../../assets/js/security-system.js"></script>
+</body>
+</html>

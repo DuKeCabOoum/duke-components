@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shadow Generator — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/_generators.css">
+</head>
+<body>
+  <div class="app">
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+      <div class="sidebar__logo">
+        <a href="../../index.html"><span>Duke</span>-components</a>
+      </div>
+
+      <!-- Admin Toggle -->
+      <div class="admin-toggle">
+        <span class="admin-toggle__label">Mode Admin</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="admin-toggle">
+          <span class="toggle-switch__slider"></span>
+        </label>
+      </div>
+
+      <!-- Components -->
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Composants</h3>
+        <ul class="sidebar__nav">
+          <li><a href="../../components/buttons/index.html" class="sidebar__link">
+            <span>🔘</span> Buttons
+          </a></li>
+          <li><a href="../../components/cards/index.html" class="sidebar__link">
+            <span>🃏</span> Cards
+          </a></li>
+          <li><a href="../../components/forms/index.html" class="sidebar__link">
+            <span>📝</span> Forms
+          </a></li>
+          <li><a href="../../components/loaders/index.html" class="sidebar__link">
+            <span>⏳</span> Loaders
+          </a></li>
+        </ul>
+      </div>
+
+      <!-- Generators -->
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Générateurs</h3>
+        <ul class="sidebar__nav">
+          <li><a href="../gradient/index.html" class="sidebar__link">
+            <span>🌈</span> Gradient
+          </a></li>
+          <li><a href="index.html" class="sidebar__link sidebar__link--active">
+            <span>🌑</span> Shadow
+          </a></li>
+          <li><a href="../flexbox/index.html" class="sidebar__link">
+            <span>📐</span> Flexbox
+          </a></li>
+          <li><a href="../grid/index.html" class="sidebar__link">
+            <span>🔲</span> Grid
+          </a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main">
+      <header class="main__header">
+        <h1 class="main__title">🌑 Shadow Generator</h1>
+        <p class="main__subtitle">Crée des ombres CSS multicouches en temps réel</p>
+      </header>
+
+      <!-- Generator Container -->
+      <div class="generator">
+        <!-- Preview Area -->
+        <div class="generator__preview">
+          <div class="shadow-preview" id="shadow-preview">
+            <!-- L'élément avec l'ombre s'affiche ici -->
+          </div>
+        </div>
+
+        <!-- Controls Panel -->
+        <div class="generator__controls">
+          <!-- Layers -->
+          <div class="control-group">
+            <label class="control-label">
+              Couches d'ombre
+              <button class="add-layer-btn" id="add-layer-btn">+ Ajouter</button>
+            </label>
+            <div class="shadow-layers" id="shadow-layers">
+              <!-- Layers générés dynamiquement -->
+            </div>
+          </div>
+
+          <!-- Inset Toggle -->
+          <div class="control-group">
+            <label class="control-label">Type d'ombre</label>
+            <div class="control-buttons">
+              <button class="control-btn control-btn--active" data-inset="false">Externe</button>
+              <button class="control-btn" data-inset="true">Interne (inset)</button>
+            </div>
+          </div>
+
+          <!-- Preview Background -->
+          <div class="control-group">
+            <label class="control-label">Fond de prévisualisation</label>
+            <div class="control-buttons">
+              <button class="control-btn control-btn--active" data-bg="dark">Sombre</button>
+              <button class="control-btn" data-bg="light">Clair</button>
+              <button class="control-btn" data-bg="gradient">Gradient</button>
+            </div>
+          </div>
+
+          <!-- Presets -->
+          <div class="control-group">
+            <label class="control-label">Presets</label>
+            <div class="shadow-presets">
+              <button class="preset-shadow" data-preset="subtle">Subtle</button>
+              <button class="preset-shadow" data-preset="medium">Medium</button>
+              <button class="preset-shadow" data-preset="strong">Strong</button>
+              <button class="preset-shadow" data-preset="layered">Layered</button>
+              <button class="preset-shadow" data-preset="neon">Neon</button>
+              <button class="preset-shadow" data-preset="inset">Inset</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Code Output -->
+        <div class="generator__output">
+          <div class="output-header">
+            <span class="output-title">CSS</span>
+            <button class="copy-btn" id="copy-shadow-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+              </svg>
+              Copier
+            </button>
+          </div>
+          <pre class="output-code"><code id="shadow-code">box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);</code></pre>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../../assets/js/security-system.js"></script>
+  <script src="../../assets/js/shadow-generator.js"></script>
+</body>
+</html>

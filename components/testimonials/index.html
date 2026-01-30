@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Testimonials — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ===========================================
+       TESTIMONIALS — Styles locaux
+       =========================================== */
+
+    .testimonials-list {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    .testimonial-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .testimonial-section__preview {
+      padding: 48px;
+      background: #0f0f0f;
+    }
+
+    .testimonial-section__info {
+      padding: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .testimonial-section__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .testimonial-section__name {
+      font-weight: 600;
+      font-size: 1.25rem;
+    }
+
+    .testimonial-section__tags {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* ===========================================
+       TESTIMONIALS 1 — CARDS GRID
+       =========================================== */
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .testimonial-card {
+      padding: 28px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .testimonial-card:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(99, 102, 241, 0.3);
+      transform: translateY(-4px);
+    }
+
+    .testimonial-card__stars {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 16px;
+    }
+
+    .testimonial-card__star {
+      color: #fbbf24;
+      font-size: 1rem;
+    }
+
+    .testimonial-card__text {
+      color: #d1d5db;
+      line-height: 1.7;
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+    }
+
+    .testimonial-card__author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .testimonial-card__avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 1rem;
+      color: white;
+    }
+
+    .testimonial-card__info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .testimonial-card__name {
+      font-weight: 600;
+      color: #fff;
+      font-size: 0.95rem;
+    }
+
+    .testimonial-card__role {
+      color: #71717a;
+      font-size: 0.85rem;
+    }
+
+    /* ===========================================
+       TESTIMONIALS 2 — QUOTE CENTERED
+       =========================================== */
+
+    .testimonial-centered {
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .testimonial-centered__quote {
+      font-size: 4rem;
+      color: #6366f1;
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    .testimonial-centered__text {
+      font-size: 1.5rem;
+      color: #e5e7eb;
+      line-height: 1.6;
+      font-style: italic;
+      margin-bottom: 32px;
+    }
+
+    .testimonial-centered__avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: white;
+      margin: 0 auto 16px;
+    }
+
+    .testimonial-centered__name {
+      font-weight: 600;
+      color: #fff;
+      font-size: 1.1rem;
+      margin-bottom: 4px;
+    }
+
+    .testimonial-centered__role {
+      color: #71717a;
+      font-size: 0.9rem;
+    }
+
+    .testimonial-centered__company {
+      color: #6366f1;
+    }
+
+    /* ===========================================
+       TESTIMONIALS 3 — CAROUSEL STYLE
+       =========================================== */
+
+    .testimonial-carousel {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .testimonial-carousel__track {
+      display: flex;
+      gap: 24px;
+      animation: scroll-testimonials 30s linear infinite;
+    }
+
+    @keyframes scroll-testimonials {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .testimonial-carousel__card {
+      flex: 0 0 350px;
+      padding: 24px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+    }
+
+    .testimonial-carousel__text {
+      color: #d1d5db;
+      line-height: 1.6;
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+    }
+
+    .testimonial-carousel__author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .testimonial-carousel__avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: white;
+    }
+
+    .testimonial-carousel__name {
+      font-weight: 600;
+      color: #fff;
+      font-size: 0.85rem;
+    }
+
+    .testimonial-carousel__role {
+      color: #71717a;
+      font-size: 0.75rem;
+    }
+
+    /* ===========================================
+       TESTIMONIALS 4 — FEATURED + GRID
+       =========================================== */
+
+    .testimonials-featured {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .testimonial-featured {
+      grid-row: span 2;
+      padding: 40px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(139, 92, 246, 0.1) 100%);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .testimonial-featured__quote {
+      font-size: 3rem;
+      color: #6366f1;
+      margin-bottom: 16px;
+    }
+
+    .testimonial-featured__text {
+      font-size: 1.25rem;
+      color: #e5e7eb;
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+
+    .testimonial-featured__author {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .testimonial-featured__avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: white;
+    }
+
+    .testimonial-featured__name {
+      font-weight: 600;
+      color: #fff;
+      font-size: 1.1rem;
+      margin-bottom: 4px;
+    }
+
+    .testimonial-featured__role {
+      color: #a1a1aa;
+      font-size: 0.9rem;
+    }
+
+    .testimonial-small {
+      padding: 24px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+    }
+
+    .testimonial-small__text {
+      color: #d1d5db;
+      line-height: 1.6;
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+    }
+
+    .testimonial-small__author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .testimonial-small__avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.8rem;
+      color: white;
+    }
+
+    .testimonial-small__name {
+      font-weight: 600;
+      color: #fff;
+      font-size: 0.85rem;
+    }
+
+    .testimonial-small__role {
+      color: #71717a;
+      font-size: 0.75rem;
+    }
+
+    /* ===========================================
+       TESTIMONIALS 5 — TWITTER/X STYLE
+       =========================================== */
+
+    .testimonials-twitter {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .testimonial-tweet {
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .testimonial-tweet:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(29, 161, 242, 0.3);
+    }
+
+    .testimonial-tweet__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .testimonial-tweet__author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .testimonial-tweet__avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: white;
+    }
+
+    .testimonial-tweet__name {
+      font-weight: 600;
+      color: #fff;
+      font-size: 0.9rem;
+    }
+
+    .testimonial-tweet__handle {
+      color: #71717a;
+      font-size: 0.8rem;
+    }
+
+    .testimonial-tweet__icon {
+      color: #1d9bf0;
+      font-size: 1.25rem;
+    }
+
+    .testimonial-tweet__text {
+      color: #d1d5db;
+      line-height: 1.5;
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+    }
+
+    .testimonial-tweet__text .highlight {
+      color: #1d9bf0;
+    }
+
+    .testimonial-tweet__meta {
+      display: flex;
+      gap: 20px;
+      color: #71717a;
+      font-size: 0.8rem;
+    }
+
+    .testimonial-tweet__action {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .testimonial-tweet__action:hover {
+      color: #1d9bf0;
+    }
+
+    /* ===========================================
+       TESTIMONIALS 6 — AVATAR WALL
+       =========================================== */
+
+    .testimonial-wall {
+      text-align: center;
+    }
+
+    .testimonial-wall__title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .testimonial-wall__subtitle {
+      color: #71717a;
+      margin-bottom: 32px;
+    }
+
+    .testimonial-wall__avatars {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+
+    .testimonial-wall__avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: white;
+      border: 3px solid #0f0f0f;
+      margin-left: -12px;
+      transition: all 0.3s ease;
+    }
+
+    .testimonial-wall__avatar:first-child {
+      margin-left: 0;
+    }
+
+    .testimonial-wall__avatar:hover {
+      transform: translateY(-4px);
+      z-index: 10;
+    }
+
+    .testimonial-wall__avatar--more {
+      background: rgba(255, 255, 255, 0.1);
+      font-size: 0.75rem;
+    }
+
+    .testimonial-wall__stats {
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+    }
+
+    .testimonial-wall__stat {
+      text-align: center;
+    }
+
+    .testimonial-wall__stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .testimonial-wall__stat-label {
+      color: #71717a;
+      font-size: 0.9rem;
+    }
+
+    /* ===========================================
+       CODE BLOCK
+       =========================================== */
+
+    .code-block {
+      background: #1a1a1a;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .code-block__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .code-block__lang {
+      font-size: 0.75rem;
+      color: #71717a;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .code-block__copy {
+      padding: 6px 12px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: #a1a1aa;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .code-block__copy:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+    }
+
+    .code-block__content {
+      padding: 16px;
+      overflow-x: auto;
+    }
+
+    .code-block__content pre {
+      margin: 0;
+      font-family: "Fira Code", monospace;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: #e0e0e0;
+    }
+
+    /* ===========================================
+       TAG
+       =========================================== */
+
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      font-size: 0.75rem;
+      color: #a1a1aa;
+    }
+
+    .tag--primary {
+      background: rgba(99, 102, 241, 0.15);
+      border-color: rgba(99, 102, 241, 0.3);
+      color: #818cf8;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar__logo">
+      <a href="../../index.html">Duke<span>UI</span></a>
+    </div>
+
+    <nav class="sidebar__nav">
+      <div class="sidebar__section">
+        <div class="sidebar__title">Composants</div>
+        <a href="../buttons/index.html" class="sidebar__link">Buttons</a>
+        <a href="../cards/index.html" class="sidebar__link">Cards</a>
+        <a href="../forms/index.html" class="sidebar__link">Forms</a>
+        <a href="../loaders/index.html" class="sidebar__link">Loaders</a>
+        <a href="../modals/index.html" class="sidebar__link">Modals</a>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__title">Effets</div>
+        <a href="../hovers/index.html" class="sidebar__link">Hovers</a>
+        <a href="../animations/index.html" class="sidebar__link">Animations</a>
+        <a href="../backgrounds/index.html" class="sidebar__link">Backgrounds</a>
+        <a href="../text-effects/index.html" class="sidebar__link">Text Effects</a>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__title">Sections</div>
+        <a href="../heroes/index.html" class="sidebar__link">Heroes</a>
+        <a href="../features/index.html" class="sidebar__link">Features</a>
+        <a href="../pricing/index.html" class="sidebar__link">Pricing</a>
+        <a href="index.html" class="sidebar__link sidebar__link--active">Testimonials</a>
+        <a href="../footers/index.html" class="sidebar__link">Footers</a>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__title">Générateurs</div>
+        <a href="../../generators/gradient/index.html" class="sidebar__link">Gradient</a>
+        <a href="../../generators/shadow/index.html" class="sidebar__link">Shadow</a>
+        <a href="../../generators/flexbox/index.html" class="sidebar__link">Flexbox</a>
+        <a href="../../generators/grid/index.html" class="sidebar__link">Grid</a>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    <header class="page-header">
+      <h1 class="page-header__title">Testimonials</h1>
+      <p class="page-header__desc">Sections de témoignages pour renforcer la crédibilité et la confiance</p>
+    </header>
+
+    <div class="testimonials-list">
+
+      <!-- ============================================
+           TESTIMONIALS 1 — CARDS GRID
+           ============================================ -->
+      <section class="testimonial-section">
+        <div class="testimonial-section__preview">
+          <div class="testimonials-grid">
+            <!-- Card 1 -->
+            <div class="testimonial-card">
+              <div class="testimonial-card__stars">
+                <span class="testimonial-card__star">★</span>
+                <span class="testimonial-card__star">★</span>
+                <span class="testimonial-card__star">★</span>
+                <span class="testimonial-card__star">★</span>
+                <span class="testimonial-card__star">★</span>
+              </div>
+              <p class="testimonial-card__text">"Un outil incroyable qui a transformé notre workflow. L'interface est intuitive et les fonctionnalités sont exactement ce dont on avait besoin."</p>
+              <div class="testimonial-card__author">
+                <div class="testimonial-card__avatar">MP</div>
+                <div class="testimonial-card__info">
+                  <span class="testimonial-card__name">Marie Dupont</span>
+                  <span class="testimonial-card__role">CEO, TechStartup</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="testimonial-card">
+              <div class="testimonial-card__stars">
+                <span class="testimonial-card__star">★</span>
+                <span class="testimonial-card__star">★</span>
+                <span class="testimonial-card__star">★</span>
+                <span class="testimonial-card__star">★</span>
+                <span class="testimonial-card__star">★</span>
+              </div>
+              <p class="testimonial-card__text">"Le support client est exceptionnel. Ils ont résolu mon problème en moins d'une heure. Je recommande vivement !"</p>
+              <div class="testimonial-card__author">
+                <div class="testimonial-card__avatar">JM</div>
+                <div class="testimonial-card__info">
+                  <span class="testimonial-card__name">Jean Martin</span>
+                  <span class="testimonial-card__role">Développeur, Freelance</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="testimonial-card">
+              <div class="testimonial-card__stars">
+                <span class="testimonial-card__star">★</span>
+                <span class="testimonial-card__star">★</span>
+                <span class="testimonial-card__star">★</span>
+                <span class="testimonial-card__star">★</span>
+                <span class="testimonial-card__star">★</span>
+              </div>
+              <p class="testimonial-card__text">"Depuis qu'on utilise cette solution, notre productivité a augmenté de 40%. Un investissement qui vaut chaque centime."</p>
+              <div class="testimonial-card__author">
+                <div class="testimonial-card__avatar">SL</div>
+                <div class="testimonial-card__info">
+                  <span class="testimonial-card__name">Sophie Leroy</span>
+                  <span class="testimonial-card__role">CTO, DigitalAgency</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-section__info">
+          <div class="testimonial-section__header">
+            <h2 class="testimonial-section__name">Testimonials Grid</h2>
+            <div class="testimonial-section__tags">
+              <span class="tag">CSS Grid</span>
+              <span class="tag tag--primary">Stars</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">HTML</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>&lt;div class="testimonial-card"&gt;
+  &lt;div class="testimonial-card__stars"&gt;
+    &lt;span class="testimonial-card__star"&gt;★&lt;/span&gt;
+    &lt;span class="testimonial-card__star"&gt;★&lt;/span&gt;
+    &lt;span class="testimonial-card__star"&gt;★&lt;/span&gt;
+    &lt;span class="testimonial-card__star"&gt;★&lt;/span&gt;
+    &lt;span class="testimonial-card__star"&gt;★&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;p class="testimonial-card__text"&gt;"Un outil incroyable..."&lt;/p&gt;
+  &lt;div class="testimonial-card__author"&gt;
+    &lt;div class="testimonial-card__avatar"&gt;MP&lt;/div&gt;
+    &lt;div class="testimonial-card__info"&gt;
+      &lt;span class="testimonial-card__name"&gt;Marie Dupont&lt;/span&gt;
+      &lt;span class="testimonial-card__role"&gt;CEO, TechStartup&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================
+           TESTIMONIALS 2 — QUOTE CENTERED
+           ============================================ -->
+      <section class="testimonial-section">
+        <div class="testimonial-section__preview">
+          <div class="testimonial-centered">
+            <div class="testimonial-centered__quote">"</div>
+            <p class="testimonial-centered__text">Cette plateforme a complètement révolutionné notre façon de travailler. L'équipe est plus efficace, les clients sont plus satisfaits, et nos revenus ont doublé en 6 mois.</p>
+            <div class="testimonial-centered__avatar">PD</div>
+            <h4 class="testimonial-centered__name">Pierre Durand</h4>
+            <p class="testimonial-centered__role">Directeur Marketing, <span class="testimonial-centered__company">StartupXYZ</span></p>
+          </div>
+        </div>
+
+        <div class="testimonial-section__info">
+          <div class="testimonial-section__header">
+            <h2 class="testimonial-section__name">Quote Centered</h2>
+            <div class="testimonial-section__tags">
+              <span class="tag">Hero</span>
+              <span class="tag tag--primary">Impact</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">HTML</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>&lt;div class="testimonial-centered"&gt;
+  &lt;div class="testimonial-centered__quote"&gt;"&lt;/div&gt;
+  &lt;p class="testimonial-centered__text"&gt;Cette plateforme...&lt;/p&gt;
+  &lt;div class="testimonial-centered__avatar"&gt;PD&lt;/div&gt;
+  &lt;h4 class="testimonial-centered__name"&gt;Pierre Durand&lt;/h4&gt;
+  &lt;p class="testimonial-centered__role"&gt;Directeur Marketing&lt;/p&gt;
+&lt;/div&gt;</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================
+           TESTIMONIALS 3 — CAROUSEL AUTO
+           ============================================ -->
+      <section class="testimonial-section">
+        <div class="testimonial-section__preview">
+          <div class="testimonial-carousel">
+            <div class="testimonial-carousel__track">
+              <!-- Cards répétées pour l'animation infinie -->
+              <div class="testimonial-carousel__card">
+                <p class="testimonial-carousel__text">"Excellent produit, je le recommande à tous mes collègues. Le support est réactif et les mises à jour régulières."</p>
+                <div class="testimonial-carousel__author">
+                  <div class="testimonial-carousel__avatar">AL</div>
+                  <div>
+                    <div class="testimonial-carousel__name">Alice Lambert</div>
+                    <div class="testimonial-carousel__role">Designer UI/UX</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="testimonial-carousel__card">
+                <p class="testimonial-carousel__text">"Interface claire, prise en main rapide. On a migré toute notre équipe en une journée. Vraiment impressionnant."</p>
+                <div class="testimonial-carousel__author">
+                  <div class="testimonial-carousel__avatar">TB</div>
+                  <div>
+                    <div class="testimonial-carousel__name">Thomas Bernard</div>
+                    <div class="testimonial-carousel__role">Tech Lead</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="testimonial-carousel__card">
+                <p class="testimonial-carousel__text">"Le meilleur investissement de l'année pour notre startup. ROI positif dès le premier mois d'utilisation."</p>
+                <div class="testimonial-carousel__author">
+                  <div class="testimonial-carousel__avatar">CR</div>
+                  <div>
+                    <div class="testimonial-carousel__name">Claire Renaud</div>
+                    <div class="testimonial-carousel__role">CEO Founder</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="testimonial-carousel__card">
+                <p class="testimonial-carousel__text">"Fonctionnalités complètes et documentation impeccable. Un plaisir à utiliser au quotidien."</p>
+                <div class="testimonial-carousel__author">
+                  <div class="testimonial-carousel__avatar">MV</div>
+                  <div>
+                    <div class="testimonial-carousel__name">Marc Vidal</div>
+                    <div class="testimonial-carousel__role">Product Manager</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Duplication pour boucle infinie -->
+              <div class="testimonial-carousel__card">
+                <p class="testimonial-carousel__text">"Excellent produit, je le recommande à tous mes collègues. Le support est réactif et les mises à jour régulières."</p>
+                <div class="testimonial-carousel__author">
+                  <div class="testimonial-carousel__avatar">AL</div>
+                  <div>
+                    <div class="testimonial-carousel__name">Alice Lambert</div>
+                    <div class="testimonial-carousel__role">Designer UI/UX</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="testimonial-carousel__card">
+                <p class="testimonial-carousel__text">"Interface claire, prise en main rapide. On a migré toute notre équipe en une journée. Vraiment impressionnant."</p>
+                <div class="testimonial-carousel__author">
+                  <div class="testimonial-carousel__avatar">TB</div>
+                  <div>
+                    <div class="testimonial-carousel__name">Thomas Bernard</div>
+                    <div class="testimonial-carousel__role">Tech Lead</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="testimonial-carousel__card">
+                <p class="testimonial-carousel__text">"Le meilleur investissement de l'année pour notre startup. ROI positif dès le premier mois d'utilisation."</p>
+                <div class="testimonial-carousel__author">
+                  <div class="testimonial-carousel__avatar">CR</div>
+                  <div>
+                    <div class="testimonial-carousel__name">Claire Renaud</div>
+                    <div class="testimonial-carousel__role">CEO Founder</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="testimonial-carousel__card">
+                <p class="testimonial-carousel__text">"Fonctionnalités complètes et documentation impeccable. Un plaisir à utiliser au quotidien."</p>
+                <div class="testimonial-carousel__author">
+                  <div class="testimonial-carousel__avatar">MV</div>
+                  <div>
+                    <div class="testimonial-carousel__name">Marc Vidal</div>
+                    <div class="testimonial-carousel__role">Product Manager</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-section__info">
+          <div class="testimonial-section__header">
+            <h2 class="testimonial-section__name">Carousel Auto-scroll</h2>
+            <div class="testimonial-section__tags">
+              <span class="tag">Animation</span>
+              <span class="tag tag--primary">Infini</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.testimonial-carousel__track {
+  display: flex;
+  gap: 24px;
+  animation: scroll-testimonials 30s linear infinite;
+}
+
+@keyframes scroll-testimonials {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================
+           TESTIMONIALS 4 — FEATURED + SMALL
+           ============================================ -->
+      <section class="testimonial-section">
+        <div class="testimonial-section__preview">
+          <div class="testimonials-featured">
+            <!-- Featured -->
+            <div class="testimonial-featured">
+              <div class="testimonial-featured__quote">"</div>
+              <p class="testimonial-featured__text">Je travaille dans le digital depuis 15 ans et c'est la première fois que je vois un outil aussi bien pensé. Il résout des problèmes qu'on ne savait même pas qu'on avait.</p>
+              <div class="testimonial-featured__author">
+                <div class="testimonial-featured__avatar">LM</div>
+                <div>
+                  <div class="testimonial-featured__name">Laurent Mercier</div>
+                  <div class="testimonial-featured__role">VP Engineering, BigTech Corp</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Small 1 -->
+            <div class="testimonial-small">
+              <p class="testimonial-small__text">"Gain de temps énorme sur nos projets. L'automatisation est parfaite."</p>
+              <div class="testimonial-small__author">
+                <div class="testimonial-small__avatar">NB</div>
+                <div>
+                  <div class="testimonial-small__name">Nathalie Blanc</div>
+                  <div class="testimonial-small__role">Chef de projet</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Small 2 -->
+            <div class="testimonial-small">
+              <p class="testimonial-small__text">"Support technique au top. Réponse en moins de 2h à chaque fois."</p>
+              <div class="testimonial-small__author">
+                <div class="testimonial-small__avatar">FG</div>
+                <div>
+                  <div class="testimonial-small__name">François Garcia</div>
+                  <div class="testimonial-small__role">DevOps Engineer</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-section__info">
+          <div class="testimonial-section__header">
+            <h2 class="testimonial-section__name">Featured + Grid</h2>
+            <div class="testimonial-section__tags">
+              <span class="tag">Asymétrique</span>
+              <span class="tag tag--primary">Highlight</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.testimonials-featured {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.testimonial-featured {
+  grid-row: span 2; /* Prend 2 lignes */
+  background: linear-gradient(135deg,
+    rgba(99, 102, 241, 0.15) 0%,
+    rgba(139, 92, 246, 0.1) 100%);
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================
+           TESTIMONIALS 5 — TWITTER STYLE
+           ============================================ -->
+      <section class="testimonial-section">
+        <div class="testimonial-section__preview">
+          <div class="testimonials-twitter">
+            <!-- Tweet 1 -->
+            <div class="testimonial-tweet">
+              <div class="testimonial-tweet__header">
+                <div class="testimonial-tweet__author">
+                  <div class="testimonial-tweet__avatar">EP</div>
+                  <div>
+                    <div class="testimonial-tweet__name">Emma Petit</div>
+                    <div class="testimonial-tweet__handle">@emma_dev</div>
+                  </div>
+                </div>
+                <span class="testimonial-tweet__icon">𝕏</span>
+              </div>
+              <p class="testimonial-tweet__text">Je viens de migrer vers <span class="highlight">@ProductX</span> et wow 🔥 L'UX est incroyable, tout est fluide. Mon équipe est ravie !</p>
+              <div class="testimonial-tweet__meta">
+                <span class="testimonial-tweet__action">♡ 234</span>
+                <span class="testimonial-tweet__action">↻ 56</span>
+                <span class="testimonial-tweet__action">💬 12</span>
+              </div>
+            </div>
+
+            <!-- Tweet 2 -->
+            <div class="testimonial-tweet">
+              <div class="testimonial-tweet__header">
+                <div class="testimonial-tweet__author">
+                  <div class="testimonial-tweet__avatar">RD</div>
+                  <div>
+                    <div class="testimonial-tweet__name">Romain Dufour</div>
+                    <div class="testimonial-tweet__handle">@romain_tech</div>
+                  </div>
+                </div>
+                <span class="testimonial-tweet__icon">𝕏</span>
+              </div>
+              <p class="testimonial-tweet__text">Après 3 mois avec <span class="highlight">@ProductX</span>, on ne pourrait plus s'en passer. L'intégration avec nos outils existants est parfaite 👌</p>
+              <div class="testimonial-tweet__meta">
+                <span class="testimonial-tweet__action">♡ 189</span>
+                <span class="testimonial-tweet__action">↻ 43</span>
+                <span class="testimonial-tweet__action">💬 8</span>
+              </div>
+            </div>
+
+            <!-- Tweet 3 -->
+            <div class="testimonial-tweet">
+              <div class="testimonial-tweet__header">
+                <div class="testimonial-tweet__author">
+                  <div class="testimonial-tweet__avatar">JC</div>
+                  <div>
+                    <div class="testimonial-tweet__name">Julie Chen</div>
+                    <div class="testimonial-tweet__handle">@julie_builds</div>
+                  </div>
+                </div>
+                <span class="testimonial-tweet__icon">𝕏</span>
+              </div>
+              <p class="testimonial-tweet__text">Le support de <span class="highlight">@ProductX</span> m'a répondu un dimanche soir. C'est ça l'engagement client 🙏 Merci !</p>
+              <div class="testimonial-tweet__meta">
+                <span class="testimonial-tweet__action">♡ 312</span>
+                <span class="testimonial-tweet__action">↻ 78</span>
+                <span class="testimonial-tweet__action">💬 24</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-section__info">
+          <div class="testimonial-section__header">
+            <h2 class="testimonial-section__name">Twitter/X Style</h2>
+            <div class="testimonial-section__tags">
+              <span class="tag">Social</span>
+              <span class="tag tag--primary">Authentique</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">HTML</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>&lt;div class="testimonial-tweet"&gt;
+  &lt;div class="testimonial-tweet__header"&gt;
+    &lt;div class="testimonial-tweet__author"&gt;
+      &lt;div class="testimonial-tweet__avatar"&gt;EP&lt;/div&gt;
+      &lt;div&gt;
+        &lt;div class="testimonial-tweet__name"&gt;Emma Petit&lt;/div&gt;
+        &lt;div class="testimonial-tweet__handle"&gt;@emma_dev&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;span class="testimonial-tweet__icon"&gt;𝕏&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;p class="testimonial-tweet__text"&gt;
+    Le produit &lt;span class="highlight"&gt;@ProductX&lt;/span&gt; est top 🔥
+  &lt;/p&gt;
+  &lt;div class="testimonial-tweet__meta"&gt;
+    &lt;span&gt;♡ 234&lt;/span&gt;
+    &lt;span&gt;↻ 56&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================
+           TESTIMONIALS 6 — AVATAR WALL
+           ============================================ -->
+      <section class="testimonial-section">
+        <div class="testimonial-section__preview">
+          <div class="testimonial-wall">
+            <h3 class="testimonial-wall__title">Rejoignez plus de 10 000 utilisateurs satisfaits</h3>
+            <p class="testimonial-wall__subtitle">Des équipes du monde entier nous font confiance</p>
+
+            <div class="testimonial-wall__avatars">
+              <div class="testimonial-wall__avatar">AB</div>
+              <div class="testimonial-wall__avatar">CD</div>
+              <div class="testimonial-wall__avatar">EF</div>
+              <div class="testimonial-wall__avatar">GH</div>
+              <div class="testimonial-wall__avatar">IJ</div>
+              <div class="testimonial-wall__avatar">KL</div>
+              <div class="testimonial-wall__avatar">MN</div>
+              <div class="testimonial-wall__avatar">OP</div>
+              <div class="testimonial-wall__avatar testimonial-wall__avatar--more">+9k</div>
+            </div>
+
+            <div class="testimonial-wall__stats">
+              <div class="testimonial-wall__stat">
+                <div class="testimonial-wall__stat-value">10,000+</div>
+                <div class="testimonial-wall__stat-label">Utilisateurs actifs</div>
+              </div>
+              <div class="testimonial-wall__stat">
+                <div class="testimonial-wall__stat-value">4.9/5</div>
+                <div class="testimonial-wall__stat-label">Note moyenne</div>
+              </div>
+              <div class="testimonial-wall__stat">
+                <div class="testimonial-wall__stat-value">50+</div>
+                <div class="testimonial-wall__stat-label">Pays</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-section__info">
+          <div class="testimonial-section__header">
+            <h2 class="testimonial-section__name">Avatar Wall + Stats</h2>
+            <div class="testimonial-section__tags">
+              <span class="tag">Social Proof</span>
+              <span class="tag tag--primary">Confiance</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.testimonial-wall__avatars {
+  display: flex;
+  justify-content: center;
+}
+
+.testimonial-wall__avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 3px solid #0f0f0f;
+  margin-left: -12px; /* Chevauchement */
+}
+
+.testimonial-wall__avatar:first-child {
+  margin-left: 0;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+  </div>
+
+  <script src="../../assets/js/main.js"></script>
+  <script>
+    function copyCode(btn) {
+      const codeBlock = btn.closest('.code-block');
+      const code = codeBlock.querySelector('pre').textContent;
+
+      navigator.clipboard.writeText(code).then(() => {
+        const originalText = btn.textContent;
+        btn.textContent = 'Copié !';
+        btn.style.color = '#22c55e';
+
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.style.color = '';
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>
