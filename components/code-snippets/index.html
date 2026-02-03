@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code Snippets — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ===========================================
+       CODE SNIPPETS COMPONENT STYLES
+       =========================================== */
+
+    /* Base Code Block */
+    .code-block {
+      background: #1e1e1e;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      font-family: 'Fira Code', 'JetBrains Mono', monospace;
+    }
+
+    .code-block__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .code-block__dots {
+      display: flex;
+      gap: 8px;
+    }
+
+    .code-block__dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .code-block__dot--red { background: #ff5f56; }
+    .code-block__dot--yellow { background: #ffbd2e; }
+    .code-block__dot--green { background: #27c93f; }
+
+    .code-block__lang {
+      font-size: 0.75rem;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .code-block__actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .code-block__btn {
+      padding: 4px 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      border-radius: 4px;
+      color: #9ca3af;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .code-block__btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+    }
+
+    .code-block__content {
+      padding: 16px;
+      overflow-x: auto;
+    }
+
+    .code-block__content pre {
+      margin: 0;
+      line-height: 1.6;
+      font-size: 0.875rem;
+    }
+
+    /* Syntax Highlighting Colors */
+    .code-block code {
+      color: #e5e7eb;
+    }
+
+    .code-block .keyword { color: #c792ea; }
+    .code-block .string { color: #c3e88d; }
+    .code-block .number { color: #f78c6c; }
+    .code-block .function { color: #82aaff; }
+    .code-block .comment { color: #546e7a; font-style: italic; }
+    .code-block .class { color: #ffcb6b; }
+    .code-block .tag { color: #f07178; }
+    .code-block .attr { color: #c792ea; }
+    .code-block .value { color: #c3e88d; }
+    .code-block .punctuation { color: #89ddff; }
+    .code-block .operator { color: #89ddff; }
+    .code-block .property { color: #82aaff; }
+
+    /* Line Numbers */
+    .code-block--numbered .code-block__content {
+      padding-left: 0;
+    }
+
+    .code-block__lines {
+      display: flex;
+    }
+
+    .code-block__line-numbers {
+      padding: 16px 12px;
+      background: rgba(0, 0, 0, 0.2);
+      text-align: right;
+      color: #4b5563;
+      font-size: 0.875rem;
+      line-height: 1.6;
+      user-select: none;
+      border-right: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .code-block__code {
+      padding: 16px;
+      flex: 1;
+      overflow-x: auto;
+    }
+
+    /* Variant: Terminal */
+    .code-block--terminal {
+      background: #0d1117;
+    }
+
+    .code-block--terminal .code-block__header {
+      background: #161b22;
+    }
+
+    .code-block--terminal .code-block__prompt {
+      color: #58a6ff;
+    }
+
+    .code-block--terminal .code-block__output {
+      color: #8b949e;
+    }
+
+    /* Variant: Glassmorphism */
+    .code-block--glass {
+      background: rgba(30, 30, 30, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Variant: Gradient Border */
+    .code-block--gradient {
+      position: relative;
+      background: #1e1e1e;
+    }
+
+    .code-block--gradient::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+      border-radius: calc(var(--radius-lg) + 2px);
+      z-index: -1;
+    }
+
+    /* Variant: Neon */
+    .code-block--neon {
+      background: #0a0a0a;
+      border: 1px solid #00ff88;
+      box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+    }
+
+    .code-block--neon .code-block__header {
+      border-bottom-color: #00ff88;
+    }
+
+    .code-block--neon .keyword { color: #00ff88; }
+    .code-block--neon .string { color: #ff00ff; }
+    .code-block--neon .function { color: #00ccff; }
+
+    /* Variant: Minimal */
+    .code-block--minimal {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+    }
+
+    .code-block--minimal .code-block__header {
+      padding: 8px 12px;
+    }
+
+    .code-block--minimal .code-block__dots {
+      display: none;
+    }
+
+    /* Variant: Diff */
+    .code-block--diff .line-added {
+      background: rgba(46, 160, 67, 0.2);
+      border-left: 3px solid #3fb950;
+    }
+
+    .code-block--diff .line-removed {
+      background: rgba(248, 81, 73, 0.2);
+      border-left: 3px solid #f85149;
+    }
+
+    /* Copy feedback */
+    .code-block__btn--copied {
+      background: rgba(46, 160, 67, 0.2);
+      color: #3fb950;
+    }
+
+    /* Inline Code */
+    .inline-code {
+      padding: 2px 6px;
+      background: rgba(99, 102, 241, 0.2);
+      border-radius: 4px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.875em;
+      color: #a5b4fc;
+    }
+
+    .inline-code--success {
+      background: rgba(16, 185, 129, 0.2);
+      color: #6ee7b7;
+    }
+
+    .inline-code--warning {
+      background: rgba(245, 158, 11, 0.2);
+      color: #fcd34d;
+    }
+
+    .inline-code--error {
+      background: rgba(239, 68, 68, 0.2);
+      color: #fca5a5;
+    }
+
+    /* Code Tabs */
+    .code-tabs {
+      background: #1e1e1e;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .code-tabs__header {
+      display: flex;
+      background: rgba(255, 255, 255, 0.05);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .code-tabs__tab {
+      padding: 12px 20px;
+      background: transparent;
+      border: none;
+      color: #6b7280;
+      font-size: 0.875rem;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s;
+    }
+
+    .code-tabs__tab:hover {
+      color: #9ca3af;
+    }
+
+    .code-tabs__tab--active {
+      color: white;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .code-tabs__tab--active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--primary);
+    }
+
+    .code-tabs__panel {
+      display: none;
+      padding: 16px;
+    }
+
+    .code-tabs__panel--active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+      <a href="../../index.html" class="sidebar__logo">
+        <span>Duke</span>-components
+      </a>
+
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Code Snippets</h3>
+        <ul class="sidebar__nav">
+          <li><a href="#basic" class="sidebar__link sidebar__link--active">Basic</a></li>
+          <li><a href="#numbered" class="sidebar__link">Numbered</a></li>
+          <li><a href="#terminal" class="sidebar__link">Terminal</a></li>
+          <li><a href="#variants" class="sidebar__link">Variants</a></li>
+          <li><a href="#inline" class="sidebar__link">Inline</a></li>
+          <li><a href="#tabs" class="sidebar__link">Tabs</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar__section">
+        <a href="../../index.html" class="sidebar__link">← Retour</a>
+      </div>
+
+      <!-- Toggle Admin -->
+      <div class="admin-toggle">
+        <span class="admin-toggle__label">Mode Admin</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="admin-toggle">
+          <span class="toggle-switch__slider"></span>
+        </label>
+      </div>
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main">
+      <header class="page-header">
+        <h1 class="page-header__title">💻 Code Snippets</h1>
+        <p class="page-header__desc">Blocs de code avec syntax highlighting et variantes créatives</p>
+      </header>
+
+      <!-- ========== BASIC SECTION ========== -->
+      <section id="basic" class="section">
+        <h2 class="section__title">Basic</h2>
+        <p class="section__desc">Blocs de code simples avec header macOS-style.</p>
+
+        <div class="components-grid">
+          <!-- Basic Code Block -->
+          <article class="component-card" data-security="safe">
+            <div class="component-card__preview" style="padding: 16px; background: var(--bg-dark);">
+              <div class="code-block" style="width: 100%;">
+                <div class="code-block__header">
+                  <div class="code-block__dots">
+                    <span class="code-block__dot code-block__dot--red"></span>
+                    <span class="code-block__dot code-block__dot--yellow"></span>
+                    <span class="code-block__dot code-block__dot--green"></span>
+                  </div>
+                  <span class="code-block__lang">javascript</span>
+                  <div class="code-block__actions">
+                    <button class="code-block__btn">Copy</button>
+                  </div>
+                </div>
+                <div class="code-block__content">
+                  <pre><code><span class="keyword">const</span> <span class="function">greeting</span> <span class="operator">=</span> <span class="punctuation">(</span><span class="attr">name</span><span class="punctuation">)</span> <span class="operator">=></span> <span class="punctuation">{</span>
+  <span class="keyword">return</span> <span class="string">`Hello, ${name}!`</span><span class="punctuation">;</span>
+<span class="punctuation">}</span><span class="punctuation">;</span>
+
+<span class="function">console</span><span class="punctuation">.</span><span class="function">log</span><span class="punctuation">(</span><span class="function">greeting</span><span class="punctuation">(</span><span class="string">'World'</span><span class="punctuation">)</span><span class="punctuation">)</span><span class="punctuation">;</span></code></pre>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Basic Code Block</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">basic</span>
+                <span class="tag">javascript</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="basic-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="basic-html"><code>&lt;div class="code-block"&gt;
+  &lt;div class="code-block__header"&gt;
+    &lt;div class="code-block__dots"&gt;
+      &lt;span class="code-block__dot code-block__dot--red"&gt;&lt;/span&gt;
+      &lt;span class="code-block__dot code-block__dot--yellow"&gt;&lt;/span&gt;
+      &lt;span class="code-block__dot code-block__dot--green"&gt;&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;span class="code-block__lang"&gt;javascript&lt;/span&gt;
+    &lt;div class="code-block__actions"&gt;
+      &lt;button class="code-block__btn"&gt;Copy&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="code-block__content"&gt;
+    &lt;pre&gt;&lt;code&gt;// Your code here&lt;/code&gt;&lt;/pre&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="basic-css" style="display:none"><code>.code-block {
+  background: #1e1e1e;
+  border-radius: 12px;
+  overflow: hidden;
+  font-family: 'Fira Code', monospace;
+}
+
+.code-block__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.code-block__dots {
+  display: flex;
+  gap: 8px;
+}
+
+.code-block__dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.code-block__dot--red { background: #ff5f56; }
+.code-block__dot--yellow { background: #ffbd2e; }
+.code-block__dot--green { background: #27c93f; }
+
+.code-block__content {
+  padding: 16px;
+  overflow-x: auto;
+}
+
+.code-block__content pre {
+  margin: 0;
+  line-height: 1.6;
+  font-size: 0.875rem;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== NUMBERED SECTION ========== -->
+      <section id="numbered" class="section">
+        <h2 class="section__title">Numbered Lines</h2>
+        <p class="section__desc">Blocs de code avec numéros de ligne.</p>
+
+        <div class="components-grid">
+          <article class="component-card" data-security="safe">
+            <div class="component-card__preview" style="padding: 16px; background: var(--bg-dark);">
+              <div class="code-block code-block--numbered" style="width: 100%;">
+                <div class="code-block__header">
+                  <div class="code-block__dots">
+                    <span class="code-block__dot code-block__dot--red"></span>
+                    <span class="code-block__dot code-block__dot--yellow"></span>
+                    <span class="code-block__dot code-block__dot--green"></span>
+                  </div>
+                  <span class="code-block__lang">python</span>
+                  <div class="code-block__actions">
+                    <button class="code-block__btn">Copy</button>
+                  </div>
+                </div>
+                <div class="code-block__lines">
+                  <div class="code-block__line-numbers">1
+2
+3
+4
+5
+6</div>
+                  <div class="code-block__code">
+                    <pre><code><span class="keyword">def</span> <span class="function">fibonacci</span><span class="punctuation">(</span><span class="attr">n</span><span class="punctuation">)</span><span class="punctuation">:</span>
+    <span class="keyword">if</span> n <span class="operator">&lt;=</span> <span class="number">1</span><span class="punctuation">:</span>
+        <span class="keyword">return</span> n
+    <span class="keyword">return</span> <span class="function">fibonacci</span><span class="punctuation">(</span>n<span class="operator">-</span><span class="number">1</span><span class="punctuation">)</span> <span class="operator">+</span> <span class="function">fibonacci</span><span class="punctuation">(</span>n<span class="operator">-</span><span class="number">2</span><span class="punctuation">)</span>
+
+<span class="function">print</span><span class="punctuation">(</span><span class="function">fibonacci</span><span class="punctuation">(</span><span class="number">10</span><span class="punctuation">)</span><span class="punctuation">)</span>  <span class="comment"># Output: 55</span></code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Numbered Lines</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">numbered</span>
+                <span class="tag">python</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="numbered-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="numbered-html"><code>&lt;div class="code-block code-block--numbered"&gt;
+  &lt;div class="code-block__header"&gt;...&lt;/div&gt;
+  &lt;div class="code-block__lines"&gt;
+    &lt;div class="code-block__line-numbers"&gt;1
+2
+3&lt;/div&gt;
+    &lt;div class="code-block__code"&gt;
+      &lt;pre&gt;&lt;code&gt;// Code&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="numbered-css" style="display:none"><code>.code-block--numbered .code-block__lines {
+  display: flex;
+}
+
+.code-block__line-numbers {
+  padding: 16px 12px;
+  background: rgba(0, 0, 0, 0.2);
+  text-align: right;
+  color: #4b5563;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  user-select: none;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.code-block__code {
+  padding: 16px;
+  flex: 1;
+  overflow-x: auto;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== TERMINAL SECTION ========== -->
+      <section id="terminal" class="section">
+        <h2 class="section__title">Terminal</h2>
+        <p class="section__desc">Style terminal pour commandes shell.</p>
+
+        <div class="components-grid">
+          <article class="component-card" data-security="safe">
+            <div class="component-card__preview" style="padding: 16px; background: var(--bg-dark);">
+              <div class="code-block code-block--terminal" style="width: 100%;">
+                <div class="code-block__header">
+                  <div class="code-block__dots">
+                    <span class="code-block__dot code-block__dot--red"></span>
+                    <span class="code-block__dot code-block__dot--yellow"></span>
+                    <span class="code-block__dot code-block__dot--green"></span>
+                  </div>
+                  <span class="code-block__lang">terminal</span>
+                </div>
+                <div class="code-block__content">
+                  <pre><code><span class="code-block__prompt">$</span> npm install duke-components
+<span class="code-block__output">added 42 packages in 2.3s</span>
+
+<span class="code-block__prompt">$</span> npm run dev
+<span class="code-block__output">Server running at http://localhost:3000</span></code></pre>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Terminal Style</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">terminal</span>
+                <span class="tag">shell</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="terminal-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="terminal-html"><code>&lt;div class="code-block code-block--terminal"&gt;
+  &lt;div class="code-block__header"&gt;...&lt;/div&gt;
+  &lt;div class="code-block__content"&gt;
+    &lt;pre&gt;&lt;code&gt;&lt;span class="code-block__prompt"&gt;$&lt;/span&gt; npm install
+&lt;span class="code-block__output"&gt;added 42 packages&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="terminal-css" style="display:none"><code>.code-block--terminal {
+  background: #0d1117;
+}
+
+.code-block--terminal .code-block__header {
+  background: #161b22;
+}
+
+.code-block--terminal .code-block__prompt {
+  color: #58a6ff;
+}
+
+.code-block--terminal .code-block__output {
+  color: #8b949e;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== VARIANTS SECTION ========== -->
+      <section id="variants" class="section">
+        <h2 class="section__title">Variants</h2>
+        <p class="section__desc">Styles créatifs pour vos blocs de code.</p>
+
+        <div class="components-grid">
+          <!-- Neon -->
+          <article class="component-card" data-security="safe">
+            <div class="component-card__preview" style="padding: 16px; background: var(--bg-dark);">
+              <div class="code-block code-block--neon" style="width: 100%;">
+                <div class="code-block__header">
+                  <div class="code-block__dots">
+                    <span class="code-block__dot code-block__dot--red"></span>
+                    <span class="code-block__dot code-block__dot--yellow"></span>
+                    <span class="code-block__dot code-block__dot--green"></span>
+                  </div>
+                  <span class="code-block__lang">jsx</span>
+                </div>
+                <div class="code-block__content">
+                  <pre><code><span class="keyword">const</span> <span class="class">App</span> <span class="operator">=</span> <span class="punctuation">()</span> <span class="operator">=></span> <span class="punctuation">(</span>
+  <span class="tag">&lt;div&gt;</span>
+    <span class="tag">&lt;h1&gt;</span><span class="string">Hello Neon!</span><span class="tag">&lt;/h1&gt;</span>
+  <span class="tag">&lt;/div&gt;</span>
+<span class="punctuation">)</span><span class="punctuation">;</span></code></pre>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Neon Style</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">neon</span>
+                <span class="tag">glow</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="neon-css">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="neon-css"><code>.code-block--neon {
+  background: #0a0a0a;
+  border: 1px solid #00ff88;
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+}
+
+.code-block--neon .code-block__header {
+  border-bottom-color: #00ff88;
+}
+
+.code-block--neon .keyword { color: #00ff88; }
+.code-block--neon .string { color: #ff00ff; }
+.code-block--neon .function { color: #00ccff; }</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- Gradient Border -->
+          <article class="component-card" data-security="safe">
+            <div class="component-card__preview" style="padding: 16px; background: var(--bg-dark);">
+              <div class="code-block code-block--gradient" style="width: 100%;">
+                <div class="code-block__header">
+                  <div class="code-block__dots">
+                    <span class="code-block__dot code-block__dot--red"></span>
+                    <span class="code-block__dot code-block__dot--yellow"></span>
+                    <span class="code-block__dot code-block__dot--green"></span>
+                  </div>
+                  <span class="code-block__lang">css</span>
+                </div>
+                <div class="code-block__content">
+                  <pre><code><span class="class">.gradient-border</span> <span class="punctuation">{</span>
+  <span class="property">background</span><span class="punctuation">:</span> <span class="function">linear-gradient</span><span class="punctuation">(</span>
+    <span class="number">135deg</span><span class="punctuation">,</span>
+    <span class="value">#667eea</span><span class="punctuation">,</span>
+    <span class="value">#764ba2</span>
+  <span class="punctuation">)</span><span class="punctuation">;</span>
+<span class="punctuation">}</span></code></pre>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Gradient Border</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">gradient</span>
+                <span class="tag">border</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="gradient-css">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="gradient-css"><code>.code-block--gradient {
+  position: relative;
+  background: #1e1e1e;
+}
+
+.code-block--gradient::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+  border-radius: calc(12px + 2px);
+  z-index: -1;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== INLINE SECTION ========== -->
+      <section id="inline" class="section">
+        <h2 class="section__title">Inline Code</h2>
+        <p class="section__desc">Code en ligne avec variantes de couleur.</p>
+
+        <div class="components-grid">
+          <article class="component-card" data-security="safe">
+            <div class="component-card__preview" style="padding: 24px; background: var(--bg-dark); flex-direction: column; gap: 16px; align-items: flex-start;">
+              <p style="color: var(--text-secondary);">
+                Utilisez <code class="inline-code">npm install</code> pour installer les dépendances.
+              </p>
+              <p style="color: var(--text-secondary);">
+                Status: <code class="inline-code inline-code--success">success</code>
+              </p>
+              <p style="color: var(--text-secondary);">
+                Warning: <code class="inline-code inline-code--warning">deprecated</code>
+              </p>
+              <p style="color: var(--text-secondary);">
+                Error: <code class="inline-code inline-code--error">undefined</code>
+              </p>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Inline Code Variants</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">inline</span>
+                <span class="tag">variants</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="inline-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="inline-html"><code>&lt;code class="inline-code"&gt;npm install&lt;/code&gt;
+&lt;code class="inline-code inline-code--success"&gt;success&lt;/code&gt;
+&lt;code class="inline-code inline-code--warning"&gt;deprecated&lt;/code&gt;
+&lt;code class="inline-code inline-code--error"&gt;undefined&lt;/code&gt;</code></pre>
+                <pre class="code-viewer__code" id="inline-css" style="display:none"><code>.inline-code {
+  padding: 2px 6px;
+  background: rgba(99, 102, 241, 0.2);
+  border-radius: 4px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.875em;
+  color: #a5b4fc;
+}
+
+.inline-code--success {
+  background: rgba(16, 185, 129, 0.2);
+  color: #6ee7b7;
+}
+
+.inline-code--warning {
+  background: rgba(245, 158, 11, 0.2);
+  color: #fcd34d;
+}
+
+.inline-code--error {
+  background: rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== TABS SECTION ========== -->
+      <section id="tabs" class="section">
+        <h2 class="section__title">Code Tabs</h2>
+        <p class="section__desc">Code avec onglets pour plusieurs langages.</p>
+
+        <div class="components-grid">
+          <article class="component-card" data-security="safe">
+            <div class="component-card__preview" style="padding: 16px; background: var(--bg-dark);">
+              <div class="code-tabs" style="width: 100%;">
+                <div class="code-tabs__header">
+                  <button class="code-tabs__tab code-tabs__tab--active" data-tab="html">HTML</button>
+                  <button class="code-tabs__tab" data-tab="css">CSS</button>
+                  <button class="code-tabs__tab" data-tab="js">JavaScript</button>
+                </div>
+                <div class="code-tabs__panel code-tabs__panel--active" data-panel="html">
+                  <pre><code><span class="tag">&lt;button</span> <span class="attr">class</span><span class="punctuation">=</span><span class="string">"btn"</span><span class="tag">&gt;</span>
+  Click me
+<span class="tag">&lt;/button&gt;</span></code></pre>
+                </div>
+                <div class="code-tabs__panel" data-panel="css">
+                  <pre><code><span class="class">.btn</span> <span class="punctuation">{</span>
+  <span class="property">padding</span><span class="punctuation">:</span> <span class="number">12px</span> <span class="number">24px</span><span class="punctuation">;</span>
+  <span class="property">background</span><span class="punctuation">:</span> <span class="value">#6366f1</span><span class="punctuation">;</span>
+<span class="punctuation">}</span></code></pre>
+                </div>
+                <div class="code-tabs__panel" data-panel="js">
+                  <pre><code><span class="keyword">document</span><span class="punctuation">.</span><span class="function">querySelector</span><span class="punctuation">(</span><span class="string">'.btn'</span><span class="punctuation">)</span>
+  <span class="punctuation">.</span><span class="function">addEventListener</span><span class="punctuation">(</span><span class="string">'click'</span><span class="punctuation">,</span> <span class="punctuation">()</span> <span class="operator">=></span> <span class="punctuation">{</span>
+    <span class="function">alert</span><span class="punctuation">(</span><span class="string">'Clicked!'</span><span class="punctuation">)</span><span class="punctuation">;</span>
+  <span class="punctuation">}</span><span class="punctuation">)</span><span class="punctuation">;</span></code></pre>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Code Tabs</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">tabs</span>
+                <span class="tag">multi-lang</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="tabs-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="tabs-html"><code>&lt;div class="code-tabs"&gt;
+  &lt;div class="code-tabs__header"&gt;
+    &lt;button class="code-tabs__tab code-tabs__tab--active" data-tab="html"&gt;HTML&lt;/button&gt;
+    &lt;button class="code-tabs__tab" data-tab="css"&gt;CSS&lt;/button&gt;
+    &lt;button class="code-tabs__tab" data-tab="js"&gt;JavaScript&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="code-tabs__panel code-tabs__panel--active" data-panel="html"&gt;
+    &lt;pre&gt;&lt;code&gt;HTML code&lt;/code&gt;&lt;/pre&gt;
+  &lt;/div&gt;
+  &lt;div class="code-tabs__panel" data-panel="css"&gt;...&lt;/div&gt;
+  &lt;div class="code-tabs__panel" data-panel="js"&gt;...&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="tabs-css" style="display:none"><code>.code-tabs {
+  background: #1e1e1e;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.code-tabs__tab {
+  padding: 12px 20px;
+  background: transparent;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  position: relative;
+}
+
+.code-tabs__tab--active {
+  color: white;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.code-tabs__tab--active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #6366f1;
+}
+
+.code-tabs__panel {
+  display: none;
+  padding: 16px;
+}
+
+.code-tabs__panel--active {
+  display: block;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="../../assets/js/copy-code.js"></script>
+  <script src="../../assets/js/security-system.js"></script>
+  <script src="../../assets/js/search.js"></script>
+  <script src="../../assets/js/accessibility.js"></script>
+  <script>
+    // Code Tabs functionality
+    document.querySelectorAll('.code-tabs').forEach(tabs => {
+      const tabBtns = tabs.querySelectorAll('.code-tabs__tab');
+      const panels = tabs.querySelectorAll('.code-tabs__panel');
+
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const target = btn.dataset.tab;
+
+          tabBtns.forEach(b => b.classList.remove('code-tabs__tab--active'));
+          panels.forEach(p => p.classList.remove('code-tabs__panel--active'));
+
+          btn.classList.add('code-tabs__tab--active');
+          tabs.querySelector(`[data-panel="${target}"]`).classList.add('code-tabs__panel--active');
+        });
+      });
+    });
+
+    // Copy buttons in code blocks
+    document.querySelectorAll('.code-block__btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const codeBlock = btn.closest('.code-block');
+        const code = codeBlock.querySelector('code').textContent;
+
+        navigator.clipboard.writeText(code).then(() => {
+          btn.textContent = 'Copied!';
+          btn.classList.add('code-block__btn--copied');
+
+          setTimeout(() => {
+            btn.textContent = 'Copy';
+            btn.classList.remove('code-block__btn--copied');
+          }, 2000);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

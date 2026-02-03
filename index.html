@@ -7,9 +7,15 @@
   <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
+  <!-- Skip link pour l'accessibilité -->
+  <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+
+  <!-- Live region pour les annonces (lecteurs d'écran) -->
+  <div aria-live="polite" aria-atomic="true" id="announcer" class="sr-only"></div>
+
   <div class="app">
     <!-- ========== SIDEBAR ========== -->
-    <aside class="sidebar">
+    <aside class="sidebar" role="navigation" aria-label="Navigation principale">
       <div class="sidebar__logo">
         <span>Duke</span>-components
       </div>
@@ -41,6 +47,9 @@
           </a></li>
           <li><a href="components/chips/index.html" class="sidebar__link">
             <span>🏷️</span> Chips
+          </a></li>
+          <li><a href="components/code-snippets/index.html" class="sidebar__link">
+            <span>💻</span> Code Snippets
           </a></li>
           <li><a href="components/dividers/index.html" class="sidebar__link">
             <span>➖</span> Dividers
@@ -80,6 +89,9 @@
           </a></li>
           <li><a href="components/ratings/index.html" class="sidebar__link">
             <span>⭐</span> Ratings
+          </a></li>
+          <li><a href="components/scroll-animations/index.html" class="sidebar__link">
+            <span>📜</span> Scroll Animations
           </a></li>
           <li><a href="components/search/index.html" class="sidebar__link">
             <span>🔍</span> Search
@@ -151,6 +163,9 @@
         <ul class="sidebar__nav">
           <li><a href="generators/gradient/index.html" class="sidebar__link">
             <span>🌈</span> Gradient
+          </a></li>
+          <li><a href="generators/text-gradient/index.html" class="sidebar__link">
+            <span>🔤</span> Text Gradient
           </a></li>
           <li><a href="generators/flexbox/index.html" class="sidebar__link">
             <span>📐</span> Flexbox
@@ -229,7 +244,7 @@
     </aside>
 
     <!-- ========== MAIN CONTENT ========== -->
-    <main class="main">
+    <main class="main" id="main-content" role="main" aria-label="Contenu principal">
       <header class="main__header">
         <h1 class="main__title">Bienvenue sur Duke-components 👋</h1>
         <p class="main__subtitle">Ta bibliothèque personnelle de composants UI — Copie, colle, c'est prêt !</p>
@@ -240,7 +255,7 @@
         <div class="stats__grid">
           <div class="stat-card">
             <span class="stat-card__icon">🔘</span>
-            <span class="stat-card__value">35</span>
+            <span class="stat-card__value">37</span>
             <span class="stat-card__label">Composants</span>
           </div>
           <div class="stat-card">
@@ -255,7 +270,7 @@
           </div>
           <div class="stat-card">
             <span class="stat-card__icon">🛠️</span>
-            <span class="stat-card__value">9</span>
+            <span class="stat-card__value">10</span>
             <span class="stat-card__label">Générateurs</span>
           </div>
           <div class="stat-card">
@@ -295,6 +310,11 @@
       <section class="recent">
         <h2>Derniers ajouts</h2>
         <div class="recent__grid">
+          <a href="generators/text-gradient/index.html" class="recent__card">
+            <span class="recent__icon">🔤</span>
+            <span class="recent__title">Text Gradient</span>
+            <span class="recent__count">Generator</span>
+          </a>
           <a href="generators/glassmorphism/index.html" class="recent__card">
             <span class="recent__icon">🪟</span>
             <span class="recent__title">Glassmorphism</span>
@@ -348,6 +368,11 @@
             <h3 class="generator-card__title">Gradient</h3>
             <p class="generator-card__desc">Linear, radial, conic</p>
           </a>
+          <a href="generators/text-gradient/index.html" class="generator-card">
+            <span class="generator-card__icon">🔤</span>
+            <h3 class="generator-card__title">Text Gradient</h3>
+            <p class="generator-card__desc">Texte dégradé animé</p>
+          </a>
           <a href="generators/shadow/index.html" class="generator-card">
             <span class="generator-card__icon">🌑</span>
             <h3 class="generator-card__title">Shadow</h3>
@@ -395,5 +420,9 @@
 
   <script src="assets/js/copy-code.js"></script>
   <script src="assets/js/security-system.js"></script>
+  <script src="assets/js/search.js"></script>
+  <script src="assets/js/dashboard.js"></script>
+  <script src="assets/js/accessibility.js"></script>
+  <script src="assets/js/theme-customizer.js"></script>
 </body>
 </html>

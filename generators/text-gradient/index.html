@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text Gradient Generator — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ===========================================
+       TEXT GRADIENT GENERATOR STYLES
+       =========================================== */
+
+    .generator {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: var(--spacing-xl);
+      min-height: calc(100vh - 200px);
+    }
+
+    /* Preview Panel */
+    .preview-panel {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-lg);
+    }
+
+    .preview-box {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-xl);
+      min-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .preview-box::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, transparent 49.5%, var(--border) 49.5%, var(--border) 50.5%, transparent 50.5%),
+        linear-gradient(0deg, transparent 49.5%, var(--border) 49.5%, var(--border) 50.5%, transparent 50.5%);
+      background-size: 40px 40px;
+      opacity: 0.3;
+    }
+
+    .preview-text {
+      position: relative;
+      font-size: 4rem;
+      font-weight: 800;
+      text-align: center;
+      line-height: 1.2;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Presets */
+    .presets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--spacing-sm);
+    }
+
+    .preset-btn {
+      padding: var(--spacing-sm) var(--spacing-md);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--bg-dark);
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 600;
+      transition: all var(--transition-fast);
+    }
+
+    .preset-btn:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .preset-btn--ocean {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .preset-btn--sunset {
+      background: linear-gradient(135deg, #f093fb, #f5576c);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .preset-btn--forest {
+      background: linear-gradient(135deg, #11998e, #38ef7d);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .preset-btn--fire {
+      background: linear-gradient(135deg, #f12711, #f5af19);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .preset-btn--neon {
+      background: linear-gradient(135deg, #00f260, #0575e6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .preset-btn--gold {
+      background: linear-gradient(135deg, #f7971e, #ffd200);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .preset-btn--purple {
+      background: linear-gradient(135deg, #8e2de2, #4a00e0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .preset-btn--cyber {
+      background: linear-gradient(135deg, #00dbde, #fc00ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Control Panel */
+    .control-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-lg);
+      max-height: calc(100vh - 200px);
+      overflow-y: auto;
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-sm);
+    }
+
+    .control-group__label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    .control-group__value {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* Text Input */
+    .text-input {
+      width: 100%;
+      padding: var(--spacing-md);
+      background: var(--bg-dark);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      color: var(--text-primary);
+      font-size: 1rem;
+      font-family: var(--font-sans);
+    }
+
+    .text-input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    /* Range Sliders */
+    .range-slider {
+      width: 100%;
+      -webkit-appearance: none;
+      height: 6px;
+      background: var(--bg-dark);
+      border-radius: 3px;
+      outline: none;
+    }
+
+    .range-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      background: var(--primary);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform var(--transition-fast);
+    }
+
+    .range-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.1);
+    }
+
+    /* Color Pickers */
+    .color-stops {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-md);
+    }
+
+    .color-stop {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-md);
+    }
+
+    .color-stop__number {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-dark);
+      border-radius: 50%;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .color-stop__picker {
+      width: 48px;
+      height: 32px;
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .color-stop__input {
+      flex: 1;
+      padding: var(--spacing-sm);
+      background: var(--bg-dark);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+    }
+
+    .color-stop__remove {
+      padding: 4px 8px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .color-stop__remove:hover {
+      border-color: var(--accent-red);
+      color: var(--accent-red);
+    }
+
+    .add-color-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--spacing-sm);
+      padding: var(--spacing-sm);
+      background: transparent;
+      border: 1px dashed var(--border);
+      border-radius: var(--radius-md);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .add-color-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    /* Direction Picker */
+    .direction-picker {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--spacing-xs);
+    }
+
+    .direction-btn {
+      padding: var(--spacing-sm);
+      background: var(--bg-dark);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.875rem;
+      transition: all var(--transition-fast);
+    }
+
+    .direction-btn:hover {
+      border-color: var(--border-hover);
+      color: var(--text-primary);
+    }
+
+    .direction-btn--active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+    }
+
+    /* Animation Toggle */
+    .animation-toggle {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-md);
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 48px;
+      height: 24px;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-switch__slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background-color: var(--bg-dark);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      transition: all var(--transition-fast);
+    }
+
+    .toggle-switch__slider::before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 2px;
+      bottom: 2px;
+      background-color: var(--text-muted);
+      border-radius: 50%;
+      transition: all var(--transition-fast);
+    }
+
+    .toggle-switch input:checked + .toggle-switch__slider {
+      background-color: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .toggle-switch input:checked + .toggle-switch__slider::before {
+      transform: translateX(24px);
+      background-color: white;
+    }
+
+    /* Code Output */
+    .code-output {
+      background: var(--bg-code);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+
+    .code-output__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--spacing-sm) var(--spacing-md);
+      background: rgba(255, 255, 255, 0.05);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .code-output__title {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    .code-output__content {
+      padding: var(--spacing-md);
+      overflow-x: auto;
+    }
+
+    .code-output__content pre {
+      margin: 0;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      line-height: 1.6;
+      color: var(--text-code);
+      white-space: pre-wrap;
+    }
+
+    /* Animation classes */
+    .animated-gradient {
+      background-size: 200% 200%;
+      animation: gradientShift 3s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .generator {
+        grid-template-columns: 1fr;
+      }
+
+      .control-panel {
+        max-height: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+      <a href="../../index.html" class="sidebar__logo">
+        <span>Duke</span>-components
+      </a>
+
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Générateurs</h3>
+        <ul class="sidebar__nav">
+          <li><a href="../gradient/index.html" class="sidebar__link">🌈 Gradient</a></li>
+          <li><a href="../text-gradient/index.html" class="sidebar__link sidebar__link--active">🔤 Text Gradient</a></li>
+          <li><a href="../flexbox/index.html" class="sidebar__link">📐 Flexbox</a></li>
+          <li><a href="../grid/index.html" class="sidebar__link">🔲 Grid</a></li>
+          <li><a href="../shadow/index.html" class="sidebar__link">🌑 Shadow</a></li>
+          <li><a href="../border-radius/index.html" class="sidebar__link">⬜ Border Radius</a></li>
+          <li><a href="../animation/index.html" class="sidebar__link">🎬 Animation</a></li>
+          <li><a href="../clip-path/index.html" class="sidebar__link">✂️ Clip Path</a></li>
+          <li><a href="../glassmorphism/index.html" class="sidebar__link">🪟 Glassmorphism</a></li>
+          <li><a href="../neumorphism/index.html" class="sidebar__link">🔘 Neumorphism</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar__section">
+        <a href="../../index.html" class="sidebar__link">← Retour au dashboard</a>
+      </div>
+
+      <!-- Toggle Admin -->
+      <div class="admin-toggle">
+        <span class="admin-toggle__label">Mode Admin</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="admin-toggle">
+          <span class="toggle-switch__slider"></span>
+        </label>
+      </div>
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main">
+      <header class="page-header">
+        <h1 class="page-header__title">🔤 Text Gradient Generator</h1>
+        <p class="page-header__desc">Créez des dégradés de texte spectaculaires en temps réel</p>
+      </header>
+
+      <div class="generator">
+        <!-- Preview Panel -->
+        <div class="preview-panel">
+          <div class="preview-box">
+            <h2 class="preview-text" id="preview-text">Duke UI</h2>
+          </div>
+
+          <!-- Presets -->
+          <div class="control-group">
+            <label class="control-group__label">Presets</label>
+            <div class="presets">
+              <button class="preset-btn preset-btn--ocean" data-colors="#667eea,#764ba2">Ocean</button>
+              <button class="preset-btn preset-btn--sunset" data-colors="#f093fb,#f5576c">Sunset</button>
+              <button class="preset-btn preset-btn--forest" data-colors="#11998e,#38ef7d">Forest</button>
+              <button class="preset-btn preset-btn--fire" data-colors="#f12711,#f5af19">Fire</button>
+              <button class="preset-btn preset-btn--neon" data-colors="#00f260,#0575e6">Neon</button>
+              <button class="preset-btn preset-btn--gold" data-colors="#f7971e,#ffd200">Gold</button>
+              <button class="preset-btn preset-btn--purple" data-colors="#8e2de2,#4a00e0">Purple</button>
+              <button class="preset-btn preset-btn--cyber" data-colors="#00dbde,#fc00ff">Cyber</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Control Panel -->
+        <div class="control-panel">
+          <!-- Text Input -->
+          <div class="control-group">
+            <label class="control-group__label">Texte</label>
+            <input type="text" class="text-input" id="text-input" value="Duke UI" maxlength="50">
+          </div>
+
+          <!-- Font Size -->
+          <div class="control-group">
+            <label class="control-group__label">
+              <span>Taille de police</span>
+              <span class="control-group__value" id="font-size-value">4rem</span>
+            </label>
+            <input type="range" class="range-slider" id="font-size" min="1" max="10" step="0.5" value="4">
+          </div>
+
+          <!-- Font Weight -->
+          <div class="control-group">
+            <label class="control-group__label">
+              <span>Épaisseur</span>
+              <span class="control-group__value" id="font-weight-value">800</span>
+            </label>
+            <input type="range" class="range-slider" id="font-weight" min="100" max="900" step="100" value="800">
+          </div>
+
+          <!-- Gradient Direction -->
+          <div class="control-group">
+            <label class="control-group__label">Direction</label>
+            <div class="direction-picker" id="direction-picker">
+              <button class="direction-btn" data-direction="to right">→</button>
+              <button class="direction-btn" data-direction="to bottom right">↘</button>
+              <button class="direction-btn" data-direction="to bottom">↓</button>
+              <button class="direction-btn" data-direction="to bottom left">↙</button>
+              <button class="direction-btn direction-btn--active" data-direction="135deg">↗</button>
+              <button class="direction-btn" data-direction="to top right">↗</button>
+              <button class="direction-btn" data-direction="to top">↑</button>
+              <button class="direction-btn" data-direction="to left">←</button>
+              <button class="direction-btn" data-direction="to top left">↖</button>
+            </div>
+          </div>
+
+          <!-- Color Stops -->
+          <div class="control-group">
+            <label class="control-group__label">Couleurs</label>
+            <div class="color-stops" id="color-stops">
+              <div class="color-stop" data-index="0">
+                <span class="color-stop__number">1</span>
+                <input type="color" class="color-stop__picker" value="#6366f1">
+                <input type="text" class="color-stop__input" value="#6366f1">
+                <button class="color-stop__remove">×</button>
+              </div>
+              <div class="color-stop" data-index="1">
+                <span class="color-stop__number">2</span>
+                <input type="color" class="color-stop__picker" value="#8b5cf6">
+                <input type="text" class="color-stop__input" value="#8b5cf6">
+                <button class="color-stop__remove">×</button>
+              </div>
+              <div class="color-stop" data-index="2">
+                <span class="color-stop__number">3</span>
+                <input type="color" class="color-stop__picker" value="#ec4899">
+                <input type="text" class="color-stop__input" value="#ec4899">
+                <button class="color-stop__remove">×</button>
+              </div>
+            </div>
+            <button class="add-color-btn" id="add-color">
+              <span>+</span> Ajouter une couleur
+            </button>
+          </div>
+
+          <!-- Animation -->
+          <div class="control-group">
+            <label class="control-group__label">Animation</label>
+            <div class="animation-toggle">
+              <label class="toggle-switch">
+                <input type="checkbox" id="animation-toggle">
+                <span class="toggle-switch__slider"></span>
+              </label>
+              <span style="color: var(--text-muted); font-size: 0.875rem;">Activer l'animation</span>
+            </div>
+          </div>
+
+          <!-- Animation Speed -->
+          <div class="control-group" id="animation-speed-group" style="display: none;">
+            <label class="control-group__label">
+              <span>Vitesse d'animation</span>
+              <span class="control-group__value" id="animation-speed-value">3s</span>
+            </label>
+            <input type="range" class="range-slider" id="animation-speed" min="1" max="10" step="0.5" value="3">
+          </div>
+
+          <!-- Code Output -->
+          <div class="code-output">
+            <div class="code-output__header">
+              <span class="code-output__title">CSS</span>
+              <button class="copy-btn" id="copy-css">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="16" height="16">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-output__content">
+              <pre id="css-output"></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../../assets/js/security-system.js"></script>
+  <script src="../../assets/js/search.js"></script>
+  <script src="../../assets/js/accessibility.js"></script>
+  <script>
+    /* ===========================================
+       TEXT GRADIENT GENERATOR
+       =========================================== */
+
+    class TextGradientGenerator {
+      constructor() {
+        this.previewText = document.getElementById('preview-text');
+        this.textInput = document.getElementById('text-input');
+        this.fontSizeSlider = document.getElementById('font-size');
+        this.fontWeightSlider = document.getElementById('font-weight');
+        this.colorStopsContainer = document.getElementById('color-stops');
+        this.addColorBtn = document.getElementById('add-color');
+        this.animationToggle = document.getElementById('animation-toggle');
+        this.animationSpeedGroup = document.getElementById('animation-speed-group');
+        this.animationSpeedSlider = document.getElementById('animation-speed');
+        this.cssOutput = document.getElementById('css-output');
+        this.copyBtn = document.getElementById('copy-css');
+
+        this.colors = ['#6366f1', '#8b5cf6', '#ec4899'];
+        this.direction = '135deg';
+        this.animated = false;
+        this.animationSpeed = 3;
+
+        this.init();
+      }
+
+      init() {
+        this.bindEvents();
+        this.updatePreview();
+      }
+
+      bindEvents() {
+        // Text input
+        this.textInput.addEventListener('input', (e) => {
+          this.previewText.textContent = e.target.value || 'Duke UI';
+        });
+
+        // Font size
+        this.fontSizeSlider.addEventListener('input', (e) => {
+          const value = e.target.value;
+          document.getElementById('font-size-value').textContent = `${value}rem`;
+          this.previewText.style.fontSize = `${value}rem`;
+        });
+
+        // Font weight
+        this.fontWeightSlider.addEventListener('input', (e) => {
+          const value = e.target.value;
+          document.getElementById('font-weight-value').textContent = value;
+          this.previewText.style.fontWeight = value;
+        });
+
+        // Direction buttons
+        document.getElementById('direction-picker').addEventListener('click', (e) => {
+          const btn = e.target.closest('.direction-btn');
+          if (!btn) return;
+
+          document.querySelectorAll('.direction-btn').forEach(b => b.classList.remove('direction-btn--active'));
+          btn.classList.add('direction-btn--active');
+          this.direction = btn.dataset.direction;
+          this.updatePreview();
+        });
+
+        // Color stops
+        this.colorStopsContainer.addEventListener('input', (e) => {
+          const stop = e.target.closest('.color-stop');
+          if (!stop) return;
+
+          const index = parseInt(stop.dataset.index);
+          const picker = stop.querySelector('.color-stop__picker');
+          const input = stop.querySelector('.color-stop__input');
+
+          if (e.target === picker) {
+            input.value = picker.value;
+          } else if (e.target === input) {
+            picker.value = input.value;
+          }
+
+          this.colors[index] = input.value;
+          this.updatePreview();
+        });
+
+        // Remove color
+        this.colorStopsContainer.addEventListener('click', (e) => {
+          if (e.target.classList.contains('color-stop__remove')) {
+            if (this.colors.length <= 2) return;
+            const stop = e.target.closest('.color-stop');
+            const index = parseInt(stop.dataset.index);
+            this.colors.splice(index, 1);
+            this.renderColorStops();
+            this.updatePreview();
+          }
+        });
+
+        // Add color
+        this.addColorBtn.addEventListener('click', () => {
+          if (this.colors.length >= 5) return;
+          this.colors.push('#ffffff');
+          this.renderColorStops();
+          this.updatePreview();
+        });
+
+        // Animation toggle
+        this.animationToggle.addEventListener('change', (e) => {
+          this.animated = e.target.checked;
+          this.animationSpeedGroup.style.display = this.animated ? 'flex' : 'none';
+          this.updatePreview();
+        });
+
+        // Animation speed
+        this.animationSpeedSlider.addEventListener('input', (e) => {
+          this.animationSpeed = e.target.value;
+          document.getElementById('animation-speed-value').textContent = `${this.animationSpeed}s`;
+          this.updatePreview();
+        });
+
+        // Presets
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            this.colors = btn.dataset.colors.split(',');
+            this.renderColorStops();
+            this.updatePreview();
+          });
+        });
+
+        // Copy CSS
+        this.copyBtn.addEventListener('click', () => {
+          const css = this.cssOutput.textContent;
+          navigator.clipboard.writeText(css).then(() => {
+            this.copyBtn.innerHTML = `
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="16" height="16">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              Copié !
+            `;
+            this.copyBtn.classList.add('copy-btn--success');
+
+            setTimeout(() => {
+              this.copyBtn.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="16" height="16">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
+                Copy
+              `;
+              this.copyBtn.classList.remove('copy-btn--success');
+            }, 2000);
+          });
+        });
+      }
+
+      renderColorStops() {
+        this.colorStopsContainer.innerHTML = this.colors.map((color, i) => `
+          <div class="color-stop" data-index="${i}">
+            <span class="color-stop__number">${i + 1}</span>
+            <input type="color" class="color-stop__picker" value="${color}">
+            <input type="text" class="color-stop__input" value="${color}">
+            <button class="color-stop__remove">×</button>
+          </div>
+        `).join('');
+      }
+
+      updatePreview() {
+        const gradient = `linear-gradient(${this.direction}, ${this.colors.join(', ')})`;
+
+        if (this.animated) {
+          this.previewText.style.background = gradient;
+          this.previewText.style.backgroundSize = '200% 200%';
+          this.previewText.style.animation = `gradientShift ${this.animationSpeed}s ease infinite`;
+        } else {
+          this.previewText.style.background = gradient;
+          this.previewText.style.backgroundSize = '';
+          this.previewText.style.animation = '';
+        }
+
+        this.previewText.style.webkitBackgroundClip = 'text';
+        this.previewText.style.webkitTextFillColor = 'transparent';
+        this.previewText.style.backgroundClip = 'text';
+
+        this.generateCSS();
+      }
+
+      generateCSS() {
+        const fontSize = this.fontSizeSlider.value;
+        const fontWeight = this.fontWeightSlider.value;
+        const gradient = `linear-gradient(${this.direction}, ${this.colors.join(', ')})`;
+
+        let css = `.gradient-text {
+  font-size: ${fontSize}rem;
+  font-weight: ${fontWeight};
+  background: ${gradient};
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;`;
+
+        if (this.animated) {
+          css += `
+  background-size: 200% 200%;
+  animation: gradientShift ${this.animationSpeed}s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}`;
+        } else {
+          css += '\n}';
+        }
+
+        this.cssOutput.textContent = css;
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      window.textGradientGenerator = new TextGradientGenerator();
+    });
+  </script>
+</body>
+</html>

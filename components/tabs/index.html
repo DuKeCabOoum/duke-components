@@ -396,6 +396,216 @@
     }
 
     /* ===========================================
+       TABS 7 — GLOW EFFECT
+       =========================================== */
+
+    .tabs-glow {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .tabs-glow__nav {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .tabs-glow__btn {
+      padding: 12px 24px;
+      background: #18181b;
+      border: 1px solid #27272a;
+      color: #71717a;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tabs-glow__btn::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      background: linear-gradient(135deg, #6366f1, #ec4899, #f59e0b);
+      border-radius: 12px;
+      opacity: 0;
+      z-index: -1;
+      transition: opacity 0.3s;
+      filter: blur(8px);
+    }
+
+    .tabs-glow__btn:hover {
+      color: #a1a1aa;
+    }
+
+    .tabs-glow__btn--active {
+      background: #1a1a1a;
+      border-color: transparent;
+      color: #fff;
+    }
+
+    .tabs-glow__btn--active::before {
+      opacity: 1;
+      animation: glow-rotate 3s linear infinite;
+    }
+
+    @keyframes glow-rotate {
+      0% { filter: blur(8px) hue-rotate(0deg); }
+      100% { filter: blur(8px) hue-rotate(360deg); }
+    }
+
+    .tabs-glow__panel {
+      display: none;
+      color: #a1a1aa;
+      line-height: 1.7;
+    }
+
+    .tabs-glow__panel--active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    /* ===========================================
+       TABS 8 — SEGMENTED (iOS Style)
+       =========================================== */
+
+    .tabs-segmented {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .tabs-segmented__nav {
+      display: inline-flex;
+      background: #18181b;
+      padding: 3px;
+      border-radius: 10px;
+      margin-bottom: 24px;
+      border: 1px solid #27272a;
+    }
+
+    .tabs-segmented__btn {
+      padding: 10px 28px;
+      background: transparent;
+      border: none;
+      color: #71717a;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .tabs-segmented__btn::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 25%;
+      height: 50%;
+      width: 1px;
+      background: #27272a;
+    }
+
+    .tabs-segmented__btn:last-child::after {
+      display: none;
+    }
+
+    .tabs-segmented__btn:hover {
+      color: #a1a1aa;
+    }
+
+    .tabs-segmented__btn--active {
+      background: #fff;
+      color: #18181b;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .tabs-segmented__btn--active::after {
+      display: none;
+    }
+
+    .tabs-segmented__panel {
+      display: none;
+      color: #a1a1aa;
+      line-height: 1.7;
+    }
+
+    .tabs-segmented__panel--active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    /* ===========================================
+       TABS 9 — CARD STYLE
+       =========================================== */
+
+    .tabs-cards {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .tabs-cards__nav {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .tabs-cards__btn {
+      flex: 1;
+      padding: 20px;
+      background: #18181b;
+      border: 1px solid #27272a;
+      border-radius: 16px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .tabs-cards__btn:hover {
+      transform: translateY(-4px);
+      border-color: rgba(99, 102, 241, 0.3);
+    }
+
+    .tabs-cards__btn--active {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.2));
+      border-color: #6366f1;
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(99, 102, 241, 0.2);
+    }
+
+    .tabs-cards__icon {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+
+    .tabs-cards__label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #a1a1aa;
+      transition: color 0.2s;
+    }
+
+    .tabs-cards__btn--active .tabs-cards__label {
+      color: #fff;
+    }
+
+    .tabs-cards__panel {
+      display: none;
+      padding: 24px;
+      background: #18181b;
+      border-radius: 16px;
+      color: #a1a1aa;
+      line-height: 1.7;
+    }
+
+    .tabs-cards__panel--active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    /* ===========================================
        CODE BLOCK
        =========================================== */
 
@@ -530,7 +740,7 @@
   <main class="main-content">
     <header class="page-header">
       <h1 class="page-header__title">Tabs</h1>
-      <p class="page-header__desc">Navigation par onglets pour organiser le contenu en sections</p>
+      <p class="page-header__desc">9 styles de tabs modernes — du basique aux effets glow premium</p>
     </header>
 
     <div class="tabs-list">
@@ -845,12 +1055,141 @@
         </div>
       </section>
 
+      <!-- TABS 7 — GLOW EFFECT -->
+      <section class="tabs-section">
+        <div class="tabs-section__preview">
+          <div class="tabs-glow" id="tabs-glow">
+            <div class="tabs-glow__nav">
+              <button class="tabs-glow__btn tabs-glow__btn--active" onclick="switchTab('glow', 0)">Design</button>
+              <button class="tabs-glow__btn" onclick="switchTab('glow', 1)">Develop</button>
+              <button class="tabs-glow__btn" onclick="switchTab('glow', 2)">Deploy</button>
+            </div>
+            <div class="tabs-glow__panel tabs-glow__panel--active">
+              Create stunning designs with our comprehensive design system and component library.
+            </div>
+            <div class="tabs-glow__panel">
+              Build powerful applications with clean, maintainable code and modern practices.
+            </div>
+            <div class="tabs-glow__panel">
+              Ship your projects with confidence using our streamlined deployment workflow.
+            </div>
+          </div>
+        </div>
+        <div class="tabs-section__info">
+          <div class="tabs-section__header">
+            <h2 class="tabs-section__name">Glow Effect</h2>
+            <div class="tabs-section__tags">
+              <span class="tag tag--primary">Premium</span>
+              <span class="tag">Animated</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.tabs-glow__btn::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, #6366f1, #ec4899, #f59e0b);
+  opacity: 0;
+  filter: blur(8px);
+  animation: glow-rotate 3s linear infinite;
+}
+
+.tabs-glow__btn--active::before {
+  opacity: 1;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TABS 8 — SEGMENTED (iOS Style) -->
+      <section class="tabs-section">
+        <div class="tabs-section__preview">
+          <div class="tabs-segmented" id="tabs-segmented">
+            <div class="tabs-segmented__nav">
+              <button class="tabs-segmented__btn tabs-segmented__btn--active" onclick="switchTab('segmented', 0)">Day</button>
+              <button class="tabs-segmented__btn" onclick="switchTab('segmented', 1)">Week</button>
+              <button class="tabs-segmented__btn" onclick="switchTab('segmented', 2)">Month</button>
+              <button class="tabs-segmented__btn" onclick="switchTab('segmented', 3)">Year</button>
+            </div>
+            <div class="tabs-segmented__panel tabs-segmented__panel--active">
+              Daily view shows your schedule for today with hourly breakdown.
+            </div>
+            <div class="tabs-segmented__panel">
+              Weekly overview displays all 7 days at a glance.
+            </div>
+            <div class="tabs-segmented__panel">
+              Monthly calendar view for long-term planning.
+            </div>
+            <div class="tabs-segmented__panel">
+              Yearly overview with quarterly summaries.
+            </div>
+          </div>
+        </div>
+        <div class="tabs-section__info">
+          <div class="tabs-section__header">
+            <h2 class="tabs-section__name">Segmented (iOS Style)</h2>
+            <div class="tabs-section__tags">
+              <span class="tag tag--primary">Native</span>
+              <span class="tag">Clean</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TABS 9 — CARD STYLE -->
+      <section class="tabs-section">
+        <div class="tabs-section__preview">
+          <div class="tabs-cards" id="tabs-cards">
+            <div class="tabs-cards__nav">
+              <button class="tabs-cards__btn tabs-cards__btn--active" onclick="switchTab('cards', 0)">
+                <div class="tabs-cards__icon">🚀</div>
+                <div class="tabs-cards__label">Startup</div>
+              </button>
+              <button class="tabs-cards__btn" onclick="switchTab('cards', 1)">
+                <div class="tabs-cards__icon">💼</div>
+                <div class="tabs-cards__label">Business</div>
+              </button>
+              <button class="tabs-cards__btn" onclick="switchTab('cards', 2)">
+                <div class="tabs-cards__icon">🏢</div>
+                <div class="tabs-cards__label">Enterprise</div>
+              </button>
+            </div>
+            <div class="tabs-cards__panel tabs-cards__panel--active">
+              Perfect for small teams and startups. Get all the essentials to launch your project.
+            </div>
+            <div class="tabs-cards__panel">
+              Scale your business with advanced features and dedicated support.
+            </div>
+            <div class="tabs-cards__panel">
+              Enterprise-grade solutions with custom integrations and SLA guarantees.
+            </div>
+          </div>
+        </div>
+        <div class="tabs-section__info">
+          <div class="tabs-section__header">
+            <h2 class="tabs-section__name">Card Style</h2>
+            <div class="tabs-section__tags">
+              <span class="tag tag--primary">Pricing</span>
+              <span class="tag">Elevated</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </div>
   </main>
   </div>
 
   <script src="../../assets/js/main.js"></script>
   <script src="../../assets/js/security-system.js"></script>
+  <script src="../../assets/js/search.js"></script>
+  <script src="../../assets/js/accessibility.js"></script>
   <script>
     function switchTab(type, index) {
       const container = document.getElementById(`tabs-${type}`);

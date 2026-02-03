@@ -2,6 +2,9 @@
 CLAUDE.md
 cloud_docs
 
+# Claude Code settings
+.claude/
+
 # IDE
 .vscode/
 .idea/

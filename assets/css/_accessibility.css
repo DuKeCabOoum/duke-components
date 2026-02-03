@@ -1,0 +1,318 @@
+/* ===========================================
+   ACCESSIBILITY STYLES — Duke-components
+   Focus states, skip links, reduced motion
+   =========================================== */
+
+/* ===========================================
+   SKIP LINKS
+   Pour les utilisateurs de lecteurs d'écran
+   =========================================== */
+
+.skip-link {
+  position: fixed;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10000;
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: var(--primary);
+  color: white;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: top var(--transition-fast);
+}
+
+.skip-link:focus {
+  top: var(--spacing-md);
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+
+/* ===========================================
+   FOCUS VISIBLE STYLES
+   Améliore la visibilité du focus clavier
+   =========================================== */
+
+/* Reset du focus par défaut */
+*:focus {
+  outline: none;
+}
+
+/* Focus visible pour navigation clavier */
+*:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Focus amélioré pour les boutons */
+button:focus-visible,
+.copy-btn:focus-visible,
+.sidebar__link:focus-visible {
+  outline: 2px solid var(--primary-light);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+}
+
+/* Focus pour les inputs */
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+/* Focus pour les liens */
+a:focus-visible {
+  outline: 2px solid var(--primary-light);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Focus pour les cards */
+.component-card:focus-within,
+.recent__card:focus-visible,
+.generator-card:focus-visible,
+.stat-card:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  box-shadow: var(--shadow-glow);
+}
+
+/* Focus pour les tabs */
+.code-viewer__tab:focus-visible,
+.code-tabs__tab:focus-visible {
+  outline: 2px solid var(--primary-light);
+  outline-offset: -2px;
+  background: var(--bg-card-hover);
+}
+
+/* ===========================================
+   REDUCED MOTION
+   Respect des préférences utilisateur
+   =========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Désactive les animations de scroll */
+  .fade-in,
+  .fade-in-up,
+  .fade-in-down,
+  .fade-in-left,
+  .fade-in-right,
+  .scale-in,
+  .scale-in-center,
+  .rotate-in,
+  .flip-in,
+  .blur-in {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+
+  /* Désactive le parallax */
+  .parallax-bg {
+    transform: none !important;
+  }
+
+  /* Désactive les gradients animés */
+  .animated-gradient {
+    animation: none !important;
+    background-size: 100% 100% !important;
+  }
+}
+
+/* ===========================================
+   HIGH CONTRAST MODE
+   Pour les utilisateurs avec contraste élevé
+   =========================================== */
+
+@media (prefers-contrast: high) {
+  :root {
+    --text-primary: #ffffff;
+    --text-secondary: #e0e0e0;
+    --text-muted: #b0b0b0;
+    --border: #555555;
+    --border-hover: #888888;
+  }
+
+  .component-card,
+  .stat-card,
+  .generator-card,
+  .recent__card {
+    border-width: 2px;
+  }
+
+  .tag {
+    border: 1px solid currentColor;
+  }
+
+  .copy-btn,
+  .code-viewer__tab {
+    border-width: 2px;
+  }
+
+  /* Améliore le contraste des badges de sécurité */
+  .security-badge--safe {
+    background: #00cc00;
+    color: #000000;
+  }
+
+  .security-badge--caution {
+    background: #ffcc00;
+    color: #000000;
+  }
+
+  .security-badge--sensitive {
+    background: #ff3333;
+    color: #ffffff;
+  }
+}
+
+/* ===========================================
+   SCREEN READER ONLY
+   Texte visible uniquement pour lecteurs d'écran
+   =========================================== */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.sr-only-focusable:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: inherit;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* ===========================================
+   KEYBOARD NAVIGATION INDICATOR
+   Montre quand la navigation clavier est active
+   =========================================== */
+
+body.keyboard-navigation *:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* ===========================================
+   LIVE REGIONS
+   Pour les annonces aux lecteurs d'écran
+   =========================================== */
+
+[aria-live] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+[aria-live="polite"],
+[aria-live="assertive"] {
+  /* Visible uniquement pour les lecteurs d'écran */
+}
+
+/* Toast container pour les annonces */
+.toast-container[role="status"] {
+  /* Les toasts sont déjà visibles */
+  position: fixed;
+  bottom: var(--spacing-lg);
+  right: var(--spacing-lg);
+  z-index: 1000;
+}
+
+/* ===========================================
+   TOUCH TARGET SIZES
+   Tailles minimales pour les zones tactiles (44x44px)
+   =========================================== */
+
+@media (pointer: coarse) {
+  button,
+  .copy-btn,
+  .sidebar__link,
+  .code-viewer__tab {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .sidebar__link {
+    padding: var(--spacing-md);
+  }
+
+  .tag {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 0.875rem;
+  }
+}
+
+/* ===========================================
+   PRINT STYLES
+   Pour l'impression des composants
+   =========================================== */
+
+@media print {
+  .sidebar,
+  .admin-toggle,
+  .search-overlay,
+  .toast-container,
+  .progress-scroll {
+    display: none !important;
+  }
+
+  .main,
+  .main-content {
+    margin-left: 0 !important;
+    padding: 0 !important;
+  }
+
+  .component-card {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    border: 1px solid #000;
+  }
+
+  .code-viewer__content {
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+  }
+}
+
+/* ===========================================
+   DARK MODE (déjà par défaut, mais explicite)
+   =========================================== */
+
+@media (prefers-color-scheme: light) {
+  /* Le projet est en dark mode only */
+  /* Ces styles sont ici pour référence future */
+}

@@ -399,7 +399,407 @@
     }
 
     /* ===========================================
-       ACCORDION 6 — NESTED
+       ACCORDION 6 — GRADIENT BORDER
+       =========================================== */
+
+    .accordion-gradient {
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .accordion-gradient__item {
+      position: relative;
+      background: #18181b;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .accordion-gradient__item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 12px;
+      padding: 2px;
+      background: linear-gradient(135deg, #6366f1, #ec4899, #f59e0b);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0.3;
+      transition: opacity 0.3s ease;
+    }
+
+    .accordion-gradient__item--open::before {
+      opacity: 1;
+      animation: gradient-rotate 3s linear infinite;
+    }
+
+    @keyframes gradient-rotate {
+      0% { background: linear-gradient(135deg, #6366f1, #ec4899, #f59e0b); }
+      33% { background: linear-gradient(135deg, #ec4899, #f59e0b, #6366f1); }
+      66% { background: linear-gradient(135deg, #f59e0b, #6366f1, #ec4899); }
+      100% { background: linear-gradient(135deg, #6366f1, #ec4899, #f59e0b); }
+    }
+
+    .accordion-gradient__header {
+      width: 100%;
+      padding: 20px 24px;
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .accordion-gradient__icon {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .accordion-gradient__item--open .accordion-gradient__icon {
+      transform: rotate(180deg);
+    }
+
+    .accordion-gradient__content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      z-index: 1;
+    }
+
+    .accordion-gradient__item--open .accordion-gradient__content {
+      max-height: 200px;
+    }
+
+    .accordion-gradient__body {
+      padding: 0 24px 20px;
+      color: #a1a1aa;
+      line-height: 1.6;
+    }
+
+    /* ===========================================
+       ACCORDION 7 — ICON ACCORDION
+       =========================================== */
+
+    .accordion-icon {
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .accordion-icon__item {
+      background: #18181b;
+      border: 1px solid #27272a;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .accordion-icon__item--open {
+      border-color: #6366f1;
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.15);
+    }
+
+    .accordion-icon__header {
+      width: 100%;
+      padding: 20px 24px;
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 1rem;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .accordion-icon__symbol {
+      width: 44px;
+      height: 44px;
+      background: rgba(99, 102, 241, 0.1);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+      transition: all 0.3s ease;
+    }
+
+    .accordion-icon__item--open .accordion-icon__symbol {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      transform: scale(1.1);
+    }
+
+    .accordion-icon__title {
+      flex: 1;
+    }
+
+    .accordion-icon__label {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .accordion-icon__desc {
+      font-size: 0.85rem;
+      color: #71717a;
+    }
+
+    .accordion-icon__arrow {
+      color: #71717a;
+      transition: all 0.3s ease;
+    }
+
+    .accordion-icon__item--open .accordion-icon__arrow {
+      color: #6366f1;
+      transform: rotate(180deg);
+    }
+
+    .accordion-icon__content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+
+    .accordion-icon__item--open .accordion-icon__content {
+      max-height: 200px;
+    }
+
+    .accordion-icon__body {
+      padding: 0 24px 20px;
+      padding-left: 84px;
+      color: #a1a1aa;
+      line-height: 1.6;
+    }
+
+    /* ===========================================
+       ACCORDION 8 — TIMELINE
+       =========================================== */
+
+    .accordion-timeline {
+      max-width: 600px;
+      margin: 0 auto;
+      position: relative;
+      padding-left: 32px;
+    }
+
+    .accordion-timeline::before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, #6366f1 0%, #ec4899 50%, #f59e0b 100%);
+      opacity: 0.3;
+    }
+
+    .accordion-timeline__item {
+      position: relative;
+      margin-bottom: 16px;
+    }
+
+    .accordion-timeline__dot {
+      position: absolute;
+      left: -28px;
+      top: 20px;
+      width: 14px;
+      height: 14px;
+      background: #27272a;
+      border: 3px solid #18181b;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+      z-index: 1;
+    }
+
+    .accordion-timeline__item--open .accordion-timeline__dot {
+      background: #6366f1;
+      border-color: #6366f1;
+      box-shadow: 0 0 12px rgba(99, 102, 241, 0.5);
+      transform: scale(1.2);
+    }
+
+    .accordion-timeline__card {
+      background: #18181b;
+      border: 1px solid #27272a;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .accordion-timeline__item--open .accordion-timeline__card {
+      border-color: rgba(99, 102, 241, 0.3);
+    }
+
+    .accordion-timeline__header {
+      width: 100%;
+      padding: 16px 20px;
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 1rem;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .accordion-timeline__title {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .accordion-timeline__date {
+      font-size: 0.75rem;
+      color: #6366f1;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .accordion-timeline__name {
+      font-weight: 500;
+    }
+
+    .accordion-timeline__arrow {
+      color: #71717a;
+      transition: transform 0.3s ease;
+    }
+
+    .accordion-timeline__item--open .accordion-timeline__arrow {
+      transform: rotate(180deg);
+    }
+
+    .accordion-timeline__content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+
+    .accordion-timeline__item--open .accordion-timeline__content {
+      max-height: 200px;
+    }
+
+    .accordion-timeline__body {
+      padding: 0 20px 16px;
+      color: #a1a1aa;
+      line-height: 1.6;
+    }
+
+    /* ===========================================
+       ACCORDION 9 — ANIMATED HEIGHT (Pure CSS)
+       =========================================== */
+
+    .accordion-smooth {
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .accordion-smooth__item {
+      background: #18181b;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .accordion-smooth__input {
+      display: none;
+    }
+
+    .accordion-smooth__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 24px;
+      cursor: pointer;
+      color: #fff;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+
+    .accordion-smooth__header:hover {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .accordion-smooth__chevron {
+      width: 24px;
+      height: 24px;
+      position: relative;
+    }
+
+    .accordion-smooth__chevron::before,
+    .accordion-smooth__chevron::after {
+      content: '';
+      position: absolute;
+      width: 10px;
+      height: 2px;
+      background: #a1a1aa;
+      top: 50%;
+      transition: all 0.3s ease;
+    }
+
+    .accordion-smooth__chevron::before {
+      left: 3px;
+      transform: translateY(-50%) rotate(45deg);
+    }
+
+    .accordion-smooth__chevron::after {
+      right: 3px;
+      transform: translateY(-50%) rotate(-45deg);
+    }
+
+    .accordion-smooth__input:checked + .accordion-smooth__header .accordion-smooth__chevron::before {
+      transform: translateY(-50%) rotate(-45deg);
+    }
+
+    .accordion-smooth__input:checked + .accordion-smooth__header .accordion-smooth__chevron::after {
+      transform: translateY(-50%) rotate(45deg);
+    }
+
+    .accordion-smooth__content {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .accordion-smooth__input:checked ~ .accordion-smooth__content {
+      grid-template-rows: 1fr;
+    }
+
+    .accordion-smooth__inner {
+      overflow: hidden;
+    }
+
+    .accordion-smooth__body {
+      padding: 0 24px 20px;
+      color: #a1a1aa;
+      line-height: 1.6;
+    }
+
+    /* ===========================================
+       ACCORDION 10 — NESTED
        =========================================== */
 
     .accordion-nested {
@@ -600,7 +1000,7 @@
   <main class="main-content">
     <header class="page-header">
       <h1 class="page-header__title">Accordions</h1>
-      <p class="page-header__desc">Composants pliables pour organiser et révéler du contenu</p>
+      <p class="page-header__desc">9 accordions modernes avec animations fluides — du basique au pure CSS</p>
     </header>
 
     <div class="accordions-list">
@@ -936,15 +1336,296 @@
         </div>
       </section>
 
+      <!-- ACCORDION 6 — GRADIENT BORDER -->
+      <section class="accordion-section">
+        <div class="accordion-section__preview">
+          <div class="accordion-gradient">
+            <div class="accordion-gradient__item accordion-gradient__item--open">
+              <button class="accordion-gradient__header" onclick="toggleAccordion(this, 'gradient')">
+                <span>Premium Features</span>
+                <span class="accordion-gradient__icon">▼</span>
+              </button>
+              <div class="accordion-gradient__content">
+                <div class="accordion-gradient__body">
+                  Unlock all premium features including advanced analytics, priority support, and custom integrations.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-gradient__item">
+              <button class="accordion-gradient__header" onclick="toggleAccordion(this, 'gradient')">
+                <span>Enterprise Solutions</span>
+                <span class="accordion-gradient__icon">▼</span>
+              </button>
+              <div class="accordion-gradient__content">
+                <div class="accordion-gradient__body">
+                  Tailored solutions for large organizations with dedicated account management.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-gradient__item">
+              <button class="accordion-gradient__header" onclick="toggleAccordion(this, 'gradient')">
+                <span>Custom Branding</span>
+                <span class="accordion-gradient__icon">▼</span>
+              </button>
+              <div class="accordion-gradient__content">
+                <div class="accordion-gradient__body">
+                  White-label options to match your brand identity perfectly.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-section__info">
+          <div class="accordion-section__header">
+            <h2 class="accordion-section__name">Gradient Border</h2>
+            <div class="accordion-section__tags">
+              <span class="tag tag--primary">Premium</span>
+              <span class="tag">Animated</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.accordion-gradient__item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 2px;
+  background: linear-gradient(135deg, #6366f1, #ec4899, #f59e0b);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ACCORDION 7 — ICON ACCORDION -->
+      <section class="accordion-section">
+        <div class="accordion-section__preview">
+          <div class="accordion-icon">
+            <div class="accordion-icon__item accordion-icon__item--open">
+              <button class="accordion-icon__header" onclick="toggleAccordion(this, 'icon')">
+                <div class="accordion-icon__symbol">🚀</div>
+                <div class="accordion-icon__title">
+                  <div class="accordion-icon__label">Performance</div>
+                  <div class="accordion-icon__desc">Optimized for speed</div>
+                </div>
+                <span class="accordion-icon__arrow">▼</span>
+              </button>
+              <div class="accordion-icon__content">
+                <div class="accordion-icon__body">
+                  Our components are optimized for maximum performance with minimal bundle size and no unnecessary dependencies.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-icon__item">
+              <button class="accordion-icon__header" onclick="toggleAccordion(this, 'icon')">
+                <div class="accordion-icon__symbol">🎨</div>
+                <div class="accordion-icon__title">
+                  <div class="accordion-icon__label">Design System</div>
+                  <div class="accordion-icon__desc">Consistent and beautiful</div>
+                </div>
+                <span class="accordion-icon__arrow">▼</span>
+              </button>
+              <div class="accordion-icon__content">
+                <div class="accordion-icon__body">
+                  A comprehensive design system with consistent spacing, typography, and color schemes.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-icon__item">
+              <button class="accordion-icon__header" onclick="toggleAccordion(this, 'icon')">
+                <div class="accordion-icon__symbol">♿</div>
+                <div class="accordion-icon__title">
+                  <div class="accordion-icon__label">Accessibility</div>
+                  <div class="accordion-icon__desc">WCAG 2.1 compliant</div>
+                </div>
+                <span class="accordion-icon__arrow">▼</span>
+              </button>
+              <div class="accordion-icon__content">
+                <div class="accordion-icon__body">
+                  All components are built with accessibility in mind, following WCAG 2.1 guidelines.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-section__info">
+          <div class="accordion-section__header">
+            <h2 class="accordion-section__name">Icon Accordion</h2>
+            <div class="accordion-section__tags">
+              <span class="tag tag--primary">Rich</span>
+              <span class="tag">Icons</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ACCORDION 8 — TIMELINE -->
+      <section class="accordion-section">
+        <div class="accordion-section__preview">
+          <div class="accordion-timeline">
+            <div class="accordion-timeline__item accordion-timeline__item--open">
+              <div class="accordion-timeline__dot"></div>
+              <div class="accordion-timeline__card">
+                <button class="accordion-timeline__header" onclick="toggleAccordion(this.closest('.accordion-timeline__item'), 'timeline', true)">
+                  <div class="accordion-timeline__title">
+                    <span class="accordion-timeline__date">Janvier 2026</span>
+                    <span class="accordion-timeline__name">Version 2.0 Release</span>
+                  </div>
+                  <span class="accordion-timeline__arrow">▼</span>
+                </button>
+                <div class="accordion-timeline__content">
+                  <div class="accordion-timeline__body">
+                    Major release with 50+ new components, improved performance, and a completely redesigned interface.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-timeline__item">
+              <div class="accordion-timeline__dot"></div>
+              <div class="accordion-timeline__card">
+                <button class="accordion-timeline__header" onclick="toggleAccordion(this.closest('.accordion-timeline__item'), 'timeline', true)">
+                  <div class="accordion-timeline__title">
+                    <span class="accordion-timeline__date">Décembre 2025</span>
+                    <span class="accordion-timeline__name">Beta Launch</span>
+                  </div>
+                  <span class="accordion-timeline__arrow">▼</span>
+                </button>
+                <div class="accordion-timeline__content">
+                  <div class="accordion-timeline__body">
+                    Public beta launch with early access for developers and designers.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-timeline__item">
+              <div class="accordion-timeline__dot"></div>
+              <div class="accordion-timeline__card">
+                <button class="accordion-timeline__header" onclick="toggleAccordion(this.closest('.accordion-timeline__item'), 'timeline', true)">
+                  <div class="accordion-timeline__title">
+                    <span class="accordion-timeline__date">Octobre 2025</span>
+                    <span class="accordion-timeline__name">Project Started</span>
+                  </div>
+                  <span class="accordion-timeline__arrow">▼</span>
+                </button>
+                <div class="accordion-timeline__content">
+                  <div class="accordion-timeline__body">
+                    Initial development began with core component library architecture.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-section__info">
+          <div class="accordion-section__header">
+            <h2 class="accordion-section__name">Timeline Accordion</h2>
+            <div class="accordion-section__tags">
+              <span class="tag tag--primary">History</span>
+              <span class="tag">Roadmap</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ACCORDION 9 — CSS ONLY (Smooth) -->
+      <section class="accordion-section">
+        <div class="accordion-section__preview">
+          <div class="accordion-smooth">
+            <div class="accordion-smooth__item">
+              <input type="radio" name="accordion-smooth" id="smooth-1" class="accordion-smooth__input" checked>
+              <label for="smooth-1" class="accordion-smooth__header">
+                <span>Pure CSS Animation</span>
+                <span class="accordion-smooth__chevron"></span>
+              </label>
+              <div class="accordion-smooth__content">
+                <div class="accordion-smooth__inner">
+                  <div class="accordion-smooth__body">
+                    This accordion uses no JavaScript! It relies on the CSS grid technique for smooth height transitions.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-smooth__item">
+              <input type="radio" name="accordion-smooth" id="smooth-2" class="accordion-smooth__input">
+              <label for="smooth-2" class="accordion-smooth__header">
+                <span>Grid Template Rows</span>
+                <span class="accordion-smooth__chevron"></span>
+              </label>
+              <div class="accordion-smooth__content">
+                <div class="accordion-smooth__inner">
+                  <div class="accordion-smooth__body">
+                    Using grid-template-rows: 0fr to 1fr creates a smooth height animation without knowing the content height.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-smooth__item">
+              <input type="radio" name="accordion-smooth" id="smooth-3" class="accordion-smooth__input">
+              <label for="smooth-3" class="accordion-smooth__header">
+                <span>Radio Button Trick</span>
+                <span class="accordion-smooth__chevron"></span>
+              </label>
+              <div class="accordion-smooth__content">
+                <div class="accordion-smooth__inner">
+                  <div class="accordion-smooth__body">
+                    Hidden radio buttons with the same name attribute ensure only one item is open at a time.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-section__info">
+          <div class="accordion-section__header">
+            <h2 class="accordion-section__name">Pure CSS (Grid Trick)</h2>
+            <div class="accordion-section__tags">
+              <span class="tag tag--primary">No JS</span>
+              <span class="tag">Modern CSS</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.accordion-smooth__content {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.4s ease;
+}
+
+.accordion-smooth__input:checked ~ .accordion-smooth__content {
+  grid-template-rows: 1fr;
+}
+
+.accordion-smooth__inner {
+  overflow: hidden;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </div>
   </main>
   </div>
 
   <script src="../../assets/js/main.js"></script>
   <script src="../../assets/js/security-system.js"></script>
+  <script src="../../assets/js/search.js"></script>
+  <script src="../../assets/js/accessibility.js"></script>
   <script>
-    function toggleAccordion(btn, type) {
-      const item = btn.parentElement;
+    function toggleAccordion(element, type, isItem = false) {
+      // For timeline, the element passed is already the item
+      const item = isItem ? element : element.parentElement;
       const isOpen = item.classList.contains(`accordion-${type}__item--open`);
 
       // Close all items of the same type

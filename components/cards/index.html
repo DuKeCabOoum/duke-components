@@ -20,7 +20,12 @@
           <li><a href="#classic" class="sidebar__link sidebar__link--active">Classic</a></li>
           <li><a href="#profile" class="sidebar__link">Profile</a></li>
           <li><a href="#product" class="sidebar__link">Product</a></li>
+          <li><a href="#pricing" class="sidebar__link">Pricing</a></li>
+          <li><a href="#blog" class="sidebar__link">Blog</a></li>
+          <li><a href="#stats" class="sidebar__link">Stats</a></li>
           <li><a href="#glass" class="sidebar__link">Glass</a></li>
+          <li><a href="#hover" class="sidebar__link">Hover Effects</a></li>
+          <li><a href="#3d" class="sidebar__link">3D Cards</a></li>
         </ul>
       </div>
 
@@ -571,6 +576,827 @@
         </div>
       </section>
 
+      <!-- ========== PRICING SECTION ========== -->
+      <section id="pricing" class="section">
+        <h2 class="section__title">Pricing</h2>
+        <p class="section__desc">Cards pour tarifs et abonnements.</p>
+
+        <div class="components-grid">
+          <!-- CARD PRICING -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="card-pricing">
+                <div class="card-pricing__header">
+                  <span class="card-pricing__name">Pro</span>
+                  <div class="card-pricing__price">
+                    <span class="card-pricing__currency">€</span>
+                    <span class="card-pricing__amount">29</span>
+                    <span class="card-pricing__period">/mo</span>
+                  </div>
+                </div>
+                <ul class="card-pricing__features">
+                  <li>Unlimited projects</li>
+                  <li>Priority support</li>
+                  <li>Advanced analytics</li>
+                </ul>
+                <button class="card-pricing__btn">Get Started</button>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Pricing Card</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">pricing</span>
+                <span class="tag">subscription</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="card-pricing-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="card-pricing-html"><code>&lt;div class="card-pricing"&gt;
+  &lt;div class="card-pricing__header"&gt;
+    &lt;span class="card-pricing__name"&gt;Pro&lt;/span&gt;
+    &lt;div class="card-pricing__price"&gt;
+      &lt;span class="card-pricing__currency"&gt;€&lt;/span&gt;
+      &lt;span class="card-pricing__amount"&gt;29&lt;/span&gt;
+      &lt;span class="card-pricing__period"&gt;/mo&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;ul class="card-pricing__features"&gt;...&lt;/ul&gt;
+  &lt;button class="card-pricing__btn"&gt;Get Started&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="card-pricing-css" style="display:none"><code>.card-pricing {
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 16px;
+  padding: 32px;
+  text-align: center;
+  max-width: 280px;
+  transition: all 0.3s ease;
+}
+
+.card-pricing:hover {
+  border-color: #6366f1;
+  transform: translateY(-4px);
+}
+
+.card-pricing__name {
+  color: #6366f1;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.card-pricing__price {
+  margin: 16px 0 24px;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 4px;
+}
+
+.card-pricing__currency {
+  font-size: 1.5rem;
+  color: #a1a1aa;
+}
+
+.card-pricing__amount {
+  font-size: 3rem;
+  font-weight: 700;
+  color: white;
+}
+
+.card-pricing__period {
+  color: #71717a;
+  font-size: 1rem;
+}
+
+.card-pricing__features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px;
+  text-align: left;
+}
+
+.card-pricing__features li {
+  color: #a1a1aa;
+  font-size: 0.875rem;
+  padding: 8px 0;
+  border-bottom: 1px solid #2a2a2a;
+}
+
+.card-pricing__features li::before {
+  content: '✓';
+  color: #10b981;
+  margin-right: 10px;
+}
+
+.card-pricing__btn {
+  width: 100%;
+  background: #6366f1;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.card-pricing__btn:hover {
+  background: #4f46e5;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- CARD PRICING POPULAR -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="card-pricing card-pricing--popular">
+                <span class="card-pricing__badge">Popular</span>
+                <div class="card-pricing__header">
+                  <span class="card-pricing__name">Business</span>
+                  <div class="card-pricing__price">
+                    <span class="card-pricing__currency">€</span>
+                    <span class="card-pricing__amount">79</span>
+                    <span class="card-pricing__period">/mo</span>
+                  </div>
+                </div>
+                <ul class="card-pricing__features">
+                  <li>Everything in Pro</li>
+                  <li>Team collaboration</li>
+                  <li>Custom integrations</li>
+                </ul>
+                <button class="card-pricing__btn">Get Started</button>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Popular Card</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">pricing</span>
+                <span class="tag">featured</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="card-pricing-pop-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="card-pricing-pop-html"><code>&lt;div class="card-pricing card-pricing--popular"&gt;
+  &lt;span class="card-pricing__badge"&gt;Popular&lt;/span&gt;
+  ...
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="card-pricing-pop-css" style="display:none"><code>.card-pricing--popular {
+  border-color: #6366f1;
+  background: linear-gradient(180deg, #1a1a2e 0%, #1a1a1a 100%);
+  position: relative;
+}
+
+.card-pricing__badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== BLOG SECTION ========== -->
+      <section id="blog" class="section">
+        <h2 class="section__title">Blog</h2>
+        <p class="section__desc">Cards pour articles et posts.</p>
+
+        <div class="components-grid">
+          <!-- CARD ARTICLE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="card-article">
+                <div class="card-article__img"></div>
+                <div class="card-article__content">
+                  <div class="card-article__meta">
+                    <span class="card-article__category">Design</span>
+                    <span class="card-article__date">Jan 15, 2025</span>
+                  </div>
+                  <h3 class="card-article__title">Modern UI Trends</h3>
+                  <p class="card-article__excerpt">Discover the latest trends in user interface design...</p>
+                  <div class="card-article__author">
+                    <div class="card-article__avatar">JD</div>
+                    <span class="card-article__name">John Doe</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Article Card</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">blog</span>
+                <span class="tag">article</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="card-article-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="card-article-html"><code>&lt;div class="card-article"&gt;
+  &lt;img class="card-article__img" src="..."&gt;
+  &lt;div class="card-article__content"&gt;
+    &lt;div class="card-article__meta"&gt;
+      &lt;span class="card-article__category"&gt;Design&lt;/span&gt;
+      &lt;span class="card-article__date"&gt;Jan 15&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;h3 class="card-article__title"&gt;...&lt;/h3&gt;
+    &lt;p class="card-article__excerpt"&gt;...&lt;/p&gt;
+    &lt;div class="card-article__author"&gt;...&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="card-article-css" style="display:none"><code>.card-article {
+  background: #1a1a1a;
+  border-radius: 16px;
+  overflow: hidden;
+  max-width: 320px;
+  transition: transform 0.3s ease;
+}
+
+.card-article:hover {
+  transform: translateY(-4px);
+}
+
+.card-article__img {
+  width: 100%;
+  height: 180px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  object-fit: cover;
+}
+
+.card-article__content {
+  padding: 20px;
+}
+
+.card-article__meta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.card-article__category {
+  color: #6366f1;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.card-article__date {
+  color: #71717a;
+  font-size: 0.75rem;
+}
+
+.card-article__title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 8px;
+}
+
+.card-article__excerpt {
+  color: #a1a1aa;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.card-article__author {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-article__avatar {
+  width: 32px;
+  height: 32px;
+  background: #6366f1;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: white;
+}
+
+.card-article__name {
+  color: #a1a1aa;
+  font-size: 0.875rem;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- CARD POST HORIZONTAL -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="card-post">
+                <div class="card-post__img"></div>
+                <div class="card-post__content">
+                  <span class="card-post__category">Tech</span>
+                  <h3 class="card-post__title">Building Modern Apps</h3>
+                  <p class="card-post__excerpt">A guide to building scalable applications...</p>
+                  <span class="card-post__read">5 min read</span>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Post Card</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">blog</span>
+                <span class="tag">horizontal</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="card-post-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="card-post-html"><code>&lt;div class="card-post"&gt;
+  &lt;img class="card-post__img" src="..."&gt;
+  &lt;div class="card-post__content"&gt;
+    &lt;span class="card-post__category"&gt;Tech&lt;/span&gt;
+    &lt;h3 class="card-post__title"&gt;...&lt;/h3&gt;
+    &lt;p class="card-post__excerpt"&gt;...&lt;/p&gt;
+    &lt;span class="card-post__read"&gt;5 min read&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="card-post-css" style="display:none"><code>.card-post {
+  display: flex;
+  gap: 16px;
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 12px;
+  padding: 12px;
+  max-width: 400px;
+  transition: all 0.3s ease;
+}
+
+.card-post:hover {
+  border-color: #6366f1;
+}
+
+.card-post__img {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, #10b981, #059669);
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.card-post__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card-post__category {
+  color: #10b981;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.card-post__title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 4px;
+}
+
+.card-post__excerpt {
+  color: #71717a;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+
+.card-post__read {
+  color: #6366f1;
+  font-size: 0.7rem;
+  font-weight: 500;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== STATS SECTION ========== -->
+      <section id="stats" class="section">
+        <h2 class="section__title">Stats</h2>
+        <p class="section__desc">Cards pour statistiques et données.</p>
+
+        <div class="components-grid">
+          <!-- CARD STAT -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="card-stat">
+                <div class="card-stat__icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                  </svg>
+                </div>
+                <div class="card-stat__content">
+                  <span class="card-stat__value">12,453</span>
+                  <span class="card-stat__label">Total Users</span>
+                </div>
+                <div class="card-stat__trend card-stat__trend--up">
+                  <span>+12.5%</span>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Stat Card</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">stats</span>
+                <span class="tag">dashboard</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="card-stat-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="card-stat-html"><code>&lt;div class="card-stat"&gt;
+  &lt;div class="card-stat__icon"&gt;...&lt;/div&gt;
+  &lt;div class="card-stat__content"&gt;
+    &lt;span class="card-stat__value"&gt;12,453&lt;/span&gt;
+    &lt;span class="card-stat__label"&gt;Total Users&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="card-stat__trend card-stat__trend--up"&gt;
+    &lt;span&gt;+12.5%&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="card-stat-css" style="display:none"><code>.card-stat {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 12px;
+  padding: 20px;
+  min-width: 260px;
+}
+
+.card-stat__icon {
+  width: 48px;
+  height: 48px;
+  background: rgba(99, 102, 241, 0.1);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6366f1;
+}
+
+.card-stat__content {
+  flex: 1;
+}
+
+.card-stat__value {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+}
+
+.card-stat__label {
+  font-size: 0.875rem;
+  color: #71717a;
+}
+
+.card-stat__trend {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.card-stat__trend--up {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.card-stat__trend--down {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- CARD CHART MINI -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="card-chart">
+                <div class="card-chart__header">
+                  <span class="card-chart__title">Revenue</span>
+                  <span class="card-chart__value">€24,500</span>
+                </div>
+                <div class="card-chart__bars">
+                  <div class="card-chart__bar" style="height: 40%"></div>
+                  <div class="card-chart__bar" style="height: 65%"></div>
+                  <div class="card-chart__bar" style="height: 45%"></div>
+                  <div class="card-chart__bar" style="height: 80%"></div>
+                  <div class="card-chart__bar" style="height: 55%"></div>
+                  <div class="card-chart__bar" style="height: 90%"></div>
+                  <div class="card-chart__bar card-chart__bar--active" style="height: 75%"></div>
+                </div>
+                <div class="card-chart__labels">
+                  <span>Mon</span>
+                  <span>Tue</span>
+                  <span>Wed</span>
+                  <span>Thu</span>
+                  <span>Fri</span>
+                  <span>Sat</span>
+                  <span>Sun</span>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Chart Card</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">stats</span>
+                <span class="tag">chart</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="card-chart-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="card-chart-html"><code>&lt;div class="card-chart"&gt;
+  &lt;div class="card-chart__header"&gt;
+    &lt;span class="card-chart__title"&gt;Revenue&lt;/span&gt;
+    &lt;span class="card-chart__value"&gt;€24,500&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="card-chart__bars"&gt;
+    &lt;div class="card-chart__bar" style="height: 40%"&gt;&lt;/div&gt;
+    ...
+  &lt;/div&gt;
+  &lt;div class="card-chart__labels"&gt;...&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="card-chart-css" style="display:none"><code>.card-chart {
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 12px;
+  padding: 20px;
+  max-width: 280px;
+}
+
+.card-chart__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.card-chart__title {
+  color: #71717a;
+  font-size: 0.875rem;
+}
+
+.card-chart__value {
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.card-chart__bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 80px;
+  margin-bottom: 8px;
+}
+
+.card-chart__bar {
+  flex: 1;
+  background: #2a2a2a;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.card-chart__bar:hover,
+.card-chart__bar--active {
+  background: #6366f1;
+}
+
+.card-chart__labels {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-chart__labels span {
+  font-size: 0.65rem;
+  color: #71717a;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- CARD NOTIFICATION -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="card-notification">
+                <div class="card-notification__icon card-notification__icon--success">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+                <div class="card-notification__content">
+                  <h4 class="card-notification__title">Payment Successful</h4>
+                  <p class="card-notification__text">Your payment of €49 has been processed.</p>
+                </div>
+                <button class="card-notification__close">×</button>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Notification Card</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">stats</span>
+                <span class="tag">alert</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="card-notification-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="card-notification-html"><code>&lt;div class="card-notification"&gt;
+  &lt;div class="card-notification__icon card-notification__icon--success"&gt;
+    &lt;svg&gt;...&lt;/svg&gt;
+  &lt;/div&gt;
+  &lt;div class="card-notification__content"&gt;
+    &lt;h4 class="card-notification__title"&gt;...&lt;/h4&gt;
+    &lt;p class="card-notification__text"&gt;...&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;button class="card-notification__close"&gt;×&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="card-notification-css" style="display:none"><code>.card-notification {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 12px;
+  padding: 16px;
+  max-width: 340px;
+}
+
+.card-notification__icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.card-notification__icon--success {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.card-notification__icon--error {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.card-notification__icon--warning {
+  background: rgba(245, 158, 11, 0.1);
+  color: #f59e0b;
+}
+
+.card-notification__content {
+  flex: 1;
+}
+
+.card-notification__title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 4px;
+}
+
+.card-notification__text {
+  font-size: 0.8rem;
+  color: #a1a1aa;
+}
+
+.card-notification__close {
+  background: none;
+  border: none;
+  color: #71717a;
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.card-notification__close:hover {
+  color: white;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
       <!-- ========== GLASS SECTION ========== -->
       <section id="glass" class="section">
         <h2 class="section__title">Glass</h2>
@@ -640,6 +1466,600 @@
   opacity: 0.9;
   line-height: 1.6;
 }</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== HOVER EFFECTS SECTION ========== -->
+      <section id="hover" class="section">
+        <h2 class="section__title">Hover Effects</h2>
+        <p class="section__desc">Cards avec effets hover premium et animations.</p>
+
+        <div class="components-grid">
+          <!-- CARD TILT 3D -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="card-tilt">
+                <div class="card-tilt__content">
+                  <span class="card-tilt__icon">🎯</span>
+                  <h3 class="card-tilt__title">3D Tilt</h3>
+                  <p class="card-tilt__text">Hover to see the 3D effect</p>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">3D Tilt Card</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">hover</span>
+                <span class="tag">3d</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="card-tilt-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="card-tilt-html"><code>&lt;div class="card-tilt"&gt;
+  &lt;div class="card-tilt__content"&gt;
+    &lt;span class="card-tilt__icon"&gt;🎯&lt;/span&gt;
+    &lt;h3 class="card-tilt__title"&gt;3D Tilt&lt;/h3&gt;
+    &lt;p class="card-tilt__text"&gt;Hover to see effect&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="card-tilt-css" style="display:none"><code>.card-tilt {
+  background: linear-gradient(145deg, #1a1a2e, #16213e);
+  border-radius: 16px;
+  padding: 32px;
+  max-width: 260px;
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease;
+}
+
+.card-tilt:hover {
+  transform: perspective(1000px) rotateX(10deg) rotateY(-10deg);
+}
+
+.card-tilt__content {
+  transform: translateZ(50px);
+  transition: transform 0.5s ease;
+}
+
+.card-tilt:hover .card-tilt__content {
+  transform: translateZ(80px);
+}
+
+.card-tilt__icon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.card-tilt__title {
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.card-tilt__text {
+  color: #a1a1aa;
+  font-size: 0.875rem;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- CARD GLOW -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="card-glow">
+                <span class="card-glow__icon">✨</span>
+                <h3 class="card-glow__title">Glow Effect</h3>
+                <p class="card-glow__text">Hover for neon glow</p>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Glow Card</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">hover</span>
+                <span class="tag">glow</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="card-glow-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="card-glow-html"><code>&lt;div class="card-glow"&gt;
+  &lt;span class="card-glow__icon"&gt;✨&lt;/span&gt;
+  &lt;h3 class="card-glow__title"&gt;Glow Effect&lt;/h3&gt;
+  &lt;p class="card-glow__text"&gt;Hover for neon glow&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="card-glow-css" style="display:none"><code>.card-glow {
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 16px;
+  padding: 28px;
+  max-width: 260px;
+  text-align: center;
+  transition: all 0.4s ease;
+}
+
+.card-glow:hover {
+  border-color: #6366f1;
+  box-shadow:
+    0 0 20px rgba(99, 102, 241, 0.3),
+    0 0 40px rgba(99, 102, 241, 0.2),
+    0 0 60px rgba(99, 102, 241, 0.1);
+  transform: translateY(-8px);
+}
+
+.card-glow__icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.card-glow__title {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.card-glow__text {
+  color: #a1a1aa;
+  font-size: 0.875rem;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- CARD REVEAL -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="card-reveal">
+                <div class="card-reveal__img"></div>
+                <div class="card-reveal__overlay">
+                  <h3 class="card-reveal__title">Revealed!</h3>
+                  <p class="card-reveal__text">Content appears on hover</p>
+                  <button class="card-reveal__btn">Explore</button>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Reveal Card</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">hover</span>
+                <span class="tag">reveal</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="card-reveal-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="card-reveal-html"><code>&lt;div class="card-reveal"&gt;
+  &lt;div class="card-reveal__img"&gt;&lt;/div&gt;
+  &lt;div class="card-reveal__overlay"&gt;
+    &lt;h3 class="card-reveal__title"&gt;Title&lt;/h3&gt;
+    &lt;p class="card-reveal__text"&gt;Description&lt;/p&gt;
+    &lt;button class="card-reveal__btn"&gt;Explore&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="card-reveal-css" style="display:none"><code>.card-reveal {
+  position: relative;
+  width: 260px;
+  height: 180px;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.card-reveal__img {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  transition: transform 0.5s ease;
+}
+
+.card-reveal:hover .card-reveal__img {
+  transform: scale(1.1);
+}
+
+.card-reveal__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.card-reveal:hover .card-reveal__overlay {
+  opacity: 1;
+}
+
+.card-reveal__title {
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 600;
+  transform: translateY(20px);
+  transition: transform 0.4s ease 0.1s;
+}
+
+.card-reveal:hover .card-reveal__title {
+  transform: translateY(0);
+}
+
+.card-reveal__text {
+  color: #a1a1aa;
+  font-size: 0.875rem;
+  margin: 8px 0 16px;
+  transform: translateY(20px);
+  transition: transform 0.4s ease 0.15s;
+}
+
+.card-reveal:hover .card-reveal__text {
+  transform: translateY(0);
+}
+
+.card-reveal__btn {
+  background: #6366f1;
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  transform: translateY(20px);
+  transition: transform 0.4s ease 0.2s;
+}
+
+.card-reveal:hover .card-reveal__btn {
+  transform: translateY(0);
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- CARD BORDER GRADIENT -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="card-border-gradient">
+                <div class="card-border-gradient__inner">
+                  <span class="card-border-gradient__icon">🔥</span>
+                  <h3 class="card-border-gradient__title">Gradient Border</h3>
+                  <p class="card-border-gradient__text">Animated border on hover</p>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Gradient Border</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">hover</span>
+                <span class="tag">gradient</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="card-border-gradient-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="card-border-gradient-html"><code>&lt;div class="card-border-gradient"&gt;
+  &lt;div class="card-border-gradient__inner"&gt;
+    &lt;span&gt;🔥&lt;/span&gt;
+    &lt;h3&gt;Gradient Border&lt;/h3&gt;
+    &lt;p&gt;Animated border&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="card-border-gradient-css" style="display:none"><code>.card-border-gradient {
+  position: relative;
+  padding: 2px;
+  border-radius: 16px;
+  background: linear-gradient(90deg, #6366f1, #ec4899, #6366f1);
+  background-size: 200% 100%;
+  animation: gradient-flow 3s linear infinite paused;
+  max-width: 260px;
+}
+
+.card-border-gradient:hover {
+  animation-play-state: running;
+}
+
+.card-border-gradient__inner {
+  background: #1a1a1a;
+  border-radius: 14px;
+  padding: 28px;
+  text-align: center;
+}
+
+.card-border-gradient__icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.card-border-gradient__title {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.card-border-gradient__text {
+  color: #a1a1aa;
+  font-size: 0.875rem;
+}
+
+@keyframes gradient-flow {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 200% 0%; }
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- CARD FLIP -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="card-flip">
+                <div class="card-flip__inner">
+                  <div class="card-flip__front">
+                    <span class="card-flip__icon">🎴</span>
+                    <h3 class="card-flip__title">Hover Me</h3>
+                  </div>
+                  <div class="card-flip__back">
+                    <p class="card-flip__text">Surprise! Back content here.</p>
+                    <button class="card-flip__btn">Action</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Flip Card</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">hover</span>
+                <span class="tag">flip</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="card-flip-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="card-flip-html"><code>&lt;div class="card-flip"&gt;
+  &lt;div class="card-flip__inner"&gt;
+    &lt;div class="card-flip__front"&gt;
+      &lt;span&gt;🎴&lt;/span&gt;
+      &lt;h3&gt;Hover Me&lt;/h3&gt;
+    &lt;/div&gt;
+    &lt;div class="card-flip__back"&gt;
+      &lt;p&gt;Back content&lt;/p&gt;
+      &lt;button&gt;Action&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="card-flip-css" style="display:none"><code>.card-flip {
+  width: 220px;
+  height: 160px;
+  perspective: 1000px;
+}
+
+.card-flip__inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease;
+}
+
+.card-flip:hover .card-flip__inner {
+  transform: rotateY(180deg);
+}
+
+.card-flip__front,
+.card-flip__back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-flip__front {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+}
+
+.card-flip__back {
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  transform: rotateY(180deg);
+}
+
+.card-flip__icon {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+.card-flip__title {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.card-flip__text {
+  color: #a1a1aa;
+  font-size: 0.875rem;
+  margin-bottom: 12px;
+}
+
+.card-flip__btn {
+  background: #6366f1;
+  color: white;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- CARD 3D CUBE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="card-3d-cube-container">
+                <div class="card-3d-cube">
+                  <div class="card-3d-cube__face card-3d-cube__face--front">
+                    <span>🎲</span>
+                    <p>Front</p>
+                  </div>
+                  <div class="card-3d-cube__face card-3d-cube__face--back">
+                    <span>🎯</span>
+                    <p>Back</p>
+                  </div>
+                  <div class="card-3d-cube__face card-3d-cube__face--right">
+                    <span>⚡</span>
+                    <p>Right</p>
+                  </div>
+                  <div class="card-3d-cube__face card-3d-cube__face--left">
+                    <span>🔥</span>
+                    <p>Left</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">3D Cube Card</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">3d</span>
+                <span class="tag">cube</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- CARD 3D PARALLAX -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="card-3d-parallax">
+                <div class="card-3d-parallax__layer card-3d-parallax__layer--back">BG</div>
+                <div class="card-3d-parallax__layer card-3d-parallax__layer--mid">
+                  <span>🚀</span>
+                </div>
+                <div class="card-3d-parallax__layer card-3d-parallax__layer--front">Parallax</div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">3D Parallax Card</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">3d</span>
+                <span class="tag">parallax</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- CARD 3D POP -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="card-3d-pop">
+                <span class="card-3d-pop__icon">💎</span>
+                <h3 class="card-3d-pop__title">Pop Out</h3>
+                <p class="card-3d-pop__text">Hover to pop!</p>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">3D Pop Card</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">3d</span>
+                <span class="tag">pop</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- CARD 3D DOOR -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="card-3d-door-container">
+                <div class="card-3d-door">
+                  <div class="card-3d-door__front">
+                    <span>🚪</span>
+                    <p>Hover to Open</p>
+                  </div>
+                  <div class="card-3d-door__inside">
+                    <span>🎁</span>
+                    <p>Surprise!</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">3D Door Card</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">3d</span>
+                <span class="tag">door</span>
               </div>
             </div>
           </article>
@@ -833,6 +2253,369 @@
       color: white;
     }
 
+    /* ========== PRICING ========== */
+    .card-pricing {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      max-width: 220px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    .card-pricing:hover {
+      border-color: #6366f1;
+      transform: translateY(-4px);
+    }
+    .card-pricing--popular {
+      border-color: #6366f1;
+      background: linear-gradient(180deg, #1a1a2e 0%, #1a1a1a 100%);
+    }
+    .card-pricing__badge {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.65rem;
+      font-weight: 600;
+    }
+    .card-pricing__name {
+      color: #6366f1;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .card-pricing__price {
+      margin: 12px 0 16px;
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 2px;
+    }
+    .card-pricing__currency {
+      font-size: 1.25rem;
+      color: #a1a1aa;
+    }
+    .card-pricing__amount {
+      font-size: 2.25rem;
+      font-weight: 700;
+      color: white;
+    }
+    .card-pricing__period {
+      color: #71717a;
+      font-size: 0.8rem;
+    }
+    .card-pricing__features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 16px;
+      text-align: left;
+    }
+    .card-pricing__features li {
+      color: #a1a1aa;
+      font-size: 0.75rem;
+      padding: 6px 0;
+      border-bottom: 1px solid #2a2a2a;
+    }
+    .card-pricing__features li::before {
+      content: '✓';
+      color: #10b981;
+      margin-right: 8px;
+    }
+    .card-pricing__btn {
+      width: 100%;
+      background: #6366f1;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    .card-pricing__btn:hover {
+      background: #4f46e5;
+    }
+
+    /* ========== BLOG ========== */
+    .card-article {
+      background: #1a1a1a;
+      border-radius: 12px;
+      overflow: hidden;
+      max-width: 240px;
+      transition: transform 0.3s ease;
+    }
+    .card-article:hover {
+      transform: translateY(-4px);
+    }
+    .card-article__img {
+      width: 100%;
+      height: 120px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+    }
+    .card-article__content {
+      padding: 14px;
+    }
+    .card-article__meta {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .card-article__category {
+      color: #6366f1;
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .card-article__date {
+      color: #71717a;
+      font-size: 0.65rem;
+    }
+    .card-article__title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 6px;
+    }
+    .card-article__excerpt {
+      color: #a1a1aa;
+      font-size: 0.75rem;
+      line-height: 1.4;
+      margin-bottom: 12px;
+    }
+    .card-article__author {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-article__avatar {
+      width: 24px;
+      height: 24px;
+      background: #6366f1;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.55rem;
+      font-weight: 600;
+      color: white;
+    }
+    .card-article__name {
+      color: #a1a1aa;
+      font-size: 0.7rem;
+    }
+
+    .card-post {
+      display: flex;
+      gap: 12px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 10px;
+      max-width: 280px;
+      transition: all 0.3s ease;
+    }
+    .card-post:hover {
+      border-color: #6366f1;
+    }
+    .card-post__img {
+      width: 70px;
+      height: 70px;
+      background: linear-gradient(135deg, #10b981, #059669);
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+    .card-post__content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .card-post__category {
+      color: #10b981;
+      font-size: 0.6rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+    .card-post__title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 2px;
+    }
+    .card-post__excerpt {
+      color: #71717a;
+      font-size: 0.65rem;
+      line-height: 1.3;
+      margin-bottom: 4px;
+    }
+    .card-post__read {
+      color: #6366f1;
+      font-size: 0.6rem;
+      font-weight: 500;
+    }
+
+    /* ========== STATS ========== */
+    .card-stat {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 14px;
+      min-width: 220px;
+    }
+    .card-stat__icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(99, 102, 241, 0.1);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #6366f1;
+    }
+    .card-stat__icon svg {
+      width: 18px;
+      height: 18px;
+    }
+    .card-stat__content {
+      flex: 1;
+    }
+    .card-stat__value {
+      display: block;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: white;
+    }
+    .card-stat__label {
+      font-size: 0.7rem;
+      color: #71717a;
+    }
+    .card-stat__trend {
+      padding: 3px 8px;
+      border-radius: 20px;
+      font-size: 0.65rem;
+      font-weight: 600;
+    }
+    .card-stat__trend--up {
+      background: rgba(16, 185, 129, 0.1);
+      color: #10b981;
+    }
+    .card-stat__trend--down {
+      background: rgba(239, 68, 68, 0.1);
+      color: #ef4444;
+    }
+
+    .card-chart {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 14px;
+      max-width: 220px;
+    }
+    .card-chart__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+    .card-chart__title {
+      color: #71717a;
+      font-size: 0.75rem;
+    }
+    .card-chart__value {
+      color: white;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+    .card-chart__bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+      height: 60px;
+      margin-bottom: 6px;
+    }
+    .card-chart__bar {
+      flex: 1;
+      background: #2a2a2a;
+      border-radius: 3px;
+      transition: background 0.2s ease;
+    }
+    .card-chart__bar:hover,
+    .card-chart__bar--active {
+      background: #6366f1;
+    }
+    .card-chart__labels {
+      display: flex;
+      justify-content: space-between;
+    }
+    .card-chart__labels span {
+      font-size: 0.55rem;
+      color: #71717a;
+    }
+
+    .card-notification {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 12px;
+      max-width: 260px;
+    }
+    .card-notification__icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .card-notification__icon svg {
+      width: 14px;
+      height: 14px;
+    }
+    .card-notification__icon--success {
+      background: rgba(16, 185, 129, 0.1);
+      color: #10b981;
+    }
+    .card-notification__content {
+      flex: 1;
+    }
+    .card-notification__title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 2px;
+    }
+    .card-notification__text {
+      font-size: 0.7rem;
+      color: #a1a1aa;
+    }
+    .card-notification__close {
+      background: none;
+      border: none;
+      color: #71717a;
+      font-size: 1rem;
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
+    }
+    .card-notification__close:hover {
+      color: white;
+    }
+
     /* ========== PRODUCT ========== */
     .card-product {
       background: #1a1a1a;
@@ -922,6 +2705,415 @@
       line-height: 1.5;
     }
 
+    /* ========== HOVER EFFECTS ========== */
+    .card-tilt {
+      background: linear-gradient(145deg, #1a1a2e, #16213e);
+      border-radius: 16px;
+      padding: 24px;
+      max-width: 200px;
+      transform-style: preserve-3d;
+      transition: transform 0.5s ease;
+    }
+    .card-tilt:hover {
+      transform: perspective(1000px) rotateX(10deg) rotateY(-10deg);
+    }
+    .card-tilt__content {
+      transform: translateZ(30px);
+      transition: transform 0.5s ease;
+    }
+    .card-tilt:hover .card-tilt__content {
+      transform: translateZ(50px);
+    }
+    .card-tilt__icon {
+      font-size: 1.75rem;
+      display: block;
+      margin-bottom: 12px;
+    }
+    .card-tilt__title {
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .card-tilt__text {
+      color: #a1a1aa;
+      font-size: 0.75rem;
+    }
+
+    .card-glow {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 16px;
+      padding: 20px;
+      max-width: 200px;
+      text-align: center;
+      transition: all 0.4s ease;
+    }
+    .card-glow:hover {
+      border-color: #6366f1;
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.3), 0 0 40px rgba(99, 102, 241, 0.2);
+      transform: translateY(-6px);
+    }
+    .card-glow__icon {
+      font-size: 1.5rem;
+      display: block;
+      margin-bottom: 12px;
+    }
+    .card-glow__title {
+      color: white;
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .card-glow__text {
+      color: #a1a1aa;
+      font-size: 0.75rem;
+    }
+
+    .card-reveal {
+      position: relative;
+      width: 200px;
+      height: 140px;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .card-reveal__img {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      transition: transform 0.5s ease;
+    }
+    .card-reveal:hover .card-reveal__img {
+      transform: scale(1.1);
+    }
+    .card-reveal__overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .card-reveal:hover .card-reveal__overlay {
+      opacity: 1;
+    }
+    .card-reveal__title {
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      transform: translateY(15px);
+      transition: transform 0.4s ease 0.1s;
+    }
+    .card-reveal:hover .card-reveal__title {
+      transform: translateY(0);
+    }
+    .card-reveal__text {
+      color: #a1a1aa;
+      font-size: 0.75rem;
+      margin: 6px 0 12px;
+      transform: translateY(15px);
+      transition: transform 0.4s ease 0.15s;
+    }
+    .card-reveal:hover .card-reveal__text {
+      transform: translateY(0);
+    }
+    .card-reveal__btn {
+      background: #6366f1;
+      color: white;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transform: translateY(15px);
+      transition: transform 0.4s ease 0.2s;
+    }
+    .card-reveal:hover .card-reveal__btn {
+      transform: translateY(0);
+    }
+
+    .card-border-gradient {
+      position: relative;
+      padding: 2px;
+      border-radius: 14px;
+      background: linear-gradient(90deg, #6366f1, #ec4899, #6366f1);
+      background-size: 200% 100%;
+      animation: card-gradient-flow 3s linear infinite paused;
+      max-width: 200px;
+    }
+    .card-border-gradient:hover {
+      animation-play-state: running;
+    }
+    .card-border-gradient__inner {
+      background: #1a1a1a;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+    .card-border-gradient__icon {
+      font-size: 1.5rem;
+      display: block;
+      margin-bottom: 10px;
+    }
+    .card-border-gradient__title {
+      color: white;
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .card-border-gradient__text {
+      color: #a1a1aa;
+      font-size: 0.75rem;
+    }
+    @keyframes card-gradient-flow {
+      0% { background-position: 0% 0%; }
+      100% { background-position: 200% 0%; }
+    }
+
+    .card-flip {
+      width: 180px;
+      height: 130px;
+      perspective: 1000px;
+    }
+    .card-flip__inner {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.6s ease;
+    }
+    .card-flip:hover .card-flip__inner {
+      transform: rotateY(180deg);
+    }
+    .card-flip__front,
+    .card-flip__back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .card-flip__front {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+    }
+    .card-flip__back {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      transform: rotateY(180deg);
+    }
+    .card-flip__icon {
+      font-size: 1.5rem;
+      margin-bottom: 6px;
+    }
+    .card-flip__title {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+    .card-flip__text {
+      color: #a1a1aa;
+      font-size: 0.75rem;
+      margin-bottom: 10px;
+    }
+    .card-flip__btn {
+      background: #6366f1;
+      color: white;
+      border: none;
+      padding: 5px 12px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      cursor: pointer;
+    }
+
+    /* ========== 3D CUBE CARD ========== */
+    .card-3d-cube-container {
+      perspective: 500px;
+      width: 140px;
+      height: 140px;
+    }
+    .card-3d-cube {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 1s ease;
+    }
+    .card-3d-cube-container:hover .card-3d-cube {
+      transform: rotateY(90deg);
+    }
+    .card-3d-cube__face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      font-weight: 600;
+      color: white;
+      backface-visibility: hidden;
+    }
+    .card-3d-cube__face span {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+    .card-3d-cube__face--front {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      transform: translateZ(70px);
+    }
+    .card-3d-cube__face--back {
+      background: linear-gradient(135deg, #ec4899, #f43f5e);
+      transform: rotateY(180deg) translateZ(70px);
+    }
+    .card-3d-cube__face--right {
+      background: linear-gradient(135deg, #10b981, #14b8a6);
+      transform: rotateY(90deg) translateZ(70px);
+    }
+    .card-3d-cube__face--left {
+      background: linear-gradient(135deg, #f59e0b, #f97316);
+      transform: rotateY(-90deg) translateZ(70px);
+    }
+
+    /* ========== 3D PARALLAX CARD ========== */
+    .card-3d-parallax {
+      position: relative;
+      width: 180px;
+      height: 180px;
+      transform-style: preserve-3d;
+      perspective: 600px;
+      cursor: pointer;
+    }
+    .card-3d-parallax:hover {
+      transform: rotateX(10deg) rotateY(-10deg);
+    }
+    .card-3d-parallax__layer {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      font-weight: 600;
+      transition: transform 0.5s ease;
+    }
+    .card-3d-parallax__layer--back {
+      background: rgba(99, 102, 241, 0.2);
+      transform: translateZ(-40px);
+      color: #71717a;
+    }
+    .card-3d-parallax__layer--mid {
+      background: rgba(99, 102, 241, 0.5);
+      transform: translateZ(0);
+      font-size: 2.5rem;
+    }
+    .card-3d-parallax__layer--front {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+      transform: translateZ(40px) scale(0.8);
+      padding: 16px;
+    }
+    .card-3d-parallax:hover .card-3d-parallax__layer--back {
+      transform: translateZ(-60px);
+    }
+    .card-3d-parallax:hover .card-3d-parallax__layer--front {
+      transform: translateZ(60px) scale(0.8);
+    }
+
+    /* ========== 3D POP CARD ========== */
+    .card-3d-pop {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 16px;
+      padding: 28px;
+      width: 180px;
+      text-align: center;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transform-style: preserve-3d;
+    }
+    .card-3d-pop:hover {
+      transform: perspective(500px) translateZ(50px) scale(1.05);
+      box-shadow: 0 25px 50px rgba(99, 102, 241, 0.3);
+      border-color: #6366f1;
+    }
+    .card-3d-pop__icon {
+      font-size: 2.5rem;
+      display: block;
+      margin-bottom: 12px;
+    }
+    .card-3d-pop__title {
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .card-3d-pop__text {
+      color: #71717a;
+      font-size: 0.85rem;
+    }
+
+    /* ========== 3D DOOR CARD ========== */
+    .card-3d-door-container {
+      perspective: 800px;
+      width: 180px;
+      height: 180px;
+    }
+    .card-3d-door {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+    .card-3d-door__front {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      transition: transform 0.6s ease;
+      transform-origin: left center;
+      z-index: 2;
+    }
+    .card-3d-door__front span {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+    .card-3d-door__inside {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+    }
+    .card-3d-door__inside span {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+    .card-3d-door-container:hover .card-3d-door__front {
+      transform: perspective(800px) rotateY(-120deg);
+    }
+
     /* ========== SECTION ========== */
     .section {
       margin-bottom: 48px;
@@ -939,5 +3131,7 @@
   <script src="../../assets/js/copy-code.js"></script>
   <script src="../../assets/js/live-editor.js"></script>
   <script src="../../assets/js/security-system.js"></script>
+  <script src="../../assets/js/search.js"></script>
+  <script src="../../assets/js/accessibility.js"></script>
 </body>
 </html>
