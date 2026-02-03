@@ -1,0 +1,1773 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toggles — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+</head>
+<body>
+  <div class="app">
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+      <a href="../../index.html" class="sidebar__logo">
+        <span>Duke</span>-components
+      </a>
+
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Toggles</h3>
+        <ul class="sidebar__nav">
+          <li><a href="#basic" class="sidebar__link sidebar__link--active">Basic</a></li>
+          <li><a href="#icons" class="sidebar__link">With Icons</a></li>
+          <li><a href="#labels" class="sidebar__link">With Labels</a></li>
+          <li><a href="#theme" class="sidebar__link">Theme Toggle</a></li>
+          <li><a href="#animated" class="sidebar__link">Animated</a></li>
+          <li><a href="#creative" class="sidebar__link">Creative</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar__section">
+        <a href="../../index.html" class="sidebar__link">← Retour</a>
+      </div>
+
+      <!-- Toggle Admin -->
+      <div class="admin-toggle">
+        <span class="admin-toggle__label">Mode Admin</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="admin-toggle">
+          <span class="toggle-switch__slider"></span>
+        </label>
+      </div>
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main">
+      <header class="main__header">
+        <h1 class="main__title">🔘 Toggle Switches</h1>
+        <p class="main__subtitle">Interrupteurs et bascules — 12 styles créatifs et animés.</p>
+      </header>
+
+      <!-- ========== BASIC SECTION ========== -->
+      <section id="basic" class="section">
+        <h2 class="section__title">Basic Toggles</h2>
+        <p class="section__desc">Toggles classiques style iOS et Material Design.</p>
+
+        <div class="components-grid">
+          <!-- IOS TOGGLE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <div style="display: flex; gap: 24px; align-items: center;">
+                <label class="toggle-ios">
+                  <input type="checkbox" checked>
+                  <span class="toggle-ios__track">
+                    <span class="toggle-ios__thumb"></span>
+                  </span>
+                </label>
+                <label class="toggle-ios">
+                  <input type="checkbox">
+                  <span class="toggle-ios__track">
+                    <span class="toggle-ios__thumb"></span>
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">iOS Style</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">toggle</span>
+                <span class="tag">iOS</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="toggle-ios-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="toggle-ios-html"><code>&lt;label class="toggle-ios"&gt;
+  &lt;input type="checkbox"&gt;
+  &lt;span class="toggle-ios__track"&gt;
+    &lt;span class="toggle-ios__thumb"&gt;&lt;/span&gt;
+  &lt;/span&gt;
+&lt;/label&gt;</code></pre>
+                <pre class="code-viewer__code" id="toggle-ios-css" style="display:none"><code>.toggle-ios {
+  cursor: pointer;
+}
+
+.toggle-ios input { display: none; }
+
+.toggle-ios__track {
+  display: block;
+  width: 52px;
+  height: 32px;
+  background: #3a3a4e;
+  border-radius: 16px;
+  position: relative;
+  transition: background 0.3s ease;
+}
+
+.toggle-ios__thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 28px;
+  height: 28px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.toggle-ios input:checked + .toggle-ios__track {
+  background: #10b981;
+}
+
+.toggle-ios input:checked + .toggle-ios__track .toggle-ios__thumb {
+  transform: translateX(20px);
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- MATERIAL TOGGLE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <div style="display: flex; gap: 24px; align-items: center;">
+                <label class="toggle-material">
+                  <input type="checkbox" checked>
+                  <span class="toggle-material__track"></span>
+                  <span class="toggle-material__thumb"></span>
+                </label>
+                <label class="toggle-material">
+                  <input type="checkbox">
+                  <span class="toggle-material__track"></span>
+                  <span class="toggle-material__thumb"></span>
+                </label>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Material Design</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">toggle</span>
+                <span class="tag">material</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="toggle-material-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="toggle-material-html"><code>&lt;label class="toggle-material"&gt;
+  &lt;input type="checkbox"&gt;
+  &lt;span class="toggle-material__track"&gt;&lt;/span&gt;
+  &lt;span class="toggle-material__thumb"&gt;&lt;/span&gt;
+&lt;/label&gt;</code></pre>
+                <pre class="code-viewer__code" id="toggle-material-css" style="display:none"><code>.toggle-material {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.toggle-material input { display: none; }
+
+.toggle-material__track {
+  position: absolute;
+  inset: 0;
+  background: #5a5a6e;
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+
+.toggle-material__thumb {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: 24px;
+  height: 24px;
+  background: #888;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.toggle-material input:checked ~ .toggle-material__track {
+  background: rgba(99, 102, 241, 0.5);
+}
+
+.toggle-material input:checked ~ .toggle-material__thumb {
+  transform: translateX(20px);
+  background: #6366f1;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- SIZES -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <div style="display: flex; gap: 20px; align-items: center;">
+                <label class="toggle-size toggle-size--sm">
+                  <input type="checkbox" checked>
+                  <span class="toggle-size__slider"></span>
+                </label>
+                <label class="toggle-size">
+                  <input type="checkbox" checked>
+                  <span class="toggle-size__slider"></span>
+                </label>
+                <label class="toggle-size toggle-size--lg">
+                  <input type="checkbox" checked>
+                  <span class="toggle-size__slider"></span>
+                </label>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Multiple Sizes</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">toggle</span>
+                <span class="tag">sizes</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="toggle-size-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="toggle-size-html"><code>&lt;label class="toggle-size toggle-size--sm"&gt;...&lt;/label&gt;
+&lt;label class="toggle-size"&gt;...&lt;/label&gt;
+&lt;label class="toggle-size toggle-size--lg"&gt;...&lt;/label&gt;</code></pre>
+                <pre class="code-viewer__code" id="toggle-size-css" style="display:none"><code>.toggle-size {
+  --toggle-width: 48px;
+  --toggle-height: 28px;
+  --thumb-size: 22px;
+  cursor: pointer;
+}
+
+.toggle-size--sm {
+  --toggle-width: 36px;
+  --toggle-height: 20px;
+  --thumb-size: 16px;
+}
+
+.toggle-size--lg {
+  --toggle-width: 64px;
+  --toggle-height: 36px;
+  --thumb-size: 30px;
+}
+
+.toggle-size input { display: none; }
+
+.toggle-size__slider {
+  display: block;
+  width: var(--toggle-width);
+  height: var(--toggle-height);
+  background: #3a3a4e;
+  border-radius: calc(var(--toggle-height) / 2);
+  position: relative;
+  transition: background 0.3s ease;
+}
+
+.toggle-size__slider::after {
+  content: '';
+  position: absolute;
+  top: calc((var(--toggle-height) - var(--thumb-size)) / 2);
+  left: calc((var(--toggle-height) - var(--thumb-size)) / 2);
+  width: var(--thumb-size);
+  height: var(--thumb-size);
+  background: white;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+.toggle-size input:checked + .toggle-size__slider {
+  background: #6366f1;
+}
+
+.toggle-size input:checked + .toggle-size__slider::after {
+  transform: translateX(calc(var(--toggle-width) - var(--toggle-height)));
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== ICONS SECTION ========== -->
+      <section id="icons" class="section">
+        <h2 class="section__title">Icon Toggles</h2>
+        <p class="section__desc">Toggles avec icônes intégrées.</p>
+
+        <div class="components-grid">
+          <!-- CHECK/X TOGGLE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <label class="toggle-check">
+                <input type="checkbox" checked>
+                <span class="toggle-check__track">
+                  <span class="toggle-check__icon toggle-check__icon--on">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  </span>
+                  <span class="toggle-check__icon toggle-check__icon--off">
+                    <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                  </span>
+                  <span class="toggle-check__thumb"></span>
+                </span>
+              </label>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Check / Cross</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">toggle</span>
+                <span class="tag">icons</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="toggle-check-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="toggle-check-html"><code>&lt;label class="toggle-check"&gt;
+  &lt;input type="checkbox"&gt;
+  &lt;span class="toggle-check__track"&gt;
+    &lt;span class="toggle-check__icon toggle-check__icon--on"&gt;✓&lt;/span&gt;
+    &lt;span class="toggle-check__icon toggle-check__icon--off"&gt;✕&lt;/span&gt;
+    &lt;span class="toggle-check__thumb"&gt;&lt;/span&gt;
+  &lt;/span&gt;
+&lt;/label&gt;</code></pre>
+                <pre class="code-viewer__code" id="toggle-check-css" style="display:none"><code>.toggle-check {
+  cursor: pointer;
+}
+
+.toggle-check input { display: none; }
+
+.toggle-check__track {
+  display: flex;
+  align-items: center;
+  width: 60px;
+  height: 32px;
+  background: #ef4444;
+  border-radius: 16px;
+  position: relative;
+  padding: 0 8px;
+  justify-content: space-between;
+  transition: background 0.3s ease;
+}
+
+.toggle-check__icon {
+  width: 14px;
+  height: 14px;
+}
+
+.toggle-check__icon svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: white;
+  stroke-width: 3;
+  opacity: 0.6;
+}
+
+.toggle-check__thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 26px;
+  height: 26px;
+  background: white;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+.toggle-check input:checked + .toggle-check__track {
+  background: #10b981;
+}
+
+.toggle-check input:checked + .toggle-check__track .toggle-check__thumb {
+  transform: translateX(28px);
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- SOUND TOGGLE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <label class="toggle-sound">
+                <input type="checkbox" checked>
+                <span class="toggle-sound__track">
+                  <svg class="toggle-sound__icon toggle-sound__icon--on" viewBox="0 0 24 24">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                  </svg>
+                  <svg class="toggle-sound__icon toggle-sound__icon--off" viewBox="0 0 24 24">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <line x1="23" y1="9" x2="17" y2="15"></line>
+                    <line x1="17" y1="9" x2="23" y2="15"></line>
+                  </svg>
+                </span>
+              </label>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Sound On/Off</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">toggle</span>
+                <span class="tag">sound</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="toggle-sound-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="toggle-sound-html"><code>&lt;label class="toggle-sound"&gt;
+  &lt;input type="checkbox"&gt;
+  &lt;span class="toggle-sound__track"&gt;
+    &lt;svg class="toggle-sound__icon--on"&gt;...&lt;/svg&gt;
+    &lt;svg class="toggle-sound__icon--off"&gt;...&lt;/svg&gt;
+  &lt;/span&gt;
+&lt;/label&gt;</code></pre>
+                <pre class="code-viewer__code" id="toggle-sound-css" style="display:none"><code>.toggle-sound {
+  cursor: pointer;
+}
+
+.toggle-sound input { display: none; }
+
+.toggle-sound__track {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: #242438;
+  border: 2px solid #3a3a4e;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.toggle-sound__icon {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: #888;
+  stroke-width: 2;
+  display: none;
+}
+
+.toggle-sound__icon--off { display: block; }
+
+.toggle-sound input:checked ~ .toggle-sound__track {
+  background: rgba(99, 102, 241, 0.1);
+  border-color: #6366f1;
+}
+
+.toggle-sound input:checked ~ .toggle-sound__track .toggle-sound__icon--on {
+  display: block;
+  stroke: #6366f1;
+}
+
+.toggle-sound input:checked ~ .toggle-sound__track .toggle-sound__icon--off {
+  display: none;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== LABELS SECTION ========== -->
+      <section id="labels" class="section">
+        <h2 class="section__title">Labeled Toggles</h2>
+        <p class="section__desc">Toggles avec texte On/Off intégré.</p>
+
+        <div class="components-grid">
+          <!-- LABELED TOGGLE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <label class="toggle-labeled">
+                <input type="checkbox" checked>
+                <span class="toggle-labeled__track">
+                  <span class="toggle-labeled__text toggle-labeled__text--on">ON</span>
+                  <span class="toggle-labeled__text toggle-labeled__text--off">OFF</span>
+                  <span class="toggle-labeled__thumb"></span>
+                </span>
+              </label>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">On/Off Labels</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">toggle</span>
+                <span class="tag">labeled</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="toggle-labeled-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="toggle-labeled-html"><code>&lt;label class="toggle-labeled"&gt;
+  &lt;input type="checkbox"&gt;
+  &lt;span class="toggle-labeled__track"&gt;
+    &lt;span class="toggle-labeled__text toggle-labeled__text--on"&gt;ON&lt;/span&gt;
+    &lt;span class="toggle-labeled__text toggle-labeled__text--off"&gt;OFF&lt;/span&gt;
+    &lt;span class="toggle-labeled__thumb"&gt;&lt;/span&gt;
+  &lt;/span&gt;
+&lt;/label&gt;</code></pre>
+                <pre class="code-viewer__code" id="toggle-labeled-css" style="display:none"><code>.toggle-labeled {
+  cursor: pointer;
+}
+
+.toggle-labeled input { display: none; }
+
+.toggle-labeled__track {
+  display: flex;
+  align-items: center;
+  width: 70px;
+  height: 32px;
+  background: #3a3a4e;
+  border-radius: 16px;
+  position: relative;
+  padding: 0 10px;
+  transition: background 0.3s ease;
+}
+
+.toggle-labeled__text {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  position: absolute;
+  transition: opacity 0.2s ease;
+}
+
+.toggle-labeled__text--on {
+  left: 10px;
+  color: white;
+  opacity: 0;
+}
+
+.toggle-labeled__text--off {
+  right: 10px;
+  color: #888;
+}
+
+.toggle-labeled__thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 26px;
+  height: 26px;
+  background: white;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+.toggle-labeled input:checked + .toggle-labeled__track {
+  background: #10b981;
+}
+
+.toggle-labeled input:checked + .toggle-labeled__track .toggle-labeled__thumb {
+  transform: translateX(38px);
+}
+
+.toggle-labeled input:checked + .toggle-labeled__track .toggle-labeled__text--on {
+  opacity: 1;
+}
+
+.toggle-labeled input:checked + .toggle-labeled__track .toggle-labeled__text--off {
+  opacity: 0;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- PILL TOGGLE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <div class="toggle-pill">
+                <input type="radio" name="pill" id="pill-monthly" checked>
+                <label for="pill-monthly">Mensuel</label>
+                <input type="radio" name="pill" id="pill-yearly">
+                <label for="pill-yearly">Annuel</label>
+                <span class="toggle-pill__slider"></span>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Pill Selector</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">toggle</span>
+                <span class="tag">pill</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="toggle-pill-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="toggle-pill-html"><code>&lt;div class="toggle-pill"&gt;
+  &lt;input type="radio" name="pill" id="pill-monthly" checked&gt;
+  &lt;label for="pill-monthly"&gt;Mensuel&lt;/label&gt;
+  &lt;input type="radio" name="pill" id="pill-yearly"&gt;
+  &lt;label for="pill-yearly"&gt;Annuel&lt;/label&gt;
+  &lt;span class="toggle-pill__slider"&gt;&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="toggle-pill-css" style="display:none"><code>.toggle-pill {
+  display: flex;
+  position: relative;
+  background: #242438;
+  border-radius: 24px;
+  padding: 4px;
+}
+
+.toggle-pill input { display: none; }
+
+.toggle-pill label {
+  padding: 10px 24px;
+  font-size: 0.85rem;
+  color: #888;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  transition: color 0.3s ease;
+}
+
+.toggle-pill input:checked + label {
+  color: white;
+}
+
+.toggle-pill__slider {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: calc(50% - 4px);
+  height: calc(100% - 8px);
+  background: #6366f1;
+  border-radius: 20px;
+  transition: transform 0.3s ease;
+}
+
+.toggle-pill input:last-of-type:checked ~ .toggle-pill__slider {
+  transform: translateX(100%);
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== THEME SECTION ========== -->
+      <section id="theme" class="section">
+        <h2 class="section__title">Theme Toggles</h2>
+        <p class="section__desc">Toggles pour changer de thème (jour/nuit).</p>
+
+        <div class="components-grid">
+          <!-- DAY/NIGHT TOGGLE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <label class="toggle-daynight">
+                <input type="checkbox" checked>
+                <span class="toggle-daynight__track">
+                  <span class="toggle-daynight__thumb">
+                    <svg class="toggle-daynight__sun" viewBox="0 0 24 24">
+                      <circle cx="12" cy="12" r="5"></circle>
+                      <line x1="12" y1="1" x2="12" y2="3"></line>
+                      <line x1="12" y1="21" x2="12" y2="23"></line>
+                      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                      <line x1="1" y1="12" x2="3" y2="12"></line>
+                      <line x1="21" y1="12" x2="23" y2="12"></line>
+                      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="toggle-daynight__moon" viewBox="0 0 24 24">
+                      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                  </span>
+                </span>
+              </label>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Day/Night</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">toggle</span>
+                <span class="tag">theme</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="toggle-daynight-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="toggle-daynight-html"><code>&lt;label class="toggle-daynight"&gt;
+  &lt;input type="checkbox"&gt;
+  &lt;span class="toggle-daynight__track"&gt;
+    &lt;span class="toggle-daynight__thumb"&gt;
+      &lt;svg class="toggle-daynight__sun"&gt;...&lt;/svg&gt;
+      &lt;svg class="toggle-daynight__moon"&gt;...&lt;/svg&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+&lt;/label&gt;</code></pre>
+                <pre class="code-viewer__code" id="toggle-daynight-css" style="display:none"><code>.toggle-daynight {
+  cursor: pointer;
+}
+
+.toggle-daynight input { display: none; }
+
+.toggle-daynight__track {
+  display: block;
+  width: 64px;
+  height: 32px;
+  background: linear-gradient(135deg, #1e3a5f, #0d1b2a);
+  border-radius: 16px;
+  position: relative;
+  transition: background 0.5s ease;
+  overflow: hidden;
+}
+
+.toggle-daynight__thumb {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 24px;
+  height: 24px;
+  background: #f1c40f;
+  border-radius: 50%;
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toggle-daynight__sun,
+.toggle-daynight__moon {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: #1a1a2e;
+  stroke-width: 2;
+  position: absolute;
+  transition: all 0.3s ease;
+}
+
+.toggle-daynight__moon {
+  opacity: 0;
+  transform: rotate(-90deg);
+}
+
+.toggle-daynight input:checked + .toggle-daynight__track {
+  background: linear-gradient(135deg, #87ceeb, #ffd700);
+}
+
+.toggle-daynight input:checked + .toggle-daynight__track .toggle-daynight__thumb {
+  transform: translateX(32px);
+  background: #fff;
+}
+
+.toggle-daynight input:checked + .toggle-daynight__track .toggle-daynight__sun {
+  opacity: 0;
+  transform: rotate(90deg);
+}
+
+.toggle-daynight input:checked + .toggle-daynight__track .toggle-daynight__moon {
+  opacity: 1;
+  transform: rotate(0deg);
+  stroke: #6366f1;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== ANIMATED SECTION ========== -->
+      <section id="animated" class="section">
+        <h2 class="section__title">Animated Toggles</h2>
+        <p class="section__desc">Toggles avec animations avancées.</p>
+
+        <div class="components-grid">
+          <!-- BOUNCE TOGGLE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <label class="toggle-bounce">
+                <input type="checkbox" checked>
+                <span class="toggle-bounce__track">
+                  <span class="toggle-bounce__thumb"></span>
+                </span>
+              </label>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Bounce Effect</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">toggle</span>
+                <span class="tag">bounce</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="toggle-bounce-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="toggle-bounce-html"><code>&lt;label class="toggle-bounce"&gt;
+  &lt;input type="checkbox"&gt;
+  &lt;span class="toggle-bounce__track"&gt;
+    &lt;span class="toggle-bounce__thumb"&gt;&lt;/span&gt;
+  &lt;/span&gt;
+&lt;/label&gt;</code></pre>
+                <pre class="code-viewer__code" id="toggle-bounce-css" style="display:none"><code>.toggle-bounce {
+  cursor: pointer;
+}
+
+.toggle-bounce input { display: none; }
+
+.toggle-bounce__track {
+  display: block;
+  width: 56px;
+  height: 32px;
+  background: #ef4444;
+  border-radius: 16px;
+  position: relative;
+  transition: background 0.3s ease;
+}
+
+.toggle-bounce__thumb {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 24px;
+  height: 24px;
+  background: white;
+  border-radius: 50%;
+  transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.toggle-bounce input:checked + .toggle-bounce__track {
+  background: #10b981;
+}
+
+.toggle-bounce input:checked + .toggle-bounce__track .toggle-bounce__thumb {
+  transform: translateX(24px);
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- GLOW TOGGLE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <label class="toggle-glow">
+                <input type="checkbox" checked>
+                <span class="toggle-glow__track">
+                  <span class="toggle-glow__thumb"></span>
+                </span>
+              </label>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Neon Glow</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">toggle</span>
+                <span class="tag">glow</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="toggle-glow-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="toggle-glow-html"><code>&lt;label class="toggle-glow"&gt;
+  &lt;input type="checkbox"&gt;
+  &lt;span class="toggle-glow__track"&gt;
+    &lt;span class="toggle-glow__thumb"&gt;&lt;/span&gt;
+  &lt;/span&gt;
+&lt;/label&gt;</code></pre>
+                <pre class="code-viewer__code" id="toggle-glow-css" style="display:none"><code>.toggle-glow {
+  cursor: pointer;
+}
+
+.toggle-glow input { display: none; }
+
+.toggle-glow__track {
+  display: block;
+  width: 56px;
+  height: 32px;
+  background: #2a2a3e;
+  border: 2px solid #3a3a4e;
+  border-radius: 16px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.toggle-glow__thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  background: #666;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.toggle-glow input:checked + .toggle-glow__track {
+  background: rgba(0, 212, 255, 0.1);
+  border-color: #00d4ff;
+  box-shadow:
+    0 0 10px rgba(0, 212, 255, 0.3),
+    0 0 20px rgba(0, 212, 255, 0.2);
+}
+
+.toggle-glow input:checked + .toggle-glow__track .toggle-glow__thumb {
+  transform: translateX(24px);
+  background: #00d4ff;
+  box-shadow: 0 0 15px rgba(0, 212, 255, 0.8);
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== CREATIVE SECTION ========== -->
+      <section id="creative" class="section">
+        <h2 class="section__title">Creative Toggles</h2>
+        <p class="section__desc">Designs uniques et créatifs.</p>
+
+        <div class="components-grid">
+          <!-- LIQUID TOGGLE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <label class="toggle-liquid">
+                <input type="checkbox" checked>
+                <span class="toggle-liquid__track">
+                  <span class="toggle-liquid__blob"></span>
+                </span>
+              </label>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Liquid Blob</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">toggle</span>
+                <span class="tag">liquid</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="toggle-liquid-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="toggle-liquid-html"><code>&lt;label class="toggle-liquid"&gt;
+  &lt;input type="checkbox"&gt;
+  &lt;span class="toggle-liquid__track"&gt;
+    &lt;span class="toggle-liquid__blob"&gt;&lt;/span&gt;
+  &lt;/span&gt;
+&lt;/label&gt;</code></pre>
+                <pre class="code-viewer__code" id="toggle-liquid-css" style="display:none"><code>.toggle-liquid {
+  cursor: pointer;
+}
+
+.toggle-liquid input { display: none; }
+
+.toggle-liquid__track {
+  display: block;
+  width: 60px;
+  height: 32px;
+  background: #242438;
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.toggle-liquid__blob {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  border-radius: 50%;
+  transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.toggle-liquid input:checked + .toggle-liquid__track .toggle-liquid__blob {
+  transform: translateX(28px);
+  width: 32px;
+  border-radius: 12px;
+}
+
+.toggle-liquid input:not(:checked) + .toggle-liquid__track .toggle-liquid__blob {
+  animation: liquid-squish 0.6s ease;
+}
+
+@keyframes liquid-squish {
+  0%, 100% { border-radius: 50%; width: 24px; }
+  50% { border-radius: 8px; width: 32px; }
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- 3D TOGGLE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <label class="toggle-3d">
+                <input type="checkbox" checked>
+                <span class="toggle-3d__track">
+                  <span class="toggle-3d__thumb"></span>
+                </span>
+              </label>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">3D Effect</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">toggle</span>
+                <span class="tag">3D</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="toggle-3d-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="toggle-3d-html"><code>&lt;label class="toggle-3d"&gt;
+  &lt;input type="checkbox"&gt;
+  &lt;span class="toggle-3d__track"&gt;
+    &lt;span class="toggle-3d__thumb"&gt;&lt;/span&gt;
+  &lt;/span&gt;
+&lt;/label&gt;</code></pre>
+                <pre class="code-viewer__code" id="toggle-3d-css" style="display:none"><code>.toggle-3d {
+  cursor: pointer;
+  perspective: 200px;
+}
+
+.toggle-3d input { display: none; }
+
+.toggle-3d__track {
+  display: block;
+  width: 56px;
+  height: 32px;
+  background: linear-gradient(180deg, #1a1a2e, #2a2a3e);
+  border-radius: 16px;
+  position: relative;
+  box-shadow:
+    inset 0 2px 4px rgba(0, 0, 0, 0.3),
+    0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.toggle-3d__thumb {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(180deg, #fff 0%, #e0e0e0 100%);
+  border-radius: 50%;
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+  transition: transform 0.3s ease;
+}
+
+.toggle-3d input:checked + .toggle-3d__track {
+  background: linear-gradient(180deg, #059669, #10b981);
+}
+
+.toggle-3d input:checked + .toggle-3d__track .toggle-3d__thumb {
+  transform: translateX(24px);
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ==================== STYLES ==================== -->
+  <style>
+    /* ========== iOS TOGGLE ========== */
+    .toggle-ios {
+      cursor: pointer;
+    }
+
+    .toggle-ios input { display: none; }
+
+    .toggle-ios__track {
+      display: block;
+      width: 52px;
+      height: 32px;
+      background: #3a3a4e;
+      border-radius: 16px;
+      position: relative;
+      transition: background 0.3s ease;
+    }
+
+    .toggle-ios__thumb {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 28px;
+      height: 28px;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .toggle-ios input:checked + .toggle-ios__track {
+      background: #10b981;
+    }
+
+    .toggle-ios input:checked + .toggle-ios__track .toggle-ios__thumb {
+      transform: translateX(20px);
+    }
+
+    /* ========== MATERIAL TOGGLE ========== */
+    .toggle-material {
+      position: relative;
+      display: inline-block;
+      width: 40px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .toggle-material input { display: none; }
+
+    .toggle-material__track {
+      position: absolute;
+      inset: 0;
+      background: #5a5a6e;
+      border-radius: 10px;
+      transition: background 0.3s ease;
+    }
+
+    .toggle-material__thumb {
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      width: 24px;
+      height: 24px;
+      background: #888;
+      border-radius: 50%;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .toggle-material input:checked ~ .toggle-material__track {
+      background: rgba(99, 102, 241, 0.5);
+    }
+
+    .toggle-material input:checked ~ .toggle-material__thumb {
+      transform: translateX(20px);
+      background: #6366f1;
+    }
+
+    /* ========== SIZE TOGGLE ========== */
+    .toggle-size {
+      --toggle-width: 48px;
+      --toggle-height: 28px;
+      --thumb-size: 22px;
+      cursor: pointer;
+    }
+
+    .toggle-size--sm {
+      --toggle-width: 36px;
+      --toggle-height: 20px;
+      --thumb-size: 16px;
+    }
+
+    .toggle-size--lg {
+      --toggle-width: 64px;
+      --toggle-height: 36px;
+      --thumb-size: 30px;
+    }
+
+    .toggle-size input { display: none; }
+
+    .toggle-size__slider {
+      display: block;
+      width: var(--toggle-width);
+      height: var(--toggle-height);
+      background: #3a3a4e;
+      border-radius: calc(var(--toggle-height) / 2);
+      position: relative;
+      transition: background 0.3s ease;
+    }
+
+    .toggle-size__slider::after {
+      content: '';
+      position: absolute;
+      top: calc((var(--toggle-height) - var(--thumb-size)) / 2);
+      left: calc((var(--toggle-height) - var(--thumb-size)) / 2);
+      width: var(--thumb-size);
+      height: var(--thumb-size);
+      background: white;
+      border-radius: 50%;
+      transition: transform 0.3s ease;
+    }
+
+    .toggle-size input:checked + .toggle-size__slider {
+      background: #6366f1;
+    }
+
+    .toggle-size input:checked + .toggle-size__slider::after {
+      transform: translateX(calc(var(--toggle-width) - var(--toggle-height)));
+    }
+
+    /* ========== CHECK TOGGLE ========== */
+    .toggle-check {
+      cursor: pointer;
+    }
+
+    .toggle-check input { display: none; }
+
+    .toggle-check__track {
+      display: flex;
+      align-items: center;
+      width: 60px;
+      height: 32px;
+      background: #ef4444;
+      border-radius: 16px;
+      position: relative;
+      padding: 0 8px;
+      justify-content: space-between;
+      transition: background 0.3s ease;
+    }
+
+    .toggle-check__icon {
+      width: 14px;
+      height: 14px;
+    }
+
+    .toggle-check__icon svg {
+      width: 100%;
+      height: 100%;
+      fill: none;
+      stroke: white;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      opacity: 0.6;
+    }
+
+    .toggle-check__thumb {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 26px;
+      height: 26px;
+      background: white;
+      border-radius: 50%;
+      transition: transform 0.3s ease;
+    }
+
+    .toggle-check input:checked + .toggle-check__track {
+      background: #10b981;
+    }
+
+    .toggle-check input:checked + .toggle-check__track .toggle-check__thumb {
+      transform: translateX(28px);
+    }
+
+    /* ========== SOUND TOGGLE ========== */
+    .toggle-sound {
+      cursor: pointer;
+    }
+
+    .toggle-sound input { display: none; }
+
+    .toggle-sound__track {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      background: #242438;
+      border: 2px solid #3a3a4e;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .toggle-sound__icon {
+      width: 24px;
+      height: 24px;
+      fill: none;
+      stroke: #888;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .toggle-sound__icon--on { display: none; }
+    .toggle-sound__icon--off { display: block; }
+
+    .toggle-sound input:checked + .toggle-sound__track {
+      background: rgba(99, 102, 241, 0.1);
+      border-color: #6366f1;
+    }
+
+    .toggle-sound input:checked + .toggle-sound__track .toggle-sound__icon--on {
+      display: block;
+      stroke: #6366f1;
+    }
+
+    .toggle-sound input:checked + .toggle-sound__track .toggle-sound__icon--off {
+      display: none;
+    }
+
+    /* ========== LABELED TOGGLE ========== */
+    .toggle-labeled {
+      cursor: pointer;
+    }
+
+    .toggle-labeled input { display: none; }
+
+    .toggle-labeled__track {
+      display: flex;
+      align-items: center;
+      width: 70px;
+      height: 32px;
+      background: #3a3a4e;
+      border-radius: 16px;
+      position: relative;
+      padding: 0 10px;
+      transition: background 0.3s ease;
+    }
+
+    .toggle-labeled__text {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      position: absolute;
+      transition: opacity 0.2s ease;
+    }
+
+    .toggle-labeled__text--on {
+      left: 10px;
+      color: white;
+      opacity: 0;
+    }
+
+    .toggle-labeled__text--off {
+      right: 10px;
+      color: #888;
+    }
+
+    .toggle-labeled__thumb {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 26px;
+      height: 26px;
+      background: white;
+      border-radius: 50%;
+      transition: transform 0.3s ease;
+    }
+
+    .toggle-labeled input:checked + .toggle-labeled__track {
+      background: #10b981;
+    }
+
+    .toggle-labeled input:checked + .toggle-labeled__track .toggle-labeled__thumb {
+      transform: translateX(38px);
+    }
+
+    .toggle-labeled input:checked + .toggle-labeled__track .toggle-labeled__text--on {
+      opacity: 1;
+    }
+
+    .toggle-labeled input:checked + .toggle-labeled__track .toggle-labeled__text--off {
+      opacity: 0;
+    }
+
+    /* ========== PILL TOGGLE ========== */
+    .toggle-pill {
+      display: flex;
+      position: relative;
+      background: #242438;
+      border-radius: 24px;
+      padding: 4px;
+    }
+
+    .toggle-pill input { display: none; }
+
+    .toggle-pill label {
+      padding: 10px 24px;
+      font-size: 0.85rem;
+      color: #888;
+      cursor: pointer;
+      position: relative;
+      z-index: 1;
+      transition: color 0.3s ease;
+    }
+
+    .toggle-pill input:checked + label {
+      color: white;
+    }
+
+    .toggle-pill__slider {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: calc(50% - 4px);
+      height: calc(100% - 8px);
+      background: #6366f1;
+      border-radius: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .toggle-pill input:last-of-type:checked ~ .toggle-pill__slider {
+      transform: translateX(100%);
+    }
+
+    /* ========== DAY/NIGHT TOGGLE ========== */
+    .toggle-daynight {
+      cursor: pointer;
+    }
+
+    .toggle-daynight input { display: none; }
+
+    .toggle-daynight__track {
+      display: block;
+      width: 64px;
+      height: 32px;
+      background: linear-gradient(135deg, #1e3a5f, #0d1b2a);
+      border-radius: 16px;
+      position: relative;
+      transition: background 0.5s ease;
+      overflow: hidden;
+    }
+
+    .toggle-daynight__thumb {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: 24px;
+      height: 24px;
+      background: #888;
+      border-radius: 50%;
+      transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .toggle-daynight__sun,
+    .toggle-daynight__moon {
+      width: 16px;
+      height: 16px;
+      fill: none;
+      stroke: white;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      position: absolute;
+      transition: all 0.3s ease;
+    }
+
+    .toggle-daynight__sun { opacity: 1; }
+    .toggle-daynight__moon {
+      opacity: 0;
+      transform: rotate(-90deg);
+    }
+
+    .toggle-daynight input:checked + .toggle-daynight__track {
+      background: linear-gradient(135deg, #87ceeb, #ffd700);
+    }
+
+    .toggle-daynight input:checked + .toggle-daynight__track .toggle-daynight__thumb {
+      transform: translateX(32px);
+      background: #f1c40f;
+    }
+
+    .toggle-daynight input:checked + .toggle-daynight__track .toggle-daynight__sun {
+      opacity: 0;
+      transform: rotate(90deg);
+    }
+
+    .toggle-daynight input:checked + .toggle-daynight__track .toggle-daynight__moon {
+      opacity: 1;
+      transform: rotate(0deg);
+      stroke: #1a1a2e;
+    }
+
+    /* ========== BOUNCE TOGGLE ========== */
+    .toggle-bounce {
+      cursor: pointer;
+    }
+
+    .toggle-bounce input { display: none; }
+
+    .toggle-bounce__track {
+      display: block;
+      width: 56px;
+      height: 32px;
+      background: #ef4444;
+      border-radius: 16px;
+      position: relative;
+      transition: background 0.3s ease;
+    }
+
+    .toggle-bounce__thumb {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: 24px;
+      height: 24px;
+      background: white;
+      border-radius: 50%;
+      transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    .toggle-bounce input:checked + .toggle-bounce__track {
+      background: #10b981;
+    }
+
+    .toggle-bounce input:checked + .toggle-bounce__track .toggle-bounce__thumb {
+      transform: translateX(24px);
+    }
+
+    /* ========== GLOW TOGGLE ========== */
+    .toggle-glow {
+      cursor: pointer;
+    }
+
+    .toggle-glow input { display: none; }
+
+    .toggle-glow__track {
+      display: block;
+      width: 56px;
+      height: 32px;
+      background: #2a2a3e;
+      border: 2px solid #3a3a4e;
+      border-radius: 16px;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .toggle-glow__thumb {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 22px;
+      height: 22px;
+      background: #666;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+
+    .toggle-glow input:checked + .toggle-glow__track {
+      background: rgba(0, 212, 255, 0.1);
+      border-color: #00d4ff;
+      box-shadow:
+        0 0 10px rgba(0, 212, 255, 0.3),
+        0 0 20px rgba(0, 212, 255, 0.2);
+    }
+
+    .toggle-glow input:checked + .toggle-glow__track .toggle-glow__thumb {
+      transform: translateX(24px);
+      background: #00d4ff;
+      box-shadow: 0 0 15px rgba(0, 212, 255, 0.8);
+    }
+
+    /* ========== LIQUID TOGGLE ========== */
+    .toggle-liquid {
+      cursor: pointer;
+    }
+
+    .toggle-liquid input { display: none; }
+
+    .toggle-liquid__track {
+      display: block;
+      width: 60px;
+      height: 32px;
+      background: #242438;
+      border-radius: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .toggle-liquid__blob {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: 24px;
+      height: 24px;
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      border-radius: 50%;
+      transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    .toggle-liquid input:checked + .toggle-liquid__track .toggle-liquid__blob {
+      transform: translateX(28px);
+      width: 32px;
+      border-radius: 12px;
+    }
+
+    /* ========== 3D TOGGLE ========== */
+    .toggle-3d {
+      cursor: pointer;
+      perspective: 200px;
+    }
+
+    .toggle-3d input { display: none; }
+
+    .toggle-3d__track {
+      display: block;
+      width: 56px;
+      height: 32px;
+      background: linear-gradient(180deg, #1a1a2e, #2a2a3e);
+      border-radius: 16px;
+      position: relative;
+      box-shadow:
+        inset 0 2px 4px rgba(0, 0, 0, 0.3),
+        0 1px 0 rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .toggle-3d__thumb {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: 24px;
+      height: 24px;
+      background: linear-gradient(180deg, #fff 0%, #e0e0e0 100%);
+      border-radius: 50%;
+      box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 1);
+      transition: transform 0.3s ease;
+    }
+
+    .toggle-3d input:checked + .toggle-3d__track {
+      background: linear-gradient(180deg, #059669, #10b981);
+    }
+
+    .toggle-3d input:checked + .toggle-3d__track .toggle-3d__thumb {
+      transform: translateX(24px);
+    }
+  </style>
+
+  <!-- ==================== SCRIPTS ==================== -->
+  <script src="../../assets/js/main.js"></script>
+</body>
+</html>

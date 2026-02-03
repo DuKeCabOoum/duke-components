@@ -1,0 +1,2413 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skeletons — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+</head>
+<body>
+  <div class="app">
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+      <a href="../../index.html" class="sidebar__logo">
+        <span>Duke</span>-components
+      </a>
+
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Skeletons</h3>
+        <ul class="sidebar__nav">
+          <li><a href="#text" class="sidebar__link sidebar__link--active">Text Lines</a></li>
+          <li><a href="#cards" class="sidebar__link">Cards</a></li>
+          <li><a href="#avatars" class="sidebar__link">Avatars</a></li>
+          <li><a href="#lists" class="sidebar__link">Lists</a></li>
+          <li><a href="#tables" class="sidebar__link">Tables</a></li>
+          <li><a href="#articles" class="sidebar__link">Articles</a></li>
+          <li><a href="#products" class="sidebar__link">Products</a></li>
+          <li><a href="#social" class="sidebar__link">Social Feed</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar__section">
+        <a href="../../index.html" class="sidebar__link">← Retour</a>
+      </div>
+
+      <!-- Toggle Admin -->
+      <div class="admin-toggle">
+        <span class="admin-toggle__label">Mode Admin</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="admin-toggle">
+          <span class="toggle-switch__slider"></span>
+        </label>
+      </div>
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main">
+      <header class="main__header">
+        <h1 class="main__title">💀 Skeleton Loaders</h1>
+        <p class="main__subtitle">Placeholders de contenu animés — 8 types pour simuler le chargement.</p>
+      </header>
+
+      <!-- ========== TEXT LINES SECTION ========== -->
+      <section id="text" class="section">
+        <h2 class="section__title">Text Lines</h2>
+        <p class="section__desc">Skeletons pour les paragraphes et textes.</p>
+
+        <div class="components-grid">
+          <!-- TEXT SKELETON SIMPLE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <div class="skeleton-text">
+                <div class="skeleton-text__line skeleton-text__line--title"></div>
+                <div class="skeleton-text__line"></div>
+                <div class="skeleton-text__line"></div>
+                <div class="skeleton-text__line skeleton-text__line--short"></div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Text Lines</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">skeleton</span>
+                <span class="tag">text</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="skeleton-text-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="skeleton-text-html"><code>&lt;div class="skeleton-text"&gt;
+  &lt;div class="skeleton-text__line skeleton-text__line--title"&gt;&lt;/div&gt;
+  &lt;div class="skeleton-text__line"&gt;&lt;/div&gt;
+  &lt;div class="skeleton-text__line"&gt;&lt;/div&gt;
+  &lt;div class="skeleton-text__line skeleton-text__line--short"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="skeleton-text-css" style="display:none"><code>.skeleton-text {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.skeleton-text__line {
+  height: 14px;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-text__line--title {
+  height: 20px;
+  width: 60%;
+  margin-bottom: 8px;
+}
+
+.skeleton-text__line--short {
+  width: 40%;
+}
+
+@keyframes skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- TEXT SKELETON PULSE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <div class="skeleton-pulse">
+                <div class="skeleton-pulse__line skeleton-pulse__line--lg"></div>
+                <div class="skeleton-pulse__line"></div>
+                <div class="skeleton-pulse__line"></div>
+                <div class="skeleton-pulse__line skeleton-pulse__line--sm"></div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Pulse Animation</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">skeleton</span>
+                <span class="tag">pulse</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="skeleton-pulse-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="skeleton-pulse-html"><code>&lt;div class="skeleton-pulse"&gt;
+  &lt;div class="skeleton-pulse__line skeleton-pulse__line--lg"&gt;&lt;/div&gt;
+  &lt;div class="skeleton-pulse__line"&gt;&lt;/div&gt;
+  &lt;div class="skeleton-pulse__line"&gt;&lt;/div&gt;
+  &lt;div class="skeleton-pulse__line skeleton-pulse__line--sm"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="skeleton-pulse-css" style="display:none"><code>.skeleton-pulse {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.skeleton-pulse__line {
+  height: 14px;
+  background: #2a2a3e;
+  border-radius: 4px;
+  animation: skeleton-pulse-anim 2s ease-in-out infinite;
+}
+
+.skeleton-pulse__line--lg {
+  height: 24px;
+  width: 50%;
+}
+
+.skeleton-pulse__line--sm {
+  width: 30%;
+}
+
+@keyframes skeleton-pulse-anim {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== CARDS SECTION ========== -->
+      <section id="cards" class="section">
+        <h2 class="section__title">Card Skeletons</h2>
+        <p class="section__desc">Placeholders pour les cards avec images et contenu.</p>
+
+        <div class="components-grid">
+          <!-- CARD SKELETON VERTICAL -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <div class="skeleton-card">
+                <div class="skeleton-card__image"></div>
+                <div class="skeleton-card__content">
+                  <div class="skeleton-card__title"></div>
+                  <div class="skeleton-card__text"></div>
+                  <div class="skeleton-card__text skeleton-card__text--short"></div>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Vertical Card</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">skeleton</span>
+                <span class="tag">card</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="skeleton-card-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="skeleton-card-html"><code>&lt;div class="skeleton-card"&gt;
+  &lt;div class="skeleton-card__image"&gt;&lt;/div&gt;
+  &lt;div class="skeleton-card__content"&gt;
+    &lt;div class="skeleton-card__title"&gt;&lt;/div&gt;
+    &lt;div class="skeleton-card__text"&gt;&lt;/div&gt;
+    &lt;div class="skeleton-card__text skeleton-card__text--short"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="skeleton-card-css" style="display:none"><code>.skeleton-card {
+  width: 200px;
+  background: #242438;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.skeleton-card__image {
+  height: 120px;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-card__content {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skeleton-card__title {
+  height: 18px;
+  width: 70%;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-card__text {
+  height: 12px;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-card__text--short {
+  width: 50%;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- CARD SKELETON HORIZONTAL -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <div class="skeleton-card-h">
+                <div class="skeleton-card-h__image"></div>
+                <div class="skeleton-card-h__content">
+                  <div class="skeleton-card-h__title"></div>
+                  <div class="skeleton-card-h__text"></div>
+                  <div class="skeleton-card-h__meta">
+                    <div class="skeleton-card-h__badge"></div>
+                    <div class="skeleton-card-h__badge"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Horizontal Card</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">skeleton</span>
+                <span class="tag">horizontal</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="skeleton-card-h-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="skeleton-card-h-html"><code>&lt;div class="skeleton-card-h"&gt;
+  &lt;div class="skeleton-card-h__image"&gt;&lt;/div&gt;
+  &lt;div class="skeleton-card-h__content"&gt;
+    &lt;div class="skeleton-card-h__title"&gt;&lt;/div&gt;
+    &lt;div class="skeleton-card-h__text"&gt;&lt;/div&gt;
+    &lt;div class="skeleton-card-h__meta"&gt;
+      &lt;div class="skeleton-card-h__badge"&gt;&lt;/div&gt;
+      &lt;div class="skeleton-card-h__badge"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="skeleton-card-h-css" style="display:none"><code>.skeleton-card-h {
+  display: flex;
+  gap: 16px;
+  background: #242438;
+  border-radius: 12px;
+  padding: 12px;
+  width: 320px;
+}
+
+.skeleton-card-h__image {
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  border-radius: 8px;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-card-h__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skeleton-card-h__title {
+  height: 16px;
+  width: 80%;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-card-h__text {
+  height: 12px;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-card-h__meta {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.skeleton-card-h__badge {
+  height: 20px;
+  width: 50px;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  border-radius: 10px;
+  animation: skeleton-shimmer 1.5s infinite;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== AVATARS SECTION ========== -->
+      <section id="avatars" class="section">
+        <h2 class="section__title">Avatar Skeletons</h2>
+        <p class="section__desc">Placeholders pour les avatars et profils utilisateur.</p>
+
+        <div class="components-grid">
+          <!-- AVATAR SKELETON SIMPLE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <div class="skeleton-avatar-group">
+                <div class="skeleton-avatar skeleton-avatar--sm"></div>
+                <div class="skeleton-avatar"></div>
+                <div class="skeleton-avatar skeleton-avatar--lg"></div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Avatar Sizes</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">skeleton</span>
+                <span class="tag">avatar</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="skeleton-avatar-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="skeleton-avatar-html"><code>&lt;div class="skeleton-avatar skeleton-avatar--sm"&gt;&lt;/div&gt;
+&lt;div class="skeleton-avatar"&gt;&lt;/div&gt;
+&lt;div class="skeleton-avatar skeleton-avatar--lg"&gt;&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="skeleton-avatar-css" style="display:none"><code>.skeleton-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-avatar--sm {
+  width: 32px;
+  height: 32px;
+}
+
+.skeleton-avatar--lg {
+  width: 64px;
+  height: 64px;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- AVATAR WITH NAME -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <div class="skeleton-user">
+                <div class="skeleton-user__avatar"></div>
+                <div class="skeleton-user__info">
+                  <div class="skeleton-user__name"></div>
+                  <div class="skeleton-user__role"></div>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">User Info</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">skeleton</span>
+                <span class="tag">user</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="skeleton-user-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="skeleton-user-html"><code>&lt;div class="skeleton-user"&gt;
+  &lt;div class="skeleton-user__avatar"&gt;&lt;/div&gt;
+  &lt;div class="skeleton-user__info"&gt;
+    &lt;div class="skeleton-user__name"&gt;&lt;/div&gt;
+    &lt;div class="skeleton-user__role"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="skeleton-user-css" style="display:none"><code>.skeleton-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.skeleton-user__avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-user__info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.skeleton-user__name {
+  height: 16px;
+  width: 100px;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-user__role {
+  height: 12px;
+  width: 70px;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: skeleton-shimmer 1.5s infinite;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== LISTS SECTION ========== -->
+      <section id="lists" class="section">
+        <h2 class="section__title">List Skeletons</h2>
+        <p class="section__desc">Placeholders pour les listes d'éléments.</p>
+
+        <div class="components-grid">
+          <!-- LIST SKELETON SIMPLE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <div class="skeleton-list">
+                <div class="skeleton-list__item">
+                  <div class="skeleton-list__icon"></div>
+                  <div class="skeleton-list__text"></div>
+                </div>
+                <div class="skeleton-list__item">
+                  <div class="skeleton-list__icon"></div>
+                  <div class="skeleton-list__text skeleton-list__text--med"></div>
+                </div>
+                <div class="skeleton-list__item">
+                  <div class="skeleton-list__icon"></div>
+                  <div class="skeleton-list__text skeleton-list__text--short"></div>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Simple List</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">skeleton</span>
+                <span class="tag">list</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="skeleton-list-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="skeleton-list-html"><code>&lt;div class="skeleton-list"&gt;
+  &lt;div class="skeleton-list__item"&gt;
+    &lt;div class="skeleton-list__icon"&gt;&lt;/div&gt;
+    &lt;div class="skeleton-list__text"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;!-- Repeat... --&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="skeleton-list-css" style="display:none"><code>.skeleton-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 250px;
+}
+
+.skeleton-list__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.skeleton-list__icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s infinite;
+  flex-shrink: 0;
+}
+
+.skeleton-list__text {
+  height: 14px;
+  flex: 1;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-list__text--med { width: 80%; }
+.skeleton-list__text--short { width: 60%; }</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- LIST WITH CHECKBOX -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <div class="skeleton-checklist">
+                <div class="skeleton-checklist__item">
+                  <div class="skeleton-checklist__check"></div>
+                  <div class="skeleton-checklist__content">
+                    <div class="skeleton-checklist__title"></div>
+                    <div class="skeleton-checklist__desc"></div>
+                  </div>
+                </div>
+                <div class="skeleton-checklist__item">
+                  <div class="skeleton-checklist__check"></div>
+                  <div class="skeleton-checklist__content">
+                    <div class="skeleton-checklist__title"></div>
+                    <div class="skeleton-checklist__desc"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Checklist</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">skeleton</span>
+                <span class="tag">checklist</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="skeleton-checklist-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="skeleton-checklist-html"><code>&lt;div class="skeleton-checklist"&gt;
+  &lt;div class="skeleton-checklist__item"&gt;
+    &lt;div class="skeleton-checklist__check"&gt;&lt;/div&gt;
+    &lt;div class="skeleton-checklist__content"&gt;
+      &lt;div class="skeleton-checklist__title"&gt;&lt;/div&gt;
+      &lt;div class="skeleton-checklist__desc"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="skeleton-checklist-css" style="display:none"><code>.skeleton-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 280px;
+}
+
+.skeleton-checklist__item {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  background: #242438;
+  border-radius: 8px;
+}
+
+.skeleton-checklist__check {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s infinite;
+  flex-shrink: 0;
+}
+
+.skeleton-checklist__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.skeleton-checklist__title {
+  height: 14px;
+  width: 70%;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-checklist__desc {
+  height: 10px;
+  width: 90%;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: skeleton-shimmer 1.5s infinite;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== TABLES SECTION ========== -->
+      <section id="tables" class="section">
+        <h2 class="section__title">Table Skeletons</h2>
+        <p class="section__desc">Placeholders pour les tableaux de données.</p>
+
+        <div class="components-grid components-grid--wide">
+          <!-- TABLE SKELETON -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <div class="skeleton-table">
+                <div class="skeleton-table__header">
+                  <div class="skeleton-table__th"></div>
+                  <div class="skeleton-table__th"></div>
+                  <div class="skeleton-table__th"></div>
+                  <div class="skeleton-table__th skeleton-table__th--sm"></div>
+                </div>
+                <div class="skeleton-table__row">
+                  <div class="skeleton-table__td"></div>
+                  <div class="skeleton-table__td"></div>
+                  <div class="skeleton-table__td"></div>
+                  <div class="skeleton-table__td skeleton-table__td--sm"></div>
+                </div>
+                <div class="skeleton-table__row">
+                  <div class="skeleton-table__td"></div>
+                  <div class="skeleton-table__td"></div>
+                  <div class="skeleton-table__td"></div>
+                  <div class="skeleton-table__td skeleton-table__td--sm"></div>
+                </div>
+                <div class="skeleton-table__row">
+                  <div class="skeleton-table__td"></div>
+                  <div class="skeleton-table__td"></div>
+                  <div class="skeleton-table__td"></div>
+                  <div class="skeleton-table__td skeleton-table__td--sm"></div>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Data Table</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">skeleton</span>
+                <span class="tag">table</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="skeleton-table-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="skeleton-table-html"><code>&lt;div class="skeleton-table"&gt;
+  &lt;div class="skeleton-table__header"&gt;
+    &lt;div class="skeleton-table__th"&gt;&lt;/div&gt;
+    &lt;div class="skeleton-table__th"&gt;&lt;/div&gt;
+    &lt;div class="skeleton-table__th"&gt;&lt;/div&gt;
+    &lt;div class="skeleton-table__th skeleton-table__th--sm"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="skeleton-table__row"&gt;
+    &lt;div class="skeleton-table__td"&gt;&lt;/div&gt;
+    &lt;div class="skeleton-table__td"&gt;&lt;/div&gt;
+    &lt;div class="skeleton-table__td"&gt;&lt;/div&gt;
+    &lt;div class="skeleton-table__td skeleton-table__td--sm"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;!-- More rows... --&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="skeleton-table-css" style="display:none"><code>.skeleton-table {
+  width: 100%;
+  max-width: 500px;
+  background: #242438;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.skeleton-table__header {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  background: #1e1e32;
+  border-bottom: 1px solid #2a2a3e;
+}
+
+.skeleton-table__th {
+  height: 14px;
+  flex: 1;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-table__th--sm,
+.skeleton-table__td--sm {
+  flex: 0.5;
+}
+
+.skeleton-table__row {
+  display: flex;
+  gap: 16px;
+  padding: 14px 16px;
+  border-bottom: 1px solid #2a2a3e;
+}
+
+.skeleton-table__row:last-child {
+  border-bottom: none;
+}
+
+.skeleton-table__td {
+  height: 12px;
+  flex: 1;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: skeleton-shimmer 1.5s infinite;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== ARTICLES SECTION ========== -->
+      <section id="articles" class="section">
+        <h2 class="section__title">Article Skeletons</h2>
+        <p class="section__desc">Placeholders pour les articles de blog.</p>
+
+        <div class="components-grid">
+          <!-- ARTICLE SKELETON -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <div class="skeleton-article">
+                <div class="skeleton-article__header">
+                  <div class="skeleton-article__avatar"></div>
+                  <div class="skeleton-article__meta">
+                    <div class="skeleton-article__author"></div>
+                    <div class="skeleton-article__date"></div>
+                  </div>
+                </div>
+                <div class="skeleton-article__image"></div>
+                <div class="skeleton-article__title"></div>
+                <div class="skeleton-article__text"></div>
+                <div class="skeleton-article__text"></div>
+                <div class="skeleton-article__text skeleton-article__text--short"></div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Blog Article</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">skeleton</span>
+                <span class="tag">article</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="skeleton-article-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="skeleton-article-html"><code>&lt;div class="skeleton-article"&gt;
+  &lt;div class="skeleton-article__header"&gt;
+    &lt;div class="skeleton-article__avatar"&gt;&lt;/div&gt;
+    &lt;div class="skeleton-article__meta"&gt;
+      &lt;div class="skeleton-article__author"&gt;&lt;/div&gt;
+      &lt;div class="skeleton-article__date"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="skeleton-article__image"&gt;&lt;/div&gt;
+  &lt;div class="skeleton-article__title"&gt;&lt;/div&gt;
+  &lt;div class="skeleton-article__text"&gt;&lt;/div&gt;
+  &lt;div class="skeleton-article__text"&gt;&lt;/div&gt;
+  &lt;div class="skeleton-article__text skeleton-article__text--short"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="skeleton-article-css" style="display:none"><code>.skeleton-article {
+  width: 280px;
+  background: #242438;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.skeleton-article__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.skeleton-article__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-article__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.skeleton-article__author {
+  height: 14px;
+  width: 100px;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-article__date {
+  height: 10px;
+  width: 70px;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-article__image {
+  height: 140px;
+  margin-bottom: 16px;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  border-radius: 8px;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-article__title {
+  height: 20px;
+  width: 80%;
+  margin-bottom: 12px;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-article__text {
+  height: 12px;
+  margin-bottom: 8px;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-article__text--short {
+  width: 60%;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- ARTICLE SKELETON MINIMAL -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <div class="skeleton-post">
+                <div class="skeleton-post__image"></div>
+                <div class="skeleton-post__category"></div>
+                <div class="skeleton-post__title"></div>
+                <div class="skeleton-post__excerpt"></div>
+                <div class="skeleton-post__excerpt skeleton-post__excerpt--short"></div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Minimal Post</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">skeleton</span>
+                <span class="tag">post</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="skeleton-post-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="skeleton-post-html"><code>&lt;div class="skeleton-post"&gt;
+  &lt;div class="skeleton-post__image"&gt;&lt;/div&gt;
+  &lt;div class="skeleton-post__category"&gt;&lt;/div&gt;
+  &lt;div class="skeleton-post__title"&gt;&lt;/div&gt;
+  &lt;div class="skeleton-post__excerpt"&gt;&lt;/div&gt;
+  &lt;div class="skeleton-post__excerpt skeleton-post__excerpt--short"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="skeleton-post-css" style="display:none"><code>.skeleton-post {
+  width: 240px;
+}
+
+.skeleton-post__image {
+  height: 160px;
+  margin-bottom: 12px;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  border-radius: 12px;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-post__category {
+  height: 10px;
+  width: 60px;
+  margin-bottom: 8px;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-post__title {
+  height: 18px;
+  width: 90%;
+  margin-bottom: 12px;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-post__excerpt {
+  height: 12px;
+  margin-bottom: 6px;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-post__excerpt--short {
+  width: 70%;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== PRODUCTS SECTION ========== -->
+      <section id="products" class="section">
+        <h2 class="section__title">Product Skeletons</h2>
+        <p class="section__desc">Placeholders pour les produits e-commerce.</p>
+
+        <div class="components-grid">
+          <!-- PRODUCT SKELETON -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <div class="skeleton-product">
+                <div class="skeleton-product__image"></div>
+                <div class="skeleton-product__info">
+                  <div class="skeleton-product__brand"></div>
+                  <div class="skeleton-product__name"></div>
+                  <div class="skeleton-product__rating">
+                    <div class="skeleton-product__stars"></div>
+                    <div class="skeleton-product__count"></div>
+                  </div>
+                  <div class="skeleton-product__price"></div>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Product Card</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">skeleton</span>
+                <span class="tag">e-commerce</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="skeleton-product-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="skeleton-product-html"><code>&lt;div class="skeleton-product"&gt;
+  &lt;div class="skeleton-product__image"&gt;&lt;/div&gt;
+  &lt;div class="skeleton-product__info"&gt;
+    &lt;div class="skeleton-product__brand"&gt;&lt;/div&gt;
+    &lt;div class="skeleton-product__name"&gt;&lt;/div&gt;
+    &lt;div class="skeleton-product__rating"&gt;
+      &lt;div class="skeleton-product__stars"&gt;&lt;/div&gt;
+      &lt;div class="skeleton-product__count"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="skeleton-product__price"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="skeleton-product-css" style="display:none"><code>.skeleton-product {
+  width: 200px;
+  background: #242438;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.skeleton-product__image {
+  height: 200px;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-product__info {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skeleton-product__brand {
+  height: 10px;
+  width: 50px;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-product__name {
+  height: 16px;
+  width: 85%;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-product__rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.skeleton-product__stars {
+  height: 12px;
+  width: 80px;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-product__count {
+  height: 10px;
+  width: 30px;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-product__price {
+  height: 20px;
+  width: 70px;
+  margin-top: 4px;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: skeleton-shimmer 1.5s infinite;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- PRODUCT GRID SKELETON -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <div class="skeleton-product-grid">
+                <div class="skeleton-product-mini">
+                  <div class="skeleton-product-mini__img"></div>
+                  <div class="skeleton-product-mini__name"></div>
+                  <div class="skeleton-product-mini__price"></div>
+                </div>
+                <div class="skeleton-product-mini">
+                  <div class="skeleton-product-mini__img"></div>
+                  <div class="skeleton-product-mini__name"></div>
+                  <div class="skeleton-product-mini__price"></div>
+                </div>
+                <div class="skeleton-product-mini">
+                  <div class="skeleton-product-mini__img"></div>
+                  <div class="skeleton-product-mini__name"></div>
+                  <div class="skeleton-product-mini__price"></div>
+                </div>
+                <div class="skeleton-product-mini">
+                  <div class="skeleton-product-mini__img"></div>
+                  <div class="skeleton-product-mini__name"></div>
+                  <div class="skeleton-product-mini__price"></div>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Product Grid</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">skeleton</span>
+                <span class="tag">grid</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="skeleton-grid-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="skeleton-grid-html"><code>&lt;div class="skeleton-product-grid"&gt;
+  &lt;div class="skeleton-product-mini"&gt;
+    &lt;div class="skeleton-product-mini__img"&gt;&lt;/div&gt;
+    &lt;div class="skeleton-product-mini__name"&gt;&lt;/div&gt;
+    &lt;div class="skeleton-product-mini__price"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;!-- Repeat... --&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="skeleton-grid-css" style="display:none"><code>.skeleton-product-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.skeleton-product-mini {
+  background: #242438;
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.skeleton-product-mini__img {
+  height: 80px;
+  margin-bottom: 8px;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  border-radius: 6px;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-product-mini__name {
+  height: 12px;
+  width: 80%;
+  margin-bottom: 6px;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-product-mini__price {
+  height: 14px;
+  width: 50%;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: skeleton-shimmer 1.5s infinite;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== SOCIAL FEED SECTION ========== -->
+      <section id="social" class="section">
+        <h2 class="section__title">Social Feed Skeletons</h2>
+        <p class="section__desc">Placeholders pour les flux de réseaux sociaux.</p>
+
+        <div class="components-grid">
+          <!-- SOCIAL POST SKELETON -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <div class="skeleton-social">
+                <div class="skeleton-social__header">
+                  <div class="skeleton-social__avatar"></div>
+                  <div class="skeleton-social__user">
+                    <div class="skeleton-social__name"></div>
+                    <div class="skeleton-social__time"></div>
+                  </div>
+                  <div class="skeleton-social__menu"></div>
+                </div>
+                <div class="skeleton-social__content">
+                  <div class="skeleton-social__text"></div>
+                  <div class="skeleton-social__text"></div>
+                  <div class="skeleton-social__text skeleton-social__text--short"></div>
+                </div>
+                <div class="skeleton-social__image"></div>
+                <div class="skeleton-social__actions">
+                  <div class="skeleton-social__action"></div>
+                  <div class="skeleton-social__action"></div>
+                  <div class="skeleton-social__action"></div>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Social Post</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">skeleton</span>
+                <span class="tag">social</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="skeleton-social-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="skeleton-social-html"><code>&lt;div class="skeleton-social"&gt;
+  &lt;div class="skeleton-social__header"&gt;
+    &lt;div class="skeleton-social__avatar"&gt;&lt;/div&gt;
+    &lt;div class="skeleton-social__user"&gt;
+      &lt;div class="skeleton-social__name"&gt;&lt;/div&gt;
+      &lt;div class="skeleton-social__time"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="skeleton-social__menu"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="skeleton-social__content"&gt;
+    &lt;div class="skeleton-social__text"&gt;&lt;/div&gt;
+    &lt;div class="skeleton-social__text"&gt;&lt;/div&gt;
+    &lt;div class="skeleton-social__text skeleton-social__text--short"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="skeleton-social__image"&gt;&lt;/div&gt;
+  &lt;div class="skeleton-social__actions"&gt;
+    &lt;div class="skeleton-social__action"&gt;&lt;/div&gt;
+    &lt;div class="skeleton-social__action"&gt;&lt;/div&gt;
+    &lt;div class="skeleton-social__action"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="skeleton-social-css" style="display:none"><code>.skeleton-social {
+  width: 320px;
+  background: #242438;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.skeleton-social__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.skeleton-social__avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-social__user {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.skeleton-social__name {
+  height: 14px;
+  width: 100px;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-social__time {
+  height: 10px;
+  width: 60px;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-social__menu {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-social__content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.skeleton-social__text {
+  height: 12px;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-social__text--short {
+  width: 70%;
+}
+
+.skeleton-social__image {
+  height: 180px;
+  margin-bottom: 12px;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  border-radius: 8px;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-social__actions {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px solid #2a2a3e;
+}
+
+.skeleton-social__action {
+  height: 20px;
+  width: 60px;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: skeleton-shimmer 1.5s infinite;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- COMMENT SKELETON -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <div class="skeleton-comments">
+                <div class="skeleton-comment">
+                  <div class="skeleton-comment__avatar"></div>
+                  <div class="skeleton-comment__bubble">
+                    <div class="skeleton-comment__name"></div>
+                    <div class="skeleton-comment__text"></div>
+                    <div class="skeleton-comment__text skeleton-comment__text--short"></div>
+                  </div>
+                </div>
+                <div class="skeleton-comment">
+                  <div class="skeleton-comment__avatar"></div>
+                  <div class="skeleton-comment__bubble">
+                    <div class="skeleton-comment__name"></div>
+                    <div class="skeleton-comment__text"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Comments</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">skeleton</span>
+                <span class="tag">comments</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="skeleton-comments-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="skeleton-comments-html"><code>&lt;div class="skeleton-comments"&gt;
+  &lt;div class="skeleton-comment"&gt;
+    &lt;div class="skeleton-comment__avatar"&gt;&lt;/div&gt;
+    &lt;div class="skeleton-comment__bubble"&gt;
+      &lt;div class="skeleton-comment__name"&gt;&lt;/div&gt;
+      &lt;div class="skeleton-comment__text"&gt;&lt;/div&gt;
+      &lt;div class="skeleton-comment__text skeleton-comment__text--short"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="skeleton-comments-css" style="display:none"><code>.skeleton-comments {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 280px;
+}
+
+.skeleton-comment {
+  display: flex;
+  gap: 10px;
+}
+
+.skeleton-comment__avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-comment__bubble {
+  flex: 1;
+  background: #242438;
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.skeleton-comment__name {
+  height: 12px;
+  width: 80px;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-comment__text {
+  height: 10px;
+  background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-comment__text--short {
+  width: 60%;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ==================== STYLES ==================== -->
+  <style>
+    /* ========== KEYFRAMES ========== */
+    @keyframes skeleton-shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    @keyframes skeleton-pulse-anim {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
+    }
+
+    /* ========== TEXT SKELETONS ========== */
+    .skeleton-text {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 280px;
+    }
+
+    .skeleton-text__line {
+      height: 14px;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      border-radius: 4px;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    .skeleton-text__line--title {
+      height: 20px;
+      width: 60%;
+      margin-bottom: 8px;
+    }
+
+    .skeleton-text__line--short {
+      width: 40%;
+    }
+
+    /* PULSE VARIANT */
+    .skeleton-pulse {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 280px;
+    }
+
+    .skeleton-pulse__line {
+      height: 14px;
+      background: #2a2a3e;
+      border-radius: 4px;
+      animation: skeleton-pulse-anim 2s ease-in-out infinite;
+    }
+
+    .skeleton-pulse__line--lg {
+      height: 24px;
+      width: 50%;
+    }
+
+    .skeleton-pulse__line--sm {
+      width: 30%;
+    }
+
+    /* ========== CARD SKELETONS ========== */
+    .skeleton-card {
+      width: 200px;
+      background: #242438;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .skeleton-card__image {
+      height: 120px;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    .skeleton-card__content {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .skeleton-card__title {
+      height: 18px;
+      width: 70%;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      border-radius: 4px;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    .skeleton-card__text {
+      height: 12px;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      border-radius: 4px;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    .skeleton-card__text--short {
+      width: 50%;
+    }
+
+    /* HORIZONTAL CARD */
+    .skeleton-card-h {
+      display: flex;
+      gap: 16px;
+      background: #242438;
+      border-radius: 12px;
+      padding: 12px;
+      width: 320px;
+    }
+
+    .skeleton-card-h__image {
+      width: 80px;
+      height: 80px;
+      flex-shrink: 0;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      border-radius: 8px;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    .skeleton-card-h__content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .skeleton-card-h__title {
+      height: 16px;
+      width: 80%;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      border-radius: 4px;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    .skeleton-card-h__text {
+      height: 12px;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      border-radius: 4px;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    .skeleton-card-h__meta {
+      display: flex;
+      gap: 8px;
+      margin-top: auto;
+    }
+
+    .skeleton-card-h__badge {
+      height: 20px;
+      width: 50px;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      border-radius: 10px;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    /* ========== AVATAR SKELETONS ========== */
+    .skeleton-avatar-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .skeleton-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    .skeleton-avatar--sm {
+      width: 32px;
+      height: 32px;
+    }
+
+    .skeleton-avatar--lg {
+      width: 64px;
+      height: 64px;
+    }
+
+    /* USER INFO */
+    .skeleton-user {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .skeleton-user__avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    .skeleton-user__info {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .skeleton-user__name {
+      height: 16px;
+      width: 100px;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      border-radius: 4px;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    .skeleton-user__role {
+      height: 12px;
+      width: 70px;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      border-radius: 4px;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    /* ========== LIST SKELETONS ========== */
+    .skeleton-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      width: 250px;
+    }
+
+    .skeleton-list__item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .skeleton-list__icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      animation: skeleton-shimmer 1.5s infinite;
+      flex-shrink: 0;
+    }
+
+    .skeleton-list__text {
+      height: 14px;
+      flex: 1;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      border-radius: 4px;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    .skeleton-list__text--med { width: 80%; flex: none; }
+    .skeleton-list__text--short { width: 60%; flex: none; }
+
+    /* CHECKLIST */
+    .skeleton-checklist {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 280px;
+    }
+
+    .skeleton-checklist__item {
+      display: flex;
+      gap: 12px;
+      padding: 12px;
+      background: #242438;
+      border-radius: 8px;
+    }
+
+    .skeleton-checklist__check {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      animation: skeleton-shimmer 1.5s infinite;
+      flex-shrink: 0;
+    }
+
+    .skeleton-checklist__content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .skeleton-checklist__title {
+      height: 14px;
+      width: 70%;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      border-radius: 4px;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    .skeleton-checklist__desc {
+      height: 10px;
+      width: 90%;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      border-radius: 4px;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    /* ========== TABLE SKELETON ========== */
+    .skeleton-table {
+      width: 100%;
+      max-width: 500px;
+      background: #242438;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .skeleton-table__header {
+      display: flex;
+      gap: 16px;
+      padding: 16px;
+      background: #1e1e32;
+      border-bottom: 1px solid #2a2a3e;
+    }
+
+    .skeleton-table__th {
+      height: 14px;
+      flex: 1;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      border-radius: 4px;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    .skeleton-table__th--sm,
+    .skeleton-table__td--sm {
+      flex: 0.5;
+    }
+
+    .skeleton-table__row {
+      display: flex;
+      gap: 16px;
+      padding: 14px 16px;
+      border-bottom: 1px solid #2a2a3e;
+    }
+
+    .skeleton-table__row:last-child {
+      border-bottom: none;
+    }
+
+    .skeleton-table__td {
+      height: 12px;
+      flex: 1;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      border-radius: 4px;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    /* ========== ARTICLE SKELETON ========== */
+    .skeleton-article {
+      width: 280px;
+      background: #242438;
+      border-radius: 12px;
+      padding: 16px;
+    }
+
+    .skeleton-article__header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .skeleton-article__avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    .skeleton-article__meta {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .skeleton-article__author {
+      height: 14px;
+      width: 100px;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      border-radius: 4px;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    .skeleton-article__date {
+      height: 10px;
+      width: 70px;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      border-radius: 4px;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    .skeleton-article__image {
+      height: 140px;
+      margin-bottom: 16px;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      border-radius: 8px;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    .skeleton-article__title {
+      height: 20px;
+      width: 80%;
+      margin-bottom: 12px;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      border-radius: 4px;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    .skeleton-article__text {
+      height: 12px;
+      margin-bottom: 8px;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      border-radius: 4px;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    .skeleton-article__text--short {
+      width: 60%;
+    }
+
+    /* POST MINIMAL */
+    .skeleton-post {
+      width: 240px;
+    }
+
+    .skeleton-post__image {
+      height: 160px;
+      margin-bottom: 12px;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      border-radius: 12px;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    .skeleton-post__category {
+      height: 10px;
+      width: 60px;
+      margin-bottom: 8px;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      border-radius: 4px;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    .skeleton-post__title {
+      height: 18px;
+      width: 90%;
+      margin-bottom: 12px;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      border-radius: 4px;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    .skeleton-post__excerpt {
+      height: 12px;
+      margin-bottom: 6px;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      border-radius: 4px;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    .skeleton-post__excerpt--short {
+      width: 70%;
+    }
+
+    /* ========== PRODUCT SKELETON ========== */
+    .skeleton-product {
+      width: 200px;
+      background: #242438;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .skeleton-product__image {
+      height: 200px;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    .skeleton-product__info {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .skeleton-product__brand {
+      height: 10px;
+      width: 50px;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      border-radius: 4px;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    .skeleton-product__name {
+      height: 16px;
+      width: 85%;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      border-radius: 4px;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    .skeleton-product__rating {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .skeleton-product__stars {
+      height: 12px;
+      width: 80px;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      border-radius: 4px;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    .skeleton-product__count {
+      height: 10px;
+      width: 30px;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      border-radius: 4px;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    .skeleton-product__price {
+      height: 20px;
+      width: 70px;
+      margin-top: 4px;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      border-radius: 4px;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    /* PRODUCT GRID */
+    .skeleton-product-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .skeleton-product-mini {
+      background: #242438;
+      border-radius: 8px;
+      padding: 8px;
+    }
+
+    .skeleton-product-mini__img {
+      height: 80px;
+      margin-bottom: 8px;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      border-radius: 6px;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    .skeleton-product-mini__name {
+      height: 12px;
+      width: 80%;
+      margin-bottom: 6px;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      border-radius: 4px;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    .skeleton-product-mini__price {
+      height: 14px;
+      width: 50%;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      border-radius: 4px;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    /* ========== SOCIAL FEED SKELETON ========== */
+    .skeleton-social {
+      width: 320px;
+      background: #242438;
+      border-radius: 12px;
+      padding: 16px;
+    }
+
+    .skeleton-social__header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .skeleton-social__avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    .skeleton-social__user {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .skeleton-social__name {
+      height: 14px;
+      width: 100px;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      border-radius: 4px;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    .skeleton-social__time {
+      height: 10px;
+      width: 60px;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      border-radius: 4px;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    .skeleton-social__menu {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    .skeleton-social__content {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .skeleton-social__text {
+      height: 12px;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      border-radius: 4px;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    .skeleton-social__text--short {
+      width: 70%;
+    }
+
+    .skeleton-social__image {
+      height: 180px;
+      margin-bottom: 12px;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      border-radius: 8px;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    .skeleton-social__actions {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 12px;
+      border-top: 1px solid #2a2a3e;
+    }
+
+    .skeleton-social__action {
+      height: 20px;
+      width: 60px;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      border-radius: 4px;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    /* COMMENTS */
+    .skeleton-comments {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      width: 280px;
+    }
+
+    .skeleton-comment {
+      display: flex;
+      gap: 10px;
+    }
+
+    .skeleton-comment__avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    .skeleton-comment__bubble {
+      flex: 1;
+      background: #1e1e32;
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .skeleton-comment__name {
+      height: 12px;
+      width: 80px;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      border-radius: 4px;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    .skeleton-comment__text {
+      height: 10px;
+      background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+      background-size: 200% 100%;
+      border-radius: 4px;
+      animation: skeleton-shimmer 1.5s infinite;
+    }
+
+    .skeleton-comment__text--short {
+      width: 60%;
+    }
+
+    /* ========== GRID WIDE ========== */
+    .components-grid--wide .component-card {
+      grid-column: span 2;
+    }
+
+    @media (max-width: 768px) {
+      .components-grid--wide .component-card {
+        grid-column: span 1;
+      }
+    }
+  </style>
+
+  <!-- ==================== SCRIPTS ==================== -->
+  <script src="../../assets/js/main.js"></script>
+</body>
+</html>

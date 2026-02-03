@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toasts - Duke Components</title>
+  <style>
+    /* ========================================
+       BASE STYLES
+    ======================================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      min-height: 100vh;
+      padding: 40px 20px;
+      color: #fff;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .page-title {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .page-subtitle {
+      text-align: center;
+      color: #a0a0b0;
+      margin-bottom: 3rem;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #667eea;
+      text-decoration: none;
+      margin-bottom: 2rem;
+      transition: color 0.3s ease;
+    }
+
+    .back-link:hover {
+      color: #764ba2;
+    }
+
+    /* ========================================
+       SECTION STYLES
+    ======================================== */
+    .section {
+      margin-bottom: 4rem;
+    }
+
+    .section__title {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: #fff;
+    }
+
+    .section__description {
+      color: #a0a0b0;
+      margin-bottom: 1.5rem;
+    }
+
+    .component-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 24px;
+    }
+
+    .component-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .component-card__title {
+      font-size: 0.875rem;
+      color: #a0a0b0;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .toast-demo {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* ========================================
+       1. BASIC TOAST
+    ======================================== */
+    .toast {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 16px;
+      background: #2a2a3e;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      animation: toast-slide-in 0.3s ease;
+    }
+
+    @keyframes toast-slide-in {
+      from {
+        opacity: 0;
+        transform: translateX(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .toast__icon {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+
+    .toast__content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .toast__title {
+      font-weight: 600;
+      color: #fff;
+      font-size: 0.9375rem;
+      margin-bottom: 4px;
+    }
+
+    .toast__message {
+      font-size: 0.875rem;
+      color: #a0a0b0;
+      line-height: 1.4;
+    }
+
+    .toast__close {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      background: transparent;
+      border: none;
+      color: #666;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .toast__close:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    .toast__close svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* ========================================
+       2. TOAST VARIANTS (Colors)
+    ======================================== */
+    .toast--success {
+      border-left: 4px solid #10b981;
+    }
+
+    .toast--success .toast__icon {
+      color: #10b981;
+    }
+
+    .toast--error {
+      border-left: 4px solid #ef4444;
+    }
+
+    .toast--error .toast__icon {
+      color: #ef4444;
+    }
+
+    .toast--warning {
+      border-left: 4px solid #f59e0b;
+    }
+
+    .toast--warning .toast__icon {
+      color: #f59e0b;
+    }
+
+    .toast--info {
+      border-left: 4px solid #3b82f6;
+    }
+
+    .toast--info .toast__icon {
+      color: #3b82f6;
+    }
+
+    /* ========================================
+       3. SOLID COLOR TOASTS
+    ======================================== */
+    .toast--solid-success {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      border: none;
+    }
+
+    .toast--solid-success .toast__icon,
+    .toast--solid-success .toast__title,
+    .toast--solid-success .toast__message {
+      color: #fff;
+    }
+
+    .toast--solid-success .toast__close {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .toast--solid-success .toast__close:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .toast--solid-error {
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+      border: none;
+    }
+
+    .toast--solid-error .toast__icon,
+    .toast--solid-error .toast__title,
+    .toast--solid-error .toast__message {
+      color: #fff;
+    }
+
+    .toast--solid-error .toast__close {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .toast--solid-warning {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      border: none;
+    }
+
+    .toast--solid-warning .toast__icon,
+    .toast--solid-warning .toast__title,
+    .toast--solid-warning .toast__message {
+      color: #1a1a2e;
+    }
+
+    .toast--solid-warning .toast__close {
+      color: rgba(0, 0, 0, 0.5);
+    }
+
+    .toast--solid-info {
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      border: none;
+    }
+
+    .toast--solid-info .toast__icon,
+    .toast--solid-info .toast__title,
+    .toast--solid-info .toast__message {
+      color: #fff;
+    }
+
+    /* ========================================
+       4. TOAST WITH ACTION
+    ======================================== */
+    .toast__actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .toast__action {
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .toast__action--primary {
+      background: #667eea;
+      border: none;
+      color: #fff;
+    }
+
+    .toast__action--primary:hover {
+      background: #764ba2;
+    }
+
+    .toast__action--secondary {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #a0a0b0;
+    }
+
+    .toast__action--secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    /* ========================================
+       5. TOAST WITH PROGRESS BAR
+    ======================================== */
+    .toast--progress {
+      padding-bottom: 0;
+      overflow: hidden;
+    }
+
+    .toast__progress {
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      margin: 16px -16px 0;
+    }
+
+    .toast__progress-bar {
+      height: 100%;
+      background: #667eea;
+      animation: toast-progress 5s linear forwards;
+    }
+
+    @keyframes toast-progress {
+      from { width: 100%; }
+      to { width: 0%; }
+    }
+
+    .toast--success .toast__progress-bar {
+      background: #10b981;
+    }
+
+    .toast--error .toast__progress-bar {
+      background: #ef4444;
+    }
+
+    .toast--warning .toast__progress-bar {
+      background: #f59e0b;
+    }
+
+    .toast--info .toast__progress-bar {
+      background: #3b82f6;
+    }
+
+    /* ========================================
+       6. TOAST WITH AVATAR
+    ======================================== */
+    .toast__avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.875rem;
+      flex-shrink: 0;
+    }
+
+    .toast--avatar {
+      align-items: center;
+    }
+
+    /* ========================================
+       7. MINIMAL TOAST
+    ======================================== */
+    .toast--minimal {
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: none;
+      border-radius: 50px;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .toast--minimal .toast__content {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .toast--minimal .toast__title {
+      margin-bottom: 0;
+      font-size: 0.875rem;
+    }
+
+    .toast--minimal .toast__message {
+      display: none;
+    }
+
+    /* ========================================
+       8. TOAST WITH IMAGE
+    ======================================== */
+    .toast__image {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      flex-shrink: 0;
+    }
+
+    /* ========================================
+       9. TOAST POSITIONS (Preview containers)
+    ======================================== */
+    .toast-container {
+      position: relative;
+      min-height: 200px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .toast-container__label {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 0.75rem;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .toast-position {
+      position: absolute;
+      width: 280px;
+    }
+
+    .toast-position--top-right {
+      top: 16px;
+      right: 16px;
+    }
+
+    .toast-position--top-left {
+      top: 16px;
+      left: 16px;
+    }
+
+    .toast-position--top-center {
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .toast-position--bottom-right {
+      bottom: 16px;
+      right: 16px;
+    }
+
+    .toast-position--bottom-left {
+      bottom: 16px;
+      left: 16px;
+    }
+
+    .toast-position--bottom-center {
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    /* ========================================
+       10. STACKED TOASTS
+    ======================================== */
+    .toast-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .toast-stack .toast:nth-child(2) {
+      opacity: 0.8;
+      transform: scale(0.98);
+    }
+
+    .toast-stack .toast:nth-child(3) {
+      opacity: 0.6;
+      transform: scale(0.96);
+    }
+
+    /* ========================================
+       11. TOAST ANIMATIONS
+    ======================================== */
+    .toast--slide-up {
+      animation: toast-slide-up 0.3s ease;
+    }
+
+    @keyframes toast-slide-up {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .toast--slide-down {
+      animation: toast-slide-down 0.3s ease;
+    }
+
+    @keyframes toast-slide-down {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .toast--bounce {
+      animation: toast-bounce 0.5s ease;
+    }
+
+    @keyframes toast-bounce {
+      0% {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .toast--shake {
+      animation: toast-shake 0.5s ease;
+    }
+
+    @keyframes toast-shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-10px); }
+      40% { transform: translateX(10px); }
+      60% { transform: translateX(-5px); }
+      80% { transform: translateX(5px); }
+    }
+
+    /* ========================================
+       12. DARK/LIGHT VARIANTS
+    ======================================== */
+    .toast--dark {
+      background: #1a1a2e;
+      border-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .toast--light {
+      background: #f5f5f5;
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .toast--light .toast__title {
+      color: #1a1a2e;
+    }
+
+    .toast--light .toast__message {
+      color: #666;
+    }
+
+    .toast--light .toast__close {
+      color: #999;
+    }
+
+    .toast--light .toast__close:hover {
+      background: rgba(0, 0, 0, 0.1);
+      color: #333;
+    }
+
+    /* ========================================
+       13. PROMISE TOAST (Loading → Success/Error)
+    ======================================== */
+    .toast--loading .toast__icon {
+      animation: toast-spin 1s linear infinite;
+    }
+
+    @keyframes toast-spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* ========================================
+       14. COMPACT TOAST
+    ======================================== */
+    .toast--compact {
+      padding: 10px 14px;
+    }
+
+    .toast--compact .toast__icon {
+      width: 18px;
+      height: 18px;
+    }
+
+    .toast--compact .toast__title {
+      font-size: 0.8125rem;
+      margin-bottom: 0;
+    }
+
+    .toast--compact .toast__message {
+      display: none;
+    }
+
+    /* ========================================
+       15. TOAST WITH LINK
+    ======================================== */
+    .toast__link {
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .toast__link:hover {
+      color: #764ba2;
+      text-decoration: underline;
+    }
+
+    /* ========================================
+       16. EMOJI TOAST
+    ======================================== */
+    .toast__emoji {
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+
+    /* ========================================
+       RESPONSIVE
+    ======================================== */
+    @media (max-width: 768px) {
+      .page-title {
+        font-size: 2rem;
+      }
+
+      .component-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .toast {
+        max-width: 100%;
+      }
+
+      .toast-position {
+        width: calc(100% - 32px);
+        max-width: 320px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="../../index.html" class="back-link">
+      <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+      </svg>
+      Retour
+    </a>
+
+    <h1 class="page-title">Toasts</h1>
+    <p class="page-subtitle">16 types de notifications toast stylisées</p>
+
+    <!-- ================================
+         SECTION 1: BASIC TOASTS
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">1. Basic Toasts</h2>
+      <p class="section__description">Toasts simples avec icône et message</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Success</h3>
+          <div class="toast toast--success">
+            <svg class="toast__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <div class="toast__content">
+              <div class="toast__title">Succès !</div>
+              <div class="toast__message">Votre action a été effectuée avec succès.</div>
+            </div>
+            <button class="toast__close" aria-label="Fermer">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Error</h3>
+          <div class="toast toast--error">
+            <svg class="toast__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <div class="toast__content">
+              <div class="toast__title">Erreur</div>
+              <div class="toast__message">Une erreur est survenue. Veuillez réessayer.</div>
+            </div>
+            <button class="toast__close" aria-label="Fermer">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Warning</h3>
+          <div class="toast toast--warning">
+            <svg class="toast__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+            </svg>
+            <div class="toast__content">
+              <div class="toast__title">Attention</div>
+              <div class="toast__message">Cette action peut avoir des conséquences.</div>
+            </div>
+            <button class="toast__close" aria-label="Fermer">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Info</h3>
+          <div class="toast toast--info">
+            <svg class="toast__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <div class="toast__content">
+              <div class="toast__title">Information</div>
+              <div class="toast__message">Voici une information importante à noter.</div>
+            </div>
+            <button class="toast__close" aria-label="Fermer">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 2: SOLID COLOR TOASTS
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">2. Solid Color Toasts</h2>
+      <p class="section__description">Toasts avec fond coloré gradient</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Solid Success</h3>
+          <div class="toast toast--solid-success">
+            <svg class="toast__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            <div class="toast__content">
+              <div class="toast__title">Enregistré !</div>
+              <div class="toast__message">Vos modifications ont été sauvegardées.</div>
+            </div>
+            <button class="toast__close" aria-label="Fermer">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Solid Error</h3>
+          <div class="toast toast--solid-error">
+            <svg class="toast__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+            <div class="toast__content">
+              <div class="toast__title">Échec</div>
+              <div class="toast__message">L'opération n'a pas pu être effectuée.</div>
+            </div>
+            <button class="toast__close" aria-label="Fermer">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Solid Warning</h3>
+          <div class="toast toast--solid-warning">
+            <svg class="toast__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+            </svg>
+            <div class="toast__content">
+              <div class="toast__title">Mise à jour requise</div>
+              <div class="toast__message">Une nouvelle version est disponible.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Solid Info</h3>
+          <div class="toast toast--solid-info">
+            <svg class="toast__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <div class="toast__content">
+              <div class="toast__title">Notification</div>
+              <div class="toast__message">Vous avez 3 nouveaux messages.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 3: TOAST WITH ACTIONS
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">3. Toast with Actions</h2>
+      <p class="section__description">Toasts avec boutons d'action</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Undo Action</h3>
+          <div class="toast">
+            <svg class="toast__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #667eea;">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+            </svg>
+            <div class="toast__content">
+              <div class="toast__title">Élément supprimé</div>
+              <div class="toast__message">L'élément a été déplacé vers la corbeille.</div>
+              <div class="toast__actions">
+                <button class="toast__action toast__action--primary">Annuler</button>
+                <button class="toast__action toast__action--secondary">Voir la corbeille</button>
+              </div>
+            </div>
+            <button class="toast__close" aria-label="Fermer">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Confirm Action</h3>
+          <div class="toast toast--warning">
+            <svg class="toast__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+            </svg>
+            <div class="toast__content">
+              <div class="toast__title">Confirmer la suppression ?</div>
+              <div class="toast__message">Cette action est irréversible.</div>
+              <div class="toast__actions">
+                <button class="toast__action toast__action--primary" style="background: #ef4444;">Supprimer</button>
+                <button class="toast__action toast__action--secondary">Annuler</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 4: TOAST WITH PROGRESS
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">4. Toast with Progress</h2>
+      <p class="section__description">Toasts avec barre de progression (auto-dismiss)</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Auto-dismiss Progress</h3>
+          <div class="toast toast--success toast--progress">
+            <svg class="toast__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <div class="toast__content">
+              <div class="toast__title">Fichier uploadé</div>
+              <div class="toast__message">image.png a été téléchargé avec succès.</div>
+            </div>
+            <button class="toast__close" aria-label="Fermer">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+            <div class="toast__progress">
+              <div class="toast__progress-bar"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Error with Progress</h3>
+          <div class="toast toast--error toast--progress">
+            <svg class="toast__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <div class="toast__content">
+              <div class="toast__title">Connexion perdue</div>
+              <div class="toast__message">Tentative de reconnexion en cours...</div>
+            </div>
+            <div class="toast__progress">
+              <div class="toast__progress-bar"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 5: TOAST WITH AVATAR
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">5. Toast with Avatar</h2>
+      <p class="section__description">Toasts avec avatar utilisateur</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">User Notification</h3>
+          <div class="toast toast--avatar">
+            <div class="toast__avatar">JD</div>
+            <div class="toast__content">
+              <div class="toast__title">Nouveau message</div>
+              <div class="toast__message">John Doe vous a envoyé un message.</div>
+            </div>
+            <button class="toast__close" aria-label="Fermer">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">With Image</h3>
+          <div class="toast">
+            <div class="toast__image"></div>
+            <div class="toast__content">
+              <div class="toast__title">Nouveau produit ajouté</div>
+              <div class="toast__message">iPhone 15 Pro a été ajouté au panier.</div>
+            </div>
+            <button class="toast__close" aria-label="Fermer">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 6: MINIMAL TOAST
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">6. Minimal Toast</h2>
+      <p class="section__description">Toasts minimalistes style pill</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Pill Style</h3>
+          <div class="toast-demo">
+            <div class="toast toast--minimal">
+              <svg class="toast__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #10b981; width: 18px; height: 18px;">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+              <div class="toast__content">
+                <div class="toast__title">Copié dans le presse-papier</div>
+              </div>
+            </div>
+
+            <div class="toast toast--minimal">
+              <svg class="toast__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #3b82f6; width: 18px; height: 18px;">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+              </svg>
+              <div class="toast__content">
+                <div class="toast__title">Upload en cours...</div>
+              </div>
+            </div>
+
+            <div class="toast toast--minimal">
+              <svg class="toast__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #ef4444; width: 18px; height: 18px;">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+              <div class="toast__content">
+                <div class="toast__title">Échec de la connexion</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 7: TOAST ANIMATIONS
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">7. Toast Animations</h2>
+      <p class="section__description">Différentes animations d'apparition</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Slide Up</h3>
+          <div class="toast toast--slide-up toast--info">
+            <svg class="toast__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+            </svg>
+            <div class="toast__content">
+              <div class="toast__title">Animation Slide Up</div>
+              <div class="toast__message">Ce toast glisse vers le haut.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Bounce</h3>
+          <div class="toast toast--bounce toast--success">
+            <svg class="toast__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <div class="toast__content">
+              <div class="toast__title">Animation Bounce</div>
+              <div class="toast__message">Ce toast rebondit à l'apparition.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Shake (Error)</h3>
+          <div class="toast toast--shake toast--error">
+            <svg class="toast__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <div class="toast__content">
+              <div class="toast__title">Animation Shake</div>
+              <div class="toast__message">Ce toast tremble pour attirer l'attention.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 8: STACKED TOASTS
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">8. Stacked Toasts</h2>
+      <p class="section__description">Toasts empilés les uns sur les autres</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Stack Preview</h3>
+          <div class="toast-stack">
+            <div class="toast toast--success">
+              <svg class="toast__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              <div class="toast__content">
+                <div class="toast__title">Notification 1</div>
+                <div class="toast__message">Premier message de la pile.</div>
+              </div>
+            </div>
+            <div class="toast toast--info">
+              <svg class="toast__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              <div class="toast__content">
+                <div class="toast__title">Notification 2</div>
+                <div class="toast__message">Deuxième message.</div>
+              </div>
+            </div>
+            <div class="toast toast--warning">
+              <svg class="toast__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+              </svg>
+              <div class="toast__content">
+                <div class="toast__title">Notification 3</div>
+                <div class="toast__message">Troisième message.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 9: COMPACT TOAST
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">9. Compact Toast</h2>
+      <p class="section__description">Toasts compacts pour moins d'intrusion</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Small Size</h3>
+          <div class="toast-demo">
+            <div class="toast toast--compact toast--success">
+              <svg class="toast__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+              <div class="toast__content">
+                <div class="toast__title">Sauvegardé</div>
+              </div>
+            </div>
+
+            <div class="toast toast--compact toast--error">
+              <svg class="toast__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+              <div class="toast__content">
+                <div class="toast__title">Erreur réseau</div>
+              </div>
+            </div>
+
+            <div class="toast toast--compact toast--info">
+              <svg class="toast__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              <div class="toast__content">
+                <div class="toast__title">3 nouveaux messages</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 10: EMOJI TOAST
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">10. Emoji Toast</h2>
+      <p class="section__description">Toasts avec emojis au lieu d'icônes</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Fun Emojis</h3>
+          <div class="toast-demo">
+            <div class="toast">
+              <span class="toast__emoji">🎉</span>
+              <div class="toast__content">
+                <div class="toast__title">Félicitations !</div>
+                <div class="toast__message">Vous avez atteint votre objectif.</div>
+              </div>
+            </div>
+
+            <div class="toast">
+              <span class="toast__emoji">💾</span>
+              <div class="toast__content">
+                <div class="toast__title">Sauvegardé</div>
+                <div class="toast__message">Toutes les modifications sont enregistrées.</div>
+              </div>
+            </div>
+
+            <div class="toast">
+              <span class="toast__emoji">🔔</span>
+              <div class="toast__content">
+                <div class="toast__title">Rappel</div>
+                <div class="toast__message">Réunion dans 15 minutes.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 11: TOAST WITH LINK
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">11. Toast with Link</h2>
+      <p class="section__description">Toasts avec liens cliquables</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">With View Link</h3>
+          <div class="toast toast--info">
+            <svg class="toast__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+            </svg>
+            <div class="toast__content">
+              <div class="toast__title">Nouvelle mise à jour</div>
+              <div class="toast__message">Version 2.0 est disponible. <a href="#" class="toast__link">Voir les nouveautés</a></div>
+            </div>
+            <button class="toast__close" aria-label="Fermer">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 12: LOADING TOAST
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">12. Loading Toast</h2>
+      <p class="section__description">Toast avec état de chargement</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Spinner</h3>
+          <div class="toast toast--loading">
+            <svg class="toast__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #667eea;">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+            </svg>
+            <div class="toast__content">
+              <div class="toast__title">Chargement en cours</div>
+              <div class="toast__message">Veuillez patienter...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 13: DARK/LIGHT VARIANTS
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">13. Dark/Light Variants</h2>
+      <p class="section__description">Toasts avec thèmes clair et sombre</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Light Theme</h3>
+          <div class="toast toast--light toast--success">
+            <svg class="toast__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <div class="toast__content">
+              <div class="toast__title">Mode clair</div>
+              <div class="toast__message">Ce toast est en thème clair.</div>
+            </div>
+            <button class="toast__close" aria-label="Fermer">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Dark Theme</h3>
+          <div class="toast toast--dark toast--info">
+            <svg class="toast__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <div class="toast__content">
+              <div class="toast__title">Mode sombre</div>
+              <div class="toast__message">Ce toast est en thème sombre.</div>
+            </div>
+            <button class="toast__close" aria-label="Fermer">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>

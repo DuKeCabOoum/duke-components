@@ -1,0 +1,2034 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Steppers — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+</head>
+<body>
+  <div class="app">
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+      <a href="../../index.html" class="sidebar__logo">
+        <span>Duke</span>-components
+      </a>
+
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Steppers</h3>
+        <ul class="sidebar__nav">
+          <li><a href="#horizontal" class="sidebar__link sidebar__link--active">Horizontal</a></li>
+          <li><a href="#vertical" class="sidebar__link">Vertical</a></li>
+          <li><a href="#progress" class="sidebar__link">Progress</a></li>
+          <li><a href="#icons" class="sidebar__link">With Icons</a></li>
+          <li><a href="#dots" class="sidebar__link">Dots</a></li>
+          <li><a href="#animated" class="sidebar__link">Animated</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar__section">
+        <a href="../../index.html" class="sidebar__link">← Retour</a>
+      </div>
+
+      <!-- Toggle Admin -->
+      <div class="admin-toggle">
+        <span class="admin-toggle__label">Mode Admin</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="admin-toggle">
+          <span class="toggle-switch__slider"></span>
+        </label>
+      </div>
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main">
+      <header class="main__header">
+        <h1 class="main__title">📶 Steppers / Wizards</h1>
+        <p class="main__subtitle">Indicateurs de progression multi-étapes — 6 styles pour guider vos utilisateurs.</p>
+      </header>
+
+      <!-- ========== HORIZONTAL SECTION ========== -->
+      <section id="horizontal" class="section">
+        <h2 class="section__title">Horizontal Steppers</h2>
+        <p class="section__desc">Steppers horizontaux classiques avec numéros.</p>
+
+        <div class="components-grid components-grid--wide">
+          <!-- HORIZONTAL STEPPER BASIC -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 32px 24px;">
+              <div class="stepper-h">
+                <div class="stepper-h__step stepper-h__step--completed">
+                  <div class="stepper-h__circle">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </div>
+                  <span class="stepper-h__label">Panier</span>
+                </div>
+                <div class="stepper-h__connector stepper-h__connector--completed"></div>
+                <div class="stepper-h__step stepper-h__step--active">
+                  <div class="stepper-h__circle">2</div>
+                  <span class="stepper-h__label">Livraison</span>
+                </div>
+                <div class="stepper-h__connector"></div>
+                <div class="stepper-h__step">
+                  <div class="stepper-h__circle">3</div>
+                  <span class="stepper-h__label">Paiement</span>
+                </div>
+                <div class="stepper-h__connector"></div>
+                <div class="stepper-h__step">
+                  <div class="stepper-h__circle">4</div>
+                  <span class="stepper-h__label">Confirmation</span>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Classic Horizontal</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">stepper</span>
+                <span class="tag">horizontal</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="stepper-h-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="stepper-h-html"><code>&lt;div class="stepper-h"&gt;
+  &lt;div class="stepper-h__step stepper-h__step--completed"&gt;
+    &lt;div class="stepper-h__circle"&gt;✓&lt;/div&gt;
+    &lt;span class="stepper-h__label"&gt;Panier&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="stepper-h__connector stepper-h__connector--completed"&gt;&lt;/div&gt;
+  &lt;div class="stepper-h__step stepper-h__step--active"&gt;
+    &lt;div class="stepper-h__circle"&gt;2&lt;/div&gt;
+    &lt;span class="stepper-h__label"&gt;Livraison&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="stepper-h__connector"&gt;&lt;/div&gt;
+  &lt;div class="stepper-h__step"&gt;
+    &lt;div class="stepper-h__circle"&gt;3&lt;/div&gt;
+    &lt;span class="stepper-h__label"&gt;Paiement&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="stepper-h-css" style="display:none"><code>.stepper-h {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.stepper-h__step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.stepper-h__circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #2a2a3e;
+  border: 2px solid #3a3a4e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: #666;
+  transition: all 0.3s ease;
+}
+
+.stepper-h__step--active .stepper-h__circle {
+  background: #6366f1;
+  border-color: #6366f1;
+  color: white;
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+}
+
+.stepper-h__step--completed .stepper-h__circle {
+  background: #10b981;
+  border-color: #10b981;
+  color: white;
+}
+
+.stepper-h__label {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.stepper-h__step--active .stepper-h__label,
+.stepper-h__step--completed .stepper-h__label {
+  color: #fff;
+}
+
+.stepper-h__connector {
+  width: 60px;
+  height: 2px;
+  background: #3a3a4e;
+  margin-top: 20px;
+}
+
+.stepper-h__connector--completed {
+  background: #10b981;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- HORIZONTAL STEPPER GRADIENT -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 32px 24px;">
+              <div class="stepper-gradient">
+                <div class="stepper-gradient__track">
+                  <div class="stepper-gradient__progress" style="width: 40%;"></div>
+                </div>
+                <div class="stepper-gradient__steps">
+                  <div class="stepper-gradient__step stepper-gradient__step--completed">
+                    <span class="stepper-gradient__dot"></span>
+                    <span class="stepper-gradient__text">Compte</span>
+                  </div>
+                  <div class="stepper-gradient__step stepper-gradient__step--active">
+                    <span class="stepper-gradient__dot"></span>
+                    <span class="stepper-gradient__text">Profil</span>
+                  </div>
+                  <div class="stepper-gradient__step">
+                    <span class="stepper-gradient__dot"></span>
+                    <span class="stepper-gradient__text">Préférences</span>
+                  </div>
+                  <div class="stepper-gradient__step">
+                    <span class="stepper-gradient__dot"></span>
+                    <span class="stepper-gradient__text">Terminé</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Gradient Track</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">stepper</span>
+                <span class="tag">gradient</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="stepper-gradient-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="stepper-gradient-html"><code>&lt;div class="stepper-gradient"&gt;
+  &lt;div class="stepper-gradient__track"&gt;
+    &lt;div class="stepper-gradient__progress" style="width: 40%;"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="stepper-gradient__steps"&gt;
+    &lt;div class="stepper-gradient__step stepper-gradient__step--completed"&gt;
+      &lt;span class="stepper-gradient__dot"&gt;&lt;/span&gt;
+      &lt;span class="stepper-gradient__text"&gt;Compte&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;!-- More steps... --&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="stepper-gradient-css" style="display:none"><code>.stepper-gradient {
+  width: 100%;
+  max-width: 400px;
+}
+
+.stepper-gradient__track {
+  height: 4px;
+  background: #2a2a3e;
+  border-radius: 2px;
+  margin-bottom: 12px;
+}
+
+.stepper-gradient__progress {
+  height: 100%;
+  background: linear-gradient(90deg, #6366f1, #a855f7);
+  border-radius: 2px;
+  transition: width 0.5s ease;
+}
+
+.stepper-gradient__steps {
+  display: flex;
+  justify-content: space-between;
+}
+
+.stepper-gradient__step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.stepper-gradient__dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #2a2a3e;
+  border: 3px solid #3a3a4e;
+  transition: all 0.3s ease;
+}
+
+.stepper-gradient__step--completed .stepper-gradient__dot,
+.stepper-gradient__step--active .stepper-gradient__dot {
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  border-color: transparent;
+}
+
+.stepper-gradient__step--active .stepper-gradient__dot {
+  box-shadow: 0 0 15px rgba(99, 102, 241, 0.5);
+}
+
+.stepper-gradient__text {
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.stepper-gradient__step--completed .stepper-gradient__text,
+.stepper-gradient__step--active .stepper-gradient__text {
+  color: #fff;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== VERTICAL SECTION ========== -->
+      <section id="vertical" class="section">
+        <h2 class="section__title">Vertical Steppers</h2>
+        <p class="section__desc">Steppers verticaux style timeline.</p>
+
+        <div class="components-grid">
+          <!-- VERTICAL STEPPER -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <div class="stepper-v">
+                <div class="stepper-v__step stepper-v__step--completed">
+                  <div class="stepper-v__marker">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </div>
+                  <div class="stepper-v__content">
+                    <h4 class="stepper-v__title">Informations personnelles</h4>
+                    <p class="stepper-v__desc">Nom, email et téléphone renseignés</p>
+                  </div>
+                </div>
+                <div class="stepper-v__step stepper-v__step--active">
+                  <div class="stepper-v__marker">2</div>
+                  <div class="stepper-v__content">
+                    <h4 class="stepper-v__title">Adresse de livraison</h4>
+                    <p class="stepper-v__desc">Saisissez votre adresse complète</p>
+                  </div>
+                </div>
+                <div class="stepper-v__step">
+                  <div class="stepper-v__marker">3</div>
+                  <div class="stepper-v__content">
+                    <h4 class="stepper-v__title">Mode de paiement</h4>
+                    <p class="stepper-v__desc">Carte bancaire ou PayPal</p>
+                  </div>
+                </div>
+                <div class="stepper-v__step">
+                  <div class="stepper-v__marker">4</div>
+                  <div class="stepper-v__content">
+                    <h4 class="stepper-v__title">Récapitulatif</h4>
+                    <p class="stepper-v__desc">Vérification finale</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Vertical Timeline</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">stepper</span>
+                <span class="tag">vertical</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="stepper-v-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="stepper-v-html"><code>&lt;div class="stepper-v"&gt;
+  &lt;div class="stepper-v__step stepper-v__step--completed"&gt;
+    &lt;div class="stepper-v__marker"&gt;✓&lt;/div&gt;
+    &lt;div class="stepper-v__content"&gt;
+      &lt;h4 class="stepper-v__title"&gt;Informations&lt;/h4&gt;
+      &lt;p class="stepper-v__desc"&gt;Description...&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="stepper-v__step stepper-v__step--active"&gt;
+    &lt;div class="stepper-v__marker"&gt;2&lt;/div&gt;
+    &lt;div class="stepper-v__content"&gt;...&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="stepper-v-css" style="display:none"><code>.stepper-v {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.stepper-v__step {
+  display: flex;
+  gap: 16px;
+  padding-bottom: 24px;
+  position: relative;
+}
+
+.stepper-v__step:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: 17px;
+  top: 40px;
+  bottom: 0;
+  width: 2px;
+  background: #3a3a4e;
+}
+
+.stepper-v__step--completed:not(:last-child)::before {
+  background: #10b981;
+}
+
+.stepper-v__marker {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #2a2a3e;
+  border: 2px solid #3a3a4e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #666;
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+.stepper-v__step--active .stepper-v__marker {
+  background: #6366f1;
+  border-color: #6366f1;
+  color: white;
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+}
+
+.stepper-v__step--completed .stepper-v__marker {
+  background: #10b981;
+  border-color: #10b981;
+  color: white;
+}
+
+.stepper-v__content {
+  flex: 1;
+  padding-top: 4px;
+}
+
+.stepper-v__title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #888;
+  margin-bottom: 4px;
+}
+
+.stepper-v__step--active .stepper-v__title,
+.stepper-v__step--completed .stepper-v__title {
+  color: #fff;
+}
+
+.stepper-v__desc {
+  font-size: 0.8rem;
+  color: #666;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- VERTICAL COMPACT -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <div class="stepper-compact">
+                <div class="stepper-compact__item stepper-compact__item--done">
+                  <span class="stepper-compact__bullet"></span>
+                  <span class="stepper-compact__text">Créer un compte</span>
+                </div>
+                <div class="stepper-compact__item stepper-compact__item--done">
+                  <span class="stepper-compact__bullet"></span>
+                  <span class="stepper-compact__text">Vérifier l'email</span>
+                </div>
+                <div class="stepper-compact__item stepper-compact__item--current">
+                  <span class="stepper-compact__bullet"></span>
+                  <span class="stepper-compact__text">Compléter le profil</span>
+                </div>
+                <div class="stepper-compact__item">
+                  <span class="stepper-compact__bullet"></span>
+                  <span class="stepper-compact__text">Choisir un plan</span>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Compact Vertical</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">stepper</span>
+                <span class="tag">compact</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="stepper-compact-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="stepper-compact-html"><code>&lt;div class="stepper-compact"&gt;
+  &lt;div class="stepper-compact__item stepper-compact__item--done"&gt;
+    &lt;span class="stepper-compact__bullet"&gt;&lt;/span&gt;
+    &lt;span class="stepper-compact__text"&gt;Créer un compte&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="stepper-compact__item stepper-compact__item--current"&gt;
+    &lt;span class="stepper-compact__bullet"&gt;&lt;/span&gt;
+    &lt;span class="stepper-compact__text"&gt;Compléter le profil&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="stepper-compact-css" style="display:none"><code>.stepper-compact {
+  display: flex;
+  flex-direction: column;
+}
+
+.stepper-compact__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  position: relative;
+}
+
+.stepper-compact__item:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 32px;
+  height: calc(100% - 20px);
+  width: 2px;
+  background: #3a3a4e;
+}
+
+.stepper-compact__item--done:not(:last-child)::before {
+  background: linear-gradient(180deg, #10b981 0%, #10b981 100%);
+}
+
+.stepper-compact__bullet {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #3a3a4e;
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+.stepper-compact__item--done .stepper-compact__bullet {
+  background: #10b981;
+}
+
+.stepper-compact__item--current .stepper-compact__bullet {
+  background: #6366f1;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+}
+
+.stepper-compact__text {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.stepper-compact__item--done .stepper-compact__text {
+  color: #888;
+  text-decoration: line-through;
+}
+
+.stepper-compact__item--current .stepper-compact__text {
+  color: #fff;
+  font-weight: 500;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== PROGRESS SECTION ========== -->
+      <section id="progress" class="section">
+        <h2 class="section__title">Progress Steppers</h2>
+        <p class="section__desc">Steppers avec barre de progression visuelle.</p>
+
+        <div class="components-grid components-grid--wide">
+          <!-- PROGRESS BAR STEPPER -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 32px 24px;">
+              <div class="stepper-progress">
+                <div class="stepper-progress__bar">
+                  <div class="stepper-progress__fill" style="width: 66%;"></div>
+                  <div class="stepper-progress__markers">
+                    <span class="stepper-progress__marker stepper-progress__marker--done"></span>
+                    <span class="stepper-progress__marker stepper-progress__marker--done"></span>
+                    <span class="stepper-progress__marker stepper-progress__marker--active"></span>
+                    <span class="stepper-progress__marker"></span>
+                  </div>
+                </div>
+                <div class="stepper-progress__labels">
+                  <span class="stepper-progress__label stepper-progress__label--done">Détails</span>
+                  <span class="stepper-progress__label stepper-progress__label--done">Adresse</span>
+                  <span class="stepper-progress__label stepper-progress__label--active">Paiement</span>
+                  <span class="stepper-progress__label">Confirmation</span>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Progress Bar</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">stepper</span>
+                <span class="tag">progress</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="stepper-progress-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="stepper-progress-html"><code>&lt;div class="stepper-progress"&gt;
+  &lt;div class="stepper-progress__bar"&gt;
+    &lt;div class="stepper-progress__fill" style="width: 66%;"&gt;&lt;/div&gt;
+    &lt;div class="stepper-progress__markers"&gt;
+      &lt;span class="stepper-progress__marker stepper-progress__marker--done"&gt;&lt;/span&gt;
+      &lt;span class="stepper-progress__marker stepper-progress__marker--active"&gt;&lt;/span&gt;
+      &lt;span class="stepper-progress__marker"&gt;&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="stepper-progress__labels"&gt;...&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="stepper-progress-css" style="display:none"><code>.stepper-progress {
+  width: 100%;
+  max-width: 450px;
+}
+
+.stepper-progress__bar {
+  position: relative;
+  height: 6px;
+  background: #2a2a3e;
+  border-radius: 3px;
+  margin-bottom: 24px;
+}
+
+.stepper-progress__fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+.stepper-progress__markers {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: space-between;
+}
+
+.stepper-progress__marker {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #2a2a3e;
+  border: 3px solid #3a3a4e;
+}
+
+.stepper-progress__marker--done {
+  background: #8b5cf6;
+  border-color: #8b5cf6;
+}
+
+.stepper-progress__marker--active {
+  background: #fff;
+  border-color: #8b5cf6;
+  box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.3);
+}
+
+.stepper-progress__labels {
+  display: flex;
+  justify-content: space-between;
+}
+
+.stepper-progress__label {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.stepper-progress__label--done,
+.stepper-progress__label--active {
+  color: #fff;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== ICONS SECTION ========== -->
+      <section id="icons" class="section">
+        <h2 class="section__title">Icon Steppers</h2>
+        <p class="section__desc">Steppers avec icônes au lieu de numéros.</p>
+
+        <div class="components-grid components-grid--wide">
+          <!-- ICON STEPPER -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 32px 24px;">
+              <div class="stepper-icons">
+                <div class="stepper-icons__step stepper-icons__step--completed">
+                  <div class="stepper-icons__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                      <circle cx="9" cy="7" r="4"></circle>
+                    </svg>
+                  </div>
+                  <span class="stepper-icons__label">Compte</span>
+                </div>
+                <div class="stepper-icons__line stepper-icons__line--completed"></div>
+                <div class="stepper-icons__step stepper-icons__step--active">
+                  <div class="stepper-icons__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                      <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                  </div>
+                  <span class="stepper-icons__label">Adresse</span>
+                </div>
+                <div class="stepper-icons__line"></div>
+                <div class="stepper-icons__step">
+                  <div class="stepper-icons__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                      <line x1="1" y1="10" x2="23" y2="10"></line>
+                    </svg>
+                  </div>
+                  <span class="stepper-icons__label">Paiement</span>
+                </div>
+                <div class="stepper-icons__line"></div>
+                <div class="stepper-icons__step">
+                  <div class="stepper-icons__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </div>
+                  <span class="stepper-icons__label">Terminé</span>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Icon Steps</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">stepper</span>
+                <span class="tag">icons</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="stepper-icons-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="stepper-icons-html"><code>&lt;div class="stepper-icons"&gt;
+  &lt;div class="stepper-icons__step stepper-icons__step--completed"&gt;
+    &lt;div class="stepper-icons__icon"&gt;
+      &lt;svg&gt;...&lt;/svg&gt;
+    &lt;/div&gt;
+    &lt;span class="stepper-icons__label"&gt;Compte&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="stepper-icons__line stepper-icons__line--completed"&gt;&lt;/div&gt;
+  &lt;div class="stepper-icons__step stepper-icons__step--active"&gt;...&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="stepper-icons-css" style="display:none"><code>.stepper-icons {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.stepper-icons__step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.stepper-icons__icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: #242438;
+  border: 2px solid #3a3a4e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.stepper-icons__icon svg {
+  width: 24px;
+  height: 24px;
+  stroke: #666;
+}
+
+.stepper-icons__step--active .stepper-icons__icon {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  border-color: transparent;
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
+}
+
+.stepper-icons__step--active .stepper-icons__icon svg {
+  stroke: white;
+}
+
+.stepper-icons__step--completed .stepper-icons__icon {
+  background: #10b981;
+  border-color: #10b981;
+}
+
+.stepper-icons__step--completed .stepper-icons__icon svg {
+  stroke: white;
+}
+
+.stepper-icons__label {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.stepper-icons__step--active .stepper-icons__label,
+.stepper-icons__step--completed .stepper-icons__label {
+  color: #fff;
+}
+
+.stepper-icons__line {
+  width: 50px;
+  height: 2px;
+  background: #3a3a4e;
+  margin-top: 28px;
+}
+
+.stepper-icons__line--completed {
+  background: #10b981;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== DOTS SECTION ========== -->
+      <section id="dots" class="section">
+        <h2 class="section__title">Dot Steppers</h2>
+        <p class="section__desc">Steppers minimalistes avec points.</p>
+
+        <div class="components-grid">
+          <!-- DOTS STEPPER -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 32px 24px;">
+              <div class="stepper-dots">
+                <span class="stepper-dots__dot stepper-dots__dot--done"></span>
+                <span class="stepper-dots__dot stepper-dots__dot--done"></span>
+                <span class="stepper-dots__dot stepper-dots__dot--active"></span>
+                <span class="stepper-dots__dot"></span>
+                <span class="stepper-dots__dot"></span>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Simple Dots</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">stepper</span>
+                <span class="tag">minimal</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="stepper-dots-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="stepper-dots-html"><code>&lt;div class="stepper-dots"&gt;
+  &lt;span class="stepper-dots__dot stepper-dots__dot--done"&gt;&lt;/span&gt;
+  &lt;span class="stepper-dots__dot stepper-dots__dot--active"&gt;&lt;/span&gt;
+  &lt;span class="stepper-dots__dot"&gt;&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="stepper-dots-css" style="display:none"><code>.stepper-dots {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.stepper-dots__dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #3a3a4e;
+  transition: all 0.3s ease;
+}
+
+.stepper-dots__dot--done {
+  background: #6366f1;
+}
+
+.stepper-dots__dot--active {
+  background: #6366f1;
+  transform: scale(1.5);
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- PILL DOTS STEPPER -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 32px 24px;">
+              <div class="stepper-pills">
+                <span class="stepper-pills__pill stepper-pills__pill--done"></span>
+                <span class="stepper-pills__pill stepper-pills__pill--active"></span>
+                <span class="stepper-pills__pill"></span>
+                <span class="stepper-pills__pill"></span>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Pill Indicators</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">stepper</span>
+                <span class="tag">pills</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="stepper-pills-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="stepper-pills-html"><code>&lt;div class="stepper-pills"&gt;
+  &lt;span class="stepper-pills__pill stepper-pills__pill--done"&gt;&lt;/span&gt;
+  &lt;span class="stepper-pills__pill stepper-pills__pill--active"&gt;&lt;/span&gt;
+  &lt;span class="stepper-pills__pill"&gt;&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="stepper-pills-css" style="display:none"><code>.stepper-pills {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stepper-pills__pill {
+  width: 24px;
+  height: 6px;
+  border-radius: 3px;
+  background: #3a3a4e;
+  transition: all 0.3s ease;
+}
+
+.stepper-pills__pill--done {
+  background: #6366f1;
+}
+
+.stepper-pills__pill--active {
+  width: 48px;
+  background: linear-gradient(90deg, #6366f1, #a855f7);
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- NUMBERED PILLS -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 32px 24px;">
+              <div class="stepper-numbered">
+                <div class="stepper-numbered__item stepper-numbered__item--done">
+                  <span class="stepper-numbered__num">1</span>
+                </div>
+                <div class="stepper-numbered__item stepper-numbered__item--done">
+                  <span class="stepper-numbered__num">2</span>
+                </div>
+                <div class="stepper-numbered__item stepper-numbered__item--active">
+                  <span class="stepper-numbered__num">3</span>
+                </div>
+                <div class="stepper-numbered__item">
+                  <span class="stepper-numbered__num">4</span>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Numbered Pills</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">stepper</span>
+                <span class="tag">numbered</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="stepper-numbered-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="stepper-numbered-html"><code>&lt;div class="stepper-numbered"&gt;
+  &lt;div class="stepper-numbered__item stepper-numbered__item--done"&gt;
+    &lt;span class="stepper-numbered__num"&gt;1&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="stepper-numbered__item stepper-numbered__item--active"&gt;
+    &lt;span class="stepper-numbered__num"&gt;2&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="stepper-numbered-css" style="display:none"><code>.stepper-numbered {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #242438;
+  padding: 8px;
+  border-radius: 24px;
+}
+
+.stepper-numbered__item {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.stepper-numbered__num {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #666;
+}
+
+.stepper-numbered__item--done {
+  background: #10b981;
+}
+
+.stepper-numbered__item--done .stepper-numbered__num {
+  color: white;
+}
+
+.stepper-numbered__item--active {
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.stepper-numbered__item--active .stepper-numbered__num {
+  color: white;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== ANIMATED SECTION ========== -->
+      <section id="animated" class="section">
+        <h2 class="section__title">Animated Steppers</h2>
+        <p class="section__desc">Steppers avec animations et effets visuels.</p>
+
+        <div class="components-grid">
+          <!-- PULSE STEPPER -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 32px 24px;">
+              <div class="stepper-pulse">
+                <div class="stepper-pulse__step stepper-pulse__step--done">
+                  <div class="stepper-pulse__ring"></div>
+                  <span>1</span>
+                </div>
+                <div class="stepper-pulse__line stepper-pulse__line--done"></div>
+                <div class="stepper-pulse__step stepper-pulse__step--active">
+                  <div class="stepper-pulse__ring"></div>
+                  <span>2</span>
+                </div>
+                <div class="stepper-pulse__line"></div>
+                <div class="stepper-pulse__step">
+                  <div class="stepper-pulse__ring"></div>
+                  <span>3</span>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Pulse Animation</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">stepper</span>
+                <span class="tag">animated</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="stepper-pulse-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="stepper-pulse-html"><code>&lt;div class="stepper-pulse"&gt;
+  &lt;div class="stepper-pulse__step stepper-pulse__step--done"&gt;
+    &lt;div class="stepper-pulse__ring"&gt;&lt;/div&gt;
+    &lt;span&gt;1&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="stepper-pulse__line stepper-pulse__line--done"&gt;&lt;/div&gt;
+  &lt;div class="stepper-pulse__step stepper-pulse__step--active"&gt;
+    &lt;div class="stepper-pulse__ring"&gt;&lt;/div&gt;
+    &lt;span&gt;2&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="stepper-pulse-css" style="display:none"><code>.stepper-pulse {
+  display: flex;
+  align-items: center;
+}
+
+.stepper-pulse__step {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #2a2a3e;
+  border: 2px solid #3a3a4e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: #666;
+  position: relative;
+}
+
+.stepper-pulse__ring {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+}
+
+.stepper-pulse__step--active {
+  background: #6366f1;
+  border-color: #6366f1;
+  color: white;
+}
+
+.stepper-pulse__step--active .stepper-pulse__ring {
+  border-color: rgba(99, 102, 241, 0.5);
+  animation: stepper-pulse-ring 2s ease-out infinite;
+}
+
+.stepper-pulse__step--done {
+  background: #10b981;
+  border-color: #10b981;
+  color: white;
+}
+
+.stepper-pulse__line {
+  width: 60px;
+  height: 2px;
+  background: #3a3a4e;
+}
+
+.stepper-pulse__line--done {
+  background: #10b981;
+}
+
+@keyframes stepper-pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- GLOW STEPPER -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 32px 24px;">
+              <div class="stepper-glow">
+                <div class="stepper-glow__step stepper-glow__step--done">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+                <div class="stepper-glow__connector stepper-glow__connector--done"></div>
+                <div class="stepper-glow__step stepper-glow__step--active">
+                  <span>2</span>
+                </div>
+                <div class="stepper-glow__connector"></div>
+                <div class="stepper-glow__step">
+                  <span>3</span>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Neon Glow</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">stepper</span>
+                <span class="tag">glow</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="stepper-glow-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="stepper-glow-html"><code>&lt;div class="stepper-glow"&gt;
+  &lt;div class="stepper-glow__step stepper-glow__step--done"&gt;
+    &lt;svg&gt;...checkmark...&lt;/svg&gt;
+  &lt;/div&gt;
+  &lt;div class="stepper-glow__connector stepper-glow__connector--done"&gt;&lt;/div&gt;
+  &lt;div class="stepper-glow__step stepper-glow__step--active"&gt;
+    &lt;span&gt;2&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="stepper-glow-css" style="display:none"><code>.stepper-glow {
+  display: flex;
+  align-items: center;
+}
+
+.stepper-glow__step {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: transparent;
+  border: 2px solid #3a3a4e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: #666;
+  transition: all 0.3s ease;
+}
+
+.stepper-glow__step svg {
+  width: 20px;
+  height: 20px;
+}
+
+.stepper-glow__step--active {
+  border-color: #00d4ff;
+  color: #00d4ff;
+  box-shadow:
+    0 0 10px rgba(0, 212, 255, 0.5),
+    0 0 20px rgba(0, 212, 255, 0.3),
+    0 0 30px rgba(0, 212, 255, 0.2),
+    inset 0 0 10px rgba(0, 212, 255, 0.1);
+  animation: stepper-glow-pulse 2s ease-in-out infinite;
+}
+
+.stepper-glow__step--done {
+  border-color: #00ff88;
+  color: #00ff88;
+  box-shadow:
+    0 0 10px rgba(0, 255, 136, 0.4),
+    0 0 20px rgba(0, 255, 136, 0.2);
+}
+
+.stepper-glow__connector {
+  width: 50px;
+  height: 2px;
+  background: #3a3a4e;
+}
+
+.stepper-glow__connector--done {
+  background: #00ff88;
+  box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
+
+@keyframes stepper-glow-pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 10px rgba(0, 212, 255, 0.5),
+      0 0 20px rgba(0, 212, 255, 0.3),
+      0 0 30px rgba(0, 212, 255, 0.2),
+      inset 0 0 10px rgba(0, 212, 255, 0.1);
+  }
+  50% {
+    box-shadow:
+      0 0 15px rgba(0, 212, 255, 0.7),
+      0 0 30px rgba(0, 212, 255, 0.4),
+      0 0 45px rgba(0, 212, 255, 0.3),
+      inset 0 0 15px rgba(0, 212, 255, 0.2);
+  }
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ==================== STYLES ==================== -->
+  <style>
+    /* ========== KEYFRAMES ========== */
+    @keyframes stepper-pulse-ring {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1.5);
+        opacity: 0;
+      }
+    }
+
+    @keyframes stepper-glow-pulse {
+      0%, 100% {
+        box-shadow:
+          0 0 10px rgba(0, 212, 255, 0.5),
+          0 0 20px rgba(0, 212, 255, 0.3),
+          0 0 30px rgba(0, 212, 255, 0.2),
+          inset 0 0 10px rgba(0, 212, 255, 0.1);
+      }
+      50% {
+        box-shadow:
+          0 0 15px rgba(0, 212, 255, 0.7),
+          0 0 30px rgba(0, 212, 255, 0.4),
+          0 0 45px rgba(0, 212, 255, 0.3),
+          inset 0 0 15px rgba(0, 212, 255, 0.2);
+      }
+    }
+
+    /* ========== HORIZONTAL STEPPER ========== */
+    .stepper-h {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    .stepper-h__step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .stepper-h__circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #2a2a3e;
+      border: 2px solid #3a3a4e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: #666;
+      transition: all 0.3s ease;
+    }
+
+    .stepper-h__circle svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .stepper-h__step--active .stepper-h__circle {
+      background: #6366f1;
+      border-color: #6366f1;
+      color: white;
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+    }
+
+    .stepper-h__step--completed .stepper-h__circle {
+      background: #10b981;
+      border-color: #10b981;
+      color: white;
+    }
+
+    .stepper-h__label {
+      font-size: 0.8rem;
+      color: #666;
+      white-space: nowrap;
+    }
+
+    .stepper-h__step--active .stepper-h__label,
+    .stepper-h__step--completed .stepper-h__label {
+      color: #fff;
+    }
+
+    .stepper-h__connector {
+      width: 50px;
+      height: 2px;
+      background: #3a3a4e;
+      margin-top: 20px;
+    }
+
+    .stepper-h__connector--completed {
+      background: #10b981;
+    }
+
+    /* ========== GRADIENT STEPPER ========== */
+    .stepper-gradient {
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .stepper-gradient__track {
+      height: 4px;
+      background: #2a2a3e;
+      border-radius: 2px;
+      margin-bottom: 12px;
+    }
+
+    .stepper-gradient__progress {
+      height: 100%;
+      background: linear-gradient(90deg, #6366f1, #a855f7);
+      border-radius: 2px;
+      transition: width 0.5s ease;
+    }
+
+    .stepper-gradient__steps {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .stepper-gradient__step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .stepper-gradient__dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #2a2a3e;
+      border: 3px solid #3a3a4e;
+      transition: all 0.3s ease;
+    }
+
+    .stepper-gradient__step--completed .stepper-gradient__dot,
+    .stepper-gradient__step--active .stepper-gradient__dot {
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      border-color: transparent;
+    }
+
+    .stepper-gradient__step--active .stepper-gradient__dot {
+      box-shadow: 0 0 15px rgba(99, 102, 241, 0.5);
+    }
+
+    .stepper-gradient__text {
+      font-size: 0.75rem;
+      color: #666;
+    }
+
+    .stepper-gradient__step--completed .stepper-gradient__text,
+    .stepper-gradient__step--active .stepper-gradient__text {
+      color: #fff;
+    }
+
+    /* ========== VERTICAL STEPPER ========== */
+    .stepper-v {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      width: 260px;
+    }
+
+    .stepper-v__step {
+      display: flex;
+      gap: 16px;
+      padding-bottom: 24px;
+      position: relative;
+    }
+
+    .stepper-v__step:not(:last-child)::before {
+      content: '';
+      position: absolute;
+      left: 17px;
+      top: 40px;
+      bottom: 0;
+      width: 2px;
+      background: #3a3a4e;
+    }
+
+    .stepper-v__step--completed:not(:last-child)::before {
+      background: #10b981;
+    }
+
+    .stepper-v__marker {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #2a2a3e;
+      border: 2px solid #3a3a4e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #666;
+      flex-shrink: 0;
+      z-index: 1;
+    }
+
+    .stepper-v__marker svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .stepper-v__step--active .stepper-v__marker {
+      background: #6366f1;
+      border-color: #6366f1;
+      color: white;
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+    }
+
+    .stepper-v__step--completed .stepper-v__marker {
+      background: #10b981;
+      border-color: #10b981;
+      color: white;
+    }
+
+    .stepper-v__content {
+      flex: 1;
+      padding-top: 4px;
+    }
+
+    .stepper-v__title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #888;
+      margin: 0 0 4px 0;
+    }
+
+    .stepper-v__step--active .stepper-v__title,
+    .stepper-v__step--completed .stepper-v__title {
+      color: #fff;
+    }
+
+    .stepper-v__desc {
+      font-size: 0.75rem;
+      color: #666;
+      margin: 0;
+    }
+
+    /* ========== COMPACT STEPPER ========== */
+    .stepper-compact {
+      display: flex;
+      flex-direction: column;
+      width: 200px;
+    }
+
+    .stepper-compact__item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+      position: relative;
+    }
+
+    .stepper-compact__item:not(:last-child)::before {
+      content: '';
+      position: absolute;
+      left: 5px;
+      top: 32px;
+      height: calc(100% - 20px);
+      width: 2px;
+      background: #3a3a4e;
+    }
+
+    .stepper-compact__item--done:not(:last-child)::before {
+      background: linear-gradient(180deg, #10b981 0%, #10b981 100%);
+    }
+
+    .stepper-compact__bullet {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #3a3a4e;
+      flex-shrink: 0;
+      z-index: 1;
+    }
+
+    .stepper-compact__item--done .stepper-compact__bullet {
+      background: #10b981;
+    }
+
+    .stepper-compact__item--current .stepper-compact__bullet {
+      background: #6366f1;
+      box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+    }
+
+    .stepper-compact__text {
+      font-size: 0.85rem;
+      color: #666;
+    }
+
+    .stepper-compact__item--done .stepper-compact__text {
+      color: #888;
+      text-decoration: line-through;
+    }
+
+    .stepper-compact__item--current .stepper-compact__text {
+      color: #fff;
+      font-weight: 500;
+    }
+
+    /* ========== PROGRESS STEPPER ========== */
+    .stepper-progress {
+      width: 100%;
+      max-width: 450px;
+    }
+
+    .stepper-progress__bar {
+      position: relative;
+      height: 6px;
+      background: #2a2a3e;
+      border-radius: 3px;
+      margin-bottom: 24px;
+    }
+
+    .stepper-progress__fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      background: linear-gradient(90deg, #6366f1, #8b5cf6);
+      border-radius: 3px;
+      transition: width 0.5s ease;
+    }
+
+    .stepper-progress__markers {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      transform: translateY(-50%);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .stepper-progress__marker {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #2a2a3e;
+      border: 3px solid #3a3a4e;
+    }
+
+    .stepper-progress__marker--done {
+      background: #8b5cf6;
+      border-color: #8b5cf6;
+    }
+
+    .stepper-progress__marker--active {
+      background: #fff;
+      border-color: #8b5cf6;
+      box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.3);
+    }
+
+    .stepper-progress__labels {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .stepper-progress__label {
+      font-size: 0.75rem;
+      color: #666;
+    }
+
+    .stepper-progress__label--done,
+    .stepper-progress__label--active {
+      color: #fff;
+    }
+
+    /* ========== ICON STEPPER ========== */
+    .stepper-icons {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    .stepper-icons__step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .stepper-icons__icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background: #242438;
+      border: 2px solid #3a3a4e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .stepper-icons__icon svg {
+      width: 24px;
+      height: 24px;
+      stroke: #666;
+    }
+
+    .stepper-icons__step--active .stepper-icons__icon {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border-color: transparent;
+      box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
+    }
+
+    .stepper-icons__step--active .stepper-icons__icon svg {
+      stroke: white;
+    }
+
+    .stepper-icons__step--completed .stepper-icons__icon {
+      background: #10b981;
+      border-color: #10b981;
+    }
+
+    .stepper-icons__step--completed .stepper-icons__icon svg {
+      stroke: white;
+    }
+
+    .stepper-icons__label {
+      font-size: 0.8rem;
+      color: #666;
+    }
+
+    .stepper-icons__step--active .stepper-icons__label,
+    .stepper-icons__step--completed .stepper-icons__label {
+      color: #fff;
+    }
+
+    .stepper-icons__line {
+      width: 40px;
+      height: 2px;
+      background: #3a3a4e;
+      margin-top: 28px;
+    }
+
+    .stepper-icons__line--completed {
+      background: #10b981;
+    }
+
+    /* ========== DOTS STEPPER ========== */
+    .stepper-dots {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .stepper-dots__dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #3a3a4e;
+      transition: all 0.3s ease;
+    }
+
+    .stepper-dots__dot--done {
+      background: #6366f1;
+    }
+
+    .stepper-dots__dot--active {
+      background: #6366f1;
+      transform: scale(1.5);
+      box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+    }
+
+    /* ========== PILLS STEPPER ========== */
+    .stepper-pills {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .stepper-pills__pill {
+      width: 24px;
+      height: 6px;
+      border-radius: 3px;
+      background: #3a3a4e;
+      transition: all 0.3s ease;
+    }
+
+    .stepper-pills__pill--done {
+      background: #6366f1;
+    }
+
+    .stepper-pills__pill--active {
+      width: 48px;
+      background: linear-gradient(90deg, #6366f1, #a855f7);
+    }
+
+    /* ========== NUMBERED STEPPER ========== */
+    .stepper-numbered {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #242438;
+      padding: 8px;
+      border-radius: 24px;
+    }
+
+    .stepper-numbered__item {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .stepper-numbered__num {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #666;
+    }
+
+    .stepper-numbered__item--done {
+      background: #10b981;
+    }
+
+    .stepper-numbered__item--done .stepper-numbered__num {
+      color: white;
+    }
+
+    .stepper-numbered__item--active {
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    }
+
+    .stepper-numbered__item--active .stepper-numbered__num {
+      color: white;
+    }
+
+    /* ========== PULSE STEPPER ========== */
+    .stepper-pulse {
+      display: flex;
+      align-items: center;
+    }
+
+    .stepper-pulse__step {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #2a2a3e;
+      border: 2px solid #3a3a4e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: #666;
+      position: relative;
+    }
+
+    .stepper-pulse__ring {
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+    }
+
+    .stepper-pulse__step--active {
+      background: #6366f1;
+      border-color: #6366f1;
+      color: white;
+    }
+
+    .stepper-pulse__step--active .stepper-pulse__ring {
+      border-color: rgba(99, 102, 241, 0.5);
+      animation: stepper-pulse-ring 2s ease-out infinite;
+    }
+
+    .stepper-pulse__step--done {
+      background: #10b981;
+      border-color: #10b981;
+      color: white;
+    }
+
+    .stepper-pulse__line {
+      width: 60px;
+      height: 2px;
+      background: #3a3a4e;
+    }
+
+    .stepper-pulse__line--done {
+      background: #10b981;
+    }
+
+    /* ========== GLOW STEPPER ========== */
+    .stepper-glow {
+      display: flex;
+      align-items: center;
+    }
+
+    .stepper-glow__step {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: transparent;
+      border: 2px solid #3a3a4e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: #666;
+      transition: all 0.3s ease;
+    }
+
+    .stepper-glow__step svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .stepper-glow__step--active {
+      border-color: #00d4ff;
+      color: #00d4ff;
+      box-shadow:
+        0 0 10px rgba(0, 212, 255, 0.5),
+        0 0 20px rgba(0, 212, 255, 0.3),
+        0 0 30px rgba(0, 212, 255, 0.2),
+        inset 0 0 10px rgba(0, 212, 255, 0.1);
+      animation: stepper-glow-pulse 2s ease-in-out infinite;
+    }
+
+    .stepper-glow__step--done {
+      border-color: #00ff88;
+      color: #00ff88;
+      box-shadow:
+        0 0 10px rgba(0, 255, 136, 0.4),
+        0 0 20px rgba(0, 255, 136, 0.2);
+    }
+
+    .stepper-glow__step--done svg {
+      stroke: #00ff88;
+    }
+
+    .stepper-glow__connector {
+      width: 50px;
+      height: 2px;
+      background: #3a3a4e;
+    }
+
+    .stepper-glow__connector--done {
+      background: #00ff88;
+      box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+    }
+
+    /* ========== GRID WIDE ========== */
+    .components-grid--wide .component-card {
+      grid-column: span 2;
+    }
+
+    @media (max-width: 768px) {
+      .components-grid--wide .component-card {
+        grid-column: span 1;
+      }
+    }
+  </style>
+
+  <!-- ==================== SCRIPTS ==================== -->
+  <script src="../../assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,1606 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dropdowns - Duke Components</title>
+  <style>
+    /* ========================================
+       BASE STYLES
+    ======================================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      min-height: 100vh;
+      padding: 40px 20px;
+      color: #fff;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .page-title {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .page-subtitle {
+      text-align: center;
+      color: #a0a0b0;
+      margin-bottom: 3rem;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #667eea;
+      text-decoration: none;
+      margin-bottom: 2rem;
+      transition: color 0.3s ease;
+    }
+
+    .back-link:hover {
+      color: #764ba2;
+    }
+
+    /* ========================================
+       SECTION STYLES
+    ======================================== */
+    .section {
+      margin-bottom: 4rem;
+    }
+
+    .section__title {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: #fff;
+    }
+
+    .section__description {
+      color: #a0a0b0;
+      margin-bottom: 1.5rem;
+    }
+
+    .component-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .component-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      min-height: 300px;
+    }
+
+    .component-card__title {
+      font-size: 0.875rem;
+      color: #a0a0b0;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* ========================================
+       1. BASIC DROPDOWN (CSS-only avec :focus-within)
+    ======================================== */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown__trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .dropdown__trigger:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: #667eea;
+    }
+
+    .dropdown__trigger:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+    }
+
+    .dropdown__arrow {
+      width: 16px;
+      height: 16px;
+      transition: transform 0.3s ease;
+    }
+
+    .dropdown__menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      min-width: 200px;
+      background: #2a2a3e;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 8px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      z-index: 100;
+    }
+
+    .dropdown:focus-within .dropdown__menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .dropdown:focus-within .dropdown__arrow {
+      transform: rotate(180deg);
+    }
+
+    .dropdown__item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      color: #a0a0b0;
+      font-size: 0.875rem;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      width: 100%;
+      text-align: left;
+    }
+
+    .dropdown__item:hover {
+      background: rgba(102, 126, 234, 0.1);
+      color: #fff;
+    }
+
+    .dropdown__item--active {
+      background: rgba(102, 126, 234, 0.2);
+      color: #667eea;
+    }
+
+    .dropdown__item-icon {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .dropdown__divider {
+      height: 1px;
+      background: rgba(255, 255, 255, 0.1);
+      margin: 8px 0;
+    }
+
+    /* ========================================
+       2. DROPDOWN WITH HEADER
+    ======================================== */
+    .dropdown__header {
+      padding: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      margin: -8px -8px 8px;
+      border-radius: 12px 12px 0 0;
+    }
+
+    .dropdown__header-title {
+      font-weight: 600;
+      color: #fff;
+      font-size: 0.875rem;
+    }
+
+    .dropdown__header-subtitle {
+      font-size: 0.75rem;
+      color: #666;
+      margin-top: 2px;
+    }
+
+    /* ========================================
+       3. PRIMARY/COLORED DROPDOWN
+    ======================================== */
+    .dropdown--primary .dropdown__trigger {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border: none;
+    }
+
+    .dropdown--primary .dropdown__trigger:hover {
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .dropdown--success .dropdown__trigger {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      border: none;
+    }
+
+    .dropdown--danger .dropdown__trigger {
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+      border: none;
+    }
+
+    /* ========================================
+       4. ICON ONLY DROPDOWN
+    ======================================== */
+    .dropdown--icon-only .dropdown__trigger {
+      padding: 12px;
+      border-radius: 50%;
+    }
+
+    .dropdown--icon-only .dropdown__trigger svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* ========================================
+       5. SELECT DROPDOWN (CSS-only avec checkbox)
+    ======================================== */
+    .select-dropdown {
+      position: relative;
+      width: 100%;
+    }
+
+    .select-dropdown__toggle {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .select-dropdown__trigger {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .select-dropdown__trigger:hover {
+      border-color: #667eea;
+    }
+
+    .select-dropdown__arrow {
+      width: 16px;
+      height: 16px;
+      color: #666;
+      transition: transform 0.3s ease;
+    }
+
+    .select-dropdown__menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      right: 0;
+      background: #2a2a3e;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 8px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      z-index: 100;
+      max-height: 250px;
+      overflow-y: auto;
+    }
+
+    .select-dropdown__toggle:checked ~ .select-dropdown__trigger {
+      border-color: #667eea;
+    }
+
+    .select-dropdown__toggle:checked ~ .select-dropdown__trigger .select-dropdown__arrow {
+      transform: rotate(180deg);
+    }
+
+    .select-dropdown__toggle:checked ~ .select-dropdown__menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .select-dropdown__option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      color: #a0a0b0;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .select-dropdown__option:hover {
+      background: rgba(102, 126, 234, 0.1);
+      color: #fff;
+    }
+
+    .select-dropdown__option--selected {
+      background: rgba(102, 126, 234, 0.2);
+      color: #667eea;
+    }
+
+    .select-dropdown__check {
+      width: 16px;
+      height: 16px;
+      margin-left: auto;
+      opacity: 0;
+    }
+
+    .select-dropdown__option--selected .select-dropdown__check {
+      opacity: 1;
+    }
+
+    /* ========================================
+       6. PROFILE DROPDOWN
+    ======================================== */
+    .profile-dropdown {
+      position: relative;
+    }
+
+    .profile-dropdown__trigger {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 16px 8px 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .profile-dropdown__trigger:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .profile-dropdown__trigger:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .profile-dropdown__avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.875rem;
+    }
+
+    .profile-dropdown__info {
+      text-align: left;
+    }
+
+    .profile-dropdown__name {
+      font-weight: 500;
+      color: #fff;
+      font-size: 0.875rem;
+    }
+
+    .profile-dropdown__role {
+      font-size: 0.75rem;
+      color: #666;
+    }
+
+    .profile-dropdown__menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      min-width: 240px;
+      background: #2a2a3e;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 8px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      z-index: 100;
+    }
+
+    .profile-dropdown:focus-within .profile-dropdown__menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .profile-dropdown__menu-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      margin: -8px -8px 8px;
+    }
+
+    .profile-dropdown__menu-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 1.25rem;
+    }
+
+    .profile-dropdown__menu-info {
+      flex: 1;
+    }
+
+    .profile-dropdown__menu-name {
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .profile-dropdown__menu-email {
+      font-size: 0.75rem;
+      color: #666;
+    }
+
+    /* ========================================
+       7. NOTIFICATION DROPDOWN
+    ======================================== */
+    .notification-dropdown {
+      position: relative;
+    }
+
+    .notification-dropdown__trigger {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      border-radius: 50%;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .notification-dropdown__trigger:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .notification-dropdown__trigger:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+    }
+
+    .notification-dropdown__trigger svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .notification-dropdown__badge {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      min-width: 18px;
+      height: 18px;
+      padding: 0 5px;
+      background: #ef4444;
+      border-radius: 9px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: badge-pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes badge-pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .notification-dropdown__menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      width: 320px;
+      background: #2a2a3e;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      z-index: 100;
+    }
+
+    .notification-dropdown:focus-within .notification-dropdown__menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .notification-dropdown__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .notification-dropdown__title {
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .notification-dropdown__mark-read {
+      font-size: 0.75rem;
+      color: #667eea;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .notification-dropdown__list {
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .notification-item {
+      display: flex;
+      gap: 12px;
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      transition: background 0.2s ease;
+      cursor: pointer;
+    }
+
+    .notification-item:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .notification-item--unread {
+      background: rgba(102, 126, 234, 0.05);
+    }
+
+    .notification-item__icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .notification-item__icon--success {
+      background: rgba(16, 185, 129, 0.2);
+      color: #10b981;
+    }
+
+    .notification-item__icon--warning {
+      background: rgba(245, 158, 11, 0.2);
+      color: #f59e0b;
+    }
+
+    .notification-item__icon--info {
+      background: rgba(59, 130, 246, 0.2);
+      color: #3b82f6;
+    }
+
+    .notification-item__icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .notification-item__content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .notification-item__text {
+      font-size: 0.875rem;
+      color: #fff;
+      line-height: 1.4;
+    }
+
+    .notification-item__time {
+      font-size: 0.75rem;
+      color: #666;
+      margin-top: 4px;
+    }
+
+    .notification-dropdown__footer {
+      padding: 12px 16px;
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .notification-dropdown__view-all {
+      font-size: 0.875rem;
+      color: #667eea;
+      text-decoration: none;
+    }
+
+    .notification-dropdown__view-all:hover {
+      text-decoration: underline;
+    }
+
+    /* ========================================
+       8. ACTION DROPDOWN (3 dots)
+    ======================================== */
+    .action-dropdown {
+      position: relative;
+    }
+
+    .action-dropdown__trigger {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: transparent;
+      border: none;
+      border-radius: 8px;
+      color: #a0a0b0;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .action-dropdown__trigger:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    .action-dropdown__trigger:focus {
+      outline: none;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .action-dropdown__trigger svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .action-dropdown__menu {
+      position: absolute;
+      top: calc(100% + 4px);
+      right: 0;
+      min-width: 160px;
+      background: #2a2a3e;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 4px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px) scale(0.95);
+      transition: all 0.2s ease;
+      z-index: 100;
+    }
+
+    .action-dropdown:focus-within .action-dropdown__menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+    }
+
+    .action-dropdown__item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      color: #a0a0b0;
+      font-size: 0.8125rem;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      width: 100%;
+      text-align: left;
+    }
+
+    .action-dropdown__item:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    .action-dropdown__item--danger:hover {
+      background: rgba(239, 68, 68, 0.1);
+      color: #ef4444;
+    }
+
+    .action-dropdown__item svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* ========================================
+       9. MEGA MENU (Large dropdown)
+    ======================================== */
+    .mega-dropdown {
+      position: relative;
+    }
+
+    .mega-dropdown__trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .mega-dropdown__trigger:hover {
+      color: #667eea;
+    }
+
+    .mega-dropdown__trigger:focus {
+      outline: none;
+    }
+
+    .mega-dropdown__arrow {
+      width: 16px;
+      height: 16px;
+      transition: transform 0.3s ease;
+    }
+
+    .mega-dropdown__menu {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-10px);
+      width: 600px;
+      background: #2a2a3e;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 100;
+    }
+
+    .mega-dropdown:focus-within .mega-dropdown__menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .mega-dropdown:focus-within .mega-dropdown__arrow {
+      transform: rotate(180deg);
+    }
+
+    .mega-dropdown__grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .mega-dropdown__section {
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+    }
+
+    .mega-dropdown__section-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #667eea;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+
+    .mega-dropdown__link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px;
+      border-radius: 8px;
+      color: #a0a0b0;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .mega-dropdown__link:hover {
+      background: rgba(102, 126, 234, 0.1);
+      color: #fff;
+    }
+
+    .mega-dropdown__link-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(102, 126, 234, 0.2);
+      color: #667eea;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mega-dropdown__link-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .mega-dropdown__link-text {
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .mega-dropdown__link-desc {
+      font-size: 0.75rem;
+      color: #666;
+    }
+
+    /* ========================================
+       10. SEARCHABLE DROPDOWN
+    ======================================== */
+    .search-dropdown {
+      position: relative;
+      width: 100%;
+    }
+
+    .search-dropdown__toggle {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .search-dropdown__trigger {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .search-dropdown__trigger:hover {
+      border-color: #667eea;
+    }
+
+    .search-dropdown__trigger svg {
+      width: 18px;
+      height: 18px;
+      color: #666;
+    }
+
+    .search-dropdown__placeholder {
+      flex: 1;
+      color: #666;
+    }
+
+    .search-dropdown__menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      right: 0;
+      background: #2a2a3e;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      z-index: 100;
+    }
+
+    .search-dropdown__toggle:checked ~ .search-dropdown__menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .search-dropdown__search {
+      padding: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .search-dropdown__input {
+      width: 100%;
+      padding: 10px 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 0.875rem;
+    }
+
+    .search-dropdown__input::placeholder {
+      color: #666;
+    }
+
+    .search-dropdown__input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .search-dropdown__list {
+      max-height: 200px;
+      overflow-y: auto;
+      padding: 8px;
+    }
+
+    .search-dropdown__option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      color: #a0a0b0;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .search-dropdown__option:hover {
+      background: rgba(102, 126, 234, 0.1);
+      color: #fff;
+    }
+
+    .search-dropdown__option-flag {
+      font-size: 1.25rem;
+    }
+
+    /* ========================================
+       11. DROPDOWN POSITIONS
+    ======================================== */
+    .dropdown--up .dropdown__menu {
+      top: auto;
+      bottom: calc(100% + 8px);
+    }
+
+    .dropdown--right .dropdown__menu {
+      left: auto;
+      right: 0;
+    }
+
+    .dropdown--left .dropdown__menu {
+      left: 0;
+      right: auto;
+    }
+
+    /* ========================================
+       12. ANIMATED DROPDOWN
+    ======================================== */
+    .dropdown--animated .dropdown__menu {
+      transform-origin: top center;
+      transform: scaleY(0);
+    }
+
+    .dropdown--animated:focus-within .dropdown__menu {
+      transform: scaleY(1);
+    }
+
+    /* Stagger animation for items */
+    .dropdown--stagger .dropdown__item {
+      opacity: 0;
+      transform: translateX(-10px);
+    }
+
+    .dropdown--stagger:focus-within .dropdown__item {
+      animation: stagger-in 0.3s ease forwards;
+    }
+
+    .dropdown--stagger:focus-within .dropdown__item:nth-child(1) { animation-delay: 0.05s; }
+    .dropdown--stagger:focus-within .dropdown__item:nth-child(2) { animation-delay: 0.1s; }
+    .dropdown--stagger:focus-within .dropdown__item:nth-child(3) { animation-delay: 0.15s; }
+    .dropdown--stagger:focus-within .dropdown__item:nth-child(4) { animation-delay: 0.2s; }
+    .dropdown--stagger:focus-within .dropdown__item:nth-child(5) { animation-delay: 0.25s; }
+
+    @keyframes stagger-in {
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* ========================================
+       RESPONSIVE
+    ======================================== */
+    @media (max-width: 768px) {
+      .page-title {
+        font-size: 2rem;
+      }
+
+      .component-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .mega-dropdown__menu {
+        width: 300px;
+      }
+
+      .mega-dropdown__grid {
+        grid-template-columns: 1fr;
+      }
+
+      .notification-dropdown__menu {
+        width: 280px;
+        right: -100px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="../../index.html" class="back-link">
+      <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+      </svg>
+      Retour
+    </a>
+
+    <h1 class="page-title">Dropdowns</h1>
+    <p class="page-subtitle">12 types de menus déroulants interactifs en CSS pur</p>
+
+    <!-- ================================
+         SECTION 1: BASIC DROPDOWNS
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">1. Basic Dropdowns</h2>
+      <p class="section__description">Menus déroulants simples avec :focus-within</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Standard</h3>
+          <div class="dropdown">
+            <button class="dropdown__trigger">
+              Options
+              <svg class="dropdown__arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+            <div class="dropdown__menu">
+              <a href="#" class="dropdown__item">
+                <svg class="dropdown__item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                </svg>
+                Modifier
+              </a>
+              <a href="#" class="dropdown__item">
+                <svg class="dropdown__item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                </svg>
+                Dupliquer
+              </a>
+              <div class="dropdown__divider"></div>
+              <a href="#" class="dropdown__item" style="color: #ef4444;">
+                <svg class="dropdown__item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                </svg>
+                Supprimer
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Primary</h3>
+          <div class="dropdown dropdown--primary">
+            <button class="dropdown__trigger">
+              Actions
+              <svg class="dropdown__arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+            <div class="dropdown__menu">
+              <a href="#" class="dropdown__item">Nouvelle tâche</a>
+              <a href="#" class="dropdown__item">Nouveau projet</a>
+              <a href="#" class="dropdown__item">Nouveau dossier</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">With Header</h3>
+          <div class="dropdown">
+            <button class="dropdown__trigger">
+              Compte
+              <svg class="dropdown__arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+            <div class="dropdown__menu">
+              <div class="dropdown__header">
+                <div class="dropdown__header-title">Mon compte</div>
+                <div class="dropdown__header-subtitle">john@example.com</div>
+              </div>
+              <a href="#" class="dropdown__item">Profil</a>
+              <a href="#" class="dropdown__item">Paramètres</a>
+              <div class="dropdown__divider"></div>
+              <a href="#" class="dropdown__item">Déconnexion</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 2: SELECT DROPDOWN
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">2. Select Dropdown</h2>
+      <p class="section__description">Dropdown de sélection style select natif</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Basic Select</h3>
+          <label class="select-dropdown">
+            <input type="checkbox" class="select-dropdown__toggle">
+            <div class="select-dropdown__trigger">
+              <span>Sélectionner une option</span>
+              <svg class="select-dropdown__arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </div>
+            <div class="select-dropdown__menu">
+              <div class="select-dropdown__option select-dropdown__option--selected">
+                Option 1
+                <svg class="select-dropdown__check" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                </svg>
+              </div>
+              <div class="select-dropdown__option">Option 2</div>
+              <div class="select-dropdown__option">Option 3</div>
+              <div class="select-dropdown__option">Option 4</div>
+              <div class="select-dropdown__option">Option 5</div>
+            </div>
+          </label>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Searchable Select</h3>
+          <label class="search-dropdown">
+            <input type="checkbox" class="search-dropdown__toggle">
+            <div class="search-dropdown__trigger">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              </svg>
+              <span class="search-dropdown__placeholder">Rechercher un pays...</span>
+            </div>
+            <div class="search-dropdown__menu">
+              <div class="search-dropdown__search">
+                <input type="text" class="search-dropdown__input" placeholder="Tapez pour rechercher...">
+              </div>
+              <div class="search-dropdown__list">
+                <div class="search-dropdown__option">
+                  <span class="search-dropdown__option-flag">🇫🇷</span>
+                  France
+                </div>
+                <div class="search-dropdown__option">
+                  <span class="search-dropdown__option-flag">🇩🇪</span>
+                  Allemagne
+                </div>
+                <div class="search-dropdown__option">
+                  <span class="search-dropdown__option-flag">🇪🇸</span>
+                  Espagne
+                </div>
+                <div class="search-dropdown__option">
+                  <span class="search-dropdown__option-flag">🇮🇹</span>
+                  Italie
+                </div>
+                <div class="search-dropdown__option">
+                  <span class="search-dropdown__option-flag">🇬🇧</span>
+                  Royaume-Uni
+                </div>
+              </div>
+            </div>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 3: PROFILE DROPDOWN
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">3. Profile Dropdown</h2>
+      <p class="section__description">Menu utilisateur avec avatar</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">User Menu</h3>
+          <div class="profile-dropdown">
+            <button class="profile-dropdown__trigger">
+              <div class="profile-dropdown__avatar">JD</div>
+              <div class="profile-dropdown__info">
+                <div class="profile-dropdown__name">John Doe</div>
+                <div class="profile-dropdown__role">Admin</div>
+              </div>
+            </button>
+            <div class="profile-dropdown__menu">
+              <div class="profile-dropdown__menu-header">
+                <div class="profile-dropdown__menu-avatar">JD</div>
+                <div class="profile-dropdown__menu-info">
+                  <div class="profile-dropdown__menu-name">John Doe</div>
+                  <div class="profile-dropdown__menu-email">john@example.com</div>
+                </div>
+              </div>
+              <a href="#" class="dropdown__item">
+                <svg class="dropdown__item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                </svg>
+                Mon profil
+              </a>
+              <a href="#" class="dropdown__item">
+                <svg class="dropdown__item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+                Paramètres
+              </a>
+              <a href="#" class="dropdown__item">
+                <svg class="dropdown__item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                Aide
+              </a>
+              <div class="dropdown__divider"></div>
+              <a href="#" class="dropdown__item" style="color: #ef4444;">
+                <svg class="dropdown__item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                </svg>
+                Déconnexion
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 4: NOTIFICATION DROPDOWN
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">4. Notification Dropdown</h2>
+      <p class="section__description">Menu de notifications avec badge</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Notifications</h3>
+          <div class="notification-dropdown">
+            <button class="notification-dropdown__trigger">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+              </svg>
+              <span class="notification-dropdown__badge">3</span>
+            </button>
+            <div class="notification-dropdown__menu">
+              <div class="notification-dropdown__header">
+                <span class="notification-dropdown__title">Notifications</span>
+                <button class="notification-dropdown__mark-read">Tout marquer comme lu</button>
+              </div>
+              <div class="notification-dropdown__list">
+                <div class="notification-item notification-item--unread">
+                  <div class="notification-item__icon notification-item__icon--success">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                  </div>
+                  <div class="notification-item__content">
+                    <p class="notification-item__text">Votre commande a été expédiée</p>
+                    <span class="notification-item__time">Il y a 5 minutes</span>
+                  </div>
+                </div>
+                <div class="notification-item notification-item--unread">
+                  <div class="notification-item__icon notification-item__icon--warning">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                    </svg>
+                  </div>
+                  <div class="notification-item__content">
+                    <p class="notification-item__text">Mise à jour de sécurité disponible</p>
+                    <span class="notification-item__time">Il y a 1 heure</span>
+                  </div>
+                </div>
+                <div class="notification-item">
+                  <div class="notification-item__icon notification-item__icon--info">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                  </div>
+                  <div class="notification-item__content">
+                    <p class="notification-item__text">Nouveau commentaire sur votre article</p>
+                    <span class="notification-item__time">Hier</span>
+                  </div>
+                </div>
+              </div>
+              <div class="notification-dropdown__footer">
+                <a href="#" class="notification-dropdown__view-all">Voir toutes les notifications</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 5: ACTION DROPDOWN
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">5. Action Dropdown</h2>
+      <p class="section__description">Menu d'actions contextuel (3 points)</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Kebab Menu</h3>
+          <div class="action-dropdown">
+            <button class="action-dropdown__trigger">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"/>
+              </svg>
+            </button>
+            <div class="action-dropdown__menu">
+              <a href="#" class="action-dropdown__item">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                </svg>
+                Voir
+              </a>
+              <a href="#" class="action-dropdown__item">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                </svg>
+                Modifier
+              </a>
+              <a href="#" class="action-dropdown__item action-dropdown__item--danger">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                </svg>
+                Supprimer
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Icon Only (Settings)</h3>
+          <div class="dropdown dropdown--icon-only">
+            <button class="dropdown__trigger">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+            </button>
+            <div class="dropdown__menu">
+              <a href="#" class="dropdown__item">Apparence</a>
+              <a href="#" class="dropdown__item">Langue</a>
+              <a href="#" class="dropdown__item">Accessibilité</a>
+              <div class="dropdown__divider"></div>
+              <a href="#" class="dropdown__item">Avancé</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 6: MEGA MENU
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">6. Mega Menu</h2>
+      <p class="section__description">Grand menu déroulant avec plusieurs colonnes</p>
+
+      <div class="component-grid">
+        <div class="component-card" style="grid-column: 1 / -1; overflow: visible;">
+          <h3 class="component-card__title">Multi-Column Menu</h3>
+          <div style="display: flex; justify-content: center;">
+            <div class="mega-dropdown">
+              <button class="mega-dropdown__trigger">
+                Produits
+                <svg class="mega-dropdown__arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+              </button>
+              <div class="mega-dropdown__menu">
+                <div class="mega-dropdown__grid">
+                  <div class="mega-dropdown__section">
+                    <h4 class="mega-dropdown__section-title">Analytics</h4>
+                    <a href="#" class="mega-dropdown__link">
+                      <div class="mega-dropdown__link-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        </svg>
+                      </div>
+                      <div>
+                        <div class="mega-dropdown__link-text">Dashboard</div>
+                        <div class="mega-dropdown__link-desc">Vue d'ensemble</div>
+                      </div>
+                    </a>
+                    <a href="#" class="mega-dropdown__link">
+                      <div class="mega-dropdown__link-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/>
+                        </svg>
+                      </div>
+                      <div>
+                        <div class="mega-dropdown__link-text">Rapports</div>
+                        <div class="mega-dropdown__link-desc">Analyses détaillées</div>
+                      </div>
+                    </a>
+                  </div>
+                  <div class="mega-dropdown__section">
+                    <h4 class="mega-dropdown__section-title">Outils</h4>
+                    <a href="#" class="mega-dropdown__link">
+                      <div class="mega-dropdown__link-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/>
+                        </svg>
+                      </div>
+                      <div>
+                        <div class="mega-dropdown__link-text">Automatisation</div>
+                        <div class="mega-dropdown__link-desc">Workflows</div>
+                      </div>
+                    </a>
+                    <a href="#" class="mega-dropdown__link">
+                      <div class="mega-dropdown__link-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                      </div>
+                      <div>
+                        <div class="mega-dropdown__link-text">Intégrations</div>
+                        <div class="mega-dropdown__link-desc">API & Webhooks</div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 7: ANIMATED DROPDOWN
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">7. Animated Dropdown</h2>
+      <p class="section__description">Dropdowns avec animations d'apparition</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Stagger Animation</h3>
+          <div class="dropdown dropdown--stagger">
+            <button class="dropdown__trigger">
+              Animation
+              <svg class="dropdown__arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+            <div class="dropdown__menu">
+              <a href="#" class="dropdown__item">Premier élément</a>
+              <a href="#" class="dropdown__item">Deuxième élément</a>
+              <a href="#" class="dropdown__item">Troisième élément</a>
+              <a href="#" class="dropdown__item">Quatrième élément</a>
+              <a href="#" class="dropdown__item">Cinquième élément</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Scale Animation</h3>
+          <div class="dropdown dropdown--animated">
+            <button class="dropdown__trigger">
+              Scale
+              <svg class="dropdown__arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+            <div class="dropdown__menu">
+              <a href="#" class="dropdown__item">Option A</a>
+              <a href="#" class="dropdown__item">Option B</a>
+              <a href="#" class="dropdown__item">Option C</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 8: COLOR VARIANTS
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">8. Color Variants</h2>
+      <p class="section__description">Dropdowns avec différentes couleurs</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Success</h3>
+          <div class="dropdown dropdown--success">
+            <button class="dropdown__trigger">
+              Succès
+              <svg class="dropdown__arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+            <div class="dropdown__menu">
+              <a href="#" class="dropdown__item">Valider</a>
+              <a href="#" class="dropdown__item">Approuver</a>
+              <a href="#" class="dropdown__item">Confirmer</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Danger</h3>
+          <div class="dropdown dropdown--danger">
+            <button class="dropdown__trigger">
+              Danger
+              <svg class="dropdown__arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+            <div class="dropdown__menu">
+              <a href="#" class="dropdown__item">Supprimer</a>
+              <a href="#" class="dropdown__item">Archiver</a>
+              <a href="#" class="dropdown__item">Annuler</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>

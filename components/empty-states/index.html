@@ -1,0 +1,1793 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Empty States — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+</head>
+<body>
+  <div class="app">
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+      <a href="../../index.html" class="sidebar__logo">
+        <span>Duke</span>-components
+      </a>
+
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Empty States</h3>
+        <ul class="sidebar__nav">
+          <li><a href="#empty" class="sidebar__link sidebar__link--active">Empty Data</a></li>
+          <li><a href="#search" class="sidebar__link">No Results</a></li>
+          <li><a href="#errors" class="sidebar__link">Errors</a></li>
+          <li><a href="#success" class="sidebar__link">Success</a></li>
+          <li><a href="#special" class="sidebar__link">Special</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar__section">
+        <a href="../../index.html" class="sidebar__link">← Retour</a>
+      </div>
+
+      <!-- Toggle Admin -->
+      <div class="admin-toggle">
+        <span class="admin-toggle__label">Mode Admin</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="admin-toggle">
+          <span class="toggle-switch__slider"></span>
+        </label>
+      </div>
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main">
+      <header class="main__header">
+        <h1 class="main__title">📭 Empty States & Errors</h1>
+        <p class="main__subtitle">États vides, erreurs et pages spéciales — 10 designs pour chaque situation.</p>
+      </header>
+
+      <!-- ========== EMPTY DATA SECTION ========== -->
+      <section id="empty" class="section">
+        <h2 class="section__title">Empty Data States</h2>
+        <p class="section__desc">Quand il n'y a pas encore de données à afficher.</p>
+
+        <div class="components-grid">
+          <!-- NO DATA -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <div class="empty-state">
+                <div class="empty-state__icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/>
+                    <path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/>
+                  </svg>
+                </div>
+                <h3 class="empty-state__title">Aucune donnée</h3>
+                <p class="empty-state__text">Commencez par ajouter vos premiers éléments</p>
+                <button class="empty-state__btn">Ajouter un élément</button>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">No Data</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">empty</span>
+                <span class="tag">minimal</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="empty-state-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="empty-state-html"><code>&lt;div class="empty-state"&gt;
+  &lt;div class="empty-state__icon"&gt;
+    &lt;svg&gt;...&lt;/svg&gt;
+  &lt;/div&gt;
+  &lt;h3 class="empty-state__title"&gt;Aucune donnée&lt;/h3&gt;
+  &lt;p class="empty-state__text"&gt;Commencez par ajouter...&lt;/p&gt;
+  &lt;button class="empty-state__btn"&gt;Ajouter&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="empty-state-css" style="display:none"><code>.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.empty-state__icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
+  background: rgba(99, 102, 241, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.empty-state__icon svg {
+  width: 40px;
+  height: 40px;
+  stroke: #6366f1;
+}
+
+.empty-state__title {
+  font-size: 1.1rem;
+  color: #fff;
+  margin: 0 0 8px;
+}
+
+.empty-state__text {
+  font-size: 0.85rem;
+  color: #888;
+  margin: 0 0 20px;
+}
+
+.empty-state__btn {
+  padding: 10px 24px;
+  background: #6366f1;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- EMPTY CART -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <div class="empty-cart">
+                <div class="empty-cart__visual">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="9" cy="21" r="1"/>
+                    <circle cx="20" cy="21" r="1"/>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
+                  </svg>
+                  <span class="empty-cart__badge">0</span>
+                </div>
+                <h3 class="empty-cart__title">Votre panier est vide</h3>
+                <p class="empty-cart__text">Explorez nos produits et trouvez ce qui vous plaît !</p>
+                <button class="empty-cart__btn">Voir les produits</button>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Empty Cart</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">empty</span>
+                <span class="tag">cart</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="empty-cart-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="empty-cart-html"><code>&lt;div class="empty-cart"&gt;
+  &lt;div class="empty-cart__visual"&gt;
+    &lt;svg&gt;...cart icon...&lt;/svg&gt;
+    &lt;span class="empty-cart__badge"&gt;0&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;h3 class="empty-cart__title"&gt;Votre panier est vide&lt;/h3&gt;
+  &lt;p class="empty-cart__text"&gt;Explorez nos produits...&lt;/p&gt;
+  &lt;button class="empty-cart__btn"&gt;Voir les produits&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="empty-cart-css" style="display:none"><code>.empty-cart {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.empty-cart__visual {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.empty-cart__visual svg {
+  width: 64px;
+  height: 64px;
+  stroke: #666;
+}
+
+.empty-cart__badge {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  width: 24px;
+  height: 24px;
+  background: #ef4444;
+  color: white;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.empty-cart__title {
+  font-size: 1.1rem;
+  color: #fff;
+  margin: 0 0 8px;
+}
+
+.empty-cart__text {
+  font-size: 0.85rem;
+  color: #888;
+  margin: 0 0 20px;
+}
+
+.empty-cart__btn {
+  padding: 12px 28px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+  border: none;
+  border-radius: 24px;
+  cursor: pointer;
+  font-weight: 500;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== SEARCH SECTION ========== -->
+      <section id="search" class="section">
+        <h2 class="section__title">No Results States</h2>
+        <p class="section__desc">Quand une recherche ne retourne aucun résultat.</p>
+
+        <div class="components-grid">
+          <!-- NO RESULTS -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <div class="no-results">
+                <div class="no-results__icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="M21 21l-4.35-4.35"/>
+                    <path d="M8 8l6 6M14 8l-6 6"/>
+                  </svg>
+                </div>
+                <h3 class="no-results__title">Aucun résultat</h3>
+                <p class="no-results__text">Aucun résultat pour "<strong>votre recherche</strong>"</p>
+                <div class="no-results__suggestions">
+                  <p>Suggestions :</p>
+                  <ul>
+                    <li>Vérifiez l'orthographe</li>
+                    <li>Utilisez des termes plus généraux</li>
+                    <li>Essayez avec moins de filtres</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">No Search Results</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">empty</span>
+                <span class="tag">search</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="no-results-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="no-results-html"><code>&lt;div class="no-results"&gt;
+  &lt;div class="no-results__icon"&gt;
+    &lt;svg&gt;...search icon...&lt;/svg&gt;
+  &lt;/div&gt;
+  &lt;h3 class="no-results__title"&gt;Aucun résultat&lt;/h3&gt;
+  &lt;p class="no-results__text"&gt;Pour "&lt;strong&gt;terme&lt;/strong&gt;"&lt;/p&gt;
+  &lt;div class="no-results__suggestions"&gt;...&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="no-results-css" style="display:none"><code>.no-results {
+  text-align: center;
+  padding: 40px 20px;
+  max-width: 320px;
+}
+
+.no-results__icon {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 20px;
+}
+
+.no-results__icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: #666;
+}
+
+.no-results__title {
+  font-size: 1.2rem;
+  color: #fff;
+  margin: 0 0 8px;
+}
+
+.no-results__text {
+  font-size: 0.9rem;
+  color: #888;
+  margin: 0 0 20px;
+}
+
+.no-results__suggestions {
+  text-align: left;
+  background: #242438;
+  padding: 16px;
+  border-radius: 12px;
+}
+
+.no-results__suggestions p {
+  font-size: 0.8rem;
+  color: #888;
+  margin: 0 0 8px;
+}
+
+.no-results__suggestions ul {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 0.8rem;
+  color: #aaa;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- NO MESSAGES -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <div class="no-messages">
+                <div class="no-messages__icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/>
+                  </svg>
+                  <span class="no-messages__dots">
+                    <span></span><span></span><span></span>
+                  </span>
+                </div>
+                <h3 class="no-messages__title">Aucun message</h3>
+                <p class="no-messages__text">Démarrez une conversation pour commencer</p>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">No Messages</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">empty</span>
+                <span class="tag">chat</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="no-messages-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="no-messages-html"><code>&lt;div class="no-messages"&gt;
+  &lt;div class="no-messages__icon"&gt;
+    &lt;svg&gt;...message icon...&lt;/svg&gt;
+    &lt;span class="no-messages__dots"&gt;
+      &lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;
+    &lt;/span&gt;
+  &lt;/div&gt;
+  &lt;h3 class="no-messages__title"&gt;Aucun message&lt;/h3&gt;
+  &lt;p class="no-messages__text"&gt;Démarrez une conversation&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="no-messages-css" style="display:none"><code>.no-messages {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.no-messages__icon {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
+}
+
+.no-messages__icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: #6366f1;
+  opacity: 0.5;
+}
+
+.no-messages__dots {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  gap: 4px;
+}
+
+.no-messages__dots span {
+  width: 6px;
+  height: 6px;
+  background: #6366f1;
+  border-radius: 50%;
+  animation: dot-bounce 1.4s ease-in-out infinite;
+}
+
+.no-messages__dots span:nth-child(2) { animation-delay: 0.2s; }
+.no-messages__dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes dot-bounce {
+  0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
+  40% { transform: scale(1.2); opacity: 1; }
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== ERRORS SECTION ========== -->
+      <section id="errors" class="section">
+        <h2 class="section__title">Error Pages</h2>
+        <p class="section__desc">Pages d'erreur pour les situations problématiques.</p>
+
+        <div class="components-grid">
+          <!-- 404 ERROR -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <div class="error-404">
+                <div class="error-404__code">
+                  <span>4</span>
+                  <div class="error-404__ghost">
+                    <div class="error-404__face">
+                      <div class="error-404__eyes">
+                        <span></span><span></span>
+                      </div>
+                      <div class="error-404__mouth"></div>
+                    </div>
+                  </div>
+                  <span>4</span>
+                </div>
+                <h3 class="error-404__title">Page introuvable</h3>
+                <p class="error-404__text">Cette page n'existe pas ou a été déplacée</p>
+                <button class="error-404__btn">Retour à l'accueil</button>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">404 Ghost</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">error</span>
+                <span class="tag">404</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="error-404-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="error-404-html"><code>&lt;div class="error-404"&gt;
+  &lt;div class="error-404__code"&gt;
+    &lt;span&gt;4&lt;/span&gt;
+    &lt;div class="error-404__ghost"&gt;...&lt;/div&gt;
+    &lt;span&gt;4&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;h3 class="error-404__title"&gt;Page introuvable&lt;/h3&gt;
+  &lt;p class="error-404__text"&gt;Cette page n'existe pas&lt;/p&gt;
+  &lt;button class="error-404__btn"&gt;Retour&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="error-404-css" style="display:none"><code>.error-404 {
+  text-align: center;
+  padding: 20px;
+}
+
+.error-404__code {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.error-404__code > span {
+  font-size: 4rem;
+  font-weight: 900;
+  color: #6366f1;
+}
+
+.error-404__ghost {
+  width: 60px;
+  height: 70px;
+  background: #6366f1;
+  border-radius: 30px 30px 0 0;
+  position: relative;
+  animation: ghost-float 3s ease-in-out infinite;
+}
+
+.error-404__face {
+  padding-top: 15px;
+}
+
+.error-404__eyes {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.error-404__eyes span {
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+}
+
+.error-404__mouth {
+  width: 20px;
+  height: 10px;
+  border: 3px solid white;
+  border-top: none;
+  border-radius: 0 0 20px 20px;
+  margin: 8px auto 0;
+}
+
+@keyframes ghost-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- 500 ERROR -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <div class="error-500">
+                <div class="error-500__icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+                    <line x1="12" y1="9" x2="12" y2="13"/>
+                    <line x1="12" y1="17" x2="12.01" y2="17"/>
+                  </svg>
+                </div>
+                <h3 class="error-500__title">Erreur serveur</h3>
+                <p class="error-500__text">Quelque chose s'est mal passé. Réessayez plus tard.</p>
+                <div class="error-500__actions">
+                  <button class="error-500__btn error-500__btn--primary">Réessayer</button>
+                  <button class="error-500__btn">Signaler</button>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">500 Server Error</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">error</span>
+                <span class="tag">500</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="error-500-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="error-500-html"><code>&lt;div class="error-500"&gt;
+  &lt;div class="error-500__icon"&gt;
+    &lt;svg&gt;...warning icon...&lt;/svg&gt;
+  &lt;/div&gt;
+  &lt;h3 class="error-500__title"&gt;Erreur serveur&lt;/h3&gt;
+  &lt;p class="error-500__text"&gt;Quelque chose s'est mal passé&lt;/p&gt;
+  &lt;div class="error-500__actions"&gt;
+    &lt;button class="error-500__btn--primary"&gt;Réessayer&lt;/button&gt;
+    &lt;button&gt;Signaler&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="error-500-css" style="display:none"><code>.error-500 {
+  text-align: center;
+  padding: 30px 20px;
+}
+
+.error-500__icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
+}
+
+.error-500__icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: #ef4444;
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.error-500__title {
+  font-size: 1.2rem;
+  color: #fff;
+  margin: 0 0 8px;
+}
+
+.error-500__text {
+  font-size: 0.85rem;
+  color: #888;
+  margin: 0 0 20px;
+}
+
+.error-500__actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.error-500__btn {
+  padding: 10px 20px;
+  background: transparent;
+  border: 2px solid #3a3a4e;
+  color: #888;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.error-500__btn--primary {
+  background: #ef4444;
+  border-color: #ef4444;
+  color: white;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- NETWORK ERROR -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <div class="error-network">
+                <div class="error-network__icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <line x1="1" y1="1" x2="23" y2="23"/>
+                    <path d="M16.72 11.06A10.94 10.94 0 0119 12.55"/>
+                    <path d="M5 12.55a10.94 10.94 0 015.17-2.39"/>
+                    <path d="M10.71 5.05A16 16 0 0122.58 9"/>
+                    <path d="M1.42 9a15.91 15.91 0 014.7-2.88"/>
+                    <path d="M8.53 16.11a6 6 0 016.95 0"/>
+                    <line x1="12" y1="20" x2="12.01" y2="20"/>
+                  </svg>
+                </div>
+                <h3 class="error-network__title">Pas de connexion</h3>
+                <p class="error-network__text">Vérifiez votre connexion internet et réessayez</p>
+                <button class="error-network__btn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="23 4 23 10 17 10"/>
+                    <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+                  </svg>
+                  Réessayer
+                </button>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Network Error</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">error</span>
+                <span class="tag">network</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="error-network-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="error-network-html"><code>&lt;div class="error-network"&gt;
+  &lt;div class="error-network__icon"&gt;
+    &lt;svg&gt;...wifi-off icon...&lt;/svg&gt;
+  &lt;/div&gt;
+  &lt;h3&gt;Pas de connexion&lt;/h3&gt;
+  &lt;p&gt;Vérifiez votre connexion internet&lt;/p&gt;
+  &lt;button class="error-network__btn"&gt;Réessayer&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="error-network-css" style="display:none"><code>.error-network {
+  text-align: center;
+  padding: 30px 20px;
+}
+
+.error-network__icon {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 20px;
+}
+
+.error-network__icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: #f59e0b;
+}
+
+.error-network__title {
+  font-size: 1.1rem;
+  color: #fff;
+  margin: 0 0 8px;
+}
+
+.error-network__text {
+  font-size: 0.85rem;
+  color: #888;
+  margin: 0 0 20px;
+}
+
+.error-network__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: #f59e0b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.error-network__btn svg {
+  width: 18px;
+  height: 18px;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== SUCCESS SECTION ========== -->
+      <section id="success" class="section">
+        <h2 class="section__title">Success States</h2>
+        <p class="section__desc">États de succès et confirmations.</p>
+
+        <div class="components-grid">
+          <!-- SUCCESS -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <div class="success-state">
+                <div class="success-state__icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                    <polyline points="22 4 12 14.01 9 11.01"/>
+                  </svg>
+                </div>
+                <h3 class="success-state__title">Commande confirmée !</h3>
+                <p class="success-state__text">Merci pour votre achat. Vous recevrez un email de confirmation.</p>
+                <p class="success-state__order">Commande #12345</p>
+                <button class="success-state__btn">Voir ma commande</button>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Order Success</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">success</span>
+                <span class="tag">order</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="success-state-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="success-state-html"><code>&lt;div class="success-state"&gt;
+  &lt;div class="success-state__icon"&gt;
+    &lt;svg&gt;...check circle...&lt;/svg&gt;
+  &lt;/div&gt;
+  &lt;h3 class="success-state__title"&gt;Commande confirmée !&lt;/h3&gt;
+  &lt;p class="success-state__text"&gt;Merci pour votre achat&lt;/p&gt;
+  &lt;p class="success-state__order"&gt;#12345&lt;/p&gt;
+  &lt;button&gt;Voir ma commande&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="success-state-css" style="display:none"><code>.success-state {
+  text-align: center;
+  padding: 30px 20px;
+}
+
+.success-state__icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
+  background: rgba(16, 185, 129, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: success-pop 0.5s ease;
+}
+
+.success-state__icon svg {
+  width: 40px;
+  height: 40px;
+  stroke: #10b981;
+}
+
+@keyframes success-pop {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.success-state__title {
+  font-size: 1.2rem;
+  color: #10b981;
+  margin: 0 0 8px;
+}
+
+.success-state__text {
+  font-size: 0.85rem;
+  color: #888;
+  margin: 0 0 12px;
+}
+
+.success-state__order {
+  font-size: 0.9rem;
+  color: #fff;
+  font-weight: 600;
+  margin: 0 0 20px;
+}
+
+.success-state__btn {
+  padding: 12px 28px;
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== SPECIAL SECTION ========== -->
+      <section id="special" class="section">
+        <h2 class="section__title">Special Pages</h2>
+        <p class="section__desc">Pages spéciales (maintenance, coming soon).</p>
+
+        <div class="components-grid">
+          <!-- MAINTENANCE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <div class="maintenance">
+                <div class="maintenance__icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="12" cy="12" r="3"/>
+                    <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/>
+                  </svg>
+                </div>
+                <h3 class="maintenance__title">Maintenance en cours</h3>
+                <p class="maintenance__text">Nous améliorons votre expérience. Revenez bientôt !</p>
+                <div class="maintenance__countdown">
+                  <div class="maintenance__time">
+                    <span>02</span>
+                    <small>Heures</small>
+                  </div>
+                  <div class="maintenance__time">
+                    <span>45</span>
+                    <small>Minutes</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Maintenance</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">special</span>
+                <span class="tag">maintenance</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="maintenance-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="maintenance-html"><code>&lt;div class="maintenance"&gt;
+  &lt;div class="maintenance__icon"&gt;
+    &lt;svg&gt;...settings icon...&lt;/svg&gt;
+  &lt;/div&gt;
+  &lt;h3&gt;Maintenance en cours&lt;/h3&gt;
+  &lt;p&gt;Nous améliorons votre expérience&lt;/p&gt;
+  &lt;div class="maintenance__countdown"&gt;...&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="maintenance-css" style="display:none"><code>.maintenance {
+  text-align: center;
+  padding: 30px 20px;
+}
+
+.maintenance__icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
+}
+
+.maintenance__icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: #f59e0b;
+  animation: spin 4s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.maintenance__title {
+  font-size: 1.2rem;
+  color: #fff;
+  margin: 0 0 8px;
+}
+
+.maintenance__text {
+  font-size: 0.85rem;
+  color: #888;
+  margin: 0 0 20px;
+}
+
+.maintenance__countdown {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+.maintenance__time {
+  background: #242438;
+  padding: 12px 16px;
+  border-radius: 12px;
+}
+
+.maintenance__time span {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #f59e0b;
+}
+
+.maintenance__time small {
+  font-size: 0.7rem;
+  color: #888;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- COMING SOON -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <div class="coming-soon">
+                <div class="coming-soon__badge">Bientôt disponible</div>
+                <h3 class="coming-soon__title">Quelque chose d'incroyable arrive</h3>
+                <p class="coming-soon__text">Inscrivez-vous pour être notifié du lancement</p>
+                <div class="coming-soon__form">
+                  <input type="email" placeholder="votre@email.com" class="coming-soon__input">
+                  <button class="coming-soon__btn">Notifier</button>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Coming Soon</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">special</span>
+                <span class="tag">launch</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="coming-soon-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="coming-soon-html"><code>&lt;div class="coming-soon"&gt;
+  &lt;div class="coming-soon__badge"&gt;Bientôt&lt;/div&gt;
+  &lt;h3 class="coming-soon__title"&gt;Quelque chose d'incroyable&lt;/h3&gt;
+  &lt;p class="coming-soon__text"&gt;Inscrivez-vous...&lt;/p&gt;
+  &lt;div class="coming-soon__form"&gt;
+    &lt;input type="email" placeholder="email"&gt;
+    &lt;button&gt;Notifier&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="coming-soon-css" style="display:none"><code>.coming-soon {
+  text-align: center;
+  padding: 30px 20px;
+}
+
+.coming-soon__badge {
+  display: inline-block;
+  padding: 6px 16px;
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  color: white;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.coming-soon__title {
+  font-size: 1.2rem;
+  color: #fff;
+  margin: 0 0 8px;
+}
+
+.coming-soon__text {
+  font-size: 0.85rem;
+  color: #888;
+  margin: 0 0 20px;
+}
+
+.coming-soon__form {
+  display: flex;
+  gap: 8px;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.coming-soon__input {
+  flex: 1;
+  padding: 12px 16px;
+  background: #242438;
+  border: 2px solid #3a3a4e;
+  border-radius: 8px;
+  color: white;
+  font-size: 0.85rem;
+}
+
+.coming-soon__input::placeholder {
+  color: #666;
+}
+
+.coming-soon__btn {
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ==================== STYLES ==================== -->
+  <style>
+    /* ========== KEYFRAMES ========== */
+    @keyframes ghost-float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    @keyframes dot-bounce {
+      0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
+      40% { transform: scale(1.2); opacity: 1; }
+    }
+
+    @keyframes success-pop {
+      0% { transform: scale(0); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* ========== EMPTY STATE ========== */
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .empty-state__icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 20px;
+      background: rgba(99, 102, 241, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .empty-state__icon svg {
+      width: 40px;
+      height: 40px;
+      stroke: #6366f1;
+    }
+
+    .empty-state__title {
+      font-size: 1.1rem;
+      color: #fff;
+      margin: 0 0 8px;
+    }
+
+    .empty-state__text {
+      font-size: 0.85rem;
+      color: #888;
+      margin: 0 0 20px;
+    }
+
+    .empty-state__btn {
+      padding: 10px 24px;
+      background: #6366f1;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background 0.3s ease;
+    }
+
+    .empty-state__btn:hover {
+      background: #5558e3;
+    }
+
+    /* ========== EMPTY CART ========== */
+    .empty-cart {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .empty-cart__visual {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+
+    .empty-cart__visual svg {
+      width: 64px;
+      height: 64px;
+      stroke: #666;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .empty-cart__badge {
+      position: absolute;
+      top: -5px;
+      right: -10px;
+      width: 24px;
+      height: 24px;
+      background: #ef4444;
+      color: white;
+      border-radius: 50%;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .empty-cart__title {
+      font-size: 1.1rem;
+      color: #fff;
+      margin: 0 0 8px;
+    }
+
+    .empty-cart__text {
+      font-size: 0.85rem;
+      color: #888;
+      margin: 0 0 20px;
+    }
+
+    .empty-cart__btn {
+      padding: 12px 28px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+      border: none;
+      border-radius: 24px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    /* ========== NO RESULTS ========== */
+    .no-results {
+      text-align: center;
+      padding: 40px 20px;
+      max-width: 320px;
+    }
+
+    .no-results__icon {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 20px;
+    }
+
+    .no-results__icon svg {
+      width: 100%;
+      height: 100%;
+      stroke: #666;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .no-results__title {
+      font-size: 1.2rem;
+      color: #fff;
+      margin: 0 0 8px;
+    }
+
+    .no-results__text {
+      font-size: 0.9rem;
+      color: #888;
+      margin: 0 0 20px;
+    }
+
+    .no-results__text strong {
+      color: #6366f1;
+    }
+
+    .no-results__suggestions {
+      text-align: left;
+      background: #242438;
+      padding: 16px;
+      border-radius: 12px;
+    }
+
+    .no-results__suggestions p {
+      font-size: 0.8rem;
+      color: #888;
+      margin: 0 0 8px;
+    }
+
+    .no-results__suggestions ul {
+      margin: 0;
+      padding-left: 20px;
+      font-size: 0.8rem;
+      color: #aaa;
+    }
+
+    .no-results__suggestions li {
+      margin-bottom: 4px;
+    }
+
+    /* ========== NO MESSAGES ========== */
+    .no-messages {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .no-messages__icon {
+      position: relative;
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 20px;
+    }
+
+    .no-messages__icon svg {
+      width: 100%;
+      height: 100%;
+      stroke: #6366f1;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      opacity: 0.5;
+    }
+
+    .no-messages__dots {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      gap: 4px;
+    }
+
+    .no-messages__dots span {
+      width: 6px;
+      height: 6px;
+      background: #6366f1;
+      border-radius: 50%;
+      animation: dot-bounce 1.4s ease-in-out infinite;
+    }
+
+    .no-messages__dots span:nth-child(2) { animation-delay: 0.2s; }
+    .no-messages__dots span:nth-child(3) { animation-delay: 0.4s; }
+
+    .no-messages__title {
+      font-size: 1.1rem;
+      color: #fff;
+      margin: 0 0 8px;
+    }
+
+    .no-messages__text {
+      font-size: 0.85rem;
+      color: #888;
+      margin: 0;
+    }
+
+    /* ========== ERROR 404 ========== */
+    .error-404 {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .error-404__code {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .error-404__code > span {
+      font-size: 4rem;
+      font-weight: 900;
+      color: #6366f1;
+    }
+
+    .error-404__ghost {
+      width: 60px;
+      height: 70px;
+      background: #6366f1;
+      border-radius: 30px 30px 0 0;
+      position: relative;
+      animation: ghost-float 3s ease-in-out infinite;
+    }
+
+    .error-404__ghost::before {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 100%;
+      height: 20px;
+      background:
+        radial-gradient(circle at 10px 0, transparent 12px, #6366f1 12px),
+        radial-gradient(circle at 30px 0, transparent 12px, #6366f1 12px),
+        radial-gradient(circle at 50px 0, transparent 12px, #6366f1 12px);
+      background-size: 20px 20px;
+      background-position: 0 10px;
+    }
+
+    .error-404__face {
+      padding-top: 15px;
+    }
+
+    .error-404__eyes {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .error-404__eyes span {
+      width: 8px;
+      height: 8px;
+      background: white;
+      border-radius: 50%;
+    }
+
+    .error-404__mouth {
+      width: 20px;
+      height: 10px;
+      border: 3px solid white;
+      border-top: none;
+      border-radius: 0 0 20px 20px;
+      margin: 8px auto 0;
+    }
+
+    .error-404__title {
+      font-size: 1.2rem;
+      color: #fff;
+      margin: 0 0 8px;
+    }
+
+    .error-404__text {
+      font-size: 0.85rem;
+      color: #888;
+      margin: 0 0 20px;
+    }
+
+    .error-404__btn {
+      padding: 12px 24px;
+      background: #6366f1;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    /* ========== ERROR 500 ========== */
+    .error-500 {
+      text-align: center;
+      padding: 30px 20px;
+    }
+
+    .error-500__icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 20px;
+    }
+
+    .error-500__icon svg {
+      width: 100%;
+      height: 100%;
+      stroke: #ef4444;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      animation: shake 0.5s ease-in-out;
+    }
+
+    .error-500__title {
+      font-size: 1.2rem;
+      color: #fff;
+      margin: 0 0 8px;
+    }
+
+    .error-500__text {
+      font-size: 0.85rem;
+      color: #888;
+      margin: 0 0 20px;
+    }
+
+    .error-500__actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .error-500__btn {
+      padding: 10px 20px;
+      background: transparent;
+      border: 2px solid #3a3a4e;
+      color: #888;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .error-500__btn:hover {
+      border-color: #666;
+      color: #fff;
+    }
+
+    .error-500__btn--primary {
+      background: #ef4444;
+      border-color: #ef4444;
+      color: white;
+    }
+
+    .error-500__btn--primary:hover {
+      background: #dc2626;
+    }
+
+    /* ========== ERROR NETWORK ========== */
+    .error-network {
+      text-align: center;
+      padding: 30px 20px;
+    }
+
+    .error-network__icon {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 20px;
+    }
+
+    .error-network__icon svg {
+      width: 100%;
+      height: 100%;
+      stroke: #f59e0b;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .error-network__title {
+      font-size: 1.1rem;
+      color: #fff;
+      margin: 0 0 8px;
+    }
+
+    .error-network__text {
+      font-size: 0.85rem;
+      color: #888;
+      margin: 0 0 20px;
+    }
+
+    .error-network__btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: #f59e0b;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .error-network__btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* ========== SUCCESS STATE ========== */
+    .success-state {
+      text-align: center;
+      padding: 30px 20px;
+    }
+
+    .success-state__icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 20px;
+      background: rgba(16, 185, 129, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: success-pop 0.5s ease;
+    }
+
+    .success-state__icon svg {
+      width: 40px;
+      height: 40px;
+      stroke: #10b981;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .success-state__title {
+      font-size: 1.2rem;
+      color: #10b981;
+      margin: 0 0 8px;
+    }
+
+    .success-state__text {
+      font-size: 0.85rem;
+      color: #888;
+      margin: 0 0 12px;
+    }
+
+    .success-state__order {
+      font-size: 0.9rem;
+      color: #fff;
+      font-weight: 600;
+      margin: 0 0 20px;
+    }
+
+    .success-state__btn {
+      padding: 12px 28px;
+      background: #10b981;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    /* ========== MAINTENANCE ========== */
+    .maintenance {
+      text-align: center;
+      padding: 30px 20px;
+    }
+
+    .maintenance__icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 20px;
+    }
+
+    .maintenance__icon svg {
+      width: 100%;
+      height: 100%;
+      stroke: #f59e0b;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      animation: spin 4s linear infinite;
+    }
+
+    .maintenance__title {
+      font-size: 1.2rem;
+      color: #fff;
+      margin: 0 0 8px;
+    }
+
+    .maintenance__text {
+      font-size: 0.85rem;
+      color: #888;
+      margin: 0 0 20px;
+    }
+
+    .maintenance__countdown {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+    }
+
+    .maintenance__time {
+      background: #242438;
+      padding: 12px 16px;
+      border-radius: 12px;
+    }
+
+    .maintenance__time span {
+      display: block;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #f59e0b;
+    }
+
+    .maintenance__time small {
+      font-size: 0.7rem;
+      color: #888;
+      text-transform: uppercase;
+    }
+
+    /* ========== COMING SOON ========== */
+    .coming-soon {
+      text-align: center;
+      padding: 30px 20px;
+    }
+
+    .coming-soon__badge {
+      display: inline-block;
+      padding: 6px 16px;
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      color: white;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .coming-soon__title {
+      font-size: 1.2rem;
+      color: #fff;
+      margin: 0 0 8px;
+    }
+
+    .coming-soon__text {
+      font-size: 0.85rem;
+      color: #888;
+      margin: 0 0 20px;
+    }
+
+    .coming-soon__form {
+      display: flex;
+      gap: 8px;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+
+    .coming-soon__input {
+      flex: 1;
+      padding: 12px 16px;
+      background: #242438;
+      border: 2px solid #3a3a4e;
+      border-radius: 8px;
+      color: white;
+      font-size: 0.85rem;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    .coming-soon__input:focus {
+      border-color: #6366f1;
+    }
+
+    .coming-soon__input::placeholder {
+      color: #666;
+    }
+
+    .coming-soon__btn {
+      padding: 12px 20px;
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+  </style>
+
+  <!-- ==================== SCRIPTS ==================== -->
+  <script src="../../assets/js/main.js"></script>
+</body>
+</html>

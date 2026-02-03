@@ -1,0 +1,1547 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File Upload - Duke Components</title>
+  <style>
+    /* ========================================
+       BASE STYLES
+    ======================================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      min-height: 100vh;
+      padding: 40px 20px;
+      color: #fff;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .page-title {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .page-subtitle {
+      text-align: center;
+      color: #a0a0b0;
+      margin-bottom: 3rem;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #667eea;
+      text-decoration: none;
+      margin-bottom: 2rem;
+      transition: color 0.3s ease;
+    }
+
+    .back-link:hover {
+      color: #764ba2;
+    }
+
+    /* ========================================
+       SECTION STYLES
+    ======================================== */
+    .section {
+      margin-bottom: 4rem;
+    }
+
+    .section__title {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: #fff;
+    }
+
+    .section__description {
+      color: #a0a0b0;
+      margin-bottom: 1.5rem;
+    }
+
+    .component-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 24px;
+    }
+
+    .component-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .component-card__title {
+      font-size: 0.875rem;
+      color: #a0a0b0;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* ========================================
+       1. BASIC FILE INPUT
+    ======================================== */
+    .file-input {
+      position: relative;
+    }
+
+    .file-input__native {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .file-input__label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #fff;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .file-input__label:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .file-input__native:focus + .file-input__label {
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
+    }
+
+    .file-input__icon {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Variant: Outline */
+    .file-input--outline .file-input__label {
+      background: transparent;
+      border: 2px solid #667eea;
+      color: #667eea;
+    }
+
+    .file-input--outline .file-input__label:hover {
+      background: rgba(102, 126, 234, 0.1);
+    }
+
+    /* Variant: Minimal */
+    .file-input--minimal .file-input__label {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px dashed rgba(255, 255, 255, 0.3);
+    }
+
+    .file-input--minimal .file-input__label:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: #667eea;
+    }
+
+    /* ========================================
+       2. DROPZONE
+    ======================================== */
+    .dropzone {
+      position: relative;
+      border: 2px dashed rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      padding: 48px 24px;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .dropzone:hover,
+    .dropzone--dragover {
+      border-color: #667eea;
+      background: rgba(102, 126, 234, 0.1);
+    }
+
+    .dropzone--dragover {
+      transform: scale(1.02);
+    }
+
+    .dropzone__input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .dropzone__icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 16px;
+      color: #667eea;
+      animation: dropzone-float 3s ease-in-out infinite;
+    }
+
+    @keyframes dropzone-float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .dropzone__title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+
+    .dropzone__subtitle {
+      color: #a0a0b0;
+      margin-bottom: 16px;
+    }
+
+    .dropzone__button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .dropzone__button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .dropzone__formats {
+      margin-top: 16px;
+      font-size: 0.75rem;
+      color: #666;
+    }
+
+    /* Dropzone with preview area */
+    .dropzone--with-preview {
+      padding-bottom: 24px;
+    }
+
+    /* ========================================
+       3. IMAGE DROPZONE
+    ======================================== */
+    .image-dropzone {
+      position: relative;
+      border: 2px dashed rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      padding: 32px;
+      text-align: center;
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+
+    .image-dropzone:hover {
+      border-color: #667eea;
+    }
+
+    .image-dropzone__input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    .image-dropzone__content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .image-dropzone__icon {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 12px;
+      color: #667eea;
+    }
+
+    .image-dropzone__text {
+      color: #a0a0b0;
+      font-size: 0.875rem;
+    }
+
+    .image-dropzone__preview {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0.3;
+      transition: opacity 0.3s ease;
+    }
+
+    .image-dropzone:hover .image-dropzone__preview {
+      opacity: 0.5;
+    }
+
+    /* ========================================
+       4. AVATAR UPLOAD
+    ======================================== */
+    .avatar-upload {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .avatar-upload__preview {
+      position: relative;
+      width: 120px;
+      height: 120px;
+    }
+
+    .avatar-upload__image {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border: 4px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .avatar-upload__image svg {
+      width: 48px;
+      height: 48px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .avatar-upload__button {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #667eea;
+      border: 3px solid #1a1a2e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .avatar-upload__button:hover {
+      background: #764ba2;
+      transform: scale(1.1);
+    }
+
+    .avatar-upload__button svg {
+      width: 16px;
+      height: 16px;
+      color: #fff;
+    }
+
+    .avatar-upload__input {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .avatar-upload__text {
+      font-size: 0.875rem;
+      color: #a0a0b0;
+    }
+
+    /* ========================================
+       5. FILE LIST
+    ======================================== */
+    .file-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .file-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .file-item:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .file-item__icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .file-item__icon--pdf {
+      background: rgba(239, 68, 68, 0.2);
+      color: #ef4444;
+    }
+
+    .file-item__icon--image {
+      background: rgba(16, 185, 129, 0.2);
+      color: #10b981;
+    }
+
+    .file-item__icon--doc {
+      background: rgba(59, 130, 246, 0.2);
+      color: #3b82f6;
+    }
+
+    .file-item__icon--zip {
+      background: rgba(245, 158, 11, 0.2);
+      color: #f59e0b;
+    }
+
+    .file-item__icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .file-item__info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .file-item__name {
+      font-weight: 500;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .file-item__size {
+      font-size: 0.75rem;
+      color: #666;
+    }
+
+    .file-item__actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .file-item__action {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: none;
+      background: rgba(255, 255, 255, 0.1);
+      color: #a0a0b0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .file-item__action:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+    }
+
+    .file-item__action--delete:hover {
+      background: rgba(239, 68, 68, 0.2);
+      color: #ef4444;
+    }
+
+    .file-item__action svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* ========================================
+       6. UPLOAD PROGRESS
+    ======================================== */
+    .upload-progress {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .upload-item {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .upload-item__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .upload-item__info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .upload-item__icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(102, 126, 234, 0.2);
+      color: #667eea;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .upload-item__icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .upload-item__name {
+      font-weight: 500;
+      color: #fff;
+      font-size: 0.875rem;
+    }
+
+    .upload-item__size {
+      font-size: 0.75rem;
+      color: #666;
+    }
+
+    .upload-item__percentage {
+      font-weight: 600;
+      color: #667eea;
+    }
+
+    .upload-item__progress {
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .upload-item__progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+      border-radius: 3px;
+      transition: width 0.3s ease;
+    }
+
+    /* Upload states */
+    .upload-item--completed .upload-item__percentage {
+      color: #10b981;
+    }
+
+    .upload-item--completed .upload-item__progress-bar {
+      background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+    }
+
+    .upload-item--error .upload-item__percentage {
+      color: #ef4444;
+    }
+
+    .upload-item--error .upload-item__progress-bar {
+      background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%);
+    }
+
+    /* Animated progress */
+    .upload-item--uploading .upload-item__progress-bar {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .upload-item--uploading .upload-item__progress-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+      );
+      animation: upload-shimmer 1.5s infinite;
+    }
+
+    @keyframes upload-shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    /* ========================================
+       7. COMPACT UPLOAD
+    ======================================== */
+    .compact-upload {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+    }
+
+    .compact-upload__input {
+      flex: 1;
+      padding: 10px 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      color: #a0a0b0;
+      font-size: 0.875rem;
+    }
+
+    .compact-upload__button {
+      padding: 10px 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .compact-upload__button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    /* ========================================
+       8. CARD UPLOAD
+    ======================================== */
+    .card-upload {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .card-upload__header {
+      padding: 16px 20px;
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-upload__title {
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .card-upload__count {
+      font-size: 0.75rem;
+      color: #667eea;
+      background: rgba(102, 126, 234, 0.2);
+      padding: 4px 10px;
+      border-radius: 12px;
+    }
+
+    .card-upload__body {
+      padding: 20px;
+    }
+
+    .card-upload__dropzone {
+      border: 2px dashed rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      padding: 32px;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .card-upload__dropzone:hover {
+      border-color: #667eea;
+      background: rgba(102, 126, 234, 0.05);
+    }
+
+    .card-upload__icon {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 12px;
+      color: #667eea;
+    }
+
+    .card-upload__text {
+      color: #a0a0b0;
+      margin-bottom: 8px;
+    }
+
+    .card-upload__formats {
+      font-size: 0.75rem;
+      color: #666;
+    }
+
+    .card-upload__files {
+      margin-top: 16px;
+    }
+
+    /* ========================================
+       9. MULTI-FILE GRID
+    ======================================== */
+    .multi-upload-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 16px;
+    }
+
+    .upload-tile {
+      aspect-ratio: 1;
+      border: 2px dashed rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .upload-tile:hover {
+      border-color: #667eea;
+      background: rgba(102, 126, 234, 0.1);
+    }
+
+    .upload-tile__icon {
+      width: 32px;
+      height: 32px;
+      color: #667eea;
+    }
+
+    .upload-tile__text {
+      font-size: 0.75rem;
+      color: #a0a0b0;
+    }
+
+    .upload-tile--filled {
+      border: none;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .upload-tile__preview {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .upload-tile__overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .upload-tile--filled:hover .upload-tile__overlay {
+      opacity: 1;
+    }
+
+    .upload-tile__remove {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(239, 68, 68, 0.8);
+      border: none;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .upload-tile__remove:hover {
+      background: #ef4444;
+      transform: scale(1.1);
+    }
+
+    .upload-tile__remove svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* ========================================
+       10. STYLED FILE TYPES
+    ======================================== */
+    .upload-type {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      padding: 24px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px dashed rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .upload-type:hover {
+      border-color: currentColor;
+      background: rgba(255, 255, 255, 0.08);
+      transform: translateY(-4px);
+    }
+
+    .upload-type__icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .upload-type__icon svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    .upload-type__title {
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .upload-type__formats {
+      font-size: 0.75rem;
+      color: #666;
+    }
+
+    /* Type variants */
+    .upload-type--image {
+      color: #10b981;
+    }
+
+    .upload-type--image .upload-type__icon {
+      background: rgba(16, 185, 129, 0.2);
+    }
+
+    .upload-type--document {
+      color: #3b82f6;
+    }
+
+    .upload-type--document .upload-type__icon {
+      background: rgba(59, 130, 246, 0.2);
+    }
+
+    .upload-type--video {
+      color: #8b5cf6;
+    }
+
+    .upload-type--video .upload-type__icon {
+      background: rgba(139, 92, 246, 0.2);
+    }
+
+    .upload-type--audio {
+      color: #ec4899;
+    }
+
+    .upload-type--audio .upload-type__icon {
+      background: rgba(236, 72, 153, 0.2);
+    }
+
+    /* ========================================
+       11. STATES
+    ======================================== */
+    .dropzone--success {
+      border-color: #10b981;
+      background: rgba(16, 185, 129, 0.1);
+    }
+
+    .dropzone--success .dropzone__icon {
+      color: #10b981;
+    }
+
+    .dropzone--error {
+      border-color: #ef4444;
+      background: rgba(239, 68, 68, 0.1);
+    }
+
+    .dropzone--error .dropzone__icon {
+      color: #ef4444;
+    }
+
+    .dropzone--disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    /* ========================================
+       12. CIRCULAR UPLOAD
+    ======================================== */
+    .circular-upload {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .circular-upload__input {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .circular-upload__circle {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 3px dashed rgba(255, 255, 255, 0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .circular-upload:hover .circular-upload__circle {
+      border-color: #667eea;
+      background: rgba(102, 126, 234, 0.1);
+    }
+
+    .circular-upload__icon {
+      width: 40px;
+      height: 40px;
+      color: #667eea;
+    }
+
+    .circular-upload__text {
+      font-size: 0.875rem;
+      color: #a0a0b0;
+    }
+
+    /* Progress ring */
+    .circular-upload--uploading .circular-upload__circle {
+      border: none;
+    }
+
+    .circular-upload__progress-ring {
+      position: absolute;
+      inset: 0;
+    }
+
+    .circular-upload__progress-ring circle {
+      fill: none;
+      stroke-width: 6;
+    }
+
+    .circular-upload__progress-ring .bg {
+      stroke: rgba(255, 255, 255, 0.1);
+    }
+
+    .circular-upload__progress-ring .progress {
+      stroke: #667eea;
+      stroke-linecap: round;
+      transform: rotate(-90deg);
+      transform-origin: center;
+      transition: stroke-dashoffset 0.3s ease;
+    }
+
+    /* ========================================
+       RESPONSIVE
+    ======================================== */
+    @media (max-width: 768px) {
+      .page-title {
+        font-size: 2rem;
+      }
+
+      .component-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .multi-upload-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="../../index.html" class="back-link">
+      <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+      </svg>
+      Retour
+    </a>
+
+    <h1 class="page-title">File Upload</h1>
+    <p class="page-subtitle">12 types de composants d'upload de fichiers</p>
+
+    <!-- ================================
+         SECTION 1: BASIC FILE INPUT
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">1. Basic File Input</h2>
+      <p class="section__description">Boutons de sélection de fichiers stylisés</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Solid Button</h3>
+          <div class="file-input">
+            <input type="file" class="file-input__native" id="file1">
+            <label for="file1" class="file-input__label">
+              <svg class="file-input__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+              </svg>
+              Choisir un fichier
+            </label>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Outline Button</h3>
+          <div class="file-input file-input--outline">
+            <input type="file" class="file-input__native" id="file2">
+            <label for="file2" class="file-input__label">
+              <svg class="file-input__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+              </svg>
+              Sélectionner
+            </label>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Minimal Button</h3>
+          <div class="file-input file-input--minimal">
+            <input type="file" class="file-input__native" id="file3">
+            <label for="file3" class="file-input__label">
+              <svg class="file-input__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+              </svg>
+              Ajouter un fichier
+            </label>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 2: DROPZONE
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">2. Dropzone</h2>
+      <p class="section__description">Zone de glisser-déposer pour fichiers</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Standard Dropzone</h3>
+          <div class="dropzone">
+            <input type="file" class="dropzone__input" multiple>
+            <svg class="dropzone__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+            </svg>
+            <h4 class="dropzone__title">Glissez vos fichiers ici</h4>
+            <p class="dropzone__subtitle">ou cliquez pour sélectionner</p>
+            <button class="dropzone__button">
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+              </svg>
+              Parcourir
+            </button>
+            <p class="dropzone__formats">PNG, JPG, PDF (max. 10MB)</p>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Success State</h3>
+          <div class="dropzone dropzone--success">
+            <input type="file" class="dropzone__input" multiple>
+            <svg class="dropzone__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <h4 class="dropzone__title">Fichier prêt !</h4>
+            <p class="dropzone__subtitle">image.png - 2.4 MB</p>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Error State</h3>
+          <div class="dropzone dropzone--error">
+            <input type="file" class="dropzone__input" multiple>
+            <svg class="dropzone__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <h4 class="dropzone__title">Fichier trop volumineux</h4>
+            <p class="dropzone__subtitle">Maximum 10MB autorisé</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 3: AVATAR UPLOAD
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">3. Avatar Upload</h2>
+      <p class="section__description">Upload de photo de profil</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Default Avatar</h3>
+          <div class="avatar-upload">
+            <div class="avatar-upload__preview">
+              <div class="avatar-upload__image">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                </svg>
+              </div>
+              <label class="avatar-upload__button">
+                <input type="file" class="avatar-upload__input" accept="image/*">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+              </label>
+            </div>
+            <span class="avatar-upload__text">Cliquez pour changer la photo</span>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Circular Upload Zone</h3>
+          <div style="display: flex; justify-content: center;">
+            <label class="circular-upload">
+              <input type="file" class="circular-upload__input" accept="image/*">
+              <div class="circular-upload__circle">
+                <svg class="circular-upload__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                </svg>
+                <span class="circular-upload__text">Upload</span>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 4: FILE LIST
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">4. File List</h2>
+      <p class="section__description">Liste de fichiers avec actions</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Uploaded Files</h3>
+          <div class="file-list">
+            <div class="file-item">
+              <div class="file-item__icon file-item__icon--pdf">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                </svg>
+              </div>
+              <div class="file-item__info">
+                <div class="file-item__name">document-projet.pdf</div>
+                <div class="file-item__size">2.4 MB</div>
+              </div>
+              <div class="file-item__actions">
+                <button class="file-item__action" aria-label="Télécharger">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                  </svg>
+                </button>
+                <button class="file-item__action file-item__action--delete" aria-label="Supprimer">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="file-item">
+              <div class="file-item__icon file-item__icon--image">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                </svg>
+              </div>
+              <div class="file-item__info">
+                <div class="file-item__name">hero-banner.png</div>
+                <div class="file-item__size">856 KB</div>
+              </div>
+              <div class="file-item__actions">
+                <button class="file-item__action" aria-label="Télécharger">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                  </svg>
+                </button>
+                <button class="file-item__action file-item__action--delete" aria-label="Supprimer">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="file-item">
+              <div class="file-item__icon file-item__icon--zip">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/>
+                </svg>
+              </div>
+              <div class="file-item__info">
+                <div class="file-item__name">assets-package.zip</div>
+                <div class="file-item__size">15.7 MB</div>
+              </div>
+              <div class="file-item__actions">
+                <button class="file-item__action" aria-label="Télécharger">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                  </svg>
+                </button>
+                <button class="file-item__action file-item__action--delete" aria-label="Supprimer">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 5: UPLOAD PROGRESS
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">5. Upload Progress</h2>
+      <p class="section__description">Indicateurs de progression d'upload</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Progress States</h3>
+          <div class="upload-progress">
+            <div class="upload-item upload-item--uploading">
+              <div class="upload-item__header">
+                <div class="upload-item__info">
+                  <div class="upload-item__icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="upload-item__name">photo-vacation.jpg</div>
+                    <div class="upload-item__size">4.2 MB</div>
+                  </div>
+                </div>
+                <span class="upload-item__percentage">65%</span>
+              </div>
+              <div class="upload-item__progress">
+                <div class="upload-item__progress-bar" style="width: 65%"></div>
+              </div>
+            </div>
+
+            <div class="upload-item upload-item--completed">
+              <div class="upload-item__header">
+                <div class="upload-item__info">
+                  <div class="upload-item__icon" style="background: rgba(16, 185, 129, 0.2); color: #10b981;">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="upload-item__name">report-2024.pdf</div>
+                    <div class="upload-item__size">1.8 MB</div>
+                  </div>
+                </div>
+                <span class="upload-item__percentage">Terminé</span>
+              </div>
+              <div class="upload-item__progress">
+                <div class="upload-item__progress-bar" style="width: 100%"></div>
+              </div>
+            </div>
+
+            <div class="upload-item upload-item--error">
+              <div class="upload-item__header">
+                <div class="upload-item__info">
+                  <div class="upload-item__icon" style="background: rgba(239, 68, 68, 0.2); color: #ef4444;">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="upload-item__name">large-video.mp4</div>
+                    <div class="upload-item__size">Échec - Fichier trop volumineux</div>
+                  </div>
+                </div>
+                <span class="upload-item__percentage">Erreur</span>
+              </div>
+              <div class="upload-item__progress">
+                <div class="upload-item__progress-bar" style="width: 35%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 6: COMPACT UPLOAD
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">6. Compact Upload</h2>
+      <p class="section__description">Upload compact avec input et bouton</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Inline Upload</h3>
+          <div class="compact-upload">
+            <input type="text" class="compact-upload__input" placeholder="Aucun fichier sélectionné" readonly>
+            <button class="compact-upload__button">Parcourir</button>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">With File Selected</h3>
+          <div class="compact-upload">
+            <input type="text" class="compact-upload__input" value="document.pdf" readonly style="color: #fff;">
+            <button class="compact-upload__button">Changer</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 7: CARD UPLOAD
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">7. Card Upload</h2>
+      <p class="section__description">Upload intégré dans une carte</p>
+
+      <div class="component-grid">
+        <div class="component-card" style="padding: 0; overflow: hidden;">
+          <div class="card-upload">
+            <div class="card-upload__header">
+              <span class="card-upload__title">Documents</span>
+              <span class="card-upload__count">3 fichiers</span>
+            </div>
+            <div class="card-upload__body">
+              <div class="card-upload__dropzone">
+                <svg class="card-upload__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+                <p class="card-upload__text">Déposez vos fichiers ici</p>
+                <p class="card-upload__formats">PDF, DOC, XLS (max 25MB)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 8: MULTI-FILE GRID
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">8. Multi-File Grid</h2>
+      <p class="section__description">Grille d'upload multiple avec prévisualisation</p>
+
+      <div class="component-grid">
+        <div class="component-card" style="grid-column: 1 / -1;">
+          <h3 class="component-card__title">Image Gallery Upload</h3>
+          <div class="multi-upload-grid">
+            <div class="upload-tile upload-tile--filled">
+              <div class="upload-tile__preview" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+              <div class="upload-tile__overlay">
+                <button class="upload-tile__remove" aria-label="Supprimer">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="upload-tile upload-tile--filled">
+              <div class="upload-tile__preview" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);"></div>
+              <div class="upload-tile__overlay">
+                <button class="upload-tile__remove" aria-label="Supprimer">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="upload-tile upload-tile--filled">
+              <div class="upload-tile__preview" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);"></div>
+              <div class="upload-tile__overlay">
+                <button class="upload-tile__remove" aria-label="Supprimer">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <label class="upload-tile">
+              <svg class="upload-tile__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+              </svg>
+              <span class="upload-tile__text">Ajouter</span>
+            </label>
+            <label class="upload-tile">
+              <svg class="upload-tile__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+              </svg>
+              <span class="upload-tile__text">Ajouter</span>
+            </label>
+            <label class="upload-tile">
+              <svg class="upload-tile__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+              </svg>
+              <span class="upload-tile__text">Ajouter</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 9: FILE TYPE UPLOADS
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">9. File Type Uploads</h2>
+      <p class="section__description">Upload spécifique par type de fichier</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Images</h3>
+          <label class="upload-type upload-type--image">
+            <div class="upload-type__icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+              </svg>
+            </div>
+            <span class="upload-type__title">Images</span>
+            <span class="upload-type__formats">PNG, JPG, GIF, WebP</span>
+          </label>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Documents</h3>
+          <label class="upload-type upload-type--document">
+            <div class="upload-type__icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+              </svg>
+            </div>
+            <span class="upload-type__title">Documents</span>
+            <span class="upload-type__formats">PDF, DOC, XLS, PPT</span>
+          </label>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Videos</h3>
+          <label class="upload-type upload-type--video">
+            <div class="upload-type__icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+              </svg>
+            </div>
+            <span class="upload-type__title">Vidéos</span>
+            <span class="upload-type__formats">MP4, WebM, MOV</span>
+          </label>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Audio</h3>
+          <label class="upload-type upload-type--audio">
+            <div class="upload-type__icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
+              </svg>
+            </div>
+            <span class="upload-type__title">Audio</span>
+            <span class="upload-type__formats">MP3, WAV, OGG</span>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 10: IMAGE DROPZONE
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">10. Image Dropzone</h2>
+      <p class="section__description">Zone de drop spécifique pour images avec prévisualisation</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Cover Image</h3>
+          <div class="image-dropzone">
+            <input type="file" class="image-dropzone__input" accept="image/*">
+            <div class="image-dropzone__content">
+              <svg class="image-dropzone__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+              </svg>
+              <p class="image-dropzone__text">Déposez votre image de couverture</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">With Preview Background</h3>
+          <div class="image-dropzone" style="min-height: 150px;">
+            <div class="image-dropzone__preview" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+            <input type="file" class="image-dropzone__input" accept="image/*">
+            <div class="image-dropzone__content">
+              <svg class="image-dropzone__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+              </svg>
+              <p class="image-dropzone__text">Cliquez pour changer</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>

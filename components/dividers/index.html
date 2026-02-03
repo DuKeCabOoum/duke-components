@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dividers — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+</head>
+<body>
+  <div class="app">
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+      <a href="../../index.html" class="sidebar__logo">
+        <span>Duke</span>-components
+      </a>
+
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Dividers</h3>
+        <ul class="sidebar__nav">
+          <li><a href="#basic" class="sidebar__link sidebar__link--active">Basic</a></li>
+          <li><a href="#text" class="sidebar__link">With Text</a></li>
+          <li><a href="#icons" class="sidebar__link">With Icons</a></li>
+          <li><a href="#gradient" class="sidebar__link">Gradient</a></li>
+          <li><a href="#decorative" class="sidebar__link">Decorative</a></li>
+          <li><a href="#vertical" class="sidebar__link">Vertical</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar__section">
+        <a href="../../index.html" class="sidebar__link">← Retour</a>
+      </div>
+
+      <!-- Toggle Admin -->
+      <div class="admin-toggle">
+        <span class="admin-toggle__label">Mode Admin</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="admin-toggle">
+          <span class="toggle-switch__slider"></span>
+        </label>
+      </div>
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main">
+      <header class="main__header">
+        <h1 class="main__title">➖ Dividers</h1>
+        <p class="main__subtitle">Séparateurs visuels — 12 styles pour structurer votre contenu.</p>
+      </header>
+
+      <!-- ========== BASIC SECTION ========== -->
+      <section id="basic" class="section">
+        <h2 class="section__title">Basic Dividers</h2>
+        <p class="section__desc">Séparateurs simples et épurés.</p>
+
+        <div class="components-grid components-grid--wide">
+          <!-- SIMPLE LINE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 40px 24px;">
+              <p style="color: #888; margin: 0 0 20px;">Contenu au-dessus</p>
+              <hr class="divider-line">
+              <p style="color: #888; margin: 20px 0 0;">Contenu en dessous</p>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Simple Line</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">divider</span>
+                <span class="tag">basic</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="divider-line-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="divider-line-html"><code>&lt;hr class="divider-line"&gt;</code></pre>
+                <pre class="code-viewer__code" id="divider-line-css" style="display:none"><code>.divider-line {
+  border: none;
+  height: 1px;
+  background: #3a3a4e;
+  margin: 0;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- DASHED -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 40px 24px;">
+              <p style="color: #888; margin: 0 0 20px;">Contenu au-dessus</p>
+              <hr class="divider-dashed">
+              <p style="color: #888; margin: 20px 0 0;">Contenu en dessous</p>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Dashed Line</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">divider</span>
+                <span class="tag">dashed</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="divider-dashed-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="divider-dashed-html"><code>&lt;hr class="divider-dashed"&gt;</code></pre>
+                <pre class="code-viewer__code" id="divider-dashed-css" style="display:none"><code>.divider-dashed {
+  border: none;
+  height: 1px;
+  background: repeating-linear-gradient(
+    90deg,
+    #3a3a4e 0,
+    #3a3a4e 8px,
+    transparent 8px,
+    transparent 16px
+  );
+  margin: 0;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- DOTTED -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 40px 24px;">
+              <p style="color: #888; margin: 0 0 20px;">Contenu au-dessus</p>
+              <hr class="divider-dotted">
+              <p style="color: #888; margin: 20px 0 0;">Contenu en dessous</p>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Dotted Line</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">divider</span>
+                <span class="tag">dotted</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="divider-dotted-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="divider-dotted-html"><code>&lt;hr class="divider-dotted"&gt;</code></pre>
+                <pre class="code-viewer__code" id="divider-dotted-css" style="display:none"><code>.divider-dotted {
+  border: none;
+  height: 3px;
+  background: repeating-linear-gradient(
+    90deg,
+    #3a3a4e 0,
+    #3a3a4e 3px,
+    transparent 3px,
+    transparent 9px
+  );
+  margin: 0;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== TEXT SECTION ========== -->
+      <section id="text" class="section">
+        <h2 class="section__title">Text Dividers</h2>
+        <p class="section__desc">Séparateurs avec texte intégré.</p>
+
+        <div class="components-grid components-grid--wide">
+          <!-- OR DIVIDER -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 40px 24px;">
+              <div class="divider-text">
+                <span>OU</span>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Text Center</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">divider</span>
+                <span class="tag">text</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="divider-text-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="divider-text-html"><code>&lt;div class="divider-text"&gt;
+  &lt;span&gt;OU&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="divider-text-css" style="display:none"><code>.divider-text {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.divider-text::before,
+.divider-text::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #3a3a4e;
+}
+
+.divider-text span {
+  color: #888;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- PILL DIVIDER -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 40px 24px;">
+              <div class="divider-pill">
+                <span>Continuer avec</span>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Pill Text</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">divider</span>
+                <span class="tag">pill</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="divider-pill-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="divider-pill-html"><code>&lt;div class="divider-pill"&gt;
+  &lt;span&gt;Continuer avec&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="divider-pill-css" style="display:none"><code>.divider-pill {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.divider-pill::before,
+.divider-pill::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #3a3a4e;
+}
+
+.divider-pill span {
+  padding: 6px 16px;
+  background: #242438;
+  border-radius: 20px;
+  color: #888;
+  font-size: 0.8rem;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== ICONS SECTION ========== -->
+      <section id="icons" class="section">
+        <h2 class="section__title">Icon Dividers</h2>
+        <p class="section__desc">Séparateurs avec icônes.</p>
+
+        <div class="components-grid components-grid--wide">
+          <!-- STAR DIVIDER -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 40px 24px;">
+              <div class="divider-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Star Icon</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">divider</span>
+                <span class="tag">icon</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="divider-icon-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="divider-icon-html"><code>&lt;div class="divider-icon"&gt;
+  &lt;svg&gt;...star...&lt;/svg&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="divider-icon-css" style="display:none"><code>.divider-icon {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.divider-icon::before,
+.divider-icon::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #3a3a4e;
+}
+
+.divider-icon svg {
+  width: 20px;
+  height: 20px;
+  fill: #6366f1;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- TRIPLE DOT -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 40px 24px;">
+              <div class="divider-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Triple Dots</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">divider</span>
+                <span class="tag">dots</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="divider-dots-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="divider-dots-html"><code>&lt;div class="divider-dots"&gt;
+  &lt;span&gt;&lt;/span&gt;
+  &lt;span&gt;&lt;/span&gt;
+  &lt;span&gt;&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="divider-dots-css" style="display:none"><code>.divider-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.divider-dots span {
+  width: 6px;
+  height: 6px;
+  background: #6366f1;
+  border-radius: 50%;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== GRADIENT SECTION ========== -->
+      <section id="gradient" class="section">
+        <h2 class="section__title">Gradient Dividers</h2>
+        <p class="section__desc">Séparateurs avec dégradés colorés.</p>
+
+        <div class="components-grid components-grid--wide">
+          <!-- GRADIENT LINE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 40px 24px;">
+              <hr class="divider-gradient">
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Gradient Line</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">divider</span>
+                <span class="tag">gradient</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="divider-gradient-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="divider-gradient-html"><code>&lt;hr class="divider-gradient"&gt;</code></pre>
+                <pre class="code-viewer__code" id="divider-gradient-css" style="display:none"><code>.divider-gradient {
+  border: none;
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent,
+    #6366f1,
+    #a855f7,
+    transparent
+  );
+  margin: 0;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- RAINBOW -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 40px 24px;">
+              <hr class="divider-rainbow">
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Rainbow</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">divider</span>
+                <span class="tag">rainbow</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="divider-rainbow-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="divider-rainbow-html"><code>&lt;hr class="divider-rainbow"&gt;</code></pre>
+                <pre class="code-viewer__code" id="divider-rainbow-css" style="display:none"><code>.divider-rainbow {
+  border: none;
+  height: 3px;
+  background: linear-gradient(90deg,
+    #ef4444,
+    #f59e0b,
+    #10b981,
+    #3b82f6,
+    #8b5cf6
+  );
+  margin: 0;
+  border-radius: 2px;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- GLOW -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 40px 24px;">
+              <hr class="divider-glow">
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Neon Glow</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">divider</span>
+                <span class="tag">glow</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="divider-glow-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="divider-glow-html"><code>&lt;hr class="divider-glow"&gt;</code></pre>
+                <pre class="code-viewer__code" id="divider-glow-css" style="display:none"><code>.divider-glow {
+  border: none;
+  height: 2px;
+  background: #00d4ff;
+  margin: 0;
+  box-shadow:
+    0 0 10px rgba(0, 212, 255, 0.5),
+    0 0 20px rgba(0, 212, 255, 0.3),
+    0 0 40px rgba(0, 212, 255, 0.1);
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== DECORATIVE SECTION ========== -->
+      <section id="decorative" class="section">
+        <h2 class="section__title">Decorative Dividers</h2>
+        <p class="section__desc">Séparateurs décoratifs et fantaisie.</p>
+
+        <div class="components-grid components-grid--wide">
+          <!-- WAVE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 40px 24px;">
+              <div class="divider-wave">
+                <svg viewBox="0 0 1200 40" preserveAspectRatio="none">
+                  <path d="M0,20 C200,60 400,-20 600,20 C800,60 1000,-20 1200,20" fill="none" stroke="#6366f1" stroke-width="2"/>
+                </svg>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Wave</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">divider</span>
+                <span class="tag">wave</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="divider-wave-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="divider-wave-html"><code>&lt;div class="divider-wave"&gt;
+  &lt;svg viewBox="0 0 1200 40" preserveAspectRatio="none"&gt;
+    &lt;path d="M0,20 C200,60 400,-20 600,20..." /&gt;
+  &lt;/svg&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="divider-wave-css" style="display:none"><code>.divider-wave {
+  width: 100%;
+  height: 40px;
+}
+
+.divider-wave svg {
+  width: 100%;
+  height: 100%;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- ZIGZAG -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 40px 24px;">
+              <div class="divider-zigzag"></div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Zigzag</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">divider</span>
+                <span class="tag">zigzag</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="divider-zigzag-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="divider-zigzag-html"><code>&lt;div class="divider-zigzag"&gt;&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="divider-zigzag-css" style="display:none"><code>.divider-zigzag {
+  height: 10px;
+  background:
+    linear-gradient(135deg, #6366f1 25%, transparent 25%) -20px 0,
+    linear-gradient(225deg, #6366f1 25%, transparent 25%) -20px 0,
+    linear-gradient(315deg, #6366f1 25%, transparent 25%),
+    linear-gradient(45deg, #6366f1 25%, transparent 25%);
+  background-size: 20px 10px;
+  background-color: transparent;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== VERTICAL SECTION ========== -->
+      <section id="vertical" class="section">
+        <h2 class="section__title">Vertical Dividers</h2>
+        <p class="section__desc">Séparateurs verticaux pour layouts horizontaux.</p>
+
+        <div class="components-grid">
+          <!-- VERTICAL LINE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <div style="display: flex; align-items: center; gap: 20px;">
+                <span style="color: #888;">Item 1</span>
+                <div class="divider-vertical"></div>
+                <span style="color: #888;">Item 2</span>
+                <div class="divider-vertical"></div>
+                <span style="color: #888;">Item 3</span>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Vertical Line</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">divider</span>
+                <span class="tag">vertical</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="divider-vertical-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="divider-vertical-html"><code>&lt;div class="divider-vertical"&gt;&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="divider-vertical-css" style="display:none"><code>.divider-vertical {
+  width: 1px;
+  height: 24px;
+  background: #3a3a4e;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- VERTICAL GRADIENT -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #1a1a2e; padding: 24px;">
+              <div style="display: flex; align-items: center; gap: 20px;">
+                <span style="color: #888;">Section A</span>
+                <div class="divider-vertical-gradient"></div>
+                <span style="color: #888;">Section B</span>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Vertical Gradient</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">divider</span>
+                <span class="tag">gradient</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="divider-vgrad-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="divider-vgrad-html"><code>&lt;div class="divider-vertical-gradient"&gt;&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="divider-vgrad-css" style="display:none"><code>.divider-vertical-gradient {
+  width: 2px;
+  height: 40px;
+  background: linear-gradient(180deg,
+    transparent,
+    #6366f1,
+    transparent
+  );
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ==================== STYLES ==================== -->
+  <style>
+    /* ========== BASIC DIVIDERS ========== */
+    .divider-line {
+      border: none;
+      height: 1px;
+      background: #3a3a4e;
+      margin: 0;
+    }
+
+    .divider-dashed {
+      border: none;
+      height: 1px;
+      background: repeating-linear-gradient(
+        90deg,
+        #3a3a4e 0,
+        #3a3a4e 8px,
+        transparent 8px,
+        transparent 16px
+      );
+      margin: 0;
+    }
+
+    .divider-dotted {
+      border: none;
+      height: 3px;
+      background: repeating-linear-gradient(
+        90deg,
+        #3a3a4e 0,
+        #3a3a4e 3px,
+        transparent 3px,
+        transparent 9px
+      );
+      margin: 0;
+    }
+
+    /* ========== TEXT DIVIDERS ========== */
+    .divider-text {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .divider-text::before,
+    .divider-text::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #3a3a4e;
+    }
+
+    .divider-text span {
+      color: #888;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .divider-pill {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .divider-pill::before,
+    .divider-pill::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #3a3a4e;
+    }
+
+    .divider-pill span {
+      padding: 6px 16px;
+      background: #242438;
+      border-radius: 20px;
+      color: #888;
+      font-size: 0.8rem;
+    }
+
+    /* ========== ICON DIVIDERS ========== */
+    .divider-icon {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .divider-icon::before,
+    .divider-icon::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #3a3a4e;
+    }
+
+    .divider-icon svg {
+      width: 20px;
+      height: 20px;
+      fill: #6366f1;
+    }
+
+    .divider-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .divider-dots span {
+      width: 6px;
+      height: 6px;
+      background: #6366f1;
+      border-radius: 50%;
+    }
+
+    /* ========== GRADIENT DIVIDERS ========== */
+    .divider-gradient {
+      border: none;
+      height: 2px;
+      background: linear-gradient(90deg,
+        transparent,
+        #6366f1,
+        #a855f7,
+        transparent
+      );
+      margin: 0;
+    }
+
+    .divider-rainbow {
+      border: none;
+      height: 3px;
+      background: linear-gradient(90deg,
+        #ef4444,
+        #f59e0b,
+        #10b981,
+        #3b82f6,
+        #8b5cf6
+      );
+      margin: 0;
+      border-radius: 2px;
+    }
+
+    .divider-glow {
+      border: none;
+      height: 2px;
+      background: #00d4ff;
+      margin: 0;
+      box-shadow:
+        0 0 10px rgba(0, 212, 255, 0.5),
+        0 0 20px rgba(0, 212, 255, 0.3),
+        0 0 40px rgba(0, 212, 255, 0.1);
+    }
+
+    /* ========== DECORATIVE DIVIDERS ========== */
+    .divider-wave {
+      width: 100%;
+      height: 40px;
+    }
+
+    .divider-wave svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .divider-zigzag {
+      height: 10px;
+      background:
+        linear-gradient(135deg, #6366f1 25%, transparent 25%) -20px 0,
+        linear-gradient(225deg, #6366f1 25%, transparent 25%) -20px 0,
+        linear-gradient(315deg, #6366f1 25%, transparent 25%),
+        linear-gradient(45deg, #6366f1 25%, transparent 25%);
+      background-size: 20px 10px;
+      background-color: transparent;
+    }
+
+    /* ========== VERTICAL DIVIDERS ========== */
+    .divider-vertical {
+      width: 1px;
+      height: 24px;
+      background: #3a3a4e;
+    }
+
+    .divider-vertical-gradient {
+      width: 2px;
+      height: 40px;
+      background: linear-gradient(180deg,
+        transparent,
+        #6366f1,
+        transparent
+      );
+    }
+
+    /* ========== GRID WIDE ========== */
+    .components-grid--wide .component-card {
+      grid-column: span 2;
+    }
+
+    @media (max-width: 768px) {
+      .components-grid--wide .component-card {
+        grid-column: span 1;
+      }
+    }
+  </style>
+
+  <!-- ==================== SCRIPTS ==================== -->
+  <script src="../../assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search - Duke Components</title>
+  <style>
+    /* ========================================
+       BASE STYLES
+    ======================================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      min-height: 100vh;
+      padding: 40px 20px;
+      color: #fff;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .page-title {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .page-subtitle {
+      text-align: center;
+      color: #a0a0b0;
+      margin-bottom: 3rem;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #667eea;
+      text-decoration: none;
+      margin-bottom: 2rem;
+      transition: color 0.3s ease;
+    }
+
+    .back-link:hover {
+      color: #764ba2;
+    }
+
+    /* ========================================
+       SECTION STYLES
+    ======================================== */
+    .section {
+      margin-bottom: 4rem;
+    }
+
+    .section__title {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: #fff;
+    }
+
+    .section__description {
+      color: #a0a0b0;
+      margin-bottom: 1.5rem;
+    }
+
+    .component-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 24px;
+    }
+
+    .component-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .component-card__title {
+      font-size: 0.875rem;
+      color: #a0a0b0;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* ========================================
+       1. BASIC SEARCH
+    ======================================== */
+    .search {
+      position: relative;
+      width: 100%;
+    }
+
+    .search__input {
+      width: 100%;
+      padding: 14px 16px 14px 48px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      font-size: 0.9375rem;
+      color: #fff;
+      transition: all 0.3s ease;
+    }
+
+    .search__input::placeholder {
+      color: #666;
+    }
+
+    .search__input:focus {
+      outline: none;
+      border-color: #667eea;
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+    }
+
+    .search__icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      color: #666;
+      pointer-events: none;
+      transition: color 0.3s ease;
+    }
+
+    .search__input:focus ~ .search__icon {
+      color: #667eea;
+    }
+
+    /* ========================================
+       2. SEARCH WITH BUTTON
+    ======================================== */
+    .search-button {
+      display: flex;
+      gap: 8px;
+    }
+
+    .search-button__input {
+      flex: 1;
+      padding: 14px 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px 0 0 12px;
+      font-size: 0.9375rem;
+      color: #fff;
+      transition: all 0.3s ease;
+    }
+
+    .search-button__input::placeholder {
+      color: #666;
+    }
+
+    .search-button__input:focus {
+      outline: none;
+      border-color: #667eea;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .search-button__btn {
+      padding: 14px 24px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border: none;
+      border-radius: 0 12px 12px 0;
+      color: #fff;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .search-button__btn:hover {
+      transform: translateX(2px);
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .search-button__btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* ========================================
+       3. PILL/ROUNDED SEARCH
+    ======================================== */
+    .search--pill .search__input {
+      border-radius: 50px;
+      padding-left: 52px;
+    }
+
+    .search--pill .search__icon {
+      left: 20px;
+    }
+
+    /* ========================================
+       4. SEARCH WITH CLEAR BUTTON
+    ======================================== */
+    .search__clear {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: #666;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .search__input:not(:placeholder-shown) ~ .search__clear {
+      opacity: 1;
+    }
+
+    .search__clear:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+    }
+
+    .search__clear svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .search--clearable .search__input {
+      padding-right: 48px;
+    }
+
+    /* ========================================
+       5. EXPANDABLE SEARCH (CSS-only)
+    ======================================== */
+    .search-expand {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-expand__toggle {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .search-expand__btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 2;
+    }
+
+    .search-expand__btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .search-expand__btn svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .search-expand__input {
+      position: absolute;
+      right: 0;
+      width: 48px;
+      height: 48px;
+      padding: 0 48px 0 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 50px;
+      font-size: 0.9375rem;
+      color: #fff;
+      opacity: 0;
+      transition: all 0.4s ease;
+    }
+
+    .search-expand__input::placeholder {
+      color: #666;
+    }
+
+    .search-expand__toggle:checked ~ .search-expand__input {
+      width: 280px;
+      opacity: 1;
+      padding-right: 56px;
+    }
+
+    .search-expand__toggle:checked ~ .search-expand__input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .search-expand__toggle:checked ~ .search-expand__btn {
+      background: #667eea;
+    }
+
+    /* ========================================
+       6. SEARCH WITH DROPDOWN SUGGESTIONS
+    ======================================== */
+    .search-suggest {
+      position: relative;
+      width: 100%;
+    }
+
+    .search-suggest__input {
+      width: 100%;
+      padding: 14px 16px 14px 48px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      font-size: 0.9375rem;
+      color: #fff;
+      transition: all 0.3s ease;
+    }
+
+    .search-suggest__input::placeholder {
+      color: #666;
+    }
+
+    .search-suggest__input:focus {
+      outline: none;
+      border-color: #667eea;
+      border-radius: 12px 12px 0 0;
+    }
+
+    .search-suggest__icon {
+      position: absolute;
+      left: 16px;
+      top: 14px;
+      width: 20px;
+      height: 20px;
+      color: #666;
+      pointer-events: none;
+    }
+
+    .search-suggest__dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: #2a2a3e;
+      border: 1px solid #667eea;
+      border-top: none;
+      border-radius: 0 0 12px 12px;
+      padding: 8px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      z-index: 100;
+    }
+
+    .search-suggest__input:focus ~ .search-suggest__dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .search-suggest__item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      color: #a0a0b0;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .search-suggest__item:hover {
+      background: rgba(102, 126, 234, 0.1);
+      color: #fff;
+    }
+
+    .search-suggest__item-icon {
+      width: 18px;
+      height: 18px;
+      color: #666;
+    }
+
+    .search-suggest__item-text {
+      flex: 1;
+    }
+
+    .search-suggest__item-hint {
+      font-size: 0.75rem;
+      color: #666;
+    }
+
+    /* ========================================
+       7. SEARCH WITH FILTERS
+    ======================================== */
+    .search-filter {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .search-filter__main {
+      flex: 1;
+      min-width: 200px;
+      position: relative;
+    }
+
+    .search-filter__input {
+      width: 100%;
+      padding: 14px 16px 14px 48px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      font-size: 0.9375rem;
+      color: #fff;
+      transition: all 0.3s ease;
+    }
+
+    .search-filter__input::placeholder {
+      color: #666;
+    }
+
+    .search-filter__input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .search-filter__icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      color: #666;
+    }
+
+    .search-filter__select {
+      padding: 14px 40px 14px 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      font-size: 0.9375rem;
+      color: #fff;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23666'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .search-filter__select:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .search-filter__select option {
+      background: #2a2a3e;
+      color: #fff;
+    }
+
+    /* ========================================
+       8. SEARCH WITH VOICE
+    ======================================== */
+    .search-voice {
+      position: relative;
+    }
+
+    .search-voice__input {
+      width: 100%;
+      padding: 14px 100px 14px 48px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      font-size: 0.9375rem;
+      color: #fff;
+      transition: all 0.3s ease;
+    }
+
+    .search-voice__input::placeholder {
+      color: #666;
+    }
+
+    .search-voice__input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .search-voice__icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      color: #666;
+    }
+
+    .search-voice__actions {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      gap: 4px;
+    }
+
+    .search-voice__btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: transparent;
+      border: none;
+      color: #666;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .search-voice__btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    .search-voice__btn--mic:hover {
+      color: #ef4444;
+    }
+
+    .search-voice__btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Mic animation */
+    .search-voice__btn--mic.active {
+      color: #ef4444;
+      animation: mic-pulse 1s ease-in-out infinite;
+    }
+
+    @keyframes mic-pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    /* ========================================
+       9. DARK/TRANSPARENT SEARCH
+    ======================================== */
+    .search--transparent .search__input {
+      background: transparent;
+      border-color: transparent;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 0;
+      padding-left: 32px;
+    }
+
+    .search--transparent .search__input:focus {
+      border-color: transparent;
+      border-bottom-color: #667eea;
+      box-shadow: none;
+    }
+
+    .search--transparent .search__icon {
+      left: 0;
+    }
+
+    /* ========================================
+       10. SEARCH WITH TAGS
+    ======================================== */
+    .search-tags {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      padding: 8px 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    .search-tags:focus-within {
+      border-color: #667eea;
+    }
+
+    .search-tags__tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 8px 4px 12px;
+      background: rgba(102, 126, 234, 0.2);
+      border-radius: 16px;
+      font-size: 0.8125rem;
+      color: #667eea;
+    }
+
+    .search-tags__tag-remove {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .search-tags__tag-remove:hover {
+      background: rgba(239, 68, 68, 0.3);
+      color: #ef4444;
+    }
+
+    .search-tags__input {
+      flex: 1;
+      min-width: 120px;
+      padding: 6px 0;
+      background: transparent;
+      border: none;
+      font-size: 0.9375rem;
+      color: #fff;
+    }
+
+    .search-tags__input::placeholder {
+      color: #666;
+    }
+
+    .search-tags__input:focus {
+      outline: none;
+    }
+
+    /* ========================================
+       11. COMMAND SEARCH (⌘K style)
+    ======================================== */
+    .search-command {
+      position: relative;
+    }
+
+    .search-command__input {
+      width: 100%;
+      padding: 14px 80px 14px 48px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      font-size: 0.9375rem;
+      color: #fff;
+      transition: all 0.3s ease;
+    }
+
+    .search-command__input::placeholder {
+      color: #666;
+    }
+
+    .search-command__input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .search-command__icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      color: #666;
+    }
+
+    .search-command__shortcut {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      gap: 4px;
+    }
+
+    .search-command__key {
+      padding: 4px 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      font-size: 0.75rem;
+      color: #666;
+      font-family: monospace;
+    }
+
+    /* ========================================
+       12. FLOATING SEARCH
+    ======================================== */
+    .search-floating {
+      position: relative;
+    }
+
+    .search-floating__input {
+      width: 100%;
+      padding: 20px 16px 8px 48px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      font-size: 0.9375rem;
+      color: #fff;
+      transition: all 0.3s ease;
+    }
+
+    .search-floating__input::placeholder {
+      color: transparent;
+    }
+
+    .search-floating__input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .search-floating__icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      color: #666;
+    }
+
+    .search-floating__label {
+      position: absolute;
+      left: 48px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #666;
+      font-size: 0.9375rem;
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+
+    .search-floating__input:focus ~ .search-floating__label,
+    .search-floating__input:not(:placeholder-shown) ~ .search-floating__label {
+      top: 12px;
+      font-size: 0.75rem;
+      color: #667eea;
+    }
+
+    /* ========================================
+       13. SEARCH HEADER BAR
+    ======================================== */
+    .search-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 20px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .search-header__icon {
+      width: 24px;
+      height: 24px;
+      color: #667eea;
+    }
+
+    .search-header__input {
+      flex: 1;
+      padding: 8px 0;
+      background: transparent;
+      border: none;
+      font-size: 1rem;
+      color: #fff;
+    }
+
+    .search-header__input::placeholder {
+      color: #666;
+    }
+
+    .search-header__input:focus {
+      outline: none;
+    }
+
+    .search-header__filters {
+      display: flex;
+      gap: 8px;
+    }
+
+    .search-header__filter {
+      padding: 6px 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      border-radius: 8px;
+      color: #a0a0b0;
+      font-size: 0.8125rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .search-header__filter:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+    }
+
+    .search-header__filter--active {
+      background: rgba(102, 126, 234, 0.2);
+      color: #667eea;
+    }
+
+    /* ========================================
+       14. LOADING STATE
+    ======================================== */
+    .search--loading .search__icon {
+      animation: search-spin 1s linear infinite;
+    }
+
+    @keyframes search-spin {
+      from { transform: translateY(-50%) rotate(0deg); }
+      to { transform: translateY(-50%) rotate(360deg); }
+    }
+
+    .search__loader {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(102, 126, 234, 0.3);
+      border-top-color: #667eea;
+      border-radius: 50%;
+      animation: search-spin 0.8s linear infinite;
+    }
+
+    /* ========================================
+       15. COLORED VARIANTS
+    ======================================== */
+    .search--primary .search__input:focus {
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+    }
+
+    .search--success .search__input:focus {
+      border-color: #10b981;
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+    }
+
+    .search--success .search__input:focus ~ .search__icon {
+      color: #10b981;
+    }
+
+    .search--danger .search__input:focus {
+      border-color: #ef4444;
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+    }
+
+    .search--danger .search__input:focus ~ .search__icon {
+      color: #ef4444;
+    }
+
+    /* ========================================
+       16. SIZE VARIANTS
+    ======================================== */
+    .search--sm .search__input {
+      padding: 10px 12px 10px 40px;
+      font-size: 0.8125rem;
+      border-radius: 8px;
+    }
+
+    .search--sm .search__icon {
+      left: 12px;
+      width: 16px;
+      height: 16px;
+    }
+
+    .search--lg .search__input {
+      padding: 18px 20px 18px 56px;
+      font-size: 1.0625rem;
+      border-radius: 16px;
+    }
+
+    .search--lg .search__icon {
+      left: 20px;
+      width: 24px;
+      height: 24px;
+    }
+
+    /* ========================================
+       RESPONSIVE
+    ======================================== */
+    @media (max-width: 768px) {
+      .page-title {
+        font-size: 2rem;
+      }
+
+      .component-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .search-filter {
+        flex-direction: column;
+      }
+
+      .search-header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .search-header__filters {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="../../index.html" class="back-link">
+      <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+      </svg>
+      Retour
+    </a>
+
+    <h1 class="page-title">Search</h1>
+    <p class="page-subtitle">16 types de barres de recherche stylisées</p>
+
+    <!-- ================================
+         SECTION 1: BASIC SEARCH
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">1. Basic Search</h2>
+      <p class="section__description">Barres de recherche simples avec icône</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Standard</h3>
+          <div class="search">
+            <input type="text" class="search__input" placeholder="Rechercher...">
+            <svg class="search__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Pill Shape</h3>
+          <div class="search search--pill">
+            <input type="text" class="search__input" placeholder="Rechercher...">
+            <svg class="search__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">With Clear Button</h3>
+          <div class="search search--clearable">
+            <input type="text" class="search__input" placeholder="Rechercher..." value="Example text">
+            <svg class="search__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+            <button class="search__clear" aria-label="Effacer">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 2: SEARCH WITH BUTTON
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">2. Search with Button</h2>
+      <p class="section__description">Recherche avec bouton de soumission</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Button Right</h3>
+          <div class="search-button">
+            <input type="text" class="search-button__input" placeholder="Rechercher un produit...">
+            <button class="search-button__btn">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              </svg>
+              Rechercher
+            </button>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Icon Only Button</h3>
+          <div class="search-button">
+            <input type="text" class="search-button__input" placeholder="Entrez votre recherche...">
+            <button class="search-button__btn" style="padding: 14px 18px;">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 3: EXPANDABLE SEARCH
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">3. Expandable Search</h2>
+      <p class="section__description">Recherche qui s'étend au clic (CSS-only)</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Click to Expand</h3>
+          <div style="display: flex; justify-content: flex-end;">
+            <div class="search-expand">
+              <input type="checkbox" class="search-expand__toggle" id="search-expand-1">
+              <input type="text" class="search-expand__input" placeholder="Rechercher...">
+              <label for="search-expand-1" class="search-expand__btn">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 4: SEARCH WITH SUGGESTIONS
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">4. Search with Suggestions</h2>
+      <p class="section__description">Recherche avec dropdown de suggestions</p>
+
+      <div class="component-grid">
+        <div class="component-card" style="overflow: visible;">
+          <h3 class="component-card__title">Auto-suggestions</h3>
+          <div class="search-suggest">
+            <input type="text" class="search-suggest__input" placeholder="Rechercher...">
+            <svg class="search-suggest__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+            <div class="search-suggest__dropdown">
+              <div class="search-suggest__item">
+                <svg class="search-suggest__item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <span class="search-suggest__item-text">Recherches récentes</span>
+              </div>
+              <div class="search-suggest__item">
+                <svg class="search-suggest__item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                </svg>
+                <span class="search-suggest__item-text">Tendances</span>
+                <span class="search-suggest__item-hint">Populaire</span>
+              </div>
+              <div class="search-suggest__item">
+                <svg class="search-suggest__item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                </svg>
+                <span class="search-suggest__item-text">Composants UI</span>
+              </div>
+              <div class="search-suggest__item">
+                <svg class="search-suggest__item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                </svg>
+                <span class="search-suggest__item-text">Animations CSS</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 5: SEARCH WITH FILTERS
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">5. Search with Filters</h2>
+      <p class="section__description">Recherche avec filtres intégrés</p>
+
+      <div class="component-grid">
+        <div class="component-card" style="grid-column: 1 / -1;">
+          <h3 class="component-card__title">Filter Bar</h3>
+          <div class="search-filter">
+            <div class="search-filter__main">
+              <input type="text" class="search-filter__input" placeholder="Rechercher...">
+              <svg class="search-filter__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              </svg>
+            </div>
+            <select class="search-filter__select">
+              <option>Toutes catégories</option>
+              <option>Composants</option>
+              <option>Effets</option>
+              <option>Générateurs</option>
+            </select>
+            <select class="search-filter__select">
+              <option>Récent</option>
+              <option>Populaire</option>
+              <option>A-Z</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 6: SEARCH WITH VOICE
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">6. Search with Voice</h2>
+      <p class="section__description">Recherche avec boutons d'action (micro, caméra)</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Google Style</h3>
+          <div class="search-voice">
+            <input type="text" class="search-voice__input" placeholder="Rechercher ou saisir une URL">
+            <svg class="search-voice__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+            <div class="search-voice__actions">
+              <button class="search-voice__btn search-voice__btn--mic" aria-label="Recherche vocale">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+                </svg>
+              </button>
+              <button class="search-voice__btn" aria-label="Recherche image">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 7: TRANSPARENT SEARCH
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">7. Transparent/Minimal Search</h2>
+      <p class="section__description">Recherche minimaliste avec underline</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Underline Style</h3>
+          <div class="search search--transparent">
+            <input type="text" class="search__input" placeholder="Rechercher...">
+            <svg class="search__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 8: SEARCH WITH TAGS
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">8. Search with Tags</h2>
+      <p class="section__description">Recherche avec tags/filtres actifs</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Tag Input</h3>
+          <div class="search-tags">
+            <span class="search-tags__tag">
+              CSS
+              <button class="search-tags__tag-remove" aria-label="Supprimer">&times;</button>
+            </span>
+            <span class="search-tags__tag">
+              Animation
+              <button class="search-tags__tag-remove" aria-label="Supprimer">&times;</button>
+            </span>
+            <input type="text" class="search-tags__input" placeholder="Ajouter un filtre...">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 9: COMMAND SEARCH
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">9. Command Search (⌘K)</h2>
+      <p class="section__description">Recherche style command palette</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">With Shortcut</h3>
+          <div class="search-command">
+            <input type="text" class="search-command__input" placeholder="Rechercher une commande...">
+            <svg class="search-command__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+            <div class="search-command__shortcut">
+              <span class="search-command__key">⌘</span>
+              <span class="search-command__key">K</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 10: FLOATING LABEL
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">10. Floating Label</h2>
+      <p class="section__description">Recherche avec label flottant</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Animated Label</h3>
+          <div class="search-floating">
+            <input type="text" class="search-floating__input" placeholder=" ">
+            <svg class="search-floating__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+            <label class="search-floating__label">Rechercher</label>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 11: SEARCH HEADER
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">11. Search Header Bar</h2>
+      <p class="section__description">Barre de recherche complète pour header</p>
+
+      <div class="component-grid">
+        <div class="component-card" style="grid-column: 1 / -1;">
+          <h3 class="component-card__title">Full Header</h3>
+          <div class="search-header">
+            <svg class="search-header__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+            <input type="text" class="search-header__input" placeholder="Rechercher dans la bibliothèque...">
+            <div class="search-header__filters">
+              <button class="search-header__filter search-header__filter--active">Tous</button>
+              <button class="search-header__filter">Composants</button>
+              <button class="search-header__filter">Effets</button>
+              <button class="search-header__filter">Sections</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 12: SIZE VARIANTS
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">12. Size Variants</h2>
+      <p class="section__description">Différentes tailles de recherche</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Small</h3>
+          <div class="search search--sm">
+            <input type="text" class="search__input" placeholder="Rechercher...">
+            <svg class="search__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Large</h3>
+          <div class="search search--lg">
+            <input type="text" class="search__input" placeholder="Rechercher...">
+            <svg class="search__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 13: COLOR VARIANTS
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">13. Color Variants</h2>
+      <p class="section__description">Différentes couleurs de focus</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Success</h3>
+          <div class="search search--success">
+            <input type="text" class="search__input" placeholder="Rechercher...">
+            <svg class="search__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Danger</h3>
+          <div class="search search--danger">
+            <input type="text" class="search__input" placeholder="Rechercher...">
+            <svg class="search__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 14: LOADING STATE
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">14. Loading State</h2>
+      <p class="section__description">État de chargement pendant la recherche</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Spinner</h3>
+          <div class="search">
+            <input type="text" class="search__input" placeholder="Chargement..." value="Recherche en cours...">
+            <div class="search__loader"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>

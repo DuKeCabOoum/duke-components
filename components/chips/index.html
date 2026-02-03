@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chips & Tags - Duke Components</title>
+  <style>
+    /* ========================================
+       BASE STYLES
+    ======================================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      min-height: 100vh;
+      padding: 40px 20px;
+      color: #fff;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .page-title {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .page-subtitle {
+      text-align: center;
+      color: #a0a0b0;
+      margin-bottom: 3rem;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #667eea;
+      text-decoration: none;
+      margin-bottom: 2rem;
+      transition: color 0.3s ease;
+    }
+
+    .back-link:hover {
+      color: #764ba2;
+    }
+
+    /* ========================================
+       SECTION STYLES
+    ======================================== */
+    .section {
+      margin-bottom: 4rem;
+    }
+
+    .section__title {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: #fff;
+    }
+
+    .section__description {
+      color: #a0a0b0;
+      margin-bottom: 1.5rem;
+    }
+
+    .component-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .component-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .component-card__title {
+      font-size: 0.875rem;
+      color: #a0a0b0;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .component-card__content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .component-card__content--vertical {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    /* ========================================
+       1. BASIC CHIPS
+    ======================================== */
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 16px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      background: rgba(102, 126, 234, 0.2);
+      color: #667eea;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+      cursor: default;
+    }
+
+    .chip:hover {
+      background: rgba(102, 126, 234, 0.3);
+    }
+
+    /* Sizes */
+    .chip--xs {
+      padding: 2px 8px;
+      font-size: 0.75rem;
+      border-radius: 10px;
+    }
+
+    .chip--sm {
+      padding: 4px 10px;
+      font-size: 0.8125rem;
+      border-radius: 12px;
+    }
+
+    .chip--lg {
+      padding: 8px 16px;
+      font-size: 1rem;
+      border-radius: 20px;
+    }
+
+    .chip--xl {
+      padding: 10px 20px;
+      font-size: 1.125rem;
+      border-radius: 24px;
+    }
+
+    /* ========================================
+       2. COLORED CHIPS
+    ======================================== */
+    .chip--primary {
+      background: rgba(102, 126, 234, 0.2);
+      color: #667eea;
+    }
+
+    .chip--secondary {
+      background: rgba(160, 160, 176, 0.2);
+      color: #a0a0b0;
+    }
+
+    .chip--success {
+      background: rgba(16, 185, 129, 0.2);
+      color: #10b981;
+    }
+
+    .chip--warning {
+      background: rgba(245, 158, 11, 0.2);
+      color: #f59e0b;
+    }
+
+    .chip--danger {
+      background: rgba(239, 68, 68, 0.2);
+      color: #ef4444;
+    }
+
+    .chip--info {
+      background: rgba(59, 130, 246, 0.2);
+      color: #3b82f6;
+    }
+
+    .chip--purple {
+      background: rgba(139, 92, 246, 0.2);
+      color: #8b5cf6;
+    }
+
+    .chip--pink {
+      background: rgba(236, 72, 153, 0.2);
+      color: #ec4899;
+    }
+
+    .chip--cyan {
+      background: rgba(6, 182, 212, 0.2);
+      color: #06b6d4;
+    }
+
+    /* ========================================
+       3. OUTLINE CHIPS
+    ======================================== */
+    .chip--outline {
+      background: transparent;
+      border: 1px solid currentColor;
+    }
+
+    .chip--outline:hover {
+      background: rgba(102, 126, 234, 0.1);
+    }
+
+    .chip--outline.chip--success {
+      border-color: #10b981;
+    }
+
+    .chip--outline.chip--warning {
+      border-color: #f59e0b;
+    }
+
+    .chip--outline.chip--danger {
+      border-color: #ef4444;
+    }
+
+    /* ========================================
+       4. SOLID CHIPS
+    ======================================== */
+    .chip--solid {
+      color: #fff;
+    }
+
+    .chip--solid.chip--primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .chip--solid.chip--success {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    }
+
+    .chip--solid.chip--warning {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: #1a1a2e;
+    }
+
+    .chip--solid.chip--danger {
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    }
+
+    .chip--solid.chip--info {
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    }
+
+    .chip--solid.chip--purple {
+      background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    }
+
+    .chip--solid.chip--pink {
+      background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+    }
+
+    /* ========================================
+       5. CHIPS WITH ICONS
+    ======================================== */
+    .chip__icon {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    .chip--lg .chip__icon {
+      width: 20px;
+      height: 20px;
+    }
+
+    .chip__icon--left {
+      margin-right: 2px;
+    }
+
+    .chip__icon--right {
+      margin-left: 2px;
+    }
+
+    /* ========================================
+       6. REMOVABLE CHIPS
+    ======================================== */
+    .chip--removable {
+      padding-right: 6px;
+      cursor: pointer;
+    }
+
+    .chip__remove {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      margin-left: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+      color: inherit;
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    .chip__remove:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.1);
+    }
+
+    .chip--danger .chip__remove:hover {
+      background: rgba(239, 68, 68, 0.5);
+    }
+
+    /* Animation de suppression */
+    .chip--removing {
+      animation: chip-remove 0.3s ease forwards;
+    }
+
+    @keyframes chip-remove {
+      0% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+    }
+
+    /* ========================================
+       7. SELECTABLE CHIPS (CSS-only)
+    ======================================== */
+    .chip-select {
+      position: relative;
+    }
+
+    .chip-select input {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .chip-select__label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 16px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      background: rgba(255, 255, 255, 0.1);
+      color: #a0a0b0;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .chip-select__label:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .chip-select input:checked + .chip-select__label {
+      background: rgba(102, 126, 234, 0.2);
+      color: #667eea;
+      border-color: #667eea;
+    }
+
+    .chip-select input:focus + .chip-select__label {
+      box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.3);
+    }
+
+    /* Checkmark animation */
+    .chip-select__check {
+      width: 16px;
+      height: 16px;
+      opacity: 0;
+      transform: scale(0);
+      transition: all 0.2s ease;
+    }
+
+    .chip-select input:checked + .chip-select__label .chip-select__check {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Variantes de sélection */
+    .chip-select--success input:checked + .chip-select__label {
+      background: rgba(16, 185, 129, 0.2);
+      color: #10b981;
+      border-color: #10b981;
+    }
+
+    .chip-select--purple input:checked + .chip-select__label {
+      background: rgba(139, 92, 246, 0.2);
+      color: #8b5cf6;
+      border-color: #8b5cf6;
+    }
+
+    /* ========================================
+       8. CHIPS WITH AVATAR
+    ======================================== */
+    .chip--avatar {
+      padding-left: 4px;
+    }
+
+    .chip__avatar {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .chip--lg .chip__avatar {
+      width: 32px;
+      height: 32px;
+      font-size: 0.875rem;
+    }
+
+    /* ========================================
+       9. CHIPS WITH COUNTER/BADGE
+    ======================================== */
+    .chip__counter {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 20px;
+      height: 20px;
+      padding: 0 6px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.2);
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-left: 4px;
+    }
+
+    .chip--solid .chip__counter {
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    .chip__counter--pulse {
+      animation: counter-pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes counter-pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    /* ========================================
+       10. CHIP GROUPS
+    ======================================== */
+    .chip-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip-group--compact {
+      gap: 4px;
+    }
+
+    .chip-group--vertical {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    /* ========================================
+       11. FILTER CHIPS
+    ======================================== */
+    .filter-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .filter-chip {
+      position: relative;
+    }
+
+    .filter-chip input {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .filter-chip__label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      background: rgba(255, 255, 255, 0.05);
+      color: #a0a0b0;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .filter-chip__label:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .filter-chip input:checked + .filter-chip__label {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    }
+
+    .filter-chip__icon {
+      width: 18px;
+      height: 18px;
+    }
+
+    .filter-chip__count {
+      padding: 2px 8px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.2);
+      font-size: 0.75rem;
+    }
+
+    .filter-chip input:checked + .filter-chip__label .filter-chip__count {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    /* ========================================
+       12. TAG INPUT STYLE
+    ======================================== */
+    .tag-input {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      min-height: 50px;
+      align-items: center;
+    }
+
+    .tag-input:focus-within {
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+    }
+
+    .tag-input__tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 8px 4px 12px;
+      border-radius: 16px;
+      font-size: 0.875rem;
+      background: rgba(102, 126, 234, 0.2);
+      color: #667eea;
+      animation: tag-appear 0.2s ease;
+    }
+
+    @keyframes tag-appear {
+      from {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .tag-input__remove {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+      color: inherit;
+      font-size: 12px;
+      line-height: 1;
+    }
+
+    .tag-input__remove:hover {
+      background: rgba(239, 68, 68, 0.3);
+      color: #ef4444;
+    }
+
+    .tag-input__placeholder {
+      color: #666;
+      font-size: 0.875rem;
+    }
+
+    /* ========================================
+       13. STATUS CHIPS
+    ======================================== */
+    .chip--status {
+      position: relative;
+      padding-left: 24px;
+    }
+
+    .chip--status::before {
+      content: '';
+      position: absolute;
+      left: 10px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .chip--status.chip--success::before {
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+    }
+
+    .chip--status.chip--warning::before {
+      background: #f59e0b;
+      box-shadow: 0 0 8px #f59e0b;
+    }
+
+    .chip--status.chip--danger::before {
+      background: #ef4444;
+      box-shadow: 0 0 8px #ef4444;
+    }
+
+    .chip--status.chip--info::before {
+      background: #3b82f6;
+      box-shadow: 0 0 8px #3b82f6;
+    }
+
+    /* Status avec animation pulse */
+    .chip--status-live::before {
+      animation: status-pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes status-pulse {
+      0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 0.5;
+        transform: scale(1.2);
+      }
+    }
+
+    /* ========================================
+       14. ANIMATED CHIPS
+    ======================================== */
+    .chip--shimmer {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .chip--shimmer::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+      );
+      animation: chip-shimmer 2s infinite;
+    }
+
+    @keyframes chip-shimmer {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    /* Glow effect */
+    .chip--glow {
+      animation: chip-glow 2s ease-in-out infinite;
+    }
+
+    @keyframes chip-glow {
+      0%, 100% {
+        box-shadow: 0 0 5px currentColor;
+      }
+      50% {
+        box-shadow: 0 0 20px currentColor, 0 0 30px currentColor;
+      }
+    }
+
+    /* Bounce on hover */
+    .chip--bounce:hover {
+      animation: chip-bounce 0.5s ease;
+    }
+
+    @keyframes chip-bounce {
+      0%, 100% { transform: translateY(0); }
+      25% { transform: translateY(-4px); }
+      50% { transform: translateY(0); }
+      75% { transform: translateY(-2px); }
+    }
+
+    /* ========================================
+       15. PILL CHIPS (More rounded)
+    ======================================== */
+    .chip--pill {
+      border-radius: 50px;
+      padding: 8px 20px;
+    }
+
+    /* ========================================
+       16. SQUARE CHIPS
+    ======================================== */
+    .chip--square {
+      border-radius: 4px;
+    }
+
+    .chip--square.chip--lg {
+      border-radius: 6px;
+    }
+
+    /* ========================================
+       17. INTERACTIVE DEMO (Hover states)
+    ======================================== */
+    .chip--interactive {
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .chip--interactive:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    }
+
+    .chip--interactive:active {
+      transform: translateY(0);
+    }
+
+    /* ========================================
+       RESPONSIVE
+    ======================================== */
+    @media (max-width: 768px) {
+      .page-title {
+        font-size: 2rem;
+      }
+
+      .component-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="../../index.html" class="back-link">
+      <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+      </svg>
+      Retour
+    </a>
+
+    <h1 class="page-title">Chips & Tags</h1>
+    <p class="page-subtitle">16 types de chips et tags interactifs en CSS pur</p>
+
+    <!-- ================================
+         SECTION 1: BASIC CHIPS
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">1. Basic Chips</h2>
+      <p class="section__description">Chips simples avec différentes tailles</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Tailles</h3>
+          <div class="component-card__content">
+            <span class="chip chip--xs">Extra Small</span>
+            <span class="chip chip--sm">Small</span>
+            <span class="chip">Default</span>
+            <span class="chip chip--lg">Large</span>
+            <span class="chip chip--xl">Extra Large</span>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Formes</h3>
+          <div class="component-card__content">
+            <span class="chip">Standard</span>
+            <span class="chip chip--pill">Pill</span>
+            <span class="chip chip--square">Square</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 2: COLORED CHIPS
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">2. Colored Chips</h2>
+      <p class="section__description">Chips avec différentes couleurs sémantiques</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Soft Colors</h3>
+          <div class="component-card__content">
+            <span class="chip chip--primary">Primary</span>
+            <span class="chip chip--secondary">Secondary</span>
+            <span class="chip chip--success">Success</span>
+            <span class="chip chip--warning">Warning</span>
+            <span class="chip chip--danger">Danger</span>
+            <span class="chip chip--info">Info</span>
+            <span class="chip chip--purple">Purple</span>
+            <span class="chip chip--pink">Pink</span>
+            <span class="chip chip--cyan">Cyan</span>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Solid Colors (Gradient)</h3>
+          <div class="component-card__content">
+            <span class="chip chip--solid chip--primary">Primary</span>
+            <span class="chip chip--solid chip--success">Success</span>
+            <span class="chip chip--solid chip--warning">Warning</span>
+            <span class="chip chip--solid chip--danger">Danger</span>
+            <span class="chip chip--solid chip--info">Info</span>
+            <span class="chip chip--solid chip--purple">Purple</span>
+            <span class="chip chip--solid chip--pink">Pink</span>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Outline</h3>
+          <div class="component-card__content">
+            <span class="chip chip--outline chip--primary">Primary</span>
+            <span class="chip chip--outline chip--success">Success</span>
+            <span class="chip chip--outline chip--warning">Warning</span>
+            <span class="chip chip--outline chip--danger">Danger</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 3: CHIPS WITH ICONS
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">3. Chips with Icons</h2>
+      <p class="section__description">Chips avec icônes SVG intégrées</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Icon Left</h3>
+          <div class="component-card__content">
+            <span class="chip chip--success">
+              <svg class="chip__icon chip__icon--left" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+              Validé
+            </span>
+            <span class="chip chip--info">
+              <svg class="chip__icon chip__icon--left" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              Info
+            </span>
+            <span class="chip chip--warning">
+              <svg class="chip__icon chip__icon--left" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+              </svg>
+              Attention
+            </span>
+            <span class="chip chip--danger">
+              <svg class="chip__icon chip__icon--left" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+              Erreur
+            </span>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Icon Right</h3>
+          <div class="component-card__content">
+            <span class="chip chip--primary">
+              Email
+              <svg class="chip__icon chip__icon--right" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+              </svg>
+            </span>
+            <span class="chip chip--purple">
+              Lien
+              <svg class="chip__icon chip__icon--right" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+              </svg>
+            </span>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Categories</h3>
+          <div class="component-card__content">
+            <span class="chip chip--lg chip--solid chip--primary">
+              <svg class="chip__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+              </svg>
+              Design
+            </span>
+            <span class="chip chip--lg chip--solid chip--success">
+              <svg class="chip__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+              </svg>
+              Code
+            </span>
+            <span class="chip chip--lg chip--solid chip--purple">
+              <svg class="chip__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+              </svg>
+              Ideas
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 4: REMOVABLE CHIPS
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">4. Removable Chips</h2>
+      <p class="section__description">Chips avec bouton de suppression</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Deletable Tags</h3>
+          <div class="component-card__content">
+            <span class="chip chip--removable chip--primary">
+              JavaScript
+              <button class="chip__remove" aria-label="Supprimer">&times;</button>
+            </span>
+            <span class="chip chip--removable chip--success">
+              Python
+              <button class="chip__remove" aria-label="Supprimer">&times;</button>
+            </span>
+            <span class="chip chip--removable chip--purple">
+              Ruby
+              <button class="chip__remove" aria-label="Supprimer">&times;</button>
+            </span>
+            <span class="chip chip--removable chip--pink">
+              React
+              <button class="chip__remove" aria-label="Supprimer">&times;</button>
+            </span>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Solid Removable</h3>
+          <div class="component-card__content">
+            <span class="chip chip--removable chip--solid chip--primary">
+              Tag 1
+              <button class="chip__remove" aria-label="Supprimer">&times;</button>
+            </span>
+            <span class="chip chip--removable chip--solid chip--danger">
+              Tag 2
+              <button class="chip__remove" aria-label="Supprimer">&times;</button>
+            </span>
+            <span class="chip chip--removable chip--solid chip--info">
+              Tag 3
+              <button class="chip__remove" aria-label="Supprimer">&times;</button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 5: SELECTABLE CHIPS
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">5. Selectable Chips (CSS-only)</h2>
+      <p class="section__description">Chips cliquables utilisant des checkboxes cachées</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Single Select (Radio)</h3>
+          <div class="component-card__content">
+            <label class="chip-select">
+              <input type="radio" name="size" checked>
+              <span class="chip-select__label">
+                <svg class="chip-select__check" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                </svg>
+                Small
+              </span>
+            </label>
+            <label class="chip-select">
+              <input type="radio" name="size">
+              <span class="chip-select__label">
+                <svg class="chip-select__check" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                </svg>
+                Medium
+              </span>
+            </label>
+            <label class="chip-select">
+              <input type="radio" name="size">
+              <span class="chip-select__label">
+                <svg class="chip-select__check" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                </svg>
+                Large
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Multi Select (Checkbox)</h3>
+          <div class="component-card__content">
+            <label class="chip-select chip-select--success">
+              <input type="checkbox" checked>
+              <span class="chip-select__label">
+                <svg class="chip-select__check" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                </svg>
+                HTML
+              </span>
+            </label>
+            <label class="chip-select chip-select--success">
+              <input type="checkbox" checked>
+              <span class="chip-select__label">
+                <svg class="chip-select__check" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                </svg>
+                CSS
+              </span>
+            </label>
+            <label class="chip-select chip-select--success">
+              <input type="checkbox">
+              <span class="chip-select__label">
+                <svg class="chip-select__check" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                </svg>
+                JavaScript
+              </span>
+            </label>
+            <label class="chip-select chip-select--success">
+              <input type="checkbox">
+              <span class="chip-select__label">
+                <svg class="chip-select__check" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                </svg>
+                Ruby
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Purple Variant</h3>
+          <div class="component-card__content">
+            <label class="chip-select chip-select--purple">
+              <input type="checkbox" checked>
+              <span class="chip-select__label">
+                <svg class="chip-select__check" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                </svg>
+                Option A
+              </span>
+            </label>
+            <label class="chip-select chip-select--purple">
+              <input type="checkbox">
+              <span class="chip-select__label">
+                <svg class="chip-select__check" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                </svg>
+                Option B
+              </span>
+            </label>
+            <label class="chip-select chip-select--purple">
+              <input type="checkbox">
+              <span class="chip-select__label">
+                <svg class="chip-select__check" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                </svg>
+                Option C
+              </span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 6: CHIPS WITH AVATAR
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">6. Chips with Avatar</h2>
+      <p class="section__description">Chips avec avatar ou initiales</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">With Initials</h3>
+          <div class="component-card__content">
+            <span class="chip chip--avatar chip--primary">
+              <span class="chip__avatar">JD</span>
+              John Doe
+            </span>
+            <span class="chip chip--avatar chip--success">
+              <span class="chip__avatar">AS</span>
+              Alice Smith
+            </span>
+            <span class="chip chip--avatar chip--purple">
+              <span class="chip__avatar">BW</span>
+              Bob Wilson
+            </span>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Large with Remove</h3>
+          <div class="component-card__content">
+            <span class="chip chip--avatar chip--removable chip--lg chip--primary">
+              <span class="chip__avatar">MT</span>
+              Marie Talon
+              <button class="chip__remove" aria-label="Supprimer">&times;</button>
+            </span>
+            <span class="chip chip--avatar chip--removable chip--lg chip--pink">
+              <span class="chip__avatar">PL</span>
+              Pierre Luc
+              <button class="chip__remove" aria-label="Supprimer">&times;</button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 7: CHIPS WITH COUNTER
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">7. Chips with Counter</h2>
+      <p class="section__description">Chips avec compteur ou badge intégré</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">With Counter</h3>
+          <div class="component-card__content">
+            <span class="chip chip--primary">
+              Messages
+              <span class="chip__counter">24</span>
+            </span>
+            <span class="chip chip--danger">
+              Erreurs
+              <span class="chip__counter">5</span>
+            </span>
+            <span class="chip chip--success">
+              Complétés
+              <span class="chip__counter">128</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Solid with Counter</h3>
+          <div class="component-card__content">
+            <span class="chip chip--solid chip--primary">
+              Notifications
+              <span class="chip__counter">12</span>
+            </span>
+            <span class="chip chip--solid chip--purple">
+              Updates
+              <span class="chip__counter chip--counter--pulse">3</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Animated Counter</h3>
+          <div class="component-card__content">
+            <span class="chip chip--lg chip--solid chip--danger">
+              <svg class="chip__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+              </svg>
+              Alertes
+              <span class="chip__counter chip__counter--pulse">7</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 8: STATUS CHIPS
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">8. Status Chips</h2>
+      <p class="section__description">Chips avec indicateur de statut</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Static Status</h3>
+          <div class="component-card__content">
+            <span class="chip chip--status chip--success">En ligne</span>
+            <span class="chip chip--status chip--warning">Absent</span>
+            <span class="chip chip--status chip--danger">Hors ligne</span>
+            <span class="chip chip--status chip--info">Occupé</span>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Live Status (Animated)</h3>
+          <div class="component-card__content">
+            <span class="chip chip--status chip--status-live chip--success">Live</span>
+            <span class="chip chip--status chip--status-live chip--danger">Recording</span>
+            <span class="chip chip--status chip--status-live chip--info">Streaming</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 9: FILTER CHIPS
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">9. Filter Chips</h2>
+      <p class="section__description">Chips de filtrage avec icône et compteur</p>
+
+      <div class="component-grid">
+        <div class="component-card" style="grid-column: 1 / -1;">
+          <h3 class="component-card__title">Product Filters</h3>
+          <div class="filter-chips">
+            <label class="filter-chip">
+              <input type="checkbox" checked>
+              <span class="filter-chip__label">
+                <svg class="filter-chip__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
+                </svg>
+                Tous
+                <span class="filter-chip__count">256</span>
+              </span>
+            </label>
+            <label class="filter-chip">
+              <input type="checkbox">
+              <span class="filter-chip__label">
+                <svg class="filter-chip__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+                Électronique
+                <span class="filter-chip__count">48</span>
+              </span>
+            </label>
+            <label class="filter-chip">
+              <input type="checkbox">
+              <span class="filter-chip__label">
+                <svg class="filter-chip__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/>
+                </svg>
+                Mode
+                <span class="filter-chip__count">92</span>
+              </span>
+            </label>
+            <label class="filter-chip">
+              <input type="checkbox">
+              <span class="filter-chip__label">
+                <svg class="filter-chip__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                </svg>
+                Maison
+                <span class="filter-chip__count">67</span>
+              </span>
+            </label>
+            <label class="filter-chip">
+              <input type="checkbox">
+              <span class="filter-chip__label">
+                <svg class="filter-chip__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                </svg>
+                Livres
+                <span class="filter-chip__count">49</span>
+              </span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 10: TAG INPUT
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">10. Tag Input Style</h2>
+      <p class="section__description">Simulation d'un champ de saisie de tags</p>
+
+      <div class="component-grid">
+        <div class="component-card" style="grid-column: 1 / -1;">
+          <h3 class="component-card__title">Tags Container</h3>
+          <div class="tag-input">
+            <span class="tag-input__tag">
+              Vue.js
+              <button class="tag-input__remove" aria-label="Supprimer">&times;</button>
+            </span>
+            <span class="tag-input__tag">
+              React
+              <button class="tag-input__remove" aria-label="Supprimer">&times;</button>
+            </span>
+            <span class="tag-input__tag">
+              Angular
+              <button class="tag-input__remove" aria-label="Supprimer">&times;</button>
+            </span>
+            <span class="tag-input__tag">
+              Svelte
+              <button class="tag-input__remove" aria-label="Supprimer">&times;</button>
+            </span>
+            <span class="tag-input__placeholder">Ajouter un tag...</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 11: ANIMATED CHIPS
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">11. Animated Chips</h2>
+      <p class="section__description">Chips avec effets d'animation</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Shimmer Effect</h3>
+          <div class="component-card__content">
+            <span class="chip chip--solid chip--primary chip--shimmer">Loading...</span>
+            <span class="chip chip--solid chip--purple chip--shimmer">Processing</span>
+            <span class="chip chip--solid chip--pink chip--shimmer">Syncing</span>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Glow Effect</h3>
+          <div class="component-card__content">
+            <span class="chip chip--success chip--glow">Active</span>
+            <span class="chip chip--danger chip--glow">Alert</span>
+            <span class="chip chip--info chip--glow">New</span>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Bounce on Hover</h3>
+          <div class="component-card__content">
+            <span class="chip chip--solid chip--primary chip--bounce">Hover me</span>
+            <span class="chip chip--solid chip--success chip--bounce">Click me</span>
+            <span class="chip chip--solid chip--purple chip--bounce">Touch me</span>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Interactive</h3>
+          <div class="component-card__content">
+            <span class="chip chip--solid chip--primary chip--interactive">Interactive 1</span>
+            <span class="chip chip--solid chip--danger chip--interactive">Interactive 2</span>
+            <span class="chip chip--solid chip--info chip--interactive">Interactive 3</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================
+         SECTION 12: CHIP GROUPS
+    ================================= -->
+    <section class="section">
+      <h2 class="section__title">12. Chip Groups</h2>
+      <p class="section__description">Organisation et layouts de chips</p>
+
+      <div class="component-grid">
+        <div class="component-card">
+          <h3 class="component-card__title">Standard Group</h3>
+          <div class="chip-group">
+            <span class="chip chip--primary">Tag 1</span>
+            <span class="chip chip--success">Tag 2</span>
+            <span class="chip chip--warning">Tag 3</span>
+            <span class="chip chip--danger">Tag 4</span>
+            <span class="chip chip--info">Tag 5</span>
+            <span class="chip chip--purple">Tag 6</span>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Compact Group</h3>
+          <div class="chip-group chip-group--compact">
+            <span class="chip chip--xs chip--outline chip--primary">#javascript</span>
+            <span class="chip chip--xs chip--outline chip--primary">#css</span>
+            <span class="chip chip--xs chip--outline chip--primary">#html</span>
+            <span class="chip chip--xs chip--outline chip--primary">#webdev</span>
+            <span class="chip chip--xs chip--outline chip--primary">#frontend</span>
+            <span class="chip chip--xs chip--outline chip--primary">#design</span>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-card__title">Vertical Group</h3>
+          <div class="chip-group chip-group--vertical">
+            <span class="chip chip--lg chip--solid chip--primary">
+              <svg class="chip__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              Étape 1 complétée
+            </span>
+            <span class="chip chip--lg chip--solid chip--success">
+              <svg class="chip__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              Étape 2 complétée
+            </span>
+            <span class="chip chip--lg chip--outline chip--secondary">
+              <svg class="chip__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              Étape 3 en attente
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>
