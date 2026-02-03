@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scroll Animations — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ===========================================
+       SCROLL ANIMATIONS STYLES
+       =========================================== */
+
+    .demo-container {
+      display: flex;
+      flex-direction: column;
+      gap: 100px;
+      padding: 50px 0;
+    }
+
+    .demo-item {
+      padding: 40px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      text-align: center;
+    }
+
+    .demo-item h3 {
+      font-size: 1.5rem;
+      margin-bottom: 8px;
+    }
+
+    .demo-item p {
+      color: var(--text-muted);
+    }
+
+    /* ===========================================
+       FADE IN ANIMATIONS
+       =========================================== */
+
+    .fade-in {
+      opacity: 0;
+      transition: opacity 0.6s ease-out;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+    }
+
+    /* Fade In Up */
+    .fade-in-up {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .fade-in-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Fade In Down */
+    .fade-in-down {
+      opacity: 0;
+      transform: translateY(-40px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .fade-in-down.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Fade In Left */
+    .fade-in-left {
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .fade-in-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* Fade In Right */
+    .fade-in-right {
+      opacity: 0;
+      transform: translateX(40px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .fade-in-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* ===========================================
+       SCALE ANIMATIONS
+       =========================================== */
+
+    .scale-in {
+      opacity: 0;
+      transform: scale(0.8);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .scale-in.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .scale-in-center {
+      opacity: 0;
+      transform: scale(0);
+      transition: opacity 0.5s ease-out, transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .scale-in-center.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* ===========================================
+       ROTATE ANIMATIONS
+       =========================================== */
+
+    .rotate-in {
+      opacity: 0;
+      transform: rotate(-10deg) scale(0.9);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .rotate-in.visible {
+      opacity: 1;
+      transform: rotate(0) scale(1);
+    }
+
+    .flip-in {
+      opacity: 0;
+      transform: perspective(600px) rotateX(-90deg);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .flip-in.visible {
+      opacity: 1;
+      transform: perspective(600px) rotateX(0);
+    }
+
+    /* ===========================================
+       BLUR ANIMATIONS
+       =========================================== */
+
+    .blur-in {
+      opacity: 0;
+      filter: blur(10px);
+      transition: opacity 0.6s ease-out, filter 0.6s ease-out;
+    }
+
+    .blur-in.visible {
+      opacity: 1;
+      filter: blur(0);
+    }
+
+    /* ===========================================
+       STAGGER ANIMATIONS
+       =========================================== */
+
+    .stagger-container .stagger-item {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+    }
+
+    .stagger-container.visible .stagger-item:nth-child(1) { transition-delay: 0ms; }
+    .stagger-container.visible .stagger-item:nth-child(2) { transition-delay: 100ms; }
+    .stagger-container.visible .stagger-item:nth-child(3) { transition-delay: 200ms; }
+    .stagger-container.visible .stagger-item:nth-child(4) { transition-delay: 300ms; }
+    .stagger-container.visible .stagger-item:nth-child(5) { transition-delay: 400ms; }
+
+    .stagger-container.visible .stagger-item {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .stagger-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .stagger-box {
+      height: 80px;
+      background: linear-gradient(135deg, var(--primary), #8b5cf6);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+    }
+
+    /* ===========================================
+       PARALLAX EFFECT
+       =========================================== */
+
+    .parallax-container {
+      position: relative;
+      height: 200px;
+      overflow: hidden;
+      border-radius: var(--radius-lg);
+    }
+
+    .parallax-bg {
+      position: absolute;
+      inset: -50px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      transition: transform 0.1s linear;
+    }
+
+    .parallax-content {
+      position: relative;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    /* ===========================================
+       PROGRESS ON SCROLL
+       =========================================== */
+
+    .progress-scroll {
+      position: fixed;
+      top: 0;
+      left: var(--sidebar-width);
+      right: 0;
+      height: 4px;
+      background: var(--bg-card);
+      z-index: 1000;
+    }
+
+    .progress-scroll__bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), #8b5cf6);
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+
+    /* ===========================================
+       REVEAL ON SCROLL
+       =========================================== */
+
+    .reveal-text {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .reveal-text__inner {
+      display: block;
+      transform: translateY(100%);
+      transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+    }
+
+    .reveal-text.visible .reveal-text__inner {
+      transform: translateY(0);
+    }
+
+    /* ===========================================
+       COUNTER ANIMATION
+       =========================================== */
+
+    .counter {
+      font-size: 4rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--primary), #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ===========================================
+       DRAW LINE
+       =========================================== */
+
+    .draw-line {
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 1000;
+      transition: stroke-dashoffset 1.5s ease-out;
+    }
+
+    .draw-line.visible {
+      stroke-dashoffset: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- Progress Bar -->
+    <div class="progress-scroll">
+      <div class="progress-scroll__bar" id="progress-bar"></div>
+    </div>
+
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+      <a href="../../index.html" class="sidebar__logo">
+        <span>Duke</span>-components
+      </a>
+
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Scroll Animations</h3>
+        <ul class="sidebar__nav">
+          <li><a href="#fade" class="sidebar__link sidebar__link--active">Fade</a></li>
+          <li><a href="#scale" class="sidebar__link">Scale</a></li>
+          <li><a href="#rotate" class="sidebar__link">Rotate</a></li>
+          <li><a href="#stagger" class="sidebar__link">Stagger</a></li>
+          <li><a href="#parallax" class="sidebar__link">Parallax</a></li>
+          <li><a href="#counter" class="sidebar__link">Counter</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar__section">
+        <a href="../../index.html" class="sidebar__link">← Retour</a>
+      </div>
+
+      <!-- Toggle Admin -->
+      <div class="admin-toggle">
+        <span class="admin-toggle__label">Mode Admin</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="admin-toggle">
+          <span class="toggle-switch__slider"></span>
+        </label>
+      </div>
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main">
+      <header class="page-header">
+        <h1 class="page-header__title">📜 Scroll Animations</h1>
+        <p class="page-header__desc">Animations déclenchées au défilement — Défilez pour voir la magie !</p>
+      </header>
+
+      <!-- ========== FADE SECTION ========== -->
+      <section id="fade" class="section">
+        <h2 class="section__title">Fade Animations</h2>
+        <p class="section__desc">Apparitions progressives avec différentes directions.</p>
+
+        <div class="demo-container">
+          <div class="demo-item fade-in" data-scroll>
+            <h3>Fade In</h3>
+            <p>Apparition simple en fondu</p>
+          </div>
+
+          <div class="demo-item fade-in-up" data-scroll>
+            <h3>Fade In Up</h3>
+            <p>Apparition de bas en haut</p>
+          </div>
+
+          <div class="demo-item fade-in-left" data-scroll>
+            <h3>Fade In Left</h3>
+            <p>Apparition de gauche à droite</p>
+          </div>
+
+          <div class="demo-item fade-in-right" data-scroll>
+            <h3>Fade In Right</h3>
+            <p>Apparition de droite à gauche</p>
+          </div>
+        </div>
+
+        <div class="components-grid" style="margin-top: 40px;">
+          <article class="component-card" data-security="safe">
+            <div class="component-card__info">
+              <h3 class="component-card__name">Fade In Up</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">fade</span>
+                <span class="tag">scroll</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">CSS</button>
+                  <button class="code-viewer__tab">JS</button>
+                </div>
+                <button class="copy-btn" data-target="fade-css">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="fade-css"><code>.fade-in-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}</code></pre>
+                <pre class="code-viewer__code" id="fade-js" style="display:none"><code>const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('[data-scroll]')
+  .forEach(el => observer.observe(el));</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== SCALE SECTION ========== -->
+      <section id="scale" class="section">
+        <h2 class="section__title">Scale Animations</h2>
+        <p class="section__desc">Effets de zoom à l'apparition.</p>
+
+        <div class="demo-container">
+          <div class="demo-item scale-in" data-scroll>
+            <h3>Scale In</h3>
+            <p>Zoom progressif</p>
+          </div>
+
+          <div class="demo-item scale-in-center" data-scroll>
+            <h3>Scale In Center</h3>
+            <p>Zoom avec bounce effect</p>
+          </div>
+        </div>
+
+        <div class="components-grid" style="margin-top: 40px;">
+          <article class="component-card" data-security="safe">
+            <div class="component-card__info">
+              <h3 class="component-card__name">Scale In Center</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">scale</span>
+                <span class="tag">bounce</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="scale-css">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="scale-css"><code>.scale-in-center {
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity 0.5s ease-out,
+              transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.scale-in-center.visible {
+  opacity: 1;
+  transform: scale(1);
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== ROTATE SECTION ========== -->
+      <section id="rotate" class="section">
+        <h2 class="section__title">Rotate Animations</h2>
+        <p class="section__desc">Rotations et effets 3D.</p>
+
+        <div class="demo-container">
+          <div class="demo-item rotate-in" data-scroll>
+            <h3>Rotate In</h3>
+            <p>Rotation légère</p>
+          </div>
+
+          <div class="demo-item flip-in" data-scroll>
+            <h3>Flip In</h3>
+            <p>Effet carte 3D</p>
+          </div>
+
+          <div class="demo-item blur-in" data-scroll>
+            <h3>Blur In</h3>
+            <p>Effet de flou</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== STAGGER SECTION ========== -->
+      <section id="stagger" class="section">
+        <h2 class="section__title">Stagger Animation</h2>
+        <p class="section__desc">Animations décalées pour les listes.</p>
+
+        <div class="demo-container">
+          <div class="demo-item stagger-container" data-scroll>
+            <h3 style="margin-bottom: 24px;">Stagger Grid</h3>
+            <div class="stagger-grid">
+              <div class="stagger-box stagger-item">1</div>
+              <div class="stagger-box stagger-item">2</div>
+              <div class="stagger-box stagger-item">3</div>
+              <div class="stagger-box stagger-item">4</div>
+              <div class="stagger-box stagger-item">5</div>
+              <div class="stagger-box stagger-item">6</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="components-grid" style="margin-top: 40px;">
+          <article class="component-card" data-security="safe">
+            <div class="component-card__info">
+              <h3 class="component-card__name">Stagger Animation</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">stagger</span>
+                <span class="tag">list</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="stagger-css">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="stagger-css"><code>.stagger-container .stagger-item {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+
+.stagger-container.visible .stagger-item:nth-child(1) { transition-delay: 0ms; }
+.stagger-container.visible .stagger-item:nth-child(2) { transition-delay: 100ms; }
+.stagger-container.visible .stagger-item:nth-child(3) { transition-delay: 200ms; }
+.stagger-container.visible .stagger-item:nth-child(4) { transition-delay: 300ms; }
+.stagger-container.visible .stagger-item:nth-child(5) { transition-delay: 400ms; }
+.stagger-container.visible .stagger-item:nth-child(6) { transition-delay: 500ms; }
+
+.stagger-container.visible .stagger-item {
+  opacity: 1;
+  transform: translateY(0);
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== PARALLAX SECTION ========== -->
+      <section id="parallax" class="section">
+        <h2 class="section__title">Parallax Effect</h2>
+        <p class="section__desc">Effet de profondeur au défilement.</p>
+
+        <div class="demo-container">
+          <div class="parallax-container" data-parallax>
+            <div class="parallax-bg"></div>
+            <div class="parallax-content">
+              <span>Parallax Background</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="components-grid" style="margin-top: 40px;">
+          <article class="component-card" data-security="safe">
+            <div class="component-card__info">
+              <h3 class="component-card__name">Parallax Effect</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">parallax</span>
+                <span class="tag">depth</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">JS</button>
+                </div>
+                <button class="copy-btn" data-target="parallax-js">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="parallax-js"><code>document.querySelectorAll('[data-parallax]').forEach(container => {
+  const bg = container.querySelector('.parallax-bg');
+
+  window.addEventListener('scroll', () => {
+    const rect = container.getBoundingClientRect();
+    const scrolled = (window.innerHeight - rect.top) /
+                     (window.innerHeight + rect.height);
+    const translateY = (scrolled - 0.5) * 100;
+
+    bg.style.transform = `translateY(${translateY}px)`;
+  });
+});</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== COUNTER SECTION ========== -->
+      <section id="counter" class="section">
+        <h2 class="section__title">Counter Animation</h2>
+        <p class="section__desc">Compteurs animés au scroll.</p>
+
+        <div class="demo-container">
+          <div class="demo-item" data-scroll>
+            <div class="counter" data-count="1000">0</div>
+            <p style="margin-top: 16px;">Composants créés</p>
+          </div>
+        </div>
+
+        <div class="components-grid" style="margin-top: 40px;">
+          <article class="component-card" data-security="safe">
+            <div class="component-card__info">
+              <h3 class="component-card__name">Animated Counter</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">counter</span>
+                <span class="tag">numbers</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">JS</button>
+                </div>
+                <button class="copy-btn" data-target="counter-js">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="counter-js"><code>function animateCounter(element) {
+  const target = parseInt(element.dataset.count);
+  const duration = 2000;
+  const start = performance.now();
+
+  function update(currentTime) {
+    const elapsed = currentTime - start;
+    const progress = Math.min(elapsed / duration, 1);
+
+    // Easing function
+    const eased = 1 - Math.pow(1 - progress, 4);
+    const current = Math.floor(target * eased);
+
+    element.textContent = current.toLocaleString();
+
+    if (progress < 1) {
+      requestAnimationFrame(update);
+    }
+  }
+
+  requestAnimationFrame(update);
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Complete JS Code -->
+      <section class="section">
+        <h2 class="section__title">Script Complet</h2>
+        <p class="section__desc">Le JavaScript pour toutes les animations.</p>
+
+        <div class="components-grid">
+          <article class="component-card" data-security="safe" style="grid-column: span 2;">
+            <div class="component-card__info">
+              <h3 class="component-card__name">Scroll Animation Script</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">complete</span>
+                <span class="tag">javascript</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">JavaScript</button>
+                </div>
+                <button class="copy-btn" data-target="complete-js">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="complete-js"><code>// Intersection Observer for scroll animations
+const scrollObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+
+      // Handle counters
+      const counter = entry.target.querySelector('[data-count]');
+      if (counter && !counter.dataset.animated) {
+        counter.dataset.animated = 'true';
+        animateCounter(counter);
+      }
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('[data-scroll]')
+  .forEach(el => scrollObserver.observe(el));
+
+// Counter animation
+function animateCounter(element) {
+  const target = parseInt(element.dataset.count);
+  const duration = 2000;
+  const start = performance.now();
+
+  function update(currentTime) {
+    const elapsed = currentTime - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 4);
+    element.textContent = Math.floor(target * eased).toLocaleString();
+    if (progress < 1) requestAnimationFrame(update);
+  }
+  requestAnimationFrame(update);
+}
+
+// Progress bar on scroll
+const progressBar = document.getElementById('progress-bar');
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const scrollPercent = (scrollTop / docHeight) * 100;
+  progressBar.style.width = scrollPercent + '%';
+});
+
+// Parallax effect
+document.querySelectorAll('[data-parallax]').forEach(container => {
+  const bg = container.querySelector('.parallax-bg');
+  window.addEventListener('scroll', () => {
+    const rect = container.getBoundingClientRect();
+    const scrolled = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+    bg.style.transform = `translateY(${(scrolled - 0.5) * 100}px)`;
+  });
+});</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="../../assets/js/copy-code.js"></script>
+  <script src="../../assets/js/security-system.js"></script>
+  <script src="../../assets/js/search.js"></script>
+  <script src="../../assets/js/accessibility.js"></script>
+  <script>
+    // Scroll animations observer
+    const scrollObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+
+          // Handle counters
+          const counter = entry.target.querySelector('[data-count]');
+          if (counter && !counter.dataset.animated) {
+            counter.dataset.animated = 'true';
+            animateCounter(counter);
+          }
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('[data-scroll]').forEach(el => scrollObserver.observe(el));
+
+    // Counter animation
+    function animateCounter(element) {
+      const target = parseInt(element.dataset.count);
+      const duration = 2000;
+      const start = performance.now();
+
+      function update(currentTime) {
+        const elapsed = currentTime - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 4);
+        element.textContent = Math.floor(target * eased).toLocaleString();
+        if (progress < 1) requestAnimationFrame(update);
+      }
+      requestAnimationFrame(update);
+    }
+
+    // Progress bar
+    const progressBar = document.getElementById('progress-bar');
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = (scrollTop / docHeight) * 100;
+      progressBar.style.width = scrollPercent + '%';
+    });
+
+    // Parallax
+    document.querySelectorAll('[data-parallax]').forEach(container => {
+      const bg = container.querySelector('.parallax-bg');
+      window.addEventListener('scroll', () => {
+        const rect = container.getBoundingClientRect();
+        const scrolled = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+        bg.style.transform = `translateY(${(scrolled - 0.5) * 100}px)`;
+      });
+    });
+  </script>
+</body>
+</html>

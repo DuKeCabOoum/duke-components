@@ -398,6 +398,247 @@
     }
 
     /* ===========================================
+       PROGRESS 9 — LIQUID FILL
+       =========================================== */
+
+    .progress-liquid {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      margin: 0 auto;
+      border-radius: 50%;
+      background: #18181b;
+      border: 4px solid #27272a;
+      overflow: hidden;
+    }
+
+    .progress-liquid__wave {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 200%;
+      height: 200%;
+      transform: translateX(-50%);
+      background: linear-gradient(180deg, #6366f1 0%, #4f46e5 100%);
+      border-radius: 40%;
+      animation: liquid-wave 3s ease-in-out infinite;
+    }
+
+    .progress-liquid__wave--2 {
+      opacity: 0.5;
+      animation: liquid-wave 4s ease-in-out infinite reverse;
+      animation-delay: -1s;
+    }
+
+    @keyframes liquid-wave {
+      0%, 100% { transform: translateX(-50%) rotate(0deg); }
+      50% { transform: translateX(-50%) rotate(180deg); }
+    }
+
+    .progress-liquid__text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      z-index: 2;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    /* ===========================================
+       PROGRESS 10 — COUNTDOWN RING
+       =========================================== */
+
+    .progress-countdown {
+      position: relative;
+      width: 140px;
+      height: 140px;
+      margin: 0 auto;
+    }
+
+    .progress-countdown__svg {
+      transform: rotate(-90deg);
+    }
+
+    .progress-countdown__bg {
+      fill: none;
+      stroke: #27272a;
+      stroke-width: 10;
+    }
+
+    .progress-countdown__fill {
+      fill: none;
+      stroke: url(#countdown-gradient);
+      stroke-width: 10;
+      stroke-linecap: round;
+      stroke-dasharray: 408.407;
+      animation: countdown-pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes countdown-pulse {
+      0%, 100% { stroke-width: 10; }
+      50% { stroke-width: 12; }
+    }
+
+    .progress-countdown__time {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    .progress-countdown__value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      display: block;
+    }
+
+    .progress-countdown__label {
+      font-size: 0.75rem;
+      color: #71717a;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* ===========================================
+       PROGRESS 11 — SKILL BARS
+       =========================================== */
+
+    .progress-skills {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .progress-skill {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .progress-skill__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .progress-skill__name {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #fff;
+    }
+
+    .progress-skill__value {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #6366f1;
+    }
+
+    .progress-skill__bar {
+      height: 6px;
+      background: #27272a;
+      border-radius: 3px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-skill__fill {
+      height: 100%;
+      border-radius: 3px;
+      position: relative;
+      transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .progress-skill__fill::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      height: 100%;
+      width: 20px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3));
+      animation: skill-shimmer 1.5s ease-in-out infinite;
+    }
+
+    @keyframes skill-shimmer {
+      0% { opacity: 0; }
+      50% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    .progress-skill--html .progress-skill__fill { background: linear-gradient(90deg, #e34f26, #f06529); }
+    .progress-skill--css .progress-skill__fill { background: linear-gradient(90deg, #264de4, #2965f1); }
+    .progress-skill--js .progress-skill__fill { background: linear-gradient(90deg, #f0db4f, #323330); }
+    .progress-skill--react .progress-skill__fill { background: linear-gradient(90deg, #61dafb, #00d8ff); }
+
+    /* ===========================================
+       PROGRESS 12 — BATTERY STYLE
+       =========================================== */
+
+    .progress-battery {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin: 0 auto;
+    }
+
+    .progress-battery__body {
+      width: 100px;
+      height: 48px;
+      background: #18181b;
+      border: 3px solid #3f3f46;
+      border-radius: 8px;
+      padding: 4px;
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+
+    .progress-battery__segment {
+      flex: 1;
+      height: 100%;
+      background: #27272a;
+      border-radius: 3px;
+      transition: background 0.3s ease;
+    }
+
+    .progress-battery__segment--filled {
+      background: linear-gradient(180deg, #22c55e, #16a34a);
+    }
+
+    .progress-battery__segment--warning {
+      background: linear-gradient(180deg, #eab308, #ca8a04);
+    }
+
+    .progress-battery__segment--critical {
+      background: linear-gradient(180deg, #ef4444, #dc2626);
+      animation: battery-blink 0.5s ease-in-out infinite;
+    }
+
+    @keyframes battery-blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .progress-battery__cap {
+      width: 6px;
+      height: 20px;
+      background: #3f3f46;
+      border-radius: 0 3px 3px 0;
+    }
+
+    .progress-battery__text {
+      margin-left: 12px;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    /* ===========================================
        CODE BLOCK
        =========================================== */
 
@@ -534,7 +775,7 @@
   <main class="main-content">
     <header class="page-header">
       <h1 class="page-header__title">Progress</h1>
-      <p class="page-header__desc">Barres de progression et indicateurs d'avancement</p>
+      <p class="page-header__desc">12 indicateurs de progression — barres, cercles, jauges et plus</p>
     </header>
 
     <div class="progress-grid">
@@ -882,12 +1123,182 @@ function setProgress(percent) {
         </div>
       </div>
 
+      <!-- PROGRESS 9 — LIQUID FILL -->
+      <div class="progress-card">
+        <div class="progress-card__preview">
+          <div class="progress-liquid" style="--level: 65%;">
+            <div class="progress-liquid__wave" style="bottom: 65%;"></div>
+            <div class="progress-liquid__wave progress-liquid__wave--2" style="bottom: 65%;"></div>
+            <span class="progress-liquid__text">65%</span>
+          </div>
+        </div>
+        <div class="progress-card__info">
+          <h3 class="progress-card__name">Liquid Fill</h3>
+          <div class="progress-card__tags">
+            <span class="tag tag--primary">Creative</span>
+            <span class="tag">Wave</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>@keyframes liquid-wave {
+  0%, 100% {
+    transform: translateX(-50%) rotate(0deg);
+  }
+  50% {
+    transform: translateX(-50%) rotate(180deg);
+  }
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROGRESS 10 — COUNTDOWN RING -->
+      <div class="progress-card">
+        <div class="progress-card__preview">
+          <div class="progress-countdown">
+            <svg class="progress-countdown__svg" width="140" height="140">
+              <defs>
+                <linearGradient id="countdown-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#6366f1" />
+                  <stop offset="100%" stop-color="#ec4899" />
+                </linearGradient>
+              </defs>
+              <circle class="progress-countdown__bg" cx="70" cy="70" r="65"></circle>
+              <circle class="progress-countdown__fill" cx="70" cy="70" r="65" style="stroke-dashoffset: 122.52;"></circle>
+            </svg>
+            <div class="progress-countdown__time">
+              <span class="progress-countdown__value">2:45</span>
+              <span class="progress-countdown__label">remaining</span>
+            </div>
+          </div>
+        </div>
+        <div class="progress-card__info">
+          <h3 class="progress-card__name">Countdown Ring</h3>
+          <div class="progress-card__tags">
+            <span class="tag tag--primary">Timer</span>
+            <span class="tag">Countdown</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROGRESS 11 — SKILL BARS -->
+      <div class="progress-card">
+        <div class="progress-card__preview">
+          <div class="progress-skills">
+            <div class="progress-skill progress-skill--html">
+              <div class="progress-skill__header">
+                <span class="progress-skill__name">HTML</span>
+                <span class="progress-skill__value">95%</span>
+              </div>
+              <div class="progress-skill__bar">
+                <div class="progress-skill__fill" style="width: 95%;"></div>
+              </div>
+            </div>
+            <div class="progress-skill progress-skill--css">
+              <div class="progress-skill__header">
+                <span class="progress-skill__name">CSS</span>
+                <span class="progress-skill__value">90%</span>
+              </div>
+              <div class="progress-skill__bar">
+                <div class="progress-skill__fill" style="width: 90%;"></div>
+              </div>
+            </div>
+            <div class="progress-skill progress-skill--js">
+              <div class="progress-skill__header">
+                <span class="progress-skill__name">JavaScript</span>
+                <span class="progress-skill__value">75%</span>
+              </div>
+              <div class="progress-skill__bar">
+                <div class="progress-skill__fill" style="width: 75%;"></div>
+              </div>
+            </div>
+            <div class="progress-skill progress-skill--react">
+              <div class="progress-skill__header">
+                <span class="progress-skill__name">React</span>
+                <span class="progress-skill__value">60%</span>
+              </div>
+              <div class="progress-skill__bar">
+                <div class="progress-skill__fill" style="width: 60%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="progress-card__info">
+          <h3 class="progress-card__name">Skill Bars</h3>
+          <div class="progress-card__tags">
+            <span class="tag tag--primary">Portfolio</span>
+            <span class="tag">Skills</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROGRESS 12 — BATTERY STYLE -->
+      <div class="progress-card">
+        <div class="progress-card__preview">
+          <div class="progress-battery">
+            <div class="progress-battery__body">
+              <div class="progress-battery__segment progress-battery__segment--filled"></div>
+              <div class="progress-battery__segment progress-battery__segment--filled"></div>
+              <div class="progress-battery__segment progress-battery__segment--filled"></div>
+              <div class="progress-battery__segment progress-battery__segment--warning"></div>
+              <div class="progress-battery__segment"></div>
+            </div>
+            <div class="progress-battery__cap"></div>
+            <span class="progress-battery__text">80%</span>
+          </div>
+          <div style="margin-top: 24px;">
+            <div class="progress-battery">
+              <div class="progress-battery__body">
+                <div class="progress-battery__segment progress-battery__segment--critical"></div>
+                <div class="progress-battery__segment"></div>
+                <div class="progress-battery__segment"></div>
+                <div class="progress-battery__segment"></div>
+                <div class="progress-battery__segment"></div>
+              </div>
+              <div class="progress-battery__cap"></div>
+              <span class="progress-battery__text" style="color: #ef4444;">15%</span>
+            </div>
+          </div>
+        </div>
+        <div class="progress-card__info">
+          <h3 class="progress-card__name">Battery Style</h3>
+          <div class="progress-card__tags">
+            <span class="tag tag--primary">Status</span>
+            <span class="tag">Device</span>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.progress-battery__segment--critical {
+  background: linear-gradient(180deg, #ef4444, #dc2626);
+  animation: battery-blink 0.5s infinite;
+}
+
+@keyframes battery-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </main>
   </div>
 
   <script src="../../assets/js/main.js"></script>
   <script src="../../assets/js/security-system.js"></script>
+  <script src="../../assets/js/search.js"></script>
+  <script src="../../assets/js/accessibility.js"></script>
   <script>
     function copyCode(btn) {
       const codeBlock = btn.closest('.code-block');

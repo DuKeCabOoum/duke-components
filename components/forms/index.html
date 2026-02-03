@@ -21,6 +21,8 @@
           <li><a href="#checkboxes" class="sidebar__link">Checkboxes</a></li>
           <li><a href="#toggles" class="sidebar__link">Toggles</a></li>
           <li><a href="#selects" class="sidebar__link">Selects</a></li>
+          <li><a href="#file-upload" class="sidebar__link">File Upload</a></li>
+          <li><a href="#advanced" class="sidebar__link">Advanced</a></li>
         </ul>
       </div>
 
@@ -242,6 +244,253 @@
   outline: none;
   border-color: #6366f1;
 }</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- INPUT VALIDATION -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="input-validation input-validation--success">
+                <input type="text" placeholder="Valid email" value="user@example.com">
+                <span class="input-validation__icon">✓</span>
+                <span class="input-validation__msg">Email is valid</span>
+              </div>
+              <div class="input-validation input-validation--error" style="margin-top: 16px;">
+                <input type="text" placeholder="Invalid email" value="invalid-email">
+                <span class="input-validation__icon">✕</span>
+                <span class="input-validation__msg">Please enter a valid email</span>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Validation States</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">input</span>
+                <span class="tag">validation</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- INPUT OTP -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="input-otp">
+                <input type="text" maxlength="1" class="input-otp__digit" value="4">
+                <input type="text" maxlength="1" class="input-otp__digit" value="2">
+                <input type="text" maxlength="1" class="input-otp__digit" value="8">
+                <input type="text" maxlength="1" class="input-otp__digit">
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">OTP / PIN Input</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">input</span>
+                <span class="tag">verification</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- INPUT PASSWORD TOGGLE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="input-password">
+                <input type="password" id="pw-demo" placeholder="Enter password" value="secret123">
+                <button type="button" class="input-password__toggle" onclick="togglePassword()">👁️</button>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Password Toggle</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">input</span>
+                <span class="tag">password</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- INPUT COUNTER -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="input-counter">
+                <textarea placeholder="Write your message..." maxlength="100" oninput="updateCounter(this)">Hello World</textarea>
+                <span class="input-counter__count"><span id="char-count">11</span>/100</span>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Character Counter</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">textarea</span>
+                <span class="tag">counter</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- INPUT UNDERLINE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="input-underline">
+                <input type="text" placeholder="Your name">
+                <span class="input-underline__line"></span>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Underline Input</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">input</span>
+                <span class="tag">minimal</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="input-underline-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="input-underline-html"><code>&lt;div class="input-underline"&gt;
+  &lt;input type="text" placeholder="Your name"&gt;
+  &lt;span class="input-underline__line"&gt;&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="input-underline-css" style="display:none"><code>.input-underline {
+  position: relative;
+  width: 200px;
+}
+
+.input-underline input {
+  width: 100%;
+  padding: 12px 0;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid #2a2a2a;
+  color: white;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.input-underline__line {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: #6366f1;
+  transition: all 0.3s ease;
+}
+
+.input-underline input:focus {
+  outline: none;
+}
+
+.input-underline input:focus ~ .input-underline__line {
+  left: 0;
+  width: 100%;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- INPUT SEARCH CLEAR -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="input-search-clear">
+                <span class="input-search-clear__icon">🔍</span>
+                <input type="text" placeholder="Search..." value="React components">
+                <button type="button" class="input-search-clear__btn" onclick="clearSearch(this)">✕</button>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Search with Clear</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">input</span>
+                <span class="tag">search</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- INPUT CREDIT CARD -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="input-credit-card">
+                <span class="input-credit-card__icon">💳</span>
+                <input type="text" placeholder="0000 0000 0000 0000" maxlength="19" oninput="formatCreditCard(this)">
+                <span class="input-credit-card__brand">VISA</span>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Credit Card Input</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">input</span>
+                <span class="tag">payment</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- INPUT TAGS -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="input-tags">
+                <div class="input-tags__list">
+                  <span class="input-tags__tag">React <button onclick="removeTag(this)">×</button></span>
+                  <span class="input-tags__tag">Vue <button onclick="removeTag(this)">×</button></span>
+                  <input type="text" placeholder="Add tag..." class="input-tags__input">
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Tags Input</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">input</span>
+                <span class="tag">tags</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- INPUT RANGE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="input-range-custom">
+                <label class="input-range-custom__label">Volume: <span id="range-value">50</span>%</label>
+                <input type="range" min="0" max="100" value="50" oninput="updateRangeValue(this)">
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Range Slider</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">range</span>
+                <span class="tag">slider</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- INPUT DATE STYLED -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="input-date-styled">
+                <span class="input-date-styled__icon">📅</span>
+                <input type="date" value="2025-01-29">
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Date Input</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">date</span>
+                <span class="tag">styled</span>
               </div>
             </div>
           </article>
@@ -668,6 +917,290 @@
               </div>
             </div>
           </article>
+
+          <!-- SELECT MULTI -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="select-multi" onclick="toggleSelectMulti(this)">
+                <div class="select-multi__selected">
+                  <span class="select-multi__chip">React</span>
+                  <span class="select-multi__chip">Vue</span>
+                  <span class="select-multi__placeholder">+ Add more</span>
+                </div>
+                <span class="select-multi__arrow">▼</span>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Multi Select</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">select</span>
+                <span class="tag">multi</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- SELECT WITH ICONS -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="select-icons">
+                <span class="select-icons__icon">🌐</span>
+                <select class="select-icons__select">
+                  <option>English</option>
+                  <option>Français</option>
+                  <option>Español</option>
+                  <option>Deutsch</option>
+                </select>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Select with Icon</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">select</span>
+                <span class="tag">icon</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== FILE UPLOAD SECTION ========== -->
+      <section id="file-upload" class="section">
+        <h2 class="section__title">File Upload</h2>
+        <p class="section__desc">Zones de téléchargement de fichiers.</p>
+
+        <div class="components-grid">
+          <!-- DROPZONE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="dropzone" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
+                <div class="dropzone__icon">📁</div>
+                <p class="dropzone__text">Drag & drop files here</p>
+                <p class="dropzone__hint">or click to browse</p>
+                <input type="file" class="dropzone__input" multiple>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Drag & Drop Zone</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">upload</span>
+                <span class="tag">dropzone</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- FILE INPUT BUTTON -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <label class="file-btn">
+                <span class="file-btn__icon">📎</span>
+                <span class="file-btn__text">Choose file</span>
+                <input type="file" hidden>
+              </label>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">File Button</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">upload</span>
+                <span class="tag">button</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- IMAGE PREVIEW UPLOAD -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="image-upload">
+                <div class="image-upload__preview">
+                  <span class="image-upload__placeholder">🖼️</span>
+                </div>
+                <div class="image-upload__info">
+                  <p class="image-upload__name">No image selected</p>
+                  <label class="image-upload__btn">
+                    Upload
+                    <input type="file" accept="image/*" hidden onchange="previewImage(this)">
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Image Preview</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">upload</span>
+                <span class="tag">preview</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- FILE LIST -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="file-list">
+                <div class="file-list__item">
+                  <span class="file-list__icon">📄</span>
+                  <div class="file-list__info">
+                    <span class="file-list__name">document.pdf</span>
+                    <span class="file-list__size">2.4 MB</span>
+                  </div>
+                  <button class="file-list__remove">✕</button>
+                </div>
+                <div class="file-list__item">
+                  <span class="file-list__icon">🖼️</span>
+                  <div class="file-list__info">
+                    <span class="file-list__name">image.png</span>
+                    <span class="file-list__size">845 KB</span>
+                  </div>
+                  <button class="file-list__remove">✕</button>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">File List</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">upload</span>
+                <span class="tag">list</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== ADVANCED SECTION ========== -->
+      <section id="advanced" class="section">
+        <h2 class="section__title">Advanced</h2>
+        <p class="section__desc">Composants de formulaire avancés.</p>
+
+        <div class="components-grid">
+          <!-- NUMBER STEPPER -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="number-stepper">
+                <button class="number-stepper__btn" onclick="stepNumber(this, -1)">−</button>
+                <input type="number" value="5" min="0" max="100" class="number-stepper__input">
+                <button class="number-stepper__btn" onclick="stepNumber(this, 1)">+</button>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Number Stepper</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">input</span>
+                <span class="tag">stepper</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- RATING INPUT -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="rating-input">
+                <input type="radio" name="rating" id="star5" value="5"><label for="star5">★</label>
+                <input type="radio" name="rating" id="star4" value="4" checked><label for="star4">★</label>
+                <input type="radio" name="rating" id="star3" value="3"><label for="star3">★</label>
+                <input type="radio" name="rating" id="star2" value="2"><label for="star2">★</label>
+                <input type="radio" name="rating" id="star1" value="1"><label for="star1">★</label>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Star Rating</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">rating</span>
+                <span class="tag">stars</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- COLOR PICKER -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="color-picker">
+                <input type="color" value="#6366f1" class="color-picker__input" id="color-input" onchange="updateColorValue(this)">
+                <span class="color-picker__value" id="color-value">#6366f1</span>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Color Picker</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">color</span>
+                <span class="tag">picker</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- AUTOCOMPLETE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="autocomplete">
+                <input type="text" placeholder="Search country..." class="autocomplete__input" list="countries">
+                <datalist id="countries">
+                  <option value="France">
+                  <option value="Germany">
+                  <option value="Spain">
+                  <option value="Italy">
+                  <option value="United Kingdom">
+                </datalist>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Autocomplete</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">input</span>
+                <span class="tag">autocomplete</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- PHONE INPUT -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="phone-input">
+                <select class="phone-input__country">
+                  <option>🇫🇷 +33</option>
+                  <option>🇺🇸 +1</option>
+                  <option>🇬🇧 +44</option>
+                  <option>🇩🇪 +49</option>
+                </select>
+                <input type="tel" placeholder="6 12 34 56 78" class="phone-input__number">
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Phone Input</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">input</span>
+                <span class="tag">phone</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- SLIDER DUAL RANGE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="dual-range">
+                <label class="dual-range__label">Price: <span id="dual-range-values">$20 - $80</span></label>
+                <div class="dual-range__track">
+                  <input type="range" min="0" max="100" value="20" class="dual-range__input" oninput="updateDualRange()">
+                  <input type="range" min="0" max="100" value="80" class="dual-range__input" oninput="updateDualRange()">
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Dual Range Slider</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">range</span>
+                <span class="tag">dual</span>
+              </div>
+            </div>
+          </article>
         </div>
       </section>
 
@@ -941,6 +1474,140 @@
       color: white;
     }
 
+    /* ========== VALIDATION INPUT ========== */
+    .input-validation {
+      position: relative;
+      width: 220px;
+    }
+    .input-validation input {
+      width: 100%;
+      padding: 12px 40px 12px 16px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      color: white;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+    }
+    .input-validation__icon {
+      position: absolute;
+      right: 12px;
+      top: 12px;
+      font-size: 1rem;
+    }
+    .input-validation__msg {
+      display: block;
+      margin-top: 6px;
+      font-size: 0.75rem;
+    }
+    .input-validation--success input {
+      border-color: #22c55e;
+    }
+    .input-validation--success .input-validation__icon,
+    .input-validation--success .input-validation__msg {
+      color: #22c55e;
+    }
+    .input-validation--error input {
+      border-color: #ef4444;
+    }
+    .input-validation--error .input-validation__icon,
+    .input-validation--error .input-validation__msg {
+      color: #ef4444;
+    }
+
+    /* ========== OTP INPUT ========== */
+    .input-otp {
+      display: flex;
+      gap: 12px;
+    }
+    .input-otp__digit {
+      width: 48px;
+      height: 56px;
+      background: #1a1a1a;
+      border: 2px solid #2a2a2a;
+      border-radius: 12px;
+      color: white;
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+    .input-otp__digit:focus {
+      outline: none;
+      border-color: #6366f1;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+    }
+    .input-otp__digit:not(:placeholder-shown) {
+      border-color: #6366f1;
+      background: rgba(99, 102, 241, 0.1);
+    }
+
+    /* ========== PASSWORD INPUT ========== */
+    .input-password {
+      position: relative;
+      width: 220px;
+    }
+    .input-password input {
+      width: 100%;
+      padding: 12px 44px 12px 16px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      color: white;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+    }
+    .input-password input:focus {
+      outline: none;
+      border-color: #6366f1;
+    }
+    .input-password__toggle {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      font-size: 1.1rem;
+      cursor: pointer;
+      opacity: 0.6;
+      transition: opacity 0.2s;
+    }
+    .input-password__toggle:hover {
+      opacity: 1;
+    }
+
+    /* ========== COUNTER INPUT ========== */
+    .input-counter {
+      position: relative;
+      width: 220px;
+    }
+    .input-counter textarea {
+      width: 100%;
+      min-height: 80px;
+      padding: 12px 16px;
+      padding-bottom: 28px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      color: white;
+      font-size: 0.9rem;
+      font-family: inherit;
+      resize: vertical;
+      transition: all 0.2s ease;
+    }
+    .input-counter textarea:focus {
+      outline: none;
+      border-color: #6366f1;
+    }
+    .input-counter__count {
+      position: absolute;
+      bottom: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: #71717a;
+    }
+
     /* ========== SECTION ========== */
     .section {
       margin-bottom: 48px;
@@ -953,10 +1620,757 @@
       color: #a1a1aa;
       margin-bottom: 24px;
     }
+
+    /* ========== UNDERLINE INPUT ========== */
+    .input-underline {
+      position: relative;
+      width: 200px;
+    }
+    .input-underline input {
+      width: 100%;
+      padding: 12px 0;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid #2a2a2a;
+      color: white;
+      font-size: 0.9rem;
+      transition: border-color 0.3s;
+    }
+    .input-underline input::placeholder {
+      color: #71717a;
+    }
+    .input-underline__line {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #6366f1, #8b5cf6);
+      transition: all 0.3s ease;
+    }
+    .input-underline input:focus {
+      outline: none;
+    }
+    .input-underline input:focus ~ .input-underline__line {
+      left: 0;
+      width: 100%;
+    }
+
+    /* ========== SEARCH CLEAR INPUT ========== */
+    .input-search-clear {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 220px;
+    }
+    .input-search-clear__icon {
+      position: absolute;
+      left: 12px;
+      font-size: 0.9rem;
+    }
+    .input-search-clear input {
+      width: 100%;
+      padding: 12px 40px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 24px;
+      color: white;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+    }
+    .input-search-clear input:focus {
+      outline: none;
+      border-color: #6366f1;
+    }
+    .input-search-clear__btn {
+      position: absolute;
+      right: 12px;
+      background: #3f3f46;
+      border: none;
+      color: #a1a1aa;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      font-size: 0.7rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .input-search-clear__btn:hover {
+      background: #ef4444;
+      color: white;
+    }
+
+    /* ========== CREDIT CARD INPUT ========== */
+    .input-credit-card {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 260px;
+    }
+    .input-credit-card__icon {
+      position: absolute;
+      left: 12px;
+      font-size: 1.2rem;
+    }
+    .input-credit-card input {
+      width: 100%;
+      padding: 14px 60px 14px 44px;
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      border: 1px solid #3f3f46;
+      border-radius: 12px;
+      color: white;
+      font-size: 1rem;
+      font-family: 'Courier New', monospace;
+      letter-spacing: 2px;
+      transition: all 0.2s ease;
+    }
+    .input-credit-card input:focus {
+      outline: none;
+      border-color: #6366f1;
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
+    }
+    .input-credit-card__brand {
+      position: absolute;
+      right: 12px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #6366f1;
+      letter-spacing: 1px;
+    }
+
+    /* ========== TAGS INPUT ========== */
+    .input-tags {
+      width: 260px;
+    }
+    .input-tags__list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 8px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      min-height: 44px;
+    }
+    .input-tags__tag {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 8px;
+      background: #6366f1;
+      border-radius: 4px;
+      color: white;
+      font-size: 0.8rem;
+    }
+    .input-tags__tag button {
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      font-size: 1rem;
+      line-height: 1;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    .input-tags__tag button:hover {
+      opacity: 1;
+    }
+    .input-tags__input {
+      flex: 1;
+      min-width: 80px;
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 0.9rem;
+      padding: 4px;
+    }
+    .input-tags__input:focus {
+      outline: none;
+    }
+
+    /* ========== RANGE INPUT ========== */
+    .input-range-custom {
+      width: 200px;
+    }
+    .input-range-custom__label {
+      display: block;
+      margin-bottom: 12px;
+      color: #a1a1aa;
+      font-size: 0.85rem;
+    }
+    .input-range-custom input[type="range"] {
+      width: 100%;
+      height: 8px;
+      background: #2a2a2a;
+      border-radius: 4px;
+      appearance: none;
+      cursor: pointer;
+    }
+    .input-range-custom input[type="range"]::-webkit-slider-thumb {
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      background: #6366f1;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .input-range-custom input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+    }
+
+    /* ========== DATE INPUT ========== */
+    .input-date-styled {
+      position: relative;
+      width: 180px;
+    }
+    .input-date-styled__icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1rem;
+    }
+    .input-date-styled input {
+      width: 100%;
+      padding: 12px 16px 12px 40px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      color: white;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .input-date-styled input:focus {
+      outline: none;
+      border-color: #6366f1;
+    }
+    .input-date-styled input::-webkit-calendar-picker-indicator {
+      filter: invert(1);
+      opacity: 0.5;
+      cursor: pointer;
+    }
+
+    /* ========== SELECT MULTI ========== */
+    .select-multi {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 220px;
+      padding: 8px 12px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    .select-multi:hover {
+      border-color: #6366f1;
+    }
+    .select-multi__selected {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+    }
+    .select-multi__chip {
+      padding: 4px 8px;
+      background: #6366f1;
+      border-radius: 4px;
+      color: white;
+      font-size: 0.75rem;
+    }
+    .select-multi__placeholder {
+      color: #71717a;
+      font-size: 0.85rem;
+    }
+    .select-multi__arrow {
+      color: #71717a;
+      font-size: 0.7rem;
+    }
+
+    /* ========== SELECT WITH ICONS ========== */
+    .select-icons {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 180px;
+    }
+    .select-icons__icon {
+      position: absolute;
+      left: 12px;
+      font-size: 1rem;
+    }
+    .select-icons__select {
+      width: 100%;
+      padding: 12px 32px 12px 40px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      color: white;
+      font-size: 0.9rem;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2371717a' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+    }
+    .select-icons__select:focus {
+      outline: none;
+      border-color: #6366f1;
+    }
+
+    /* ========== DROPZONE ========== */
+    .dropzone {
+      position: relative;
+      width: 240px;
+      padding: 32px 24px;
+      background: #1a1a1a;
+      border: 2px dashed #3f3f46;
+      border-radius: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .dropzone:hover,
+    .dropzone--active {
+      border-color: #6366f1;
+      background: rgba(99, 102, 241, 0.05);
+    }
+    .dropzone__icon {
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+    }
+    .dropzone__text {
+      color: white;
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+    }
+    .dropzone__hint {
+      color: #71717a;
+      font-size: 0.8rem;
+    }
+    .dropzone__input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    /* ========== FILE BUTTON ========== */
+    .file-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border-radius: 8px;
+      color: white;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .file-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+    }
+    .file-btn__icon {
+      font-size: 1.1rem;
+    }
+
+    /* ========== IMAGE UPLOAD ========== */
+    .image-upload {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+    }
+    .image-upload__preview {
+      width: 64px;
+      height: 64px;
+      background: #2a2a2a;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .image-upload__preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .image-upload__placeholder {
+      font-size: 1.5rem;
+      opacity: 0.5;
+    }
+    .image-upload__name {
+      color: #a1a1aa;
+      font-size: 0.8rem;
+      margin-bottom: 8px;
+    }
+    .image-upload__btn {
+      padding: 6px 12px;
+      background: #3f3f46;
+      border-radius: 6px;
+      color: white;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .image-upload__btn:hover {
+      background: #6366f1;
+    }
+
+    /* ========== FILE LIST ========== */
+    .file-list {
+      width: 240px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .file-list__item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+    }
+    .file-list__icon {
+      font-size: 1.2rem;
+    }
+    .file-list__info {
+      flex: 1;
+      min-width: 0;
+    }
+    .file-list__name {
+      display: block;
+      color: white;
+      font-size: 0.85rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .file-list__size {
+      color: #71717a;
+      font-size: 0.75rem;
+    }
+    .file-list__remove {
+      background: none;
+      border: none;
+      color: #71717a;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .file-list__remove:hover {
+      color: #ef4444;
+    }
+
+    /* ========== NUMBER STEPPER ========== */
+    .number-stepper {
+      display: flex;
+      align-items: center;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .number-stepper__btn {
+      width: 40px;
+      height: 40px;
+      background: #2a2a2a;
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .number-stepper__btn:hover {
+      background: #6366f1;
+    }
+    .number-stepper__input {
+      width: 60px;
+      height: 40px;
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 1rem;
+      text-align: center;
+      -moz-appearance: textfield;
+    }
+    .number-stepper__input::-webkit-outer-spin-button,
+    .number-stepper__input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    }
+
+    /* ========== RATING INPUT ========== */
+    .rating-input {
+      display: flex;
+      flex-direction: row-reverse;
+      gap: 4px;
+    }
+    .rating-input input {
+      display: none;
+    }
+    .rating-input label {
+      font-size: 1.8rem;
+      color: #3f3f46;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .rating-input label:hover,
+    .rating-input label:hover ~ label,
+    .rating-input input:checked ~ label {
+      color: #f59e0b;
+    }
+
+    /* ========== COLOR PICKER ========== */
+    .color-picker {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+    }
+    .color-picker__input {
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: transparent;
+    }
+    .color-picker__input::-webkit-color-swatch-wrapper {
+      padding: 0;
+    }
+    .color-picker__input::-webkit-color-swatch {
+      border: none;
+      border-radius: 8px;
+    }
+    .color-picker__value {
+      color: #a1a1aa;
+      font-size: 0.9rem;
+      font-family: 'Courier New', monospace;
+    }
+
+    /* ========== AUTOCOMPLETE ========== */
+    .autocomplete {
+      width: 200px;
+    }
+    .autocomplete__input {
+      width: 100%;
+      padding: 12px 16px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      color: white;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+    }
+    .autocomplete__input:focus {
+      outline: none;
+      border-color: #6366f1;
+    }
+
+    /* ========== PHONE INPUT ========== */
+    .phone-input {
+      display: flex;
+      width: 240px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .phone-input__country {
+      width: 90px;
+      padding: 12px 8px;
+      background: #2a2a2a;
+      border: none;
+      color: white;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+    .phone-input__number {
+      flex: 1;
+      padding: 12px;
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 0.9rem;
+    }
+    .phone-input__number::placeholder {
+      color: #71717a;
+    }
+    .phone-input__number:focus {
+      outline: none;
+    }
+
+    /* ========== DUAL RANGE ========== */
+    .dual-range {
+      width: 200px;
+    }
+    .dual-range__label {
+      display: block;
+      margin-bottom: 12px;
+      color: #a1a1aa;
+      font-size: 0.85rem;
+    }
+    .dual-range__track {
+      position: relative;
+      height: 8px;
+      background: #2a2a2a;
+      border-radius: 4px;
+    }
+    .dual-range__input {
+      position: absolute;
+      width: 100%;
+      height: 8px;
+      background: transparent;
+      appearance: none;
+      pointer-events: none;
+    }
+    .dual-range__input::-webkit-slider-thumb {
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      background: #6366f1;
+      border-radius: 50%;
+      cursor: pointer;
+      pointer-events: auto;
+    }
   </style>
 
   <script src="../../assets/js/copy-code.js"></script>
   <script src="../../assets/js/live-editor.js"></script>
   <script src="../../assets/js/security-system.js"></script>
+  <script src="../../assets/js/search.js"></script>
+  <script src="../../assets/js/accessibility.js"></script>
+  <script>
+    // Toggle password visibility
+    function togglePassword() {
+      const input = document.getElementById('pw-demo');
+      const btn = event.currentTarget;
+      if (input.type === 'password') {
+        input.type = 'text';
+        btn.textContent = '🙈';
+      } else {
+        input.type = 'password';
+        btn.textContent = '👁️';
+      }
+    }
+
+    // Update character counter
+    function updateCounter(textarea) {
+      const count = textarea.value.length;
+      document.getElementById('char-count').textContent = count;
+    }
+
+    // OTP auto-focus next input
+    document.querySelectorAll('.input-otp__digit').forEach((input, index, inputs) => {
+      input.addEventListener('input', (e) => {
+        if (e.target.value.length === 1 && index < inputs.length - 1) {
+          inputs[index + 1].focus();
+        }
+      });
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace' && e.target.value === '' && index > 0) {
+          inputs[index - 1].focus();
+        }
+      });
+    });
+
+    // Clear search input
+    function clearSearch(btn) {
+      const input = btn.previousElementSibling;
+      input.value = '';
+      input.focus();
+    }
+
+    // Format credit card number
+    function formatCreditCard(input) {
+      let value = input.value.replace(/\s/g, '').replace(/\D/g, '');
+      let formatted = value.match(/.{1,4}/g)?.join(' ') || '';
+      input.value = formatted;
+    }
+
+    // Remove tag
+    function removeTag(btn) {
+      btn.parentElement.remove();
+    }
+
+    // Update range value
+    function updateRangeValue(input) {
+      document.getElementById('range-value').textContent = input.value;
+    }
+
+    // Number stepper
+    function stepNumber(btn, delta) {
+      const input = btn.parentElement.querySelector('.number-stepper__input');
+      let value = parseInt(input.value) || 0;
+      let min = parseInt(input.min) || -Infinity;
+      let max = parseInt(input.max) || Infinity;
+      input.value = Math.min(max, Math.max(min, value + delta));
+    }
+
+    // Update color picker value
+    function updateColorValue(input) {
+      document.getElementById('color-value').textContent = input.value;
+    }
+
+    // Update dual range values
+    function updateDualRange() {
+      const inputs = document.querySelectorAll('.dual-range__input');
+      const min = Math.min(inputs[0].value, inputs[1].value);
+      const max = Math.max(inputs[0].value, inputs[1].value);
+      document.getElementById('dual-range-values').textContent = `$${min} - $${max}`;
+    }
+
+    // Drag & Drop handlers
+    function handleDragOver(event) {
+      event.preventDefault();
+      event.currentTarget.classList.add('dropzone--active');
+    }
+
+    function handleDragLeave(event) {
+      event.currentTarget.classList.remove('dropzone--active');
+    }
+
+    function handleDrop(event) {
+      event.preventDefault();
+      event.currentTarget.classList.remove('dropzone--active');
+      // Handle dropped files here
+    }
+
+    // Image preview
+    function previewImage(input) {
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        const preview = input.closest('.image-upload').querySelector('.image-upload__preview');
+        const name = input.closest('.image-upload').querySelector('.image-upload__name');
+
+        reader.onload = function(e) {
+          preview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+          name.textContent = input.files[0].name;
+        }
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    // Toggle multi select (demo only)
+    function toggleSelectMulti(el) {
+      el.style.borderColor = el.style.borderColor === 'rgb(99, 102, 241)' ? '#2a2a2a' : '#6366f1';
+    }
+  </script>
 </body>
 </html>
