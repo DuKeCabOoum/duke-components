@@ -284,16 +284,14 @@
    CODE VIEWER — Blur pour sensitive
    =========================================== */
 
-/* Blur le code quand pas admin */
-.component-card[data-security="sensitive"]:not(.admin-mode *) .code-viewer__content {
+/* Blur le code sensible par défaut */
+.component-card[data-security="sensitive"] .code-viewer__content {
   filter: blur(4px);
   user-select: none;
-  pointer-events: none;
 }
 
 /* En mode admin, pas de blur */
 .admin-mode .component-card[data-security="sensitive"] .code-viewer__content {
   filter: none;
   user-select: auto;
-  pointer-events: auto;
 }

@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spotlight Effects — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ========================================
+       SPOTLIGHT EFFECTS — Cursor Following Light
+       ======================================== */
+
+    .spotlight-preview {
+      position: relative;
+      height: 400px;
+      background: #0a0a0f;
+      border-radius: 24px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .spotlight-preview__content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      color: white;
+      pointer-events: none;
+    }
+
+    .spotlight-preview__title {
+      font-size: 48px;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    .spotlight-preview__subtitle {
+      font-size: 18px;
+      opacity: 0.8;
+    }
+
+    /* ===== SPOTLIGHT BASIC ===== */
+    .spotlight-basic {
+      background:
+        radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+          rgba(99, 102, 241, 0.3) 0%,
+          transparent 50%),
+        #0a0a0f;
+    }
+
+    /* ===== SPOTLIGHT GRADIENT ===== */
+    .spotlight-gradient {
+      background:
+        radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+          rgba(99, 102, 241, 0.15) 0%,
+          rgba(236, 72, 153, 0.1) 30%,
+          transparent 60%),
+        linear-gradient(135deg, #0f0f1a, #1a1a3e);
+    }
+
+    /* ===== SPOTLIGHT BORDER ===== */
+    .spotlight-card {
+      position: relative;
+      width: 300px;
+      height: 200px;
+      background: linear-gradient(135deg, #18181b, #1f1f23);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .spotlight-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      padding: 1px;
+      background: radial-gradient(
+        400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(99, 102, 241, 0.6),
+        transparent 60%
+      );
+      -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    .spotlight-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      background: radial-gradient(
+        300px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(99, 102, 241, 0.1),
+        transparent 60%
+      );
+      pointer-events: none;
+    }
+
+    .spotlight-card__content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      color: white;
+    }
+
+    /* ===== SPOTLIGHT GRID ===== */
+    .spotlight-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      padding: 24px;
+    }
+
+    .spotlight-grid-item {
+      position: relative;
+      height: 150px;
+      background: linear-gradient(135deg, #18181b, #1f1f23);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      transition: border-color 0.3s ease;
+    }
+
+    .spotlight-grid-item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        200px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(99, 102, 241, 0.15),
+        transparent 60%
+      );
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .spotlight-grid-item:hover::before {
+      opacity: 1;
+    }
+
+    .spotlight-grid-item:hover {
+      border-color: rgba(99, 102, 241, 0.3);
+    }
+
+    .spotlight-grid-item__icon {
+      font-size: 32px;
+    }
+
+    /* ===== SPOTLIGHT TEXT REVEAL ===== */
+    .spotlight-text {
+      position: relative;
+      overflow: hidden;
+      background: #0a0a0f;
+      padding: 80px;
+    }
+
+    .spotlight-text__hidden {
+      font-size: 72px;
+      font-weight: 900;
+      color: #1a1a1a;
+      text-align: center;
+    }
+
+    .spotlight-text__reveal {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 72px;
+      font-weight: 900;
+      background: linear-gradient(135deg, #6366f1, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      clip-path: circle(100px at var(--mouse-x, 50%) var(--mouse-y, 50%));
+      pointer-events: none;
+    }
+
+    /* ===== SPOTLIGHT PARTICLES ===== */
+    .spotlight-particles {
+      position: relative;
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: #6366f1;
+      border-radius: 50%;
+      opacity: 0;
+      animation: particle-fade 1s ease-out forwards;
+      pointer-events: none;
+    }
+
+    @keyframes particle-fade {
+      0% { transform: scale(0); opacity: 1; }
+      100% { transform: scale(3); opacity: 0; }
+    }
+
+    /* ===== SPOTLIGHT MAGNETIC ===== */
+    .spotlight-magnetic {
+      position: relative;
+    }
+
+    .magnetic-element {
+      width: 100px;
+      height: 100px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      color: white;
+      cursor: pointer;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 10px 40px rgba(99, 102, 241, 0.4);
+    }
+
+    /* ===== SPOTLIGHT TRAIL ===== */
+    .spotlight-trail {
+      position: relative;
+    }
+
+    .trail-dot {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: linear-gradient(135deg, #6366f1, #ec4899);
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0.6;
+      filter: blur(2px);
+    }
+
+    /* ===== SPOTLIGHT GLOW CURSOR ===== */
+    .spotlight-glow-cursor {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.3s ease;
+    }
+
+    /* ===== SPOTLIGHT TORCH ===== */
+    .spotlight-torch {
+      background: #000;
+      position: relative;
+    }
+
+    .spotlight-torch__content {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #6366f1, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      clip-path: circle(80px at var(--mouse-x, 50%) var(--mouse-y, 50%));
+      pointer-events: none;
+    }
+
+    .spotlight-torch__content h2 {
+      font-size: 48px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .spotlight-torch__content p {
+      font-size: 18px;
+      opacity: 0.8;
+    }
+
+    .spotlight-torch__hint {
+      position: relative;
+      z-index: 10;
+      color: #333;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+      <a href="../../index.html" class="sidebar__logo">
+        <span>Duke</span>-components
+      </a>
+
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Spotlight Effects</h3>
+        <ul class="sidebar__nav">
+          <li><a href="#basic" class="sidebar__link sidebar__link--active">Basic Spotlight</a></li>
+          <li><a href="#gradient" class="sidebar__link">Gradient Glow</a></li>
+          <li><a href="#cards" class="sidebar__link">Card Border</a></li>
+          <li><a href="#grid" class="sidebar__link">Grid Effect</a></li>
+          <li><a href="#text" class="sidebar__link">Text Reveal</a></li>
+          <li><a href="#torch" class="sidebar__link">Torch Mode</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar__section">
+        <a href="../../index.html" class="sidebar__link">← Retour</a>
+      </div>
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main">
+      <header class="main__header">
+        <h1 class="main__title">🔦 Spotlight Effects</h1>
+        <p class="main__subtitle">Effets de lumière qui suivent le curseur — Créez des interactions immersives.</p>
+      </header>
+
+      <!-- ========== BASIC SPOTLIGHT ========== -->
+      <section id="basic" class="section">
+        <h2 class="section__title">Basic Spotlight</h2>
+        <p class="section__desc">Effet spotlight simple qui suit le curseur.</p>
+
+        <div class="spotlight-preview spotlight-basic" data-spotlight>
+          <div class="spotlight-preview__content">
+            <h2 class="spotlight-preview__title">Déplacez votre souris</h2>
+            <p class="spotlight-preview__subtitle">La lumière suit votre curseur</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== GRADIENT GLOW ========== -->
+      <section id="gradient" class="section">
+        <h2 class="section__title">Gradient Glow</h2>
+        <p class="section__desc">Spotlight avec dégradé multi-couleurs.</p>
+
+        <div class="spotlight-preview spotlight-gradient" data-spotlight>
+          <div class="spotlight-preview__content">
+            <h2 class="spotlight-preview__title">Gradient Glow</h2>
+            <p class="spotlight-preview__subtitle">Effet lumineux dégradé</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== CARD BORDER ========== -->
+      <section id="cards" class="section">
+        <h2 class="section__title">Card Border Effect</h2>
+        <p class="section__desc">Bordure illuminée au survol de la souris.</p>
+
+        <div class="spotlight-preview" style="background: #0a0a0f; gap: 24px; flex-wrap: wrap;">
+          <div class="spotlight-card" data-spotlight-card>
+            <div class="spotlight-card__content">
+              <div style="font-size: 32px; margin-bottom: 8px;">⚡</div>
+              <div style="font-weight: 600;">Performance</div>
+            </div>
+          </div>
+          <div class="spotlight-card" data-spotlight-card>
+            <div class="spotlight-card__content">
+              <div style="font-size: 32px; margin-bottom: 8px;">🔒</div>
+              <div style="font-weight: 600;">Sécurité</div>
+            </div>
+          </div>
+          <div class="spotlight-card" data-spotlight-card>
+            <div class="spotlight-card__content">
+              <div style="font-size: 32px; margin-bottom: 8px;">🎨</div>
+              <div style="font-weight: 600;">Design</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== GRID EFFECT ========== -->
+      <section id="grid" class="section">
+        <h2 class="section__title">Grid Effect</h2>
+        <p class="section__desc">Effet spotlight sur une grille d'éléments.</p>
+
+        <div class="spotlight-preview" style="padding: 0; background: #0a0a0f;">
+          <div class="spotlight-grid" data-spotlight-grid>
+            <div class="spotlight-grid-item"><span class="spotlight-grid-item__icon">📊</span></div>
+            <div class="spotlight-grid-item"><span class="spotlight-grid-item__icon">🚀</span></div>
+            <div class="spotlight-grid-item"><span class="spotlight-grid-item__icon">💡</span></div>
+            <div class="spotlight-grid-item"><span class="spotlight-grid-item__icon">🔧</span></div>
+            <div class="spotlight-grid-item"><span class="spotlight-grid-item__icon">⭐</span></div>
+            <div class="spotlight-grid-item"><span class="spotlight-grid-item__icon">🎯</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== TEXT REVEAL ========== -->
+      <section id="text" class="section">
+        <h2 class="section__title">Text Reveal</h2>
+        <p class="section__desc">Texte révélé par le spotlight.</p>
+
+        <div class="spotlight-preview spotlight-text" data-spotlight-text>
+          <div class="spotlight-text__hidden">DUKE</div>
+          <div class="spotlight-text__reveal">DUKE</div>
+        </div>
+      </section>
+
+      <!-- ========== TORCH MODE ========== -->
+      <section id="torch" class="section">
+        <h2 class="section__title">Torch Mode</h2>
+        <p class="section__desc">Mode lampe torche - révélez le contenu caché.</p>
+
+        <div class="spotlight-preview spotlight-torch" data-spotlight-torch>
+          <div class="spotlight-torch__hint">Explorez avec votre curseur...</div>
+          <div class="spotlight-torch__content">
+            <h2>SECRET</h2>
+            <p>Vous avez trouvé le trésor !</p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="../../assets/js/main.js"></script>
+  <script>
+    // AFFICHE : Effet Spotlight basique
+    document.querySelectorAll('[data-spotlight]').forEach(el => {
+      el.addEventListener('mousemove', (e) => {
+        const rect = el.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        el.style.setProperty('--mouse-x', x + '%');
+        el.style.setProperty('--mouse-y', y + '%');
+      });
+    });
+
+    // AFFICHE : Effet Spotlight sur cards
+    document.querySelectorAll('[data-spotlight-card]').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        card.style.setProperty('--mouse-x', x + '%');
+        card.style.setProperty('--mouse-y', y + '%');
+      });
+    });
+
+    // AFFICHE : Effet Spotlight sur grid
+    document.querySelectorAll('[data-spotlight-grid]').forEach(grid => {
+      grid.addEventListener('mousemove', (e) => {
+        const items = grid.querySelectorAll('.spotlight-grid-item');
+        items.forEach(item => {
+          const rect = item.getBoundingClientRect();
+          const x = ((e.clientX - rect.left) / rect.width) * 100;
+          const y = ((e.clientY - rect.top) / rect.height) * 100;
+          item.style.setProperty('--mouse-x', x + '%');
+          item.style.setProperty('--mouse-y', y + '%');
+        });
+      });
+    });
+
+    // AFFICHE : Effet Text Reveal
+    document.querySelectorAll('[data-spotlight-text]').forEach(el => {
+      el.addEventListener('mousemove', (e) => {
+        const rect = el.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const reveal = el.querySelector('.spotlight-text__reveal');
+        reveal.style.clipPath = `circle(100px at ${x}px ${y}px)`;
+      });
+    });
+
+    // AFFICHE : Effet Torch
+    document.querySelectorAll('[data-spotlight-torch]').forEach(el => {
+      el.addEventListener('mousemove', (e) => {
+        const rect = el.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const content = el.querySelector('.spotlight-torch__content');
+        content.style.clipPath = `circle(80px at ${x}px ${y}px)`;
+      });
+    });
+  </script>
+  <script src="../../assets/js/theme-toggle.js"></script>
+</body>
+</html>

@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Glitch Effects — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ========================================
+       GLITCH EFFECTS — Cyberpunk Style
+       ======================================== */
+
+    .glitch-preview {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 200px;
+      background: #0a0a0f;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    /* ===== GLITCH TEXT CLASSIC ===== */
+    .glitch-text {
+      position: relative;
+      font-size: 64px;
+      font-weight: 900;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+    }
+
+    .glitch-text::before,
+    .glitch-text::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .glitch-text::before {
+      color: #ff00ff;
+      animation: glitch-1 2s infinite linear alternate-reverse;
+      clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+    }
+
+    .glitch-text::after {
+      color: #00ffff;
+      animation: glitch-2 3s infinite linear alternate-reverse;
+      clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+    }
+
+    @keyframes glitch-1 {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-3px); }
+      40% { transform: translateX(3px); }
+      60% { transform: translateX(-2px); }
+      80% { transform: translateX(2px); }
+    }
+
+    @keyframes glitch-2 {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(3px); }
+      40% { transform: translateX(-3px); }
+      60% { transform: translateX(2px); }
+      80% { transform: translateX(-2px); }
+    }
+
+    /* ===== GLITCH TEXT INTENSE ===== */
+    .glitch-intense {
+      position: relative;
+      font-size: 72px;
+      font-weight: 900;
+      color: #fff;
+      animation: glitch-skew 1s infinite linear alternate-reverse;
+    }
+
+    .glitch-intense::before,
+    .glitch-intense::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .glitch-intense::before {
+      color: #ff00ff;
+      animation: glitch-intense-1 0.3s infinite;
+      clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+      transform: translateX(-2px);
+    }
+
+    .glitch-intense::after {
+      color: #00ffff;
+      animation: glitch-intense-2 0.3s infinite;
+      clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+      transform: translateX(2px);
+    }
+
+    @keyframes glitch-skew {
+      0%, 100% { transform: skewX(0deg); }
+      10% { transform: skewX(-2deg); }
+      20% { transform: skewX(2deg); }
+      30% { transform: skewX(0deg); }
+    }
+
+    @keyframes glitch-intense-1 {
+      0%, 100% { transform: translateX(-2px); opacity: 0.8; }
+      50% { transform: translateX(2px); opacity: 0.5; }
+    }
+
+    @keyframes glitch-intense-2 {
+      0%, 100% { transform: translateX(2px); opacity: 0.8; }
+      50% { transform: translateX(-2px); opacity: 0.5; }
+    }
+
+    /* ===== GLITCH RGB SPLIT ===== */
+    .glitch-rgb {
+      position: relative;
+      font-size: 64px;
+      font-weight: 900;
+      color: #fff;
+    }
+
+    .glitch-rgb::before,
+    .glitch-rgb::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      mix-blend-mode: screen;
+    }
+
+    .glitch-rgb::before {
+      color: #ff0000;
+      animation: glitch-rgb-r 0.8s infinite;
+    }
+
+    .glitch-rgb::after {
+      color: #00ff00;
+      animation: glitch-rgb-g 0.8s infinite;
+    }
+
+    @keyframes glitch-rgb-r {
+      0%, 100% { transform: translate(-2px, 0); }
+      50% { transform: translate(2px, 0); }
+    }
+
+    @keyframes glitch-rgb-g {
+      0%, 100% { transform: translate(2px, 0); }
+      50% { transform: translate(-2px, 0); }
+    }
+
+    /* ===== GLITCH HOVER ===== */
+    .glitch-hover {
+      position: relative;
+      font-size: 48px;
+      font-weight: 900;
+      color: #fff;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .glitch-hover::before,
+    .glitch-hover::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .glitch-hover::before {
+      color: #ff00ff;
+      clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+    }
+
+    .glitch-hover::after {
+      color: #00ffff;
+      clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
+    }
+
+    .glitch-hover:hover::before,
+    .glitch-hover:hover::after {
+      opacity: 1;
+      animation: glitch-hover-anim 0.3s infinite;
+    }
+
+    @keyframes glitch-hover-anim {
+      0%, 100% { transform: translate(0); }
+      20% { transform: translate(-3px, 2px); }
+      40% { transform: translate(3px, -2px); }
+      60% { transform: translate(-2px, -1px); }
+      80% { transform: translate(2px, 1px); }
+    }
+
+    /* ===== GLITCH BUTTON ===== */
+    .glitch-btn {
+      position: relative;
+      padding: 16px 48px;
+      font-size: 18px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #fff;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border: none;
+      border-radius: 0;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .glitch-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      animation: glitch-btn-shine 3s infinite;
+    }
+
+    .glitch-btn:hover {
+      animation: glitch-btn-shake 0.3s infinite;
+    }
+
+    @keyframes glitch-btn-shine {
+      0% { left: -100%; }
+      50%, 100% { left: 100%; }
+    }
+
+    @keyframes glitch-btn-shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-3px); }
+      75% { transform: translateX(3px); }
+    }
+
+    /* ===== GLITCH SCANLINES ===== */
+    .glitch-scanlines {
+      position: relative;
+      font-size: 64px;
+      font-weight: 900;
+      color: #fff;
+    }
+
+    .glitch-scanlines::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.3) 2px,
+        rgba(0, 0, 0, 0.3) 4px
+      );
+      pointer-events: none;
+      animation: scanlines-move 0.1s infinite;
+    }
+
+    @keyframes scanlines-move {
+      0% { background-position: 0 0; }
+      100% { background-position: 0 4px; }
+    }
+
+    /* ===== GLITCH NOISE ===== */
+    .glitch-noise {
+      position: relative;
+      font-size: 64px;
+      font-weight: 900;
+      color: #fff;
+    }
+
+    .glitch-noise::after {
+      content: '';
+      position: absolute;
+      top: -10%;
+      left: -10%;
+      width: 120%;
+      height: 120%;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      opacity: 0.1;
+      mix-blend-mode: overlay;
+      animation: noise-shift 0.2s steps(10) infinite;
+    }
+
+    @keyframes noise-shift {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(10%, 10%); }
+    }
+
+    /* ===== GLITCH IMAGE ===== */
+    .glitch-image {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      background: linear-gradient(135deg, #6366f1, #ec4899);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 64px;
+    }
+
+    .glitch-image::before,
+    .glitch-image::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: inherit;
+      border-radius: inherit;
+    }
+
+    .glitch-image::before {
+      animation: glitch-img-1 2s infinite;
+      mix-blend-mode: multiply;
+    }
+
+    .glitch-image::after {
+      animation: glitch-img-2 3s infinite;
+      mix-blend-mode: screen;
+    }
+
+    @keyframes glitch-img-1 {
+      0%, 100% { clip-path: inset(0 0 0 0); transform: translateX(0); }
+      20% { clip-path: inset(20% 0 60% 0); transform: translateX(-5px); }
+      40% { clip-path: inset(60% 0 20% 0); transform: translateX(5px); }
+      60% { clip-path: inset(40% 0 40% 0); transform: translateX(-3px); }
+      80% { clip-path: inset(10% 0 80% 0); transform: translateX(3px); }
+    }
+
+    @keyframes glitch-img-2 {
+      0%, 100% { clip-path: inset(0 0 0 0); transform: translateX(0); }
+      20% { clip-path: inset(70% 0 10% 0); transform: translateX(5px); }
+      40% { clip-path: inset(30% 0 50% 0); transform: translateX(-5px); }
+      60% { clip-path: inset(50% 0 30% 0); transform: translateX(3px); }
+      80% { clip-path: inset(80% 0 10% 0); transform: translateX(-3px); }
+    }
+
+    /* ===== GLITCH TYPING ===== */
+    .glitch-typing {
+      font-size: 48px;
+      font-weight: 700;
+      color: #00ff00;
+      font-family: 'Courier New', monospace;
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 3px solid #00ff00;
+      animation: typing 4s steps(20) infinite, blink-caret 0.5s step-end infinite;
+    }
+
+    @keyframes typing {
+      0%, 100% { width: 0; }
+      50%, 90% { width: 100%; }
+    }
+
+    @keyframes blink-caret {
+      50% { border-color: transparent; }
+    }
+
+    /* ===== GLITCH FLICKER ===== */
+    .glitch-flicker {
+      font-size: 64px;
+      font-weight: 900;
+      color: #fff;
+      animation: flicker 0.15s infinite;
+    }
+
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.8; }
+      25%, 75% { opacity: 0.9; }
+    }
+
+    /* ===== CYBERPUNK BOX ===== */
+    .cyber-box {
+      position: relative;
+      padding: 32px 48px;
+      background: #0a0a0f;
+      border: 2px solid #00ffff;
+      clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+    }
+
+    .cyber-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 20px;
+      height: 20px;
+      background: #00ffff;
+      clip-path: polygon(0 0, 100% 100%, 100% 0);
+    }
+
+    .cyber-box::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 20px;
+      height: 20px;
+      background: #00ffff;
+      clip-path: polygon(0 0, 0 100%, 100% 100%);
+    }
+
+    .cyber-box__text {
+      font-size: 24px;
+      font-weight: 700;
+      color: #00ffff;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+      <a href="../../index.html" class="sidebar__logo">
+        <span>Duke</span>-components
+      </a>
+
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Glitch Effects</h3>
+        <ul class="sidebar__nav">
+          <li><a href="#classic" class="sidebar__link sidebar__link--active">Classic Glitch</a></li>
+          <li><a href="#rgb" class="sidebar__link">RGB Split</a></li>
+          <li><a href="#intense" class="sidebar__link">Intense</a></li>
+          <li><a href="#hover" class="sidebar__link">Hover Effect</a></li>
+          <li><a href="#button" class="sidebar__link">Glitch Button</a></li>
+          <li><a href="#scanlines" class="sidebar__link">Scanlines</a></li>
+          <li><a href="#image" class="sidebar__link">Image Glitch</a></li>
+          <li><a href="#cyber" class="sidebar__link">Cyberpunk Box</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar__section">
+        <a href="../../index.html" class="sidebar__link">← Retour</a>
+      </div>
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main">
+      <header class="main__header">
+        <h1 class="main__title">💥 Glitch Effects</h1>
+        <p class="main__subtitle">Effets glitch cyberpunk — Textes, images, boutons avec distorsions numériques.</p>
+      </header>
+
+      <!-- ========== CLASSIC GLITCH ========== -->
+      <section id="classic" class="section">
+        <h2 class="section__title">Classic Glitch</h2>
+        <p class="section__desc">Effet glitch classique avec décalage RGB.</p>
+
+        <div class="glitch-preview">
+          <span class="glitch-text" data-text="GLITCH">GLITCH</span>
+        </div>
+      </section>
+
+      <!-- ========== RGB SPLIT ========== -->
+      <section id="rgb" class="section">
+        <h2 class="section__title">RGB Split</h2>
+        <p class="section__desc">Séparation des canaux RGB.</p>
+
+        <div class="glitch-preview">
+          <span class="glitch-rgb" data-text="DUKE">DUKE</span>
+        </div>
+      </section>
+
+      <!-- ========== INTENSE ========== -->
+      <section id="intense" class="section">
+        <h2 class="section__title">Intense Glitch</h2>
+        <p class="section__desc">Glitch intense avec skew et distorsions.</p>
+
+        <div class="glitch-preview">
+          <span class="glitch-intense" data-text="ERROR">ERROR</span>
+        </div>
+      </section>
+
+      <!-- ========== HOVER EFFECT ========== -->
+      <section id="hover" class="section">
+        <h2 class="section__title">Hover Glitch</h2>
+        <p class="section__desc">Effet glitch déclenché au survol.</p>
+
+        <div class="glitch-preview">
+          <span class="glitch-hover" data-text="HOVER ME">HOVER ME</span>
+        </div>
+      </section>
+
+      <!-- ========== GLITCH BUTTON ========== -->
+      <section id="button" class="section">
+        <h2 class="section__title">Glitch Button</h2>
+        <p class="section__desc">Bouton avec effet glitch au survol.</p>
+
+        <div class="glitch-preview">
+          <button class="glitch-btn">Enter System</button>
+        </div>
+      </section>
+
+      <!-- ========== SCANLINES ========== -->
+      <section id="scanlines" class="section">
+        <h2 class="section__title">Scanlines</h2>
+        <p class="section__desc">Effet scanlines style CRT monitor.</p>
+
+        <div class="glitch-preview">
+          <span class="glitch-scanlines">RETRO</span>
+        </div>
+      </section>
+
+      <!-- ========== IMAGE GLITCH ========== -->
+      <section id="image" class="section">
+        <h2 class="section__title">Image Glitch</h2>
+        <p class="section__desc">Effet glitch sur images/cards.</p>
+
+        <div class="glitch-preview" style="gap: 32px;">
+          <div class="glitch-image">🎮</div>
+          <div class="glitch-image" style="background: linear-gradient(135deg, #00ffff, #ff00ff);">⚡</div>
+        </div>
+      </section>
+
+      <!-- ========== CYBERPUNK BOX ========== -->
+      <section id="cyber" class="section">
+        <h2 class="section__title">Cyberpunk Box</h2>
+        <p class="section__desc">Container style cyberpunk avec coins coupés.</p>
+
+        <div class="glitch-preview">
+          <div class="cyber-box">
+            <span class="cyber-box__text">System Online</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== TYPING + FLICKER ========== -->
+      <section class="section">
+        <h2 class="section__title">Typing + Flicker</h2>
+        <p class="section__desc">Effets typing terminal et flicker.</p>
+
+        <div class="glitch-preview" style="flex-direction: column; gap: 32px;">
+          <span class="glitch-typing">INITIALIZING...</span>
+          <span class="glitch-flicker" style="font-size: 48px;">SYSTEM READY</span>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="../../assets/js/main.js"></script>
+  <script src="../../assets/js/theme-toggle.js"></script>
+</body>
+</html>

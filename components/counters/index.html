@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animated Counters — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ========================================
+       ANIMATED COUNTERS — Number Animations
+       ======================================== */
+
+    .counters-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+
+    .counter-card {
+      background: linear-gradient(135deg, #18181b, #1f1f23);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 32px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .counter-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(99, 102, 241, 0.3);
+    }
+
+    /* ===== COUNTER BASIC ===== */
+    .counter {
+      font-size: 56px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 8px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .counter__label {
+      font-size: 14px;
+      color: #71717a;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* ===== COUNTER GRADIENT ===== */
+    .counter--gradient {
+      background: linear-gradient(135deg, #6366f1, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ===== COUNTER GLOW ===== */
+    .counter--glow {
+      color: #6366f1;
+      text-shadow: 0 0 30px rgba(99, 102, 241, 0.5);
+    }
+
+    /* ===== COUNTER WITH ICON ===== */
+    .counter-card--icon .counter__icon {
+      font-size: 32px;
+      margin-bottom: 16px;
+    }
+
+    /* ===== COUNTER CIRCULAR ===== */
+    .counter-circular {
+      position: relative;
+      width: 150px;
+      height: 150px;
+      margin: 0 auto 16px;
+    }
+
+    .counter-circular__svg {
+      transform: rotate(-90deg);
+    }
+
+    .counter-circular__bg {
+      fill: none;
+      stroke: rgba(99, 102, 241, 0.2);
+      stroke-width: 8;
+    }
+
+    .counter-circular__progress {
+      fill: none;
+      stroke: url(#gradient);
+      stroke-width: 8;
+      stroke-linecap: round;
+      stroke-dasharray: 408;
+      stroke-dashoffset: 408;
+      transition: stroke-dashoffset 2s ease-out;
+    }
+
+    .counter-circular__value {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 32px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    /* ===== COUNTER BAR ===== */
+    .counter-bar {
+      margin-top: 16px;
+    }
+
+    .counter-bar__track {
+      height: 8px;
+      background: rgba(99, 102, 241, 0.2);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .counter-bar__fill {
+      height: 100%;
+      background: linear-gradient(90deg, #6366f1, #ec4899);
+      border-radius: 4px;
+      width: 0;
+      transition: width 2s ease-out;
+    }
+
+    /* ===== COUNTER FLIP ===== */
+    .counter-flip {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    .counter-flip__digit {
+      width: 60px;
+      height: 80px;
+      background: linear-gradient(180deg, #2a2a3e 0%, #1e1e2e 50%, #2a2a3e 100%);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      font-weight: 700;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+      box-shadow:
+        0 4px 6px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .counter-flip__digit::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    /* ===== COUNTER ODOMETER ===== */
+    .counter-odometer {
+      display: flex;
+      gap: 4px;
+      justify-content: center;
+      margin-bottom: 16px;
+      background: #0a0a0f;
+      padding: 16px 24px;
+      border-radius: 12px;
+    }
+
+    .counter-odometer__digit {
+      width: 40px;
+      height: 60px;
+      background: linear-gradient(180deg, #1e1e2e, #2a2a3e);
+      border-radius: 6px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .counter-odometer__roll {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .counter-odometer__num {
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    /* ===== COUNTER TYPING ===== */
+    .counter-typing {
+      font-size: 48px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .counter-typing::after {
+      content: '|';
+      animation: blink 0.7s infinite;
+      color: #6366f1;
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+
+    /* ===== COUNTER BOUNCE ===== */
+    .counter-bounce {
+      animation: bounce-in 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    @keyframes bounce-in {
+      0% { transform: scale(0); opacity: 0; }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* ===== COUNTDOWN TIMER ===== */
+    .countdown {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+    }
+
+    .countdown__item {
+      text-align: center;
+    }
+
+    .countdown__value {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 8px;
+      box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
+    }
+
+    .countdown__label {
+      font-size: 12px;
+      color: #71717a;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .countdown__separator {
+      font-size: 32px;
+      color: #6366f1;
+      display: flex;
+      align-items: center;
+      padding-bottom: 30px;
+    }
+
+    /* ===== STATS ROW ===== */
+    .stats-row {
+      display: flex;
+      justify-content: space-around;
+      padding: 48px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.05));
+      border-radius: 24px;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-item__value {
+      font-size: 64px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #6366f1, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+    }
+
+    .stat-item__label {
+      font-size: 16px;
+      color: #94a3b8;
+    }
+
+    /* Preview wrapper */
+    .counter-preview {
+      background: #0a0a0f;
+      border-radius: 24px;
+      padding: 48px;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+      <a href="../../index.html" class="sidebar__logo">
+        <span>Duke</span>-components
+      </a>
+
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Counters</h3>
+        <ul class="sidebar__nav">
+          <li><a href="#basic" class="sidebar__link sidebar__link--active">Basic Counters</a></li>
+          <li><a href="#circular" class="sidebar__link">Circular Progress</a></li>
+          <li><a href="#flip" class="sidebar__link">Flip Counter</a></li>
+          <li><a href="#countdown" class="sidebar__link">Countdown Timer</a></li>
+          <li><a href="#stats" class="sidebar__link">Stats Section</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar__section">
+        <a href="../../index.html" class="sidebar__link">← Retour</a>
+      </div>
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main">
+      <header class="main__header">
+        <h1 class="main__title">🔢 Animated Counters</h1>
+        <p class="main__subtitle">Compteurs animés — Nombres qui s'incrémentent, progress circles, countdown.</p>
+      </header>
+
+      <!-- ========== BASIC COUNTERS ========== -->
+      <section id="basic" class="section">
+        <h2 class="section__title">Basic Counters</h2>
+        <p class="section__desc">Compteurs simples avec animation d'incrémentation. Cliquez sur "Lancer" pour voir l'animation.</p>
+
+        <button class="trigger-btn" onclick="animateCounters()" style="margin-bottom: 24px; padding: 12px 24px; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
+          Lancer l'animation
+        </button>
+
+        <div class="counters-grid">
+          <div class="counter-card">
+            <div class="counter" data-target="10000">0</div>
+            <div class="counter__label">Utilisateurs</div>
+          </div>
+          <div class="counter-card">
+            <div class="counter counter--gradient" data-target="99.9" data-suffix="%">0</div>
+            <div class="counter__label">Uptime</div>
+          </div>
+          <div class="counter-card">
+            <div class="counter counter--glow" data-target="50" data-suffix="M+">0</div>
+            <div class="counter__label">Requêtes/jour</div>
+          </div>
+          <div class="counter-card counter-card--icon">
+            <div class="counter__icon">🏆</div>
+            <div class="counter" data-target="24" data-suffix="/7">0</div>
+            <div class="counter__label">Support</div>
+          </div>
+        </div>
+
+        <!-- With Progress Bar -->
+        <h3 style="color: #fff; margin: 32px 0 16px;">Avec barre de progression</h3>
+        <div class="counters-grid" style="grid-template-columns: repeat(2, 1fr);">
+          <div class="counter-card">
+            <div class="counter" data-target="78" data-suffix="%">0</div>
+            <div class="counter__label">Objectif atteint</div>
+            <div class="counter-bar">
+              <div class="counter-bar__track">
+                <div class="counter-bar__fill" data-width="78%"></div>
+              </div>
+            </div>
+          </div>
+          <div class="counter-card">
+            <div class="counter counter--gradient" data-target="95" data-suffix="%">0</div>
+            <div class="counter__label">Satisfaction client</div>
+            <div class="counter-bar">
+              <div class="counter-bar__track">
+                <div class="counter-bar__fill" data-width="95%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== CIRCULAR PROGRESS ========== -->
+      <section id="circular" class="section">
+        <h2 class="section__title">Circular Progress</h2>
+        <p class="section__desc">Compteurs circulaires avec animation SVG.</p>
+
+        <div class="counters-grid">
+          <div class="counter-card">
+            <div class="counter-circular">
+              <svg class="counter-circular__svg" width="150" height="150" viewBox="0 0 150 150">
+                <defs>
+                  <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:#6366f1"/>
+                    <stop offset="100%" style="stop-color:#ec4899"/>
+                  </linearGradient>
+                </defs>
+                <circle class="counter-circular__bg" cx="75" cy="75" r="65"/>
+                <circle class="counter-circular__progress" cx="75" cy="75" r="65" data-percent="75"/>
+              </svg>
+              <div class="counter-circular__value">75%</div>
+            </div>
+            <div class="counter__label">Performance</div>
+          </div>
+          <div class="counter-card">
+            <div class="counter-circular">
+              <svg class="counter-circular__svg" width="150" height="150" viewBox="0 0 150 150">
+                <circle class="counter-circular__bg" cx="75" cy="75" r="65"/>
+                <circle class="counter-circular__progress" cx="75" cy="75" r="65" data-percent="92"/>
+              </svg>
+              <div class="counter-circular__value">92%</div>
+            </div>
+            <div class="counter__label">Complétion</div>
+          </div>
+          <div class="counter-card">
+            <div class="counter-circular">
+              <svg class="counter-circular__svg" width="150" height="150" viewBox="0 0 150 150">
+                <circle class="counter-circular__bg" cx="75" cy="75" r="65"/>
+                <circle class="counter-circular__progress" cx="75" cy="75" r="65" data-percent="58"/>
+              </svg>
+              <div class="counter-circular__value">58%</div>
+            </div>
+            <div class="counter__label">Progression</div>
+          </div>
+          <div class="counter-card">
+            <div class="counter-circular">
+              <svg class="counter-circular__svg" width="150" height="150" viewBox="0 0 150 150">
+                <circle class="counter-circular__bg" cx="75" cy="75" r="65"/>
+                <circle class="counter-circular__progress" cx="75" cy="75" r="65" data-percent="100"/>
+              </svg>
+              <div class="counter-circular__value">100%</div>
+            </div>
+            <div class="counter__label">Complété</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== FLIP COUNTER ========== -->
+      <section id="flip" class="section">
+        <h2 class="section__title">Flip Counter</h2>
+        <p class="section__desc">Compteur style flip clock / aéroport.</p>
+
+        <div class="counter-preview" style="text-align: center;">
+          <div class="counter-flip">
+            <div class="counter-flip__digit">1</div>
+            <div class="counter-flip__digit">2</div>
+            <div class="counter-flip__digit">,</div>
+            <div class="counter-flip__digit">5</div>
+            <div class="counter-flip__digit">4</div>
+            <div class="counter-flip__digit">7</div>
+          </div>
+          <div class="counter__label" style="font-size: 16px;">Visiteurs aujourd'hui</div>
+        </div>
+      </section>
+
+      <!-- ========== COUNTDOWN TIMER ========== -->
+      <section id="countdown" class="section">
+        <h2 class="section__title">Countdown Timer</h2>
+        <p class="section__desc">Compte à rebours pour événements.</p>
+
+        <div class="counter-preview">
+          <div class="countdown">
+            <div class="countdown__item">
+              <div class="countdown__value" id="days">12</div>
+              <div class="countdown__label">Jours</div>
+            </div>
+            <span class="countdown__separator">:</span>
+            <div class="countdown__item">
+              <div class="countdown__value" id="hours">08</div>
+              <div class="countdown__label">Heures</div>
+            </div>
+            <span class="countdown__separator">:</span>
+            <div class="countdown__item">
+              <div class="countdown__value" id="minutes">45</div>
+              <div class="countdown__label">Minutes</div>
+            </div>
+            <span class="countdown__separator">:</span>
+            <div class="countdown__item">
+              <div class="countdown__value" id="seconds">30</div>
+              <div class="countdown__label">Secondes</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== STATS SECTION ========== -->
+      <section id="stats" class="section">
+        <h2 class="section__title">Stats Section</h2>
+        <p class="section__desc">Section de statistiques pour landing page.</p>
+
+        <div class="stats-row">
+          <div class="stat-item">
+            <div class="stat-item__value" data-target="10" data-suffix="K+">0</div>
+            <div class="stat-item__label">Utilisateurs actifs</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-item__value" data-target="99.9" data-suffix="%">0</div>
+            <div class="stat-item__label">Uptime garanti</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-item__value" data-target="50" data-suffix="M+">0</div>
+            <div class="stat-item__label">Requêtes / jour</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-item__value" data-target="24" data-suffix="/7">0</div>
+            <div class="stat-item__label">Support premium</div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="../../assets/js/main.js"></script>
+  <script>
+    // AFFICHE : Animation des compteurs
+    function animateCounters() {
+      document.querySelectorAll('[data-target]').forEach(counter => {
+        const target = parseFloat(counter.dataset.target);
+        const suffix = counter.dataset.suffix || '';
+        const duration = 2000;
+        const start = 0;
+        const startTime = performance.now();
+
+        function update(currentTime) {
+          const elapsed = currentTime - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          const easeOut = 1 - Math.pow(1 - progress, 3);
+          const current = start + (target - start) * easeOut;
+
+          if (target % 1 !== 0) {
+            counter.textContent = current.toFixed(1) + suffix;
+          } else {
+            counter.textContent = Math.floor(current).toLocaleString() + suffix;
+          }
+
+          if (progress < 1) {
+            requestAnimationFrame(update);
+          }
+        }
+
+        requestAnimationFrame(update);
+      });
+
+      // Animate progress bars
+      document.querySelectorAll('.counter-bar__fill').forEach(bar => {
+        bar.style.width = bar.dataset.width;
+      });
+
+      // Animate circular progress
+      document.querySelectorAll('.counter-circular__progress').forEach(circle => {
+        const percent = circle.dataset.percent;
+        const circumference = 408; // 2 * PI * 65
+        const offset = circumference - (percent / 100) * circumference;
+        circle.style.strokeDashoffset = offset;
+      });
+    }
+
+    // Countdown timer
+    function updateCountdown() {
+      const seconds = document.getElementById('seconds');
+      let sec = parseInt(seconds.textContent);
+      sec = sec > 0 ? sec - 1 : 59;
+      seconds.textContent = sec.toString().padStart(2, '0');
+
+      if (sec === 59) {
+        const minutes = document.getElementById('minutes');
+        let min = parseInt(minutes.textContent);
+        min = min > 0 ? min - 1 : 59;
+        minutes.textContent = min.toString().padStart(2, '0');
+      }
+    }
+
+    setInterval(updateCountdown, 1000);
+
+    // Auto-trigger on scroll (Intersection Observer)
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounters();
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.stats-row').forEach(el => observer.observe(el));
+  </script>
+  <script src="../../assets/js/theme-toggle.js"></script>
+</body>
+</html>

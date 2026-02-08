@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Layouts - Duke Components</title>
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <style>
+        /* ========================================
+           BLOG LAYOUTS — Composants Blog
+           ======================================== */
+
+        .blog-section {
+            padding: 3rem 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .blog-section:last-child {
+            border-bottom: none;
+        }
+
+        .blog-section__header {
+            margin-bottom: 2rem;
+        }
+
+        .blog-section__title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-section__desc {
+            color: var(--text-secondary);
+        }
+
+        /* ========================================
+           1. BLOG HERO
+           ======================================== */
+
+        .blog-hero {
+            position: relative;
+            min-height: 500px;
+            display: flex;
+            align-items: flex-end;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 24px;
+            overflow: hidden;
+            padding: 3rem;
+        }
+
+        .blog-hero__bg {
+            position: absolute;
+            inset: 0;
+            background: url('https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=1200') center/cover;
+        }
+
+        .blog-hero__overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 100%);
+        }
+
+        .blog-hero__content {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+        }
+
+        .blog-hero__category {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--primary);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .blog-hero__title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .blog-hero__meta {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            color: rgba(255,255,255,0.8);
+            font-size: 0.9rem;
+        }
+
+        .blog-hero__author {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .blog-hero__avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+        }
+
+        /* ========================================
+           2. BLOG GRID — 3 colonnes
+           ======================================== */
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .blog-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border-color: var(--primary);
+        }
+
+        .blog-card__image {
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blog-card__image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .blog-card:hover .blog-card__image img {
+            transform: scale(1.1);
+        }
+
+        .blog-card__category {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            padding: 0.375rem 0.75rem;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .blog-card__content {
+            padding: 1.5rem;
+        }
+
+        .blog-card__title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .blog-card__excerpt {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .blog-card__footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .blog-card__author {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .blog-card__author-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .blog-card__author-name {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .blog-card__date {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* ========================================
+           3. BLOG LIST — Liste horizontale
+           ======================================== */
+
+        .blog-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .blog-list-item {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .blog-list-item:hover {
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .blog-list-item__image {
+            height: 220px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .blog-list-item__image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .blog-list-item__content {
+            padding: 1.5rem 1.5rem 1.5rem 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .blog-list-item__category {
+            display: inline-block;
+            width: fit-content;
+            padding: 0.375rem 0.75rem;
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--primary-light);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .blog-list-item__title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+        }
+
+        .blog-list-item__excerpt {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .blog-list-item__meta {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .blog-list-item__meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* ========================================
+           4. BLOG ARTICLE — Page article
+           ======================================== */
+
+        .blog-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .blog-article__header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .blog-article__category {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--primary-light);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .blog-article__title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+
+        .blog-article__meta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            color: var(--text-secondary);
+        }
+
+        .blog-article__author {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .blog-article__author-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .blog-article__author-info {
+            text-align: left;
+        }
+
+        .blog-article__author-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .blog-article__author-role {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .blog-article__cover {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            margin-bottom: 3rem;
+            overflow: hidden;
+        }
+
+        .blog-article__cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .blog-article__content {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        .blog-article__content h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 2.5rem 0 1rem;
+        }
+
+        .blog-article__content h3 {
+            font-size: 1.375rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 2rem 0 1rem;
+        }
+
+        .blog-article__content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .blog-article__content blockquote {
+            border-left: 4px solid var(--primary);
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: var(--text-primary);
+        }
+
+        .blog-article__content code {
+            background: var(--bg-secondary);
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            font-family: var(--font-mono);
+            font-size: 0.9em;
+        }
+
+        .blog-article__content pre {
+            background: var(--bg-code);
+            padding: 1.5rem;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        .blog-article__content pre code {
+            background: transparent;
+            padding: 0;
+        }
+
+        /* ========================================
+           5. BLOG SIDEBAR
+           ======================================== */
+
+        .blog-with-sidebar {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 3rem;
+        }
+
+        .blog-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .sidebar-widget {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+
+        .sidebar-widget__title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* Search Widget */
+        .widget-search {
+            position: relative;
+        }
+
+        .widget-search__input {
+            width: 100%;
+            padding: 0.875rem 1rem 0.875rem 2.75rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .widget-search__input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        .widget-search__icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        /* Categories Widget */
+        .widget-categories {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .widget-categories__item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .widget-categories__item:hover {
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--primary-light);
+        }
+
+        .widget-categories__count {
+            background: var(--bg-tertiary);
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+        }
+
+        /* Recent Posts Widget */
+        .widget-recent {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .widget-recent__item {
+            display: flex;
+            gap: 1rem;
+            cursor: pointer;
+        }
+
+        .widget-recent__image {
+            width: 80px;
+            height: 60px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            flex-shrink: 0;
+        }
+
+        .widget-recent__content {
+            flex: 1;
+        }
+
+        .widget-recent__title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.4;
+            margin-bottom: 0.25rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .widget-recent__date {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Tags Widget */
+        .widget-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .widget-tag {
+            padding: 0.5rem 1rem;
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .widget-tag:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Newsletter Widget */
+        .widget-newsletter__text {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .widget-newsletter__form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .widget-newsletter__input {
+            padding: 0.875rem 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+
+        .widget-newsletter__input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .widget-newsletter__btn {
+            padding: 0.875rem 1rem;
+            background: var(--primary);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .widget-newsletter__btn:hover {
+            background: var(--primary-hover);
+        }
+
+        /* ========================================
+           6. BLOG MASONRY
+           ======================================== */
+
+        .blog-masonry {
+            columns: 3;
+            column-gap: 1.5rem;
+        }
+
+        .blog-masonry-item {
+            break-inside: avoid;
+            margin-bottom: 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .blog-masonry-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .blog-masonry-item__image {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .blog-masonry-item--tall .blog-masonry-item__image {
+            height: 300px;
+        }
+
+        .blog-masonry-item--short .blog-masonry-item__image {
+            height: 150px;
+        }
+
+        .blog-masonry-item--medium .blog-masonry-item__image {
+            height: 200px;
+        }
+
+        .blog-masonry-item__content {
+            padding: 1.5rem;
+        }
+
+        .blog-masonry-item__title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .blog-masonry-item__excerpt {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* ========================================
+           7. BLOG FEATURED + GRID
+           ======================================== */
+
+        .blog-featured-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto auto;
+            gap: 1.5rem;
+        }
+
+        .blog-featured {
+            grid-column: 1;
+            grid-row: 1 / 3;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-featured__image {
+            height: 350px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .blog-featured__content {
+            padding: 2rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-featured__category {
+            display: inline-block;
+            width: fit-content;
+            padding: 0.375rem 0.75rem;
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--primary-light);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .blog-featured__title {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .blog-featured__excerpt {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            flex: 1;
+        }
+
+        .blog-small {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 180px 1fr;
+            transition: all 0.3s ease;
+        }
+
+        .blog-small:hover {
+            border-color: var(--primary);
+        }
+
+        .blog-small__image {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .blog-small__content {
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .blog-small__title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .blog-small__meta {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* ========================================
+           CODE VIEWER
+           ======================================== */
+
+        .code-block {
+            background: #1e1e1e;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 1.5rem;
+        }
+
+        .code-block__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background: #2d2d2d;
+            border-bottom: 1px solid #404040;
+        }
+
+        .code-block__lang {
+            font-size: 0.75rem;
+            color: #888;
+            text-transform: uppercase;
+        }
+
+        .code-block__copy {
+            background: transparent;
+            border: 1px solid #555;
+            color: #aaa;
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: all 0.2s;
+        }
+
+        .code-block__copy:hover {
+            background: #404040;
+            color: #fff;
+        }
+
+        .code-block__content {
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: #d4d4d4;
+        }
+
+        .code-block__content code {
+            white-space: pre;
+        }
+
+        /* Syntax highlighting */
+        .code-block .tag { color: #569cd6; }
+        .code-block .attr { color: #9cdcfe; }
+        .code-block .string { color: #ce9178; }
+        .code-block .comment { color: #6a9955; }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar__header">
+            <a href="../../index.html" class="sidebar__logo">
+                <span class="sidebar__logo-icon">D</span>
+                <span class="sidebar__logo-text">Duke UI</span>
+            </a>
+        </div>
+        <nav class="sidebar__nav">
+            <a href="../../index.html" class="sidebar__link">
+                <svg class="sidebar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                    <polyline points="9,22 9,12 15,12 15,22"/>
+                </svg>
+                Dashboard
+            </a>
+            <div class="sidebar__category">Composants</div>
+            <a href="../cards/index.html" class="sidebar__link">Cards</a>
+            <a href="#" class="sidebar__link sidebar__link--active">Blog</a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="page-header">
+            <div class="page-header__content">
+                <h1 class="page-header__title">Blog Layouts</h1>
+                <p class="page-header__description">
+                    Layouts et composants pour créer des blogs modernes et élégants
+                </p>
+            </div>
+            <div class="page-header__badge badge badge--safe">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                SAFE
+            </div>
+        </header>
+
+        <!-- 1. Blog Hero -->
+        <section class="blog-section">
+            <div class="blog-section__header">
+                <h2 class="blog-section__title">1. Hero Article</h2>
+                <p class="blog-section__desc">Grande bannière pour mettre en avant l'article principal</p>
+            </div>
+
+            <div class="blog-hero">
+                <div class="blog-hero__bg"></div>
+                <div class="blog-hero__overlay"></div>
+                <div class="blog-hero__content">
+                    <span class="blog-hero__category">Technologie</span>
+                    <h1 class="blog-hero__title">L'avenir du développement web : tendances 2026</h1>
+                    <div class="blog-hero__meta">
+                        <div class="blog-hero__author">
+                            <div class="blog-hero__avatar">JD</div>
+                            <span>Julien Duke</span>
+                        </div>
+                        <span>7 Février 2026</span>
+                        <span>8 min de lecture</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Blog Grid -->
+        <section class="blog-section">
+            <div class="blog-section__header">
+                <h2 class="blog-section__title">2. Grid 3 colonnes</h2>
+                <p class="blog-section__desc">Layout classique pour afficher plusieurs articles</p>
+            </div>
+
+            <div class="blog-grid">
+                <article class="blog-card">
+                    <div class="blog-card__image">
+                        <span class="blog-card__category">Design</span>
+                    </div>
+                    <div class="blog-card__content">
+                        <h3 class="blog-card__title">Les tendances UI/UX à surveiller en 2026</h3>
+                        <p class="blog-card__excerpt">Découvrez les nouvelles tendances du design qui vont révolutionner l'expérience utilisateur cette année.</p>
+                        <div class="blog-card__footer">
+                            <div class="blog-card__author">
+                                <div class="blog-card__author-avatar"></div>
+                                <span class="blog-card__author-name">Marie L.</span>
+                            </div>
+                            <span class="blog-card__date">5 Fév</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="blog-card">
+                    <div class="blog-card__image">
+                        <span class="blog-card__category">Dev</span>
+                    </div>
+                    <div class="blog-card__content">
+                        <h3 class="blog-card__title">CSS Container Queries : le guide complet</h3>
+                        <p class="blog-card__excerpt">Comment utiliser les Container Queries pour créer des composants vraiment responsives.</p>
+                        <div class="blog-card__footer">
+                            <div class="blog-card__author">
+                                <div class="blog-card__author-avatar"></div>
+                                <span class="blog-card__author-name">Thomas R.</span>
+                            </div>
+                            <span class="blog-card__date">3 Fév</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="blog-card">
+                    <div class="blog-card__image">
+                        <span class="blog-card__category">IA</span>
+                    </div>
+                    <div class="blog-card__content">
+                        <h3 class="blog-card__title">Intégrer l'IA dans vos projets web</h3>
+                        <p class="blog-card__excerpt">Tutoriel pas à pas pour ajouter des fonctionnalités IA à votre application.</p>
+                        <div class="blog-card__footer">
+                            <div class="blog-card__author">
+                                <div class="blog-card__author-avatar"></div>
+                                <span class="blog-card__author-name">Sophie D.</span>
+                            </div>
+                            <span class="blog-card__date">1 Fév</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- 3. Blog List -->
+        <section class="blog-section">
+            <div class="blog-section__header">
+                <h2 class="blog-section__title">3. Liste horizontale</h2>
+                <p class="blog-section__desc">Format liste avec image à gauche</p>
+            </div>
+
+            <div class="blog-list">
+                <article class="blog-list-item">
+                    <div class="blog-list-item__image"></div>
+                    <div class="blog-list-item__content">
+                        <span class="blog-list-item__category">Performance</span>
+                        <h3 class="blog-list-item__title">Optimiser les Core Web Vitals de votre site</h3>
+                        <p class="blog-list-item__excerpt">Améliorez votre score Lighthouse et l'expérience utilisateur avec ces techniques d'optimisation avancées.</p>
+                        <div class="blog-list-item__meta">
+                            <span>👤 Paul Martin</span>
+                            <span>📅 29 Jan 2026</span>
+                            <span>⏱️ 12 min</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="blog-list-item">
+                    <div class="blog-list-item__image"></div>
+                    <div class="blog-list-item__content">
+                        <span class="blog-list-item__category">Sécurité</span>
+                        <h3 class="blog-list-item__title">Les bonnes pratiques de sécurité en 2026</h3>
+                        <p class="blog-list-item__excerpt">Protégez vos applications web contre les menaces les plus courantes avec ce guide complet.</p>
+                        <div class="blog-list-item__meta">
+                            <span>👤 Claire Dubois</span>
+                            <span>📅 25 Jan 2026</span>
+                            <span>⏱️ 15 min</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- 4. Blog with Sidebar -->
+        <section class="blog-section">
+            <div class="blog-section__header">
+                <h2 class="blog-section__title">4. Layout avec Sidebar</h2>
+                <p class="blog-section__desc">Contenu principal + widgets latéraux</p>
+            </div>
+
+            <div class="blog-with-sidebar">
+                <!-- Main Content -->
+                <div class="blog-list">
+                    <article class="blog-list-item">
+                        <div class="blog-list-item__image"></div>
+                        <div class="blog-list-item__content">
+                            <span class="blog-list-item__category">Tutorial</span>
+                            <h3 class="blog-list-item__title">Créer un design system de A à Z</h3>
+                            <p class="blog-list-item__excerpt">Guide complet pour construire un design system scalable.</p>
+                            <div class="blog-list-item__meta">
+                                <span>👤 Alex Chen</span>
+                                <span>📅 20 Jan 2026</span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="blog-list-item">
+                        <div class="blog-list-item__image"></div>
+                        <div class="blog-list-item__content">
+                            <span class="blog-list-item__category">Frontend</span>
+                            <h3 class="blog-list-item__title">React 19 : les nouvelles fonctionnalités</h3>
+                            <p class="blog-list-item__excerpt">Tour d'horizon des nouveautés de React 19.</p>
+                            <div class="blog-list-item__meta">
+                                <span>👤 Emma Wilson</span>
+                                <span>📅 18 Jan 2026</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Sidebar -->
+                <aside class="blog-sidebar">
+                    <!-- Search -->
+                    <div class="sidebar-widget widget-search">
+                        <svg class="widget-search__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="M21 21l-4.35-4.35"/>
+                        </svg>
+                        <input type="text" class="widget-search__input" placeholder="Rechercher...">
+                    </div>
+
+                    <!-- Categories -->
+                    <div class="sidebar-widget">
+                        <h3 class="sidebar-widget__title">Catégories</h3>
+                        <div class="widget-categories">
+                            <div class="widget-categories__item">
+                                <span>Design</span>
+                                <span class="widget-categories__count">24</span>
+                            </div>
+                            <div class="widget-categories__item">
+                                <span>Développement</span>
+                                <span class="widget-categories__count">42</span>
+                            </div>
+                            <div class="widget-categories__item">
+                                <span>Tutoriels</span>
+                                <span class="widget-categories__count">18</span>
+                            </div>
+                            <div class="widget-categories__item">
+                                <span>Actualités</span>
+                                <span class="widget-categories__count">31</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Posts -->
+                    <div class="sidebar-widget">
+                        <h3 class="sidebar-widget__title">Articles récents</h3>
+                        <div class="widget-recent">
+                            <div class="widget-recent__item">
+                                <div class="widget-recent__image"></div>
+                                <div class="widget-recent__content">
+                                    <h4 class="widget-recent__title">Les animations CSS modernes</h4>
+                                    <span class="widget-recent__date">5 Fév 2026</span>
+                                </div>
+                            </div>
+                            <div class="widget-recent__item">
+                                <div class="widget-recent__image"></div>
+                                <div class="widget-recent__content">
+                                    <h4 class="widget-recent__title">Guide TypeScript avancé</h4>
+                                    <span class="widget-recent__date">3 Fév 2026</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tags -->
+                    <div class="sidebar-widget">
+                        <h3 class="sidebar-widget__title">Tags populaires</h3>
+                        <div class="widget-tags">
+                            <span class="widget-tag">CSS</span>
+                            <span class="widget-tag">JavaScript</span>
+                            <span class="widget-tag">React</span>
+                            <span class="widget-tag">Design</span>
+                            <span class="widget-tag">UI/UX</span>
+                            <span class="widget-tag">Performance</span>
+                        </div>
+                    </div>
+
+                    <!-- Newsletter -->
+                    <div class="sidebar-widget">
+                        <h3 class="sidebar-widget__title">Newsletter</h3>
+                        <p class="widget-newsletter__text">Recevez les derniers articles directement dans votre boîte mail.</p>
+                        <form class="widget-newsletter__form">
+                            <input type="email" class="widget-newsletter__input" placeholder="votre@email.com">
+                            <button type="submit" class="widget-newsletter__btn">S'abonner</button>
+                        </form>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <!-- 5. Featured + Grid -->
+        <section class="blog-section">
+            <div class="blog-section__header">
+                <h2 class="blog-section__title">5. Featured + Grid</h2>
+                <p class="blog-section__desc">Article mis en avant avec grille secondaire</p>
+            </div>
+
+            <div class="blog-featured-grid">
+                <article class="blog-featured">
+                    <div class="blog-featured__image"></div>
+                    <div class="blog-featured__content">
+                        <span class="blog-featured__category">Guide Complet</span>
+                        <h2 class="blog-featured__title">Maîtriser les animations CSS en 2026</h2>
+                        <p class="blog-featured__excerpt">Un guide complet pour créer des animations fluides et performantes avec les dernières techniques CSS. De @keyframes aux nouvelles propriétés scroll-driven animations.</p>
+                        <div class="blog-card__footer">
+                            <div class="blog-card__author">
+                                <div class="blog-card__author-avatar"></div>
+                                <span class="blog-card__author-name">Julien Duke</span>
+                            </div>
+                            <span class="blog-card__date">7 Fév 2026</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="blog-small">
+                    <div class="blog-small__image"></div>
+                    <div class="blog-small__content">
+                        <h3 class="blog-small__title">CSS Nesting officiellement supporté</h3>
+                        <span class="blog-small__meta">4 Fév 2026 • 5 min</span>
+                    </div>
+                </article>
+
+                <article class="blog-small">
+                    <div class="blog-small__image"></div>
+                    <div class="blog-small__content">
+                        <h3 class="blog-small__title">View Transitions API : tutoriel</h3>
+                        <span class="blog-small__meta">2 Fév 2026 • 8 min</span>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- 6. Masonry Layout -->
+        <section class="blog-section">
+            <div class="blog-section__header">
+                <h2 class="blog-section__title">6. Masonry Layout</h2>
+                <p class="blog-section__desc">Disposition Pinterest-style</p>
+            </div>
+
+            <div class="blog-masonry">
+                <article class="blog-masonry-item blog-masonry-item--tall">
+                    <div class="blog-masonry-item__image"></div>
+                    <div class="blog-masonry-item__content">
+                        <h3 class="blog-masonry-item__title">Design tokens : le guide ultime</h3>
+                        <p class="blog-masonry-item__excerpt">Comment implémenter un système de design tokens efficace.</p>
+                    </div>
+                </article>
+                <article class="blog-masonry-item blog-masonry-item--short">
+                    <div class="blog-masonry-item__image"></div>
+                    <div class="blog-masonry-item__content">
+                        <h3 class="blog-masonry-item__title">Tips CSS rapides</h3>
+                    </div>
+                </article>
+                <article class="blog-masonry-item blog-masonry-item--medium">
+                    <div class="blog-masonry-item__image"></div>
+                    <div class="blog-masonry-item__content">
+                        <h3 class="blog-masonry-item__title">Accessibilité web en 2026</h3>
+                        <p class="blog-masonry-item__excerpt">Les nouvelles normes WCAG 3.0 expliquées.</p>
+                    </div>
+                </article>
+                <article class="blog-masonry-item blog-masonry-item--short">
+                    <div class="blog-masonry-item__image"></div>
+                    <div class="blog-masonry-item__content">
+                        <h3 class="blog-masonry-item__title">Tailwind v4</h3>
+                    </div>
+                </article>
+                <article class="blog-masonry-item blog-masonry-item--medium">
+                    <div class="blog-masonry-item__image"></div>
+                    <div class="blog-masonry-item__content">
+                        <h3 class="blog-masonry-item__title">Les micro-interactions qui font la différence</h3>
+                    </div>
+                </article>
+                <article class="blog-masonry-item blog-masonry-item--tall">
+                    <div class="blog-masonry-item__image"></div>
+                    <div class="blog-masonry-item__content">
+                        <h3 class="blog-masonry-item__title">Architecture frontend moderne</h3>
+                        <p class="blog-masonry-item__excerpt">Stratégies pour organiser votre code frontend.</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Code Example -->
+        <section class="blog-section">
+            <div class="blog-section__header">
+                <h2 class="blog-section__title">Code HTML</h2>
+                <p class="blog-section__desc">Structure de base d'une card blog</p>
+            </div>
+
+            <div class="code-block">
+                <div class="code-block__header">
+                    <span class="code-block__lang">HTML</span>
+                    <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+                </div>
+                <div class="code-block__content">
+<code><span class="tag">&lt;article</span> <span class="attr">class</span>=<span class="string">"blog-card"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="string">"blog-card__image"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;img</span> <span class="attr">src</span>=<span class="string">"cover.jpg"</span> <span class="attr">alt</span>=<span class="string">"Article cover"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;span</span> <span class="attr">class</span>=<span class="string">"blog-card__category"</span><span class="tag">&gt;</span>Design<span class="tag">&lt;/span&gt;</span>
+  <span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="string">"blog-card__content"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;h3</span> <span class="attr">class</span>=<span class="string">"blog-card__title"</span><span class="tag">&gt;</span>Titre de l'article<span class="tag">&lt;/h3&gt;</span>
+    <span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="string">"blog-card__excerpt"</span><span class="tag">&gt;</span>Description courte...<span class="tag">&lt;/p&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="string">"blog-card__footer"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="string">"blog-card__author"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;img</span> <span class="attr">src</span>=<span class="string">"avatar.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;span&gt;</span>Nom Auteur<span class="tag">&lt;/span&gt;</span>
+      <span class="tag">&lt;/div&gt;</span>
+      <span class="tag">&lt;span</span> <span class="attr">class</span>=<span class="string">"blog-card__date"</span><span class="tag">&gt;</span>5 Fév<span class="tag">&lt;/span&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/article&gt;</span></code>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="../../assets/js/theme-toggle.js"></script>
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block');
+            const code = codeBlock.querySelector('code').textContent;
+
+            navigator.clipboard.writeText(code).then(() => {
+                const originalText = button.textContent;
+                button.textContent = 'Copié !';
+                button.style.background = '#22c55e';
+                button.style.borderColor = '#22c55e';
+                button.style.color = '#fff';
+
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.background = '';
+                    button.style.borderColor = '';
+                    button.style.color = '';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Magnetic Buttons — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ========================================
+       MAGNETIC BUTTONS — Interactive Effects
+       ======================================== */
+
+    /* ===== BASE MAGNETIC ===== */
+    .magnetic-wrap {
+      display: inline-block;
+      position: relative;
+    }
+
+    .magnetic-btn {
+      position: relative;
+      padding: 20px 48px;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
+    }
+
+    /* ===== MAGNETIC PRIMARY ===== */
+    .magnetic-btn--primary {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+      box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+    }
+
+    .magnetic-btn--primary:hover {
+      box-shadow: 0 8px 30px rgba(99, 102, 241, 0.5);
+    }
+
+    /* ===== MAGNETIC OUTLINE ===== */
+    .magnetic-btn--outline {
+      background: transparent;
+      color: #6366f1;
+      border: 2px solid #6366f1;
+    }
+
+    .magnetic-btn--outline:hover {
+      background: rgba(99, 102, 241, 0.1);
+    }
+
+    /* ===== MAGNETIC GLASS ===== */
+    .magnetic-btn--glass {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .magnetic-btn--glass:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    /* ===== MAGNETIC GLOW ===== */
+    .magnetic-btn--glow {
+      background: linear-gradient(135deg, #6366f1, #ec4899);
+      color: white;
+      box-shadow:
+        0 0 20px rgba(99, 102, 241, 0.5),
+        0 0 40px rgba(236, 72, 153, 0.3);
+    }
+
+    .magnetic-btn--glow:hover {
+      box-shadow:
+        0 0 30px rgba(99, 102, 241, 0.6),
+        0 0 60px rgba(236, 72, 153, 0.4);
+    }
+
+    /* ===== MAGNETIC FILL ===== */
+    .magnetic-btn--fill {
+      background: #1e1e2e;
+      color: white;
+      border: 2px solid #6366f1;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .magnetic-btn--fill::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: #6366f1;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.4s ease, height 0.4s ease;
+      z-index: -1;
+    }
+
+    .magnetic-btn--fill:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    /* ===== MAGNETIC CIRCLE ===== */
+    .magnetic-btn--circle {
+      width: 80px;
+      height: 80px;
+      padding: 0;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+      box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+    }
+
+    /* ===== MAGNETIC LIQUID ===== */
+    .magnetic-btn--liquid {
+      background: #6366f1;
+      color: white;
+      border-radius: 50px;
+      transition: border-radius 0.3s ease, transform 0.3s ease;
+    }
+
+    .magnetic-btn--liquid:hover {
+      border-radius: 12px;
+    }
+
+    /* ===== MAGNETIC 3D ===== */
+    .magnetic-btn--3d {
+      background: #6366f1;
+      color: white;
+      transform-style: preserve-3d;
+      transition: transform 0.3s ease;
+    }
+
+    .magnetic-btn--3d::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: #4f46e5;
+      border-radius: 12px;
+      transform: translateZ(-10px);
+    }
+
+    /* ===== MAGNETIC RIPPLE ===== */
+    .magnetic-btn--ripple {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+    }
+
+    .magnetic-btn--ripple .ripple {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.4);
+      border-radius: 50%;
+      transform: scale(0);
+      animation: ripple-effect 0.6s ease-out;
+      pointer-events: none;
+    }
+
+    @keyframes ripple-effect {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+
+    /* ===== MAGNETIC UNDERLINE ===== */
+    .magnetic-btn--underline {
+      background: transparent;
+      color: white;
+      padding: 16px 0;
+      border-radius: 0;
+    }
+
+    .magnetic-btn--underline::after {
+      content: '';
+      position: absolute;
+      bottom: 8px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, #6366f1, #ec4899);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.4s ease;
+    }
+
+    .magnetic-btn--underline:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    /* ===== MAGNETIC SPLIT ===== */
+    .magnetic-btn--split {
+      background: transparent;
+      color: white;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .magnetic-btn--split .btn-text {
+      display: block;
+      padding: 20px 48px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      transition: transform 0.4s ease;
+    }
+
+    .magnetic-btn--split .btn-text--hover {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(135deg, #ec4899, #f472b6);
+      transform: translateY(100%);
+    }
+
+    .magnetic-btn--split:hover .btn-text {
+      transform: translateY(-100%);
+    }
+
+    .magnetic-btn--split:hover .btn-text--hover {
+      transform: translateY(0);
+    }
+
+    /* ===== MAGNETIC ICON ===== */
+    .magnetic-btn--icon {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+    }
+
+    .magnetic-btn--icon .btn-icon {
+      transition: transform 0.3s ease;
+    }
+
+    .magnetic-btn--icon:hover .btn-icon {
+      transform: translateX(4px);
+    }
+
+    /* ===== MAGNETIC BORDER GRADIENT ===== */
+    .magnetic-btn--border-gradient {
+      background: #1e1e2e;
+      color: white;
+      border: none;
+      position: relative;
+    }
+
+    .magnetic-btn--border-gradient::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 12px;
+      padding: 2px;
+      background: linear-gradient(135deg, #6366f1, #ec4899, #f59e0b);
+      -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+    }
+
+    /* ===== MAGNETIC SHAKE ===== */
+    .magnetic-btn--shake:hover {
+      animation: shake 0.5s ease-in-out;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    /* ===== MAGNETIC PULSE ===== */
+    .magnetic-btn--pulse {
+      background: linear-gradient(135deg, #10b981, #34d399);
+      color: white;
+      animation: pulse-btn 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-btn {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+      50% { box-shadow: 0 0 0 15px rgba(16, 185, 129, 0); }
+    }
+
+    /* ===== PREVIEW WRAPPER ===== */
+    .btn-preview {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      padding: 48px;
+      background: linear-gradient(135deg, #0a0a0f, #1a1a2e);
+      border-radius: 16px;
+      justify-content: center;
+      align-items: center;
+      min-height: 200px;
+    }
+
+    .btn-preview--dark {
+      background: linear-gradient(135deg, #0f0f1a, #1a1a3e);
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+      <a href="../../index.html" class="sidebar__logo">
+        <span>Duke</span>-components
+      </a>
+
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Magnetic Buttons</h3>
+        <ul class="sidebar__nav">
+          <li><a href="#basic" class="sidebar__link sidebar__link--active">Basic Magnetic</a></li>
+          <li><a href="#effects" class="sidebar__link">Special Effects</a></li>
+          <li><a href="#hover" class="sidebar__link">Hover Animations</a></li>
+          <li><a href="#shapes" class="sidebar__link">Shapes</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar__section">
+        <a href="../../index.html" class="sidebar__link">← Retour</a>
+      </div>
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main">
+      <header class="main__header">
+        <h1 class="main__title">🧲 Magnetic Buttons</h1>
+        <p class="main__subtitle">Boutons interactifs avec effet magnétique — Le curseur attire le bouton.</p>
+      </header>
+
+      <!-- ========== BASIC SECTION ========== -->
+      <section id="basic" class="section">
+        <h2 class="section__title">Basic Magnetic</h2>
+        <p class="section__desc">Boutons avec effet magnétique basique. Déplacez votre souris autour du bouton.</p>
+
+        <div class="btn-preview">
+          <div class="magnetic-wrap" data-magnetic>
+            <button class="magnetic-btn magnetic-btn--primary">Primary Button</button>
+          </div>
+          <div class="magnetic-wrap" data-magnetic>
+            <button class="magnetic-btn magnetic-btn--outline">Outline Button</button>
+          </div>
+          <div class="magnetic-wrap" data-magnetic>
+            <button class="magnetic-btn magnetic-btn--glass">Glass Button</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== EFFECTS SECTION ========== -->
+      <section id="effects" class="section">
+        <h2 class="section__title">Special Effects</h2>
+        <p class="section__desc">Boutons magnétiques avec effets spéciaux.</p>
+
+        <div class="btn-preview">
+          <div class="magnetic-wrap" data-magnetic>
+            <button class="magnetic-btn magnetic-btn--glow">Glow Effect</button>
+          </div>
+          <div class="magnetic-wrap" data-magnetic>
+            <button class="magnetic-btn magnetic-btn--fill">Fill Effect</button>
+          </div>
+          <div class="magnetic-wrap" data-magnetic>
+            <button class="magnetic-btn magnetic-btn--border-gradient">Gradient Border</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== HOVER SECTION ========== -->
+      <section id="hover" class="section">
+        <h2 class="section__title">Hover Animations</h2>
+        <p class="section__desc">Animations au survol combinées avec l'effet magnétique.</p>
+
+        <div class="btn-preview">
+          <div class="magnetic-wrap" data-magnetic>
+            <button class="magnetic-btn magnetic-btn--liquid">Liquid Morph</button>
+          </div>
+          <div class="magnetic-wrap" data-magnetic>
+            <button class="magnetic-btn magnetic-btn--ripple" data-ripple>Ripple Click</button>
+          </div>
+          <div class="magnetic-wrap" data-magnetic>
+            <button class="magnetic-btn magnetic-btn--underline">Underline Reveal</button>
+          </div>
+          <div class="magnetic-wrap" data-magnetic>
+            <button class="magnetic-btn magnetic-btn--split">
+              <span class="btn-text">Split Text</span>
+              <span class="btn-text btn-text--hover">Hover Me!</span>
+            </button>
+          </div>
+          <div class="magnetic-wrap" data-magnetic>
+            <button class="magnetic-btn magnetic-btn--icon">
+              Get Started <span class="btn-icon">→</span>
+            </button>
+          </div>
+          <div class="magnetic-wrap" data-magnetic>
+            <button class="magnetic-btn magnetic-btn--pulse">Pulse Effect</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== SHAPES SECTION ========== -->
+      <section id="shapes" class="section">
+        <h2 class="section__title">Different Shapes</h2>
+        <p class="section__desc">Différentes formes de boutons magnétiques.</p>
+
+        <div class="btn-preview">
+          <div class="magnetic-wrap" data-magnetic>
+            <button class="magnetic-btn magnetic-btn--circle">→</button>
+          </div>
+          <div class="magnetic-wrap" data-magnetic>
+            <button class="magnetic-btn magnetic-btn--circle" style="background: linear-gradient(135deg, #ec4899, #f472b6);">♥</button>
+          </div>
+          <div class="magnetic-wrap" data-magnetic>
+            <button class="magnetic-btn magnetic-btn--circle" style="background: linear-gradient(135deg, #10b981, #34d399);">✓</button>
+          </div>
+          <div class="magnetic-wrap" data-magnetic>
+            <button class="magnetic-btn magnetic-btn--primary" style="border-radius: 50px;">Pill Button</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- CODE EXAMPLE -->
+      <section class="section">
+        <h2 class="section__title">Code JavaScript</h2>
+        <p class="section__desc">Script pour l'effet magnétique.</p>
+
+        <div class="code-viewer" style="max-width: 800px;">
+          <pre class="code-viewer__code" style="display: block; background: #1e1e2e; padding: 24px; border-radius: 12px;"><code style="color: #e4e4e7;">// Magnetic Effect
+document.querySelectorAll('[data-magnetic]').forEach(wrap => {
+  const btn = wrap.querySelector('.magnetic-btn');
+
+  wrap.addEventListener('mousemove', (e) => {
+    const rect = wrap.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+
+    btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+  });
+
+  wrap.addEventListener('mouseleave', () => {
+    btn.style.transform = 'translate(0, 0)';
+  });
+});
+
+// Ripple Effect
+document.querySelectorAll('[data-ripple]').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    const rect = btn.getBoundingClientRect();
+    const ripple = document.createElement('span');
+    ripple.className = 'ripple';
+    ripple.style.left = e.clientX - rect.left + 'px';
+    ripple.style.top = e.clientY - rect.top + 'px';
+    btn.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 600);
+  });
+});</code></pre>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="../../assets/js/main.js"></script>
+  <script>
+    // AFFICHE : Effet magnétique sur les boutons
+    document.querySelectorAll('[data-magnetic]').forEach(wrap => {
+      const btn = wrap.querySelector('.magnetic-btn');
+
+      wrap.addEventListener('mousemove', (e) => {
+        const rect = wrap.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+
+        btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+      });
+
+      wrap.addEventListener('mouseleave', () => {
+        btn.style.transform = 'translate(0, 0)';
+      });
+    });
+
+    // AFFICHE : Effet ripple au clic
+    document.querySelectorAll('[data-ripple]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const ripple = document.createElement('span');
+        ripple.className = 'ripple';
+        ripple.style.left = (e.clientX - rect.left) + 'px';
+        ripple.style.top = (e.clientY - rect.top) + 'px';
+        btn.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 600);
+      });
+    });
+  </script>
+  <script src="../../assets/js/theme-toggle.js"></script>
+</body>
+</html>

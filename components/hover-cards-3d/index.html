@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Hover Cards - Duke Components</title>
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <style>
+        /* ========================================
+           3D HOVER CARDS — Cartes avec effet 3D
+           ======================================== */
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 3rem;
+            padding: 2rem;
+        }
+
+        .card-section {
+            text-align: center;
+        }
+
+        .card-section__title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        /* ========================================
+           1. TILT CARD
+           ======================================== */
+
+        .card-tilt-wrapper {
+            perspective: 1000px;
+        }
+
+        .card-tilt {
+            position: relative;
+            width: 280px;
+            height: 360px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem;
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+            cursor: pointer;
+        }
+
+        .card-tilt:hover {
+            transform: rotateY(10deg) rotateX(-10deg);
+        }
+
+        .card-tilt__icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            transform: translateZ(30px);
+        }
+
+        .card-tilt__title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            transform: translateZ(40px);
+        }
+
+        .card-tilt__text {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            transform: translateZ(20px);
+        }
+
+        .card-tilt__glow {
+            position: absolute;
+            inset: -5px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.3));
+            border-radius: 24px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: -1;
+            filter: blur(20px);
+        }
+
+        .card-tilt:hover .card-tilt__glow {
+            opacity: 1;
+        }
+
+        /* ========================================
+           2. FLIP CARD
+           ======================================== */
+
+        .card-flip-wrapper {
+            perspective: 1000px;
+            width: 280px;
+            height: 360px;
+            margin: 0 auto;
+        }
+
+        .card-flip {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-flip-wrapper:hover .card-flip {
+            transform: rotateY(180deg);
+        }
+
+        .card-flip__front,
+        .card-flip__back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-flip__front {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .card-flip__back {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            transform: rotateY(180deg);
+        }
+
+        .card-flip__icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-flip__title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .card-flip__text {
+            color: var(--text-secondary);
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .card-flip__btn {
+            margin-top: 1.5rem;
+            padding: 0.75rem 2rem;
+            background: var(--primary);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .card-flip__btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* ========================================
+           3. PARALLAX CARD
+           ======================================== */
+
+        .card-parallax-wrapper {
+            perspective: 1000px;
+        }
+
+        .card-parallax {
+            position: relative;
+            width: 280px;
+            height: 360px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            transition: transform 0.3s ease;
+        }
+
+        .card-parallax__bg {
+            position: absolute;
+            inset: -20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transform: translateZ(-50px) scale(1.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card-parallax:hover .card-parallax__bg {
+            transform: translateZ(-50px) scale(1.15);
+        }
+
+        .card-parallax__content {
+            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 2rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
+            transform: translateZ(30px);
+        }
+
+        .card-parallax__title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.5rem;
+            transform: translateZ(20px);
+        }
+
+        .card-parallax__text {
+            color: rgba(255,255,255,0.8);
+            transform: translateZ(10px);
+        }
+
+        /* ========================================
+           4. FOLD CARD
+           ======================================== */
+
+        .card-fold-wrapper {
+            perspective: 1000px;
+            width: 280px;
+            height: 200px;
+            margin: 0 auto;
+        }
+
+        .card-fold {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+        }
+
+        .card-fold__top,
+        .card-fold__bottom {
+            position: absolute;
+            width: 100%;
+            height: 50%;
+            overflow: hidden;
+        }
+
+        .card-fold__top {
+            top: 0;
+            transform-origin: bottom;
+            transition: transform 0.6s ease;
+            z-index: 2;
+        }
+
+        .card-fold-wrapper:hover .card-fold__top {
+            transform: rotateX(-180deg);
+        }
+
+        .card-fold__top-inner {
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px 20px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-fold__top-back {
+            position: absolute;
+            inset: 0;
+            background: var(--bg-tertiary);
+            transform: rotateX(180deg);
+            backface-visibility: hidden;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .card-fold__bottom {
+            bottom: 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-top: none;
+            border-radius: 0 0 20px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 1rem;
+        }
+
+        .card-fold__icon {
+            font-size: 3rem;
+            color: white;
+        }
+
+        .card-fold__title {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* ========================================
+           5. MORPH CARD
+           ======================================== */
+
+        .card-morph {
+            width: 280px;
+            height: 360px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-morph:hover {
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            transform: scale(1.02);
+        }
+
+        .card-morph__icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.5s;
+        }
+
+        .card-morph:hover .card-morph__icon {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        .card-morph__title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .card-morph__text {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ========================================
+           6. GLOW CARD
+           ======================================== */
+
+        .card-glow {
+            position: relative;
+            width: 280px;
+            height: 360px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        .card-glow::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            background: linear-gradient(135deg, #667eea, #764ba2, #f093fb, #f5576c);
+            border-radius: 22px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s;
+            filter: blur(15px);
+        }
+
+        .card-glow::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--bg-card);
+            border-radius: 20px;
+            z-index: -1;
+        }
+
+        .card-glow:hover::before {
+            opacity: 1;
+        }
+
+        .card-glow:hover {
+            transform: translateY(-5px);
+            border-color: transparent;
+        }
+
+        .card-glow__icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-glow__title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .card-glow__text {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ========================================
+           7. SHINE CARD
+           ======================================== */
+
+        .card-shine {
+            position: relative;
+            width: 280px;
+            height: 360px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            overflow: hidden;
+        }
+
+        .card-shine::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(255,255,255,0.1) 50%,
+                transparent 70%
+            );
+            transform: translateX(-100%) rotate(45deg);
+            transition: transform 0.8s;
+        }
+
+        .card-shine:hover::before {
+            transform: translateX(100%) rotate(45deg);
+        }
+
+        .card-shine__icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-shine__title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .card-shine__text {
+            color: rgba(255,255,255,0.7);
+            line-height: 1.6;
+        }
+
+        /* ========================================
+           8. LIFT CARD
+           ======================================== */
+
+        .card-lift {
+            width: 280px;
+            height: 360px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .card-lift:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+        }
+
+        .card-lift__image {
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-lift__title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .card-lift__text {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* ========================================
+           9. MAGNETIC CARD (JS)
+           ======================================== */
+
+        .card-magnetic-wrapper {
+            perspective: 1000px;
+        }
+
+        .card-magnetic {
+            width: 280px;
+            height: 360px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem;
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease;
+        }
+
+        .card-magnetic__content {
+            transform: translateZ(40px);
+        }
+
+        .card-magnetic__icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #fa709a, #fee140);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-magnetic__title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .card-magnetic__text {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ========================================
+           10. STACK CARDS
+           ======================================== */
+
+        .card-stack-wrapper {
+            position: relative;
+            width: 280px;
+            height: 360px;
+            margin: 0 auto;
+        }
+
+        .card-stack {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-stack:nth-child(1) {
+            z-index: 3;
+        }
+
+        .card-stack:nth-child(2) {
+            z-index: 2;
+            transform: translateY(10px) scale(0.95);
+            opacity: 0.7;
+        }
+
+        .card-stack:nth-child(3) {
+            z-index: 1;
+            transform: translateY(20px) scale(0.9);
+            opacity: 0.4;
+        }
+
+        .card-stack-wrapper:hover .card-stack:nth-child(1) {
+            transform: translateY(-20px) rotate(-5deg);
+        }
+
+        .card-stack-wrapper:hover .card-stack:nth-child(2) {
+            transform: translateY(0) scale(1) rotate(0deg);
+            opacity: 1;
+        }
+
+        .card-stack-wrapper:hover .card-stack:nth-child(3) {
+            transform: translateY(20px) scale(1.05) rotate(5deg);
+            opacity: 0.7;
+        }
+
+        .card-stack__title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .card-stack__text {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* ========================================
+           CODE VIEWER
+           ======================================== */
+
+        .code-section {
+            padding: 2rem;
+            border-top: 1px solid var(--border);
+            margin-top: 2rem;
+        }
+
+        .code-section__title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .code-block__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background: #2d2d2d;
+            border-bottom: 1px solid #404040;
+        }
+
+        .code-block__lang {
+            font-size: 0.75rem;
+            color: #888;
+            text-transform: uppercase;
+        }
+
+        .code-block__copy {
+            background: transparent;
+            border: 1px solid #555;
+            color: #aaa;
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: all 0.2s;
+        }
+
+        .code-block__copy:hover {
+            background: #404040;
+            color: #fff;
+        }
+
+        .code-block__content {
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: #d4d4d4;
+        }
+
+        .code-block__content code {
+            white-space: pre;
+        }
+
+        .code-block .selector { color: #d7ba7d; }
+        .code-block .property { color: #9cdcfe; }
+        .code-block .value { color: #ce9178; }
+        .code-block .keyword { color: #c586c0; }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar__header">
+            <a href="../../index.html" class="sidebar__logo">
+                <span class="sidebar__logo-icon">D</span>
+                <span class="sidebar__logo-text">Duke UI</span>
+            </a>
+        </div>
+        <nav class="sidebar__nav">
+            <a href="../../index.html" class="sidebar__link">
+                <svg class="sidebar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                    <polyline points="9,22 9,12 15,12 15,22"/>
+                </svg>
+                Dashboard
+            </a>
+            <div class="sidebar__category">Composants</div>
+            <a href="../cards/index.html" class="sidebar__link">Cards</a>
+            <a href="#" class="sidebar__link sidebar__link--active">3D Hover Cards</a>
+            <a href="../hovers/index.html" class="sidebar__link">Hovers</a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="page-header">
+            <div class="page-header__content">
+                <h1 class="page-header__title">3D Hover Cards</h1>
+                <p class="page-header__description">
+                    Cartes interactives avec effets 3D au survol de la souris
+                </p>
+            </div>
+            <div class="page-header__badge badge badge--caution">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                CAUTION (JS pour Magnetic)
+            </div>
+        </header>
+
+        <div class="cards-grid">
+            <!-- 1. Tilt Card -->
+            <div class="card-section">
+                <h3 class="card-section__title">1. Tilt Card</h3>
+                <div class="card-tilt-wrapper">
+                    <div class="card-tilt">
+                        <div class="card-tilt__glow"></div>
+                        <div class="card-tilt__icon">🚀</div>
+                        <h3 class="card-tilt__title">Tilt Effect</h3>
+                        <p class="card-tilt__text">Survolez pour voir l'effet de rotation 3D avec perspective.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Flip Card -->
+            <div class="card-section">
+                <h3 class="card-section__title">2. Flip Card</h3>
+                <div class="card-flip-wrapper">
+                    <div class="card-flip">
+                        <div class="card-flip__front">
+                            <span class="card-flip__icon">🎯</span>
+                            <h3 class="card-flip__title">Flip Card</h3>
+                        </div>
+                        <div class="card-flip__back">
+                            <p class="card-flip__text">Découvrez le contenu caché au dos de la carte avec un flip complet.</p>
+                            <button class="card-flip__btn">En savoir plus</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Parallax Card -->
+            <div class="card-section">
+                <h3 class="card-section__title">3. Parallax Card</h3>
+                <div class="card-parallax-wrapper">
+                    <div class="card-parallax">
+                        <div class="card-parallax__bg"></div>
+                        <div class="card-parallax__content">
+                            <h3 class="card-parallax__title">Parallax Effect</h3>
+                            <p class="card-parallax__text">Effet de profondeur au survol</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Fold Card -->
+            <div class="card-section">
+                <h3 class="card-section__title">4. Fold Card</h3>
+                <div class="card-fold-wrapper">
+                    <div class="card-fold">
+                        <div class="card-fold__top">
+                            <div class="card-fold__top-inner">
+                                <span class="card-fold__icon">📁</span>
+                            </div>
+                            <div class="card-fold__top-back">
+                                Contenu révélé !
+                            </div>
+                        </div>
+                        <div class="card-fold__bottom">
+                            <span class="card-fold__title">Folder Card</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Morph Card -->
+            <div class="card-section">
+                <h3 class="card-section__title">5. Morph Card</h3>
+                <div class="card-morph">
+                    <div class="card-morph__icon">🔮</div>
+                    <h3 class="card-morph__title">Morph Card</h3>
+                    <p class="card-morph__text">La forme de la carte se transforme au survol avec un effet organique.</p>
+                </div>
+            </div>
+
+            <!-- 6. Glow Card -->
+            <div class="card-section">
+                <h3 class="card-section__title">6. Glow Card</h3>
+                <div class="card-glow">
+                    <div class="card-glow__icon">✨</div>
+                    <h3 class="card-glow__title">Glow Effect</h3>
+                    <p class="card-glow__text">Un halo lumineux entoure la carte au survol avec un effet de lévitation.</p>
+                </div>
+            </div>
+
+            <!-- 7. Shine Card -->
+            <div class="card-section">
+                <h3 class="card-section__title">7. Shine Card</h3>
+                <div class="card-shine">
+                    <span class="card-shine__icon">💎</span>
+                    <h3 class="card-shine__title">Shine Effect</h3>
+                    <p class="card-shine__text">Un reflet de lumière traverse la carte au survol.</p>
+                </div>
+            </div>
+
+            <!-- 8. Lift Card -->
+            <div class="card-section">
+                <h3 class="card-section__title">8. Lift Card</h3>
+                <div class="card-lift">
+                    <div class="card-lift__image"></div>
+                    <h3 class="card-lift__title">Lift Effect</h3>
+                    <p class="card-lift__text">La carte s'élève avec une ombre portée dynamique au survol.</p>
+                </div>
+            </div>
+
+            <!-- 9. Magnetic Card -->
+            <div class="card-section">
+                <h3 class="card-section__title">9. Magnetic Card (JS)</h3>
+                <div class="card-magnetic-wrapper">
+                    <div class="card-magnetic" id="magneticCard">
+                        <div class="card-magnetic__content">
+                            <div class="card-magnetic__icon">🧲</div>
+                            <h3 class="card-magnetic__title">Magnetic</h3>
+                            <p class="card-magnetic__text">La carte suit la position de la souris avec un effet magnétique.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 10. Stack Cards -->
+            <div class="card-section">
+                <h3 class="card-section__title">10. Stack Cards</h3>
+                <div class="card-stack-wrapper">
+                    <div class="card-stack">
+                        <h3 class="card-stack__title">Card 1</h3>
+                        <p class="card-stack__text">Première carte de la pile</p>
+                    </div>
+                    <div class="card-stack">
+                        <h3 class="card-stack__title">Card 2</h3>
+                        <p class="card-stack__text">Deuxième carte</p>
+                    </div>
+                    <div class="card-stack">
+                        <h3 class="card-stack__title">Card 3</h3>
+                        <p class="card-stack__text">Troisième carte</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Code Example -->
+        <section class="code-section">
+            <h2 class="code-section__title">Code CSS - Tilt Card</h2>
+            <div class="code-block">
+                <div class="code-block__header">
+                    <span class="code-block__lang">CSS</span>
+                    <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+                </div>
+                <div class="code-block__content">
+<code><span class="selector">.card-tilt-wrapper</span> {
+  <span class="property">perspective</span>: <span class="value">1000px</span>;
+}
+
+<span class="selector">.card-tilt</span> {
+  <span class="property">transform-style</span>: <span class="value">preserve-3d</span>;
+  <span class="property">transition</span>: <span class="value">transform 0.5s ease</span>;
+}
+
+<span class="selector">.card-tilt:hover</span> {
+  <span class="property">transform</span>: <span class="value">rotateY(10deg) rotateX(-10deg)</span>;
+}
+
+<span class="selector">.card-tilt__icon</span> {
+  <span class="property">transform</span>: <span class="value">translateZ(30px)</span>;
+}
+
+<span class="selector">.card-tilt__title</span> {
+  <span class="property">transform</span>: <span class="value">translateZ(40px)</span>;
+}</code>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="../../assets/js/theme-toggle.js"></script>
+    <script>
+        // Magnetic Card Effect
+        const card = document.getElementById('magneticCard');
+        const wrapper = card.parentElement;
+
+        wrapper.addEventListener('mousemove', (e) => {
+            const rect = wrapper.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            const rotateX = (y - centerY) / 10;
+            const rotateY = (centerX - x) / 10;
+
+            card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+
+        wrapper.addEventListener('mouseleave', () => {
+            card.style.transform = 'rotateX(0) rotateY(0)';
+        });
+
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block');
+            const code = codeBlock.querySelector('code').textContent;
+
+            navigator.clipboard.writeText(code).then(() => {
+                const originalText = button.textContent;
+                button.textContent = 'Copié !';
+                button.style.background = '#22c55e';
+                button.style.borderColor = '#22c55e';
+                button.style.color = '#fff';
+
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.background = '';
+                    button.style.borderColor = '';
+                    button.style.color = '';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

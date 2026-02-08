@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SaaS Components — Duke-components</title>
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <style>
+    /* ========================================
+       SAAS COMPONENTS — Landing Page Elements
+       ======================================== */
+
+    /* ===== HERO SECTION - GRADIENT MESH ===== */
+    .hero-saas {
+      position: relative;
+      padding: 80px 40px;
+      background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 50%, #0f0f23 100%);
+      border-radius: 24px;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .hero-saas::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 60%, rgba(34, 211, 238, 0.2) 0%, transparent 40%);
+      animation: hero-glow 10s ease-in-out infinite;
+    }
+
+    @keyframes hero-glow {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      33% { transform: translate(2%, 2%) rotate(1deg); }
+      66% { transform: translate(-1%, 1%) rotate(-1deg); }
+    }
+
+    .hero-saas__badge {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: rgba(99, 102, 241, 0.2);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      border-radius: 50px;
+      color: #a5b4fc;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 24px;
+    }
+
+    .hero-saas__badge::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: #22c55e;
+      border-radius: 50%;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.2); }
+    }
+
+    .hero-saas__title {
+      position: relative;
+      font-size: 56px;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, #fff 0%, #a5b4fc 50%, #f0abfc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-saas__subtitle {
+      position: relative;
+      font-size: 20px;
+      color: #94a3b8;
+      max-width: 600px;
+      margin: 0 auto 40px;
+      line-height: 1.6;
+    }
+
+    .hero-saas__cta {
+      position: relative;
+      display: inline-flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn-hero {
+      padding: 16px 32px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-hero--primary {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+      box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+    }
+
+    .btn-hero--primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(99, 102, 241, 0.5);
+    }
+
+    .btn-hero--secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-hero--secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    /* ===== LOGO CLOUD ===== */
+    .logo-cloud {
+      padding: 40px;
+      text-align: center;
+    }
+
+    .logo-cloud__title {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #64748b;
+      margin-bottom: 32px;
+    }
+
+    .logo-cloud__grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 48px;
+      opacity: 0.6;
+      filter: grayscale(100%);
+      transition: all 0.3s ease;
+    }
+
+    .logo-cloud__grid:hover {
+      opacity: 1;
+      filter: grayscale(0%);
+    }
+
+    .logo-cloud__item {
+      font-size: 24px;
+      font-weight: 700;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ===== FEATURE BENTO GRID ===== */
+    .bento-features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, auto);
+      gap: 24px;
+      padding: 40px;
+    }
+
+    .bento-card {
+      background: linear-gradient(135deg, #1e1e2e, #2a2a3e);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .bento-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(99, 102, 241, 0.3);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .bento-card--large {
+      grid-column: span 2;
+    }
+
+    .bento-card--tall {
+      grid-row: span 2;
+    }
+
+    .bento-card__icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .bento-card__title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+
+    .bento-card__desc {
+      font-size: 15px;
+      color: #94a3b8;
+      line-height: 1.6;
+    }
+
+    .bento-card__visual {
+      margin-top: 24px;
+      height: 120px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.1));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+    }
+
+    /* ===== PRICING TABLE MODERN ===== */
+    .pricing-section {
+      padding: 60px 40px;
+      text-align: center;
+    }
+
+    .pricing-section__title {
+      font-size: 42px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+
+    .pricing-section__subtitle {
+      font-size: 18px;
+      color: #94a3b8;
+      margin-bottom: 48px;
+    }
+
+    .pricing-toggle {
+      display: inline-flex;
+      background: #1e1e2e;
+      border-radius: 50px;
+      padding: 4px;
+      margin-bottom: 48px;
+    }
+
+    .pricing-toggle__btn {
+      padding: 12px 24px;
+      border: none;
+      background: transparent;
+      color: #94a3b8;
+      font-weight: 600;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .pricing-toggle__btn--active {
+      background: #6366f1;
+      color: white;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .pricing-card {
+      background: linear-gradient(135deg, #1e1e2e, #2a2a3e);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 40px 32px;
+      text-align: left;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .pricing-card:hover {
+      transform: translateY(-8px);
+    }
+
+    .pricing-card--featured {
+      background: linear-gradient(135deg, #2a2a4e, #3a3a5e);
+      border-color: #6366f1;
+      transform: scale(1.05);
+    }
+
+    .pricing-card--featured:hover {
+      transform: scale(1.05) translateY(-8px);
+    }
+
+    .pricing-card__badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+      padding: 6px 16px;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .pricing-card__name {
+      font-size: 18px;
+      font-weight: 600;
+      color: #94a3b8;
+      margin-bottom: 8px;
+    }
+
+    .pricing-card__price {
+      font-size: 48px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .pricing-card__price span {
+      font-size: 16px;
+      font-weight: 400;
+      color: #64748b;
+    }
+
+    .pricing-card__desc {
+      font-size: 14px;
+      color: #64748b;
+      margin-bottom: 32px;
+    }
+
+    .pricing-card__features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 32px;
+    }
+
+    .pricing-card__features li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+      color: #e2e8f0;
+      font-size: 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .pricing-card__features li::before {
+      content: '✓';
+      color: #22c55e;
+      font-weight: 700;
+    }
+
+    .pricing-card__cta {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .pricing-card__cta--primary {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+    }
+
+    .pricing-card__cta--secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    /* ===== TESTIMONIALS CAROUSEL ===== */
+    .testimonials-section {
+      padding: 60px 40px;
+      overflow: hidden;
+    }
+
+    .testimonials-section__title {
+      font-size: 36px;
+      font-weight: 800;
+      color: #fff;
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .testimonial-track {
+      display: flex;
+      gap: 24px;
+      animation: scroll-testimonials 30s linear infinite;
+    }
+
+    @keyframes scroll-testimonials {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .testimonial-card {
+      flex-shrink: 0;
+      width: 400px;
+      background: linear-gradient(135deg, #1e1e2e, #2a2a3e);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 32px;
+    }
+
+    .testimonial-card__stars {
+      color: #fbbf24;
+      margin-bottom: 16px;
+      font-size: 18px;
+    }
+
+    .testimonial-card__text {
+      font-size: 16px;
+      color: #e2e8f0;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    .testimonial-card__author {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .testimonial-card__avatar {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #6366f1, #ec4899);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .testimonial-card__name {
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .testimonial-card__role {
+      font-size: 14px;
+      color: #64748b;
+    }
+
+    /* ===== STATS SECTION ===== */
+    .stats-section {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+      padding: 60px 40px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.05));
+      border-radius: 24px;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-item__value {
+      font-size: 56px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #6366f1, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+    }
+
+    .stat-item__label {
+      font-size: 16px;
+      color: #94a3b8;
+    }
+
+    /* ===== CTA SECTION ===== */
+    .cta-section {
+      position: relative;
+      padding: 80px 40px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border-radius: 32px;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .cta-section__title {
+      position: relative;
+      font-size: 42px;
+      font-weight: 800;
+      color: white;
+      margin-bottom: 16px;
+    }
+
+    .cta-section__subtitle {
+      position: relative;
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 32px;
+    }
+
+    .cta-section__btn {
+      position: relative;
+      padding: 18px 40px;
+      background: white;
+      color: #6366f1;
+      border: none;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .cta-section__btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    /* ===== FAQ SECTION ===== */
+    .faq-section {
+      padding: 60px 40px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .faq-section__title {
+      font-size: 36px;
+      font-weight: 800;
+      color: #fff;
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .faq-item {
+      background: linear-gradient(135deg, #1e1e2e, #2a2a3e);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+
+    .faq-item__question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .faq-item__question:hover {
+      background: rgba(99, 102, 241, 0.1);
+    }
+
+    .faq-item__question h3 {
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+      margin: 0;
+    }
+
+    .faq-item__icon {
+      font-size: 20px;
+      color: #6366f1;
+      transition: transform 0.3s ease;
+    }
+
+    .faq-item--open .faq-item__icon {
+      transform: rotate(45deg);
+    }
+
+    .faq-item__answer {
+      padding: 0 24px 24px;
+      color: #94a3b8;
+      line-height: 1.7;
+      display: none;
+    }
+
+    .faq-item--open .faq-item__answer {
+      display: block;
+    }
+
+    /* ===== INTEGRATION GRID ===== */
+    .integrations-section {
+      padding: 60px 40px;
+      text-align: center;
+    }
+
+    .integrations-section__title {
+      font-size: 36px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+
+    .integrations-section__subtitle {
+      font-size: 18px;
+      color: #94a3b8;
+      margin-bottom: 48px;
+    }
+
+    .integrations-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .integration-card {
+      background: linear-gradient(135deg, #1e1e2e, #2a2a3e);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 32px;
+      transition: all 0.3s ease;
+    }
+
+    .integration-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(99, 102, 241, 0.3);
+    }
+
+    .integration-card__icon {
+      font-size: 40px;
+      margin-bottom: 16px;
+    }
+
+    .integration-card__name {
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    /* Preview container pour les composants */
+    .saas-preview {
+      background: #0a0a1a;
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .saas-preview--dark {
+      background: linear-gradient(135deg, #0f0f23, #1a1a3e);
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+      <a href="../index.html" class="sidebar__logo">
+        <span>Duke</span>-components
+      </a>
+
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">SaaS Components</h3>
+        <ul class="sidebar__nav">
+          <li><a href="#hero" class="sidebar__link sidebar__link--active">Hero Sections</a></li>
+          <li><a href="#features" class="sidebar__link">Feature Grids</a></li>
+          <li><a href="#pricing" class="sidebar__link">Pricing Tables</a></li>
+          <li><a href="#testimonials" class="sidebar__link">Testimonials</a></li>
+          <li><a href="#stats" class="sidebar__link">Stats Sections</a></li>
+          <li><a href="#cta" class="sidebar__link">CTA Sections</a></li>
+          <li><a href="#faq" class="sidebar__link">FAQ Sections</a></li>
+          <li><a href="#integrations" class="sidebar__link">Integrations</a></li>
+          <li><a href="#logos" class="sidebar__link">Logo Clouds</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar__section">
+        <a href="../index.html" class="sidebar__link">← Retour</a>
+      </div>
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main">
+      <header class="main__header">
+        <h1 class="main__title">🚀 SaaS Components</h1>
+        <p class="main__subtitle">Composants premium pour landing pages SaaS — Hero, Pricing, Features, Testimonials.</p>
+      </header>
+
+      <!-- ========== HERO SECTION ========== -->
+      <section id="hero" class="section">
+        <h2 class="section__title">Hero Sections</h2>
+        <p class="section__desc">Sections hero modernes avec effets visuels impressionnants.</p>
+
+        <div class="components-grid">
+          <!-- HERO GRADIENT MESH -->
+          <article class="component-card component-card--full" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="padding: 0; overflow: hidden; border-radius: 12px;">
+              <div class="hero-saas" style="transform: scale(0.6); transform-origin: top left; width: 166%; height: 250px;">
+                <span class="hero-saas__badge">Nouveau : IA intégrée</span>
+                <h1 class="hero-saas__title">Construisez plus vite<br>avec Duke</h1>
+                <p class="hero-saas__subtitle">La plateforme qui accélère votre développement.</p>
+                <div class="hero-saas__cta">
+                  <button class="btn-hero btn-hero--primary">Commencer</button>
+                  <button class="btn-hero btn-hero--secondary">Voir la démo</button>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Hero Gradient Mesh</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">hero</span>
+                <span class="tag">gradient</span>
+                <span class="tag">animated</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn">Copy</button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code"><code>&lt;section class="hero-saas"&gt;
+  &lt;span class="hero-saas__badge"&gt;
+    Nouveau : IA intégrée
+  &lt;/span&gt;
+  &lt;h1 class="hero-saas__title"&gt;
+    Construisez plus vite&lt;br&gt;avec Duke
+  &lt;/h1&gt;
+  &lt;p class="hero-saas__subtitle"&gt;
+    La plateforme qui accélère votre développement.
+  &lt;/p&gt;
+  &lt;div class="hero-saas__cta"&gt;
+    &lt;button class="btn-hero btn-hero--primary"&gt;Commencer&lt;/button&gt;
+    &lt;button class="btn-hero btn-hero--secondary"&gt;Voir la démo&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== FEATURES SECTION ========== -->
+      <section id="features" class="section">
+        <h2 class="section__title">Feature Grids</h2>
+        <p class="section__desc">Grilles de fonctionnalités style Bento pour présenter vos features.</p>
+
+        <div class="saas-preview saas-preview--dark">
+          <div class="bento-features" style="padding: 0;">
+            <div class="bento-card bento-card--large">
+              <div class="bento-card__icon">⚡</div>
+              <h3 class="bento-card__title">Performance Ultra-rapide</h3>
+              <p class="bento-card__desc">Chargement instantané grâce à notre CDN global et notre cache intelligent.</p>
+              <div class="bento-card__visual">📊</div>
+            </div>
+            <div class="bento-card bento-card--tall">
+              <div class="bento-card__icon">🔒</div>
+              <h3 class="bento-card__title">Sécurité Enterprise</h3>
+              <p class="bento-card__desc">Chiffrement de bout en bout, SSO, et conformité RGPD.</p>
+            </div>
+            <div class="bento-card">
+              <div class="bento-card__icon">🎨</div>
+              <h3 class="bento-card__title">Design System</h3>
+              <p class="bento-card__desc">Composants personnalisables à l'infini.</p>
+            </div>
+            <div class="bento-card">
+              <div class="bento-card__icon">🤖</div>
+              <h3 class="bento-card__title">IA Intégrée</h3>
+              <p class="bento-card__desc">Automatisez vos tâches avec notre IA.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== PRICING SECTION ========== -->
+      <section id="pricing" class="section">
+        <h2 class="section__title">Pricing Tables</h2>
+        <p class="section__desc">Tables de tarification modernes et convertissantes.</p>
+
+        <div class="saas-preview saas-preview--dark">
+          <div class="pricing-section" style="padding: 20px;">
+            <div class="pricing-toggle">
+              <button class="pricing-toggle__btn pricing-toggle__btn--active">Mensuel</button>
+              <button class="pricing-toggle__btn">Annuel (-20%)</button>
+            </div>
+            <div class="pricing-grid">
+              <div class="pricing-card">
+                <h3 class="pricing-card__name">Starter</h3>
+                <div class="pricing-card__price">19€ <span>/mois</span></div>
+                <p class="pricing-card__desc">Parfait pour démarrer</p>
+                <ul class="pricing-card__features">
+                  <li>5 projets</li>
+                  <li>10 GB stockage</li>
+                  <li>Support email</li>
+                </ul>
+                <button class="pricing-card__cta pricing-card__cta--secondary">Commencer</button>
+              </div>
+              <div class="pricing-card pricing-card--featured">
+                <span class="pricing-card__badge">Populaire</span>
+                <h3 class="pricing-card__name">Pro</h3>
+                <div class="pricing-card__price">49€ <span>/mois</span></div>
+                <p class="pricing-card__desc">Pour les équipes</p>
+                <ul class="pricing-card__features">
+                  <li>Projets illimités</li>
+                  <li>100 GB stockage</li>
+                  <li>Support prioritaire</li>
+                  <li>API access</li>
+                </ul>
+                <button class="pricing-card__cta pricing-card__cta--primary">Commencer</button>
+              </div>
+              <div class="pricing-card">
+                <h3 class="pricing-card__name">Enterprise</h3>
+                <div class="pricing-card__price">99€ <span>/mois</span></div>
+                <p class="pricing-card__desc">Solutions sur mesure</p>
+                <ul class="pricing-card__features">
+                  <li>Tout illimité</li>
+                  <li>SSO & SAML</li>
+                  <li>Manager dédié</li>
+                  <li>SLA 99.99%</li>
+                </ul>
+                <button class="pricing-card__cta pricing-card__cta--secondary">Contacter</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== TESTIMONIALS SECTION ========== -->
+      <section id="testimonials" class="section">
+        <h2 class="section__title">Testimonials</h2>
+        <p class="section__desc">Carrousels de témoignages clients.</p>
+
+        <div class="saas-preview saas-preview--dark">
+          <div class="testimonials-section" style="padding: 20px;">
+            <div class="testimonial-track">
+              <div class="testimonial-card">
+                <div class="testimonial-card__stars">★★★★★</div>
+                <p class="testimonial-card__text">"Duke a transformé notre workflow. On développe 3x plus vite qu'avant. L'équipe est incroyable."</p>
+                <div class="testimonial-card__author">
+                  <div class="testimonial-card__avatar">M</div>
+                  <div>
+                    <div class="testimonial-card__name">Marie Dupont</div>
+                    <div class="testimonial-card__role">CTO @ TechStartup</div>
+                  </div>
+                </div>
+              </div>
+              <div class="testimonial-card">
+                <div class="testimonial-card__stars">★★★★★</div>
+                <p class="testimonial-card__text">"Le meilleur investissement qu'on ait fait cette année. ROI positif dès le premier mois."</p>
+                <div class="testimonial-card__author">
+                  <div class="testimonial-card__avatar">P</div>
+                  <div>
+                    <div class="testimonial-card__name">Pierre Martin</div>
+                    <div class="testimonial-card__role">CEO @ Agency</div>
+                  </div>
+                </div>
+              </div>
+              <div class="testimonial-card">
+                <div class="testimonial-card__stars">★★★★★</div>
+                <p class="testimonial-card__text">"Interface intuitive, support réactif. On ne reviendrait jamais en arrière."</p>
+                <div class="testimonial-card__author">
+                  <div class="testimonial-card__avatar">S</div>
+                  <div>
+                    <div class="testimonial-card__name">Sophie Bernard</div>
+                    <div class="testimonial-card__role">Lead Dev @ Corp</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== STATS SECTION ========== -->
+      <section id="stats" class="section">
+        <h2 class="section__title">Stats Sections</h2>
+        <p class="section__desc">Sections de statistiques impressionnantes.</p>
+
+        <div class="saas-preview">
+          <div class="stats-section">
+            <div class="stat-item">
+              <div class="stat-item__value">10K+</div>
+              <div class="stat-item__label">Utilisateurs actifs</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-item__value">99.9%</div>
+              <div class="stat-item__label">Uptime garanti</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-item__value">50M+</div>
+              <div class="stat-item__label">Requêtes / jour</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-item__value">24/7</div>
+              <div class="stat-item__label">Support premium</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== CTA SECTION ========== -->
+      <section id="cta" class="section">
+        <h2 class="section__title">CTA Sections</h2>
+        <p class="section__desc">Call-to-action percutants pour convertir.</p>
+
+        <div class="saas-preview">
+          <div class="cta-section">
+            <h2 class="cta-section__title">Prêt à transformer votre business ?</h2>
+            <p class="cta-section__subtitle">Rejoignez +10 000 entreprises qui nous font confiance.</p>
+            <button class="cta-section__btn">Démarrer gratuitement →</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== FAQ SECTION ========== -->
+      <section id="faq" class="section">
+        <h2 class="section__title">FAQ Sections</h2>
+        <p class="section__desc">Sections FAQ interactives.</p>
+
+        <div class="saas-preview saas-preview--dark">
+          <div class="faq-section" style="padding: 20px;">
+            <div class="faq-item faq-item--open">
+              <div class="faq-item__question">
+                <h3>Comment fonctionne l'essai gratuit ?</h3>
+                <span class="faq-item__icon">+</span>
+              </div>
+              <div class="faq-item__answer">
+                L'essai gratuit dure 14 jours avec accès complet à toutes les fonctionnalités. Aucune carte bancaire requise.
+              </div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-item__question">
+                <h3>Puis-je annuler à tout moment ?</h3>
+                <span class="faq-item__icon">+</span>
+              </div>
+              <div class="faq-item__answer">
+                Oui, vous pouvez annuler votre abonnement à tout moment depuis votre tableau de bord.
+              </div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-item__question">
+                <h3>Y a-t-il un support technique ?</h3>
+                <span class="faq-item__icon">+</span>
+              </div>
+              <div class="faq-item__answer">
+                Oui, notre équipe support est disponible 24/7 par chat, email et téléphone pour les plans Pro et Enterprise.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== INTEGRATIONS SECTION ========== -->
+      <section id="integrations" class="section">
+        <h2 class="section__title">Integrations</h2>
+        <p class="section__desc">Grilles d'intégrations tierces.</p>
+
+        <div class="saas-preview saas-preview--dark">
+          <div class="integrations-grid" style="max-width: 600px; margin: 0 auto;">
+            <div class="integration-card">
+              <div class="integration-card__icon">📊</div>
+              <div class="integration-card__name">Analytics</div>
+            </div>
+            <div class="integration-card">
+              <div class="integration-card__icon">💳</div>
+              <div class="integration-card__name">Stripe</div>
+            </div>
+            <div class="integration-card">
+              <div class="integration-card__icon">📧</div>
+              <div class="integration-card__name">Mailchimp</div>
+            </div>
+            <div class="integration-card">
+              <div class="integration-card__icon">💬</div>
+              <div class="integration-card__name">Slack</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== LOGO CLOUD SECTION ========== -->
+      <section id="logos" class="section">
+        <h2 class="section__title">Logo Clouds</h2>
+        <p class="section__desc">Logos de clients et partenaires.</p>
+
+        <div class="saas-preview saas-preview--dark">
+          <div class="logo-cloud">
+            <p class="logo-cloud__title">Ils nous font confiance</p>
+            <div class="logo-cloud__grid">
+              <div class="logo-cloud__item">🏢 TechCorp</div>
+              <div class="logo-cloud__item">🚀 StartupX</div>
+              <div class="logo-cloud__item">💼 BigAgency</div>
+              <div class="logo-cloud__item">🎯 GoalInc</div>
+              <div class="logo-cloud__item">⚡ FastDev</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="../assets/js/main.js"></script>
+  <script>
+    // FAQ Toggle
+    document.querySelectorAll('.faq-item__question').forEach(question => {
+      question.addEventListener('click', () => {
+        const item = question.closest('.faq-item');
+        item.classList.toggle('faq-item--open');
+      });
+    });
+
+    // Tabs
+    document.querySelectorAll('.code-viewer__tab').forEach(tab => {
+      tab.addEventListener('click', function() {
+        const viewer = this.closest('.code-viewer');
+        const tabs = viewer.querySelectorAll('.code-viewer__tab');
+        const codes = viewer.querySelectorAll('.code-viewer__code');
+        tabs.forEach(t => t.classList.remove('code-viewer__tab--active'));
+        this.classList.add('code-viewer__tab--active');
+        const index = Array.from(tabs).indexOf(this);
+        codes.forEach((code, i) => {
+          code.style.display = i === index ? 'block' : 'none';
+        });
+      });
+    });
+  </script>
+  <script src="../assets/js/theme-toggle.js"></script>
+</body>
+</html>

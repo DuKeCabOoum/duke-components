@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bento Grids — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ========================================
+       BENTO GRIDS — Tendance 2025
+       Style Apple/Vercel/Linear
+       ======================================== */
+
+    /* ===== BASE BENTO ===== */
+    .bento-container {
+      display: grid;
+      gap: 16px;
+      padding: 24px;
+      background: #0a0a0f;
+      border-radius: 24px;
+    }
+
+    .bento-item {
+      background: linear-gradient(135deg, #18181b, #1f1f23);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .bento-item:hover {
+      border-color: rgba(99, 102, 241, 0.4);
+      transform: translateY(-4px);
+      box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(99, 102, 241, 0.2);
+    }
+
+    .bento-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    }
+
+    /* ===== BENTO CLASSIC (2x3 grid) ===== */
+    .bento-classic {
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, 200px);
+    }
+
+    .bento-classic .bento-item--hero {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+
+    .bento-classic .bento-item--tall {
+      grid-row: span 2;
+    }
+
+    .bento-classic .bento-item--wide {
+      grid-column: span 2;
+    }
+
+    /* ===== BENTO APPLE STYLE ===== */
+    .bento-apple {
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(3, 180px);
+    }
+
+    .bento-apple .bento-item--featured {
+      grid-column: span 2;
+      grid-row: span 2;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    }
+
+    .bento-apple .bento-item--accent {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .bento-apple .bento-item--accent .bento-item__title,
+    .bento-apple .bento-item--accent .bento-item__desc {
+      color: white;
+    }
+
+    /* ===== BENTO ASYMMETRIC ===== */
+    .bento-asymmetric {
+      grid-template-columns: 1.5fr 1fr 1fr;
+      grid-template-rows: repeat(2, 220px);
+    }
+
+    /* ===== BENTO MASONRY STYLE ===== */
+    .bento-masonry {
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: 100px;
+    }
+
+    .bento-masonry .bento-item--1 { grid-row: span 3; }
+    .bento-masonry .bento-item--2 { grid-row: span 2; }
+    .bento-masonry .bento-item--3 { grid-row: span 2; grid-column: span 2; }
+    .bento-masonry .bento-item--4 { grid-row: span 3; }
+    .bento-masonry .bento-item--5 { grid-row: span 2; }
+
+    /* ===== BENTO ITEM CONTENT ===== */
+    .bento-item__icon {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
+    }
+
+    .bento-item__icon--glass {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .bento-item__icon--gradient-1 {
+      background: linear-gradient(135deg, #f472b6, #ec4899);
+    }
+
+    .bento-item__icon--gradient-2 {
+      background: linear-gradient(135deg, #34d399, #10b981);
+    }
+
+    .bento-item__icon--gradient-3 {
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    }
+
+    .bento-item__title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .bento-item__desc {
+      font-size: 14px;
+      color: #71717a;
+      line-height: 1.6;
+    }
+
+    .bento-item__visual {
+      position: absolute;
+      right: -20px;
+      bottom: -20px;
+      font-size: 120px;
+      opacity: 0.1;
+      pointer-events: none;
+    }
+
+    .bento-item__tag {
+      display: inline-block;
+      padding: 4px 12px;
+      background: rgba(99, 102, 241, 0.2);
+      color: #a5b4fc;
+      font-size: 12px;
+      font-weight: 500;
+      border-radius: 50px;
+      margin-bottom: 16px;
+    }
+
+    /* ===== BENTO WITH GLOW ===== */
+    .bento-glow .bento-item {
+      position: relative;
+    }
+
+    .bento-glow .bento-item::after {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      background: linear-gradient(135deg, #6366f1, #ec4899, #6366f1);
+      border-radius: 21px;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      filter: blur(8px);
+    }
+
+    .bento-glow .bento-item:hover::after {
+      opacity: 0.5;
+    }
+
+    /* ===== BENTO WITH IMAGE ===== */
+    .bento-item--image {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .bento-item__image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .bento-item--image:hover .bento-item__image {
+      transform: scale(1.05);
+    }
+
+    .bento-item__overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 24px;
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+    }
+
+    /* ===== BENTO ANIMATED ===== */
+    .bento-animated .bento-item {
+      animation: bento-float 6s ease-in-out infinite;
+    }
+
+    .bento-animated .bento-item:nth-child(2) { animation-delay: 0.5s; }
+    .bento-animated .bento-item:nth-child(3) { animation-delay: 1s; }
+    .bento-animated .bento-item:nth-child(4) { animation-delay: 1.5s; }
+    .bento-animated .bento-item:nth-child(5) { animation-delay: 2s; }
+    .bento-animated .bento-item:nth-child(6) { animation-delay: 2.5s; }
+
+    @keyframes bento-float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* ===== BENTO INTERACTIVE ===== */
+    .bento-item--interactive {
+      cursor: pointer;
+    }
+
+    .bento-item--interactive .bento-item__arrow {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      transition: all 0.3s ease;
+    }
+
+    .bento-item--interactive:hover .bento-item__arrow {
+      background: #6366f1;
+      transform: translate(4px, -4px);
+    }
+
+    /* ===== BENTO STATS ===== */
+    .bento-item__stat {
+      font-size: 48px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #fff, #a5b4fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+    }
+
+    .bento-item__stat-label {
+      font-size: 14px;
+      color: #71717a;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* ===== BENTO CODE PREVIEW ===== */
+    .bento-item--code {
+      font-family: 'Monaco', 'Menlo', monospace;
+      font-size: 13px;
+      background: #0d0d12;
+    }
+
+    .bento-item--code pre {
+      margin: 0;
+      color: #e4e4e7;
+    }
+
+    .bento-item--code .code-line {
+      display: block;
+      padding: 2px 0;
+    }
+
+    .bento-item--code .code-keyword { color: #c792ea; }
+    .bento-item--code .code-function { color: #82aaff; }
+    .bento-item--code .code-string { color: #c3e88d; }
+    .bento-item--code .code-comment { color: #545468; }
+
+    /* ===== BENTO GRADIENT BORDERS ===== */
+    .bento-gradient-border {
+      position: relative;
+      background: transparent;
+      border: none;
+    }
+
+    .bento-gradient-border::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      padding: 1px;
+      background: linear-gradient(135deg, #6366f1, #ec4899, #f59e0b);
+      -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+    }
+
+    .bento-gradient-border > * {
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+      <a href="../../index.html" class="sidebar__logo">
+        <span>Duke</span>-components
+      </a>
+
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Bento Grids</h3>
+        <ul class="sidebar__nav">
+          <li><a href="#classic" class="sidebar__link sidebar__link--active">Classic Layout</a></li>
+          <li><a href="#apple" class="sidebar__link">Apple Style</a></li>
+          <li><a href="#asymmetric" class="sidebar__link">Asymmetric</a></li>
+          <li><a href="#masonry" class="sidebar__link">Masonry</a></li>
+          <li><a href="#animated" class="sidebar__link">Animated</a></li>
+          <li><a href="#glow" class="sidebar__link">With Glow</a></li>
+          <li><a href="#interactive" class="sidebar__link">Interactive</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar__section">
+        <a href="../../index.html" class="sidebar__link">← Retour</a>
+      </div>
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main">
+      <header class="main__header">
+        <h1 class="main__title">🍱 Bento Grids</h1>
+        <p class="main__subtitle">Grilles Bento modernes style Apple/Vercel — La tendance 2025.</p>
+      </header>
+
+      <!-- ========== CLASSIC SECTION ========== -->
+      <section id="classic" class="section">
+        <h2 class="section__title">Classic Layout</h2>
+        <p class="section__desc">Layout Bento classique avec hero card et cards secondaires.</p>
+
+        <div class="bento-container bento-classic">
+          <div class="bento-item bento-item--hero">
+            <span class="bento-item__tag">Featured</span>
+            <div class="bento-item__icon">⚡</div>
+            <h3 class="bento-item__title">Performance Ultra-rapide</h3>
+            <p class="bento-item__desc">Notre infrastructure edge garantit des temps de réponse inférieurs à 50ms dans le monde entier. Déployez en confiance.</p>
+            <span class="bento-item__visual">⚡</span>
+          </div>
+          <div class="bento-item">
+            <div class="bento-item__icon bento-item__icon--gradient-1">🔒</div>
+            <h3 class="bento-item__title">Sécurité</h3>
+            <p class="bento-item__desc">Chiffrement E2E</p>
+          </div>
+          <div class="bento-item">
+            <div class="bento-item__icon bento-item__icon--gradient-2">🎨</div>
+            <h3 class="bento-item__title">Design</h3>
+            <p class="bento-item__desc">100+ composants</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== APPLE STYLE SECTION ========== -->
+      <section id="apple" class="section">
+        <h2 class="section__title">Apple Style</h2>
+        <p class="section__desc">Inspiré des grilles marketing d'Apple.</p>
+
+        <div class="bento-container bento-apple">
+          <div class="bento-item bento-item--featured">
+            <div class="bento-item__icon">🚀</div>
+            <h3 class="bento-item__title">Lancez votre projet en minutes</h3>
+            <p class="bento-item__desc">Configuration zero, déploiement instantané. Concentrez-vous sur votre code.</p>
+          </div>
+          <div class="bento-item">
+            <div class="bento-item__stat">99.9%</div>
+            <p class="bento-item__stat-label">Uptime</p>
+          </div>
+          <div class="bento-item bento-item--accent">
+            <div class="bento-item__icon bento-item__icon--glass">✨</div>
+            <h3 class="bento-item__title">Nouveau</h3>
+            <p class="bento-item__desc">IA intégrée</p>
+          </div>
+          <div class="bento-item">
+            <div class="bento-item__icon bento-item__icon--gradient-3">📊</div>
+            <h3 class="bento-item__title">Analytics</h3>
+            <p class="bento-item__desc">Temps réel</p>
+          </div>
+          <div class="bento-item">
+            <div class="bento-item__stat">50M+</div>
+            <p class="bento-item__stat-label">Requêtes/jour</p>
+          </div>
+          <div class="bento-item">
+            <div class="bento-item__icon">🔗</div>
+            <h3 class="bento-item__title">API</h3>
+            <p class="bento-item__desc">RESTful</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== ASYMMETRIC SECTION ========== -->
+      <section id="asymmetric" class="section">
+        <h2 class="section__title">Asymmetric</h2>
+        <p class="section__desc">Layout asymétrique pour plus de dynamisme.</p>
+
+        <div class="bento-container bento-asymmetric">
+          <div class="bento-item" style="grid-row: span 2;">
+            <div class="bento-item__icon">🎯</div>
+            <h3 class="bento-item__title">Focus Mode</h3>
+            <p class="bento-item__desc">Éliminez les distractions et concentrez-vous sur ce qui compte vraiment. Notre mode focus analyse vos habitudes et optimise votre productivité.</p>
+            <span class="bento-item__visual">🎯</span>
+          </div>
+          <div class="bento-item">
+            <div class="bento-item__icon bento-item__icon--gradient-2">⚙️</div>
+            <h3 class="bento-item__title">Automations</h3>
+          </div>
+          <div class="bento-item">
+            <div class="bento-item__stat">24/7</div>
+            <p class="bento-item__stat-label">Support</p>
+          </div>
+          <div class="bento-item" style="grid-column: span 2;">
+            <div class="bento-item__icon bento-item__icon--gradient-1">🤖</div>
+            <h3 class="bento-item__title">Intelligence Artificielle</h3>
+            <p class="bento-item__desc">Propulsé par les derniers modèles IA pour des suggestions intelligentes.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== MASONRY SECTION ========== -->
+      <section id="masonry" class="section">
+        <h2 class="section__title">Masonry Style</h2>
+        <p class="section__desc">Effet Pinterest/Masonry avec hauteurs variées.</p>
+
+        <div class="bento-container bento-masonry">
+          <div class="bento-item bento-item--1">
+            <div class="bento-item__icon">📱</div>
+            <h3 class="bento-item__title">Mobile First</h3>
+            <p class="bento-item__desc">Design responsive natif pour tous les devices.</p>
+          </div>
+          <div class="bento-item bento-item--2">
+            <div class="bento-item__stat">3x</div>
+            <p class="bento-item__stat-label">Plus rapide</p>
+          </div>
+          <div class="bento-item bento-item--3">
+            <div class="bento-item__icon bento-item__icon--gradient-2">🌍</div>
+            <h3 class="bento-item__title">Global CDN</h3>
+            <p class="bento-item__desc">200+ edge locations worldwide.</p>
+          </div>
+          <div class="bento-item bento-item--4">
+            <div class="bento-item__icon bento-item__icon--gradient-1">💎</div>
+            <h3 class="bento-item__title">Premium Quality</h3>
+            <p class="bento-item__desc">Chaque détail compte.</p>
+          </div>
+          <div class="bento-item bento-item--5">
+            <div class="bento-item__icon bento-item__icon--gradient-3">🔔</div>
+            <h3 class="bento-item__title">Notifications</h3>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== ANIMATED SECTION ========== -->
+      <section id="animated" class="section">
+        <h2 class="section__title">Animated</h2>
+        <p class="section__desc">Bento avec animations flottantes subtiles.</p>
+
+        <div class="bento-container bento-classic bento-animated">
+          <div class="bento-item bento-item--wide">
+            <div class="bento-item__icon">🎨</div>
+            <h3 class="bento-item__title">Design System Complet</h3>
+            <p class="bento-item__desc">Tokens, composants, patterns.</p>
+          </div>
+          <div class="bento-item">
+            <div class="bento-item__icon bento-item__icon--gradient-1">🔮</div>
+            <h3 class="bento-item__title">Prédictions</h3>
+          </div>
+          <div class="bento-item">
+            <div class="bento-item__icon bento-item__icon--gradient-2">📈</div>
+            <h3 class="bento-item__title">Growth</h3>
+          </div>
+          <div class="bento-item">
+            <div class="bento-item__icon bento-item__icon--gradient-3">⭐</div>
+            <h3 class="bento-item__title">Premium</h3>
+          </div>
+          <div class="bento-item bento-item--wide">
+            <div class="bento-item__icon">🤝</div>
+            <h3 class="bento-item__title">Collaboration en temps réel</h3>
+            <p class="bento-item__desc">Travaillez ensemble, sans friction.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== GLOW SECTION ========== -->
+      <section id="glow" class="section">
+        <h2 class="section__title">With Glow Effect</h2>
+        <p class="section__desc">Effet glow au survol pour plus d'impact.</p>
+
+        <div class="bento-container bento-classic bento-glow">
+          <div class="bento-item bento-item--hero">
+            <div class="bento-item__icon">💡</div>
+            <h3 class="bento-item__title">Hover pour voir le glow</h3>
+            <p class="bento-item__desc">Un effet lumineux subtil apparaît autour de chaque carte au survol, créant une expérience interactive engageante.</p>
+          </div>
+          <div class="bento-item">
+            <div class="bento-item__icon bento-item__icon--gradient-1">🎆</div>
+            <h3 class="bento-item__title">Glow Pink</h3>
+          </div>
+          <div class="bento-item">
+            <div class="bento-item__icon bento-item__icon--gradient-2">🌟</div>
+            <h3 class="bento-item__title">Glow Green</h3>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== INTERACTIVE SECTION ========== -->
+      <section id="interactive" class="section">
+        <h2 class="section__title">Interactive Cards</h2>
+        <p class="section__desc">Cartes cliquables avec indicateur de navigation.</p>
+
+        <div class="bento-container bento-classic">
+          <div class="bento-item bento-item--interactive bento-item--wide">
+            <span class="bento-item__arrow">→</span>
+            <div class="bento-item__icon">📚</div>
+            <h3 class="bento-item__title">Documentation</h3>
+            <p class="bento-item__desc">Guides complets et exemples de code.</p>
+          </div>
+          <div class="bento-item bento-item--interactive">
+            <span class="bento-item__arrow">→</span>
+            <div class="bento-item__icon bento-item__icon--gradient-1">🎓</div>
+            <h3 class="bento-item__title">Tutoriels</h3>
+          </div>
+          <div class="bento-item bento-item--interactive">
+            <span class="bento-item__arrow">→</span>
+            <div class="bento-item__icon bento-item__icon--gradient-2">💬</div>
+            <h3 class="bento-item__title">Community</h3>
+          </div>
+          <div class="bento-item bento-item--interactive">
+            <span class="bento-item__arrow">→</span>
+            <div class="bento-item__icon bento-item__icon--gradient-3">🎁</div>
+            <h3 class="bento-item__title">Templates</h3>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="../../assets/js/main.js"></script>
+  <script src="../../assets/js/theme-toggle.js"></script>
+</body>
+</html>

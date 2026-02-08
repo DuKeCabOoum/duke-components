@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Celebrations — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ========================================
+       CELEBRATIONS — Animations de succès
+       ======================================== */
+
+    /* ===== CONFETTI ===== */
+    .confetti-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1000;
+    }
+
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      opacity: 0;
+    }
+
+    .confetti--square { border-radius: 0; }
+    .confetti--circle { border-radius: 50%; }
+    .confetti--ribbon {
+      width: 4px;
+      height: 16px;
+      border-radius: 2px;
+    }
+
+    @keyframes confetti-fall {
+      0% {
+        opacity: 1;
+        transform: translateY(-100px) rotate(0deg);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(100vh) rotate(720deg);
+      }
+    }
+
+    /* Preview confetti (statique pour démo) */
+    .confetti-preview {
+      position: relative;
+      width: 120px;
+      height: 120px;
+    }
+
+    .confetti-preview .confetti {
+      opacity: 1;
+      animation: confetti-float 2s ease-in-out infinite;
+    }
+
+    .confetti-preview .confetti:nth-child(1) { left: 20%; top: 10%; background: #ff6b6b; animation-delay: 0s; }
+    .confetti-preview .confetti:nth-child(2) { left: 40%; top: 30%; background: #4ecdc4; animation-delay: 0.2s; }
+    .confetti-preview .confetti:nth-child(3) { left: 60%; top: 15%; background: #ffe66d; animation-delay: 0.4s; }
+    .confetti-preview .confetti:nth-child(4) { left: 80%; top: 40%; background: #6366f1; animation-delay: 0.6s; }
+    .confetti-preview .confetti:nth-child(5) { left: 30%; top: 60%; background: #f472b6; animation-delay: 0.8s; }
+    .confetti-preview .confetti:nth-child(6) { left: 70%; top: 70%; background: #34d399; animation-delay: 1s; }
+
+    @keyframes confetti-float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(10px) rotate(180deg); }
+    }
+
+    /* ===== SUCCESS CHECKMARK ===== */
+    .success-checkmark {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #10b981, #34d399);
+      animation: success-pop 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      box-shadow: 0 10px 40px rgba(16, 185, 129, 0.4);
+    }
+
+    .success-checkmark__icon {
+      width: 40px;
+      height: 40px;
+      stroke: white;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+    }
+
+    .success-checkmark__icon path {
+      stroke-dasharray: 50;
+      stroke-dashoffset: 50;
+      animation: checkmark-draw 0.6s ease forwards 0.3s;
+    }
+
+    @keyframes success-pop {
+      0% { transform: scale(0); opacity: 0; }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes checkmark-draw {
+      to { stroke-dashoffset: 0; }
+    }
+
+    /* ===== FIREWORKS ===== */
+    .fireworks-container {
+      position: relative;
+      width: 150px;
+      height: 150px;
+    }
+
+    .firework {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      left: 50%;
+      top: 50%;
+    }
+
+    .firework--1 { background: #ff6b6b; animation: firework-burst 1.5s ease-out infinite; }
+    .firework--2 { background: #4ecdc4; animation: firework-burst 1.5s ease-out infinite 0.1s; }
+    .firework--3 { background: #ffe66d; animation: firework-burst 1.5s ease-out infinite 0.2s; }
+    .firework--4 { background: #6366f1; animation: firework-burst 1.5s ease-out infinite 0.3s; }
+    .firework--5 { background: #f472b6; animation: firework-burst 1.5s ease-out infinite 0.4s; }
+    .firework--6 { background: #34d399; animation: firework-burst 1.5s ease-out infinite 0.5s; }
+    .firework--7 { background: #fbbf24; animation: firework-burst 1.5s ease-out infinite 0.6s; }
+    .firework--8 { background: #a78bfa; animation: firework-burst 1.5s ease-out infinite 0.7s; }
+
+    .firework--1 { --angle: 0deg; }
+    .firework--2 { --angle: 45deg; }
+    .firework--3 { --angle: 90deg; }
+    .firework--4 { --angle: 135deg; }
+    .firework--5 { --angle: 180deg; }
+    .firework--6 { --angle: 225deg; }
+    .firework--7 { --angle: 270deg; }
+    .firework--8 { --angle: 315deg; }
+
+    @keyframes firework-burst {
+      0% {
+        transform: translate(-50%, -50%) rotate(var(--angle)) translateY(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(-50%, -50%) rotate(var(--angle)) translateY(-60px);
+        opacity: 0;
+      }
+    }
+
+    /* ===== STARS BURST ===== */
+    .stars-burst {
+      position: relative;
+      width: 100px;
+      height: 100px;
+    }
+
+    .star {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      font-size: 20px;
+      animation: star-burst 1.2s ease-out infinite;
+    }
+
+    .star:nth-child(1) { --tx: -40px; --ty: -40px; animation-delay: 0s; }
+    .star:nth-child(2) { --tx: 40px; --ty: -40px; animation-delay: 0.1s; }
+    .star:nth-child(3) { --tx: 50px; --ty: 0; animation-delay: 0.2s; }
+    .star:nth-child(4) { --tx: 40px; --ty: 40px; animation-delay: 0.3s; }
+    .star:nth-child(5) { --tx: -40px; --ty: 40px; animation-delay: 0.4s; }
+    .star:nth-child(6) { --tx: -50px; --ty: 0; animation-delay: 0.5s; }
+
+    @keyframes star-burst {
+      0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 1;
+      }
+      50% {
+        transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(calc(-50% + var(--tx) * 1.5), calc(-50% + var(--ty) * 1.5)) scale(0);
+        opacity: 0;
+      }
+    }
+
+    /* ===== TROPHY ===== */
+    .trophy-celebration {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .trophy {
+      font-size: 50px;
+      animation: trophy-bounce 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+      filter: drop-shadow(0 4px 20px rgba(251, 191, 36, 0.5));
+    }
+
+    .trophy-sparkle {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: #fbbf24;
+      border-radius: 50%;
+      animation: sparkle 1s ease-in-out infinite;
+    }
+
+    .trophy-sparkle:nth-child(2) { top: 10%; left: 20%; animation-delay: 0.2s; }
+    .trophy-sparkle:nth-child(3) { top: 20%; right: 15%; animation-delay: 0.4s; }
+    .trophy-sparkle:nth-child(4) { bottom: 30%; left: 10%; animation-delay: 0.6s; }
+    .trophy-sparkle:nth-child(5) { bottom: 20%; right: 20%; animation-delay: 0.8s; }
+
+    @keyframes trophy-bounce {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-10px) scale(1.1); }
+    }
+
+    @keyframes sparkle {
+      0%, 100% { transform: scale(0); opacity: 0; }
+      50% { transform: scale(1); opacity: 1; }
+    }
+
+    /* ===== COINS RAIN ===== */
+    .coins-container {
+      position: relative;
+      width: 120px;
+      height: 100px;
+      overflow: hidden;
+    }
+
+    .coin {
+      position: absolute;
+      font-size: 24px;
+      animation: coin-fall 1.5s linear infinite;
+    }
+
+    .coin:nth-child(1) { left: 10%; animation-delay: 0s; }
+    .coin:nth-child(2) { left: 30%; animation-delay: 0.3s; }
+    .coin:nth-child(3) { left: 50%; animation-delay: 0.6s; }
+    .coin:nth-child(4) { left: 70%; animation-delay: 0.9s; }
+    .coin:nth-child(5) { left: 90%; animation-delay: 1.2s; }
+
+    @keyframes coin-fall {
+      0% {
+        transform: translateY(-30px) rotateY(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100px) rotateY(720deg);
+        opacity: 0;
+      }
+    }
+
+    /* ===== BALLOONS ===== */
+    .balloons-container {
+      position: relative;
+      width: 150px;
+      height: 120px;
+    }
+
+    .balloon {
+      position: absolute;
+      bottom: 0;
+      font-size: 30px;
+      animation: balloon-float 2s ease-in-out infinite;
+    }
+
+    .balloon:nth-child(1) { left: 15%; animation-delay: 0s; }
+    .balloon:nth-child(2) { left: 40%; animation-delay: 0.3s; }
+    .balloon:nth-child(3) { left: 65%; animation-delay: 0.6s; }
+
+    @keyframes balloon-float {
+      0% { transform: translateY(0) rotate(-5deg); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+      100% { transform: translateY(0) rotate(-5deg); }
+    }
+
+    /* ===== EMOJI EXPLOSION ===== */
+    .emoji-explosion {
+      position: relative;
+      width: 120px;
+      height: 120px;
+    }
+
+    .emoji-particle {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      font-size: 24px;
+      animation: emoji-burst 1.5s ease-out infinite;
+    }
+
+    .emoji-particle:nth-child(1) { --ex: -50px; --ey: -50px; }
+    .emoji-particle:nth-child(2) { --ex: 50px; --ey: -50px; animation-delay: 0.1s; }
+    .emoji-particle:nth-child(3) { --ex: -60px; --ey: 20px; animation-delay: 0.2s; }
+    .emoji-particle:nth-child(4) { --ex: 60px; --ey: 20px; animation-delay: 0.3s; }
+    .emoji-particle:nth-child(5) { --ex: 0; --ey: -60px; animation-delay: 0.4s; }
+
+    @keyframes emoji-burst {
+      0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(calc(-50% + var(--ex)), calc(-50% + var(--ey))) scale(1);
+        opacity: 0;
+      }
+    }
+
+    /* ===== CONFETTI CANNON ===== */
+    .confetti-cannon {
+      position: relative;
+      width: 150px;
+      height: 100px;
+    }
+
+    .cannon-particle {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+    }
+
+    .cannon-left .cannon-particle {
+      left: 0;
+      animation: cannon-shoot-left 1.2s ease-out infinite;
+    }
+
+    .cannon-right .cannon-particle {
+      right: 0;
+      animation: cannon-shoot-right 1.2s ease-out infinite;
+    }
+
+    .cannon-particle:nth-child(1) { background: #ff6b6b; --cy: -60px; animation-delay: 0s; }
+    .cannon-particle:nth-child(2) { background: #4ecdc4; --cy: -50px; animation-delay: 0.1s; }
+    .cannon-particle:nth-child(3) { background: #ffe66d; --cy: -70px; animation-delay: 0.2s; }
+    .cannon-particle:nth-child(4) { background: #6366f1; --cy: -45px; animation-delay: 0.3s; }
+    .cannon-particle:nth-child(5) { background: #f472b6; --cy: -65px; animation-delay: 0.4s; }
+
+    @keyframes cannon-shoot-left {
+      0% {
+        transform: translate(0, 100px) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(70px, var(--cy)) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes cannon-shoot-right {
+      0% {
+        transform: translate(0, 100px) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(-70px, var(--cy)) rotate(-360deg);
+        opacity: 0;
+      }
+    }
+
+    /* ===== LEVEL UP ===== */
+    .level-up {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .level-up__badge {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 700;
+      color: white;
+      animation: level-pulse 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+      box-shadow: 0 0 30px rgba(99, 102, 241, 0.6);
+    }
+
+    .level-up__text {
+      font-size: 14px;
+      font-weight: 600;
+      color: #8b5cf6;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      animation: text-glow 1s ease-in-out infinite;
+    }
+
+    .level-up__rays {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      top: -20px;
+    }
+
+    .ray {
+      position: absolute;
+      width: 3px;
+      height: 20px;
+      background: linear-gradient(to top, transparent, #fbbf24);
+      left: 50%;
+      top: 50%;
+      transform-origin: bottom center;
+      animation: ray-pulse 1s ease-in-out infinite;
+    }
+
+    .ray:nth-child(1) { transform: translate(-50%, -100%) rotate(0deg); }
+    .ray:nth-child(2) { transform: translate(-50%, -100%) rotate(45deg); }
+    .ray:nth-child(3) { transform: translate(-50%, -100%) rotate(90deg); }
+    .ray:nth-child(4) { transform: translate(-50%, -100%) rotate(135deg); }
+    .ray:nth-child(5) { transform: translate(-50%, -100%) rotate(180deg); }
+    .ray:nth-child(6) { transform: translate(-50%, -100%) rotate(225deg); }
+    .ray:nth-child(7) { transform: translate(-50%, -100%) rotate(270deg); }
+    .ray:nth-child(8) { transform: translate(-50%, -100%) rotate(315deg); }
+
+    @keyframes level-pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+    }
+
+    @keyframes text-glow {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+
+    @keyframes ray-pulse {
+      0%, 100% { opacity: 0.3; height: 20px; }
+      50% { opacity: 1; height: 30px; }
+    }
+
+    /* ===== PARTY POPPER ===== */
+    .party-popper {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .popper-emoji {
+      font-size: 50px;
+      animation: popper-shake 0.5s ease-in-out infinite;
+    }
+
+    .popper-particle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      animation: popper-burst 1s ease-out infinite;
+    }
+
+    .popper-particle:nth-child(2) { background: #ff6b6b; --px: -40px; --py: -30px; }
+    .popper-particle:nth-child(3) { background: #4ecdc4; --px: -20px; --py: -50px; }
+    .popper-particle:nth-child(4) { background: #ffe66d; --px: 10px; --py: -45px; }
+    .popper-particle:nth-child(5) { background: #6366f1; --px: -50px; --py: -10px; }
+    .popper-particle:nth-child(6) { background: #f472b6; --px: -35px; --py: -45px; }
+
+    @keyframes popper-shake {
+      0%, 100% { transform: rotate(-5deg); }
+      50% { transform: rotate(5deg); }
+    }
+
+    @keyframes popper-burst {
+      0% {
+        left: 50%;
+        top: 50%;
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(0);
+      }
+      100% {
+        left: calc(50% + var(--px));
+        top: calc(50% + var(--py));
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
+
+    /* ===== HEART BURST ===== */
+    .heart-burst {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .heart-main {
+      font-size: 40px;
+      animation: heart-beat 0.8s ease-in-out infinite;
+    }
+
+    .heart-particle {
+      position: absolute;
+      font-size: 16px;
+      animation: heart-float 1.5s ease-out infinite;
+    }
+
+    .heart-particle:nth-child(2) { --hx: -30px; --hy: -40px; animation-delay: 0s; }
+    .heart-particle:nth-child(3) { --hx: 30px; --hy: -35px; animation-delay: 0.2s; }
+    .heart-particle:nth-child(4) { --hx: -40px; --hy: 10px; animation-delay: 0.4s; }
+    .heart-particle:nth-child(5) { --hx: 40px; --hy: 15px; animation-delay: 0.6s; }
+
+    @keyframes heart-beat {
+      0%, 100% { transform: scale(1); }
+      25% { transform: scale(1.2); }
+      50% { transform: scale(1); }
+      75% { transform: scale(1.1); }
+    }
+
+    @keyframes heart-float {
+      0% {
+        left: 50%;
+        top: 50%;
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(0);
+      }
+      100% {
+        left: calc(50% + var(--hx));
+        top: calc(50% + var(--hy));
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
+
+    /* ===== TRIGGER BUTTONS ===== */
+    .trigger-btn {
+      padding: 10px 20px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      margin-top: 16px;
+    }
+
+    .trigger-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+    }
+
+    .trigger-btn:active {
+      transform: translateY(0);
+    }
+
+    /* Animation pause au survol */
+    .component-card:hover .confetti-preview .confetti,
+    .component-card:hover .firework,
+    .component-card:hover .star,
+    .component-card:hover .trophy,
+    .component-card:hover .coin,
+    .component-card:hover .balloon,
+    .component-card:hover .emoji-particle,
+    .component-card:hover .cannon-particle,
+    .component-card:hover .level-up__badge,
+    .component-card:hover .popper-emoji,
+    .component-card:hover .heart-main {
+      animation-play-state: running;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+      <a href="../../index.html" class="sidebar__logo">
+        <span>Duke</span>-components
+      </a>
+
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Celebrations</h3>
+        <ul class="sidebar__nav">
+          <li><a href="#confetti" class="sidebar__link sidebar__link--active">Confetti</a></li>
+          <li><a href="#checkmarks" class="sidebar__link">Success Checkmarks</a></li>
+          <li><a href="#fireworks" class="sidebar__link">Fireworks</a></li>
+          <li><a href="#trophies" class="sidebar__link">Trophies</a></li>
+          <li><a href="#emojis" class="sidebar__link">Emoji Celebrations</a></li>
+          <li><a href="#gaming" class="sidebar__link">Gaming / Level Up</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar__section">
+        <a href="../../index.html" class="sidebar__link">← Retour</a>
+      </div>
+
+      <!-- Toggle Admin -->
+      <div class="admin-toggle">
+        <span class="admin-toggle__label">Mode Admin</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="admin-toggle">
+          <span class="toggle-switch__slider"></span>
+        </label>
+      </div>
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main">
+      <header class="main__header">
+        <h1 class="main__title">🎉 Celebrations</h1>
+        <p class="main__subtitle">Animations de succès et feedback positif — Confetti, Fireworks, Checkmarks, Trophées.</p>
+      </header>
+
+      <!-- ========== CONFETTI SECTION ========== -->
+      <section id="confetti" class="section">
+        <h2 class="section__title">Confetti</h2>
+        <p class="section__desc">Pluie de confettis colorés pour célébrer un succès.</p>
+
+        <div class="components-grid">
+          <!-- CONFETTI RAIN -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="confetti-preview">
+                <div class="confetti confetti--square"></div>
+                <div class="confetti confetti--circle"></div>
+                <div class="confetti confetti--ribbon"></div>
+                <div class="confetti confetti--square"></div>
+                <div class="confetti confetti--circle"></div>
+                <div class="confetti confetti--ribbon"></div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Confetti Rain</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">confetti</span>
+                <span class="tag">celebration</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                  <button class="code-viewer__tab">JS</button>
+                </div>
+                <button class="copy-btn" data-target="confetti-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="confetti-html"><code>&lt;div class="confetti-container" id="confetti"&gt;&lt;/div&gt;
+&lt;button onclick="launchConfetti()"&gt;Celebrate!&lt;/button&gt;</code></pre>
+                <pre class="code-viewer__code" id="confetti-css" style="display:none"><code>.confetti-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  opacity: 0;
+  animation: confetti-fall 3s ease-out forwards;
+}
+
+@keyframes confetti-fall {
+  0% {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(100vh) rotate(720deg);
+  }
+}</code></pre>
+                <pre class="code-viewer__code" id="confetti-js" style="display:none"><code>function launchConfetti() {
+  const container = document.getElementById('confetti');
+  const colors = ['#ff6b6b', '#4ecdc4', '#ffe66d', '#6366f1', '#f472b6', '#34d399'];
+  const shapes = ['square', 'circle', 'ribbon'];
+
+  for (let i = 0; i &lt; 100; i++) {
+    const confetti = document.createElement('div');
+    confetti.className = `confetti confetti--${shapes[Math.floor(Math.random() * shapes.length)]}`;
+    confetti.style.left = Math.random() * 100 + '%';
+    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+    confetti.style.animationDelay = Math.random() * 0.5 + 's';
+    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+    container.appendChild(confetti);
+
+    setTimeout(() =&gt; confetti.remove(), 4000);
+  }
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- CONFETTI CANNON -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="confetti-cannon">
+                <div class="cannon-left">
+                  <div class="cannon-particle"></div>
+                  <div class="cannon-particle"></div>
+                  <div class="cannon-particle"></div>
+                  <div class="cannon-particle"></div>
+                  <div class="cannon-particle"></div>
+                </div>
+                <div class="cannon-right">
+                  <div class="cannon-particle"></div>
+                  <div class="cannon-particle"></div>
+                  <div class="cannon-particle"></div>
+                  <div class="cannon-particle"></div>
+                  <div class="cannon-particle"></div>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Confetti Cannon</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">confetti</span>
+                <span class="tag">cannon</span>
+                <span class="tag">burst</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="cannon-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="cannon-html"><code>&lt;div class="confetti-cannon"&gt;
+  &lt;div class="cannon-left"&gt;
+    &lt;div class="cannon-particle"&gt;&lt;/div&gt;
+    &lt;!-- Repeat 5 times --&gt;
+  &lt;/div&gt;
+  &lt;div class="cannon-right"&gt;
+    &lt;div class="cannon-particle"&gt;&lt;/div&gt;
+    &lt;!-- Repeat 5 times --&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="cannon-css" style="display:none"><code>.confetti-cannon {
+  position: relative;
+  width: 150px;
+  height: 100px;
+}
+
+.cannon-particle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+}
+
+.cannon-left .cannon-particle {
+  left: 0;
+  animation: cannon-shoot-left 1.2s ease-out infinite;
+}
+
+.cannon-right .cannon-particle {
+  right: 0;
+  animation: cannon-shoot-right 1.2s ease-out infinite;
+}
+
+@keyframes cannon-shoot-left {
+  0% {
+    transform: translate(0, 100px);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(70px, -60px);
+    opacity: 0;
+  }
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== CHECKMARKS SECTION ========== -->
+      <section id="checkmarks" class="section">
+        <h2 class="section__title">Success Checkmarks</h2>
+        <p class="section__desc">Animations de validation et de succès.</p>
+
+        <div class="components-grid">
+          <!-- SUCCESS CHECKMARK -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="success-checkmark">
+                <svg class="success-checkmark__icon" viewBox="0 0 24 24">
+                  <path d="M5 13l4 4L19 7"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Success Circle</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">checkmark</span>
+                <span class="tag">success</span>
+                <span class="tag">animated</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="checkmark-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="checkmark-html"><code>&lt;div class="success-checkmark"&gt;
+  &lt;svg class="success-checkmark__icon" viewBox="0 0 24 24"&gt;
+    &lt;path d="M5 13l4 4L19 7"&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="checkmark-css" style="display:none"><code>.success-checkmark {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #10b981, #34d399);
+  animation: success-pop 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  box-shadow: 0 10px 40px rgba(16, 185, 129, 0.4);
+}
+
+.success-checkmark__icon {
+  width: 40px;
+  height: 40px;
+  stroke: white;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+
+.success-checkmark__icon path {
+  stroke-dasharray: 50;
+  stroke-dashoffset: 50;
+  animation: checkmark-draw 0.6s ease forwards 0.3s;
+}
+
+@keyframes success-pop {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes checkmark-draw {
+  to { stroke-dashoffset: 0; }
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== FIREWORKS SECTION ========== -->
+      <section id="fireworks" class="section">
+        <h2 class="section__title">Fireworks</h2>
+        <p class="section__desc">Feux d'artifice et explosions d'etoiles.</p>
+
+        <div class="components-grid">
+          <!-- FIREWORKS BURST -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="fireworks-container">
+                <div class="firework firework--1"></div>
+                <div class="firework firework--2"></div>
+                <div class="firework firework--3"></div>
+                <div class="firework firework--4"></div>
+                <div class="firework firework--5"></div>
+                <div class="firework firework--6"></div>
+                <div class="firework firework--7"></div>
+                <div class="firework firework--8"></div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Fireworks Burst</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">fireworks</span>
+                <span class="tag">burst</span>
+                <span class="tag">colorful</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="fireworks-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="fireworks-html"><code>&lt;div class="fireworks-container"&gt;
+  &lt;div class="firework firework--1"&gt;&lt;/div&gt;
+  &lt;div class="firework firework--2"&gt;&lt;/div&gt;
+  &lt;!-- 8 fireworks total --&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="fireworks-css" style="display:none"><code>.fireworks-container {
+  position: relative;
+  width: 150px;
+  height: 150px;
+}
+
+.firework {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  left: 50%;
+  top: 50%;
+}
+
+.firework--1 { background: #ff6b6b; --angle: 0deg; }
+.firework--2 { background: #4ecdc4; --angle: 45deg; }
+/* ... etc pour chaque angle */
+
+@keyframes firework-burst {
+  0% {
+    transform: translate(-50%, -50%) rotate(var(--angle)) translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(var(--angle)) translateY(-60px);
+    opacity: 0;
+  }
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- STARS BURST -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="stars-burst">
+                <span class="star">⭐</span>
+                <span class="star">⭐</span>
+                <span class="star">⭐</span>
+                <span class="star">⭐</span>
+                <span class="star">⭐</span>
+                <span class="star">⭐</span>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Stars Burst</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">stars</span>
+                <span class="tag">burst</span>
+                <span class="tag">emoji</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="stars-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="stars-html"><code>&lt;div class="stars-burst"&gt;
+  &lt;span class="star"&gt;⭐&lt;/span&gt;
+  &lt;span class="star"&gt;⭐&lt;/span&gt;
+  &lt;span class="star"&gt;⭐&lt;/span&gt;
+  &lt;span class="star"&gt;⭐&lt;/span&gt;
+  &lt;span class="star"&gt;⭐&lt;/span&gt;
+  &lt;span class="star"&gt;⭐&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="stars-css" style="display:none"><code>.stars-burst {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+.star {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  font-size: 20px;
+  animation: star-burst 1.2s ease-out infinite;
+}
+
+.star:nth-child(1) { --tx: -40px; --ty: -40px; }
+.star:nth-child(2) { --tx: 40px; --ty: -40px; }
+/* ... variables pour chaque direction */
+
+@keyframes star-burst {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(-50% + var(--tx) * 1.5), calc(-50% + var(--ty) * 1.5)) scale(0);
+    opacity: 0;
+  }
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== TROPHIES SECTION ========== -->
+      <section id="trophies" class="section">
+        <h2 class="section__title">Trophies & Rewards</h2>
+        <p class="section__desc">Trophees, medailles et recompenses animees.</p>
+
+        <div class="components-grid">
+          <!-- TROPHY -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="trophy-celebration">
+                <span class="trophy">🏆</span>
+                <span class="trophy-sparkle"></span>
+                <span class="trophy-sparkle"></span>
+                <span class="trophy-sparkle"></span>
+                <span class="trophy-sparkle"></span>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Trophy Winner</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">trophy</span>
+                <span class="tag">reward</span>
+                <span class="tag">sparkle</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="trophy-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="trophy-html"><code>&lt;div class="trophy-celebration"&gt;
+  &lt;span class="trophy"&gt;🏆&lt;/span&gt;
+  &lt;span class="trophy-sparkle"&gt;&lt;/span&gt;
+  &lt;span class="trophy-sparkle"&gt;&lt;/span&gt;
+  &lt;span class="trophy-sparkle"&gt;&lt;/span&gt;
+  &lt;span class="trophy-sparkle"&gt;&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="trophy-css" style="display:none"><code>.trophy-celebration {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.trophy {
+  font-size: 50px;
+  animation: trophy-bounce 0.8s ease-in-out infinite;
+  filter: drop-shadow(0 4px 20px rgba(251, 191, 36, 0.5));
+}
+
+.trophy-sparkle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #fbbf24;
+  border-radius: 50%;
+  animation: sparkle 1s ease-in-out infinite;
+}
+
+@keyframes trophy-bounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-10px) scale(1.1); }
+}
+
+@keyframes sparkle {
+  0%, 100% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1); opacity: 1; }
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- COINS RAIN -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="coins-container">
+                <span class="coin">🪙</span>
+                <span class="coin">🪙</span>
+                <span class="coin">🪙</span>
+                <span class="coin">🪙</span>
+                <span class="coin">🪙</span>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Coins Rain</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">coins</span>
+                <span class="tag">reward</span>
+                <span class="tag">gamification</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="coins-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="coins-html"><code>&lt;div class="coins-container"&gt;
+  &lt;span class="coin"&gt;🪙&lt;/span&gt;
+  &lt;span class="coin"&gt;🪙&lt;/span&gt;
+  &lt;span class="coin"&gt;🪙&lt;/span&gt;
+  &lt;span class="coin"&gt;🪙&lt;/span&gt;
+  &lt;span class="coin"&gt;🪙&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="coins-css" style="display:none"><code>.coins-container {
+  position: relative;
+  width: 120px;
+  height: 100px;
+  overflow: hidden;
+}
+
+.coin {
+  position: absolute;
+  font-size: 24px;
+  animation: coin-fall 1.5s linear infinite;
+}
+
+.coin:nth-child(1) { left: 10%; animation-delay: 0s; }
+.coin:nth-child(2) { left: 30%; animation-delay: 0.3s; }
+.coin:nth-child(3) { left: 50%; animation-delay: 0.6s; }
+.coin:nth-child(4) { left: 70%; animation-delay: 0.9s; }
+.coin:nth-child(5) { left: 90%; animation-delay: 1.2s; }
+
+@keyframes coin-fall {
+  0% {
+    transform: translateY(-30px) rotateY(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100px) rotateY(720deg);
+    opacity: 0;
+  }
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== EMOJIS SECTION ========== -->
+      <section id="emojis" class="section">
+        <h2 class="section__title">Emoji Celebrations</h2>
+        <p class="section__desc">Celebrations avec emojis expressifs.</p>
+
+        <div class="components-grid">
+          <!-- PARTY POPPER -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="party-popper">
+                <span class="popper-emoji">🎉</span>
+                <span class="popper-particle"></span>
+                <span class="popper-particle"></span>
+                <span class="popper-particle"></span>
+                <span class="popper-particle"></span>
+                <span class="popper-particle"></span>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Party Popper</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">party</span>
+                <span class="tag">emoji</span>
+                <span class="tag">celebration</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="popper-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="popper-html"><code>&lt;div class="party-popper"&gt;
+  &lt;span class="popper-emoji"&gt;🎉&lt;/span&gt;
+  &lt;span class="popper-particle"&gt;&lt;/span&gt;
+  &lt;!-- 5 particles --&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="popper-css" style="display:none"><code>.party-popper {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popper-emoji {
+  font-size: 50px;
+  animation: popper-shake 0.5s ease-in-out infinite;
+}
+
+@keyframes popper-shake {
+  0%, 100% { transform: rotate(-5deg); }
+  50% { transform: rotate(5deg); }
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- HEART BURST -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="heart-burst">
+                <span class="heart-main">❤️</span>
+                <span class="heart-particle">💕</span>
+                <span class="heart-particle">💕</span>
+                <span class="heart-particle">💕</span>
+                <span class="heart-particle">💕</span>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Heart Burst</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">heart</span>
+                <span class="tag">love</span>
+                <span class="tag">like</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="heart-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="heart-html"><code>&lt;div class="heart-burst"&gt;
+  &lt;span class="heart-main"&gt;❤️&lt;/span&gt;
+  &lt;span class="heart-particle"&gt;💕&lt;/span&gt;
+  &lt;span class="heart-particle"&gt;💕&lt;/span&gt;
+  &lt;span class="heart-particle"&gt;💕&lt;/span&gt;
+  &lt;span class="heart-particle"&gt;💕&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="heart-css" style="display:none"><code>.heart-burst {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+.heart-main {
+  font-size: 40px;
+  animation: heart-beat 0.8s ease-in-out infinite;
+}
+
+@keyframes heart-beat {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.2); }
+  50% { transform: scale(1); }
+  75% { transform: scale(1.1); }
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- BALLOONS -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="balloons-container">
+                <span class="balloon">🎈</span>
+                <span class="balloon">🎈</span>
+                <span class="balloon">🎈</span>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Balloons Float</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">balloons</span>
+                <span class="tag">float</span>
+                <span class="tag">party</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="balloons-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="balloons-html"><code>&lt;div class="balloons-container"&gt;
+  &lt;span class="balloon"&gt;🎈&lt;/span&gt;
+  &lt;span class="balloon"&gt;🎈&lt;/span&gt;
+  &lt;span class="balloon"&gt;🎈&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="balloons-css" style="display:none"><code>.balloons-container {
+  position: relative;
+  width: 150px;
+  height: 120px;
+}
+
+.balloon {
+  position: absolute;
+  bottom: 0;
+  font-size: 30px;
+  animation: balloon-float 2s ease-in-out infinite;
+}
+
+.balloon:nth-child(1) { left: 15%; animation-delay: 0s; }
+.balloon:nth-child(2) { left: 40%; animation-delay: 0.3s; }
+.balloon:nth-child(3) { left: 65%; animation-delay: 0.6s; }
+
+@keyframes balloon-float {
+  0% { transform: translateY(0) rotate(-5deg); }
+  50% { transform: translateY(-20px) rotate(5deg); }
+  100% { transform: translateY(0) rotate(-5deg); }
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- EMOJI EXPLOSION -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="emoji-explosion">
+                <span class="emoji-particle">🎊</span>
+                <span class="emoji-particle">✨</span>
+                <span class="emoji-particle">🌟</span>
+                <span class="emoji-particle">💫</span>
+                <span class="emoji-particle">🎯</span>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Emoji Explosion</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">emoji</span>
+                <span class="tag">explosion</span>
+                <span class="tag">mixed</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="emoji-explosion-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="emoji-explosion-html"><code>&lt;div class="emoji-explosion"&gt;
+  &lt;span class="emoji-particle"&gt;🎊&lt;/span&gt;
+  &lt;span class="emoji-particle"&gt;✨&lt;/span&gt;
+  &lt;span class="emoji-particle"&gt;🌟&lt;/span&gt;
+  &lt;span class="emoji-particle"&gt;💫&lt;/span&gt;
+  &lt;span class="emoji-particle"&gt;🎯&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="emoji-explosion-css" style="display:none"><code>.emoji-explosion {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+
+.emoji-particle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  font-size: 24px;
+  animation: emoji-burst 1.5s ease-out infinite;
+}
+
+.emoji-particle:nth-child(1) { --ex: -50px; --ey: -50px; }
+.emoji-particle:nth-child(2) { --ex: 50px; --ey: -50px; }
+/* ... variables pour chaque direction */
+
+@keyframes emoji-burst {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(-50% + var(--ex)), calc(-50% + var(--ey))) scale(1);
+    opacity: 0;
+  }
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== GAMING SECTION ========== -->
+      <section id="gaming" class="section">
+        <h2 class="section__title">Gaming / Level Up</h2>
+        <p class="section__desc">Animations de gaming et progression.</p>
+
+        <div class="components-grid">
+          <!-- LEVEL UP -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="level-up">
+                <div class="level-up__rays">
+                  <div class="ray"></div>
+                  <div class="ray"></div>
+                  <div class="ray"></div>
+                  <div class="ray"></div>
+                  <div class="ray"></div>
+                  <div class="ray"></div>
+                  <div class="ray"></div>
+                  <div class="ray"></div>
+                </div>
+                <div class="level-up__badge">5</div>
+                <span class="level-up__text">Level Up!</span>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Level Up Badge</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">level</span>
+                <span class="tag">gaming</span>
+                <span class="tag">progress</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="levelup-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="levelup-html"><code>&lt;div class="level-up"&gt;
+  &lt;div class="level-up__rays"&gt;
+    &lt;div class="ray"&gt;&lt;/div&gt;
+    &lt;!-- 8 rays --&gt;
+  &lt;/div&gt;
+  &lt;div class="level-up__badge"&gt;5&lt;/div&gt;
+  &lt;span class="level-up__text"&gt;Level Up!&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="levelup-css" style="display:none"><code>.level-up {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.level-up__badge {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 700;
+  color: white;
+  animation: level-pulse 0.6s infinite;
+  box-shadow: 0 0 30px rgba(99, 102, 241, 0.6);
+}
+
+.level-up__text {
+  font-size: 14px;
+  font-weight: 600;
+  color: #8b5cf6;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+@keyframes level-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="../../assets/js/main.js"></script>
+  <script>
+    // AFFICHE : Gestion des onglets HTML/CSS/JS
+    document.querySelectorAll('.code-viewer__tab').forEach(tab => {
+      tab.addEventListener('click', function() {
+        const viewer = this.closest('.code-viewer');
+        const tabs = viewer.querySelectorAll('.code-viewer__tab');
+        const codes = viewer.querySelectorAll('.code-viewer__code');
+
+        tabs.forEach(t => t.classList.remove('code-viewer__tab--active'));
+        this.classList.add('code-viewer__tab--active');
+
+        const index = Array.from(tabs).indexOf(this);
+        codes.forEach((code, i) => {
+          code.style.display = i === index ? 'block' : 'none';
+        });
+      });
+    });
+  </script>
+  <script src="../../assets/js/theme-toggle.js"></script>
+</body>
+</html>

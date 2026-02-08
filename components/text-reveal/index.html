@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Reveal Effects - Duke Components</title>
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <style>
+        /* ========================================
+           TEXT REVEAL EFFECTS — Révélation de texte
+           ======================================== */
+
+        .reveal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .reveal-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+
+        .reveal-card__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .reveal-card__title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .reveal-card__demo {
+            min-height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-primary);
+            border-radius: 12px;
+            overflow: hidden;
+            padding: 2rem;
+        }
+
+        .reveal-card__actions {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn-replay {
+            padding: 0.5rem 1.5rem;
+            background: var(--primary);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-replay:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        /* ========================================
+           1. SLIDE UP REVEAL
+           ======================================== */
+
+        .reveal-slide-up {
+            overflow: hidden;
+        }
+
+        .reveal-slide-up__text {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            display: inline-block;
+            transform: translateY(100%);
+            animation: slide-up-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes slide-up-reveal {
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        /* ========================================
+           2. LETTER BY LETTER
+           ======================================== */
+
+        .reveal-letters {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            gap: 0.1em;
+        }
+
+        .reveal-letters__char {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(50px) rotate(10deg);
+            animation: letter-reveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .reveal-letters__char:nth-child(1) { animation-delay: 0.05s; }
+        .reveal-letters__char:nth-child(2) { animation-delay: 0.1s; }
+        .reveal-letters__char:nth-child(3) { animation-delay: 0.15s; }
+        .reveal-letters__char:nth-child(4) { animation-delay: 0.2s; }
+        .reveal-letters__char:nth-child(5) { animation-delay: 0.25s; }
+        .reveal-letters__char:nth-child(6) { animation-delay: 0.3s; }
+        .reveal-letters__char:nth-child(7) { animation-delay: 0.35s; }
+        .reveal-letters__char:nth-child(8) { animation-delay: 0.4s; }
+        .reveal-letters__char:nth-child(9) { animation-delay: 0.45s; }
+        .reveal-letters__char:nth-child(10) { animation-delay: 0.5s; }
+        .reveal-letters__char:nth-child(11) { animation-delay: 0.55s; }
+        .reveal-letters__char:nth-child(12) { animation-delay: 0.6s; }
+
+        @keyframes letter-reveal {
+            to {
+                opacity: 1;
+                transform: translateY(0) rotate(0deg);
+            }
+        }
+
+        /* ========================================
+           3. CLIP PATH REVEAL
+           ======================================== */
+
+        .reveal-clip {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            clip-path: inset(0 100% 0 0);
+            animation: clip-reveal 1s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+        }
+
+        @keyframes clip-reveal {
+            to {
+                clip-path: inset(0 0 0 0);
+            }
+        }
+
+        /* ========================================
+           4. BLUR REVEAL
+           ======================================== */
+
+        .reveal-blur {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            filter: blur(20px);
+            opacity: 0;
+            animation: blur-reveal 1.2s ease-out forwards;
+        }
+
+        @keyframes blur-reveal {
+            to {
+                filter: blur(0);
+                opacity: 1;
+            }
+        }
+
+        /* ========================================
+           5. WORD BY WORD
+           ======================================== */
+
+        .reveal-words {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5em;
+            justify-content: center;
+        }
+
+        .reveal-words__word {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: word-reveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .reveal-words__word:nth-child(1) { animation-delay: 0.1s; }
+        .reveal-words__word:nth-child(2) { animation-delay: 0.2s; }
+        .reveal-words__word:nth-child(3) { animation-delay: 0.3s; }
+        .reveal-words__word:nth-child(4) { animation-delay: 0.4s; }
+        .reveal-words__word:nth-child(5) { animation-delay: 0.5s; }
+
+        @keyframes word-reveal {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ========================================
+           6. SPLIT LINE REVEAL
+           ======================================== */
+
+        .reveal-split {
+            position: relative;
+            font-size: 2rem;
+            font-weight: 800;
+            overflow: hidden;
+        }
+
+        .reveal-split__line {
+            display: block;
+            overflow: hidden;
+        }
+
+        .reveal-split__text {
+            display: block;
+            transform: translateY(100%);
+            animation: split-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .reveal-split__line:nth-child(1) .reveal-split__text { animation-delay: 0s; }
+        .reveal-split__line:nth-child(2) .reveal-split__text { animation-delay: 0.15s; }
+        .reveal-split__line:nth-child(3) .reveal-split__text { animation-delay: 0.3s; }
+
+        @keyframes split-reveal {
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        /* ========================================
+           7. MASK REVEAL
+           ======================================== */
+
+        .reveal-mask {
+            position: relative;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        .reveal-mask__text {
+            opacity: 0;
+            animation: mask-text-reveal 0.01s 0.8s forwards;
+        }
+
+        .reveal-mask__cover {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            transform-origin: left;
+            animation: mask-cover-reveal 1.2s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+        }
+
+        @keyframes mask-text-reveal {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes mask-cover-reveal {
+            0% {
+                transform: scaleX(0);
+                transform-origin: left;
+            }
+            50% {
+                transform: scaleX(1);
+                transform-origin: left;
+            }
+            51% {
+                transform-origin: right;
+            }
+            100% {
+                transform: scaleX(0);
+                transform-origin: right;
+            }
+        }
+
+        /* ========================================
+           8. GLITCH REVEAL
+           ======================================== */
+
+        .reveal-glitch {
+            position: relative;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #fff;
+            animation: glitch-reveal 0.5s steps(1) forwards;
+        }
+
+        .reveal-glitch::before,
+        .reveal-glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .reveal-glitch::before {
+            color: #ff00ff;
+            animation: glitch-reveal-1 0.5s steps(2) forwards;
+            clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+        }
+
+        .reveal-glitch::after {
+            color: #00ffff;
+            animation: glitch-reveal-2 0.5s steps(2) forwards;
+            clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+        }
+
+        @keyframes glitch-reveal {
+            0% { opacity: 0; }
+            10% { opacity: 1; transform: translateX(-5px); }
+            20% { transform: translateX(5px); }
+            30% { transform: translateX(-3px); }
+            40% { transform: translateX(3px); }
+            50% { transform: translateX(0); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes glitch-reveal-1 {
+            0%, 40% { transform: translateX(-5px); }
+            50%, 100% { transform: translateX(0); }
+        }
+
+        @keyframes glitch-reveal-2 {
+            0%, 40% { transform: translateX(5px); }
+            50%, 100% { transform: translateX(0); }
+        }
+
+        /* ========================================
+           9. TYPEWRITER REVEAL
+           ======================================== */
+
+        .reveal-typewriter {
+            font-family: 'Fira Code', monospace;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 3px solid var(--primary);
+            width: 0;
+            animation:
+                typewriter-width 2s steps(25) forwards,
+                blink-cursor 0.7s step-end infinite;
+        }
+
+        @keyframes typewriter-width {
+            to {
+                width: 100%;
+            }
+        }
+
+        @keyframes blink-cursor {
+            50% {
+                border-color: transparent;
+            }
+        }
+
+        /* ========================================
+           10. WAVE REVEAL
+           ======================================== */
+
+        .reveal-wave {
+            display: flex;
+            gap: 0.05em;
+        }
+
+        .reveal-wave__char {
+            display: inline-block;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            opacity: 0;
+            transform: translateY(100%) scaleY(0);
+            animation: wave-char-reveal 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        .reveal-wave__char:nth-child(1) { animation-delay: 0.02s; }
+        .reveal-wave__char:nth-child(2) { animation-delay: 0.04s; }
+        .reveal-wave__char:nth-child(3) { animation-delay: 0.06s; }
+        .reveal-wave__char:nth-child(4) { animation-delay: 0.08s; }
+        .reveal-wave__char:nth-child(5) { animation-delay: 0.1s; }
+        .reveal-wave__char:nth-child(6) { animation-delay: 0.12s; }
+        .reveal-wave__char:nth-child(7) { animation-delay: 0.14s; }
+        .reveal-wave__char:nth-child(8) { animation-delay: 0.16s; }
+        .reveal-wave__char:nth-child(9) { animation-delay: 0.18s; }
+        .reveal-wave__char:nth-child(10) { animation-delay: 0.2s; }
+        .reveal-wave__char:nth-child(11) { animation-delay: 0.22s; }
+        .reveal-wave__char:nth-child(12) { animation-delay: 0.24s; }
+        .reveal-wave__char:nth-child(13) { animation-delay: 0.26s; }
+        .reveal-wave__char:nth-child(14) { animation-delay: 0.28s; }
+
+        @keyframes wave-char-reveal {
+            to {
+                opacity: 1;
+                transform: translateY(0) scaleY(1);
+            }
+        }
+
+        /* ========================================
+           11. GRADIENT SWEEP
+           ======================================== */
+
+        .reveal-gradient-sweep {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(90deg,
+                var(--text-primary) 0%,
+                var(--text-primary) 50%,
+                transparent 50%,
+                transparent 100%
+            );
+            background-size: 200% 100%;
+            background-position: 100% 0;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient-sweep 1s ease-out forwards;
+        }
+
+        @keyframes gradient-sweep {
+            to {
+                background-position: 0% 0;
+            }
+        }
+
+        /* ========================================
+           12. SCALE ROTATE REVEAL
+           ======================================== */
+
+        .reveal-scale-rotate {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            opacity: 0;
+            transform: scale(0.5) rotate(-10deg);
+            animation: scale-rotate-reveal 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        @keyframes scale-rotate-reveal {
+            to {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        /* ========================================
+           CODE VIEWER
+           ======================================== */
+
+        .code-block {
+            background: #1e1e1e;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 1.5rem;
+        }
+
+        .code-block__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background: #2d2d2d;
+            border-bottom: 1px solid #404040;
+        }
+
+        .code-block__lang {
+            font-size: 0.75rem;
+            color: #888;
+            text-transform: uppercase;
+        }
+
+        .code-block__copy {
+            background: transparent;
+            border: 1px solid #555;
+            color: #aaa;
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: all 0.2s;
+        }
+
+        .code-block__copy:hover {
+            background: #404040;
+            color: #fff;
+        }
+
+        .code-block__content {
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: #d4d4d4;
+        }
+
+        .code-block__content code {
+            white-space: pre;
+        }
+
+        .code-block .selector { color: #d7ba7d; }
+        .code-block .property { color: #9cdcfe; }
+        .code-block .value { color: #ce9178; }
+        .code-block .keyword { color: #c586c0; }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar__header">
+            <a href="../../index.html" class="sidebar__logo">
+                <span class="sidebar__logo-icon">D</span>
+                <span class="sidebar__logo-text">Duke UI</span>
+            </a>
+        </div>
+        <nav class="sidebar__nav">
+            <a href="../../index.html" class="sidebar__link">
+                <svg class="sidebar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                    <polyline points="9,22 9,12 15,12 15,22"/>
+                </svg>
+                Dashboard
+            </a>
+            <div class="sidebar__category">Effets</div>
+            <a href="../text-effects/index.html" class="sidebar__link">Text Effects</a>
+            <a href="#" class="sidebar__link sidebar__link--active">Text Reveal</a>
+            <a href="../typewriter/index.html" class="sidebar__link">Typewriter</a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="page-header">
+            <div class="page-header__content">
+                <h1 class="page-header__title">Text Reveal Effects</h1>
+                <p class="page-header__description">
+                    Animations de révélation de texte pour des entrées impactantes
+                </p>
+            </div>
+            <div class="page-header__badge badge badge--safe">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                SAFE
+            </div>
+        </header>
+
+        <div class="reveal-grid">
+            <!-- 1. Slide Up -->
+            <article class="reveal-card">
+                <div class="reveal-card__header">
+                    <h3 class="reveal-card__title">1. Slide Up</h3>
+                </div>
+                <div class="reveal-card__demo" id="demo-1">
+                    <div class="reveal-slide-up">
+                        <span class="reveal-slide-up__text">Duke UI</span>
+                    </div>
+                </div>
+                <div class="reveal-card__actions">
+                    <button class="btn-replay" onclick="replay('demo-1')">Rejouer</button>
+                </div>
+                <div class="code-block">
+                    <div class="code-block__header">
+                        <span class="code-block__lang">CSS</span>
+                        <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+                    </div>
+                    <div class="code-block__content">
+<code><span class="selector">.reveal-slide-up</span> {
+  <span class="property">overflow</span>: <span class="value">hidden</span>;
+}
+
+<span class="selector">.reveal-slide-up__text</span> {
+  <span class="property">transform</span>: <span class="value">translateY(100%)</span>;
+  <span class="property">animation</span>: <span class="value">slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards</span>;
+}
+
+<span class="keyword">@keyframes</span> slide-up {
+  <span class="selector">to</span> { <span class="property">transform</span>: <span class="value">translateY(0)</span>; }
+}</code>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 2. Letter by Letter -->
+            <article class="reveal-card">
+                <div class="reveal-card__header">
+                    <h3 class="reveal-card__title">2. Letter by Letter</h3>
+                </div>
+                <div class="reveal-card__demo" id="demo-2">
+                    <div class="reveal-letters">
+                        <span class="reveal-letters__char">D</span>
+                        <span class="reveal-letters__char">U</span>
+                        <span class="reveal-letters__char">K</span>
+                        <span class="reveal-letters__char">E</span>
+                        <span class="reveal-letters__char" style="margin-left: 0.5em">C</span>
+                        <span class="reveal-letters__char">O</span>
+                        <span class="reveal-letters__char">M</span>
+                        <span class="reveal-letters__char">P</span>
+                        <span class="reveal-letters__char">O</span>
+                        <span class="reveal-letters__char">N</span>
+                        <span class="reveal-letters__char">E</span>
+                        <span class="reveal-letters__char">N</span>
+                        <span class="reveal-letters__char">T</span>
+                        <span class="reveal-letters__char">S</span>
+                    </div>
+                </div>
+                <div class="reveal-card__actions">
+                    <button class="btn-replay" onclick="replay('demo-2')">Rejouer</button>
+                </div>
+            </article>
+
+            <!-- 3. Clip Path -->
+            <article class="reveal-card">
+                <div class="reveal-card__header">
+                    <h3 class="reveal-card__title">3. Clip Path</h3>
+                </div>
+                <div class="reveal-card__demo" id="demo-3">
+                    <h2 class="reveal-clip">Creative Design</h2>
+                </div>
+                <div class="reveal-card__actions">
+                    <button class="btn-replay" onclick="replay('demo-3')">Rejouer</button>
+                </div>
+                <div class="code-block">
+                    <div class="code-block__header">
+                        <span class="code-block__lang">CSS</span>
+                        <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+                    </div>
+                    <div class="code-block__content">
+<code><span class="selector">.reveal-clip</span> {
+  <span class="property">clip-path</span>: <span class="value">inset(0 100% 0 0)</span>;
+  <span class="property">animation</span>: <span class="value">clip-reveal 1s ease forwards</span>;
+}
+
+<span class="keyword">@keyframes</span> clip-reveal {
+  <span class="selector">to</span> { <span class="property">clip-path</span>: <span class="value">inset(0 0 0 0)</span>; }
+}</code>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 4. Blur Reveal -->
+            <article class="reveal-card">
+                <div class="reveal-card__header">
+                    <h3 class="reveal-card__title">4. Blur Reveal</h3>
+                </div>
+                <div class="reveal-card__demo" id="demo-4">
+                    <h2 class="reveal-blur">Blur Effect</h2>
+                </div>
+                <div class="reveal-card__actions">
+                    <button class="btn-replay" onclick="replay('demo-4')">Rejouer</button>
+                </div>
+            </article>
+
+            <!-- 5. Word by Word -->
+            <article class="reveal-card">
+                <div class="reveal-card__header">
+                    <h3 class="reveal-card__title">5. Word by Word</h3>
+                </div>
+                <div class="reveal-card__demo" id="demo-5">
+                    <div class="reveal-words">
+                        <span class="reveal-words__word">Build</span>
+                        <span class="reveal-words__word">beautiful</span>
+                        <span class="reveal-words__word">modern</span>
+                        <span class="reveal-words__word">interfaces</span>
+                    </div>
+                </div>
+                <div class="reveal-card__actions">
+                    <button class="btn-replay" onclick="replay('demo-5')">Rejouer</button>
+                </div>
+            </article>
+
+            <!-- 6. Split Lines -->
+            <article class="reveal-card">
+                <div class="reveal-card__header">
+                    <h3 class="reveal-card__title">6. Split Lines</h3>
+                </div>
+                <div class="reveal-card__demo" id="demo-6">
+                    <div class="reveal-split">
+                        <span class="reveal-split__line"><span class="reveal-split__text">We create</span></span>
+                        <span class="reveal-split__line"><span class="reveal-split__text">amazing digital</span></span>
+                        <span class="reveal-split__line"><span class="reveal-split__text">experiences</span></span>
+                    </div>
+                </div>
+                <div class="reveal-card__actions">
+                    <button class="btn-replay" onclick="replay('demo-6')">Rejouer</button>
+                </div>
+            </article>
+
+            <!-- 7. Mask Reveal -->
+            <article class="reveal-card">
+                <div class="reveal-card__header">
+                    <h3 class="reveal-card__title">7. Mask Reveal</h3>
+                </div>
+                <div class="reveal-card__demo" id="demo-7">
+                    <div class="reveal-mask">
+                        <span class="reveal-mask__text">INNOVATION</span>
+                        <span class="reveal-mask__cover"></span>
+                    </div>
+                </div>
+                <div class="reveal-card__actions">
+                    <button class="btn-replay" onclick="replay('demo-7')">Rejouer</button>
+                </div>
+            </article>
+
+            <!-- 8. Glitch Reveal -->
+            <article class="reveal-card">
+                <div class="reveal-card__header">
+                    <h3 class="reveal-card__title">8. Glitch Reveal</h3>
+                </div>
+                <div class="reveal-card__demo" id="demo-8" style="background: #0a0a0a;">
+                    <h2 class="reveal-glitch" data-text="SYSTEM">SYSTEM</h2>
+                </div>
+                <div class="reveal-card__actions">
+                    <button class="btn-replay" onclick="replay('demo-8')">Rejouer</button>
+                </div>
+            </article>
+
+            <!-- 9. Typewriter -->
+            <article class="reveal-card">
+                <div class="reveal-card__header">
+                    <h3 class="reveal-card__title">9. Typewriter</h3>
+                </div>
+                <div class="reveal-card__demo" id="demo-9">
+                    <p class="reveal-typewriter">console.log("Hello World!");</p>
+                </div>
+                <div class="reveal-card__actions">
+                    <button class="btn-replay" onclick="replay('demo-9')">Rejouer</button>
+                </div>
+            </article>
+
+            <!-- 10. Wave -->
+            <article class="reveal-card">
+                <div class="reveal-card__header">
+                    <h3 class="reveal-card__title">10. Wave</h3>
+                </div>
+                <div class="reveal-card__demo" id="demo-10">
+                    <div class="reveal-wave">
+                        <span class="reveal-wave__char">W</span>
+                        <span class="reveal-wave__char">A</span>
+                        <span class="reveal-wave__char">V</span>
+                        <span class="reveal-wave__char">E</span>
+                        <span class="reveal-wave__char" style="margin-left: 0.5em">E</span>
+                        <span class="reveal-wave__char">F</span>
+                        <span class="reveal-wave__char">F</span>
+                        <span class="reveal-wave__char">E</span>
+                        <span class="reveal-wave__char">C</span>
+                        <span class="reveal-wave__char">T</span>
+                    </div>
+                </div>
+                <div class="reveal-card__actions">
+                    <button class="btn-replay" onclick="replay('demo-10')">Rejouer</button>
+                </div>
+            </article>
+
+            <!-- 11. Gradient Sweep -->
+            <article class="reveal-card">
+                <div class="reveal-card__header">
+                    <h3 class="reveal-card__title">11. Gradient Sweep</h3>
+                </div>
+                <div class="reveal-card__demo" id="demo-11">
+                    <h2 class="reveal-gradient-sweep">Gradient Sweep</h2>
+                </div>
+                <div class="reveal-card__actions">
+                    <button class="btn-replay" onclick="replay('demo-11')">Rejouer</button>
+                </div>
+            </article>
+
+            <!-- 12. Scale Rotate -->
+            <article class="reveal-card">
+                <div class="reveal-card__header">
+                    <h3 class="reveal-card__title">12. Scale Rotate</h3>
+                </div>
+                <div class="reveal-card__demo" id="demo-12">
+                    <h2 class="reveal-scale-rotate">Scale & Rotate</h2>
+                </div>
+                <div class="reveal-card__actions">
+                    <button class="btn-replay" onclick="replay('demo-12')">Rejouer</button>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <script src="../../assets/js/theme-toggle.js"></script>
+    <script>
+        function replay(demoId) {
+            const demo = document.getElementById(demoId);
+            const html = demo.innerHTML;
+            demo.innerHTML = '';
+            // Force reflow
+            void demo.offsetWidth;
+            demo.innerHTML = html;
+        }
+
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block');
+            const code = codeBlock.querySelector('code').textContent;
+
+            navigator.clipboard.writeText(code).then(() => {
+                const originalText = button.textContent;
+                button.textContent = 'Copié !';
+                button.style.background = '#22c55e';
+                button.style.borderColor = '#22c55e';
+                button.style.color = '#fff';
+
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.background = '';
+                    button.style.borderColor = '';
+                    button.style.color = '';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

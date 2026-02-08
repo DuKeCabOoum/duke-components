@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typewriter Effects - Duke Components</title>
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <style>
+        /* ========================================
+           TYPEWRITER EFFECTS - Effets machine à écrire
+           ======================================== */
+
+        .typewriter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .typewriter-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .typewriter-card__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .typewriter-card__title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .typewriter-card__demo {
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-primary);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+
+        /* ========================================
+           1. CLASSIC TYPEWRITER
+           ======================================== */
+
+        .typewriter-classic {
+            font-family: 'Courier New', monospace;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            overflow: hidden;
+            border-right: 3px solid var(--primary);
+            white-space: nowrap;
+            animation:
+                typing-classic 3.5s steps(30, end),
+                blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes typing-classic {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: var(--primary); }
+        }
+
+        /* ========================================
+           2. MULTILINE TYPEWRITER
+           ======================================== */
+
+        .typewriter-multiline {
+            font-family: 'Courier New', monospace;
+            font-size: 1.25rem;
+            color: var(--text-primary);
+            position: relative;
+        }
+
+        .typewriter-multiline__line {
+            overflow: hidden;
+            white-space: nowrap;
+            opacity: 0;
+            animation: reveal-line 0.5s forwards;
+        }
+
+        .typewriter-multiline__line:nth-child(1) {
+            animation-delay: 0s;
+        }
+        .typewriter-multiline__line:nth-child(1)::after {
+            content: '';
+            border-right: 2px solid var(--primary);
+            animation: type-line 1.5s steps(20) 0s forwards, move-caret 0s 1.5s forwards;
+        }
+
+        .typewriter-multiline__line:nth-child(2) {
+            animation-delay: 1.5s;
+        }
+        .typewriter-multiline__line:nth-child(2)::after {
+            content: '';
+            border-right: 2px solid var(--primary);
+            animation: type-line 1.5s steps(20) 1.5s forwards, move-caret 0s 3s forwards;
+        }
+
+        .typewriter-multiline__line:nth-child(3) {
+            animation-delay: 3s;
+        }
+        .typewriter-multiline__line:nth-child(3)::after {
+            content: '';
+            border-right: 2px solid var(--primary);
+            animation: type-line 1.5s steps(20) 3s forwards, blink-caret 0.75s step-end 4.5s infinite;
+        }
+
+        @keyframes reveal-line {
+            to { opacity: 1; }
+        }
+
+        @keyframes type-line {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes move-caret {
+            to { border-color: transparent; }
+        }
+
+        /* ========================================
+           3. DELETE & RETYPE
+           ======================================== */
+
+        .typewriter-delete {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            position: relative;
+        }
+
+        .typewriter-delete__text {
+            display: inline-block;
+        }
+
+        .typewriter-delete__static {
+            color: var(--text-secondary);
+        }
+
+        .typewriter-delete__dynamic {
+            color: var(--primary);
+            position: relative;
+        }
+
+        .typewriter-delete__dynamic::after {
+            content: '|';
+            position: absolute;
+            right: -4px;
+            animation: blink-cursor 0.7s infinite;
+        }
+
+        @keyframes blink-cursor {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* ========================================
+           4. GLITCH TYPEWRITER
+           ======================================== */
+
+        .typewriter-glitch {
+            font-family: 'Courier New', monospace;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #fff;
+            position: relative;
+            text-shadow:
+                2px 0 #ff00ff,
+                -2px 0 #00ffff;
+            animation: glitch-text 3s infinite;
+        }
+
+        .typewriter-glitch::before,
+        .typewriter-glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .typewriter-glitch::before {
+            color: #ff00ff;
+            animation: glitch-1 2s infinite linear alternate-reverse;
+            clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+        }
+
+        .typewriter-glitch::after {
+            color: #00ffff;
+            animation: glitch-2 3s infinite linear alternate-reverse;
+            clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+        }
+
+        @keyframes glitch-1 {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-3px); }
+            40% { transform: translateX(3px); }
+            60% { transform: translateX(-1px); }
+            80% { transform: translateX(2px); }
+        }
+
+        @keyframes glitch-2 {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(3px); }
+            40% { transform: translateX(-2px); }
+            60% { transform: translateX(1px); }
+            80% { transform: translateX(-3px); }
+        }
+
+        @keyframes glitch-text {
+            0%, 100% { text-shadow: 2px 0 #ff00ff, -2px 0 #00ffff; }
+            25% { text-shadow: -2px 0 #ff00ff, 2px 0 #00ffff; }
+            50% { text-shadow: 2px 2px #ff00ff, -2px -2px #00ffff; }
+            75% { text-shadow: -2px 2px #ff00ff, 2px -2px #00ffff; }
+        }
+
+        /* ========================================
+           5. TERMINAL TYPEWRITER
+           ======================================== */
+
+        .typewriter-terminal {
+            background: #0d1117;
+            border-radius: 12px;
+            padding: 1.5rem;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            width: 100%;
+        }
+
+        .typewriter-terminal__header {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .typewriter-terminal__dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .typewriter-terminal__dot--red { background: #ff5f56; }
+        .typewriter-terminal__dot--yellow { background: #ffbd2e; }
+        .typewriter-terminal__dot--green { background: #27ca40; }
+
+        .typewriter-terminal__content {
+            color: #7ee787;
+        }
+
+        .typewriter-terminal__line {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            opacity: 0;
+            animation: fade-in 0.3s forwards;
+        }
+
+        .typewriter-terminal__line:nth-child(1) { animation-delay: 0.5s; }
+        .typewriter-terminal__line:nth-child(2) { animation-delay: 1.5s; }
+        .typewriter-terminal__line:nth-child(3) { animation-delay: 2.5s; }
+        .typewriter-terminal__line:nth-child(4) { animation-delay: 3.5s; }
+
+        @keyframes fade-in {
+            to { opacity: 1; }
+        }
+
+        .typewriter-terminal__prompt {
+            color: #79c0ff;
+        }
+
+        .typewriter-terminal__command {
+            color: #c9d1d9;
+            overflow: hidden;
+            white-space: nowrap;
+            width: 0;
+            animation: terminal-type 1s steps(20) forwards;
+        }
+
+        .typewriter-terminal__line:nth-child(1) .typewriter-terminal__command { animation-delay: 0.5s; }
+        .typewriter-terminal__line:nth-child(2) .typewriter-terminal__command { animation-delay: 1.5s; }
+        .typewriter-terminal__line:nth-child(3) .typewriter-terminal__command { animation-delay: 2.5s; }
+        .typewriter-terminal__line:nth-child(4) .typewriter-terminal__command { animation-delay: 3.5s; }
+
+        @keyframes terminal-type {
+            to { width: 100%; }
+        }
+
+        .typewriter-terminal__output {
+            color: #8b949e;
+            margin-left: 1rem;
+            opacity: 0;
+            animation: fade-in 0.3s forwards;
+        }
+
+        .typewriter-terminal__line:nth-child(2) .typewriter-terminal__output { animation-delay: 2.5s; }
+
+        /* ========================================
+           6. CODE TYPEWRITER
+           ======================================== */
+
+        .typewriter-code {
+            background: #1e1e1e;
+            border-radius: 12px;
+            padding: 1.5rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .typewriter-code__line {
+            display: flex;
+            opacity: 0;
+            animation: code-line-appear 0.1s forwards;
+        }
+
+        .typewriter-code__line:nth-child(1) { animation-delay: 0.2s; }
+        .typewriter-code__line:nth-child(2) { animation-delay: 0.8s; }
+        .typewriter-code__line:nth-child(3) { animation-delay: 1.4s; }
+        .typewriter-code__line:nth-child(4) { animation-delay: 2s; }
+        .typewriter-code__line:nth-child(5) { animation-delay: 2.6s; }
+
+        @keyframes code-line-appear {
+            to { opacity: 1; }
+        }
+
+        .typewriter-code__number {
+            color: #858585;
+            width: 30px;
+            text-align: right;
+            margin-right: 1rem;
+            user-select: none;
+        }
+
+        .typewriter-code__content {
+            overflow: hidden;
+            white-space: nowrap;
+            width: 0;
+            animation: code-type 0.6s steps(30) forwards;
+        }
+
+        .typewriter-code__line:nth-child(1) .typewriter-code__content { animation-delay: 0.2s; }
+        .typewriter-code__line:nth-child(2) .typewriter-code__content { animation-delay: 0.8s; }
+        .typewriter-code__line:nth-child(3) .typewriter-code__content { animation-delay: 1.4s; }
+        .typewriter-code__line:nth-child(4) .typewriter-code__content { animation-delay: 2s; }
+        .typewriter-code__line:nth-child(5) .typewriter-code__content { animation-delay: 2.6s; }
+
+        @keyframes code-type {
+            to { width: 100%; }
+        }
+
+        .typewriter-code .keyword { color: #569cd6; }
+        .typewriter-code .function { color: #dcdcaa; }
+        .typewriter-code .string { color: #ce9178; }
+        .typewriter-code .comment { color: #6a9955; }
+        .typewriter-code .variable { color: #9cdcfe; }
+        .typewriter-code .operator { color: #d4d4d4; }
+
+        /* ========================================
+           7. GRADIENT TYPEWRITER
+           ======================================== */
+
+        .typewriter-gradient {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #f5576c, #667eea);
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient-flow 4s linear infinite;
+            position: relative;
+        }
+
+        .typewriter-gradient::after {
+            content: '|';
+            position: absolute;
+            right: -10px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: blink-gradient 0.8s infinite;
+        }
+
+        @keyframes gradient-flow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 300% 50%; }
+        }
+
+        @keyframes blink-gradient {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* ========================================
+           8. SCRAMBLE TEXT
+           ======================================== */
+
+        .typewriter-scramble {
+            font-size: 1.5rem;
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+            color: var(--primary);
+            letter-spacing: 2px;
+        }
+
+        /* ========================================
+           CODE VIEWER
+           ======================================== */
+
+        .code-block {
+            background: #1e1e1e;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .code-block__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background: #2d2d2d;
+            border-bottom: 1px solid #404040;
+        }
+
+        .code-block__lang {
+            font-size: 0.75rem;
+            color: #888;
+            text-transform: uppercase;
+        }
+
+        .code-block__copy {
+            background: transparent;
+            border: 1px solid #555;
+            color: #aaa;
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: all 0.2s;
+        }
+
+        .code-block__copy:hover {
+            background: #404040;
+            color: #fff;
+        }
+
+        .code-block__content {
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: #d4d4d4;
+        }
+
+        .code-block__content code {
+            white-space: pre;
+        }
+
+        /* Syntax highlighting */
+        .code-block .tag { color: #569cd6; }
+        .code-block .attr { color: #9cdcfe; }
+        .code-block .string { color: #ce9178; }
+        .code-block .comment { color: #6a9955; }
+        .code-block .keyword { color: #c586c0; }
+        .code-block .property { color: #9cdcfe; }
+        .code-block .value { color: #ce9178; }
+        .code-block .selector { color: #d7ba7d; }
+        .code-block .function { color: #dcdcaa; }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar__header">
+            <a href="../../index.html" class="sidebar__logo">
+                <span class="sidebar__logo-icon">D</span>
+                <span class="sidebar__logo-text">Duke UI</span>
+            </a>
+        </div>
+        <nav class="sidebar__nav">
+            <a href="../../index.html" class="sidebar__link">
+                <svg class="sidebar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                    <polyline points="9,22 9,12 15,12 15,22"/>
+                </svg>
+                Dashboard
+            </a>
+            <div class="sidebar__category">Composants</div>
+            <a href="../buttons/index.html" class="sidebar__link">Buttons</a>
+            <a href="../glitch-effects/index.html" class="sidebar__link">Glitch Effects</a>
+            <a href="../gradient-borders/index.html" class="sidebar__link">Gradient Borders</a>
+            <a href="../text-effects/index.html" class="sidebar__link">Text Effects</a>
+            <a href="#" class="sidebar__link sidebar__link--active">Typewriter</a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="page-header">
+            <div class="page-header__content">
+                <h1 class="page-header__title">Typewriter Effects</h1>
+                <p class="page-header__description">
+                    Effets de machine à écrire animés pour textes dynamiques et engageants
+                </p>
+            </div>
+            <div class="page-header__badge badge badge--safe">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                SAFE
+            </div>
+        </header>
+
+        <div class="typewriter-grid">
+            <!-- 1. Classic Typewriter -->
+            <article class="typewriter-card">
+                <div class="typewriter-card__header">
+                    <h3 class="typewriter-card__title">Classic Typewriter</h3>
+                </div>
+                <div class="typewriter-card__demo">
+                    <span class="typewriter-classic">Hello, World!</span>
+                </div>
+                <div class="code-block">
+                    <div class="code-block__header">
+                        <span class="code-block__lang">CSS</span>
+                        <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+                    </div>
+                    <div class="code-block__content">
+<code><span class="selector">.typewriter-classic</span> {
+  <span class="property">font-family</span>: <span class="value">'Courier New', monospace</span>;
+  <span class="property">overflow</span>: <span class="value">hidden</span>;
+  <span class="property">border-right</span>: <span class="value">3px solid #6366f1</span>;
+  <span class="property">white-space</span>: <span class="value">nowrap</span>;
+  <span class="property">animation</span>:
+    <span class="value">typing 3.5s steps(30, end)</span>,
+    <span class="value">blink-caret 0.75s step-end infinite</span>;
+}
+
+<span class="keyword">@keyframes</span> typing {
+  <span class="selector">from</span> { <span class="property">width</span>: <span class="value">0</span>; }
+  <span class="selector">to</span> { <span class="property">width</span>: <span class="value">100%</span>; }
+}
+
+<span class="keyword">@keyframes</span> blink-caret {
+  <span class="selector">from, to</span> { <span class="property">border-color</span>: <span class="value">transparent</span>; }
+  <span class="selector">50%</span> { <span class="property">border-color</span>: <span class="value">#6366f1</span>; }
+}</code>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 2. Terminal Typewriter -->
+            <article class="typewriter-card">
+                <div class="typewriter-card__header">
+                    <h3 class="typewriter-card__title">Terminal Style</h3>
+                </div>
+                <div class="typewriter-card__demo" style="padding: 0; background: transparent;">
+                    <div class="typewriter-terminal">
+                        <div class="typewriter-terminal__header">
+                            <span class="typewriter-terminal__dot typewriter-terminal__dot--red"></span>
+                            <span class="typewriter-terminal__dot typewriter-terminal__dot--yellow"></span>
+                            <span class="typewriter-terminal__dot typewriter-terminal__dot--green"></span>
+                        </div>
+                        <div class="typewriter-terminal__content">
+                            <div class="typewriter-terminal__line">
+                                <span class="typewriter-terminal__prompt">$</span>
+                                <span class="typewriter-terminal__command">npm install duke-ui</span>
+                            </div>
+                            <div class="typewriter-terminal__line">
+                                <span class="typewriter-terminal__output">Installing packages...</span>
+                            </div>
+                            <div class="typewriter-terminal__line">
+                                <span class="typewriter-terminal__prompt">$</span>
+                                <span class="typewriter-terminal__command">npm run dev</span>
+                            </div>
+                            <div class="typewriter-terminal__line">
+                                <span class="typewriter-terminal__prompt" style="color: #7ee787;">✓</span>
+                                <span class="typewriter-terminal__command" style="color: #7ee787;">Ready!</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="code-block">
+                    <div class="code-block__header">
+                        <span class="code-block__lang">HTML + CSS</span>
+                        <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+                    </div>
+                    <div class="code-block__content">
+<code><span class="comment">&lt;!-- Structure Terminal --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="string">"terminal"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="string">"terminal__line"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;span</span> <span class="attr">class</span>=<span class="string">"prompt"</span><span class="tag">&gt;</span>$<span class="tag">&lt;/span&gt;</span>
+    <span class="tag">&lt;span</span> <span class="attr">class</span>=<span class="string">"command"</span><span class="tag">&gt;</span>npm install<span class="tag">&lt;/span&gt;</span>
+  <span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/div&gt;</span></code>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 3. Glitch Typewriter -->
+            <article class="typewriter-card">
+                <div class="typewriter-card__header">
+                    <h3 class="typewriter-card__title">Glitch Typewriter</h3>
+                </div>
+                <div class="typewriter-card__demo" style="background: #0a0a0a;">
+                    <span class="typewriter-glitch" data-text="SYSTEM_ERROR">SYSTEM_ERROR</span>
+                </div>
+                <div class="code-block">
+                    <div class="code-block__header">
+                        <span class="code-block__lang">CSS</span>
+                        <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+                    </div>
+                    <div class="code-block__content">
+<code><span class="selector">.typewriter-glitch</span> {
+  <span class="property">font-family</span>: <span class="value">'Courier New', monospace</span>;
+  <span class="property">color</span>: <span class="value">#fff</span>;
+  <span class="property">text-shadow</span>:
+    <span class="value">2px 0 #ff00ff</span>,
+    <span class="value">-2px 0 #00ffff</span>;
+  <span class="property">animation</span>: <span class="value">glitch-text 3s infinite</span>;
+}
+
+<span class="selector">.typewriter-glitch::before</span>,
+<span class="selector">.typewriter-glitch::after</span> {
+  <span class="property">content</span>: <span class="value">attr(data-text)</span>;
+  <span class="property">position</span>: <span class="value">absolute</span>;
+  <span class="property">left</span>: <span class="value">0</span>;
+}</code>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 4. Code Typewriter -->
+            <article class="typewriter-card">
+                <div class="typewriter-card__header">
+                    <h3 class="typewriter-card__title">Code Syntax</h3>
+                </div>
+                <div class="typewriter-card__demo" style="padding: 0; background: transparent;">
+                    <div class="typewriter-code">
+                        <div class="typewriter-code__line">
+                            <span class="typewriter-code__number">1</span>
+                            <span class="typewriter-code__content"><span class="keyword">const</span> <span class="variable">greeting</span> <span class="operator">=</span> <span class="string">"Hello"</span>;</span>
+                        </div>
+                        <div class="typewriter-code__line">
+                            <span class="typewriter-code__number">2</span>
+                            <span class="typewriter-code__content"><span class="keyword">const</span> <span class="variable">name</span> <span class="operator">=</span> <span class="string">"Duke"</span>;</span>
+                        </div>
+                        <div class="typewriter-code__line">
+                            <span class="typewriter-code__number">3</span>
+                            <span class="typewriter-code__content"></span>
+                        </div>
+                        <div class="typewriter-code__line">
+                            <span class="typewriter-code__number">4</span>
+                            <span class="typewriter-code__content"><span class="function">console</span>.<span class="function">log</span>(<span class="variable">greeting</span>, <span class="variable">name</span>);</span>
+                        </div>
+                        <div class="typewriter-code__line">
+                            <span class="typewriter-code__number">5</span>
+                            <span class="typewriter-code__content"><span class="comment">// Output: Hello Duke</span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="code-block">
+                    <div class="code-block__header">
+                        <span class="code-block__lang">CSS</span>
+                        <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+                    </div>
+                    <div class="code-block__content">
+<code><span class="selector">.typewriter-code__line</span> {
+  <span class="property">opacity</span>: <span class="value">0</span>;
+  <span class="property">animation</span>: <span class="value">fade-in 0.3s forwards</span>;
+}
+
+<span class="selector">.typewriter-code__content</span> {
+  <span class="property">overflow</span>: <span class="value">hidden</span>;
+  <span class="property">white-space</span>: <span class="value">nowrap</span>;
+  <span class="property">width</span>: <span class="value">0</span>;
+  <span class="property">animation</span>: <span class="value">code-type 0.6s steps(30) forwards</span>;
+}</code>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 5. Gradient Typewriter -->
+            <article class="typewriter-card">
+                <div class="typewriter-card__header">
+                    <h3 class="typewriter-card__title">Gradient Flow</h3>
+                </div>
+                <div class="typewriter-card__demo">
+                    <span class="typewriter-gradient">Duke UI</span>
+                </div>
+                <div class="code-block">
+                    <div class="code-block__header">
+                        <span class="code-block__lang">CSS</span>
+                        <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+                    </div>
+                    <div class="code-block__content">
+<code><span class="selector">.typewriter-gradient</span> {
+  <span class="property">font-size</span>: <span class="value">2.5rem</span>;
+  <span class="property">font-weight</span>: <span class="value">800</span>;
+  <span class="property">background</span>: <span class="value">linear-gradient(90deg,
+    #667eea, #764ba2, #f093fb, #f5576c, #667eea)</span>;
+  <span class="property">background-size</span>: <span class="value">300% 100%</span>;
+  <span class="property">-webkit-background-clip</span>: <span class="value">text</span>;
+  <span class="property">-webkit-text-fill-color</span>: <span class="value">transparent</span>;
+  <span class="property">animation</span>: <span class="value">gradient-flow 4s linear infinite</span>;
+}
+
+<span class="keyword">@keyframes</span> gradient-flow {
+  <span class="selector">0%</span> { <span class="property">background-position</span>: <span class="value">0% 50%</span>; }
+  <span class="selector">100%</span> { <span class="property">background-position</span>: <span class="value">300% 50%</span>; }
+}</code>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 6. Delete & Retype (JavaScript) -->
+            <article class="typewriter-card">
+                <div class="typewriter-card__header">
+                    <h3 class="typewriter-card__title">Delete & Retype</h3>
+                    <span class="badge badge--caution" style="font-size: 0.7rem; padding: 0.25rem 0.5rem;">JS</span>
+                </div>
+                <div class="typewriter-card__demo">
+                    <div class="typewriter-delete">
+                        <span class="typewriter-delete__static">Je suis </span>
+                        <span class="typewriter-delete__dynamic" id="dynamicText">développeur</span>
+                    </div>
+                </div>
+                <div class="code-block">
+                    <div class="code-block__header">
+                        <span class="code-block__lang">JavaScript</span>
+                        <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+                    </div>
+                    <div class="code-block__content">
+<code><span class="keyword">const</span> words = [<span class="string">'développeur'</span>, <span class="string">'designer'</span>, <span class="string">'créatif'</span>];
+<span class="keyword">let</span> wordIndex = <span class="value">0</span>;
+<span class="keyword">let</span> charIndex = <span class="value">0</span>;
+<span class="keyword">let</span> isDeleting = <span class="value">false</span>;
+
+<span class="keyword">function</span> <span class="function">typeEffect</span>() {
+  <span class="keyword">const</span> current = words[wordIndex];
+  <span class="keyword">const</span> element = <span class="function">document.getElementById</span>(<span class="string">'text'</span>);
+
+  <span class="keyword">if</span> (isDeleting) {
+    element.textContent = current.<span class="function">substring</span>(<span class="value">0</span>, charIndex - <span class="value">1</span>);
+    charIndex--;
+  } <span class="keyword">else</span> {
+    element.textContent = current.<span class="function">substring</span>(<span class="value">0</span>, charIndex + <span class="value">1</span>);
+    charIndex++;
+  }
+
+  <span class="keyword">let</span> delay = isDeleting ? <span class="value">50</span> : <span class="value">100</span>;
+
+  <span class="keyword">if</span> (!isDeleting && charIndex === current.length) {
+    delay = <span class="value">2000</span>;
+    isDeleting = <span class="value">true</span>;
+  } <span class="keyword">else if</span> (isDeleting && charIndex === <span class="value">0</span>) {
+    isDeleting = <span class="value">false</span>;
+    wordIndex = (wordIndex + <span class="value">1</span>) % words.length;
+  }
+
+  <span class="function">setTimeout</span>(typeEffect, delay);
+}
+
+<span class="function">typeEffect</span>();</code>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 7. Scramble Text (JavaScript) -->
+            <article class="typewriter-card">
+                <div class="typewriter-card__header">
+                    <h3 class="typewriter-card__title">Scramble Effect</h3>
+                    <span class="badge badge--caution" style="font-size: 0.7rem; padding: 0.25rem 0.5rem;">JS</span>
+                </div>
+                <div class="typewriter-card__demo">
+                    <span class="typewriter-scramble" id="scrambleText">DUKE COMPONENTS</span>
+                </div>
+                <div class="code-block">
+                    <div class="code-block__header">
+                        <span class="code-block__lang">JavaScript</span>
+                        <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+                    </div>
+                    <div class="code-block__content">
+<code><span class="keyword">const</span> chars = <span class="string">'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'</span>;
+<span class="keyword">const</span> target = <span class="string">'DUKE COMPONENTS'</span>;
+<span class="keyword">let</span> iteration = <span class="value">0</span>;
+
+<span class="keyword">function</span> <span class="function">scramble</span>() {
+  element.textContent = target
+    .<span class="function">split</span>(<span class="string">''</span>)
+    .<span class="function">map</span>((char, i) => {
+      <span class="keyword">if</span> (i < iteration) <span class="keyword">return</span> target[i];
+      <span class="keyword">return</span> chars[Math.<span class="function">floor</span>(Math.<span class="function">random</span>() * chars.length)];
+    })
+    .<span class="function">join</span>(<span class="string">''</span>);
+
+  <span class="keyword">if</span> (iteration < target.length) {
+    iteration += <span class="value">1/3</span>;
+    <span class="function">requestAnimationFrame</span>(scramble);
+  }
+}</code>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 8. Multiline Reveal -->
+            <article class="typewriter-card">
+                <div class="typewriter-card__header">
+                    <h3 class="typewriter-card__title">Multiline Reveal</h3>
+                </div>
+                <div class="typewriter-card__demo">
+                    <div class="typewriter-multiline">
+                        <div class="typewriter-multiline__line">Première ligne...</div>
+                        <div class="typewriter-multiline__line">Deuxième ligne...</div>
+                        <div class="typewriter-multiline__line">Troisième ligne!</div>
+                    </div>
+                </div>
+                <div class="code-block">
+                    <div class="code-block__header">
+                        <span class="code-block__lang">CSS</span>
+                        <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+                    </div>
+                    <div class="code-block__content">
+<code><span class="selector">.multiline__line</span> {
+  <span class="property">opacity</span>: <span class="value">0</span>;
+  <span class="property">animation</span>: <span class="value">reveal-line 0.5s forwards</span>;
+}
+
+<span class="selector">.multiline__line:nth-child(1)</span> { <span class="property">animation-delay</span>: <span class="value">0s</span>; }
+<span class="selector">.multiline__line:nth-child(2)</span> { <span class="property">animation-delay</span>: <span class="value">1.5s</span>; }
+<span class="selector">.multiline__line:nth-child(3)</span> { <span class="property">animation-delay</span>: <span class="value">3s</span>; }
+
+<span class="keyword">@keyframes</span> reveal-line {
+  <span class="selector">to</span> { <span class="property">opacity</span>: <span class="value">1</span>; }
+}</code>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <script>
+        // ========================================
+        // DELETE & RETYPE EFFECT
+        // ========================================
+        const words = ['développeur', 'designer', 'créatif', 'passionné'];
+        let wordIndex = 0;
+        let charIndex = words[0].length;
+        let isDeleting = true;
+
+        function typeEffect() {
+            const current = words[wordIndex];
+            const element = document.getElementById('dynamicText');
+
+            if (isDeleting) {
+                element.textContent = current.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                element.textContent = current.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let delay = isDeleting ? 50 : 100;
+
+            if (!isDeleting && charIndex === current.length) {
+                delay = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length;
+            }
+
+            setTimeout(typeEffect, delay);
+        }
+
+        setTimeout(typeEffect, 2000);
+
+        // ========================================
+        // SCRAMBLE EFFECT
+        // ========================================
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%';
+        const target = 'DUKE COMPONENTS';
+        let iteration = 0;
+        const scrambleElement = document.getElementById('scrambleText');
+
+        function scramble() {
+            scrambleElement.textContent = target
+                .split('')
+                .map((char, i) => {
+                    if (char === ' ') return ' ';
+                    if (i < iteration) return target[i];
+                    return chars[Math.floor(Math.random() * chars.length)];
+                })
+                .join('');
+
+            if (iteration < target.length) {
+                iteration += 1/3;
+                requestAnimationFrame(scramble);
+            }
+        }
+
+        // Start scramble after delay
+        setTimeout(() => {
+            scramble();
+        }, 1000);
+
+        // Repeat scramble
+        setInterval(() => {
+            iteration = 0;
+            scramble();
+        }, 5000);
+
+        // ========================================
+        // COPY CODE FUNCTION
+        // ========================================
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block');
+            const code = codeBlock.querySelector('code').textContent;
+
+            navigator.clipboard.writeText(code).then(() => {
+                const originalText = button.textContent;
+                button.textContent = 'Copié !';
+                button.style.background = '#22c55e';
+                button.style.borderColor = '#22c55e';
+                button.style.color = '#fff';
+
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.background = '';
+                    button.style.borderColor = '';
+                    button.style.color = '';
+                }, 2000);
+            });
+        }
+    </script>
+  <script src="../../assets/js/theme-toggle.js"></script>
+</body>
+</html>
+</code>

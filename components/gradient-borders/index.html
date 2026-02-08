@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gradient Borders — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ========================================
+       GRADIENT BORDERS — Animated Borders
+       ======================================== */
+
+    .border-preview {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 32px;
+      padding: 48px;
+      background: #0a0a0f;
+      border-radius: 24px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* ===== GRADIENT BORDER STATIC ===== */
+    .gradient-border {
+      position: relative;
+      padding: 32px 48px;
+      background: #18181b;
+      border-radius: 16px;
+    }
+
+    .gradient-border::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      padding: 2px;
+      background: linear-gradient(135deg, #6366f1, #ec4899, #f59e0b);
+      -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+    }
+
+    .gradient-border__content {
+      position: relative;
+      color: white;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    /* ===== GRADIENT BORDER ANIMATED ===== */
+    .gradient-border-animated {
+      position: relative;
+      padding: 32px 48px;
+      background: #18181b;
+      border-radius: 16px;
+    }
+
+    .gradient-border-animated::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      padding: 2px;
+      background: linear-gradient(var(--angle, 0deg), #6366f1, #ec4899, #22d3ee, #6366f1);
+      -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      animation: rotate-gradient 3s linear infinite;
+    }
+
+    @property --angle {
+      syntax: '<angle>';
+      initial-value: 0deg;
+      inherits: false;
+    }
+
+    @keyframes rotate-gradient {
+      to { --angle: 360deg; }
+    }
+
+    /* Fallback pour navigateurs sans @property */
+    @supports not (background: paint(something)) {
+      .gradient-border-animated::before {
+        background: conic-gradient(from var(--angle, 0deg), #6366f1, #ec4899, #22d3ee, #6366f1);
+        animation: spin 3s linear infinite;
+      }
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ===== CONIC GRADIENT BORDER ===== */
+    .conic-border {
+      position: relative;
+      padding: 32px 48px;
+      background: #18181b;
+      border-radius: 16px;
+    }
+
+    .conic-border::before {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 18px;
+      background: conic-gradient(from 0deg, #6366f1, #ec4899, #f59e0b, #22c55e, #06b6d4, #6366f1);
+      z-index: -1;
+      animation: spin 4s linear infinite;
+    }
+
+    .conic-border::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: #18181b;
+      border-radius: 16px;
+      z-index: -1;
+    }
+
+    /* ===== GLOWING BORDER ===== */
+    .glowing-border {
+      position: relative;
+      padding: 32px 48px;
+      background: #18181b;
+      border-radius: 16px;
+      border: 2px solid #6366f1;
+      box-shadow:
+        0 0 10px rgba(99, 102, 241, 0.5),
+        0 0 20px rgba(99, 102, 241, 0.3),
+        0 0 30px rgba(99, 102, 241, 0.2),
+        inset 0 0 10px rgba(99, 102, 241, 0.1);
+      animation: glow-pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes glow-pulse {
+      0%, 100% {
+        box-shadow:
+          0 0 10px rgba(99, 102, 241, 0.5),
+          0 0 20px rgba(99, 102, 241, 0.3),
+          0 0 30px rgba(99, 102, 241, 0.2);
+      }
+      50% {
+        box-shadow:
+          0 0 15px rgba(99, 102, 241, 0.6),
+          0 0 30px rgba(99, 102, 241, 0.4),
+          0 0 45px rgba(99, 102, 241, 0.3);
+      }
+    }
+
+    /* ===== RAINBOW BORDER ===== */
+    .rainbow-border {
+      position: relative;
+      padding: 32px 48px;
+      background: #18181b;
+      border-radius: 16px;
+    }
+
+    .rainbow-border::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 18px;
+      background: linear-gradient(
+        90deg,
+        #ff0000, #ff8000, #ffff00, #80ff00, #00ff00,
+        #00ff80, #00ffff, #0080ff, #0000ff, #8000ff,
+        #ff00ff, #ff0080, #ff0000
+      );
+      background-size: 400% 100%;
+      z-index: -1;
+      animation: rainbow-move 8s linear infinite;
+    }
+
+    .rainbow-border::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: #18181b;
+      border-radius: 16px;
+      z-index: -1;
+    }
+
+    @keyframes rainbow-move {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 400% 50%; }
+    }
+
+    /* ===== NEON BORDER ===== */
+    .neon-border {
+      position: relative;
+      padding: 32px 48px;
+      background: transparent;
+      border: 2px solid #00ffff;
+      border-radius: 0;
+      color: #00ffff;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      box-shadow:
+        0 0 5px #00ffff,
+        0 0 10px #00ffff,
+        0 0 20px #00ffff,
+        inset 0 0 5px #00ffff;
+      animation: neon-flicker 1.5s infinite alternate;
+    }
+
+    @keyframes neon-flicker {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.8; }
+      25%, 75% { opacity: 0.9; }
+    }
+
+    /* ===== DASHED ANIMATED BORDER ===== */
+    .dashed-border {
+      position: relative;
+      padding: 32px 48px;
+      background: #18181b;
+      border: 2px dashed #6366f1;
+      border-radius: 16px;
+      animation: dash-move 20s linear infinite;
+      background-image:
+        repeating-linear-gradient(
+          90deg,
+          #6366f1 0,
+          #6366f1 10px,
+          transparent 10px,
+          transparent 20px
+        );
+      background-size: 200% 2px;
+      background-position: 0 0, 0 100%;
+      background-repeat: no-repeat;
+    }
+
+    /* ===== DOUBLE BORDER ===== */
+    .double-border {
+      position: relative;
+      padding: 32px 48px;
+      background: #18181b;
+      border-radius: 16px;
+      border: 2px solid #6366f1;
+    }
+
+    .double-border::before {
+      content: '';
+      position: absolute;
+      inset: 6px;
+      border: 1px solid rgba(99, 102, 241, 0.5);
+      border-radius: 12px;
+    }
+
+    /* ===== CORNER BORDERS ===== */
+    .corner-border {
+      position: relative;
+      padding: 32px 48px;
+      background: #18181b;
+    }
+
+    .corner-border::before,
+    .corner-border::after {
+      content: '';
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      border: 2px solid #6366f1;
+    }
+
+    .corner-border::before {
+      top: 0;
+      left: 0;
+      border-right: none;
+      border-bottom: none;
+    }
+
+    .corner-border::after {
+      bottom: 0;
+      right: 0;
+      border-left: none;
+      border-top: none;
+    }
+
+    .corner-border .corner-bl,
+    .corner-border .corner-tr {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      border: 2px solid #6366f1;
+    }
+
+    .corner-border .corner-bl {
+      bottom: 0;
+      left: 0;
+      border-right: none;
+      border-top: none;
+    }
+
+    .corner-border .corner-tr {
+      top: 0;
+      right: 0;
+      border-left: none;
+      border-bottom: none;
+    }
+
+    /* ===== HOVER BORDER ===== */
+    .hover-border {
+      position: relative;
+      padding: 32px 48px;
+      background: #18181b;
+      border: 2px solid transparent;
+      border-radius: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .hover-border::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #6366f1, #ec4899);
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .hover-border::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: #18181b;
+      border-radius: 16px;
+      z-index: -1;
+    }
+
+    .hover-border:hover::before {
+      opacity: 1;
+    }
+
+    /* ===== SNAKE BORDER ===== */
+    .snake-border {
+      position: relative;
+      padding: 32px 48px;
+      background: #18181b;
+      overflow: hidden;
+    }
+
+    .snake-border::before {
+      content: '';
+      position: absolute;
+      width: 150%;
+      height: 150%;
+      top: -25%;
+      left: -25%;
+      background: conic-gradient(from 0deg, transparent 70%, #6366f1 100%);
+      animation: snake-rotate 4s linear infinite;
+    }
+
+    .snake-border::after {
+      content: '';
+      position: absolute;
+      inset: 3px;
+      background: #18181b;
+      border-radius: 0;
+    }
+
+    @keyframes snake-rotate {
+      to { transform: rotate(360deg); }
+    }
+
+    .snake-border__content {
+      position: relative;
+      z-index: 1;
+      color: white;
+      font-weight: 600;
+    }
+
+    /* ===== BORDER CARD ===== */
+    .border-card {
+      width: 200px;
+      text-align: center;
+    }
+
+    .border-card__label {
+      margin-top: 16px;
+      font-size: 14px;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+      <a href="../../index.html" class="sidebar__logo">
+        <span>Duke</span>-components
+      </a>
+
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Gradient Borders</h3>
+        <ul class="sidebar__nav">
+          <li><a href="#static" class="sidebar__link sidebar__link--active">Static Gradient</a></li>
+          <li><a href="#animated" class="sidebar__link">Animated</a></li>
+          <li><a href="#conic" class="sidebar__link">Conic Gradient</a></li>
+          <li><a href="#glow" class="sidebar__link">Glowing</a></li>
+          <li><a href="#rainbow" class="sidebar__link">Rainbow</a></li>
+          <li><a href="#neon" class="sidebar__link">Neon</a></li>
+          <li><a href="#special" class="sidebar__link">Special Effects</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar__section">
+        <a href="../../index.html" class="sidebar__link">← Retour</a>
+      </div>
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main">
+      <header class="main__header">
+        <h1 class="main__title">🌈 Gradient Borders</h1>
+        <p class="main__subtitle">Bordures en dégradé — Statiques, animées, néon, rainbow.</p>
+      </header>
+
+      <!-- ========== STATIC GRADIENT ========== -->
+      <section id="static" class="section">
+        <h2 class="section__title">Static Gradient</h2>
+        <p class="section__desc">Bordures en dégradé statique.</p>
+
+        <div class="border-preview">
+          <div class="border-card">
+            <div class="gradient-border">
+              <div class="gradient-border__content">Gradient Border</div>
+            </div>
+            <div class="border-card__label">3 couleurs</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== ANIMATED ========== -->
+      <section id="animated" class="section">
+        <h2 class="section__title">Animated Gradient</h2>
+        <p class="section__desc">Bordures avec dégradé qui tourne.</p>
+
+        <div class="border-preview">
+          <div class="border-card">
+            <div class="gradient-border-animated">
+              <div class="gradient-border__content">Rotating</div>
+            </div>
+            <div class="border-card__label">Animation rotate</div>
+          </div>
+          <div class="border-card">
+            <div class="snake-border">
+              <div class="snake-border__content">Snake</div>
+            </div>
+            <div class="border-card__label">Snake effect</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== CONIC ========== -->
+      <section id="conic" class="section">
+        <h2 class="section__title">Conic Gradient</h2>
+        <p class="section__desc">Dégradé conique animé.</p>
+
+        <div class="border-preview">
+          <div class="border-card">
+            <div class="conic-border">
+              <div class="gradient-border__content">Conic Spin</div>
+            </div>
+            <div class="border-card__label">Conic gradient</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== GLOW ========== -->
+      <section id="glow" class="section">
+        <h2 class="section__title">Glowing Borders</h2>
+        <p class="section__desc">Bordures avec effet lumineux.</p>
+
+        <div class="border-preview">
+          <div class="border-card">
+            <div class="glowing-border">
+              <div class="gradient-border__content">Glowing</div>
+            </div>
+            <div class="border-card__label">Pulse glow</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== RAINBOW ========== -->
+      <section id="rainbow" class="section">
+        <h2 class="section__title">Rainbow Border</h2>
+        <p class="section__desc">Bordure arc-en-ciel animée.</p>
+
+        <div class="border-preview">
+          <div class="border-card">
+            <div class="rainbow-border">
+              <div class="gradient-border__content">Rainbow</div>
+            </div>
+            <div class="border-card__label">Full spectrum</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== NEON ========== -->
+      <section id="neon" class="section">
+        <h2 class="section__title">Neon Border</h2>
+        <p class="section__desc">Style néon cyberpunk.</p>
+
+        <div class="border-preview">
+          <div class="border-card">
+            <div class="neon-border">NEON</div>
+            <div class="border-card__label">Cyan neon</div>
+          </div>
+          <div class="border-card">
+            <div class="neon-border" style="border-color: #ff00ff; color: #ff00ff; box-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff, 0 0 20px #ff00ff;">PINK</div>
+            <div class="border-card__label">Pink neon</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== SPECIAL ========== -->
+      <section id="special" class="section">
+        <h2 class="section__title">Special Effects</h2>
+        <p class="section__desc">Effets spéciaux et hover.</p>
+
+        <div class="border-preview">
+          <div class="border-card">
+            <div class="double-border">
+              <div class="gradient-border__content">Double</div>
+            </div>
+            <div class="border-card__label">Double border</div>
+          </div>
+          <div class="border-card">
+            <div class="corner-border">
+              <span class="corner-bl"></span>
+              <span class="corner-tr"></span>
+              <div class="gradient-border__content">Corners</div>
+            </div>
+            <div class="border-card__label">Corner only</div>
+          </div>
+          <div class="border-card">
+            <div class="hover-border">
+              <div class="gradient-border__content">Hover me</div>
+            </div>
+            <div class="border-card__label">Hover reveal</div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="../../assets/js/main.js"></script>
+  <script src="../../assets/js/theme-toggle.js"></script>
+</body>
+</html>

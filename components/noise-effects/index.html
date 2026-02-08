@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noise & Grain Effects - Duke Components</title>
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <style>
+        /* ========================================
+           NOISE & GRAIN EFFECTS — Effets de bruit vintage
+           ======================================== */
+
+        .noise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .noise-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .noise-card__header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .noise-card__title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .noise-card__demo {
+            position: relative;
+            min-height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* ========================================
+           BASE NOISE TEXTURE (SVG)
+           ======================================== */
+
+        .noise-base {
+            position: absolute;
+            inset: 0;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .noise-base::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.4;
+        }
+
+        /* ========================================
+           1. SUBTLE GRAIN — Grain subtil
+           ======================================== */
+
+        .noise-subtle {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+        }
+
+        .noise-subtle::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.15;
+            mix-blend-mode: overlay;
+        }
+
+        .noise-subtle__content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: white;
+        }
+
+        .noise-subtle__title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .noise-subtle__text {
+            opacity: 0.9;
+        }
+
+        /* ========================================
+           2. HEAVY GRAIN — Grain prononcé
+           ======================================== */
+
+        .noise-heavy {
+            background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+            position: relative;
+        }
+
+        .noise-heavy::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.3;
+            mix-blend-mode: soft-light;
+        }
+
+        .noise-heavy__content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: white;
+        }
+
+        .noise-heavy__title {
+            font-size: 2rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+        }
+
+        /* ========================================
+           3. ANIMATED NOISE — Bruit animé
+           ======================================== */
+
+        .noise-animated {
+            background: #0a0a0a;
+            position: relative;
+        }
+
+        .noise-animated::after {
+            content: '';
+            position: absolute;
+            inset: -50%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.4;
+            animation: noise-shift 0.5s steps(10) infinite;
+        }
+
+        @keyframes noise-shift {
+            0% { transform: translate(0, 0); }
+            10% { transform: translate(-5%, -5%); }
+            20% { transform: translate(5%, 10%); }
+            30% { transform: translate(-10%, 5%); }
+            40% { transform: translate(10%, -5%); }
+            50% { transform: translate(-5%, 10%); }
+            60% { transform: translate(5%, -10%); }
+            70% { transform: translate(-10%, -5%); }
+            80% { transform: translate(10%, 5%); }
+            90% { transform: translate(-5%, -10%); }
+            100% { transform: translate(0, 0); }
+        }
+
+        .noise-animated__content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: #fff;
+        }
+
+        .noise-animated__title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #ff3366;
+            text-shadow: 0 0 30px rgba(255, 51, 102, 0.5);
+        }
+
+        /* ========================================
+           4. RETRO TV — Effet TV rétro
+           ======================================== */
+
+        .noise-tv {
+            background: #111;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .noise-tv::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .noise-tv::after {
+            content: '';
+            position: absolute;
+            inset: -100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.15;
+            animation: tv-noise 0.2s steps(5) infinite;
+            z-index: 1;
+        }
+
+        @keyframes tv-noise {
+            0% { transform: translate(0, 0); }
+            20% { transform: translate(-10%, 10%); }
+            40% { transform: translate(10%, -10%); }
+            60% { transform: translate(-10%, -10%); }
+            80% { transform: translate(10%, 10%); }
+            100% { transform: translate(0, 0); }
+        }
+
+        .noise-tv__content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+        }
+
+        .noise-tv__title {
+            font-family: 'Courier New', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #00ff00;
+            text-shadow:
+                0 0 10px #00ff00,
+                0 0 20px #00ff00,
+                0 0 30px #00ff00;
+            animation: flicker 2s infinite;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            92% { opacity: 1; }
+            93% { opacity: 0.8; }
+            94% { opacity: 1; }
+            95% { opacity: 0.9; }
+            96% { opacity: 1; }
+        }
+
+        /* ========================================
+           5. FILM GRAIN — Grain de film
+           ======================================== */
+
+        .noise-film {
+            background: linear-gradient(135deg, #8b7355 0%, #5c4033 100%);
+            position: relative;
+        }
+
+        .noise-film::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(
+                ellipse at center,
+                transparent 0%,
+                rgba(0, 0, 0, 0.4) 100%
+            );
+            z-index: 1;
+        }
+
+        .noise-film::after {
+            content: '';
+            position: absolute;
+            inset: -20%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.25;
+            mix-blend-mode: multiply;
+            animation: film-grain 0.3s steps(3) infinite;
+            z-index: 2;
+        }
+
+        @keyframes film-grain {
+            0% { transform: translate(0, 0); }
+            33% { transform: translate(-3%, 3%); }
+            66% { transform: translate(3%, -3%); }
+            100% { transform: translate(0, 0); }
+        }
+
+        .noise-film__content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            color: #f5e6d3;
+        }
+
+        .noise-film__title {
+            font-family: Georgia, serif;
+            font-size: 2rem;
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        .noise-film__year {
+            font-size: 1rem;
+            opacity: 0.7;
+            margin-top: 0.5rem;
+        }
+
+        /* ========================================
+           6. DUOTONE GRAIN — Grain bicolore
+           ======================================== */
+
+        .noise-duotone {
+            background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%);
+            position: relative;
+        }
+
+        .noise-duotone::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.2;
+            mix-blend-mode: overlay;
+        }
+
+        .noise-duotone__content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: white;
+        }
+
+        .noise-duotone__title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        /* ========================================
+           7. GRADIENT NOISE — Dégradé avec bruit
+           ======================================== */
+
+        .noise-gradient {
+            background:
+                radial-gradient(circle at 30% 30%, #667eea 0%, transparent 50%),
+                radial-gradient(circle at 70% 70%, #764ba2 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, #f093fb 0%, transparent 50%),
+                #0a0a0a;
+            position: relative;
+        }
+
+        .noise-gradient::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.3;
+            mix-blend-mode: soft-light;
+        }
+
+        .noise-gradient__content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: white;
+        }
+
+        .noise-gradient__title {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, rgba(255,255,255,0.7));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* ========================================
+           8. VINTAGE PAPER — Papier vintage
+           ======================================== */
+
+        .noise-paper {
+            background: #f5f1e6;
+            position: relative;
+        }
+
+        .noise-paper::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 100% 0%, rgba(139, 115, 85, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 0% 100%, rgba(139, 115, 85, 0.15) 0%, transparent 50%);
+        }
+
+        .noise-paper::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.08;
+            mix-blend-mode: multiply;
+        }
+
+        .noise-paper__content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: #3d3d3d;
+        }
+
+        .noise-paper__title {
+            font-family: Georgia, serif;
+            font-size: 2rem;
+            font-weight: 400;
+        }
+
+        .noise-paper__line {
+            width: 60px;
+            height: 2px;
+            background: #8b7355;
+            margin: 1rem auto;
+        }
+
+        /* ========================================
+           9. NEON NOISE — Néon avec grain
+           ======================================== */
+
+        .noise-neon {
+            background: #0a0a0a;
+            position: relative;
+        }
+
+        .noise-neon::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.15;
+        }
+
+        .noise-neon__content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .noise-neon__title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #fff;
+            text-shadow:
+                0 0 10px #ff00ff,
+                0 0 20px #ff00ff,
+                0 0 40px #ff00ff,
+                0 0 80px #ff00ff;
+            animation: neon-pulse 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes neon-pulse {
+            from {
+                text-shadow:
+                    0 0 10px #ff00ff,
+                    0 0 20px #ff00ff,
+                    0 0 40px #ff00ff,
+                    0 0 80px #ff00ff;
+            }
+            to {
+                text-shadow:
+                    0 0 5px #ff00ff,
+                    0 0 10px #ff00ff,
+                    0 0 20px #ff00ff,
+                    0 0 40px #ff00ff;
+            }
+        }
+
+        /* ========================================
+           10. CSS DITHER — Effet dithering CSS
+           ======================================== */
+
+        .noise-dither {
+            background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+            position: relative;
+        }
+
+        .noise-dither::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px);
+            background-size: 3px 3px;
+            opacity: 0.8;
+        }
+
+        .noise-dither__content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: white;
+        }
+
+        .noise-dither__title {
+            font-size: 2rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* ========================================
+           CODE VIEWER
+           ======================================== */
+
+        .code-block {
+            margin: 1.5rem;
+            background: #1e1e1e;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .code-block__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background: #2d2d2d;
+            border-bottom: 1px solid #404040;
+        }
+
+        .code-block__lang {
+            font-size: 0.75rem;
+            color: #888;
+            text-transform: uppercase;
+        }
+
+        .code-block__copy {
+            background: transparent;
+            border: 1px solid #555;
+            color: #aaa;
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: all 0.2s;
+        }
+
+        .code-block__copy:hover {
+            background: #404040;
+            color: #fff;
+        }
+
+        .code-block__content {
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: #d4d4d4;
+        }
+
+        .code-block__content code {
+            white-space: pre;
+        }
+
+        .code-block .selector { color: #d7ba7d; }
+        .code-block .property { color: #9cdcfe; }
+        .code-block .value { color: #ce9178; }
+        .code-block .keyword { color: #c586c0; }
+        .code-block .comment { color: #6a9955; }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar__header">
+            <a href="../../index.html" class="sidebar__logo">
+                <span class="sidebar__logo-icon">D</span>
+                <span class="sidebar__logo-text">Duke UI</span>
+            </a>
+        </div>
+        <nav class="sidebar__nav">
+            <a href="../../index.html" class="sidebar__link">
+                <svg class="sidebar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                    <polyline points="9,22 9,12 15,12 15,22"/>
+                </svg>
+                Dashboard
+            </a>
+            <div class="sidebar__category">Effets</div>
+            <a href="../backgrounds/index.html" class="sidebar__link">Backgrounds</a>
+            <a href="../glitch-effects/index.html" class="sidebar__link">Glitch Effects</a>
+            <a href="#" class="sidebar__link sidebar__link--active">Noise & Grain</a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="page-header">
+            <div class="page-header__content">
+                <h1 class="page-header__title">Noise & Grain Effects</h1>
+                <p class="page-header__description">
+                    Effets de bruit et de grain pour un style vintage, rétro ou cinématique
+                </p>
+            </div>
+            <div class="page-header__badge badge badge--safe">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                SAFE
+            </div>
+        </header>
+
+        <div class="noise-grid">
+            <!-- 1. Subtle Grain -->
+            <article class="noise-card">
+                <div class="noise-card__header">
+                    <h3 class="noise-card__title">1. Subtle Grain</h3>
+                </div>
+                <div class="noise-card__demo noise-subtle">
+                    <div class="noise-subtle__content">
+                        <h2 class="noise-subtle__title">Subtle Grain</h2>
+                        <p class="noise-subtle__text">Grain discret sur dégradé</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 2. Heavy Grain -->
+            <article class="noise-card">
+                <div class="noise-card__header">
+                    <h3 class="noise-card__title">2. Heavy Grain</h3>
+                </div>
+                <div class="noise-card__demo noise-heavy">
+                    <div class="noise-heavy__content">
+                        <h2 class="noise-heavy__title">Heavy</h2>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 3. Animated Noise -->
+            <article class="noise-card">
+                <div class="noise-card__header">
+                    <h3 class="noise-card__title">3. Animated Noise</h3>
+                </div>
+                <div class="noise-card__demo noise-animated">
+                    <div class="noise-animated__content">
+                        <h2 class="noise-animated__title">ANIMATED</h2>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 4. Retro TV -->
+            <article class="noise-card">
+                <div class="noise-card__header">
+                    <h3 class="noise-card__title">4. Retro TV</h3>
+                </div>
+                <div class="noise-card__demo noise-tv">
+                    <div class="noise-tv__content">
+                        <h2 class="noise-tv__title">SIGNAL</h2>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 5. Film Grain -->
+            <article class="noise-card">
+                <div class="noise-card__header">
+                    <h3 class="noise-card__title">5. Film Grain</h3>
+                </div>
+                <div class="noise-card__demo noise-film">
+                    <div class="noise-film__content">
+                        <h2 class="noise-film__title">Cinematic</h2>
+                        <p class="noise-film__year">MCMXCIX</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 6. Duotone Grain -->
+            <article class="noise-card">
+                <div class="noise-card__header">
+                    <h3 class="noise-card__title">6. Duotone Grain</h3>
+                </div>
+                <div class="noise-card__demo noise-duotone">
+                    <div class="noise-duotone__content">
+                        <h2 class="noise-duotone__title">Duotone</h2>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 7. Gradient Noise -->
+            <article class="noise-card">
+                <div class="noise-card__header">
+                    <h3 class="noise-card__title">7. Gradient Noise</h3>
+                </div>
+                <div class="noise-card__demo noise-gradient">
+                    <div class="noise-gradient__content">
+                        <h2 class="noise-gradient__title">Gradient Noise</h2>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 8. Vintage Paper -->
+            <article class="noise-card">
+                <div class="noise-card__header">
+                    <h3 class="noise-card__title">8. Vintage Paper</h3>
+                </div>
+                <div class="noise-card__demo noise-paper">
+                    <div class="noise-paper__content">
+                        <h2 class="noise-paper__title">Vintage</h2>
+                        <div class="noise-paper__line"></div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 9. Neon Noise -->
+            <article class="noise-card">
+                <div class="noise-card__header">
+                    <h3 class="noise-card__title">9. Neon Noise</h3>
+                </div>
+                <div class="noise-card__demo noise-neon">
+                    <div class="noise-neon__content">
+                        <h2 class="noise-neon__title">NEON</h2>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 10. CSS Dither -->
+            <article class="noise-card">
+                <div class="noise-card__header">
+                    <h3 class="noise-card__title">10. CSS Dither</h3>
+                </div>
+                <div class="noise-card__demo noise-dither">
+                    <div class="noise-dither__content">
+                        <h2 class="noise-dither__title">Dither</h2>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <!-- Code Example -->
+        <div class="code-block">
+            <div class="code-block__header">
+                <span class="code-block__lang">CSS</span>
+                <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<code><span class="comment">/* Grain Effect with SVG Noise */</span>
+<span class="selector">.grain-effect</span> {
+  <span class="property">position</span>: <span class="value">relative</span>;
+}
+
+<span class="selector">.grain-effect::after</span> {
+  <span class="property">content</span>: <span class="value">''</span>;
+  <span class="property">position</span>: <span class="value">absolute</span>;
+  <span class="property">inset</span>: <span class="value">0</span>;
+  <span class="property">background-image</span>: <span class="value">url("data:image/svg+xml,
+    %3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E
+    %3Cfilter id='noise'%3E
+    %3CfeTurbulence type='fractalNoise' baseFrequency='0.65'
+      numOctaves='3' stitchTiles='stitch'/%3E
+    %3C/filter%3E
+    %3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E
+    %3C/svg%3E")</span>;
+  <span class="property">opacity</span>: <span class="value">0.15</span>;
+  <span class="property">mix-blend-mode</span>: <span class="value">overlay</span>;
+  <span class="property">pointer-events</span>: <span class="value">none</span>;
+}</code>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../assets/js/theme-toggle.js"></script>
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block');
+            const code = codeBlock.querySelector('code').textContent;
+
+            navigator.clipboard.writeText(code).then(() => {
+                const originalText = button.textContent;
+                button.textContent = 'Copié !';
+                button.style.background = '#22c55e';
+                button.style.borderColor = '#22c55e';
+                button.style.color = '#fff';
+
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.background = '';
+                    button.style.borderColor = '';
+                    button.style.color = '';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

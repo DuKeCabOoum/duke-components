@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marquee — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ========================================
+       MARQUEE / TICKER — Scrolling Animations
+       ======================================== */
+
+    /* ===== BASE MARQUEE ===== */
+    .marquee {
+      overflow: hidden;
+      white-space: nowrap;
+      position: relative;
+    }
+
+    .marquee::before,
+    .marquee::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .marquee::before {
+      left: 0;
+      background: linear-gradient(90deg, #0a0a0f, transparent);
+    }
+
+    .marquee::after {
+      right: 0;
+      background: linear-gradient(-90deg, #0a0a0f, transparent);
+    }
+
+    .marquee__track {
+      display: inline-flex;
+      animation: marquee-scroll 20s linear infinite;
+    }
+
+    .marquee--reverse .marquee__track {
+      animation-direction: reverse;
+    }
+
+    .marquee--slow .marquee__track {
+      animation-duration: 40s;
+    }
+
+    .marquee--fast .marquee__track {
+      animation-duration: 10s;
+    }
+
+    .marquee:hover .marquee__track {
+      animation-play-state: paused;
+    }
+
+    @keyframes marquee-scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ===== MARQUEE TEXT ===== */
+    .marquee-text {
+      padding: 40px 0;
+      background: linear-gradient(135deg, #0f0f1a, #1a1a2e);
+      border-radius: 16px;
+    }
+
+    .marquee-text__item {
+      font-size: 72px;
+      font-weight: 800;
+      color: transparent;
+      -webkit-text-stroke: 1px #6366f1;
+      padding: 0 40px;
+      transition: all 0.3s ease;
+    }
+
+    .marquee-text__item:hover {
+      color: #6366f1;
+      -webkit-text-stroke: 1px transparent;
+    }
+
+    /* ===== MARQUEE LOGOS ===== */
+    .marquee-logos {
+      padding: 32px 0;
+      background: #0f0f1a;
+      border-radius: 16px;
+    }
+
+    .marquee-logos__item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 160px;
+      height: 60px;
+      margin: 0 24px;
+      padding: 16px 32px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 700;
+      color: #71717a;
+      transition: all 0.3s ease;
+    }
+
+    .marquee-logos__item:hover {
+      background: rgba(99, 102, 241, 0.2);
+      color: #a5b4fc;
+    }
+
+    /* ===== MARQUEE CARDS ===== */
+    .marquee-cards {
+      padding: 40px 0;
+    }
+
+    .marquee-cards .marquee__track {
+      gap: 24px;
+    }
+
+    .marquee-card {
+      flex-shrink: 0;
+      width: 300px;
+      padding: 24px;
+      background: linear-gradient(135deg, #18181b, #1f1f23);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      margin: 0 12px;
+    }
+
+    .marquee-card__header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .marquee-card__avatar {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #6366f1, #ec4899);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: white;
+      font-weight: 700;
+    }
+
+    .marquee-card__name {
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .marquee-card__role {
+      font-size: 13px;
+      color: #71717a;
+    }
+
+    .marquee-card__stars {
+      color: #fbbf24;
+      margin-bottom: 12px;
+    }
+
+    .marquee-card__text {
+      font-size: 14px;
+      color: #a1a1aa;
+      line-height: 1.6;
+      white-space: normal;
+    }
+
+    /* ===== MARQUEE IMAGES ===== */
+    .marquee-images {
+      padding: 24px 0;
+    }
+
+    .marquee-images__item {
+      flex-shrink: 0;
+      width: 250px;
+      height: 180px;
+      margin: 0 12px;
+      background: linear-gradient(135deg, #6366f1, #ec4899);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      transition: transform 0.3s ease;
+    }
+
+    .marquee-images__item:hover {
+      transform: scale(1.05);
+    }
+
+    /* ===== MARQUEE VERTICAL ===== */
+    .marquee-vertical {
+      height: 300px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .marquee-vertical::before,
+    .marquee-vertical::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 60px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .marquee-vertical::before {
+      top: 0;
+      background: linear-gradient(180deg, #0a0a0f, transparent);
+    }
+
+    .marquee-vertical::after {
+      bottom: 0;
+      background: linear-gradient(0deg, #0a0a0f, transparent);
+    }
+
+    .marquee-vertical .marquee__track {
+      flex-direction: column;
+      animation: marquee-vertical 15s linear infinite;
+    }
+
+    @keyframes marquee-vertical {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-50%); }
+    }
+
+    .marquee-vertical__item {
+      padding: 16px 24px;
+      margin: 8px 0;
+      background: linear-gradient(135deg, #18181b, #1f1f23);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      white-space: nowrap;
+    }
+
+    .marquee-vertical__item span {
+      color: #71717a;
+      margin-right: 8px;
+    }
+
+    /* ===== MARQUEE GRADIENT TEXT ===== */
+    .marquee-gradient-text {
+      padding: 60px 0;
+    }
+
+    .marquee-gradient-text__item {
+      font-size: 96px;
+      font-weight: 900;
+      padding: 0 60px;
+      background: linear-gradient(135deg, #6366f1, #ec4899, #f59e0b, #6366f1);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradient-shift 3s linear infinite;
+    }
+
+    @keyframes gradient-shift {
+      0% { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+
+    /* ===== MARQUEE TAGS/SKILLS ===== */
+    .marquee-tags {
+      padding: 24px 0;
+    }
+
+    .marquee-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      margin: 0 8px;
+      background: rgba(99, 102, 241, 0.1);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #a5b4fc;
+      transition: all 0.3s ease;
+    }
+
+    .marquee-tag:hover {
+      background: rgba(99, 102, 241, 0.2);
+      transform: scale(1.05);
+    }
+
+    .marquee-tag__icon {
+      font-size: 18px;
+    }
+
+    /* ===== MARQUEE DOUBLE ROW ===== */
+    .marquee-double {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* ===== MARQUEE INFINITE SCROLL NEWS ===== */
+    .marquee-news {
+      background: #6366f1;
+      padding: 12px 0;
+    }
+
+    .marquee-news .marquee__track {
+      animation-duration: 30s;
+    }
+
+    .marquee-news__item {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      padding: 0 32px;
+      font-size: 14px;
+      font-weight: 500;
+      color: white;
+    }
+
+    .marquee-news__item::after {
+      content: '•';
+      opacity: 0.5;
+    }
+
+    .marquee-news__badge {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 4px 12px;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    /* ===== PREVIEW WRAPPER ===== */
+    .marquee-preview {
+      background: #0a0a0f;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+      <a href="../../index.html" class="sidebar__logo">
+        <span>Duke</span>-components
+      </a>
+
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Marquee</h3>
+        <ul class="sidebar__nav">
+          <li><a href="#text" class="sidebar__link sidebar__link--active">Text Marquee</a></li>
+          <li><a href="#logos" class="sidebar__link">Logo Cloud</a></li>
+          <li><a href="#cards" class="sidebar__link">Cards/Testimonials</a></li>
+          <li><a href="#images" class="sidebar__link">Images</a></li>
+          <li><a href="#vertical" class="sidebar__link">Vertical</a></li>
+          <li><a href="#gradient" class="sidebar__link">Gradient Text</a></li>
+          <li><a href="#tags" class="sidebar__link">Tags/Skills</a></li>
+          <li><a href="#news" class="sidebar__link">News Ticker</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar__section">
+        <a href="../../index.html" class="sidebar__link">← Retour</a>
+      </div>
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main">
+      <header class="main__header">
+        <h1 class="main__title">📜 Marquee / Ticker</h1>
+        <p class="main__subtitle">Animations de défilement infini — Textes, logos, cards, images.</p>
+      </header>
+
+      <!-- ========== TEXT MARQUEE ========== -->
+      <section id="text" class="section">
+        <h2 class="section__title">Text Marquee</h2>
+        <p class="section__desc">Texte défilant avec effet outline. Pause au survol.</p>
+
+        <div class="marquee-preview">
+          <div class="marquee marquee-text">
+            <div class="marquee__track">
+              <span class="marquee-text__item">DESIGN</span>
+              <span class="marquee-text__item">DEVELOP</span>
+              <span class="marquee-text__item">DEPLOY</span>
+              <span class="marquee-text__item">REPEAT</span>
+              <span class="marquee-text__item">DESIGN</span>
+              <span class="marquee-text__item">DEVELOP</span>
+              <span class="marquee-text__item">DEPLOY</span>
+              <span class="marquee-text__item">REPEAT</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== LOGOS MARQUEE ========== -->
+      <section id="logos" class="section">
+        <h2 class="section__title">Logo Cloud Marquee</h2>
+        <p class="section__desc">Défilement de logos clients/partenaires.</p>
+
+        <div class="marquee-preview">
+          <div class="marquee marquee-logos">
+            <div class="marquee__track">
+              <div class="marquee-logos__item">🏢 TechCorp</div>
+              <div class="marquee-logos__item">🚀 StartupX</div>
+              <div class="marquee-logos__item">💼 BigAgency</div>
+              <div class="marquee-logos__item">⚡ FastDev</div>
+              <div class="marquee-logos__item">🎯 GoalInc</div>
+              <div class="marquee-logos__item">🔮 FutureLab</div>
+              <div class="marquee-logos__item">🏢 TechCorp</div>
+              <div class="marquee-logos__item">🚀 StartupX</div>
+              <div class="marquee-logos__item">💼 BigAgency</div>
+              <div class="marquee-logos__item">⚡ FastDev</div>
+              <div class="marquee-logos__item">🎯 GoalInc</div>
+              <div class="marquee-logos__item">🔮 FutureLab</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== CARDS MARQUEE ========== -->
+      <section id="cards" class="section">
+        <h2 class="section__title">Cards / Testimonials Marquee</h2>
+        <p class="section__desc">Défilement de cards témoignages.</p>
+
+        <div class="marquee-preview" style="padding: 24px 0;">
+          <div class="marquee marquee-cards">
+            <div class="marquee__track">
+              <div class="marquee-card">
+                <div class="marquee-card__header">
+                  <div class="marquee-card__avatar">M</div>
+                  <div>
+                    <div class="marquee-card__name">Marie Dupont</div>
+                    <div class="marquee-card__role">CTO @ TechStartup</div>
+                  </div>
+                </div>
+                <div class="marquee-card__stars">★★★★★</div>
+                <p class="marquee-card__text">"Duke a transformé notre workflow. On développe 3x plus vite."</p>
+              </div>
+              <div class="marquee-card">
+                <div class="marquee-card__header">
+                  <div class="marquee-card__avatar">P</div>
+                  <div>
+                    <div class="marquee-card__name">Pierre Martin</div>
+                    <div class="marquee-card__role">CEO @ Agency</div>
+                  </div>
+                </div>
+                <div class="marquee-card__stars">★★★★★</div>
+                <p class="marquee-card__text">"Le meilleur investissement de l'année. ROI positif immédiat."</p>
+              </div>
+              <div class="marquee-card">
+                <div class="marquee-card__header">
+                  <div class="marquee-card__avatar">S</div>
+                  <div>
+                    <div class="marquee-card__name">Sophie Bernard</div>
+                    <div class="marquee-card__role">Lead Dev</div>
+                  </div>
+                </div>
+                <div class="marquee-card__stars">★★★★★</div>
+                <p class="marquee-card__text">"Interface intuitive, support réactif. On adore !"</p>
+              </div>
+              <div class="marquee-card">
+                <div class="marquee-card__header">
+                  <div class="marquee-card__avatar">M</div>
+                  <div>
+                    <div class="marquee-card__name">Marie Dupont</div>
+                    <div class="marquee-card__role">CTO @ TechStartup</div>
+                  </div>
+                </div>
+                <div class="marquee-card__stars">★★★★★</div>
+                <p class="marquee-card__text">"Duke a transformé notre workflow. On développe 3x plus vite."</p>
+              </div>
+              <div class="marquee-card">
+                <div class="marquee-card__header">
+                  <div class="marquee-card__avatar">P</div>
+                  <div>
+                    <div class="marquee-card__name">Pierre Martin</div>
+                    <div class="marquee-card__role">CEO @ Agency</div>
+                  </div>
+                </div>
+                <div class="marquee-card__stars">★★★★★</div>
+                <p class="marquee-card__text">"Le meilleur investissement de l'année. ROI positif immédiat."</p>
+              </div>
+              <div class="marquee-card">
+                <div class="marquee-card__header">
+                  <div class="marquee-card__avatar">S</div>
+                  <div>
+                    <div class="marquee-card__name">Sophie Bernard</div>
+                    <div class="marquee-card__role">Lead Dev</div>
+                  </div>
+                </div>
+                <div class="marquee-card__stars">★★★★★</div>
+                <p class="marquee-card__text">"Interface intuitive, support réactif. On adore !"</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== IMAGES MARQUEE ========== -->
+      <section id="images" class="section">
+        <h2 class="section__title">Images Marquee</h2>
+        <p class="section__desc">Défilement d'images/projets.</p>
+
+        <div class="marquee-preview" style="padding: 24px 0;">
+          <div class="marquee marquee-images">
+            <div class="marquee__track">
+              <div class="marquee-images__item" style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">🎨</div>
+              <div class="marquee-images__item" style="background: linear-gradient(135deg, #ec4899, #f472b6);">🚀</div>
+              <div class="marquee-images__item" style="background: linear-gradient(135deg, #10b981, #34d399);">💎</div>
+              <div class="marquee-images__item" style="background: linear-gradient(135deg, #f59e0b, #fbbf24);">⚡</div>
+              <div class="marquee-images__item" style="background: linear-gradient(135deg, #06b6d4, #22d3ee);">🔮</div>
+              <div class="marquee-images__item" style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">🎨</div>
+              <div class="marquee-images__item" style="background: linear-gradient(135deg, #ec4899, #f472b6);">🚀</div>
+              <div class="marquee-images__item" style="background: linear-gradient(135deg, #10b981, #34d399);">💎</div>
+              <div class="marquee-images__item" style="background: linear-gradient(135deg, #f59e0b, #fbbf24);">⚡</div>
+              <div class="marquee-images__item" style="background: linear-gradient(135deg, #06b6d4, #22d3ee);">🔮</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== VERTICAL MARQUEE ========== -->
+      <section id="vertical" class="section">
+        <h2 class="section__title">Vertical Marquee</h2>
+        <p class="section__desc">Défilement vertical pour sidebars ou notifications.</p>
+
+        <div class="marquee-preview" style="padding: 24px; max-width: 400px;">
+          <div class="marquee-vertical">
+            <div class="marquee__track">
+              <div class="marquee-vertical__item"><span>🟢</span> Marie a rejoint l'équipe</div>
+              <div class="marquee-vertical__item"><span>🎉</span> Nouveau record de ventes</div>
+              <div class="marquee-vertical__item"><span>🚀</span> Déploiement v2.0 réussi</div>
+              <div class="marquee-vertical__item"><span>⭐</span> 5 étoiles sur ProductHunt</div>
+              <div class="marquee-vertical__item"><span>💰</span> 10K utilisateurs atteints</div>
+              <div class="marquee-vertical__item"><span>🔒</span> Certification SOC2 obtenue</div>
+              <div class="marquee-vertical__item"><span>🟢</span> Marie a rejoint l'équipe</div>
+              <div class="marquee-vertical__item"><span>🎉</span> Nouveau record de ventes</div>
+              <div class="marquee-vertical__item"><span>🚀</span> Déploiement v2.0 réussi</div>
+              <div class="marquee-vertical__item"><span>⭐</span> 5 étoiles sur ProductHunt</div>
+              <div class="marquee-vertical__item"><span>💰</span> 10K utilisateurs atteints</div>
+              <div class="marquee-vertical__item"><span>🔒</span> Certification SOC2 obtenue</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== GRADIENT TEXT MARQUEE ========== -->
+      <section id="gradient" class="section">
+        <h2 class="section__title">Gradient Text Marquee</h2>
+        <p class="section__desc">Texte géant avec dégradé animé.</p>
+
+        <div class="marquee-preview">
+          <div class="marquee marquee-gradient-text">
+            <div class="marquee__track">
+              <span class="marquee-gradient-text__item">DUKE</span>
+              <span class="marquee-gradient-text__item">COMPONENTS</span>
+              <span class="marquee-gradient-text__item">2025</span>
+              <span class="marquee-gradient-text__item">DUKE</span>
+              <span class="marquee-gradient-text__item">COMPONENTS</span>
+              <span class="marquee-gradient-text__item">2025</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== TAGS MARQUEE ========== -->
+      <section id="tags" class="section">
+        <h2 class="section__title">Tags / Skills Marquee</h2>
+        <p class="section__desc">Défilement de tags ou compétences.</p>
+
+        <div class="marquee-preview">
+          <div class="marquee-double">
+            <div class="marquee marquee-tags">
+              <div class="marquee__track">
+                <span class="marquee-tag"><span class="marquee-tag__icon">⚛️</span> React</span>
+                <span class="marquee-tag"><span class="marquee-tag__icon">💚</span> Vue.js</span>
+                <span class="marquee-tag"><span class="marquee-tag__icon">🔷</span> TypeScript</span>
+                <span class="marquee-tag"><span class="marquee-tag__icon">🎨</span> Tailwind</span>
+                <span class="marquee-tag"><span class="marquee-tag__icon">🔥</span> Firebase</span>
+                <span class="marquee-tag"><span class="marquee-tag__icon">🐍</span> Python</span>
+                <span class="marquee-tag"><span class="marquee-tag__icon">⚛️</span> React</span>
+                <span class="marquee-tag"><span class="marquee-tag__icon">💚</span> Vue.js</span>
+                <span class="marquee-tag"><span class="marquee-tag__icon">🔷</span> TypeScript</span>
+                <span class="marquee-tag"><span class="marquee-tag__icon">🎨</span> Tailwind</span>
+                <span class="marquee-tag"><span class="marquee-tag__icon">🔥</span> Firebase</span>
+                <span class="marquee-tag"><span class="marquee-tag__icon">🐍</span> Python</span>
+              </div>
+            </div>
+            <div class="marquee marquee-tags marquee--reverse">
+              <div class="marquee__track">
+                <span class="marquee-tag"><span class="marquee-tag__icon">🚂</span> Rails</span>
+                <span class="marquee-tag"><span class="marquee-tag__icon">🐘</span> PostgreSQL</span>
+                <span class="marquee-tag"><span class="marquee-tag__icon">🐳</span> Docker</span>
+                <span class="marquee-tag"><span class="marquee-tag__icon">☁️</span> AWS</span>
+                <span class="marquee-tag"><span class="marquee-tag__icon">🎯</span> GraphQL</span>
+                <span class="marquee-tag"><span class="marquee-tag__icon">📱</span> React Native</span>
+                <span class="marquee-tag"><span class="marquee-tag__icon">🚂</span> Rails</span>
+                <span class="marquee-tag"><span class="marquee-tag__icon">🐘</span> PostgreSQL</span>
+                <span class="marquee-tag"><span class="marquee-tag__icon">🐳</span> Docker</span>
+                <span class="marquee-tag"><span class="marquee-tag__icon">☁️</span> AWS</span>
+                <span class="marquee-tag"><span class="marquee-tag__icon">🎯</span> GraphQL</span>
+                <span class="marquee-tag"><span class="marquee-tag__icon">📱</span> React Native</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== NEWS TICKER ========== -->
+      <section id="news" class="section">
+        <h2 class="section__title">News Ticker</h2>
+        <p class="section__desc">Bandeau d'actualités défilant.</p>
+
+        <div class="marquee-preview" style="overflow: hidden; border-radius: 8px;">
+          <div class="marquee marquee-news">
+            <div class="marquee__track">
+              <div class="marquee-news__item"><span class="marquee-news__badge">NEW</span> Version 2.0 disponible</div>
+              <div class="marquee-news__item"><span class="marquee-news__badge">🔥</span> 50% de réduction cette semaine</div>
+              <div class="marquee-news__item"><span class="marquee-news__badge">🎉</span> 100K utilisateurs atteints</div>
+              <div class="marquee-news__item"><span class="marquee-news__badge">📢</span> Webinar le 15 février</div>
+              <div class="marquee-news__item"><span class="marquee-news__badge">NEW</span> Version 2.0 disponible</div>
+              <div class="marquee-news__item"><span class="marquee-news__badge">🔥</span> 50% de réduction cette semaine</div>
+              <div class="marquee-news__item"><span class="marquee-news__badge">🎉</span> 100K utilisateurs atteints</div>
+              <div class="marquee-news__item"><span class="marquee-news__badge">📢</span> Webinar le 15 février</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="../../assets/js/main.js"></script>
+  <script src="../../assets/js/theme-toggle.js"></script>
+</body>
+</html>
