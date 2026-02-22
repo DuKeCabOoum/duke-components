@@ -1,0 +1,2148 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comparaison + Scores — Variantes de Design | NicheTrackr</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================================
+       DESIGN SYSTEM
+       ============================================================ */
+    :root {
+      --nt-primary: #007782;
+      --nt-primary-dark: #005f68;
+      --nt-primary-light: #e0f2f1;
+      --nt-green: #28865a;
+      --nt-green-light: #dcfce7;
+      --nt-orange: #fb8c00;
+      --nt-orange-light: #fff3e0;
+      --nt-red: #d04555;
+      --nt-red-light: #fef2f2;
+      --nt-indigo: #6366f1;
+      --nt-indigo-light: #eef2ff;
+      --nt-text: #15191a;
+      --nt-text-secondary: #3d4849;
+      --nt-text-muted: #6b7280;
+      --nt-bg: #f7f8f9;
+      --nt-card: #ffffff;
+      --nt-border: #e1e6e6;
+      --nt-radius: 12px;
+      --nt-radius-sm: 8px;
+      --nt-shadow: 0 1px 3px rgba(21,25,26,0.04), 0 1px 2px rgba(21,25,26,0.02);
+      font-family: 'Inter', -apple-system, sans-serif;
+    }
+
+    /* ============================================================
+       RESET + BASE
+       ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--nt-bg);
+      color: var(--nt-text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.5;
+      padding: 32px;
+    }
+
+    /* ============================================================
+       PAGE HEADER
+       ============================================================ */
+    .page-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .page-header h1 {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--nt-text);
+      margin-bottom: 8px;
+    }
+
+    .page-header p {
+      font-size: 14px;
+      color: var(--nt-text-muted);
+    }
+
+    /* ============================================================
+       TAB NAVIGATION
+       ============================================================ */
+    .tab-nav {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      padding: 10px 20px;
+      border: 1px solid var(--nt-border);
+      border-radius: var(--nt-radius-sm);
+      background: var(--nt-card);
+      color: var(--nt-text-secondary);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: var(--nt-shadow);
+    }
+
+    .tab-btn:hover {
+      border-color: var(--nt-primary);
+      color: var(--nt-primary);
+      background: var(--nt-primary-light);
+    }
+
+    .tab-btn.active {
+      background: var(--nt-primary);
+      color: #fff;
+      border-color: var(--nt-primary);
+    }
+
+    /* ============================================================
+       VARIANT SECTIONS
+       ============================================================ */
+    .variant-section {
+      display: none;
+      max-width: 700px;
+      margin: 0 auto;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .variant-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .variant-label {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--nt-text);
+      margin-bottom: 6px;
+    }
+
+    .variant-desc {
+      font-size: 13px;
+      color: var(--nt-text-muted);
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--nt-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+    }
+
+    .card {
+      background: var(--nt-card);
+      border: 1px solid var(--nt-border);
+      border-radius: var(--nt-radius);
+      box-shadow: var(--nt-shadow);
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+
+    /* ============================================================
+       VARIANT A — DOT GRID + CIRCULAR
+       ============================================================ */
+    .va-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .va-metric {
+      text-align: center;
+    }
+
+    .va-metric__label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--nt-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 6px;
+    }
+
+    .va-metric__value {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--nt-text);
+      margin-bottom: 10px;
+    }
+
+    .va-dots {
+      display: flex;
+      justify-content: center;
+      gap: 4px;
+      margin-bottom: 6px;
+    }
+
+    .va-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #e5e7eb;
+      transition: all 0.3s ease;
+    }
+
+    .va-dot--active {
+      width: 10px;
+      height: 10px;
+      box-shadow: 0 0 0 3px rgba(0,0,0,0.06);
+    }
+
+    .va-dot--green { background: var(--nt-green); }
+    .va-dot--orange { background: var(--nt-orange); }
+    .va-dot--red { background: var(--nt-red); }
+
+    .va-rank {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--nt-text-muted);
+    }
+
+    /* Circular scores */
+    .va-scores {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 8px;
+    }
+
+    .va-score {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .va-score__ring {
+      position: relative;
+      width: 72px;
+      height: 72px;
+    }
+
+    .va-score__ring svg {
+      transform: rotate(-90deg);
+    }
+
+    .va-score__ring-bg {
+      fill: none;
+      stroke: #f0f0f0;
+      stroke-width: 5;
+    }
+
+    .va-score__ring-fill {
+      fill: none;
+      stroke-width: 5;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 1s ease;
+    }
+
+    .va-score__value {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--nt-text);
+    }
+
+    .va-score__label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--nt-text-muted);
+      text-align: center;
+    }
+
+    /* ============================================================
+       VARIANT B — HORIZONTAL PROGRESS BARS
+       ============================================================ */
+    .vb-metrics {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .vb-metric {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .vb-metric__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .vb-metric__label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--nt-text);
+    }
+
+    .vb-metric__info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .vb-metric__value {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--nt-text);
+    }
+
+    .vb-metric__rank {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 20px;
+      color: #fff;
+    }
+
+    .vb-metric__rank--green { background: var(--nt-green); }
+    .vb-metric__rank--orange { background: var(--nt-orange); }
+    .vb-metric__rank--red { background: var(--nt-red); }
+
+    .vb-bar {
+      position: relative;
+      height: 8px;
+      background: #f0f0f0;
+      border-radius: 4px;
+      overflow: visible;
+    }
+
+    .vb-bar__track {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      border-radius: 4px;
+      opacity: 0.2;
+      width: 100%;
+    }
+
+    .vb-bar__marker {
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 3px solid #fff;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+      transition: left 1s ease;
+    }
+
+    .vb-bar__marker--green { background: var(--nt-green); }
+    .vb-bar__marker--orange { background: var(--nt-orange); }
+    .vb-bar__marker--red { background: var(--nt-red); }
+
+    .vb-bar__labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 4px;
+    }
+
+    .vb-bar__label-text {
+      font-size: 10px;
+      color: var(--nt-text-muted);
+    }
+
+    /* B sub-scores */
+    .vb-scores {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .vb-score {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .vb-score__label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--nt-text-secondary);
+      width: 80px;
+      flex-shrink: 0;
+    }
+
+    .vb-score__bar-wrap {
+      flex: 1;
+      height: 6px;
+      background: #f0f0f0;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .vb-score__bar {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 1s ease;
+    }
+
+    .vb-score__value {
+      font-size: 12px;
+      font-weight: 800;
+      width: 45px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    /* ============================================================
+       VARIANT C — RADAR / SPIDER CHART
+       ============================================================ */
+    .vc-radar-wrap {
+      display: flex;
+      justify-content: center;
+      padding: 16px 0;
+    }
+
+    .vc-radar-wrap svg text {
+      font-family: 'Inter', sans-serif;
+    }
+
+    .vc-pills {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .vc-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid var(--nt-border);
+      background: var(--nt-card);
+    }
+
+    .vc-pill__dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .vc-pill__dot--green { background: var(--nt-green); }
+    .vc-pill__dot--red { background: var(--nt-red); }
+
+    .vc-pill__value {
+      font-weight: 800;
+    }
+
+    /* ============================================================
+       VARIANT D — MINI GAUGE METERS
+       ============================================================ */
+    .vd-gauges {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .vd-gauge {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .vd-gauge__label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--nt-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .vd-gauge__svg-wrap {
+      position: relative;
+      width: 90px;
+      height: 55px;
+      overflow: hidden;
+    }
+
+    .vd-gauge__svg-wrap svg {
+      width: 90px;
+      height: 90px;
+    }
+
+    .vd-gauge__bg {
+      fill: none;
+      stroke: #f0f0f0;
+      stroke-width: 8;
+      stroke-linecap: round;
+    }
+
+    .vd-gauge__fill {
+      fill: none;
+      stroke-width: 8;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 1s ease;
+    }
+
+    .vd-gauge__needle {
+      transition: transform 1s ease;
+      transform-origin: 45px 45px;
+    }
+
+    .vd-gauge__value {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--nt-text);
+      margin-top: -4px;
+    }
+
+    .vd-gauge__rank {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--nt-text-muted);
+    }
+
+    /* D sub-scores */
+    .vd-scores {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .vd-score {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .vd-score__ring {
+      position: relative;
+      width: 48px;
+      height: 48px;
+    }
+
+    .vd-score__ring svg {
+      transform: rotate(-90deg);
+    }
+
+    .vd-score__ring-bg {
+      fill: none;
+      stroke: #f0f0f0;
+      stroke-width: 4;
+    }
+
+    .vd-score__ring-fill {
+      fill: none;
+      stroke-width: 4;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 1s ease;
+    }
+
+    .vd-score__value {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .vd-score__label {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--nt-text-muted);
+      text-align: center;
+    }
+
+    /* ============================================================
+       VARIANT E — RANKING CARDS WITH PERCENTILE
+       ============================================================ */
+    .ve-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .ve-card {
+      background: var(--nt-card);
+      border: 1px solid var(--nt-border);
+      border-radius: var(--nt-radius-sm);
+      padding: 16px;
+      transition: box-shadow 0.2s ease;
+    }
+
+    .ve-card:hover {
+      box-shadow: 0 4px 12px rgba(21,25,26,0.07);
+    }
+
+    .ve-card__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .ve-card__label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--nt-text-muted);
+    }
+
+    .ve-card__rank {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 12px;
+      color: #fff;
+    }
+
+    .ve-card__rank--green { background: var(--nt-green); }
+    .ve-card__rank--orange { background: var(--nt-orange); }
+    .ve-card__rank--red { background: var(--nt-red); }
+
+    .ve-card__value {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--nt-text);
+      margin-bottom: 12px;
+    }
+
+    .ve-card__bar-wrap {
+      height: 6px;
+      background: #f0f0f0;
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 6px;
+    }
+
+    .ve-card__bar {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 1s ease;
+    }
+
+    .ve-card__bar--green { background: var(--nt-green); }
+    .ve-card__bar--orange { background: var(--nt-orange); }
+    .ve-card__bar--red { background: var(--nt-red); }
+
+    .ve-card__percentile {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--nt-text-muted);
+    }
+
+    /* E sub-scores */
+    .ve-pills {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .ve-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .ve-pill--green {
+      background: var(--nt-green-light);
+      color: var(--nt-green);
+    }
+
+    .ve-pill--red {
+      background: var(--nt-red-light);
+      color: var(--nt-red);
+    }
+
+    /* ============================================================
+       VARIANT F — PODIUM / TRACK STYLE
+       ============================================================ */
+    .vf-tracks {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .vf-track {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .vf-track__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .vf-track__label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--nt-text-secondary);
+    }
+
+    .vf-track__value {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--nt-text);
+    }
+
+    .vf-track__line {
+      position: relative;
+      height: 28px;
+      background: #f5f6f7;
+      border-radius: 14px;
+      border: 1px solid var(--nt-border);
+    }
+
+    .vf-track__dot {
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #d1d5db;
+    }
+
+    .vf-track__dot--active {
+      width: 22px;
+      height: 22px;
+      border: 3px solid #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      z-index: 2;
+      transition: left 1s ease;
+    }
+
+    .vf-track__dot--green { background: var(--nt-green); }
+    .vf-track__dot--orange { background: var(--nt-orange); }
+    .vf-track__dot--red { background: var(--nt-red); }
+
+    .vf-track__tooltip {
+      position: absolute;
+      top: -26px;
+      transform: translateX(-50%);
+      font-size: 10px;
+      font-weight: 700;
+      color: #fff;
+      padding: 2px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .vf-track__tooltip--green { background: var(--nt-green); }
+    .vf-track__tooltip--orange { background: var(--nt-orange); }
+    .vf-track__tooltip--red { background: var(--nt-red); }
+
+    /* F sub-scores vertical mini bars */
+    .vf-scores {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .vf-score {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .vf-score__bar-container {
+      width: 28px;
+      height: 60px;
+      background: #f0f0f0;
+      border-radius: 4px;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+
+    .vf-score__bar {
+      width: 100%;
+      border-radius: 4px 4px 0 0;
+      transition: height 1s ease;
+    }
+
+    .vf-score__value {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--nt-text);
+    }
+
+    .vf-score__label {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--nt-text-muted);
+      text-align: center;
+    }
+
+    /* ============================================================
+       VARIANT G — HEATMAP COMPACT
+       ============================================================ */
+    .vg-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 3px;
+    }
+
+    .vg-table th {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--nt-text-muted);
+      padding: 4px 6px;
+      text-align: center;
+    }
+
+    .vg-table th:first-child {
+      text-align: left;
+      width: 130px;
+    }
+
+    .vg-row-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--nt-text);
+      padding: 8px 8px;
+    }
+
+    .vg-cell {
+      width: 42px;
+      height: 32px;
+      border-radius: 4px;
+      text-align: center;
+      vertical-align: middle;
+      font-size: 10px;
+      font-weight: 600;
+      color: transparent;
+      transition: all 0.2s ease;
+    }
+
+    .vg-cell:hover {
+      transform: scale(1.15);
+    }
+
+    .vg-cell--current {
+      color: #fff;
+      font-weight: 800;
+      font-size: 11px;
+      box-shadow: 0 0 0 2px #fff, 0 0 0 4px currentColor;
+    }
+
+    .vg-cell--g1 { background: #dcfce7; }
+    .vg-cell--g2 { background: #bbf7d0; }
+    .vg-cell--g3 { background: #86efac; }
+    .vg-cell--y1 { background: #fef9c3; }
+    .vg-cell--y2 { background: #fde68a; }
+    .vg-cell--o1 { background: #fed7aa; }
+    .vg-cell--o2 { background: #fdba74; }
+    .vg-cell--r1 { background: #fecaca; }
+    .vg-cell--r2 { background: #fca5a5; }
+
+    .vg-cell--current-green { background: var(--nt-green); color: #fff; box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--nt-green); }
+    .vg-cell--current-orange { background: var(--nt-orange); color: #fff; box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--nt-orange); }
+    .vg-cell--current-red { background: var(--nt-red); color: #fff; box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--nt-red); }
+
+    .vg-metric-value {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--nt-text);
+      padding: 8px;
+      text-align: right;
+    }
+
+    /* G sub-scores badges */
+    .vg-badges {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .vg-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: var(--nt-radius-sm);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .vg-badge--green {
+      background: var(--nt-green-light);
+      color: var(--nt-green);
+    }
+
+    .vg-badge--red {
+      background: var(--nt-red-light);
+      color: var(--nt-red);
+    }
+
+    .vg-badge__score {
+      font-weight: 800;
+      font-size: 15px;
+    }
+
+    /* ============================================================
+       VARIANT H — STAT CARDS + SPARKLINES
+       ============================================================ */
+    .vh-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .vh-card {
+      background: var(--nt-card);
+      border: 1px solid var(--nt-border);
+      border-radius: var(--nt-radius-sm);
+      padding: 16px 16px 16px 20px;
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow 0.2s ease;
+    }
+
+    .vh-card:hover {
+      box-shadow: 0 4px 12px rgba(21,25,26,0.07);
+    }
+
+    .vh-card__border {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+    }
+
+    .vh-card__border--green { background: var(--nt-green); }
+    .vh-card__border--orange { background: var(--nt-orange); }
+    .vh-card__border--red { background: var(--nt-red); }
+
+    .vh-card__top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+
+    .vh-card__icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    .vh-card__icon--green { background: var(--nt-green-light); color: var(--nt-green); }
+    .vh-card__icon--orange { background: var(--nt-orange-light); color: var(--nt-orange); }
+    .vh-card__icon--red { background: var(--nt-red-light); color: var(--nt-red); }
+
+    .vh-card__sparkline {
+      opacity: 0.7;
+    }
+
+    .vh-card__label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--nt-text-muted);
+      margin-bottom: 4px;
+    }
+
+    .vh-card__value-row {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+
+    .vh-card__value {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--nt-text);
+    }
+
+    .vh-card__rank {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 12px;
+      color: #fff;
+    }
+
+    .vh-card__rank--green { background: var(--nt-green); }
+    .vh-card__rank--orange { background: var(--nt-orange); }
+    .vh-card__rank--red { background: var(--nt-red); }
+
+    /* H sub-scores segmented bar */
+    .vh-segments {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .vh-segment-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .vh-segment__label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--nt-text-secondary);
+      width: 80px;
+      flex-shrink: 0;
+    }
+
+    .vh-segment__bar-wrap {
+      flex: 1;
+      height: 10px;
+      background: #f0f0f0;
+      border-radius: 5px;
+      overflow: hidden;
+      display: flex;
+    }
+
+    .vh-segment__bar-filled {
+      height: 100%;
+      border-radius: 5px;
+      position: relative;
+      transition: width 1s ease;
+    }
+
+    .vh-segment__bar-filled::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: rgba(255,255,255,0.6);
+      border-radius: 2px;
+    }
+
+    .vh-segment__value {
+      font-size: 13px;
+      font-weight: 800;
+      width: 50px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    /* ============================================================
+       UTILITY COLORS
+       ============================================================ */
+    .color-green { color: var(--nt-green); }
+    .color-orange { color: var(--nt-orange); }
+    .color-red { color: var(--nt-red); }
+    .bg-green { background: var(--nt-green); }
+    .bg-orange { background: var(--nt-orange); }
+    .bg-red { background: var(--nt-red); }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       PAGE HEADER
+       ============================================================ -->
+  <div class="page-header">
+    <h1>Comparaison + Scores — Variantes de Design</h1>
+    <p>8 variantes visuelles pour la section Comparaison + Scores Rapides — NicheTrackr</p>
+  </div>
+
+  <!-- ============================================================
+       TAB NAVIGATION
+       ============================================================ -->
+  <nav class="tab-nav" role="tablist">
+    <button class="tab-btn active" data-tab="a" role="tab" aria-selected="true">A — Dot Grid</button>
+    <button class="tab-btn" data-tab="b" role="tab" aria-selected="false">B — Progress Bars</button>
+    <button class="tab-btn" data-tab="c" role="tab" aria-selected="false">C — Radar Chart</button>
+    <button class="tab-btn" data-tab="d" role="tab" aria-selected="false">D — Gauges</button>
+    <button class="tab-btn" data-tab="e" role="tab" aria-selected="false">E — Percentile Cards</button>
+    <button class="tab-btn" data-tab="f" role="tab" aria-selected="false">F — Track Style</button>
+    <button class="tab-btn" data-tab="g" role="tab" aria-selected="false">G — Heatmap</button>
+    <button class="tab-btn" data-tab="h" role="tab" aria-selected="false">H — Stat Cards</button>
+  </nav>
+
+  <!-- ============================================================
+       VARIANT A — DOT GRID + CIRCULAR
+       ============================================================ -->
+  <section class="variant-section active" id="variant-a" role="tabpanel">
+    <div class="variant-label">Variante A — Dot Grid + Circular Scores</div>
+    <div class="variant-desc">Grille de points pour le classement, anneaux circulaires pour les scores. Propre et fonctionnel.</div>
+
+    <!-- Comparison metrics -->
+    <div class="card">
+      <div class="section-title">Comparaison vs concurrence</div>
+      <div class="va-grid">
+        <!-- Taux de conversion -->
+        <div class="va-metric">
+          <div class="va-metric__label">Taux conversion</div>
+          <div class="va-metric__value">3.2%</div>
+          <div class="va-dots">
+            <div class="va-dot"></div>
+            <div class="va-dot"></div>
+            <div class="va-dot"></div>
+            <div class="va-dot"></div>
+            <div class="va-dot va-dot--active va-dot--orange"></div>
+            <div class="va-dot"></div>
+            <div class="va-dot"></div>
+            <div class="va-dot"></div>
+            <div class="va-dot"></div>
+          </div>
+          <div class="va-rank">5/9</div>
+        </div>
+        <!-- Panier moyen -->
+        <div class="va-metric">
+          <div class="va-metric__label">Panier moyen</div>
+          <div class="va-metric__value">46,68 &euro;</div>
+          <div class="va-dots">
+            <div class="va-dot"></div>
+            <div class="va-dot"></div>
+            <div class="va-dot"></div>
+            <div class="va-dot va-dot--active va-dot--green"></div>
+            <div class="va-dot"></div>
+            <div class="va-dot"></div>
+            <div class="va-dot"></div>
+            <div class="va-dot"></div>
+            <div class="va-dot"></div>
+          </div>
+          <div class="va-rank">4/9</div>
+        </div>
+        <!-- Rapidite vente -->
+        <div class="va-metric">
+          <div class="va-metric__label">Rapidit&eacute; vente</div>
+          <div class="va-metric__value">9h 2m</div>
+          <div class="va-dots">
+            <div class="va-dot"></div>
+            <div class="va-dot va-dot--active va-dot--green"></div>
+            <div class="va-dot"></div>
+            <div class="va-dot"></div>
+            <div class="va-dot"></div>
+            <div class="va-dot"></div>
+            <div class="va-dot"></div>
+            <div class="va-dot"></div>
+            <div class="va-dot"></div>
+          </div>
+          <div class="va-rank">2/9</div>
+        </div>
+        <!-- Volume marche -->
+        <div class="va-metric">
+          <div class="va-metric__label">Volume march&eacute;</div>
+          <div class="va-metric__value">593</div>
+          <div class="va-dots">
+            <div class="va-dot"></div>
+            <div class="va-dot"></div>
+            <div class="va-dot"></div>
+            <div class="va-dot"></div>
+            <div class="va-dot"></div>
+            <div class="va-dot"></div>
+            <div class="va-dot"></div>
+            <div class="va-dot"></div>
+            <div class="va-dot va-dot--active va-dot--red"></div>
+          </div>
+          <div class="va-rank">9/9</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scores rapides -->
+    <div class="card">
+      <div class="section-title">Scores rapides</div>
+      <div class="va-scores">
+        <!-- Taux vente 0.5/10 -->
+        <div class="va-score">
+          <div class="va-score__ring">
+            <svg width="72" height="72" viewBox="0 0 72 72">
+              <circle class="va-score__ring-bg" cx="36" cy="36" r="30"/>
+              <circle class="va-score__ring-fill" cx="36" cy="36" r="30"
+                stroke="var(--nt-red)"
+                stroke-dasharray="188.5"
+                stroke-dashoffset="179.1"/>
+            </svg>
+            <span class="va-score__value color-red">0.5</span>
+          </div>
+          <span class="va-score__label">Taux vente</span>
+        </div>
+        <!-- Rapidite 9.9/10 -->
+        <div class="va-score">
+          <div class="va-score__ring">
+            <svg width="72" height="72" viewBox="0 0 72 72">
+              <circle class="va-score__ring-bg" cx="36" cy="36" r="30"/>
+              <circle class="va-score__ring-fill" cx="36" cy="36" r="30"
+                stroke="var(--nt-green)"
+                stroke-dasharray="188.5"
+                stroke-dashoffset="1.9"/>
+            </svg>
+            <span class="va-score__value color-green">9.9</span>
+          </div>
+          <span class="va-score__label">Rapidit&eacute;</span>
+        </div>
+        <!-- Panier 9.3/10 -->
+        <div class="va-score">
+          <div class="va-score__ring">
+            <svg width="72" height="72" viewBox="0 0 72 72">
+              <circle class="va-score__ring-bg" cx="36" cy="36" r="30"/>
+              <circle class="va-score__ring-fill" cx="36" cy="36" r="30"
+                stroke="var(--nt-green)"
+                stroke-dasharray="188.5"
+                stroke-dashoffset="13.2"/>
+            </svg>
+            <span class="va-score__value color-green">9.3</span>
+          </div>
+          <span class="va-score__label">Panier</span>
+        </div>
+        <!-- Volume 0.9/10 -->
+        <div class="va-score">
+          <div class="va-score__ring">
+            <svg width="72" height="72" viewBox="0 0 72 72">
+              <circle class="va-score__ring-bg" cx="36" cy="36" r="30"/>
+              <circle class="va-score__ring-fill" cx="36" cy="36" r="30"
+                stroke="var(--nt-red)"
+                stroke-dasharray="188.5"
+                stroke-dashoffset="171.5"/>
+            </svg>
+            <span class="va-score__value color-red">0.9</span>
+          </div>
+          <span class="va-score__label">Volume</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VARIANT B — HORIZONTAL PROGRESS BARS
+       ============================================================ -->
+  <section class="variant-section" id="variant-b" role="tabpanel">
+    <div class="variant-label">Variante B — Horizontal Progress Bars</div>
+    <div class="variant-desc">Barres de progression avec marqueur de position. Plus dense en donnees, style enterprise.</div>
+
+    <!-- Comparison metrics -->
+    <div class="card">
+      <div class="section-title">Comparaison vs concurrence</div>
+      <div class="vb-metrics">
+        <!-- Taux de conversion 5/9 -->
+        <div class="vb-metric">
+          <div class="vb-metric__header">
+            <span class="vb-metric__label">Taux de conversion</span>
+            <div class="vb-metric__info">
+              <span class="vb-metric__value">3.2%</span>
+              <span class="vb-metric__rank vb-metric__rank--orange">#5</span>
+            </div>
+          </div>
+          <div class="vb-bar">
+            <div class="vb-bar__track" style="background: var(--nt-orange);"></div>
+            <div class="vb-bar__marker vb-bar__marker--orange" style="left: 55.6%;"></div>
+          </div>
+          <div class="vb-bar__labels">
+            <span class="vb-bar__label-text">1er</span>
+            <span class="vb-bar__label-text">9e</span>
+          </div>
+        </div>
+        <!-- Panier moyen 4/9 -->
+        <div class="vb-metric">
+          <div class="vb-metric__header">
+            <span class="vb-metric__label">Panier moyen</span>
+            <div class="vb-metric__info">
+              <span class="vb-metric__value">46,68 &euro;</span>
+              <span class="vb-metric__rank vb-metric__rank--green">#4</span>
+            </div>
+          </div>
+          <div class="vb-bar">
+            <div class="vb-bar__track" style="background: var(--nt-green);"></div>
+            <div class="vb-bar__marker vb-bar__marker--green" style="left: 43.8%;"></div>
+          </div>
+          <div class="vb-bar__labels">
+            <span class="vb-bar__label-text">1er</span>
+            <span class="vb-bar__label-text">9e</span>
+          </div>
+        </div>
+        <!-- Rapidite vente 2/9 -->
+        <div class="vb-metric">
+          <div class="vb-metric__header">
+            <span class="vb-metric__label">Rapidit&eacute; de vente</span>
+            <div class="vb-metric__info">
+              <span class="vb-metric__value">9h 2m</span>
+              <span class="vb-metric__rank vb-metric__rank--green">#2</span>
+            </div>
+          </div>
+          <div class="vb-bar">
+            <div class="vb-bar__track" style="background: var(--nt-green);"></div>
+            <div class="vb-bar__marker vb-bar__marker--green" style="left: 18.8%;"></div>
+          </div>
+          <div class="vb-bar__labels">
+            <span class="vb-bar__label-text">1er</span>
+            <span class="vb-bar__label-text">9e</span>
+          </div>
+        </div>
+        <!-- Volume marche 9/9 -->
+        <div class="vb-metric">
+          <div class="vb-metric__header">
+            <span class="vb-metric__label">Volume march&eacute;</span>
+            <div class="vb-metric__info">
+              <span class="vb-metric__value">593</span>
+              <span class="vb-metric__rank vb-metric__rank--red">#9</span>
+            </div>
+          </div>
+          <div class="vb-bar">
+            <div class="vb-bar__track" style="background: var(--nt-red);"></div>
+            <div class="vb-bar__marker vb-bar__marker--red" style="left: 100%;"></div>
+          </div>
+          <div class="vb-bar__labels">
+            <span class="vb-bar__label-text">1er</span>
+            <span class="vb-bar__label-text">9e</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scores rapides -->
+    <div class="card">
+      <div class="section-title">Scores rapides</div>
+      <div class="vb-scores">
+        <div class="vb-score">
+          <span class="vb-score__label">Taux vente</span>
+          <div class="vb-score__bar-wrap">
+            <div class="vb-score__bar" style="width: 5%; background: var(--nt-red);"></div>
+          </div>
+          <span class="vb-score__value color-red">0.5/10</span>
+        </div>
+        <div class="vb-score">
+          <span class="vb-score__label">Rapidit&eacute;</span>
+          <div class="vb-score__bar-wrap">
+            <div class="vb-score__bar" style="width: 99%; background: var(--nt-green);"></div>
+          </div>
+          <span class="vb-score__value color-green">9.9/10</span>
+        </div>
+        <div class="vb-score">
+          <span class="vb-score__label">Panier</span>
+          <div class="vb-score__bar-wrap">
+            <div class="vb-score__bar" style="width: 93%; background: var(--nt-green);"></div>
+          </div>
+          <span class="vb-score__value color-green">9.3/10</span>
+        </div>
+        <div class="vb-score">
+          <span class="vb-score__label">Volume</span>
+          <div class="vb-score__bar-wrap">
+            <div class="vb-score__bar" style="width: 9%; background: var(--nt-red);"></div>
+          </div>
+          <span class="vb-score__value color-red">0.9/10</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VARIANT C — RADAR / SPIDER CHART
+       ============================================================ -->
+  <section class="variant-section" id="variant-c" role="tabpanel">
+    <div class="variant-label">Variante C — Radar / Spider Chart</div>
+    <div class="variant-desc">Graphique radar SVG central. Polygone plein = tracker actuel, pointilles = moyenne. Moderne et visuel.</div>
+
+    <!-- Radar chart -->
+    <div class="card">
+      <div class="section-title">Comparaison vs concurrence</div>
+      <div class="vc-radar-wrap">
+        <svg width="360" height="320" viewBox="0 0 360 320">
+          <!-- Grid lines (concentric pentagons approximated as 4-point shapes) -->
+          <!-- Center: 180, 160 -->
+          <!-- Axes: Top (Taux conv), Right (Panier), Bottom (Rapidite), Left (Volume) -->
+
+          <!-- Grid circles (5 levels) -->
+          <circle cx="180" cy="160" r="24" fill="none" stroke="#e5e7eb" stroke-width="0.5"/>
+          <circle cx="180" cy="160" r="48" fill="none" stroke="#e5e7eb" stroke-width="0.5"/>
+          <circle cx="180" cy="160" r="72" fill="none" stroke="#e5e7eb" stroke-width="0.5"/>
+          <circle cx="180" cy="160" r="96" fill="none" stroke="#e5e7eb" stroke-width="0.5"/>
+          <circle cx="180" cy="160" r="120" fill="none" stroke="#e5e7eb" stroke-width="1"/>
+
+          <!-- Axis lines -->
+          <line x1="180" y1="160" x2="180" y2="40" stroke="#e5e7eb" stroke-width="1"/>
+          <line x1="180" y1="160" x2="300" y2="160" stroke="#e5e7eb" stroke-width="1"/>
+          <line x1="180" y1="160" x2="180" y2="280" stroke="#e5e7eb" stroke-width="1"/>
+          <line x1="180" y1="160" x2="60" y2="160" stroke="#e5e7eb" stroke-width="1"/>
+
+          <!-- Average polygon (dashed) -->
+          <!-- Avg = ~5/9 on each axis = 55.6% of 120 = 66.7px -->
+          <polygon points="180,93 247,160 180,227 113,160"
+            fill="none" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="6,4"/>
+
+          <!-- Current tracker polygon -->
+          <!-- Taux conv: 5/9 = 55.6% -> 66.7px up -> y = 160-66.7 = 93.3 -->
+          <!-- Panier: 4/9 = 44.4% -> 53.3px right -> x = 180+53.3 = 233.3 (good = closer to center? No, lower rank = better) -->
+          <!-- For rank: 1/9 = best. So position = (rank-1)/(9-1) from best to worst -->
+          <!-- Taux: rank 5 -> (5-1)/8 = 0.5 -> 60px -> 180, 160-60 = 180,100 -->
+          <!-- Panier: rank 4 -> (4-1)/8 = 0.375 -> but inverted: higher=better so (9-4)/8 = 0.625 -> 75 -> 180+75, 160 = 255,160 -->
+          <!-- Rapidite: rank 2 -> (9-2)/8 = 0.875 -> 105 -> 180, 160+105 = 180,265 -->
+          <!-- Volume: rank 9 -> (9-9)/8 = 0 -> 0 -> 180-0, 160 = nope, min ~12 -->
+          <!-- Let's simplify: score = how good (inverted rank). 1=best=100%, 9=worst=0% -->
+          <!-- Taux: 5/9 -> score = (9-5)/(9-1) = 0.5 -> 60px -->
+          <!-- Panier: 4/9 -> score = (9-4)/8 = 0.625 -> 75px -->
+          <!-- Rapidite: 2/9 -> score = (9-2)/8 = 0.875 -> 105px -->
+          <!-- Volume: 9/9 -> score = 0/8 = 0 -> 12px (minimum visible) -->
+          <polygon points="180,100 255,160 180,55 168,160"
+            fill="rgba(0,119,130,0.12)" stroke="var(--nt-primary)" stroke-width="2.5"/>
+
+          <!-- Data points -->
+          <circle cx="180" cy="100" r="5" fill="var(--nt-orange)" stroke="#fff" stroke-width="2"/>
+          <circle cx="255" cy="160" r="5" fill="var(--nt-green)" stroke="#fff" stroke-width="2"/>
+          <circle cx="180" cy="55" r="5" fill="var(--nt-green)" stroke="#fff" stroke-width="2"/>
+          <circle cx="168" cy="160" r="5" fill="var(--nt-red)" stroke="#fff" stroke-width="2"/>
+
+          <!-- Labels -->
+          <text x="180" y="24" text-anchor="middle" font-size="11" font-weight="600" fill="#3d4849">Taux conversion</text>
+          <text x="180" y="38" text-anchor="middle" font-size="12" font-weight="800" fill="#15191a">3.2% (#5)</text>
+
+          <text x="316" y="156" text-anchor="start" font-size="11" font-weight="600" fill="#3d4849">Panier moyen</text>
+          <text x="316" y="170" text-anchor="start" font-size="12" font-weight="800" fill="#15191a">46,68&#8364; (#4)</text>
+
+          <text x="180" y="300" text-anchor="middle" font-size="11" font-weight="600" fill="#3d4849">Rapidit&#233; vente</text>
+          <text x="180" y="314" text-anchor="middle" font-size="12" font-weight="800" fill="#15191a">9h 2m (#2)</text>
+
+          <text x="44" y="156" text-anchor="end" font-size="11" font-weight="600" fill="#3d4849">Volume march&#233;</text>
+          <text x="44" y="170" text-anchor="end" font-size="12" font-weight="800" fill="#15191a">593 (#9)</text>
+
+          <!-- Legend -->
+          <line x1="100" y1="8" x2="120" y2="8" stroke="var(--nt-primary)" stroke-width="2"/>
+          <text x="124" y="12" font-size="10" fill="#6b7280">Tracker actuel</text>
+          <line x1="200" y1="8" x2="220" y2="8" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="6,4"/>
+          <text x="224" y="12" font-size="10" fill="#6b7280">Moyenne</text>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Score pills -->
+    <div class="card">
+      <div class="section-title">Scores rapides</div>
+      <div class="vc-pills">
+        <div class="vc-pill">
+          <span class="vc-pill__dot vc-pill__dot--red"></span>
+          Taux vente
+          <span class="vc-pill__value color-red">0.5/10</span>
+        </div>
+        <div class="vc-pill">
+          <span class="vc-pill__dot vc-pill__dot--green"></span>
+          Rapidit&eacute;
+          <span class="vc-pill__value color-green">9.9/10</span>
+        </div>
+        <div class="vc-pill">
+          <span class="vc-pill__dot vc-pill__dot--green"></span>
+          Panier
+          <span class="vc-pill__value color-green">9.3/10</span>
+        </div>
+        <div class="vc-pill">
+          <span class="vc-pill__dot vc-pill__dot--red"></span>
+          Volume
+          <span class="vc-pill__value color-red">0.9/10</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VARIANT D — MINI GAUGE METERS
+       ============================================================ -->
+  <section class="variant-section" id="variant-d" role="tabpanel">
+    <div class="variant-label">Variante D — Mini Gauge Meters</div>
+    <div class="variant-desc">Jauges semi-circulaires miniatures avec aiguille de position. Compact, style tableau de bord.</div>
+
+    <!-- Gauges -->
+    <div class="card">
+      <div class="section-title">Comparaison vs concurrence</div>
+      <div class="vd-gauges">
+        <!-- Taux conversion 5/9 -> 50% through arc -->
+        <div class="vd-gauge">
+          <div class="vd-gauge__label">Taux conversion</div>
+          <div class="vd-gauge__svg-wrap">
+            <svg viewBox="0 0 90 90">
+              <!-- Background arc (semi-circle) -->
+              <path class="vd-gauge__bg"
+                d="M 10 45 A 35 35 0 0 1 80 45"/>
+              <!-- Colored fill arc - 50% of semicircle -->
+              <path class="vd-gauge__fill"
+                d="M 10 45 A 35 35 0 0 1 80 45"
+                stroke="var(--nt-orange)"
+                stroke-dasharray="110"
+                stroke-dashoffset="55"/>
+              <!-- Needle -->
+              <line x1="45" y1="45" x2="45" y2="16" stroke="var(--nt-orange)" stroke-width="2.5" stroke-linecap="round"
+                class="vd-gauge__needle" style="transform: rotate(-0deg);"/>
+              <!-- Center dot -->
+              <circle cx="45" cy="45" r="4" fill="var(--nt-orange)"/>
+              <circle cx="45" cy="45" r="2" fill="#fff"/>
+            </svg>
+          </div>
+          <div class="vd-gauge__value color-orange">3.2%</div>
+          <div class="vd-gauge__rank">Rang 5/9</div>
+        </div>
+        <!-- Panier moyen 4/9 -> 62.5% -->
+        <div class="vd-gauge">
+          <div class="vd-gauge__label">Panier moyen</div>
+          <div class="vd-gauge__svg-wrap">
+            <svg viewBox="0 0 90 90">
+              <path class="vd-gauge__bg"
+                d="M 10 45 A 35 35 0 0 1 80 45"/>
+              <path class="vd-gauge__fill"
+                d="M 10 45 A 35 35 0 0 1 80 45"
+                stroke="var(--nt-green)"
+                stroke-dasharray="110"
+                stroke-dashoffset="41.3"/>
+              <line x1="45" y1="45" x2="45" y2="16" stroke="var(--nt-green)" stroke-width="2.5" stroke-linecap="round"
+                class="vd-gauge__needle" style="transform: rotate(-22.5deg);"/>
+              <circle cx="45" cy="45" r="4" fill="var(--nt-green)"/>
+              <circle cx="45" cy="45" r="2" fill="#fff"/>
+            </svg>
+          </div>
+          <div class="vd-gauge__value color-green">46,68 &euro;</div>
+          <div class="vd-gauge__rank">Rang 4/9</div>
+        </div>
+        <!-- Rapidite 2/9 -> 87.5% -->
+        <div class="vd-gauge">
+          <div class="vd-gauge__label">Rapidit&eacute; vente</div>
+          <div class="vd-gauge__svg-wrap">
+            <svg viewBox="0 0 90 90">
+              <path class="vd-gauge__bg"
+                d="M 10 45 A 35 35 0 0 1 80 45"/>
+              <path class="vd-gauge__fill"
+                d="M 10 45 A 35 35 0 0 1 80 45"
+                stroke="var(--nt-green)"
+                stroke-dasharray="110"
+                stroke-dashoffset="13.8"/>
+              <line x1="45" y1="45" x2="45" y2="16" stroke="var(--nt-green)" stroke-width="2.5" stroke-linecap="round"
+                class="vd-gauge__needle" style="transform: rotate(-67.5deg);"/>
+              <circle cx="45" cy="45" r="4" fill="var(--nt-green)"/>
+              <circle cx="45" cy="45" r="2" fill="#fff"/>
+            </svg>
+          </div>
+          <div class="vd-gauge__value color-green">9h 2m</div>
+          <div class="vd-gauge__rank">Rang 2/9</div>
+        </div>
+        <!-- Volume 9/9 -> 0% -->
+        <div class="vd-gauge">
+          <div class="vd-gauge__label">Volume march&eacute;</div>
+          <div class="vd-gauge__svg-wrap">
+            <svg viewBox="0 0 90 90">
+              <path class="vd-gauge__bg"
+                d="M 10 45 A 35 35 0 0 1 80 45"/>
+              <path class="vd-gauge__fill"
+                d="M 10 45 A 35 35 0 0 1 80 45"
+                stroke="var(--nt-red)"
+                stroke-dasharray="110"
+                stroke-dashoffset="107"/>
+              <line x1="45" y1="45" x2="45" y2="16" stroke="var(--nt-red)" stroke-width="2.5" stroke-linecap="round"
+                class="vd-gauge__needle" style="transform: rotate(85deg);"/>
+              <circle cx="45" cy="45" r="4" fill="var(--nt-red)"/>
+              <circle cx="45" cy="45" r="2" fill="#fff"/>
+            </svg>
+          </div>
+          <div class="vd-gauge__value color-red">593</div>
+          <div class="vd-gauge__rank">Rang 9/9</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scores rapides - small circular rings -->
+    <div class="card">
+      <div class="section-title">Scores rapides</div>
+      <div class="vd-scores">
+        <!-- Taux vente 0.5/10 -->
+        <div class="vd-score">
+          <div class="vd-score__ring">
+            <svg width="48" height="48" viewBox="0 0 48 48">
+              <circle class="vd-score__ring-bg" cx="24" cy="24" r="20"/>
+              <circle class="vd-score__ring-fill" cx="24" cy="24" r="20"
+                stroke="var(--nt-red)"
+                stroke-dasharray="125.7"
+                stroke-dashoffset="119.4"/>
+            </svg>
+            <span class="vd-score__value color-red">0.5</span>
+          </div>
+          <span class="vd-score__label">Taux vente</span>
+        </div>
+        <!-- Rapidite 9.9/10 -->
+        <div class="vd-score">
+          <div class="vd-score__ring">
+            <svg width="48" height="48" viewBox="0 0 48 48">
+              <circle class="vd-score__ring-bg" cx="24" cy="24" r="20"/>
+              <circle class="vd-score__ring-fill" cx="24" cy="24" r="20"
+                stroke="var(--nt-green)"
+                stroke-dasharray="125.7"
+                stroke-dashoffset="1.3"/>
+            </svg>
+            <span class="vd-score__value color-green">9.9</span>
+          </div>
+          <span class="vd-score__label">Rapidit&eacute;</span>
+        </div>
+        <!-- Panier 9.3/10 -->
+        <div class="vd-score">
+          <div class="vd-score__ring">
+            <svg width="48" height="48" viewBox="0 0 48 48">
+              <circle class="vd-score__ring-bg" cx="24" cy="24" r="20"/>
+              <circle class="vd-score__ring-fill" cx="24" cy="24" r="20"
+                stroke="var(--nt-green)"
+                stroke-dasharray="125.7"
+                stroke-dashoffset="8.8"/>
+            </svg>
+            <span class="vd-score__value color-green">9.3</span>
+          </div>
+          <span class="vd-score__label">Panier</span>
+        </div>
+        <!-- Volume 0.9/10 -->
+        <div class="vd-score">
+          <div class="vd-score__ring">
+            <svg width="48" height="48" viewBox="0 0 48 48">
+              <circle class="vd-score__ring-bg" cx="24" cy="24" r="20"/>
+              <circle class="vd-score__ring-fill" cx="24" cy="24" r="20"
+                stroke="var(--nt-red)"
+                stroke-dasharray="125.7"
+                stroke-dashoffset="114.4"/>
+            </svg>
+            <span class="vd-score__value color-red">0.9</span>
+          </div>
+          <span class="vd-score__label">Volume</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VARIANT E — RANKING CARDS WITH PERCENTILE
+       ============================================================ -->
+  <section class="variant-section" id="variant-e" role="tabpanel">
+    <div class="variant-label">Variante E — Ranking Cards with Percentile</div>
+    <div class="variant-desc">Grille 2x2 de cartes avec barre de percentile. Propre, SaaS-moderne.</div>
+
+    <!-- Comparison cards -->
+    <div class="card">
+      <div class="section-title">Comparaison vs concurrence</div>
+      <div class="ve-grid">
+        <!-- Taux conversion 5/9 -> top 55.6% -->
+        <div class="ve-card">
+          <div class="ve-card__header">
+            <span class="ve-card__label">Taux de conversion</span>
+            <span class="ve-card__rank ve-card__rank--orange">#5/9</span>
+          </div>
+          <div class="ve-card__value">3.2%</div>
+          <div class="ve-card__bar-wrap">
+            <div class="ve-card__bar ve-card__bar--orange" style="width: 55.6%;"></div>
+          </div>
+          <div class="ve-card__percentile color-orange">Top 56%</div>
+        </div>
+        <!-- Panier moyen 4/9 -> top 44.4% -->
+        <div class="ve-card">
+          <div class="ve-card__header">
+            <span class="ve-card__label">Panier moyen</span>
+            <span class="ve-card__rank ve-card__rank--green">#4/9</span>
+          </div>
+          <div class="ve-card__value">46,68 &euro;</div>
+          <div class="ve-card__bar-wrap">
+            <div class="ve-card__bar ve-card__bar--green" style="width: 44.4%;"></div>
+          </div>
+          <div class="ve-card__percentile color-green">Top 44%</div>
+        </div>
+        <!-- Rapidite 2/9 -> top 22.2% -->
+        <div class="ve-card">
+          <div class="ve-card__header">
+            <span class="ve-card__label">Rapidit&eacute; de vente</span>
+            <span class="ve-card__rank ve-card__rank--green">#2/9</span>
+          </div>
+          <div class="ve-card__value">9h 2m</div>
+          <div class="ve-card__bar-wrap">
+            <div class="ve-card__bar ve-card__bar--green" style="width: 22.2%;"></div>
+          </div>
+          <div class="ve-card__percentile color-green">Top 22%</div>
+        </div>
+        <!-- Volume 9/9 -> top 100% -->
+        <div class="ve-card">
+          <div class="ve-card__header">
+            <span class="ve-card__label">Volume march&eacute;</span>
+            <span class="ve-card__rank ve-card__rank--red">#9/9</span>
+          </div>
+          <div class="ve-card__value">593</div>
+          <div class="ve-card__bar-wrap">
+            <div class="ve-card__bar ve-card__bar--red" style="width: 100%;"></div>
+          </div>
+          <div class="ve-card__percentile color-red">Dernier</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Score pills -->
+    <div class="card">
+      <div class="section-title">Scores rapides</div>
+      <div class="ve-pills">
+        <span class="ve-pill ve-pill--red">Taux vente <strong>0.5</strong>/10</span>
+        <span class="ve-pill ve-pill--green">Rapidit&eacute; <strong>9.9</strong>/10</span>
+        <span class="ve-pill ve-pill--green">Panier <strong>9.3</strong>/10</span>
+        <span class="ve-pill ve-pill--red">Volume <strong>0.9</strong>/10</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VARIANT F — PODIUM / TRACK STYLE
+       ============================================================ -->
+  <section class="variant-section" id="variant-f" role="tabpanel">
+    <div class="variant-label">Variante F — Podium / Track Style</div>
+    <div class="variant-desc">Chaque metrique sur sa propre "piste" avec marqueurs pour tous les trackers. Ambiance sportive et competitive.</div>
+
+    <!-- Track metrics -->
+    <div class="card">
+      <div class="section-title">Comparaison vs concurrence</div>
+      <div class="vf-tracks">
+        <!-- Taux conversion 5/9 -->
+        <div class="vf-track">
+          <div class="vf-track__header">
+            <span class="vf-track__label">Taux de conversion</span>
+            <span class="vf-track__value color-orange">3.2%</span>
+          </div>
+          <div class="vf-track__line">
+            <!-- 9 dots evenly spread: position = ((i-1)/8) * 92% + 4% -->
+            <div class="vf-track__dot" style="left: 4%;"></div>
+            <div class="vf-track__dot" style="left: 15.5%;"></div>
+            <div class="vf-track__dot" style="left: 27%;"></div>
+            <div class="vf-track__dot" style="left: 38.5%;"></div>
+            <!-- Active dot at position 5 -->
+            <div class="vf-track__dot vf-track__dot--active vf-track__dot--orange" style="left: 50%;">
+              <span class="vf-track__tooltip vf-track__tooltip--orange" style="left: 50%;">3.2%</span>
+            </div>
+            <div class="vf-track__dot" style="left: 61.5%;"></div>
+            <div class="vf-track__dot" style="left: 73%;"></div>
+            <div class="vf-track__dot" style="left: 84.5%;"></div>
+            <div class="vf-track__dot" style="left: 96%;"></div>
+          </div>
+        </div>
+        <!-- Panier moyen 4/9 -->
+        <div class="vf-track">
+          <div class="vf-track__header">
+            <span class="vf-track__label">Panier moyen</span>
+            <span class="vf-track__value color-green">46,68 &euro;</span>
+          </div>
+          <div class="vf-track__line">
+            <div class="vf-track__dot" style="left: 4%;"></div>
+            <div class="vf-track__dot" style="left: 15.5%;"></div>
+            <div class="vf-track__dot" style="left: 27%;"></div>
+            <div class="vf-track__dot vf-track__dot--active vf-track__dot--green" style="left: 38.5%;">
+              <span class="vf-track__tooltip vf-track__tooltip--green" style="left: 50%;">46,68&euro;</span>
+            </div>
+            <div class="vf-track__dot" style="left: 50%;"></div>
+            <div class="vf-track__dot" style="left: 61.5%;"></div>
+            <div class="vf-track__dot" style="left: 73%;"></div>
+            <div class="vf-track__dot" style="left: 84.5%;"></div>
+            <div class="vf-track__dot" style="left: 96%;"></div>
+          </div>
+        </div>
+        <!-- Rapidite 2/9 -->
+        <div class="vf-track">
+          <div class="vf-track__header">
+            <span class="vf-track__label">Rapidit&eacute; de vente</span>
+            <span class="vf-track__value color-green">9h 2m</span>
+          </div>
+          <div class="vf-track__line">
+            <div class="vf-track__dot" style="left: 4%;"></div>
+            <div class="vf-track__dot vf-track__dot--active vf-track__dot--green" style="left: 15.5%;">
+              <span class="vf-track__tooltip vf-track__tooltip--green" style="left: 50%;">9h 2m</span>
+            </div>
+            <div class="vf-track__dot" style="left: 27%;"></div>
+            <div class="vf-track__dot" style="left: 38.5%;"></div>
+            <div class="vf-track__dot" style="left: 50%;"></div>
+            <div class="vf-track__dot" style="left: 61.5%;"></div>
+            <div class="vf-track__dot" style="left: 73%;"></div>
+            <div class="vf-track__dot" style="left: 84.5%;"></div>
+            <div class="vf-track__dot" style="left: 96%;"></div>
+          </div>
+        </div>
+        <!-- Volume 9/9 -->
+        <div class="vf-track">
+          <div class="vf-track__header">
+            <span class="vf-track__label">Volume march&eacute;</span>
+            <span class="vf-track__value color-red">593</span>
+          </div>
+          <div class="vf-track__line">
+            <div class="vf-track__dot" style="left: 4%;"></div>
+            <div class="vf-track__dot" style="left: 15.5%;"></div>
+            <div class="vf-track__dot" style="left: 27%;"></div>
+            <div class="vf-track__dot" style="left: 38.5%;"></div>
+            <div class="vf-track__dot" style="left: 50%;"></div>
+            <div class="vf-track__dot" style="left: 61.5%;"></div>
+            <div class="vf-track__dot" style="left: 73%;"></div>
+            <div class="vf-track__dot" style="left: 84.5%;"></div>
+            <div class="vf-track__dot vf-track__dot--active vf-track__dot--red" style="left: 96%;">
+              <span class="vf-track__tooltip vf-track__tooltip--red" style="left: 50%;">593</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scores - vertical mini bars -->
+    <div class="card">
+      <div class="section-title">Scores rapides</div>
+      <div class="vf-scores">
+        <div class="vf-score">
+          <div class="vf-score__bar-container">
+            <div class="vf-score__bar" style="height: 5%; background: var(--nt-red);"></div>
+          </div>
+          <span class="vf-score__value color-red">0.5</span>
+          <span class="vf-score__label">Taux vente</span>
+        </div>
+        <div class="vf-score">
+          <div class="vf-score__bar-container">
+            <div class="vf-score__bar" style="height: 99%; background: var(--nt-green);"></div>
+          </div>
+          <span class="vf-score__value color-green">9.9</span>
+          <span class="vf-score__label">Rapidit&eacute;</span>
+        </div>
+        <div class="vf-score">
+          <div class="vf-score__bar-container">
+            <div class="vf-score__bar" style="height: 93%; background: var(--nt-green);"></div>
+          </div>
+          <span class="vf-score__value color-green">9.3</span>
+          <span class="vf-score__label">Panier</span>
+        </div>
+        <div class="vf-score">
+          <div class="vf-score__bar-container">
+            <div class="vf-score__bar" style="height: 9%; background: var(--nt-red);"></div>
+          </div>
+          <span class="vf-score__value color-red">0.9</span>
+          <span class="vf-score__label">Volume</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VARIANT G — HEATMAP COMPACT
+       ============================================================ -->
+  <section class="variant-section" id="variant-g" role="tabpanel">
+    <div class="variant-label">Variante G — Heatmap Compact</div>
+    <div class="variant-desc">Grille compacte de type heatmap. Intensite de couleur = performance. Tres dense, ideal pour les analystes.</div>
+
+    <!-- Heatmap -->
+    <div class="card">
+      <div class="section-title">Comparaison vs concurrence</div>
+      <table class="vg-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>1er</th>
+            <th>2e</th>
+            <th>3e</th>
+            <th>4e</th>
+            <th>5e</th>
+            <th>6e</th>
+            <th>7e</th>
+            <th>8e</th>
+            <th>9e</th>
+            <th>Valeur</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Taux conversion - rank 5 -->
+          <tr>
+            <td class="vg-row-label">Taux conversion</td>
+            <td><div class="vg-cell vg-cell--g3"></div></td>
+            <td><div class="vg-cell vg-cell--g2"></div></td>
+            <td><div class="vg-cell vg-cell--g1"></div></td>
+            <td><div class="vg-cell vg-cell--y1"></div></td>
+            <td><div class="vg-cell vg-cell--current-orange">5e</div></td>
+            <td><div class="vg-cell vg-cell--o1"></div></td>
+            <td><div class="vg-cell vg-cell--o2"></div></td>
+            <td><div class="vg-cell vg-cell--r1"></div></td>
+            <td><div class="vg-cell vg-cell--r2"></div></td>
+            <td class="vg-metric-value color-orange">3.2%</td>
+          </tr>
+          <!-- Panier moyen - rank 4 -->
+          <tr>
+            <td class="vg-row-label">Panier moyen</td>
+            <td><div class="vg-cell vg-cell--g3"></div></td>
+            <td><div class="vg-cell vg-cell--g2"></div></td>
+            <td><div class="vg-cell vg-cell--g1"></div></td>
+            <td><div class="vg-cell vg-cell--current-green">4e</div></td>
+            <td><div class="vg-cell vg-cell--y2"></div></td>
+            <td><div class="vg-cell vg-cell--o1"></div></td>
+            <td><div class="vg-cell vg-cell--o2"></div></td>
+            <td><div class="vg-cell vg-cell--r1"></div></td>
+            <td><div class="vg-cell vg-cell--r2"></div></td>
+            <td class="vg-metric-value color-green">46,68&euro;</td>
+          </tr>
+          <!-- Rapidite - rank 2 -->
+          <tr>
+            <td class="vg-row-label">Rapidit&eacute; vente</td>
+            <td><div class="vg-cell vg-cell--g3"></div></td>
+            <td><div class="vg-cell vg-cell--current-green">2e</div></td>
+            <td><div class="vg-cell vg-cell--g1"></div></td>
+            <td><div class="vg-cell vg-cell--y1"></div></td>
+            <td><div class="vg-cell vg-cell--y2"></div></td>
+            <td><div class="vg-cell vg-cell--o1"></div></td>
+            <td><div class="vg-cell vg-cell--o2"></div></td>
+            <td><div class="vg-cell vg-cell--r1"></div></td>
+            <td><div class="vg-cell vg-cell--r2"></div></td>
+            <td class="vg-metric-value color-green">9h 2m</td>
+          </tr>
+          <!-- Volume - rank 9 -->
+          <tr>
+            <td class="vg-row-label">Volume march&eacute;</td>
+            <td><div class="vg-cell vg-cell--g3"></div></td>
+            <td><div class="vg-cell vg-cell--g2"></div></td>
+            <td><div class="vg-cell vg-cell--g1"></div></td>
+            <td><div class="vg-cell vg-cell--y1"></div></td>
+            <td><div class="vg-cell vg-cell--y2"></div></td>
+            <td><div class="vg-cell vg-cell--o1"></div></td>
+            <td><div class="vg-cell vg-cell--o2"></div></td>
+            <td><div class="vg-cell vg-cell--r1"></div></td>
+            <td><div class="vg-cell vg-cell--current-red">9e</div></td>
+            <td class="vg-metric-value color-red">593</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Sub-scores badges -->
+    <div class="card">
+      <div class="section-title">Scores rapides</div>
+      <div class="vg-badges">
+        <div class="vg-badge vg-badge--red">
+          Taux vente
+          <span class="vg-badge__score">0.5</span>
+          <span>/10</span>
+        </div>
+        <div class="vg-badge vg-badge--green">
+          Rapidit&eacute;
+          <span class="vg-badge__score">9.9</span>
+          <span>/10</span>
+        </div>
+        <div class="vg-badge vg-badge--green">
+          Panier
+          <span class="vg-badge__score">9.3</span>
+          <span>/10</span>
+        </div>
+        <div class="vg-badge vg-badge--red">
+          Volume
+          <span class="vg-badge__score">0.9</span>
+          <span>/10</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VARIANT H — STAT CARDS + SPARKLINES
+       ============================================================ -->
+  <section class="variant-section" id="variant-h" role="tabpanel">
+    <div class="variant-label">Variante H — Stat Cards + Sparklines</div>
+    <div class="variant-desc">Grille 2x2 de cartes avec icones, mini sparklines SVG et bordure coloree. Esthetique SaaS moderne.</div>
+
+    <!-- Stat cards -->
+    <div class="card">
+      <div class="section-title">Comparaison vs concurrence</div>
+      <div class="vh-grid">
+        <!-- Taux conversion -->
+        <div class="vh-card">
+          <div class="vh-card__border vh-card__border--orange"></div>
+          <div class="vh-card__top">
+            <div class="vh-card__icon vh-card__icon--orange">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path d="M16 8v8m-4-5v5m-4-2v2m-2 4h16a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+              </svg>
+            </div>
+            <svg class="vh-card__sparkline" width="64" height="24" viewBox="0 0 64 24">
+              <polyline points="0,18 8,14 16,16 24,10 32,12 40,8 48,14 56,11 64,13"
+                fill="none" stroke="var(--nt-orange)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <polyline points="0,18 8,14 16,16 24,10 32,12 40,8 48,14 56,11 64,13"
+                fill="url(#sparkOrange)" stroke="none"/>
+              <defs>
+                <linearGradient id="sparkOrange" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="var(--nt-orange)" stop-opacity="0.15"/>
+                  <stop offset="100%" stop-color="var(--nt-orange)" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <div class="vh-card__label">Taux de conversion</div>
+          <div class="vh-card__value-row">
+            <span class="vh-card__value">3.2%</span>
+            <span class="vh-card__rank vh-card__rank--orange">#5/9</span>
+          </div>
+        </div>
+        <!-- Panier moyen -->
+        <div class="vh-card">
+          <div class="vh-card__border vh-card__border--green"></div>
+          <div class="vh-card__top">
+            <div class="vh-card__icon vh-card__icon--green">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"/>
+              </svg>
+            </div>
+            <svg class="vh-card__sparkline" width="64" height="24" viewBox="0 0 64 24">
+              <polyline points="0,20 8,16 16,18 24,12 32,14 40,6 48,8 56,4 64,6"
+                fill="none" stroke="var(--nt-green)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <polyline points="0,20 8,16 16,18 24,12 32,14 40,6 48,8 56,4 64,6 64,24 0,24"
+                fill="url(#sparkGreen)" stroke="none"/>
+              <defs>
+                <linearGradient id="sparkGreen" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="var(--nt-green)" stop-opacity="0.15"/>
+                  <stop offset="100%" stop-color="var(--nt-green)" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <div class="vh-card__label">Panier moyen</div>
+          <div class="vh-card__value-row">
+            <span class="vh-card__value">46,68 &euro;</span>
+            <span class="vh-card__rank vh-card__rank--green">#4/9</span>
+          </div>
+        </div>
+        <!-- Rapidite vente -->
+        <div class="vh-card">
+          <div class="vh-card__border vh-card__border--green"></div>
+          <div class="vh-card__top">
+            <div class="vh-card__icon vh-card__icon--green">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+              </svg>
+            </div>
+            <svg class="vh-card__sparkline" width="64" height="24" viewBox="0 0 64 24">
+              <polyline points="0,18 8,20 16,14 24,16 32,8 40,10 48,4 56,6 64,2"
+                fill="none" stroke="var(--nt-green)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <polyline points="0,18 8,20 16,14 24,16 32,8 40,10 48,4 56,6 64,2 64,24 0,24"
+                fill="url(#sparkGreen2)" stroke="none"/>
+              <defs>
+                <linearGradient id="sparkGreen2" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="var(--nt-green)" stop-opacity="0.15"/>
+                  <stop offset="100%" stop-color="var(--nt-green)" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <div class="vh-card__label">Rapidit&eacute; de vente</div>
+          <div class="vh-card__value-row">
+            <span class="vh-card__value">9h 2m</span>
+            <span class="vh-card__rank vh-card__rank--green">#2/9</span>
+          </div>
+        </div>
+        <!-- Volume marche -->
+        <div class="vh-card">
+          <div class="vh-card__border vh-card__border--red"></div>
+          <div class="vh-card__top">
+            <div class="vh-card__icon vh-card__icon--red">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+              </svg>
+            </div>
+            <svg class="vh-card__sparkline" width="64" height="24" viewBox="0 0 64 24">
+              <polyline points="0,6 8,8 16,4 24,10 32,12 40,16 48,14 56,20 64,18"
+                fill="none" stroke="var(--nt-red)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <polyline points="0,6 8,8 16,4 24,10 32,12 40,16 48,14 56,20 64,18 64,24 0,24"
+                fill="url(#sparkRed)" stroke="none"/>
+              <defs>
+                <linearGradient id="sparkRed" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="var(--nt-red)" stop-opacity="0.15"/>
+                  <stop offset="100%" stop-color="var(--nt-red)" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <div class="vh-card__label">Volume march&eacute;</div>
+          <div class="vh-card__value-row">
+            <span class="vh-card__value">593</span>
+            <span class="vh-card__rank vh-card__rank--red">#9/9</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scores rapides - segmented horizontal bar -->
+    <div class="card">
+      <div class="section-title">Scores rapides</div>
+      <div class="vh-segments">
+        <div class="vh-segment-row">
+          <span class="vh-segment__label">Taux vente</span>
+          <div class="vh-segment__bar-wrap">
+            <div class="vh-segment__bar-filled" style="width: 5%; background: var(--nt-red);"></div>
+          </div>
+          <span class="vh-segment__value color-red">0.5/10</span>
+        </div>
+        <div class="vh-segment-row">
+          <span class="vh-segment__label">Rapidit&eacute;</span>
+          <div class="vh-segment__bar-wrap">
+            <div class="vh-segment__bar-filled" style="width: 99%; background: var(--nt-green);"></div>
+          </div>
+          <span class="vh-segment__value color-green">9.9/10</span>
+        </div>
+        <div class="vh-segment-row">
+          <span class="vh-segment__label">Panier</span>
+          <div class="vh-segment__bar-wrap">
+            <div class="vh-segment__bar-filled" style="width: 93%; background: var(--nt-green);"></div>
+          </div>
+          <span class="vh-segment__value color-green">9.3/10</span>
+        </div>
+        <div class="vh-segment-row">
+          <span class="vh-segment__label">Volume</span>
+          <div class="vh-segment__bar-wrap">
+            <div class="vh-segment__bar-filled" style="width: 9%; background: var(--nt-red);"></div>
+          </div>
+          <span class="vh-segment__value color-red">0.9/10</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       JAVASCRIPT — TAB SWITCHING
+       ============================================================ -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const tabs = document.querySelectorAll('.tab-btn');
+      const sections = document.querySelectorAll('.variant-section');
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          const targetId = tab.getAttribute('data-tab');
+
+          // Update tabs
+          tabs.forEach(t => {
+            t.classList.remove('active');
+            t.setAttribute('aria-selected', 'false');
+          });
+          tab.classList.add('active');
+          tab.setAttribute('aria-selected', 'true');
+
+          // Update sections
+          sections.forEach(s => s.classList.remove('active'));
+          document.getElementById('variant-' + targetId).classList.add('active');
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

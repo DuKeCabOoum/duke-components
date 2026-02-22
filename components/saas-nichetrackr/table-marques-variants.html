@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Top Marques — Variantes de Design | Duke-components</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/*  RESET + VARIABLES  */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --nt-primary:#007782;--nt-primary-dark:#005f68;--nt-primary-light:#e0f2f1;
+  --nt-green:#28865a;--nt-green-light:#dcfce7;
+  --nt-orange:#fb8c00;--nt-orange-light:#fff3e0;
+  --nt-red:#d04555;--nt-red-light:#fef2f2;
+  --nt-indigo:#6366f1;
+  --nt-text:#15191a;--nt-text-secondary:#3d4849;--nt-text-muted:#6b7280;
+  --nt-bg:#f7f8f9;--nt-card:#ffffff;--nt-border:#e1e6e6;
+  --nt-radius:12px;--nt-radius-sm:8px;
+  --nt-shadow:0 1px 3px rgba(21,25,26,0.04),0 1px 2px rgba(21,25,26,0.02);
+  font-family:'Inter',-apple-system,sans-serif;
+}
+body{background:var(--nt-bg);color:var(--nt-text);line-height:1.5}
+/* PAGE HEADER */
+.page-header{max-width:1280px;margin:0 auto;padding:32px 32px 0}
+.page-header h1{font-size:24px;font-weight:700;color:var(--nt-text)}
+.page-header p{color:var(--nt-text-muted);font-size:14px;margin-top:4px}
+/* TABS NAV */
+.tabs-nav{max-width:1280px;margin:24px auto 0;padding:0 32px;display:flex;gap:4px;border-bottom:2px solid var(--nt-border);flex-wrap:wrap}
+.tab-btn{padding:10px 20px;font-size:13px;font-weight:600;border:none;background:none;color:var(--nt-text-muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .2s;border-radius:8px 8px 0 0}
+.tab-btn:hover{color:var(--nt-text);background:var(--nt-primary-light)}
+.tab-btn.active{color:var(--nt-primary);border-bottom-color:var(--nt-primary);background:var(--nt-primary-light)}
+/* VARIANT CONTAINER */
+.variant-section{display:none;max-width:1280px;margin:0 auto;padding:24px 32px 48px}
+.variant-section.active{display:block}
+.variant-label{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--nt-primary);background:var(--nt-primary-light);padding:4px 12px;border-radius:20px;margin-bottom:16px}
+/* SECTION HEADER */
+.section-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.section-hdr h2{font-size:18px;font-weight:700}
+.section-hdr a{font-size:13px;color:var(--nt-primary);text-decoration:none;font-weight:500}
+.section-hdr a:hover{text-decoration:underline}
+/* RANK BADGES */
+.rank{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;font-size:12px;font-weight:700;color:#fff;flex-shrink:0}
+.rank--1{background:var(--nt-primary)}.rank--2{background:var(--nt-green)}.rank--3{background:var(--nt-orange)}.rank--other{background:#9ca3af;font-size:11px}
+/* METRIC BADGE */
+.metric-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:6px;font-size:12px;font-weight:500}
+.metric-badge--green{background:var(--nt-green-light);color:var(--nt-green)}
+.metric-badge--orange{background:var(--nt-orange-light);color:var(--nt-orange)}
+.metric-badge--red{background:var(--nt-red-light);color:var(--nt-red)}
+.metric-badge--teal{background:var(--nt-primary-light);color:var(--nt-primary)}
+
+/* ===================== VARIANT A — Classic Accordion Table ===================== */
+.va-table-wrap{background:var(--nt-card);border-radius:var(--nt-radius);box-shadow:var(--nt-shadow);overflow:hidden;border:1px solid var(--nt-border)}
+.va-table{width:100%;border-collapse:collapse}
+.va-table thead th{padding:12px 16px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--nt-text-muted);background:#f9fafb;border-bottom:1px solid var(--nt-border);text-align:left}
+.va-table thead th:first-child{width:50px;text-align:center}
+.va-table tbody tr.va-row{cursor:pointer;transition:background .15s}
+.va-table tbody tr.va-row:hover{background:#f0fdfa}
+.va-table tbody tr.va-row td{padding:12px 16px;font-size:13px;border-bottom:1px solid #f1f5f5}
+.va-table tbody tr.va-row td:first-child{text-align:center}
+.va-brand{font-weight:600;color:var(--nt-text)}
+.va-table .num{font-variant-numeric:tabular-nums}
+.va-chevron{display:inline-block;transition:transform .2s;color:var(--nt-text-muted);font-size:12px}
+.va-row.open .va-chevron{transform:rotate(90deg)}
+.va-sub{display:none;background:#f9fbfb}
+.va-sub.open{display:table-row}
+.va-sub td{padding:0 16px 12px 60px}
+.va-sub-table{width:100%;border-collapse:collapse;font-size:12px}
+.va-sub-table th{padding:6px 10px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--nt-text-muted);text-align:left;border-bottom:1px solid var(--nt-border)}
+.va-sub-table td{padding:6px 10px;color:var(--nt-text-secondary)}
+
+/* ===================== VARIANT B — Card Grid ===================== */
+.vb-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.vb-card{background:var(--nt-card);border-radius:var(--nt-radius);border:1px solid var(--nt-border);box-shadow:var(--nt-shadow);padding:20px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.vb-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.08);transform:translateY(-1px)}
+.vb-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;border-radius:4px 0 0 4px}
+.vb-card.vb-r1::before{background:var(--nt-primary)}.vb-card.vb-r2::before{background:var(--nt-green)}.vb-card.vb-r3::before{background:var(--nt-orange)}.vb-card.vb-rn::before{background:#d1d5db}
+.vb-card-top{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.vb-card-name{font-weight:700;font-size:15px}
+.vb-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.vb-metric{text-align:center;padding:8px 4px;background:var(--nt-bg);border-radius:var(--nt-radius-sm)}
+.vb-metric-val{font-size:15px;font-weight:700;color:var(--nt-text)}
+.vb-metric-lbl{font-size:10px;color:var(--nt-text-muted);text-transform:uppercase;letter-spacing:.3px;margin-top:2px}
+.vb-subs{display:none;margin-top:14px;border-top:1px solid var(--nt-border);padding-top:12px}
+.vb-card.open .vb-subs{display:block}
+.vb-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:var(--nt-bg);border-radius:20px;font-size:11px;margin:3px 2px;color:var(--nt-text-secondary)}
+.vb-chip b{color:var(--nt-text);font-weight:600}
+.vb-expand-hint{font-size:11px;color:var(--nt-text-muted);margin-top:10px;text-align:right}
+
+/* ===================== VARIANT C — Horizontal Bar Race ===================== */
+.vc-list{display:flex;flex-direction:column;gap:8px}
+.vc-item{background:var(--nt-card);border-radius:var(--nt-radius);border:1px solid var(--nt-border);padding:14px 20px;cursor:pointer;transition:all .2s}
+.vc-item:hover{box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.vc-item-top{display:flex;align-items:center;gap:16px}
+.vc-brand-col{width:140px;display:flex;align-items:center;gap:10px}
+.vc-brand-name{font-weight:600;font-size:14px}
+.vc-bar-col{flex:1;position:relative;height:32px;background:var(--nt-bg);border-radius:6px;overflow:hidden}
+.vc-bar{height:100%;border-radius:6px;transition:width .6s ease;display:flex;align-items:center;padding-left:10px}
+.vc-bar span{font-size:11px;font-weight:700;color:#fff;white-space:nowrap}
+.vc-stats-col{width:260px;display:flex;gap:16px;justify-content:flex-end;font-size:12px;color:var(--nt-text-secondary)}
+.vc-stats-col .vc-stat{text-align:center}
+.vc-stats-col .vc-stat-val{font-weight:700;font-size:14px;color:var(--nt-text)}
+.vc-stats-col .vc-stat-lbl{font-size:10px;color:var(--nt-text-muted);text-transform:uppercase}
+.vc-subs{display:none;margin-top:12px;padding-top:12px;border-top:1px dashed var(--nt-border)}
+.vc-item.open .vc-subs{display:block}
+.vc-sub-bar{display:flex;align-items:center;gap:12px;margin-bottom:6px;font-size:12px}
+.vc-sub-bar .vc-sub-name{width:100px;color:var(--nt-text-secondary);font-weight:500}
+.vc-sub-bar .vc-sub-track{flex:1;height:18px;background:var(--nt-bg);border-radius:4px;overflow:hidden}
+.vc-sub-bar .vc-sub-fill{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:8px}
+.vc-sub-bar .vc-sub-fill span{font-size:10px;font-weight:600;color:#fff}
+
+/* ===================== VARIANT D — Heat Map Table ===================== */
+.vd-wrap{background:var(--nt-card);border-radius:var(--nt-radius);box-shadow:var(--nt-shadow);overflow:hidden;border:1px solid var(--nt-border)}
+.vd-legend{display:flex;align-items:center;gap:12px;padding:12px 16px;background:#f9fafb;border-bottom:1px solid var(--nt-border);font-size:11px;color:var(--nt-text-muted)}
+.vd-legend-bar{width:120px;height:10px;border-radius:5px;background:linear-gradient(90deg,var(--nt-red-light),var(--nt-orange-light),var(--nt-green-light),var(--nt-green))}
+.vd-table{width:100%;border-collapse:collapse}
+.vd-table thead th{padding:10px 14px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--nt-text-muted);text-align:left;border-bottom:1px solid var(--nt-border)}
+.vd-table thead th:first-child{width:50px;text-align:center}
+.vd-table tbody tr.vd-row{cursor:pointer;transition:background .15s}
+.vd-table tbody tr.vd-row:hover{background:rgba(0,119,130,.04)}
+.vd-table tbody tr.vd-row td{padding:10px 14px;font-size:13px;border-bottom:1px solid #f3f4f6;font-variant-numeric:tabular-nums}
+.vd-table tbody tr.vd-row td:first-child{text-align:center}
+.vd-cell{padding:4px 8px;border-radius:6px;font-weight:500;text-align:center;display:inline-block;min-width:60px}
+.vd-sub{display:none;background:#fafbfc}
+.vd-sub.open{display:table-row}
+.vd-sub td{padding:4px 16px 12px 60px}
+.vd-sub-table{width:100%;border-collapse:collapse;font-size:12px}
+.vd-sub-table th{padding:5px 8px;font-size:10px;font-weight:600;text-transform:uppercase;color:var(--nt-text-muted);text-align:left;border-bottom:1px solid var(--nt-border)}
+.vd-sub-table td{padding:5px 8px}
+
+/* ===================== VARIANT E — Ranked Cards + Inline Charts ===================== */
+.ve-list{display:flex;flex-direction:column;gap:10px}
+.ve-card{background:var(--nt-card);border-radius:var(--nt-radius);border:1px solid var(--nt-border);box-shadow:var(--nt-shadow);display:flex;align-items:center;gap:20px;padding:16px 24px;cursor:pointer;transition:all .2s}
+.ve-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.07)}
+.ve-card.open{flex-wrap:wrap}
+.ve-rank-big{font-size:32px;font-weight:900;width:50px;text-align:center;flex-shrink:0}
+.ve-rank-big.r1{color:var(--nt-primary)}.ve-rank-big.r2{color:var(--nt-green)}.ve-rank-big.r3{color:var(--nt-orange)}.ve-rank-big.rn{color:#d1d5db}
+.ve-info{flex:1;min-width:0}
+.ve-info-name{font-weight:700;font-size:16px;margin-bottom:6px}
+.ve-info-stats{display:flex;gap:20px;font-size:12px;color:var(--nt-text-secondary)}
+.ve-info-stats span{display:flex;align-items:center;gap:4px}
+.ve-info-stats strong{color:var(--nt-text);font-weight:600}
+.ve-chart{width:200px;flex-shrink:0}
+.ve-bar-mini{height:8px;background:var(--nt-bg);border-radius:4px;overflow:hidden;margin-bottom:4px}
+.ve-bar-mini-fill{height:100%;border-radius:4px}
+.ve-bar-mini-lbl{display:flex;justify-content:space-between;font-size:10px;color:var(--nt-text-muted)}
+.ve-subs{display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--nt-border)}
+.ve-card.open .ve-subs{display:block}
+.ve-sub-row{display:flex;align-items:center;gap:16px;padding:4px 0;font-size:12px}
+.ve-sub-row .ve-sub-name{width:100px;font-weight:500;color:var(--nt-text-secondary)}
+.ve-sub-row .ve-sub-stats{display:flex;gap:16px;color:var(--nt-text-muted)}
+.ve-sub-row .ve-sub-stats strong{color:var(--nt-text)}
+
+/* ===================== VARIANT F — Compact Chips + Metrics ===================== */
+.vf-grid{display:flex;flex-wrap:wrap;gap:12px}
+.vf-chip-card{background:var(--nt-card);border-radius:var(--nt-radius);border:1px solid var(--nt-border);padding:14px 18px;cursor:pointer;transition:all .2s;min-width:220px;flex:1 1 calc(25% - 12px)}
+.vf-chip-card:hover{box-shadow:0 4px 12px rgba(0,0,0,.07)}
+.vf-chip-top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.vf-chip-name{font-weight:700;font-size:14px}
+.vf-badges{display:flex;flex-wrap:wrap;gap:4px}
+.vf-badge{padding:3px 8px;border-radius:6px;font-size:11px;font-weight:500}
+.vf-subs{display:none;margin-top:10px;border-top:1px solid var(--nt-border);padding-top:8px}
+.vf-chip-card.open .vf-subs{display:block}
+.vf-sub-chip{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;background:var(--nt-bg);border-radius:16px;font-size:10px;margin:2px;color:var(--nt-text-secondary)}
+.vf-sub-chip b{font-weight:600;color:var(--nt-text)}
+
+/* ===================== VARIANT G — Treemap ===================== */
+.vg-container{position:relative}
+.vg-treemap{display:flex;flex-wrap:wrap;gap:4px;min-height:360px}
+.vg-block{border-radius:var(--nt-radius-sm);padding:16px;display:flex;flex-direction:column;justify-content:center;align-items:center;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;text-align:center}
+.vg-block:hover{opacity:.9;transform:scale(1.01)}
+.vg-block-rank{font-size:11px;font-weight:700;opacity:.7;margin-bottom:2px}
+.vg-block-name{font-size:15px;font-weight:700;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.2)}
+.vg-block-metric{font-size:20px;font-weight:800;color:#fff;margin-top:4px}
+.vg-block-sub{font-size:10px;color:rgba(255,255,255,.8);margin-top:2px}
+.vg-detail{display:none;margin-top:16px;background:var(--nt-card);border-radius:var(--nt-radius);border:1px solid var(--nt-border);padding:20px;box-shadow:var(--nt-shadow)}
+.vg-detail.open{display:block}
+.vg-detail h3{font-size:16px;font-weight:700;margin-bottom:12px}
+.vg-detail-metrics{display:flex;gap:24px;flex-wrap:wrap}
+.vg-detail-metric{text-align:center}
+.vg-detail-metric .val{font-size:20px;font-weight:700}
+.vg-detail-metric .lbl{font-size:11px;color:var(--nt-text-muted);text-transform:uppercase}
+
+/* ===================== VARIANT H — Dashboard Cards + Sparklines ===================== */
+.vh-featured{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px}
+.vh-fcard{background:var(--nt-card);border-radius:var(--nt-radius);border:1px solid var(--nt-border);box-shadow:var(--nt-shadow);padding:24px;position:relative;overflow:hidden}
+.vh-fcard::after{content:'';position:absolute;top:0;left:0;right:0;height:4px}
+.vh-fcard.vh-r1::after{background:var(--nt-primary)}.vh-fcard.vh-r2::after{background:var(--nt-green)}.vh-fcard.vh-r3::after{background:var(--nt-orange)}
+.vh-fcard-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.vh-fcard-name{font-size:18px;font-weight:700}
+.vh-fcard-rank{font-size:12px;font-weight:700;padding:4px 10px;border-radius:20px}
+.vh-r1 .vh-fcard-rank{background:var(--nt-primary-light);color:var(--nt-primary)}
+.vh-r2 .vh-fcard-rank{background:var(--nt-green-light);color:var(--nt-green)}
+.vh-r3 .vh-fcard-rank{background:var(--nt-orange-light);color:var(--nt-orange)}
+.vh-fcard-metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:16px}
+.vh-fm{padding:10px;background:var(--nt-bg);border-radius:var(--nt-radius-sm)}
+.vh-fm-val{font-size:18px;font-weight:700}
+.vh-fm-lbl{font-size:10px;color:var(--nt-text-muted);text-transform:uppercase;letter-spacing:.3px}
+.vh-sparkline{margin-top:8px}
+.vh-trend{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;margin-top:6px}
+.vh-trend.up{color:var(--nt-green)}.vh-trend.down{color:var(--nt-red)}
+.vh-compact-list{background:var(--nt-card);border-radius:var(--nt-radius);border:1px solid var(--nt-border);overflow:hidden}
+.vh-compact-row{display:flex;align-items:center;padding:12px 20px;border-bottom:1px solid #f3f4f6;font-size:13px;transition:background .15s}
+.vh-compact-row:last-child{border-bottom:none}
+.vh-compact-row:hover{background:#f0fdfa}
+.vh-cr-rank{width:36px;flex-shrink:0}
+.vh-cr-name{width:140px;font-weight:600;flex-shrink:0}
+.vh-cr-stats{flex:1;display:flex;gap:24px;justify-content:flex-end}
+.vh-cr-stat{text-align:center;min-width:70px}
+.vh-cr-stat-val{font-weight:600;font-size:13px}
+.vh-cr-stat-lbl{font-size:10px;color:var(--nt-text-muted);text-transform:uppercase}
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>Top Marques — Variantes de Design</h1>
+  <p>8 variantes (A-H) pour la section "Top Marques Decouvertes" du dashboard NicheTrackr</p>
+</div>
+
+<nav class="tabs-nav">
+  <button class="tab-btn active" onclick="showVariant('a')">A — Accordion Table</button>
+  <button class="tab-btn" onclick="showVariant('b')">B — Card Grid</button>
+  <button class="tab-btn" onclick="showVariant('c')">C — Bar Race</button>
+  <button class="tab-btn" onclick="showVariant('d')">D — Heat Map</button>
+  <button class="tab-btn" onclick="showVariant('e')">E — Ranked Cards</button>
+  <button class="tab-btn" onclick="showVariant('f')">F — Compact Chips</button>
+  <button class="tab-btn" onclick="showVariant('g')">G — Treemap</button>
+  <button class="tab-btn" onclick="showVariant('h')">H — Sparklines</button>
+</nav>
+
+<!-- ==================== VARIANT A — Classic Accordion Table ==================== -->
+<section id="variant-a" class="variant-section active">
+  <span class="variant-label">Variante A</span>
+  <div class="section-hdr">
+    <h2>Top Marques Decouvertes</h2>
+    <a href="#">Voir toutes &rarr;</a>
+  </div>
+  <div class="va-table-wrap">
+    <table class="va-table">
+      <thead><tr><th>#</th><th>Marque</th><th>En ligne</th><th>Vendus</th><th>Taux vente</th><th>Panier moy.</th><th>Delai vente</th><th></th></tr></thead>
+      <tbody>
+        <tr class="va-row open" onclick="toggleVA(this)"><td><span class="rank rank--1">1</span></td><td class="va-brand">Zara</td><td class="num">123</td><td class="num">23</td><td><span class="metric-badge metric-badge--orange">15.8%</span></td><td class="num">24.86 &euro;</td><td class="num">1.7j</td><td><span class="va-chevron">&#9654;</span></td></tr>
+        <tr class="va-sub open"><td colspan="8"><table class="va-sub-table"><thead><tr><th>Categorie</th><th>En ligne</th><th>Vendus</th><th>Taux</th><th>Panier</th><th>Delai</th></tr></thead><tbody><tr><td>Joggings</td><td>6</td><td>7</td><td><span class="metric-badge metric-badge--green">53.9%</span></td><td>27.58 &euro;</td><td>2.1j</td></tr><tr><td>Sweats</td><td>6</td><td>5</td><td><span class="metric-badge metric-badge--green">45.5%</span></td><td>44.85 &euro;</td><td>11h</td></tr><tr><td>Baskets</td><td>7</td><td>5</td><td><span class="metric-badge metric-badge--green">41.7%</span></td><td>47.46 &euro;</td><td>2.5j</td></tr></tbody></table></td></tr>
+        <tr class="va-row" onclick="toggleVA(this)"><td><span class="rank rank--2">2</span></td><td class="va-brand">Sezane</td><td class="num">58</td><td class="num">23</td><td><span class="metric-badge metric-badge--green">28.4%</span></td><td class="num">94.33 &euro;</td><td class="num">2.8j</td><td><span class="va-chevron">&#9654;</span></td></tr>
+        <tr class="va-sub"><td colspan="8"></td></tr>
+        <tr class="va-row" onclick="toggleVA(this)"><td><span class="rank rank--3">3</span></td><td class="va-brand">Lacoste</td><td class="num">15</td><td class="num">20</td><td><span class="metric-badge metric-badge--green">57.1%</span></td><td class="num">46.06 &euro;</td><td class="num">2.5j</td><td><span class="va-chevron">&#9654;</span></td></tr>
+        <tr class="va-sub"><td colspan="8"></td></tr>
+        <tr class="va-row" onclick="toggleVA(this)"><td><span class="rank rank--other">4</span></td><td class="va-brand">Nike</td><td class="num">45</td><td class="num">19</td><td><span class="metric-badge metric-badge--green">29.7%</span></td><td class="num">64.43 &euro;</td><td class="num">2.6j</td><td><span class="va-chevron">&#9654;</span></td></tr>
+        <tr class="va-sub"><td colspan="8"></td></tr>
+        <tr class="va-row" onclick="toggleVA(this)"><td><span class="rank rank--other">5</span></td><td class="va-brand">Ralph Lauren</td><td class="num">42</td><td class="num">19</td><td><span class="metric-badge metric-badge--green">31.2%</span></td><td class="num">55.07 &euro;</td><td class="num">1.9j</td><td><span class="va-chevron">&#9654;</span></td></tr>
+        <tr class="va-sub"><td colspan="8"></td></tr>
+        <tr class="va-row" onclick="toggleVA(this)"><td><span class="rank rank--other">6</span></td><td class="va-brand">Adidas</td><td class="num">19</td><td class="num">17</td><td><span class="metric-badge metric-badge--green">47.2%</span></td><td class="num">38.50 &euro;</td><td class="num">1.7j</td><td><span class="va-chevron">&#9654;</span></td></tr>
+        <tr class="va-sub"><td colspan="8"></td></tr>
+        <tr class="va-row" onclick="toggleVA(this)"><td><span class="rank rank--other">7</span></td><td class="va-brand">Maje</td><td class="num">57</td><td class="num">12</td><td><span class="metric-badge metric-badge--orange">17.4%</span></td><td class="num">99.79 &euro;</td><td class="num">1.9j</td><td><span class="va-chevron">&#9654;</span></td></tr>
+        <tr class="va-sub"><td colspan="8"></td></tr>
+        <tr class="va-row" onclick="toggleVA(this)"><td><span class="rank rank--other">8</span></td><td class="va-brand">Ba&amp;sh</td><td class="num">35</td><td class="num">11</td><td><span class="metric-badge metric-badge--orange">23.9%</span></td><td class="num">62.02 &euro;</td><td class="num">1.0j</td><td><span class="va-chevron">&#9654;</span></td></tr>
+        <tr class="va-sub"><td colspan="8"></td></tr>
+        <tr class="va-row" onclick="toggleVA(this)"><td><span class="rank rank--other">9</span></td><td class="va-brand">The Kooples</td><td class="num">33</td><td class="num">11</td><td><span class="metric-badge metric-badge--green">25.0%</span></td><td class="num">64.48 &euro;</td><td class="num">1.1j</td><td><span class="va-chevron">&#9654;</span></td></tr>
+        <tr class="va-sub"><td colspan="8"></td></tr>
+        <tr class="va-row" onclick="toggleVA(this)"><td><span class="rank rank--other">10</span></td><td class="va-brand">Isabel Marant</td><td class="num">25</td><td class="num">6</td><td><span class="metric-badge metric-badge--orange">19.4%</span></td><td class="num">103.53 &euro;</td><td class="num">1.8j</td><td><span class="va-chevron">&#9654;</span></td></tr>
+        <tr class="va-sub"><td colspan="8"></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ==================== VARIANT B — Card Grid ==================== -->
+<section id="variant-b" class="variant-section">
+  <span class="variant-label">Variante B</span>
+  <div class="section-hdr">
+    <h2>Top Marques Decouvertes</h2>
+    <a href="#">Voir toutes &rarr;</a>
+  </div>
+  <div class="vb-grid">
+    <div class="vb-card vb-r1 open" onclick="this.classList.toggle('open')">
+      <div class="vb-card-top"><span class="rank rank--1">1</span><span class="vb-card-name">Zara</span></div>
+      <div class="vb-metrics">
+        <div class="vb-metric"><div class="vb-metric-val">123</div><div class="vb-metric-lbl">En ligne</div></div>
+        <div class="vb-metric"><div class="vb-metric-val">23</div><div class="vb-metric-lbl">Vendus</div></div>
+        <div class="vb-metric"><div class="vb-metric-val" style="color:var(--nt-orange)">15.8%</div><div class="vb-metric-lbl">Taux</div></div>
+      </div>
+      <div class="vb-metrics" style="margin-top:8px">
+        <div class="vb-metric"><div class="vb-metric-val">24.86&euro;</div><div class="vb-metric-lbl">Panier</div></div>
+        <div class="vb-metric"><div class="vb-metric-val">1.7j</div><div class="vb-metric-lbl">Delai</div></div>
+        <div class="vb-metric"></div>
+      </div>
+      <div class="vb-subs">
+        <div class="vb-chip"><b>Joggings</b> 7 vendus &bull; 53.9% &bull; 27.58&euro;</div>
+        <div class="vb-chip"><b>Sweats</b> 5 vendus &bull; 45.5% &bull; 44.85&euro;</div>
+        <div class="vb-chip"><b>Baskets</b> 5 vendus &bull; 41.7% &bull; 47.46&euro;</div>
+      </div>
+      <div class="vb-expand-hint">Cliquer pour voir les categories</div>
+    </div>
+    <div class="vb-card vb-r2" onclick="this.classList.toggle('open')">
+      <div class="vb-card-top"><span class="rank rank--2">2</span><span class="vb-card-name">Sezane</span></div>
+      <div class="vb-metrics">
+        <div class="vb-metric"><div class="vb-metric-val">58</div><div class="vb-metric-lbl">En ligne</div></div>
+        <div class="vb-metric"><div class="vb-metric-val">23</div><div class="vb-metric-lbl">Vendus</div></div>
+        <div class="vb-metric"><div class="vb-metric-val" style="color:var(--nt-green)">28.4%</div><div class="vb-metric-lbl">Taux</div></div>
+      </div>
+      <div class="vb-metrics" style="margin-top:8px">
+        <div class="vb-metric"><div class="vb-metric-val">94.33&euro;</div><div class="vb-metric-lbl">Panier</div></div>
+        <div class="vb-metric"><div class="vb-metric-val">2.8j</div><div class="vb-metric-lbl">Delai</div></div>
+        <div class="vb-metric"></div>
+      </div>
+      <div class="vb-subs"></div>
+    </div>
+    <div class="vb-card vb-r3" onclick="this.classList.toggle('open')">
+      <div class="vb-card-top"><span class="rank rank--3">3</span><span class="vb-card-name">Lacoste</span></div>
+      <div class="vb-metrics">
+        <div class="vb-metric"><div class="vb-metric-val">15</div><div class="vb-metric-lbl">En ligne</div></div>
+        <div class="vb-metric"><div class="vb-metric-val">20</div><div class="vb-metric-lbl">Vendus</div></div>
+        <div class="vb-metric"><div class="vb-metric-val" style="color:var(--nt-green)">57.1%</div><div class="vb-metric-lbl">Taux</div></div>
+      </div>
+      <div class="vb-metrics" style="margin-top:8px">
+        <div class="vb-metric"><div class="vb-metric-val">46.06&euro;</div><div class="vb-metric-lbl">Panier</div></div>
+        <div class="vb-metric"><div class="vb-metric-val">2.5j</div><div class="vb-metric-lbl">Delai</div></div>
+        <div class="vb-metric"></div>
+      </div>
+      <div class="vb-subs"></div>
+    </div>
+    <div class="vb-card vb-rn" onclick="this.classList.toggle('open')">
+      <div class="vb-card-top"><span class="rank rank--other">4</span><span class="vb-card-name">Nike</span></div>
+      <div class="vb-metrics">
+        <div class="vb-metric"><div class="vb-metric-val">45</div><div class="vb-metric-lbl">En ligne</div></div>
+        <div class="vb-metric"><div class="vb-metric-val">19</div><div class="vb-metric-lbl">Vendus</div></div>
+        <div class="vb-metric"><div class="vb-metric-val" style="color:var(--nt-green)">29.7%</div><div class="vb-metric-lbl">Taux</div></div>
+      </div>
+      <div class="vb-metrics" style="margin-top:8px">
+        <div class="vb-metric"><div class="vb-metric-val">64.43&euro;</div><div class="vb-metric-lbl">Panier</div></div>
+        <div class="vb-metric"><div class="vb-metric-val">2.6j</div><div class="vb-metric-lbl">Delai</div></div>
+        <div class="vb-metric"></div>
+      </div>
+      <div class="vb-subs"></div>
+    </div>
+    <div class="vb-card vb-rn" onclick="this.classList.toggle('open')">
+      <div class="vb-card-top"><span class="rank rank--other">5</span><span class="vb-card-name">Ralph Lauren</span></div>
+      <div class="vb-metrics">
+        <div class="vb-metric"><div class="vb-metric-val">42</div><div class="vb-metric-lbl">En ligne</div></div>
+        <div class="vb-metric"><div class="vb-metric-val">19</div><div class="vb-metric-lbl">Vendus</div></div>
+        <div class="vb-metric"><div class="vb-metric-val" style="color:var(--nt-green)">31.2%</div><div class="vb-metric-lbl">Taux</div></div>
+      </div>
+      <div class="vb-metrics" style="margin-top:8px">
+        <div class="vb-metric"><div class="vb-metric-val">55.07&euro;</div><div class="vb-metric-lbl">Panier</div></div>
+        <div class="vb-metric"><div class="vb-metric-val">1.9j</div><div class="vb-metric-lbl">Delai</div></div>
+        <div class="vb-metric"></div>
+      </div>
+      <div class="vb-subs"></div>
+    </div>
+    <div class="vb-card vb-rn" onclick="this.classList.toggle('open')">
+      <div class="vb-card-top"><span class="rank rank--other">6</span><span class="vb-card-name">Adidas</span></div>
+      <div class="vb-metrics">
+        <div class="vb-metric"><div class="vb-metric-val">19</div><div class="vb-metric-lbl">En ligne</div></div>
+        <div class="vb-metric"><div class="vb-metric-val">17</div><div class="vb-metric-lbl">Vendus</div></div>
+        <div class="vb-metric"><div class="vb-metric-val" style="color:var(--nt-green)">47.2%</div><div class="vb-metric-lbl">Taux</div></div>
+      </div>
+      <div class="vb-metrics" style="margin-top:8px">
+        <div class="vb-metric"><div class="vb-metric-val">38.50&euro;</div><div class="vb-metric-lbl">Panier</div></div>
+        <div class="vb-metric"><div class="vb-metric-val">1.7j</div><div class="vb-metric-lbl">Delai</div></div>
+        <div class="vb-metric"></div>
+      </div>
+      <div class="vb-subs"></div>
+    </div>
+    <div class="vb-card vb-rn" onclick="this.classList.toggle('open')">
+      <div class="vb-card-top"><span class="rank rank--other">7</span><span class="vb-card-name">Maje</span></div>
+      <div class="vb-metrics">
+        <div class="vb-metric"><div class="vb-metric-val">57</div><div class="vb-metric-lbl">En ligne</div></div>
+        <div class="vb-metric"><div class="vb-metric-val">12</div><div class="vb-metric-lbl">Vendus</div></div>
+        <div class="vb-metric"><div class="vb-metric-val" style="color:var(--nt-orange)">17.4%</div><div class="vb-metric-lbl">Taux</div></div>
+      </div>
+      <div class="vb-metrics" style="margin-top:8px">
+        <div class="vb-metric"><div class="vb-metric-val">99.79&euro;</div><div class="vb-metric-lbl">Panier</div></div>
+        <div class="vb-metric"><div class="vb-metric-val">1.9j</div><div class="vb-metric-lbl">Delai</div></div>
+        <div class="vb-metric"></div>
+      </div>
+      <div class="vb-subs"></div>
+    </div>
+    <div class="vb-card vb-rn" onclick="this.classList.toggle('open')">
+      <div class="vb-card-top"><span class="rank rank--other">8</span><span class="vb-card-name">Ba&amp;sh</span></div>
+      <div class="vb-metrics">
+        <div class="vb-metric"><div class="vb-metric-val">35</div><div class="vb-metric-lbl">En ligne</div></div>
+        <div class="vb-metric"><div class="vb-metric-val">11</div><div class="vb-metric-lbl">Vendus</div></div>
+        <div class="vb-metric"><div class="vb-metric-val" style="color:var(--nt-orange)">23.9%</div><div class="vb-metric-lbl">Taux</div></div>
+      </div>
+      <div class="vb-metrics" style="margin-top:8px">
+        <div class="vb-metric"><div class="vb-metric-val">62.02&euro;</div><div class="vb-metric-lbl">Panier</div></div>
+        <div class="vb-metric"><div class="vb-metric-val">1.0j</div><div class="vb-metric-lbl">Delai</div></div>
+        <div class="vb-metric"></div>
+      </div>
+      <div class="vb-subs"></div>
+    </div>
+    <div class="vb-card vb-rn" onclick="this.classList.toggle('open')">
+      <div class="vb-card-top"><span class="rank rank--other">9</span><span class="vb-card-name">The Kooples</span></div>
+      <div class="vb-metrics">
+        <div class="vb-metric"><div class="vb-metric-val">33</div><div class="vb-metric-lbl">En ligne</div></div>
+        <div class="vb-metric"><div class="vb-metric-val">11</div><div class="vb-metric-lbl">Vendus</div></div>
+        <div class="vb-metric"><div class="vb-metric-val" style="color:var(--nt-green)">25.0%</div><div class="vb-metric-lbl">Taux</div></div>
+      </div>
+      <div class="vb-metrics" style="margin-top:8px">
+        <div class="vb-metric"><div class="vb-metric-val">64.48&euro;</div><div class="vb-metric-lbl">Panier</div></div>
+        <div class="vb-metric"><div class="vb-metric-val">1.1j</div><div class="vb-metric-lbl">Delai</div></div>
+        <div class="vb-metric"></div>
+      </div>
+      <div class="vb-subs"></div>
+    </div>
+    <div class="vb-card vb-rn" onclick="this.classList.toggle('open')">
+      <div class="vb-card-top"><span class="rank rank--other">10</span><span class="vb-card-name">Isabel Marant</span></div>
+      <div class="vb-metrics">
+        <div class="vb-metric"><div class="vb-metric-val">25</div><div class="vb-metric-lbl">En ligne</div></div>
+        <div class="vb-metric"><div class="vb-metric-val">6</div><div class="vb-metric-lbl">Vendus</div></div>
+        <div class="vb-metric"><div class="vb-metric-val" style="color:var(--nt-orange)">19.4%</div><div class="vb-metric-lbl">Taux</div></div>
+      </div>
+      <div class="vb-metrics" style="margin-top:8px">
+        <div class="vb-metric"><div class="vb-metric-val">103.53&euro;</div><div class="vb-metric-lbl">Panier</div></div>
+        <div class="vb-metric"><div class="vb-metric-val">1.8j</div><div class="vb-metric-lbl">Delai</div></div>
+        <div class="vb-metric"></div>
+      </div>
+      <div class="vb-subs"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== VARIANT C — Horizontal Bar Race ==================== -->
+<section id="variant-c" class="variant-section">
+  <span class="variant-label">Variante C</span>
+  <div class="section-hdr">
+    <h2>Top Marques Decouvertes</h2>
+    <a href="#">Voir toutes &rarr;</a>
+  </div>
+  <div class="vc-list">
+    <div class="vc-item open" onclick="this.classList.toggle('open')">
+      <div class="vc-item-top">
+        <div class="vc-brand-col"><span class="rank rank--1">1</span><span class="vc-brand-name">Zara</span></div>
+        <div class="vc-bar-col"><div class="vc-bar" style="width:100%;background:linear-gradient(90deg,var(--nt-primary),#00a5b0)"><span>23 vendus</span></div></div>
+        <div class="vc-stats-col">
+          <div class="vc-stat"><div class="vc-stat-val">123</div><div class="vc-stat-lbl">En ligne</div></div>
+          <div class="vc-stat"><div class="vc-stat-val">15.8%</div><div class="vc-stat-lbl">Taux</div></div>
+          <div class="vc-stat"><div class="vc-stat-val">24.86&euro;</div><div class="vc-stat-lbl">Panier</div></div>
+        </div>
+      </div>
+      <div class="vc-subs">
+        <div class="vc-sub-bar"><span class="vc-sub-name">Joggings</span><div class="vc-sub-track"><div class="vc-sub-fill" style="width:100%;background:var(--nt-primary);opacity:.7"><span>7</span></div></div></div>
+        <div class="vc-sub-bar"><span class="vc-sub-name">Sweats</span><div class="vc-sub-track"><div class="vc-sub-fill" style="width:71%;background:var(--nt-primary);opacity:.6"><span>5</span></div></div></div>
+        <div class="vc-sub-bar"><span class="vc-sub-name">Baskets</span><div class="vc-sub-track"><div class="vc-sub-fill" style="width:71%;background:var(--nt-primary);opacity:.5"><span>5</span></div></div></div>
+      </div>
+    </div>
+    <div class="vc-item" onclick="this.classList.toggle('open')">
+      <div class="vc-item-top">
+        <div class="vc-brand-col"><span class="rank rank--2">2</span><span class="vc-brand-name">Sezane</span></div>
+        <div class="vc-bar-col"><div class="vc-bar" style="width:100%;background:linear-gradient(90deg,var(--nt-green),#3fb97a)"><span>23 vendus</span></div></div>
+        <div class="vc-stats-col">
+          <div class="vc-stat"><div class="vc-stat-val">58</div><div class="vc-stat-lbl">En ligne</div></div>
+          <div class="vc-stat"><div class="vc-stat-val">28.4%</div><div class="vc-stat-lbl">Taux</div></div>
+          <div class="vc-stat"><div class="vc-stat-val">94.33&euro;</div><div class="vc-stat-lbl">Panier</div></div>
+        </div>
+      </div>
+      <div class="vc-subs"></div>
+    </div>
+    <div class="vc-item" onclick="this.classList.toggle('open')">
+      <div class="vc-item-top">
+        <div class="vc-brand-col"><span class="rank rank--3">3</span><span class="vc-brand-name">Lacoste</span></div>
+        <div class="vc-bar-col"><div class="vc-bar" style="width:87%;background:linear-gradient(90deg,var(--nt-orange),#ffa726)"><span>20 vendus</span></div></div>
+        <div class="vc-stats-col">
+          <div class="vc-stat"><div class="vc-stat-val">15</div><div class="vc-stat-lbl">En ligne</div></div>
+          <div class="vc-stat"><div class="vc-stat-val">57.1%</div><div class="vc-stat-lbl">Taux</div></div>
+          <div class="vc-stat"><div class="vc-stat-val">46.06&euro;</div><div class="vc-stat-lbl">Panier</div></div>
+        </div>
+      </div>
+      <div class="vc-subs"></div>
+    </div>
+    <div class="vc-item" onclick="this.classList.toggle('open')">
+      <div class="vc-item-top">
+        <div class="vc-brand-col"><span class="rank rank--other">4</span><span class="vc-brand-name">Nike</span></div>
+        <div class="vc-bar-col"><div class="vc-bar" style="width:83%;background:linear-gradient(90deg,#6b93a0,#8bb5c2)"><span>19 vendus</span></div></div>
+        <div class="vc-stats-col">
+          <div class="vc-stat"><div class="vc-stat-val">45</div><div class="vc-stat-lbl">En ligne</div></div>
+          <div class="vc-stat"><div class="vc-stat-val">29.7%</div><div class="vc-stat-lbl">Taux</div></div>
+          <div class="vc-stat"><div class="vc-stat-val">64.43&euro;</div><div class="vc-stat-lbl">Panier</div></div>
+        </div>
+      </div>
+      <div class="vc-subs"></div>
+    </div>
+    <div class="vc-item" onclick="this.classList.toggle('open')">
+      <div class="vc-item-top">
+        <div class="vc-brand-col"><span class="rank rank--other">5</span><span class="vc-brand-name">Ralph Lauren</span></div>
+        <div class="vc-bar-col"><div class="vc-bar" style="width:83%;background:linear-gradient(90deg,#7a9ea8,#9dbdc5)"><span>19 vendus</span></div></div>
+        <div class="vc-stats-col">
+          <div class="vc-stat"><div class="vc-stat-val">42</div><div class="vc-stat-lbl">En ligne</div></div>
+          <div class="vc-stat"><div class="vc-stat-val">31.2%</div><div class="vc-stat-lbl">Taux</div></div>
+          <div class="vc-stat"><div class="vc-stat-val">55.07&euro;</div><div class="vc-stat-lbl">Panier</div></div>
+        </div>
+      </div>
+      <div class="vc-subs"></div>
+    </div>
+    <div class="vc-item" onclick="this.classList.toggle('open')">
+      <div class="vc-item-top">
+        <div class="vc-brand-col"><span class="rank rank--other">6</span><span class="vc-brand-name">Adidas</span></div>
+        <div class="vc-bar-col"><div class="vc-bar" style="width:74%;background:linear-gradient(90deg,#8aabb3,#acc5cb)"><span>17 vendus</span></div></div>
+        <div class="vc-stats-col">
+          <div class="vc-stat"><div class="vc-stat-val">19</div><div class="vc-stat-lbl">En ligne</div></div>
+          <div class="vc-stat"><div class="vc-stat-val">47.2%</div><div class="vc-stat-lbl">Taux</div></div>
+          <div class="vc-stat"><div class="vc-stat-val">38.50&euro;</div><div class="vc-stat-lbl">Panier</div></div>
+        </div>
+      </div>
+      <div class="vc-subs"></div>
+    </div>
+    <div class="vc-item" onclick="this.classList.toggle('open')">
+      <div class="vc-item-top">
+        <div class="vc-brand-col"><span class="rank rank--other">7</span><span class="vc-brand-name">Maje</span></div>
+        <div class="vc-bar-col"><div class="vc-bar" style="width:52%;background:linear-gradient(90deg,#a0b8be,#bdd0d4)"><span>12 vendus</span></div></div>
+        <div class="vc-stats-col">
+          <div class="vc-stat"><div class="vc-stat-val">57</div><div class="vc-stat-lbl">En ligne</div></div>
+          <div class="vc-stat"><div class="vc-stat-val">17.4%</div><div class="vc-stat-lbl">Taux</div></div>
+          <div class="vc-stat"><div class="vc-stat-val">99.79&euro;</div><div class="vc-stat-lbl">Panier</div></div>
+        </div>
+      </div>
+      <div class="vc-subs"></div>
+    </div>
+    <div class="vc-item" onclick="this.classList.toggle('open')">
+      <div class="vc-item-top">
+        <div class="vc-brand-col"><span class="rank rank--other">8</span><span class="vc-brand-name">Ba&amp;sh</span></div>
+        <div class="vc-bar-col"><div class="vc-bar" style="width:48%;background:linear-gradient(90deg,#b0c4c9,#cdd9dc)"><span>11 vendus</span></div></div>
+        <div class="vc-stats-col">
+          <div class="vc-stat"><div class="vc-stat-val">35</div><div class="vc-stat-lbl">En ligne</div></div>
+          <div class="vc-stat"><div class="vc-stat-val">23.9%</div><div class="vc-stat-lbl">Taux</div></div>
+          <div class="vc-stat"><div class="vc-stat-val">62.02&euro;</div><div class="vc-stat-lbl">Panier</div></div>
+        </div>
+      </div>
+      <div class="vc-subs"></div>
+    </div>
+    <div class="vc-item" onclick="this.classList.toggle('open')">
+      <div class="vc-item-top">
+        <div class="vc-brand-col"><span class="rank rank--other">9</span><span class="vc-brand-name">The Kooples</span></div>
+        <div class="vc-bar-col"><div class="vc-bar" style="width:48%;background:linear-gradient(90deg,#baced2,#d5e2e5)"><span>11 vendus</span></div></div>
+        <div class="vc-stats-col">
+          <div class="vc-stat"><div class="vc-stat-val">33</div><div class="vc-stat-lbl">En ligne</div></div>
+          <div class="vc-stat"><div class="vc-stat-val">25.0%</div><div class="vc-stat-lbl">Taux</div></div>
+          <div class="vc-stat"><div class="vc-stat-val">64.48&euro;</div><div class="vc-stat-lbl">Panier</div></div>
+        </div>
+      </div>
+      <div class="vc-subs"></div>
+    </div>
+    <div class="vc-item" onclick="this.classList.toggle('open')">
+      <div class="vc-item-top">
+        <div class="vc-brand-col"><span class="rank rank--other">10</span><span class="vc-brand-name">Isabel Marant</span></div>
+        <div class="vc-bar-col"><div class="vc-bar" style="width:26%;background:linear-gradient(90deg,#c8d6da,#dee8ea)"><span>6 vendus</span></div></div>
+        <div class="vc-stats-col">
+          <div class="vc-stat"><div class="vc-stat-val">25</div><div class="vc-stat-lbl">En ligne</div></div>
+          <div class="vc-stat"><div class="vc-stat-val">19.4%</div><div class="vc-stat-lbl">Taux</div></div>
+          <div class="vc-stat"><div class="vc-stat-val">103.53&euro;</div><div class="vc-stat-lbl">Panier</div></div>
+        </div>
+      </div>
+      <div class="vc-subs"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== VARIANT D — Heat Map Table ==================== -->
+<section id="variant-d" class="variant-section">
+  <span class="variant-label">Variante D</span>
+  <div class="section-hdr">
+    <h2>Top Marques Decouvertes</h2>
+    <a href="#">Voir toutes &rarr;</a>
+  </div>
+  <div class="vd-wrap">
+    <div class="vd-legend"><span>Performance :</span><span style="font-size:10px">Faible</span><div class="vd-legend-bar"></div><span style="font-size:10px">Forte</span></div>
+    <table class="vd-table">
+      <thead><tr><th>#</th><th>Marque</th><th>En ligne</th><th>Vendus</th><th>Taux vente</th><th>Panier moy.</th><th>Delai vente</th></tr></thead>
+      <tbody>
+        <tr class="vd-row" onclick="toggleVD(this)"><td><span class="rank rank--1">1</span></td><td class="va-brand">Zara</td><td><span class="vd-cell" style="background:#e0f2f1;color:#005f68">123</span></td><td><span class="vd-cell" style="background:#dcfce7;color:#28865a">23</span></td><td><span class="vd-cell" style="background:#fff3e0;color:#fb8c00">15.8%</span></td><td><span class="vd-cell" style="background:#fef2f2;color:#d04555">24.86&euro;</span></td><td><span class="vd-cell" style="background:#dcfce7;color:#28865a">1.7j</span></td></tr>
+        <tr class="vd-sub open"><td colspan="7"><table class="vd-sub-table"><thead><tr><th>Categorie</th><th>En ligne</th><th>Vendus</th><th>Taux</th><th>Panier</th><th>Delai</th></tr></thead><tbody><tr><td>Joggings</td><td>6</td><td>7</td><td><span class="vd-cell" style="background:#dcfce7;color:#28865a">53.9%</span></td><td>27.58&euro;</td><td>2.1j</td></tr><tr><td>Sweats</td><td>6</td><td>5</td><td><span class="vd-cell" style="background:#dcfce7;color:#28865a">45.5%</span></td><td>44.85&euro;</td><td>11h</td></tr><tr><td>Baskets</td><td>7</td><td>5</td><td><span class="vd-cell" style="background:#dcfce7;color:#28865a">41.7%</span></td><td>47.46&euro;</td><td>2.5j</td></tr></tbody></table></td></tr>
+        <tr class="vd-row" onclick="toggleVD(this)"><td><span class="rank rank--2">2</span></td><td class="va-brand">Sezane</td><td><span class="vd-cell" style="background:#e0f2f1;color:#005f68">58</span></td><td><span class="vd-cell" style="background:#dcfce7;color:#28865a">23</span></td><td><span class="vd-cell" style="background:#dcfce7;color:#28865a">28.4%</span></td><td><span class="vd-cell" style="background:#dcfce7;color:#28865a">94.33&euro;</span></td><td><span class="vd-cell" style="background:#fff3e0;color:#fb8c00">2.8j</span></td></tr>
+        <tr class="vd-sub"><td colspan="7"></td></tr>
+        <tr class="vd-row" onclick="toggleVD(this)"><td><span class="rank rank--3">3</span></td><td class="va-brand">Lacoste</td><td><span class="vd-cell" style="background:#fef2f2;color:#d04555">15</span></td><td><span class="vd-cell" style="background:#dcfce7;color:#28865a">20</span></td><td><span class="vd-cell" style="background:#dcfce7;color:#166534">57.1%</span></td><td><span class="vd-cell" style="background:#fff3e0;color:#fb8c00">46.06&euro;</span></td><td><span class="vd-cell" style="background:#fff3e0;color:#fb8c00">2.5j</span></td></tr>
+        <tr class="vd-sub"><td colspan="7"></td></tr>
+        <tr class="vd-row" onclick="toggleVD(this)"><td><span class="rank rank--other">4</span></td><td class="va-brand">Nike</td><td><span class="vd-cell" style="background:#e0f2f1;color:#005f68">45</span></td><td><span class="vd-cell" style="background:#dcfce7;color:#28865a">19</span></td><td><span class="vd-cell" style="background:#dcfce7;color:#28865a">29.7%</span></td><td><span class="vd-cell" style="background:#dcfce7;color:#28865a">64.43&euro;</span></td><td><span class="vd-cell" style="background:#fff3e0;color:#fb8c00">2.6j</span></td></tr>
+        <tr class="vd-sub"><td colspan="7"></td></tr>
+        <tr class="vd-row" onclick="toggleVD(this)"><td><span class="rank rank--other">5</span></td><td class="va-brand">Ralph Lauren</td><td><span class="vd-cell" style="background:#e0f2f1;color:#005f68">42</span></td><td><span class="vd-cell" style="background:#dcfce7;color:#28865a">19</span></td><td><span class="vd-cell" style="background:#dcfce7;color:#28865a">31.2%</span></td><td><span class="vd-cell" style="background:#dcfce7;color:#28865a">55.07&euro;</span></td><td><span class="vd-cell" style="background:#dcfce7;color:#28865a">1.9j</span></td></tr>
+        <tr class="vd-sub"><td colspan="7"></td></tr>
+        <tr class="vd-row" onclick="toggleVD(this)"><td><span class="rank rank--other">6</span></td><td class="va-brand">Adidas</td><td><span class="vd-cell" style="background:#fef2f2;color:#d04555">19</span></td><td><span class="vd-cell" style="background:#fff3e0;color:#fb8c00">17</span></td><td><span class="vd-cell" style="background:#dcfce7;color:#166534">47.2%</span></td><td><span class="vd-cell" style="background:#fff3e0;color:#fb8c00">38.50&euro;</span></td><td><span class="vd-cell" style="background:#dcfce7;color:#28865a">1.7j</span></td></tr>
+        <tr class="vd-sub"><td colspan="7"></td></tr>
+        <tr class="vd-row" onclick="toggleVD(this)"><td><span class="rank rank--other">7</span></td><td class="va-brand">Maje</td><td><span class="vd-cell" style="background:#e0f2f1;color:#005f68">57</span></td><td><span class="vd-cell" style="background:#fff3e0;color:#fb8c00">12</span></td><td><span class="vd-cell" style="background:#fef2f2;color:#d04555">17.4%</span></td><td><span class="vd-cell" style="background:#dcfce7;color:#166534">99.79&euro;</span></td><td><span class="vd-cell" style="background:#dcfce7;color:#28865a">1.9j</span></td></tr>
+        <tr class="vd-sub"><td colspan="7"></td></tr>
+        <tr class="vd-row" onclick="toggleVD(this)"><td><span class="rank rank--other">8</span></td><td class="va-brand">Ba&amp;sh</td><td><span class="vd-cell" style="background:#fff3e0;color:#fb8c00">35</span></td><td><span class="vd-cell" style="background:#fef2f2;color:#d04555">11</span></td><td><span class="vd-cell" style="background:#fff3e0;color:#fb8c00">23.9%</span></td><td><span class="vd-cell" style="background:#dcfce7;color:#28865a">62.02&euro;</span></td><td><span class="vd-cell" style="background:#dcfce7;color:#166534">1.0j</span></td></tr>
+        <tr class="vd-sub"><td colspan="7"></td></tr>
+        <tr class="vd-row" onclick="toggleVD(this)"><td><span class="rank rank--other">9</span></td><td class="va-brand">The Kooples</td><td><span class="vd-cell" style="background:#fff3e0;color:#fb8c00">33</span></td><td><span class="vd-cell" style="background:#fef2f2;color:#d04555">11</span></td><td><span class="vd-cell" style="background:#dcfce7;color:#28865a">25.0%</span></td><td><span class="vd-cell" style="background:#dcfce7;color:#28865a">64.48&euro;</span></td><td><span class="vd-cell" style="background:#dcfce7;color:#166534">1.1j</span></td></tr>
+        <tr class="vd-sub"><td colspan="7"></td></tr>
+        <tr class="vd-row" onclick="toggleVD(this)"><td><span class="rank rank--other">10</span></td><td class="va-brand">Isabel Marant</td><td><span class="vd-cell" style="background:#fff3e0;color:#fb8c00">25</span></td><td><span class="vd-cell" style="background:#fef2f2;color:#d04555">6</span></td><td><span class="vd-cell" style="background:#fef2f2;color:#d04555">19.4%</span></td><td><span class="vd-cell" style="background:#dcfce7;color:#166534">103.53&euro;</span></td><td><span class="vd-cell" style="background:#dcfce7;color:#28865a">1.8j</span></td></tr>
+        <tr class="vd-sub"><td colspan="7"></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ==================== VARIANT E — Ranked Cards + Inline Charts ==================== -->
+<section id="variant-e" class="variant-section">
+  <span class="variant-label">Variante E</span>
+  <div class="section-hdr">
+    <h2>Top Marques Decouvertes</h2>
+    <a href="#">Voir toutes &rarr;</a>
+  </div>
+  <div class="ve-list">
+    <div class="ve-card open" onclick="this.classList.toggle('open')">
+      <div class="ve-rank-big r1">1</div>
+      <div class="ve-info">
+        <div class="ve-info-name">Zara</div>
+        <div class="ve-info-stats">
+          <span><strong>123</strong> en ligne</span>
+          <span><strong>23</strong> vendus</span>
+          <span><strong>24.86&euro;</strong> panier</span>
+          <span><strong>1.7j</strong> delai</span>
+        </div>
+      </div>
+      <div class="ve-chart">
+        <div class="ve-bar-mini"><div class="ve-bar-mini-fill" style="width:28%;background:var(--nt-orange)"></div></div>
+        <div class="ve-bar-mini-lbl"><span>Taux vente</span><span style="font-weight:600;color:var(--nt-orange)">15.8%</span></div>
+      </div>
+      <div class="ve-subs" style="width:100%;margin-left:70px">
+        <div class="ve-sub-row"><span class="ve-sub-name">Joggings</span><div class="ve-sub-stats"><span><strong>6</strong> en ligne</span><span><strong>7</strong> vendus</span><span style="color:var(--nt-green)"><strong>53.9%</strong></span><span><strong>27.58&euro;</strong></span><span><strong>2.1j</strong></span></div></div>
+        <div class="ve-sub-row"><span class="ve-sub-name">Sweats</span><div class="ve-sub-stats"><span><strong>6</strong> en ligne</span><span><strong>5</strong> vendus</span><span style="color:var(--nt-green)"><strong>45.5%</strong></span><span><strong>44.85&euro;</strong></span><span><strong>11h</strong></span></div></div>
+        <div class="ve-sub-row"><span class="ve-sub-name">Baskets</span><div class="ve-sub-stats"><span><strong>7</strong> en ligne</span><span><strong>5</strong> vendus</span><span style="color:var(--nt-green)"><strong>41.7%</strong></span><span><strong>47.46&euro;</strong></span><span><strong>2.5j</strong></span></div></div>
+      </div>
+    </div>
+    <div class="ve-card" onclick="this.classList.toggle('open')">
+      <div class="ve-rank-big r2">2</div>
+      <div class="ve-info">
+        <div class="ve-info-name">Sezane</div>
+        <div class="ve-info-stats"><span><strong>58</strong> en ligne</span><span><strong>23</strong> vendus</span><span><strong>94.33&euro;</strong> panier</span><span><strong>2.8j</strong> delai</span></div>
+      </div>
+      <div class="ve-chart">
+        <div class="ve-bar-mini"><div class="ve-bar-mini-fill" style="width:50%;background:var(--nt-green)"></div></div>
+        <div class="ve-bar-mini-lbl"><span>Taux vente</span><span style="font-weight:600;color:var(--nt-green)">28.4%</span></div>
+      </div>
+    </div>
+    <div class="ve-card" onclick="this.classList.toggle('open')">
+      <div class="ve-rank-big r3">3</div>
+      <div class="ve-info">
+        <div class="ve-info-name">Lacoste</div>
+        <div class="ve-info-stats"><span><strong>15</strong> en ligne</span><span><strong>20</strong> vendus</span><span><strong>46.06&euro;</strong> panier</span><span><strong>2.5j</strong> delai</span></div>
+      </div>
+      <div class="ve-chart">
+        <div class="ve-bar-mini"><div class="ve-bar-mini-fill" style="width:100%;background:var(--nt-green)"></div></div>
+        <div class="ve-bar-mini-lbl"><span>Taux vente</span><span style="font-weight:600;color:var(--nt-green)">57.1%</span></div>
+      </div>
+    </div>
+    <div class="ve-card" onclick="this.classList.toggle('open')">
+      <div class="ve-rank-big rn">4</div>
+      <div class="ve-info">
+        <div class="ve-info-name">Nike</div>
+        <div class="ve-info-stats"><span><strong>45</strong> en ligne</span><span><strong>19</strong> vendus</span><span><strong>64.43&euro;</strong> panier</span><span><strong>2.6j</strong> delai</span></div>
+      </div>
+      <div class="ve-chart">
+        <div class="ve-bar-mini"><div class="ve-bar-mini-fill" style="width:52%;background:var(--nt-green)"></div></div>
+        <div class="ve-bar-mini-lbl"><span>Taux vente</span><span style="font-weight:600;color:var(--nt-green)">29.7%</span></div>
+      </div>
+    </div>
+    <div class="ve-card" onclick="this.classList.toggle('open')">
+      <div class="ve-rank-big rn">5</div>
+      <div class="ve-info">
+        <div class="ve-info-name">Ralph Lauren</div>
+        <div class="ve-info-stats"><span><strong>42</strong> en ligne</span><span><strong>19</strong> vendus</span><span><strong>55.07&euro;</strong> panier</span><span><strong>1.9j</strong> delai</span></div>
+      </div>
+      <div class="ve-chart">
+        <div class="ve-bar-mini"><div class="ve-bar-mini-fill" style="width:55%;background:var(--nt-green)"></div></div>
+        <div class="ve-bar-mini-lbl"><span>Taux vente</span><span style="font-weight:600;color:var(--nt-green)">31.2%</span></div>
+      </div>
+    </div>
+    <div class="ve-card" onclick="this.classList.toggle('open')">
+      <div class="ve-rank-big rn">6</div>
+      <div class="ve-info">
+        <div class="ve-info-name">Adidas</div>
+        <div class="ve-info-stats"><span><strong>19</strong> en ligne</span><span><strong>17</strong> vendus</span><span><strong>38.50&euro;</strong> panier</span><span><strong>1.7j</strong> delai</span></div>
+      </div>
+      <div class="ve-chart">
+        <div class="ve-bar-mini"><div class="ve-bar-mini-fill" style="width:83%;background:var(--nt-green)"></div></div>
+        <div class="ve-bar-mini-lbl"><span>Taux vente</span><span style="font-weight:600;color:var(--nt-green)">47.2%</span></div>
+      </div>
+    </div>
+    <div class="ve-card" onclick="this.classList.toggle('open')">
+      <div class="ve-rank-big rn">7</div>
+      <div class="ve-info">
+        <div class="ve-info-name">Maje</div>
+        <div class="ve-info-stats"><span><strong>57</strong> en ligne</span><span><strong>12</strong> vendus</span><span><strong>99.79&euro;</strong> panier</span><span><strong>1.9j</strong> delai</span></div>
+      </div>
+      <div class="ve-chart">
+        <div class="ve-bar-mini"><div class="ve-bar-mini-fill" style="width:30%;background:var(--nt-orange)"></div></div>
+        <div class="ve-bar-mini-lbl"><span>Taux vente</span><span style="font-weight:600;color:var(--nt-orange)">17.4%</span></div>
+      </div>
+    </div>
+    <div class="ve-card" onclick="this.classList.toggle('open')">
+      <div class="ve-rank-big rn">8</div>
+      <div class="ve-info">
+        <div class="ve-info-name">Ba&amp;sh</div>
+        <div class="ve-info-stats"><span><strong>35</strong> en ligne</span><span><strong>11</strong> vendus</span><span><strong>62.02&euro;</strong> panier</span><span><strong>1.0j</strong> delai</span></div>
+      </div>
+      <div class="ve-chart">
+        <div class="ve-bar-mini"><div class="ve-bar-mini-fill" style="width:42%;background:var(--nt-orange)"></div></div>
+        <div class="ve-bar-mini-lbl"><span>Taux vente</span><span style="font-weight:600;color:var(--nt-orange)">23.9%</span></div>
+      </div>
+    </div>
+    <div class="ve-card" onclick="this.classList.toggle('open')">
+      <div class="ve-rank-big rn">9</div>
+      <div class="ve-info">
+        <div class="ve-info-name">The Kooples</div>
+        <div class="ve-info-stats"><span><strong>33</strong> en ligne</span><span><strong>11</strong> vendus</span><span><strong>64.48&euro;</strong> panier</span><span><strong>1.1j</strong> delai</span></div>
+      </div>
+      <div class="ve-chart">
+        <div class="ve-bar-mini"><div class="ve-bar-mini-fill" style="width:44%;background:var(--nt-orange)"></div></div>
+        <div class="ve-bar-mini-lbl"><span>Taux vente</span><span style="font-weight:600;color:var(--nt-orange)">25.0%</span></div>
+      </div>
+    </div>
+    <div class="ve-card" onclick="this.classList.toggle('open')">
+      <div class="ve-rank-big rn">10</div>
+      <div class="ve-info">
+        <div class="ve-info-name">Isabel Marant</div>
+        <div class="ve-info-stats"><span><strong>25</strong> en ligne</span><span><strong>6</strong> vendus</span><span><strong>103.53&euro;</strong> panier</span><span><strong>1.8j</strong> delai</span></div>
+      </div>
+      <div class="ve-chart">
+        <div class="ve-bar-mini"><div class="ve-bar-mini-fill" style="width:34%;background:var(--nt-orange)"></div></div>
+        <div class="ve-bar-mini-lbl"><span>Taux vente</span><span style="font-weight:600;color:var(--nt-orange)">19.4%</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== VARIANT F — Compact Chips + Metrics ==================== -->
+<section id="variant-f" class="variant-section">
+  <span class="variant-label">Variante F</span>
+  <div class="section-hdr">
+    <h2>Top Marques Decouvertes</h2>
+    <a href="#">Voir toutes &rarr;</a>
+  </div>
+  <div class="vf-grid">
+    <div class="vf-chip-card open" onclick="this.classList.toggle('open')">
+      <div class="vf-chip-top"><span class="rank rank--1">1</span><span class="vf-chip-name">Zara</span></div>
+      <div class="vf-badges">
+        <span class="vf-badge" style="background:var(--nt-primary-light);color:var(--nt-primary)">123 en ligne</span>
+        <span class="vf-badge" style="background:var(--nt-green-light);color:var(--nt-green)">23 vendus</span>
+        <span class="vf-badge" style="background:var(--nt-orange-light);color:var(--nt-orange)">15.8%</span>
+        <span class="vf-badge" style="background:#f3f4f6;color:var(--nt-text-secondary)">24.86&euro;</span>
+        <span class="vf-badge" style="background:#f3f4f6;color:var(--nt-text-secondary)">1.7j</span>
+      </div>
+      <div class="vf-subs">
+        <div class="vf-sub-chip"><b>Joggings</b> 7 vendus - 53.9% - 27.58&euro;</div>
+        <div class="vf-sub-chip"><b>Sweats</b> 5 vendus - 45.5% - 44.85&euro;</div>
+        <div class="vf-sub-chip"><b>Baskets</b> 5 vendus - 41.7% - 47.46&euro;</div>
+      </div>
+    </div>
+    <div class="vf-chip-card" onclick="this.classList.toggle('open')">
+      <div class="vf-chip-top"><span class="rank rank--2">2</span><span class="vf-chip-name">Sezane</span></div>
+      <div class="vf-badges">
+        <span class="vf-badge" style="background:var(--nt-primary-light);color:var(--nt-primary)">58 en ligne</span>
+        <span class="vf-badge" style="background:var(--nt-green-light);color:var(--nt-green)">23 vendus</span>
+        <span class="vf-badge" style="background:var(--nt-green-light);color:var(--nt-green)">28.4%</span>
+        <span class="vf-badge" style="background:#f3f4f6;color:var(--nt-text-secondary)">94.33&euro;</span>
+        <span class="vf-badge" style="background:#f3f4f6;color:var(--nt-text-secondary)">2.8j</span>
+      </div>
+      <div class="vf-subs"></div>
+    </div>
+    <div class="vf-chip-card" onclick="this.classList.toggle('open')">
+      <div class="vf-chip-top"><span class="rank rank--3">3</span><span class="vf-chip-name">Lacoste</span></div>
+      <div class="vf-badges">
+        <span class="vf-badge" style="background:var(--nt-primary-light);color:var(--nt-primary)">15 en ligne</span>
+        <span class="vf-badge" style="background:var(--nt-green-light);color:var(--nt-green)">20 vendus</span>
+        <span class="vf-badge" style="background:var(--nt-green-light);color:var(--nt-green)">57.1%</span>
+        <span class="vf-badge" style="background:#f3f4f6;color:var(--nt-text-secondary)">46.06&euro;</span>
+        <span class="vf-badge" style="background:#f3f4f6;color:var(--nt-text-secondary)">2.5j</span>
+      </div>
+      <div class="vf-subs"></div>
+    </div>
+    <div class="vf-chip-card" onclick="this.classList.toggle('open')">
+      <div class="vf-chip-top"><span class="rank rank--other">4</span><span class="vf-chip-name">Nike</span></div>
+      <div class="vf-badges">
+        <span class="vf-badge" style="background:var(--nt-primary-light);color:var(--nt-primary)">45 en ligne</span>
+        <span class="vf-badge" style="background:var(--nt-green-light);color:var(--nt-green)">19 vendus</span>
+        <span class="vf-badge" style="background:var(--nt-green-light);color:var(--nt-green)">29.7%</span>
+        <span class="vf-badge" style="background:#f3f4f6;color:var(--nt-text-secondary)">64.43&euro;</span>
+        <span class="vf-badge" style="background:#f3f4f6;color:var(--nt-text-secondary)">2.6j</span>
+      </div>
+      <div class="vf-subs"></div>
+    </div>
+    <div class="vf-chip-card" onclick="this.classList.toggle('open')">
+      <div class="vf-chip-top"><span class="rank rank--other">5</span><span class="vf-chip-name">Ralph Lauren</span></div>
+      <div class="vf-badges">
+        <span class="vf-badge" style="background:var(--nt-primary-light);color:var(--nt-primary)">42 en ligne</span>
+        <span class="vf-badge" style="background:var(--nt-green-light);color:var(--nt-green)">19 vendus</span>
+        <span class="vf-badge" style="background:var(--nt-green-light);color:var(--nt-green)">31.2%</span>
+        <span class="vf-badge" style="background:#f3f4f6;color:var(--nt-text-secondary)">55.07&euro;</span>
+        <span class="vf-badge" style="background:#f3f4f6;color:var(--nt-text-secondary)">1.9j</span>
+      </div>
+      <div class="vf-subs"></div>
+    </div>
+    <div class="vf-chip-card" onclick="this.classList.toggle('open')">
+      <div class="vf-chip-top"><span class="rank rank--other">6</span><span class="vf-chip-name">Adidas</span></div>
+      <div class="vf-badges">
+        <span class="vf-badge" style="background:var(--nt-primary-light);color:var(--nt-primary)">19 en ligne</span>
+        <span class="vf-badge" style="background:var(--nt-green-light);color:var(--nt-green)">17 vendus</span>
+        <span class="vf-badge" style="background:var(--nt-green-light);color:var(--nt-green)">47.2%</span>
+        <span class="vf-badge" style="background:#f3f4f6;color:var(--nt-text-secondary)">38.50&euro;</span>
+        <span class="vf-badge" style="background:#f3f4f6;color:var(--nt-text-secondary)">1.7j</span>
+      </div>
+      <div class="vf-subs"></div>
+    </div>
+    <div class="vf-chip-card" onclick="this.classList.toggle('open')">
+      <div class="vf-chip-top"><span class="rank rank--other">7</span><span class="vf-chip-name">Maje</span></div>
+      <div class="vf-badges">
+        <span class="vf-badge" style="background:var(--nt-primary-light);color:var(--nt-primary)">57 en ligne</span>
+        <span class="vf-badge" style="background:var(--nt-orange-light);color:var(--nt-orange)">12 vendus</span>
+        <span class="vf-badge" style="background:var(--nt-orange-light);color:var(--nt-orange)">17.4%</span>
+        <span class="vf-badge" style="background:#f3f4f6;color:var(--nt-text-secondary)">99.79&euro;</span>
+        <span class="vf-badge" style="background:#f3f4f6;color:var(--nt-text-secondary)">1.9j</span>
+      </div>
+      <div class="vf-subs"></div>
+    </div>
+    <div class="vf-chip-card" onclick="this.classList.toggle('open')">
+      <div class="vf-chip-top"><span class="rank rank--other">8</span><span class="vf-chip-name">Ba&amp;sh</span></div>
+      <div class="vf-badges">
+        <span class="vf-badge" style="background:var(--nt-primary-light);color:var(--nt-primary)">35 en ligne</span>
+        <span class="vf-badge" style="background:var(--nt-orange-light);color:var(--nt-orange)">11 vendus</span>
+        <span class="vf-badge" style="background:var(--nt-orange-light);color:var(--nt-orange)">23.9%</span>
+        <span class="vf-badge" style="background:#f3f4f6;color:var(--nt-text-secondary)">62.02&euro;</span>
+        <span class="vf-badge" style="background:#f3f4f6;color:var(--nt-text-secondary)">1.0j</span>
+      </div>
+      <div class="vf-subs"></div>
+    </div>
+    <div class="vf-chip-card" onclick="this.classList.toggle('open')">
+      <div class="vf-chip-top"><span class="rank rank--other">9</span><span class="vf-chip-name">The Kooples</span></div>
+      <div class="vf-badges">
+        <span class="vf-badge" style="background:var(--nt-primary-light);color:var(--nt-primary)">33 en ligne</span>
+        <span class="vf-badge" style="background:var(--nt-orange-light);color:var(--nt-orange)">11 vendus</span>
+        <span class="vf-badge" style="background:var(--nt-green-light);color:var(--nt-green)">25.0%</span>
+        <span class="vf-badge" style="background:#f3f4f6;color:var(--nt-text-secondary)">64.48&euro;</span>
+        <span class="vf-badge" style="background:#f3f4f6;color:var(--nt-text-secondary)">1.1j</span>
+      </div>
+      <div class="vf-subs"></div>
+    </div>
+    <div class="vf-chip-card" onclick="this.classList.toggle('open')">
+      <div class="vf-chip-top"><span class="rank rank--other">10</span><span class="vf-chip-name">Isabel Marant</span></div>
+      <div class="vf-badges">
+        <span class="vf-badge" style="background:var(--nt-primary-light);color:var(--nt-primary)">25 en ligne</span>
+        <span class="vf-badge" style="background:var(--nt-red-light);color:var(--nt-red)">6 vendus</span>
+        <span class="vf-badge" style="background:var(--nt-orange-light);color:var(--nt-orange)">19.4%</span>
+        <span class="vf-badge" style="background:#f3f4f6;color:var(--nt-text-secondary)">103.53&euro;</span>
+        <span class="vf-badge" style="background:#f3f4f6;color:var(--nt-text-secondary)">1.8j</span>
+      </div>
+      <div class="vf-subs"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== VARIANT G — Treemap ==================== -->
+<section id="variant-g" class="variant-section">
+  <span class="variant-label">Variante G</span>
+  <div class="section-hdr">
+    <h2>Top Marques Decouvertes</h2>
+    <a href="#">Voir toutes &rarr;</a>
+  </div>
+  <div class="vg-container">
+    <div class="vg-treemap">
+      <div class="vg-block" style="flex:2.3;min-height:160px;background:linear-gradient(135deg,#00919e,#007782)" onclick="showVGDetail('zara')">
+        <div class="vg-block-rank">#1</div>
+        <div class="vg-block-name">Zara</div>
+        <div class="vg-block-metric">23 vendus</div>
+        <div class="vg-block-sub">123 en ligne &bull; 15.8% &bull; 24.86&euro;</div>
+      </div>
+      <div class="vg-block" style="flex:2.3;min-height:160px;background:linear-gradient(135deg,#33a374,#28865a)" onclick="showVGDetail('sezane')">
+        <div class="vg-block-rank">#2</div>
+        <div class="vg-block-name">Sezane</div>
+        <div class="vg-block-metric">23 vendus</div>
+        <div class="vg-block-sub">58 en ligne &bull; 28.4% &bull; 94.33&euro;</div>
+      </div>
+      <div class="vg-block" style="flex:2;min-height:140px;background:linear-gradient(135deg,#ffa726,#fb8c00)" onclick="showVGDetail('lacoste')">
+        <div class="vg-block-rank">#3</div>
+        <div class="vg-block-name">Lacoste</div>
+        <div class="vg-block-metric">20 vendus</div>
+        <div class="vg-block-sub">15 en ligne &bull; 57.1% &bull; 46.06&euro;</div>
+      </div>
+      <div class="vg-block" style="flex:1.9;min-height:120px;background:linear-gradient(135deg,#5a8f9a,#4a7d87)" onclick="showVGDetail('nike')">
+        <div class="vg-block-rank">#4</div>
+        <div class="vg-block-name">Nike</div>
+        <div class="vg-block-metric">19 vendus</div>
+        <div class="vg-block-sub">29.7% &bull; 64.43&euro;</div>
+      </div>
+      <div class="vg-block" style="flex:1.9;min-height:120px;background:linear-gradient(135deg,#6a9da7,#5a8b95)" onclick="showVGDetail('ralph')">
+        <div class="vg-block-rank">#5</div>
+        <div class="vg-block-name">Ralph Lauren</div>
+        <div class="vg-block-metric">19 vendus</div>
+        <div class="vg-block-sub">31.2% &bull; 55.07&euro;</div>
+      </div>
+      <div class="vg-block" style="flex:1.7;min-height:100px;background:linear-gradient(135deg,#2da56e,#1f8f5a)" onclick="showVGDetail('adidas')">
+        <div class="vg-block-rank">#6</div>
+        <div class="vg-block-name">Adidas</div>
+        <div class="vg-block-metric">17 vendus</div>
+        <div class="vg-block-sub">47.2% &bull; 38.50&euro;</div>
+      </div>
+      <div class="vg-block" style="flex:1.2;min-height:90px;background:linear-gradient(135deg,#e07a8a,#d04555)" onclick="showVGDetail('maje')">
+        <div class="vg-block-rank">#7</div>
+        <div class="vg-block-name">Maje</div>
+        <div class="vg-block-metric">12</div>
+        <div class="vg-block-sub">17.4%</div>
+      </div>
+      <div class="vg-block" style="flex:1.1;min-height:80px;background:linear-gradient(135deg,#8ca8b0,#7a969e)" onclick="showVGDetail('bash')">
+        <div class="vg-block-rank">#8</div>
+        <div class="vg-block-name">Ba&amp;sh</div>
+        <div class="vg-block-metric">11</div>
+        <div class="vg-block-sub">23.9%</div>
+      </div>
+      <div class="vg-block" style="flex:1.1;min-height:80px;background:linear-gradient(135deg,#96b0b7,#84a0a8)" onclick="showVGDetail('kooples')">
+        <div class="vg-block-rank">#9</div>
+        <div class="vg-block-name">The Kooples</div>
+        <div class="vg-block-metric">11</div>
+        <div class="vg-block-sub">25.0%</div>
+      </div>
+      <div class="vg-block" style="flex:.6;min-height:70px;background:linear-gradient(135deg,#c97a85,#b86a75)" onclick="showVGDetail('marant')">
+        <div class="vg-block-rank">#10</div>
+        <div class="vg-block-name">Isabel Marant</div>
+        <div class="vg-block-metric">6</div>
+        <div class="vg-block-sub">19.4%</div>
+      </div>
+    </div>
+    <div class="vg-detail open" id="vg-detail-zara">
+      <h3>Zara — Detail</h3>
+      <div class="vg-detail-metrics">
+        <div class="vg-detail-metric"><div class="val" style="color:var(--nt-primary)">123</div><div class="lbl">En ligne</div></div>
+        <div class="vg-detail-metric"><div class="val" style="color:var(--nt-green)">23</div><div class="lbl">Vendus</div></div>
+        <div class="vg-detail-metric"><div class="val" style="color:var(--nt-orange)">15.8%</div><div class="lbl">Taux vente</div></div>
+        <div class="vg-detail-metric"><div class="val">24.86&euro;</div><div class="lbl">Panier moy.</div></div>
+        <div class="vg-detail-metric"><div class="val">1.7j</div><div class="lbl">Delai vente</div></div>
+      </div>
+      <div style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap">
+        <span class="vf-sub-chip"><b>Joggings</b> 7 vendus - 53.9% - 27.58&euro; - 2.1j</span>
+        <span class="vf-sub-chip"><b>Sweats</b> 5 vendus - 45.5% - 44.85&euro; - 11h</span>
+        <span class="vf-sub-chip"><b>Baskets</b> 5 vendus - 41.7% - 47.46&euro; - 2.5j</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== VARIANT H — Dashboard Cards with Sparklines ==================== -->
+<section id="variant-h" class="variant-section">
+  <span class="variant-label">Variante H</span>
+  <div class="section-hdr">
+    <h2>Top Marques Decouvertes</h2>
+    <a href="#">Voir toutes &rarr;</a>
+  </div>
+  <!-- Featured top 3 -->
+  <div class="vh-featured">
+    <div class="vh-fcard vh-r1">
+      <div class="vh-fcard-top">
+        <span class="vh-fcard-name">Zara</span>
+        <span class="vh-fcard-rank">#1</span>
+      </div>
+      <div class="vh-fcard-metrics">
+        <div class="vh-fm"><div class="vh-fm-val">123</div><div class="vh-fm-lbl">En ligne</div></div>
+        <div class="vh-fm"><div class="vh-fm-val" style="color:var(--nt-green)">23</div><div class="vh-fm-lbl">Vendus</div></div>
+        <div class="vh-fm"><div class="vh-fm-val" style="color:var(--nt-orange)">15.8%</div><div class="vh-fm-lbl">Taux vente</div></div>
+        <div class="vh-fm"><div class="vh-fm-val">24.86&euro;</div><div class="vh-fm-lbl">Panier moy.</div></div>
+      </div>
+      <div class="vh-sparkline">
+        <svg width="100%" height="32" viewBox="0 0 200 32"><polyline fill="none" stroke="var(--nt-primary)" stroke-width="2" points="0,28 20,24 40,20 60,26 80,18 100,22 120,14 140,16 160,10 180,12 200,8"/><polyline fill="none" stroke="var(--nt-primary)" stroke-width="0" stroke-opacity="0.1" points="0,28 20,24 40,20 60,26 80,18 100,22 120,14 140,16 160,10 180,12 200,8 200,32 0,32"/><polygon fill="var(--nt-primary)" fill-opacity="0.08" points="0,28 20,24 40,20 60,26 80,18 100,22 120,14 140,16 160,10 180,12 200,8 200,32 0,32"/></svg>
+      </div>
+      <span class="vh-trend up">+12% vs semaine precedente</span>
+      <div style="margin-top:12px;border-top:1px solid var(--nt-border);padding-top:10px">
+        <div style="font-size:11px;color:var(--nt-text-muted);margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:.3px">Sous-categories</div>
+        <div class="vf-sub-chip"><b>Joggings</b> 7 &bull; 53.9%</div>
+        <div class="vf-sub-chip"><b>Sweats</b> 5 &bull; 45.5%</div>
+        <div class="vf-sub-chip"><b>Baskets</b> 5 &bull; 41.7%</div>
+      </div>
+    </div>
+    <div class="vh-fcard vh-r2">
+      <div class="vh-fcard-top">
+        <span class="vh-fcard-name">Sezane</span>
+        <span class="vh-fcard-rank">#2</span>
+      </div>
+      <div class="vh-fcard-metrics">
+        <div class="vh-fm"><div class="vh-fm-val">58</div><div class="vh-fm-lbl">En ligne</div></div>
+        <div class="vh-fm"><div class="vh-fm-val" style="color:var(--nt-green)">23</div><div class="vh-fm-lbl">Vendus</div></div>
+        <div class="vh-fm"><div class="vh-fm-val" style="color:var(--nt-green)">28.4%</div><div class="vh-fm-lbl">Taux vente</div></div>
+        <div class="vh-fm"><div class="vh-fm-val">94.33&euro;</div><div class="vh-fm-lbl">Panier moy.</div></div>
+      </div>
+      <div class="vh-sparkline">
+        <svg width="100%" height="32" viewBox="0 0 200 32"><polyline fill="none" stroke="var(--nt-green)" stroke-width="2" points="0,22 20,20 40,24 60,18 80,16 100,20 120,12 140,14 160,8 180,10 200,6"/><polygon fill="var(--nt-green)" fill-opacity="0.08" points="0,22 20,20 40,24 60,18 80,16 100,20 120,12 140,14 160,8 180,10 200,6 200,32 0,32"/></svg>
+      </div>
+      <span class="vh-trend up">+8% vs semaine precedente</span>
+    </div>
+    <div class="vh-fcard vh-r3">
+      <div class="vh-fcard-top">
+        <span class="vh-fcard-name">Lacoste</span>
+        <span class="vh-fcard-rank">#3</span>
+      </div>
+      <div class="vh-fcard-metrics">
+        <div class="vh-fm"><div class="vh-fm-val">15</div><div class="vh-fm-lbl">En ligne</div></div>
+        <div class="vh-fm"><div class="vh-fm-val" style="color:var(--nt-green)">20</div><div class="vh-fm-lbl">Vendus</div></div>
+        <div class="vh-fm"><div class="vh-fm-val" style="color:var(--nt-green)">57.1%</div><div class="vh-fm-lbl">Taux vente</div></div>
+        <div class="vh-fm"><div class="vh-fm-val">46.06&euro;</div><div class="vh-fm-lbl">Panier moy.</div></div>
+      </div>
+      <div class="vh-sparkline">
+        <svg width="100%" height="32" viewBox="0 0 200 32"><polyline fill="none" stroke="var(--nt-orange)" stroke-width="2" points="0,10 20,14 40,8 60,12 80,16 100,10 120,18 140,14 160,20 180,16 200,12"/><polygon fill="var(--nt-orange)" fill-opacity="0.08" points="0,10 20,14 40,8 60,12 80,16 100,10 120,18 140,14 160,20 180,16 200,12 200,32 0,32"/></svg>
+      </div>
+      <span class="vh-trend down">-3% vs semaine precedente</span>
+    </div>
+  </div>
+  <!-- Compact list for 4-10 -->
+  <div class="vh-compact-list">
+    <div class="vh-compact-row">
+      <div class="vh-cr-rank"><span class="rank rank--other">4</span></div>
+      <div class="vh-cr-name">Nike</div>
+      <div class="vh-cr-stats">
+        <div class="vh-cr-stat"><div class="vh-cr-stat-val">45</div><div class="vh-cr-stat-lbl">En ligne</div></div>
+        <div class="vh-cr-stat"><div class="vh-cr-stat-val">19</div><div class="vh-cr-stat-lbl">Vendus</div></div>
+        <div class="vh-cr-stat"><div class="vh-cr-stat-val" style="color:var(--nt-green)">29.7%</div><div class="vh-cr-stat-lbl">Taux</div></div>
+        <div class="vh-cr-stat"><div class="vh-cr-stat-val">64.43&euro;</div><div class="vh-cr-stat-lbl">Panier</div></div>
+        <div class="vh-cr-stat"><div class="vh-cr-stat-val">2.6j</div><div class="vh-cr-stat-lbl">Delai</div></div>
+      </div>
+    </div>
+    <div class="vh-compact-row">
+      <div class="vh-cr-rank"><span class="rank rank--other">5</span></div>
+      <div class="vh-cr-name">Ralph Lauren</div>
+      <div class="vh-cr-stats">
+        <div class="vh-cr-stat"><div class="vh-cr-stat-val">42</div><div class="vh-cr-stat-lbl">En ligne</div></div>
+        <div class="vh-cr-stat"><div class="vh-cr-stat-val">19</div><div class="vh-cr-stat-lbl">Vendus</div></div>
+        <div class="vh-cr-stat"><div class="vh-cr-stat-val" style="color:var(--nt-green)">31.2%</div><div class="vh-cr-stat-lbl">Taux</div></div>
+        <div class="vh-cr-stat"><div class="vh-cr-stat-val">55.07&euro;</div><div class="vh-cr-stat-lbl">Panier</div></div>
+        <div class="vh-cr-stat"><div class="vh-cr-stat-val">1.9j</div><div class="vh-cr-stat-lbl">Delai</div></div>
+      </div>
+    </div>
+    <div class="vh-compact-row">
+      <div class="vh-cr-rank"><span class="rank rank--other">6</span></div>
+      <div class="vh-cr-name">Adidas</div>
+      <div class="vh-cr-stats">
+        <div class="vh-cr-stat"><div class="vh-cr-stat-val">19</div><div class="vh-cr-stat-lbl">En ligne</div></div>
+        <div class="vh-cr-stat"><div class="vh-cr-stat-val">17</div><div class="vh-cr-stat-lbl">Vendus</div></div>
+        <div class="vh-cr-stat"><div class="vh-cr-stat-val" style="color:var(--nt-green)">47.2%</div><div class="vh-cr-stat-lbl">Taux</div></div>
+        <div class="vh-cr-stat"><div class="vh-cr-stat-val">38.50&euro;</div><div class="vh-cr-stat-lbl">Panier</div></div>
+        <div class="vh-cr-stat"><div class="vh-cr-stat-val">1.7j</div><div class="vh-cr-stat-lbl">Delai</div></div>
+      </div>
+    </div>
+    <div class="vh-compact-row">
+      <div class="vh-cr-rank"><span class="rank rank--other">7</span></div>
+      <div class="vh-cr-name">Maje</div>
+      <div class="vh-cr-stats">
+        <div class="vh-cr-stat"><div class="vh-cr-stat-val">57</div><div class="vh-cr-stat-lbl">En ligne</div></div>
+        <div class="vh-cr-stat"><div class="vh-cr-stat-val">12</div><div class="vh-cr-stat-lbl">Vendus</div></div>
+        <div class="vh-cr-stat"><div class="vh-cr-stat-val" style="color:var(--nt-orange)">17.4%</div><div class="vh-cr-stat-lbl">Taux</div></div>
+        <div class="vh-cr-stat"><div class="vh-cr-stat-val">99.79&euro;</div><div class="vh-cr-stat-lbl">Panier</div></div>
+        <div class="vh-cr-stat"><div class="vh-cr-stat-val">1.9j</div><div class="vh-cr-stat-lbl">Delai</div></div>
+      </div>
+    </div>
+    <div class="vh-compact-row">
+      <div class="vh-cr-rank"><span class="rank rank--other">8</span></div>
+      <div class="vh-cr-name">Ba&amp;sh</div>
+      <div class="vh-cr-stats">
+        <div class="vh-cr-stat"><div class="vh-cr-stat-val">35</div><div class="vh-cr-stat-lbl">En ligne</div></div>
+        <div class="vh-cr-stat"><div class="vh-cr-stat-val">11</div><div class="vh-cr-stat-lbl">Vendus</div></div>
+        <div class="vh-cr-stat"><div class="vh-cr-stat-val" style="color:var(--nt-orange)">23.9%</div><div class="vh-cr-stat-lbl">Taux</div></div>
+        <div class="vh-cr-stat"><div class="vh-cr-stat-val">62.02&euro;</div><div class="vh-cr-stat-lbl">Panier</div></div>
+        <div class="vh-cr-stat"><div class="vh-cr-stat-val">1.0j</div><div class="vh-cr-stat-lbl">Delai</div></div>
+      </div>
+    </div>
+    <div class="vh-compact-row">
+      <div class="vh-cr-rank"><span class="rank rank--other">9</span></div>
+      <div class="vh-cr-name">The Kooples</div>
+      <div class="vh-cr-stats">
+        <div class="vh-cr-stat"><div class="vh-cr-stat-val">33</div><div class="vh-cr-stat-lbl">En ligne</div></div>
+        <div class="vh-cr-stat"><div class="vh-cr-stat-val">11</div><div class="vh-cr-stat-lbl">Vendus</div></div>
+        <div class="vh-cr-stat"><div class="vh-cr-stat-val" style="color:var(--nt-green)">25.0%</div><div class="vh-cr-stat-lbl">Taux</div></div>
+        <div class="vh-cr-stat"><div class="vh-cr-stat-val">64.48&euro;</div><div class="vh-cr-stat-lbl">Panier</div></div>
+        <div class="vh-cr-stat"><div class="vh-cr-stat-val">1.1j</div><div class="vh-cr-stat-lbl">Delai</div></div>
+      </div>
+    </div>
+    <div class="vh-compact-row">
+      <div class="vh-cr-rank"><span class="rank rank--other">10</span></div>
+      <div class="vh-cr-name">Isabel Marant</div>
+      <div class="vh-cr-stats">
+        <div class="vh-cr-stat"><div class="vh-cr-stat-val">25</div><div class="vh-cr-stat-lbl">En ligne</div></div>
+        <div class="vh-cr-stat"><div class="vh-cr-stat-val">6</div><div class="vh-cr-stat-lbl">Vendus</div></div>
+        <div class="vh-cr-stat"><div class="vh-cr-stat-val" style="color:var(--nt-orange)">19.4%</div><div class="vh-cr-stat-lbl">Taux</div></div>
+        <div class="vh-cr-stat"><div class="vh-cr-stat-val">103.53&euro;</div><div class="vh-cr-stat-lbl">Panier</div></div>
+        <div class="vh-cr-stat"><div class="vh-cr-stat-val">1.8j</div><div class="vh-cr-stat-lbl">Delai</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+function showVariant(id){
+  document.querySelectorAll('.variant-section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('variant-'+id).classList.add('active');
+  event.target.classList.add('active');
+}
+function toggleVA(row){
+  row.classList.toggle('open');
+  const sub=row.nextElementSibling;
+  if(sub&&sub.classList.contains('va-sub'))sub.classList.toggle('open');
+}
+function toggleVD(row){
+  row.classList.toggle('open');
+  const sub=row.nextElementSibling;
+  if(sub&&sub.classList.contains('vd-sub'))sub.classList.toggle('open');
+}
+function showVGDetail(id){
+  document.querySelectorAll('.vg-detail').forEach(d=>d.classList.remove('open'));
+  const el=document.getElementById('vg-detail-'+id);
+  if(el)el.classList.add('open');
+}
+</script>
+</body>
+</html>

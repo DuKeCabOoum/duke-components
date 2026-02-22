@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NicheTrackr — Details : Mix A+ (Final)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================
+       VARIABLES COMMUNES NicheTrackr
+       ============================================ */
+    :root {
+      --nt-primary: #007782;
+      --nt-primary-dark: #005f68;
+      --nt-primary-light: rgba(0, 119, 130, 0.1);
+      --nt-green: #28865a;
+      --nt-green-light: rgba(40, 134, 90, 0.1);
+      --nt-orange: #f9bb42;
+      --nt-orange-dark: #e6a817;
+      --nt-orange-light: rgba(249, 187, 66, 0.12);
+      --nt-red: #d04555;
+      --nt-red-light: rgba(208, 69, 85, 0.1);
+      --nt-indigo: #6366f1;
+      --nt-indigo-light: rgba(99, 102, 241, 0.1);
+      --nt-pink: #ec4899;
+      --nt-pink-light: rgba(236, 72, 153, 0.1);
+      --nt-bg: #f5f7f8;
+      --nt-card: #ffffff;
+      --nt-border: #e5e8eb;
+      --nt-text: #1a2332;
+      --nt-text-secondary: #5a6566;
+      --nt-text-muted: #8a9394;
+      --nt-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      --nt-shadow-md: 0 4px 12px rgba(0,0,0,0.06);
+      --nt-radius: 12px;
+      --nt-radius-sm: 8px;
+      --nt-font: 'Inter', -apple-system, sans-serif;
+      --nt-mono: 'SF Mono', 'Cascadia Code', monospace;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: var(--nt-font); background: var(--nt-bg); color: var(--nt-text); padding: 24px; line-height: 1.5; }
+
+    @keyframes barGrow { from { height: 0; } to { height: var(--bar-h); } }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes progressGrow { from { width: 0; } to { width: var(--progress); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes pulseHeart { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+
+    /* Titre de page */
+    .page-title {
+      margin-bottom: 24px; padding: 20px 28px;
+      background: linear-gradient(135deg, #1a2332 0%, #007782 100%);
+      border-radius: 12px; color: #f1f5f9;
+    }
+    .page-title h1 { font-size: 1.3rem; font-weight: 700; }
+    .page-title span { font-size: 0.8rem; color: #94a3b8; display: block; margin-top: 4px; }
+
+    /* ============================================
+       MIX A+ — Variante A enrichie
+       Base: Analytique Compact
+       + Heatmap Likes
+       + Top Recherches
+       + Top Annonces avec le plus de likes
+       ============================================ */
+    .mx { max-width: 1100px; }
+
+    /* ------------------------------------------
+       KPIs — 3 cards par rangee, bordure gauche
+       ------------------------------------------ */
+    .mx__kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 12px; }
+    .mx__kpi {
+      background: var(--nt-card); border: 1px solid var(--nt-border); border-radius: var(--nt-radius);
+      padding: 18px 20px; position: relative; overflow: hidden;
+      animation: slideUp 0.4s ease backwards; box-shadow: var(--nt-shadow);
+      transition: all 0.2s;
+    }
+    .mx__kpi:hover { box-shadow: var(--nt-shadow-md); transform: translateY(-1px); }
+    .mx__kpi::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; border-radius: 4px 0 0 4px; }
+    .mx__kpi:nth-child(1)::before { background: var(--nt-primary); }
+    .mx__kpi:nth-child(2)::before { background: var(--nt-green); }
+    .mx__kpi:nth-child(3)::before { background: var(--nt-orange); }
+    .mx__kpi:nth-child(1) { animation-delay: 0.05s; }
+    .mx__kpi:nth-child(2) { animation-delay: 0.1s; }
+    .mx__kpi:nth-child(3) { animation-delay: 0.15s; }
+    .mx__kpis--row2 .mx__kpi:nth-child(1)::before { background: var(--nt-indigo); }
+    .mx__kpis--row2 .mx__kpi:nth-child(2)::before { background: var(--nt-red); }
+    .mx__kpis--row2 .mx__kpi:nth-child(3)::before { background: var(--nt-pink); }
+    .mx__kpi-label { font-size: 0.7rem; font-weight: 600; color: var(--nt-text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+    .mx__kpi-val { font-size: 1.6rem; font-weight: 800; color: var(--nt-text); font-family: var(--nt-mono); }
+    .mx__kpi-sub { font-size: 0.72rem; color: var(--nt-text-muted); margin-top: 2px; }
+    .mx__kpi-trend { font-size: 0.7rem; font-weight: 600; margin-top: 4px; display: inline-block; padding: 1px 8px; border-radius: 10px; }
+    .mx__kpi-trend--up { background: var(--nt-green-light); color: var(--nt-green); }
+    .mx__kpi-trend--down { background: var(--nt-red-light); color: var(--nt-red); }
+
+    /* ------------------------------------------
+       Section generique (carte blanche)
+       ------------------------------------------ */
+    .mx__section {
+      background: var(--nt-card); border: 1px solid var(--nt-border); border-radius: var(--nt-radius);
+      padding: 20px; margin-bottom: 16px; box-shadow: var(--nt-shadow);
+    }
+    .mx__section-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .mx__section-title { font-size: 0.95rem; font-weight: 700; }
+    .mx__section-desc { font-size: 0.72rem; color: var(--nt-text-muted); margin-top: 2px; }
+
+    /* Filtres pilules */
+    .mx__filter { display: flex; gap: 4px; background: var(--nt-bg); border: 1px solid var(--nt-border); border-radius: 6px; padding: 3px; }
+    .mx__filter-btn {
+      padding: 4px 12px; border-radius: 4px; font-size: 0.72rem; font-weight: 500;
+      color: var(--nt-text-secondary); background: none; border: none; cursor: pointer; transition: all 0.2s;
+    }
+    .mx__filter-btn--active { background: var(--nt-primary); color: white; font-weight: 600; }
+
+    /* ------------------------------------------
+       Tableau de performance
+       ------------------------------------------ */
+    .mx__table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+    .mx__table thead th {
+      padding: 10px 14px; text-align: left; font-size: 0.68rem; font-weight: 600;
+      color: var(--nt-text-muted); text-transform: uppercase; letter-spacing: 0.5px;
+      border-bottom: 2px solid var(--nt-border); white-space: nowrap;
+    }
+    .mx__table tbody td { padding: 11px 14px; border-bottom: 1px solid var(--nt-border); color: var(--nt-text); }
+    .mx__table tbody tr:last-child td { border-bottom: none; }
+    .mx__table tbody tr:hover { background: var(--nt-primary-light); }
+    .mx__badge { display: inline-flex; padding: 2px 8px; border-radius: 20px; font-size: 0.68rem; font-weight: 600; }
+    .mx__badge--forte { background: var(--nt-green-light); color: var(--nt-green); }
+    .mx__badge--moyenne { background: var(--nt-orange-light); color: var(--nt-orange-dark); }
+    .mx__badge--faible { background: var(--nt-red-light); color: var(--nt-red); }
+
+    /* ------------------------------------------
+       Grille 2 colonnes pour les charts
+       ------------------------------------------ */
+    .mx__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .mx__chart {
+      background: var(--nt-card); border: 1px solid var(--nt-border); border-radius: var(--nt-radius);
+      padding: 20px; box-shadow: var(--nt-shadow);
+    }
+    .mx__chart-title { font-size: 0.82rem; font-weight: 700; margin-bottom: 4px; }
+    .mx__chart-desc { font-size: 0.68rem; color: var(--nt-text-muted); margin-bottom: 14px; }
+
+    /* Barres verticales */
+    .mx__vbars { display: flex; align-items: flex-end; gap: 10px; height: 160px; padding-bottom: 24px; position: relative; }
+    .mx__vbar-col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; gap: 4px; }
+    .mx__vbar {
+      width: 100%; max-width: 40px; border-radius: 4px 4px 0 0; height: 0;
+      animation: barGrow 0.8s ease forwards; position: relative; transition: filter 0.2s;
+    }
+    .mx__vbar:hover { filter: brightness(1.15); }
+    .mx__vbar--green { background: linear-gradient(180deg, var(--nt-green), rgba(40,134,90,0.5)); }
+    .mx__vbar--teal { background: linear-gradient(180deg, var(--nt-primary), rgba(0,119,130,0.5)); }
+    .mx__vbar--orange { background: linear-gradient(180deg, var(--nt-orange), rgba(249,187,66,0.5)); }
+    .mx__vbar--red { background: linear-gradient(180deg, var(--nt-red), rgba(208,69,85,0.5)); }
+    .mx__vbar--indigo { background: linear-gradient(180deg, var(--nt-indigo), rgba(99,102,241,0.5)); }
+    .mx__vbar-val { font-size: 0.72rem; font-weight: 700; color: var(--nt-text); }
+    .mx__vbar-label { font-size: 0.62rem; color: var(--nt-text-muted); white-space: nowrap; }
+
+    /* Barres horizontales (enjeux performance) */
+    .mx__hbar-group { display: flex; flex-direction: column; gap: 12px; }
+    .mx__hbar { display: flex; align-items: center; gap: 10px; }
+    .mx__hbar-label { font-size: 0.75rem; font-weight: 500; min-width: 80px; color: var(--nt-text-secondary); }
+    .mx__hbar-track { flex: 1; height: 24px; background: var(--nt-bg); border-radius: 4px; overflow: hidden; position: relative; }
+    .mx__hbar-fill { height: 100%; border-radius: 4px; animation: progressGrow 0.8s ease forwards; width: 0; }
+    .mx__hbar-fill--teal { background: linear-gradient(90deg, var(--nt-primary), rgba(0,119,130,0.6)); }
+    .mx__hbar-fill--green { background: linear-gradient(90deg, var(--nt-green), rgba(40,134,90,0.6)); }
+    .mx__hbar-fill--orange { background: linear-gradient(90deg, var(--nt-orange), rgba(249,187,66,0.6)); }
+    .mx__hbar-fill--pink { background: linear-gradient(90deg, var(--nt-pink), rgba(236,72,153,0.6)); }
+    .mx__hbar-pct { font-size: 0.72rem; font-weight: 700; min-width: 42px; text-align: right; }
+
+    /* ------------------------------------------
+       HEATMAP LIKES (jour x creneau horaire)
+       ------------------------------------------ */
+    .mx__heatmap { display: grid; grid-template-columns: 70px repeat(7, 1fr); gap: 3px; }
+    .mx__heatmap-label { font-size: 0.65rem; color: var(--nt-text-muted); display: flex; align-items: center; font-weight: 500; }
+    .mx__heatmap-day { font-size: 0.62rem; font-weight: 600; color: var(--nt-text-muted); text-align: center; padding-bottom: 4px; text-transform: uppercase; letter-spacing: 0.3px; }
+    .mx__heatmap-cell {
+      aspect-ratio: 1; border-radius: 4px; min-height: 24px;
+      transition: all 0.2s; cursor: default; position: relative;
+    }
+    .mx__heatmap-cell:hover { transform: scale(1.1); z-index: 1; }
+    .mx__heatmap-cell--0 { background: var(--nt-bg); border: 1px solid var(--nt-border); }
+    .mx__heatmap-cell--1 { background: rgba(0,119,130,0.12); }
+    .mx__heatmap-cell--2 { background: rgba(0,119,130,0.25); }
+    .mx__heatmap-cell--3 { background: rgba(0,119,130,0.42); }
+    .mx__heatmap-cell--4 { background: rgba(0,119,130,0.65); }
+    .mx__heatmap-cell--5 { background: var(--nt-primary); }
+    .mx__heatmap-legend { display: flex; align-items: center; gap: 4px; margin-top: 10px; font-size: 0.62rem; color: var(--nt-text-muted); }
+    .mx__heatmap-legend-cell { width: 14px; height: 14px; border-radius: 3px; }
+    .mx__heatmap-tip { font-size: 0.62rem; color: var(--nt-text-muted); font-style: italic; margin-top: 8px; }
+
+    /* ------------------------------------------
+       TOP RECHERCHES (barres horizontales)
+       ------------------------------------------ */
+    .mx__top-list { display: flex; flex-direction: column; gap: 10px; }
+    .mx__top-item { display: flex; align-items: center; gap: 10px; }
+    .mx__top-rank {
+      width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 0.62rem; font-weight: 700; flex-shrink: 0;
+    }
+    .mx__top-rank--1 { background: linear-gradient(135deg, #f9bb42, #e6a817); color: #fff; }
+    .mx__top-rank--2 { background: linear-gradient(135deg, #94a3b8, #64748b); color: #fff; }
+    .mx__top-rank--3 { background: linear-gradient(135deg, #d97706, #b45309); color: #fff; }
+    .mx__top-rank--other { background: var(--nt-bg); color: var(--nt-text-muted); }
+    .mx__top-name { font-size: 0.78rem; font-weight: 500; min-width: 130px; color: var(--nt-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .mx__top-bar { flex: 1; height: 22px; background: var(--nt-bg); border-radius: 4px; overflow: hidden; }
+    .mx__top-bar-fill { height: 100%; border-radius: 4px; animation: progressGrow 0.8s ease forwards; width: 0; }
+    .mx__top-bar-fill--1 { background: linear-gradient(90deg, var(--nt-green), rgba(40,134,90,0.6)); }
+    .mx__top-bar-fill--2 { background: linear-gradient(90deg, var(--nt-primary), rgba(0,119,130,0.6)); }
+    .mx__top-bar-fill--3 { background: linear-gradient(90deg, var(--nt-orange), rgba(249,187,66,0.6)); }
+    .mx__top-bar-fill--4 { background: linear-gradient(90deg, var(--nt-indigo), rgba(99,102,241,0.6)); }
+    .mx__top-bar-fill--5 { background: linear-gradient(90deg, var(--nt-red), rgba(208,69,85,0.6)); }
+    .mx__top-count { font-size: 0.72rem; font-weight: 700; min-width: 28px; text-align: right; font-family: var(--nt-mono); }
+    .mx__top-sizes { display: flex; gap: 6px; margin-top: 14px; flex-wrap: wrap; }
+    .mx__top-size { font-size: 0.62rem; padding: 2px 10px; border-radius: 10px; background: var(--nt-bg); color: var(--nt-text-muted); border: 1px solid var(--nt-border); }
+    .mx__top-size--active { background: var(--nt-green-light); color: var(--nt-green); font-weight: 600; border-color: rgba(40,134,90,0.2); }
+
+    /* ------------------------------------------
+       TOP ANNONCES AVEC LE PLUS DE LIKES
+       ------------------------------------------ */
+    .mx__liked-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .mx__liked-card {
+      background: var(--nt-card); border: 1px solid var(--nt-border); border-radius: var(--nt-radius-sm);
+      overflow: hidden; transition: all 0.25s; position: relative;
+      animation: slideUp 0.5s ease backwards;
+    }
+    .mx__liked-card:hover { box-shadow: var(--nt-shadow-md); transform: translateY(-3px); border-color: var(--nt-primary); }
+    .mx__liked-card:nth-child(1) { animation-delay: 0.05s; }
+    .mx__liked-card:nth-child(2) { animation-delay: 0.1s; }
+    .mx__liked-card:nth-child(3) { animation-delay: 0.15s; }
+    .mx__liked-card:nth-child(4) { animation-delay: 0.2s; }
+
+    /* Image placeholder */
+    .mx__liked-img {
+      width: 100%; height: 140px; background: linear-gradient(135deg, #e2e8f0, #f1f5f9);
+      display: flex; align-items: center; justify-content: center; position: relative;
+    }
+    .mx__liked-img svg { color: #cbd5e1; }
+    .mx__liked-likes-badge {
+      position: absolute; top: 8px; right: 8px;
+      display: flex; align-items: center; gap: 4px;
+      background: rgba(255,255,255,0.92); backdrop-filter: blur(4px);
+      border-radius: 20px; padding: 3px 10px;
+      font-size: 0.7rem; font-weight: 700; color: var(--nt-red);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .mx__liked-likes-badge svg { width: 14px; height: 14px; fill: var(--nt-red); }
+    .mx__liked-rank {
+      position: absolute; top: 8px; left: 8px;
+      width: 24px; height: 24px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.65rem; font-weight: 800; color: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .mx__liked-rank--1 { background: linear-gradient(135deg, #f9bb42, #e6a817); }
+    .mx__liked-rank--2 { background: linear-gradient(135deg, #94a3b8, #64748b); }
+    .mx__liked-rank--3 { background: linear-gradient(135deg, #d97706, #b45309); }
+    .mx__liked-rank--4 { background: var(--nt-text-muted); }
+
+    .mx__liked-body { padding: 12px; }
+    .mx__liked-title {
+      font-size: 0.75rem; font-weight: 600; color: var(--nt-text);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 4px;
+    }
+    .mx__liked-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+    .mx__liked-price { font-size: 0.88rem; font-weight: 800; color: var(--nt-primary); font-family: var(--nt-mono); }
+    .mx__liked-condition {
+      font-size: 0.6rem; font-weight: 600; padding: 1px 6px; border-radius: 8px;
+      background: var(--nt-green-light); color: var(--nt-green);
+    }
+    .mx__liked-info { display: flex; align-items: center; gap: 8px; font-size: 0.65rem; color: var(--nt-text-muted); }
+    .mx__liked-info-item { display: flex; align-items: center; gap: 3px; }
+    .mx__liked-info-item svg { width: 12px; height: 12px; }
+
+    /* ------------------------------------------
+       Flux section (full width) — area chart
+       ------------------------------------------ */
+    .mx__flux {
+      background: var(--nt-card); border: 1px solid var(--nt-border); border-radius: var(--nt-radius);
+      padding: 20px; margin-bottom: 16px; box-shadow: var(--nt-shadow);
+    }
+    .mx__flux-head { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 16px; }
+    .mx__flux-cards { display: flex; gap: 10px; }
+    .mx__flux-card { padding: 8px 14px; border-radius: 8px; border: 1px solid var(--nt-border); background: var(--nt-bg); }
+    .mx__flux-card-label { font-size: 0.62rem; color: var(--nt-text-muted); text-transform: uppercase; letter-spacing: 0.3px; }
+    .mx__flux-card-val { font-size: 0.95rem; font-weight: 700; margin-top: 2px; }
+    .mx__flux-card--winner .mx__flux-card-val { color: var(--nt-green); }
+    .mx__flux-card--loser .mx__flux-card-val { color: var(--nt-red); }
+    .mx__flux-card-sub { font-size: 0.62rem; color: var(--nt-text-muted); }
+    .mx__area-placeholder { height: 160px; background: linear-gradient(180deg, rgba(0,119,130,0.08) 0%, transparent 100%); border-radius: 8px; display: flex; align-items: flex-end; padding: 0 12px; }
+    .mx__area-bar { flex: 1; background: linear-gradient(180deg, var(--nt-primary), rgba(0,119,130,0.3)); border-radius: 4px 4px 0 0; margin: 0 2px; transition: opacity 0.2s; }
+    .mx__area-bar:hover { opacity: 0.8; }
+
+    /* ------------------------------------------
+       Info grid
+       ------------------------------------------ */
+    .mx__info { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .mx__info-item { display: flex; flex-direction: column; gap: 2px; }
+    .mx__info-label { font-size: 0.68rem; font-weight: 600; color: var(--nt-text-muted); text-transform: uppercase; }
+    .mx__info-val { font-size: 0.82rem; color: var(--nt-text); }
+    .mx__info-link { color: var(--nt-primary); font-size: 0.82rem; text-decoration: none; }
+    .mx__info-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <!-- Titre -->
+  <div class="page-title">
+    <h1>Mix A+ — Dashboard Analytique Enrichi</h1>
+    <span>Base Variante A (compact, filtres, barres) + Heatmap Likes + Top Recherches + Top Annonces Likes</span>
+  </div>
+
+  <div class="mx">
+
+    <!-- ============================================
+         1. KPIs — 6 metriques en 2 rangees de 3
+         ============================================ -->
+    <div class="mx__kpis">
+      <div class="mx__kpi">
+        <div class="mx__kpi-label">Vitesse de vente</div>
+        <div class="mx__kpi-val">16h</div>
+        <div class="mx__kpi-sub">Temps median avant vente</div>
+      </div>
+      <div class="mx__kpi">
+        <div class="mx__kpi-label">Prix median vendu</div>
+        <div class="mx__kpi-val">51,54&euro;</div>
+        <div class="mx__kpi-sub">Produits vendus uniquement</div>
+      </div>
+      <div class="mx__kpi">
+        <div class="mx__kpi-label">Nouvelles / jour</div>
+        <div class="mx__kpi-val">377.7/j</div>
+        <div class="mx__kpi-trend mx__kpi-trend--up">&#8593; +125% vs sem. prec.</div>
+      </div>
+    </div>
+    <div class="mx__kpis mx__kpis--row2">
+      <div class="mx__kpi">
+        <div class="mx__kpi-label">Articles suivis</div>
+        <div class="mx__kpi-val">3 136</div>
+        <div class="mx__kpi-sub">Total depuis creation</div>
+      </div>
+      <div class="mx__kpi">
+        <div class="mx__kpi-label">Articles vendus</div>
+        <div class="mx__kpi-val">161</div>
+        <div class="mx__kpi-trend mx__kpi-trend--up">&#8593; +29% cette semaine</div>
+      </div>
+      <div class="mx__kpi">
+        <div class="mx__kpi-label">Taux de vente</div>
+        <div class="mx__kpi-val">5.1%</div>
+        <div class="mx__kpi-sub">Vendus / Total</div>
+      </div>
+    </div>
+
+    <!-- Spacer -->
+    <div style="height: 4px;"></div>
+
+    <!-- ============================================
+         2. Performance par condition AVEC filtres
+         ============================================ -->
+    <div class="mx__section">
+      <div class="mx__section-head">
+        <div>
+          <div class="mx__section-title">Modeles & Variantes qui performent</div>
+          <div class="mx__section-desc">Comparez rapidement prix, vitesse, liquidite et parts des ventes</div>
+        </div>
+        <div class="mx__filter">
+          <button class="mx__filter-btn mx__filter-btn--active">Etat</button>
+          <button class="mx__filter-btn">Taille</button>
+        </div>
+      </div>
+      <table class="mx__table">
+        <thead>
+          <tr>
+            <th>Condition</th><th>Prix median</th><th>% vente</th>
+            <th>Temps median</th><th>Volume</th><th>Vendus</th><th>Liquidite</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Neuf avec etiquette</td><td>62,71&euro;</td><td>33.3%</td>
+            <td>1.8j</td><td>120</td><td>40</td>
+            <td><span class="mx__badge mx__badge--forte">Forte</span></td>
+          </tr>
+          <tr>
+            <td>Bon etat</td><td>57,00&euro;</td><td>29.5%</td>
+            <td>2.4j</td><td>122</td><td>36</td>
+            <td><span class="mx__badge mx__badge--forte">Forte</span></td>
+          </tr>
+          <tr>
+            <td>Satisfaisant</td><td>57,95&euro;</td><td>26.5%</td>
+            <td>1.4j</td><td>121</td><td>32</td>
+            <td><span class="mx__badge mx__badge--forte">Forte</span></td>
+          </tr>
+          <tr>
+            <td>Tres bon etat</td><td>70,56&euro;</td><td>29.1%</td>
+            <td>3.2j</td><td>103</td><td>30</td>
+            <td><span class="mx__badge mx__badge--forte">Forte</span></td>
+          </tr>
+          <tr>
+            <td>Neuf sans etiquette</td><td>54,90&euro;</td><td>25.8%</td>
+            <td>1.0j</td><td>89</td><td>23</td>
+            <td><span class="mx__badge mx__badge--moyenne">Moyenne</span></td>
+          </tr>
+          <tr>
+            <td>Non specifie</td><td>-</td><td>0.0%</td>
+            <td>-</td><td>1 661</td><td>0</td>
+            <td><span class="mx__badge mx__badge--faible">Faible</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ============================================
+         3. Charts : Prix + Enjeux performance
+         ============================================ -->
+    <div class="mx__grid">
+      <div class="mx__chart">
+        <div class="mx__chart-title">Repartition des prix (tous)</div>
+        <div class="mx__chart-desc">Distribution des annonces par tranche de prix</div>
+        <div class="mx__vbars">
+          <div class="mx__vbar-col"><div class="mx__vbar mx__vbar--green" style="--bar-h:80%"></div><span class="mx__vbar-val">110</span><span class="mx__vbar-label">&lt;14&euro;</span></div>
+          <div class="mx__vbar-col"><div class="mx__vbar mx__vbar--teal" style="--bar-h:5%"></div><span class="mx__vbar-val">7</span><span class="mx__vbar-label">14-28&euro;</span></div>
+          <div class="mx__vbar-col"><div class="mx__vbar mx__vbar--teal" style="--bar-h:5%"></div><span class="mx__vbar-val">7</span><span class="mx__vbar-label">28-42&euro;</span></div>
+          <div class="mx__vbar-col"><div class="mx__vbar mx__vbar--orange" style="--bar-h:2%"></div><span class="mx__vbar-val">1</span><span class="mx__vbar-label">42-56&euro;</span></div>
+          <div class="mx__vbar-col"><div class="mx__vbar mx__vbar--red" style="--bar-h:2%"></div><span class="mx__vbar-val">1</span><span class="mx__vbar-label">56-70&euro;</span></div>
+          <div class="mx__vbar-col"><div class="mx__vbar mx__vbar--indigo" style="--bar-h:8%"></div><span class="mx__vbar-val">10</span><span class="mx__vbar-label">&gt;70&euro;</span></div>
+        </div>
+      </div>
+      <div class="mx__chart">
+        <div class="mx__chart-title">Enjeux de la performance</div>
+        <div class="mx__chart-desc">Les criteres les plus importants pour une vente rapide</div>
+        <div class="mx__hbar-group">
+          <div class="mx__hbar">
+            <span class="mx__hbar-label">Taille</span>
+            <div class="mx__hbar-track"><div class="mx__hbar-fill mx__hbar-fill--teal" style="--progress: 54%"></div></div>
+            <span class="mx__hbar-pct">54.6%</span>
+          </div>
+          <div class="mx__hbar">
+            <span class="mx__hbar-label">Etat</span>
+            <div class="mx__hbar-track"><div class="mx__hbar-fill mx__hbar-fill--green" style="--progress: 37%"></div></div>
+            <span class="mx__hbar-pct">36.7%</span>
+          </div>
+          <div class="mx__hbar">
+            <span class="mx__hbar-label">Promotion</span>
+            <div class="mx__hbar-track"><div class="mx__hbar-fill mx__hbar-fill--orange" style="--progress: 9%"></div></div>
+            <span class="mx__hbar-pct">8.7%</span>
+          </div>
+          <div class="mx__hbar">
+            <span class="mx__hbar-label">Marque</span>
+            <div class="mx__hbar-track"><div class="mx__hbar-fill mx__hbar-fill--pink" style="--progress: 0%"></div></div>
+            <span class="mx__hbar-pct">0.0%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================
+         4. Charts : Rapidite + Ventes par prix
+         ============================================ -->
+    <div class="mx__grid">
+      <div class="mx__chart">
+        <div class="mx__chart-title">Rapidite de vente</div>
+        <div class="mx__chart-desc">Temps entre publication et vente</div>
+        <div class="mx__vbars">
+          <div class="mx__vbar-col"><div class="mx__vbar mx__vbar--green" style="--bar-h:90%"></div><span class="mx__vbar-val">55</span><span class="mx__vbar-label">&lt; 6h</span></div>
+          <div class="mx__vbar-col"><div class="mx__vbar mx__vbar--teal" style="--bar-h:30%"></div><span class="mx__vbar-val">18</span><span class="mx__vbar-label">6-12h</span></div>
+          <div class="mx__vbar-col"><div class="mx__vbar mx__vbar--teal" style="--bar-h:25%"></div><span class="mx__vbar-val">14</span><span class="mx__vbar-label">12-24h</span></div>
+          <div class="mx__vbar-col"><div class="mx__vbar mx__vbar--orange" style="--bar-h:60%"></div><span class="mx__vbar-val">36</span><span class="mx__vbar-label">1-3j</span></div>
+          <div class="mx__vbar-col"><div class="mx__vbar mx__vbar--red" style="--bar-h:38%"></div><span class="mx__vbar-val">22</span><span class="mx__vbar-label">3-7j</span></div>
+          <div class="mx__vbar-col"><div class="mx__vbar mx__vbar--indigo" style="--bar-h:28%"></div><span class="mx__vbar-val">16</span><span class="mx__vbar-label">&gt; 7j</span></div>
+        </div>
+      </div>
+      <div class="mx__chart">
+        <div class="mx__chart-title">Ventes par tranche de prix</div>
+        <div class="mx__chart-desc">Nombre de ventes par gamme de prix</div>
+        <div class="mx__vbars">
+          <div class="mx__vbar-col"><div class="mx__vbar mx__vbar--green" style="--bar-h:5%"></div><span class="mx__vbar-val">0</span><span class="mx__vbar-label">&lt;5&euro;</span></div>
+          <div class="mx__vbar-col"><div class="mx__vbar mx__vbar--teal" style="--bar-h:8%"></div><span class="mx__vbar-val">1</span><span class="mx__vbar-label">5-10&euro;</span></div>
+          <div class="mx__vbar-col"><div class="mx__vbar mx__vbar--teal" style="--bar-h:12%"></div><span class="mx__vbar-val">7</span><span class="mx__vbar-label">10-20&euro;</span></div>
+          <div class="mx__vbar-col"><div class="mx__vbar mx__vbar--orange" style="--bar-h:45%"></div><span class="mx__vbar-val">67</span><span class="mx__vbar-label">20-50&euro;</span></div>
+          <div class="mx__vbar-col"><div class="mx__vbar mx__vbar--red" style="--bar-h:40%"></div><span class="mx__vbar-val">62</span><span class="mx__vbar-label">50-100&euro;</span></div>
+          <div class="mx__vbar-col"><div class="mx__vbar mx__vbar--indigo" style="--bar-h:15%"></div><span class="mx__vbar-val">24</span><span class="mx__vbar-label">&gt;100&euro;</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================
+         5. NOUVEAU : Heatmap Likes + Top Recherches
+         ============================================ -->
+    <div class="mx__grid">
+      <!-- Heatmap likes -->
+      <div class="mx__chart">
+        <div class="mx__chart-title">Repartition des likes</div>
+        <div class="mx__chart-desc">Quand les acheteurs mettent le plus de favoris</div>
+        <div class="mx__heatmap">
+          <!-- Header jours -->
+          <div></div>
+          <div class="mx__heatmap-day">Lun</div><div class="mx__heatmap-day">Mar</div><div class="mx__heatmap-day">Mer</div>
+          <div class="mx__heatmap-day">Jeu</div><div class="mx__heatmap-day">Ven</div><div class="mx__heatmap-day">Sam</div><div class="mx__heatmap-day">Dim</div>
+
+          <!-- Matin 9h-12h -->
+          <div class="mx__heatmap-label">Matin 9-12h</div>
+          <div class="mx__heatmap-cell mx__heatmap-cell--1"></div>
+          <div class="mx__heatmap-cell mx__heatmap-cell--2"></div>
+          <div class="mx__heatmap-cell mx__heatmap-cell--1"></div>
+          <div class="mx__heatmap-cell mx__heatmap-cell--2"></div>
+          <div class="mx__heatmap-cell mx__heatmap-cell--3"></div>
+          <div class="mx__heatmap-cell mx__heatmap-cell--4"></div>
+          <div class="mx__heatmap-cell mx__heatmap-cell--5"></div>
+
+          <!-- Midi 12h-14h -->
+          <div class="mx__heatmap-label">Midi 12-14h</div>
+          <div class="mx__heatmap-cell mx__heatmap-cell--2"></div>
+          <div class="mx__heatmap-cell mx__heatmap-cell--3"></div>
+          <div class="mx__heatmap-cell mx__heatmap-cell--2"></div>
+          <div class="mx__heatmap-cell mx__heatmap-cell--3"></div>
+          <div class="mx__heatmap-cell mx__heatmap-cell--4"></div>
+          <div class="mx__heatmap-cell mx__heatmap-cell--5"></div>
+          <div class="mx__heatmap-cell mx__heatmap-cell--4"></div>
+
+          <!-- Aprem 15h-18h -->
+          <div class="mx__heatmap-label">Aprem 15-18h</div>
+          <div class="mx__heatmap-cell mx__heatmap-cell--1"></div>
+          <div class="mx__heatmap-cell mx__heatmap-cell--1"></div>
+          <div class="mx__heatmap-cell mx__heatmap-cell--2"></div>
+          <div class="mx__heatmap-cell mx__heatmap-cell--1"></div>
+          <div class="mx__heatmap-cell mx__heatmap-cell--3"></div>
+          <div class="mx__heatmap-cell mx__heatmap-cell--3"></div>
+          <div class="mx__heatmap-cell mx__heatmap-cell--2"></div>
+
+          <!-- Soir 18h-22h -->
+          <div class="mx__heatmap-label">Soir 18-22h</div>
+          <div class="mx__heatmap-cell mx__heatmap-cell--3"></div>
+          <div class="mx__heatmap-cell mx__heatmap-cell--4"></div>
+          <div class="mx__heatmap-cell mx__heatmap-cell--3"></div>
+          <div class="mx__heatmap-cell mx__heatmap-cell--4"></div>
+          <div class="mx__heatmap-cell mx__heatmap-cell--5"></div>
+          <div class="mx__heatmap-cell mx__heatmap-cell--5"></div>
+          <div class="mx__heatmap-cell mx__heatmap-cell--4"></div>
+        </div>
+        <div class="mx__heatmap-legend">
+          Faible
+          <div class="mx__heatmap-legend-cell mx__heatmap-cell--0"></div>
+          <div class="mx__heatmap-legend-cell mx__heatmap-cell--1"></div>
+          <div class="mx__heatmap-legend-cell mx__heatmap-cell--2"></div>
+          <div class="mx__heatmap-legend-cell mx__heatmap-cell--3"></div>
+          <div class="mx__heatmap-legend-cell mx__heatmap-cell--4"></div>
+          <div class="mx__heatmap-legend-cell mx__heatmap-cell--5"></div>
+          Fort
+        </div>
+        <div class="mx__heatmap-tip">Samedi midi et dimanche soir = pics d'engagement</div>
+      </div>
+
+      <!-- Top recherches -->
+      <div class="mx__chart">
+        <div class="mx__chart-title">Le plus recherche</div>
+        <div class="mx__chart-desc">Top 5 des articles qui se vendent le mieux</div>
+        <div class="mx__top-list">
+          <div class="mx__top-item">
+            <span class="mx__top-rank mx__top-rank--1">1</span>
+            <span class="mx__top-name">Sezane Pulls d'hiver</span>
+            <div class="mx__top-bar"><div class="mx__top-bar-fill mx__top-bar-fill--1" style="--progress: 100%"></div></div>
+            <span class="mx__top-count">18</span>
+          </div>
+          <div class="mx__top-item">
+            <span class="mx__top-rank mx__top-rank--2">2</span>
+            <span class="mx__top-name">Sezane Cardigans</span>
+            <div class="mx__top-bar"><div class="mx__top-bar-fill mx__top-bar-fill--2" style="--progress: 94%"></div></div>
+            <span class="mx__top-count">17</span>
+          </div>
+          <div class="mx__top-item">
+            <span class="mx__top-rank mx__top-rank--3">3</span>
+            <span class="mx__top-name">Zara Robes ete</span>
+            <div class="mx__top-bar"><div class="mx__top-bar-fill mx__top-bar-fill--3" style="--progress: 72%"></div></div>
+            <span class="mx__top-count">13</span>
+          </div>
+          <div class="mx__top-item">
+            <span class="mx__top-rank mx__top-rank--other">4</span>
+            <span class="mx__top-name">Lacoste Polos</span>
+            <div class="mx__top-bar"><div class="mx__top-bar-fill mx__top-bar-fill--4" style="--progress: 55%"></div></div>
+            <span class="mx__top-count">10</span>
+          </div>
+          <div class="mx__top-item">
+            <span class="mx__top-rank mx__top-rank--other">5</span>
+            <span class="mx__top-name">Sezane Chemises</span>
+            <div class="mx__top-bar"><div class="mx__top-bar-fill mx__top-bar-fill--5" style="--progress: 50%"></div></div>
+            <span class="mx__top-count">9</span>
+          </div>
+        </div>
+        <div class="mx__top-sizes">
+          <span class="mx__top-size mx__top-size--active">S</span>
+          <span class="mx__top-size mx__top-size--active">M</span>
+          <span class="mx__top-size mx__top-size--active">L</span>
+          <span class="mx__top-size">XL</span>
+          <span class="mx__top-size">XXL</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================
+         6. NOUVEAU : Top Annonces avec le plus de likes
+         ============================================ -->
+    <div class="mx__section">
+      <div class="mx__section-head">
+        <div>
+          <div class="mx__section-title">Annonces les plus likees</div>
+          <div class="mx__section-desc">Les articles qui generent le plus d'interet — utile pour identifier les tendances</div>
+        </div>
+        <div class="mx__filter">
+          <button class="mx__filter-btn mx__filter-btn--active">Cette semaine</button>
+          <button class="mx__filter-btn">30 jours</button>
+        </div>
+      </div>
+      <div class="mx__liked-grid">
+
+        <!-- Card 1 — Top 1 -->
+        <div class="mx__liked-card">
+          <div class="mx__liked-img">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+              <path d="M21 15l-5-5L5 21"/>
+            </svg>
+            <div class="mx__liked-rank mx__liked-rank--1">1</div>
+            <div class="mx__liked-likes-badge">
+              <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              47
+            </div>
+          </div>
+          <div class="mx__liked-body">
+            <div class="mx__liked-title">Pull Sezane Gaspard Ecru Taille M</div>
+            <div class="mx__liked-meta">
+              <span class="mx__liked-price">48,00&euro;</span>
+              <span class="mx__liked-condition">Tres bon etat</span>
+            </div>
+            <div class="mx__liked-info">
+              <span class="mx__liked-info-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                2h ago
+              </span>
+              <span class="mx__liked-info-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                312 vues
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 — Top 2 -->
+        <div class="mx__liked-card">
+          <div class="mx__liked-img">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+              <path d="M21 15l-5-5L5 21"/>
+            </svg>
+            <div class="mx__liked-rank mx__liked-rank--2">2</div>
+            <div class="mx__liked-likes-badge">
+              <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              38
+            </div>
+          </div>
+          <div class="mx__liked-body">
+            <div class="mx__liked-title">Cardigan Sezane Gigi Noir Taille S</div>
+            <div class="mx__liked-meta">
+              <span class="mx__liked-price">62,00&euro;</span>
+              <span class="mx__liked-condition">Neuf avec etiquette</span>
+            </div>
+            <div class="mx__liked-info">
+              <span class="mx__liked-info-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                5h ago
+              </span>
+              <span class="mx__liked-info-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                245 vues
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 — Top 3 -->
+        <div class="mx__liked-card">
+          <div class="mx__liked-img">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+              <path d="M21 15l-5-5L5 21"/>
+            </svg>
+            <div class="mx__liked-rank mx__liked-rank--3">3</div>
+            <div class="mx__liked-likes-badge">
+              <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              31
+            </div>
+          </div>
+          <div class="mx__liked-body">
+            <div class="mx__liked-title">Robe Zara Satin Midi Verte Taille L</div>
+            <div class="mx__liked-meta">
+              <span class="mx__liked-price">28,50&euro;</span>
+              <span class="mx__liked-condition">Bon etat</span>
+            </div>
+            <div class="mx__liked-info">
+              <span class="mx__liked-info-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                1j ago
+              </span>
+              <span class="mx__liked-info-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                189 vues
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4 — Top 4 -->
+        <div class="mx__liked-card">
+          <div class="mx__liked-img">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+              <path d="M21 15l-5-5L5 21"/>
+            </svg>
+            <div class="mx__liked-rank mx__liked-rank--4">4</div>
+            <div class="mx__liked-likes-badge">
+              <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              24
+            </div>
+          </div>
+          <div class="mx__liked-body">
+            <div class="mx__liked-title">Polo Lacoste Classic Fit Bleu Marine XL</div>
+            <div class="mx__liked-meta">
+              <span class="mx__liked-price">35,00&euro;</span>
+              <span class="mx__liked-condition">Satisfaisant</span>
+            </div>
+            <div class="mx__liked-info">
+              <span class="mx__liked-info-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                3j ago
+              </span>
+              <span class="mx__liked-info-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                156 vues
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================
+         7. Flux hebdo avec cards resume
+         ============================================ -->
+    <div class="mx__flux">
+      <div class="mx__flux-head">
+        <div>
+          <div class="mx__chart-title">Flux des ventes</div>
+          <div class="mx__chart-desc">Rythme des nouvelles annonces et des ventes sur la semaine</div>
+        </div>
+        <div class="mx__flux-cards">
+          <div class="mx__flux-card mx__flux-card--winner">
+            <div class="mx__flux-card-label">Creneau gagnant</div>
+            <div class="mx__flux-card-val">Samedi</div>
+            <div class="mx__flux-card-sub">307% plus rapide</div>
+          </div>
+          <div class="mx__flux-card mx__flux-card--loser">
+            <div class="mx__flux-card-label">Creneau a eviter</div>
+            <div class="mx__flux-card-val">Lundi</div>
+            <div class="mx__flux-card-sub">100% plus lent</div>
+          </div>
+          <div class="mx__flux-card">
+            <div class="mx__flux-card-label">Total semaine</div>
+            <div class="mx__flux-card-val">67</div>
+            <div class="mx__flux-card-sub">22% de plus</div>
+          </div>
+        </div>
+      </div>
+      <div class="mx__area-placeholder">
+        <div class="mx__area-bar" style="height: 15%"></div>
+        <div class="mx__area-bar" style="height: 8%"></div>
+        <div class="mx__area-bar" style="height: 22%"></div>
+        <div class="mx__area-bar" style="height: 18%"></div>
+        <div class="mx__area-bar" style="height: 35%"></div>
+        <div class="mx__area-bar" style="height: 28%"></div>
+        <div class="mx__area-bar" style="height: 45%"></div>
+        <div class="mx__area-bar" style="height: 55%"></div>
+        <div class="mx__area-bar" style="height: 42%"></div>
+        <div class="mx__area-bar" style="height: 38%"></div>
+        <div class="mx__area-bar" style="height: 65%"></div>
+        <div class="mx__area-bar" style="height: 85%"></div>
+        <div class="mx__area-bar" style="height: 95%"></div>
+        <div class="mx__area-bar" style="height: 100%"></div>
+      </div>
+    </div>
+
+    <!-- ============================================
+         8. Top marques decouvertes (tableau riche)
+         ============================================ -->
+    <div class="mx__section">
+      <div class="mx__section-head">
+        <div>
+          <div class="mx__section-title">Top marques decouvertes</div>
+          <div class="mx__section-desc">Les marques les plus presentes dans cette niche</div>
+        </div>
+      </div>
+      <table class="mx__table">
+        <thead>
+          <tr>
+            <th>#</th><th>Marque</th><th>En ligne</th><th>Vendus</th>
+            <th>Taux vente</th><th>Panier moy.</th><th>Delai vente</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="mx__top-rank mx__top-rank--1" style="width:20px;height:20px;font-size:0.6rem;">1</span></td>
+            <td style="font-weight:600;">Sezane</td><td>245</td><td>68</td>
+            <td>27.8%</td><td>54,20&euro;</td><td>1.2j</td>
+          </tr>
+          <tr>
+            <td><span class="mx__top-rank mx__top-rank--2" style="width:20px;height:20px;font-size:0.6rem;">2</span></td>
+            <td style="font-weight:600;">Zara</td><td>189</td><td>42</td>
+            <td>22.2%</td><td>28,50&euro;</td><td>2.1j</td>
+          </tr>
+          <tr>
+            <td><span class="mx__top-rank mx__top-rank--3" style="width:20px;height:20px;font-size:0.6rem;">3</span></td>
+            <td style="font-weight:600;">Lacoste</td><td>134</td><td>31</td>
+            <td>23.1%</td><td>42,00&euro;</td><td>1.8j</td>
+          </tr>
+          <tr>
+            <td><span class="mx__top-rank mx__top-rank--other" style="width:20px;height:20px;font-size:0.6rem;">4</span></td>
+            <td style="font-weight:600;">Ralph Lauren</td><td>98</td><td>18</td>
+            <td>18.4%</td><td>65,00&euro;</td><td>3.5j</td>
+          </tr>
+          <tr>
+            <td><span class="mx__top-rank mx__top-rank--other" style="width:20px;height:20px;font-size:0.6rem;">5</span></td>
+            <td style="font-weight:600;">Maje</td><td>76</td><td>12</td>
+            <td>15.8%</td><td>72,00&euro;</td><td>4.2j</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ============================================
+         9. Infos tracker
+         ============================================ -->
+    <div class="mx__section">
+      <div class="mx__section-title" style="margin-bottom: 12px;">Informations</div>
+      <div class="mx__info">
+        <div class="mx__info-item">
+          <span class="mx__info-label">URL Vinted</span>
+          <a href="#" class="mx__info-link">https://www.vinted.fr/catalog?search_text=mode+femme&cata...</a>
+        </div>
+        <div class="mx__info-item">
+          <span class="mx__info-label">Type</span>
+          <span class="mx__info-val">Catalogue</span>
+        </div>
+        <div class="mx__info-item">
+          <span class="mx__info-label">Cree le</span>
+          <span class="mx__info-val">20/02/2026</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

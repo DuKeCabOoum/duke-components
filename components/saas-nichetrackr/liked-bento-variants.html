@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NicheTrackr — Bento Likes : Vendues + En Vente (5+5)</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #f0f2f5;
+      color: #1a2332;
+      padding: 32px;
+      line-height: 1.5;
+    }
+
+    h1 { font-size: 28px; margin-bottom: 8px; }
+    .page-desc { color: #64748b; margin-bottom: 40px; font-size: 14px; }
+
+    /* NAV sticky */
+    .nav-v {
+      display: flex; gap: 8px; margin-bottom: 32px;
+      position: sticky; top: 0; background: #f0f2f5; padding: 12px 0; z-index: 10;
+    }
+    .nav-v a {
+      padding: 8px 20px; border-radius: 24px; background: #fff; color: #475569;
+      text-decoration: none; font-size: 14px; font-weight: 600; border: 1px solid #e2e8f0; transition: all 0.2s;
+    }
+    .nav-v a:hover, .nav-v a.active { background: #007782; color: #fff; border-color: #007782; }
+
+    .variant-label {
+      display: inline-block; background: #007782; color: #fff;
+      padding: 4px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; margin-bottom: 12px;
+    }
+    .variant-desc { color: #64748b; font-size: 13px; margin-bottom: 24px; }
+
+    .wrap {
+      background: #fff; border: 1px solid #e2e8f0; border-radius: 16px;
+      padding: 28px; margin-bottom: 48px;
+    }
+
+    /* ================================================================
+       Section header avec badge VENDU / EN VENTE
+       ================================================================ */
+    .sh { margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
+    .sh__title { font-size: 17px; font-weight: 700; color: #1a2332; }
+    .sh__badge {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.05em;
+      padding: 3px 10px; border-radius: 20px; text-transform: uppercase;
+    }
+    .sh__badge--sold { background: #dcfce7; color: #166534; }
+    .sh__badge--live { background: #dbeafe; color: #1e40af; }
+    .sh__sub { font-size: 12px; color: #94a3b8; margin-top: 2px; }
+    .sh__left { flex: 1; }
+
+    .section-gap { margin-top: 32px; border-top: 1px solid #f1f5f9; padding-top: 28px; }
+
+    /* ================================================================
+       CARD (bc = bento card)
+       ================================================================ */
+    .bc {
+      background: #fff; border: 1px solid #e2e8f0; border-radius: 12px;
+      overflow: hidden; position: relative; transition: all 0.25s;
+      cursor: pointer; display: flex; flex-direction: column;
+    }
+    .bc:hover {
+      border-color: #007782;
+      box-shadow: 0 8px 24px rgba(0,119,130,0.12);
+      transform: translateY(-2px);
+    }
+
+    /* Image */
+    .bc__img {
+      width: 100%; position: relative; overflow: hidden;
+      background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+      display: flex; align-items: center; justify-content: center;
+      flex: 1; min-height: 0;
+    }
+    .bc__img svg { color: #cbd5e1; }
+
+    /* Multi-photo */
+    .bc__photos { display: flex; width: 100%; height: 100%; gap: 2px; }
+    .bc__photo-main { flex: 1; min-width: 0; overflow: hidden; }
+    .bc__photo-main img, .bc__photo-main .ph { width: 100%; height: 100%; object-fit: cover; }
+    .bc__photo-side { display: flex; flex-direction: column; gap: 2px; width: 35%; flex-shrink: 0; }
+    .bc__photo-thumb { flex: 1; min-height: 0; overflow: hidden; }
+    .bc__photo-thumb .ph { width: 100%; height: 100%; }
+
+    /* Rank badge */
+    .bc__rank {
+      position: absolute; top: 8px; left: 8px;
+      width: 26px; height: 26px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 12px; color: #fff; z-index: 2;
+    }
+    .bc__rank--1 { background: linear-gradient(135deg, #f59e0b, #d97706); width: 30px; height: 30px; font-size: 14px; }
+    .bc__rank--2 { background: linear-gradient(135deg, #94a3b8, #64748b); }
+    .bc__rank--3 { background: linear-gradient(135deg, #d97706, #92400e); }
+    .bc__rank--o { background: #475569; font-size: 10px; width: 22px; height: 22px; }
+
+    /* Heart */
+    .bc__heart {
+      position: absolute; top: 8px; right: 8px;
+      background: rgba(255,255,255,0.92); backdrop-filter: blur(4px);
+      border-radius: 20px; padding: 3px 8px;
+      display: flex; align-items: center; gap: 4px;
+      font-size: 12px; font-weight: 700; color: #ef4444; z-index: 2;
+    }
+    .bc__heart svg { fill: #ef4444; width: 12px; height: 12px; }
+
+    /* Status badge (VENDU / EN VENTE) sur la carte */
+    .bc__status {
+      position: absolute; bottom: 8px; left: 8px;
+      font-size: 9px; font-weight: 700; letter-spacing: 0.05em;
+      padding: 2px 8px; border-radius: 10px; z-index: 2;
+      text-transform: uppercase; backdrop-filter: blur(4px);
+    }
+    .bc__status--sold { background: rgba(22,101,52,0.85); color: #fff; }
+    .bc__status--live { background: rgba(30,64,175,0.85); color: #fff; }
+
+    /* Body */
+    .bc__body { padding: 10px 12px; flex-shrink: 0; }
+    .bc__title { font-size: 13px; font-weight: 600; color: #1a2332; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .bc__meta { display: flex; align-items: center; justify-content: space-between; margin-top: 3px; gap: 6px; }
+    .bc__price { font-size: 15px; font-weight: 800; color: #007782; }
+    .bc__cond {
+      font-size: 9px; font-weight: 600; padding: 2px 6px; border-radius: 10px;
+      background: #dcfce7; color: #166534; white-space: nowrap;
+    }
+    .bc__info { display: flex; gap: 10px; margin-top: 5px; font-size: 10px; color: #94a3b8; }
+    .bc__info-i { display: flex; align-items: center; gap: 3px; }
+    .bc__info svg { width: 10px; height: 10px; flex-shrink: 0; }
+
+    /* Placeholder */
+    .ph {
+      display: flex; align-items: center; justify-content: center;
+      width: 100%; height: 100%;
+    }
+    .ph--1 { background: #e8d5c4; } .ph--2 { background: #c4d4e4; }
+    .ph--3 { background: #d4e4c4; } .ph--4 { background: #e4d4e4; }
+    .ph--5 { background: #d4e4e4; } .ph--6 { background: #dde8f0; }
+    .ph--7 { background: #e0d8ef; } .ph--8 { background: #d8efe0; }
+    .ph--9 { background: #efe0d8; } .ph--10 { background: #d8e0ef; }
+
+    /* SVG placeholder */
+    .ico { fill: none; stroke: currentColor; stroke-width: 1; }
+
+    /* ================================================================
+       VARIANTE A — 5 colonnes portrait : #1 = 2cols, #2-5 = 1col
+       ================================================================ */
+    .g5 {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-template-rows: 320px 260px;
+      gap: 12px;
+    }
+    .g5 .bc:nth-child(1) { grid-column: span 2; }
+    .g5 .bc { display: flex; flex-direction: column; }
+    .g5 .bc__img { flex: 1; min-height: 0; }
+
+    /* ================================================================
+       VARIANTE B — Hero horizontal + 4 portraits
+       ================================================================ */
+    .gh {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: 200px 280px;
+      gap: 12px;
+    }
+    .gh .bc:nth-child(1) {
+      grid-column: span 4;
+      flex-direction: row;
+    }
+    .gh .bc:nth-child(1) .bc__img { width: 260px; flex: none; height: 100%; }
+    .gh .bc:nth-child(1) .bc__body {
+      flex: 1; display: flex; flex-direction: column;
+      justify-content: center; padding: 20px 28px;
+    }
+    .gh .bc:nth-child(1) .bc__title { font-size: 17px; white-space: normal; line-height: 1.3; }
+    .gh .bc:nth-child(1) .bc__price { font-size: 22px; }
+    .gh .bc:nth-child(1) .bc__cond { font-size: 11px; padding: 3px 10px; }
+    .gh .bc:nth-child(1) .bc__info { font-size: 12px; }
+    .gh .bc:nth-child(n+2) { display: flex; flex-direction: column; }
+    .gh .bc:nth-child(n+2) .bc__img { flex: 1; min-height: 0; }
+
+    /* ================================================================
+       VARIANTE C — Podium : #2 | #1 (big) | #3 en haut, #4-5 en bas
+       ================================================================ */
+    .gp {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 12px;
+    }
+    .gp .bc:nth-child(1) { grid-column: span 4; height: 360px; order: 2; }
+    .gp .bc:nth-child(2) { grid-column: span 4; height: 320px; order: 1; }
+    .gp .bc:nth-child(3) { grid-column: span 4; height: 320px; order: 3; }
+    .gp .bc:nth-child(4) { grid-column: span 6; height: 260px; order: 4; }
+    .gp .bc:nth-child(5) { grid-column: span 6; height: 260px; order: 5; }
+    .gp .bc { display: flex; flex-direction: column; }
+    .gp .bc__img { flex: 1; min-height: 0; }
+    .gp .bc:nth-child(1) .bc__title { font-size: 15px; white-space: normal; }
+    .gp .bc:nth-child(1) .bc__price { font-size: 18px; }
+
+    /* ================================================================
+       VARIANTE D — Pinterest columns
+       ================================================================ */
+    .gpin {
+      columns: 5;
+      column-gap: 12px;
+    }
+    .gpin .bc { break-inside: avoid; margin-bottom: 12px; }
+    .gpin .bc__img { flex: none; }
+    .gpin .bc:nth-child(1) .bc__img { height: 240px; }
+    .gpin .bc:nth-child(2) .bc__img { height: 200px; }
+    .gpin .bc:nth-child(3) .bc__img { height: 220px; }
+    .gpin .bc:nth-child(4) .bc__img { height: 180px; }
+    .gpin .bc:nth-child(5) .bc__img { height: 190px; }
+  </style>
+</head>
+<body>
+
+  <h1>Annonces les plus likees — Vendues + En Vente (5+5)</h1>
+  <p class="page-desc">Split strategique : 5 vendues les plus likees (valide ce qui marche) + 5 en vente les plus likees (tendances a surveiller).</p>
+
+  <nav class="nav-v">
+    <a href="#var-a" class="active">A — 5 colonnes</a>
+    <a href="#var-b">B — Hero + grille</a>
+    <a href="#var-c">C — Podium</a>
+    <a href="#var-d">D — Pinterest</a>
+  </nav>
+
+  <!-- ================================================================
+       VARIANTE A — 5 colonnes portrait
+       ================================================================ -->
+  <div id="var-a" class="wrap">
+    <span class="variant-label">Variante A — 5 colonnes</span>
+    <p class="variant-desc">#1 prend 2 colonnes, #2-5 en portrait. Cartes etroites = photos Vinted respectees.</p>
+
+    <!-- VENDUES -->
+    <div class="sh">
+      <div class="sh__left">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <h3 class="sh__title">Vendues les plus likees</h3>
+          <span class="sh__badge sh__badge--sold">Vendu</span>
+        </div>
+        <p class="sh__sub">Ces articles ont genere le plus d'interet ET se sont vendus — le signal le plus fiable</p>
+      </div>
+    </div>
+    <div class="g5">
+      <div class="bc"><div class="bc__img"><div class="bc__photos"><div class="bc__photo-main"><div class="ph ph--1"><svg class="ico" width="36" height="36" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div><div class="bc__photo-side"><div class="bc__photo-thumb"><div class="ph" style="background:#d4c4b4;"></div></div><div class="bc__photo-thumb"><div class="ph" style="background:#c4b4a4;"></div></div></div></div><div class="bc__rank bc__rank--1">1</div><div class="bc__heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 169</div><div class="bc__status bc__status--sold">Vendu</div></div><div class="bc__body"><p class="bc__title">Maillot de bain Yse x Sezane</p><div class="bc__meta"><span class="bc__price">45,00€</span><span class="bc__cond">Neuf avec etiquette</span></div><div class="bc__info"><span class="bc__info-i">Vendu en 2h</span><span class="bc__info-i">Sezane</span><span class="bc__info-i">312 vues</span></div></div></div>
+      <div class="bc"><div class="bc__img"><div class="ph ph--2"><svg class="ico" width="28" height="28" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div class="bc__rank bc__rank--2">2</div><div class="bc__heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 123</div><div class="bc__status bc__status--sold">Vendu</div></div><div class="bc__body"><p class="bc__title">Chemise Sezane soie</p><div class="bc__meta"><span class="bc__price">60,00€</span><span class="bc__cond">Tres bon etat</span></div><div class="bc__info"><span class="bc__info-i">Vendu en 5h</span><span class="bc__info-i">Sezane</span></div></div></div>
+      <div class="bc"><div class="bc__img"><div class="ph ph--3"><svg class="ico" width="28" height="28" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div class="bc__rank bc__rank--3">3</div><div class="bc__heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 113</div><div class="bc__status bc__status--sold">Vendu</div></div><div class="bc__body"><p class="bc__title">Tailleur veste Sezane</p><div class="bc__meta"><span class="bc__price">100,00€</span><span class="bc__cond">Tres bon etat</span></div><div class="bc__info"><span class="bc__info-i">Vendu en 1j</span><span class="bc__info-i">Sezane</span></div></div></div>
+      <div class="bc"><div class="bc__img"><div class="ph ph--4"><svg class="ico" width="28" height="28" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div class="bc__rank bc__rank--o">4</div><div class="bc__heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 98</div><div class="bc__status bc__status--sold">Vendu</div></div><div class="bc__body"><p class="bc__title">Pull Sezane Gaspard Ecru</p><div class="bc__meta"><span class="bc__price">48,00€</span><span class="bc__cond">Tres bon etat</span></div></div></div>
+      <div class="bc"><div class="bc__img"><div class="ph ph--5"><svg class="ico" width="28" height="28" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div class="bc__rank bc__rank--o">5</div><div class="bc__heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 87</div><div class="bc__status bc__status--sold">Vendu</div></div><div class="bc__body"><p class="bc__title">Robe Zara Satin Midi Verte</p><div class="bc__meta"><span class="bc__price">28,50€</span><span class="bc__cond">Bon etat</span></div></div></div>
+    </div>
+
+    <!-- EN VENTE -->
+    <div class="section-gap">
+      <div class="sh">
+        <div class="sh__left">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <h3 class="sh__title">En vente les plus likees</h3>
+            <span class="sh__badge sh__badge--live">En vente</span>
+          </div>
+          <p class="sh__sub">Articles actuellement en ligne avec le plus de favoris — tendances a surveiller</p>
+        </div>
+      </div>
+      <div class="g5">
+        <div class="bc"><div class="bc__img"><div class="bc__photos"><div class="bc__photo-main"><div class="ph ph--6"><svg class="ico" width="36" height="36" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div><div class="bc__photo-side"><div class="bc__photo-thumb"><div class="ph" style="background:#cdd8e4;"></div></div><div class="bc__photo-thumb"><div class="ph" style="background:#bccdd8;"></div></div></div></div><div class="bc__rank bc__rank--1">1</div><div class="bc__heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 156</div><div class="bc__status bc__status--live">En vente</div></div><div class="bc__body"><p class="bc__title">Cardigan Sezane Gigi Noir S</p><div class="bc__meta"><span class="bc__price">62,00€</span><span class="bc__cond">Neuf avec etiquette</span></div><div class="bc__info"><span class="bc__info-i">Publie il y a 5h</span><span class="bc__info-i">Sezane</span><span class="bc__info-i">245 vues</span></div></div></div>
+        <div class="bc"><div class="bc__img"><div class="ph ph--7"><svg class="ico" width="28" height="28" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div class="bc__rank bc__rank--2">2</div><div class="bc__heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 134</div><div class="bc__status bc__status--live">En vente</div></div><div class="bc__body"><p class="bc__title">Manteau Sezane Emile</p><div class="bc__meta"><span class="bc__price">95,00€</span><span class="bc__cond">Bon etat</span></div><div class="bc__info"><span class="bc__info-i">Publie il y a 1j</span><span class="bc__info-i">Sezane</span></div></div></div>
+        <div class="bc"><div class="bc__img"><div class="ph ph--8"><svg class="ico" width="28" height="28" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div class="bc__rank bc__rank--3">3</div><div class="bc__heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 108</div><div class="bc__status bc__status--live">En vente</div></div><div class="bc__body"><p class="bc__title">Jupe plissee Sezane</p><div class="bc__meta"><span class="bc__price">45,00€</span><span class="bc__cond">Tres bon etat</span></div><div class="bc__info"><span class="bc__info-i">Publie il y a 2j</span><span class="bc__info-i">Sezane</span></div></div></div>
+        <div class="bc"><div class="bc__img"><div class="ph ph--9"><svg class="ico" width="28" height="28" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div class="bc__rank bc__rank--o">4</div><div class="bc__heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 92</div><div class="bc__status bc__status--live">En vente</div></div><div class="bc__body"><p class="bc__title">Polo Ralph Lauren Slim M</p><div class="bc__meta"><span class="bc__price">35,00€</span><span class="bc__cond">Satisfaisant</span></div></div></div>
+        <div class="bc"><div class="bc__img"><div class="ph ph--10"><svg class="ico" width="28" height="28" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div class="bc__rank bc__rank--o">5</div><div class="bc__heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 78</div><div class="bc__status bc__status--live">En vente</div></div><div class="bc__body"><p class="bc__title">Nike Dunk Low Panda 38</p><div class="bc__meta"><span class="bc__price">72,00€</span><span class="bc__cond">Neuf sans etiquette</span></div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================
+       VARIANTE B — Hero horizontal + 4 portraits
+       ================================================================ -->
+  <div id="var-b" class="wrap">
+    <span class="variant-label">Variante B — Hero + Grille</span>
+    <p class="variant-desc">Le #1 en banniere horizontale (photo portrait a gauche, infos a droite). Les 4 suivants en portrait.</p>
+
+    <!-- VENDUES -->
+    <div class="sh"><div class="sh__left"><div style="display:flex;align-items:center;gap:10px;"><h3 class="sh__title">Vendues les plus likees</h3><span class="sh__badge sh__badge--sold">Vendu</span></div><p class="sh__sub">Ces articles ont genere le plus d'interet ET se sont vendus — le signal le plus fiable</p></div></div>
+    <div class="gh">
+      <div class="bc"><div class="bc__img"><div class="bc__photos"><div class="bc__photo-main"><div class="ph ph--1"><svg class="ico" width="40" height="40" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div><div class="bc__photo-side"><div class="bc__photo-thumb"><div class="ph" style="background:#d4c4b4;"></div></div><div class="bc__photo-thumb"><div class="ph" style="background:#c4b4a4;"></div></div></div></div><div class="bc__rank bc__rank--1">1</div><div class="bc__heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 169</div><div class="bc__status bc__status--sold">Vendu en 2h</div></div><div class="bc__body"><p class="bc__title">Maillot de bain Yse x Sezane — L'article le plus populaire et vendu le plus vite</p><div class="bc__meta"><span class="bc__price">45,00€</span><span class="bc__cond">Neuf avec etiquette</span></div><div class="bc__info"><span class="bc__info-i">Vendu en 2 heures</span><span class="bc__info-i">Sezane</span><span class="bc__info-i">312 vues</span></div></div></div>
+      <div class="bc"><div class="bc__img"><div class="ph ph--2"><svg class="ico" width="28" height="28" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div class="bc__rank bc__rank--2">2</div><div class="bc__heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 123</div><div class="bc__status bc__status--sold">Vendu</div></div><div class="bc__body"><p class="bc__title">Chemise Sezane soie</p><div class="bc__meta"><span class="bc__price">60,00€</span><span class="bc__cond">Tres bon etat</span></div><div class="bc__info"><span class="bc__info-i">Vendu en 5h</span></div></div></div>
+      <div class="bc"><div class="bc__img"><div class="ph ph--3"><svg class="ico" width="28" height="28" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div class="bc__rank bc__rank--3">3</div><div class="bc__heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 113</div><div class="bc__status bc__status--sold">Vendu</div></div><div class="bc__body"><p class="bc__title">Tailleur veste Sezane</p><div class="bc__meta"><span class="bc__price">100,00€</span></div><div class="bc__info"><span class="bc__info-i">Vendu en 1j</span></div></div></div>
+      <div class="bc"><div class="bc__img"><div class="ph ph--4"><svg class="ico" width="28" height="28" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div class="bc__rank bc__rank--o">4</div><div class="bc__heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 98</div><div class="bc__status bc__status--sold">Vendu</div></div><div class="bc__body"><p class="bc__title">Pull Gaspard Ecru</p><div class="bc__meta"><span class="bc__price">48,00€</span></div></div></div>
+      <div class="bc"><div class="bc__img"><div class="ph ph--5"><svg class="ico" width="28" height="28" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div class="bc__rank bc__rank--o">5</div><div class="bc__heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 87</div><div class="bc__status bc__status--sold">Vendu</div></div><div class="bc__body"><p class="bc__title">Robe Zara Satin</p><div class="bc__meta"><span class="bc__price">28,50€</span></div></div></div>
+    </div>
+
+    <!-- EN VENTE -->
+    <div class="section-gap">
+      <div class="sh"><div class="sh__left"><div style="display:flex;align-items:center;gap:10px;"><h3 class="sh__title">En vente les plus likees</h3><span class="sh__badge sh__badge--live">En vente</span></div><p class="sh__sub">Articles actuellement en ligne avec le plus de favoris — tendances a surveiller</p></div></div>
+      <div class="gh">
+        <div class="bc"><div class="bc__img"><div class="bc__photos"><div class="bc__photo-main"><div class="ph ph--6"><svg class="ico" width="40" height="40" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div><div class="bc__photo-side"><div class="bc__photo-thumb"><div class="ph" style="background:#cdd8e4;"></div></div><div class="bc__photo-thumb"><div class="ph" style="background:#bccdd8;"></div></div></div></div><div class="bc__rank bc__rank--1">1</div><div class="bc__heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 156</div><div class="bc__status bc__status--live">En vente</div></div><div class="bc__body"><p class="bc__title">Cardigan Sezane Gigi Noir Taille S — Tres recherche cette saison</p><div class="bc__meta"><span class="bc__price">62,00€</span><span class="bc__cond">Neuf avec etiquette</span></div><div class="bc__info"><span class="bc__info-i">Publie il y a 5h</span><span class="bc__info-i">Sezane</span><span class="bc__info-i">245 vues</span></div></div></div>
+        <div class="bc"><div class="bc__img"><div class="ph ph--7"><svg class="ico" width="28" height="28" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div class="bc__rank bc__rank--2">2</div><div class="bc__heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 134</div><div class="bc__status bc__status--live">En vente</div></div><div class="bc__body"><p class="bc__title">Manteau Sezane Emile</p><div class="bc__meta"><span class="bc__price">95,00€</span></div><div class="bc__info"><span class="bc__info-i">Il y a 1j</span></div></div></div>
+        <div class="bc"><div class="bc__img"><div class="ph ph--8"><svg class="ico" width="28" height="28" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div class="bc__rank bc__rank--3">3</div><div class="bc__heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 108</div><div class="bc__status bc__status--live">En vente</div></div><div class="bc__body"><p class="bc__title">Jupe plissee Sezane</p><div class="bc__meta"><span class="bc__price">45,00€</span></div><div class="bc__info"><span class="bc__info-i">Il y a 2j</span></div></div></div>
+        <div class="bc"><div class="bc__img"><div class="ph ph--9"><svg class="ico" width="28" height="28" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div class="bc__rank bc__rank--o">4</div><div class="bc__heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 92</div><div class="bc__status bc__status--live">En vente</div></div><div class="bc__body"><p class="bc__title">Polo Ralph Lauren</p><div class="bc__meta"><span class="bc__price">35,00€</span></div></div></div>
+        <div class="bc"><div class="bc__img"><div class="ph ph--10"><svg class="ico" width="28" height="28" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div class="bc__rank bc__rank--o">5</div><div class="bc__heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 78</div><div class="bc__status bc__status--live">En vente</div></div><div class="bc__body"><p class="bc__title">Nike Dunk Low 38</p><div class="bc__meta"><span class="bc__price">72,00€</span></div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================
+       VARIANTE C — Podium
+       ================================================================ -->
+  <div id="var-c" class="wrap">
+    <span class="variant-label">Variante C — Podium</span>
+    <p class="variant-desc">Top 3 en podium (#1 au centre, plus grand), #4-5 en bas. Format olympique.</p>
+
+    <!-- VENDUES -->
+    <div class="sh"><div class="sh__left"><div style="display:flex;align-items:center;gap:10px;"><h3 class="sh__title">Vendues les plus likees</h3><span class="sh__badge sh__badge--sold">Vendu</span></div><p class="sh__sub">Ces articles ont genere le plus d'interet ET se sont vendus</p></div></div>
+    <div class="gp">
+      <div class="bc"><div class="bc__img"><div class="ph ph--1"><svg class="ico" width="36" height="36" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div class="bc__rank bc__rank--1">1</div><div class="bc__heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 169</div><div class="bc__status bc__status--sold">Vendu en 2h</div></div><div class="bc__body"><p class="bc__title">Maillot de bain Yse x Sezane</p><div class="bc__meta"><span class="bc__price">45,00€</span><span class="bc__cond">Neuf</span></div><div class="bc__info"><span class="bc__info-i">Sezane</span><span class="bc__info-i">312 vues</span></div></div></div>
+      <div class="bc"><div class="bc__img"><div class="ph ph--2"><svg class="ico" width="28" height="28" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div class="bc__rank bc__rank--2">2</div><div class="bc__heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 123</div><div class="bc__status bc__status--sold">Vendu</div></div><div class="bc__body"><p class="bc__title">Chemise Sezane soie</p><div class="bc__meta"><span class="bc__price">60,00€</span></div><div class="bc__info"><span class="bc__info-i">Vendu en 5h</span></div></div></div>
+      <div class="bc"><div class="bc__img"><div class="ph ph--3"><svg class="ico" width="28" height="28" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div class="bc__rank bc__rank--3">3</div><div class="bc__heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 113</div><div class="bc__status bc__status--sold">Vendu</div></div><div class="bc__body"><p class="bc__title">Tailleur veste Sezane</p><div class="bc__meta"><span class="bc__price">100,00€</span></div><div class="bc__info"><span class="bc__info-i">Vendu en 1j</span></div></div></div>
+      <div class="bc"><div class="bc__img"><div class="ph ph--4"><svg class="ico" width="28" height="28" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div class="bc__rank bc__rank--o">4</div><div class="bc__heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 98</div><div class="bc__status bc__status--sold">Vendu</div></div><div class="bc__body"><p class="bc__title">Pull Sezane Gaspard</p><div class="bc__meta"><span class="bc__price">48,00€</span></div></div></div>
+      <div class="bc"><div class="bc__img"><div class="ph ph--5"><svg class="ico" width="28" height="28" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div class="bc__rank bc__rank--o">5</div><div class="bc__heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 87</div><div class="bc__status bc__status--sold">Vendu</div></div><div class="bc__body"><p class="bc__title">Robe Zara Satin</p><div class="bc__meta"><span class="bc__price">28,50€</span></div></div></div>
+    </div>
+
+    <!-- EN VENTE -->
+    <div class="section-gap">
+      <div class="sh"><div class="sh__left"><div style="display:flex;align-items:center;gap:10px;"><h3 class="sh__title">En vente les plus likees</h3><span class="sh__badge sh__badge--live">En vente</span></div><p class="sh__sub">Articles actuellement en ligne avec le plus de favoris</p></div></div>
+      <div class="gp">
+        <div class="bc"><div class="bc__img"><div class="ph ph--6"><svg class="ico" width="36" height="36" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div class="bc__rank bc__rank--1">1</div><div class="bc__heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 156</div><div class="bc__status bc__status--live">En vente</div></div><div class="bc__body"><p class="bc__title">Cardigan Sezane Gigi Noir S</p><div class="bc__meta"><span class="bc__price">62,00€</span><span class="bc__cond">Neuf</span></div><div class="bc__info"><span class="bc__info-i">Sezane</span><span class="bc__info-i">245 vues</span></div></div></div>
+        <div class="bc"><div class="bc__img"><div class="ph ph--7"><svg class="ico" width="28" height="28" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div class="bc__rank bc__rank--2">2</div><div class="bc__heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 134</div><div class="bc__status bc__status--live">En vente</div></div><div class="bc__body"><p class="bc__title">Manteau Emile Sezane</p><div class="bc__meta"><span class="bc__price">95,00€</span></div></div></div>
+        <div class="bc"><div class="bc__img"><div class="ph ph--8"><svg class="ico" width="28" height="28" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div class="bc__rank bc__rank--3">3</div><div class="bc__heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 108</div><div class="bc__status bc__status--live">En vente</div></div><div class="bc__body"><p class="bc__title">Jupe plissee Sezane</p><div class="bc__meta"><span class="bc__price">45,00€</span></div></div></div>
+        <div class="bc"><div class="bc__img"><div class="ph ph--9"><svg class="ico" width="28" height="28" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div class="bc__rank bc__rank--o">4</div><div class="bc__heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 92</div><div class="bc__status bc__status--live">En vente</div></div><div class="bc__body"><p class="bc__title">Polo Ralph Lauren</p><div class="bc__meta"><span class="bc__price">35,00€</span></div></div></div>
+        <div class="bc"><div class="bc__img"><div class="ph ph--10"><svg class="ico" width="28" height="28" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div class="bc__rank bc__rank--o">5</div><div class="bc__heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 78</div><div class="bc__status bc__status--live">En vente</div></div><div class="bc__body"><p class="bc__title">Nike Dunk Low 38</p><div class="bc__meta"><span class="bc__price">72,00€</span></div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================
+       VARIANTE D — Pinterest columns
+       ================================================================ -->
+  <div id="var-d" class="wrap">
+    <span class="variant-label">Variante D — Pinterest</span>
+    <p class="variant-desc">Layout masonry (CSS columns). Hauteurs variees selon le rang. Effet organique naturel.</p>
+
+    <!-- VENDUES -->
+    <div class="sh"><div class="sh__left"><div style="display:flex;align-items:center;gap:10px;"><h3 class="sh__title">Vendues les plus likees</h3><span class="sh__badge sh__badge--sold">Vendu</span></div><p class="sh__sub">Ces articles ont genere le plus d'interet ET se sont vendus</p></div></div>
+    <div class="gpin">
+      <div class="bc"><div class="bc__img"><div class="ph ph--1"><svg class="ico" width="36" height="36" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div class="bc__rank bc__rank--1">1</div><div class="bc__heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 169</div><div class="bc__status bc__status--sold">Vendu en 2h</div></div><div class="bc__body"><p class="bc__title">Maillot Yse x Sezane</p><div class="bc__meta"><span class="bc__price">45,00€</span><span class="bc__cond">Neuf</span></div><div class="bc__info"><span class="bc__info-i">Sezane</span><span class="bc__info-i">312 vues</span></div></div></div>
+      <div class="bc"><div class="bc__img"><div class="ph ph--2"><svg class="ico" width="28" height="28" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div class="bc__rank bc__rank--2">2</div><div class="bc__heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 123</div><div class="bc__status bc__status--sold">Vendu</div></div><div class="bc__body"><p class="bc__title">Chemise Sezane soie</p><div class="bc__meta"><span class="bc__price">60,00€</span></div></div></div>
+      <div class="bc"><div class="bc__img"><div class="ph ph--3"><svg class="ico" width="28" height="28" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div class="bc__rank bc__rank--3">3</div><div class="bc__heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 113</div><div class="bc__status bc__status--sold">Vendu</div></div><div class="bc__body"><p class="bc__title">Tailleur veste</p><div class="bc__meta"><span class="bc__price">100€</span></div></div></div>
+      <div class="bc"><div class="bc__img"><div class="ph ph--4"><svg class="ico" width="24" height="24" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div class="bc__rank bc__rank--o">4</div><div class="bc__heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 98</div><div class="bc__status bc__status--sold">Vendu</div></div><div class="bc__body"><p class="bc__title">Pull Gaspard</p><div class="bc__meta"><span class="bc__price">48€</span></div></div></div>
+      <div class="bc"><div class="bc__img"><div class="ph ph--5"><svg class="ico" width="24" height="24" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div class="bc__rank bc__rank--o">5</div><div class="bc__heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 87</div><div class="bc__status bc__status--sold">Vendu</div></div><div class="bc__body"><p class="bc__title">Robe Zara</p><div class="bc__meta"><span class="bc__price">28,50€</span></div></div></div>
+    </div>
+
+    <!-- EN VENTE -->
+    <div class="section-gap">
+      <div class="sh"><div class="sh__left"><div style="display:flex;align-items:center;gap:10px;"><h3 class="sh__title">En vente les plus likees</h3><span class="sh__badge sh__badge--live">En vente</span></div><p class="sh__sub">Articles actuellement en ligne avec le plus de favoris</p></div></div>
+      <div class="gpin">
+        <div class="bc"><div class="bc__img"><div class="ph ph--6"><svg class="ico" width="36" height="36" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div class="bc__rank bc__rank--1">1</div><div class="bc__heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 156</div><div class="bc__status bc__status--live">En vente</div></div><div class="bc__body"><p class="bc__title">Cardigan Gigi Noir S</p><div class="bc__meta"><span class="bc__price">62,00€</span><span class="bc__cond">Neuf</span></div><div class="bc__info"><span class="bc__info-i">Sezane</span><span class="bc__info-i">245 vues</span></div></div></div>
+        <div class="bc"><div class="bc__img"><div class="ph ph--7"><svg class="ico" width="28" height="28" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div class="bc__rank bc__rank--2">2</div><div class="bc__heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 134</div><div class="bc__status bc__status--live">En vente</div></div><div class="bc__body"><p class="bc__title">Manteau Emile</p><div class="bc__meta"><span class="bc__price">95,00€</span></div></div></div>
+        <div class="bc"><div class="bc__img"><div class="ph ph--8"><svg class="ico" width="28" height="28" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div class="bc__rank bc__rank--3">3</div><div class="bc__heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 108</div><div class="bc__status bc__status--live">En vente</div></div><div class="bc__body"><p class="bc__title">Jupe plissee</p><div class="bc__meta"><span class="bc__price">45,00€</span></div></div></div>
+        <div class="bc"><div class="bc__img"><div class="ph ph--9"><svg class="ico" width="24" height="24" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div class="bc__rank bc__rank--o">4</div><div class="bc__heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 92</div><div class="bc__status bc__status--live">En vente</div></div><div class="bc__body"><p class="bc__title">Polo RL</p><div class="bc__meta"><span class="bc__price">35€</span></div></div></div>
+        <div class="bc"><div class="bc__img"><div class="ph ph--10"><svg class="ico" width="24" height="24" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div class="bc__rank bc__rank--o">5</div><div class="bc__heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 78</div><div class="bc__status bc__status--live">En vente</div></div><div class="bc__body"><p class="bc__title">Nike Dunk</p><div class="bc__meta"><span class="bc__price">72€</span></div></div></div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

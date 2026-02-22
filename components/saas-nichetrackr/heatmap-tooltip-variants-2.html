@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heatmap Tooltip — Variantes In-Cell (E-H) | Duke-components</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ========== RESET + VARIABLES ========== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --nt-primary:#007782;
+  --nt-primary-dark:#005f68;
+  --nt-primary-light:#e0f2f1;
+  --nt-success:#28865a;
+  --nt-warning:#f9bb42;
+  --nt-error:#d04555;
+  --nt-surface:#ffffff;
+  --nt-text:#1e293b;
+  --nt-text-muted:#64748b;
+  --nt-border:#e2e8f0;
+  --nt-radius:12px;
+  --nt-radius-sm:8px;
+  --nt-shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+  --nt-shadow-lg:0 10px 30px rgba(0,0,0,.12),0 4px 12px rgba(0,0,0,.06);
+  --page-bg:#0f172a;
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+}
+body{background:var(--page-bg);color:var(--nt-text);line-height:1.5;padding:40px 32px 80px}
+
+/* ========== PAGE HEADER ========== */
+.page-title{
+  text-align:center;
+  margin-bottom:48px;
+}
+.page-title h1{
+  font-size:28px;
+  font-weight:800;
+  color:#f8fafc;
+  letter-spacing:-.5px;
+}
+.page-title p{
+  font-size:14px;
+  color:#94a3b8;
+  margin-top:6px;
+}
+
+/* ========== VARIANT CARD (white card container) ========== */
+.variant-card{
+  max-width:900px;
+  margin:0 auto 40px;
+  background:var(--nt-surface);
+  border-radius:16px;
+  padding:32px;
+  box-shadow:var(--nt-shadow-lg);
+}
+.variant-card__header{
+  margin-bottom:24px;
+}
+.variant-card__label{
+  display:inline-block;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:var(--nt-primary);
+  background:var(--nt-primary-light);
+  padding:4px 12px;
+  border-radius:20px;
+  margin-bottom:8px;
+}
+.variant-card__title{
+  font-size:18px;
+  font-weight:700;
+  color:var(--nt-text);
+}
+.variant-card__desc{
+  font-size:13px;
+  color:var(--nt-text-muted);
+  margin-top:4px;
+  line-height:1.6;
+}
+
+/* ========== SHARED HEATMAP GRID ========== */
+.heatmap{
+  display:grid;
+  grid-template-columns:110px repeat(7,1fr);
+  gap:3px;
+  margin-bottom:20px;
+}
+.heatmap__corner{
+  /* empty top-left cell */
+}
+.heatmap__day-header{
+  text-align:center;
+  font-size:12px;
+  font-weight:600;
+  color:var(--nt-text-muted);
+  padding:6px 0 10px;
+}
+.heatmap__row-label{
+  display:flex;
+  align-items:center;
+  font-size:12px;
+  font-weight:500;
+  color:var(--nt-text);
+  padding-right:12px;
+}
+.heatmap__cell{
+  position:relative;
+  width:100%;
+  aspect-ratio:1.6;
+  border-radius:6px;
+  cursor:pointer;
+  overflow:hidden;
+}
+
+/* Cell intensity colors (teal scale 0-5) */
+.heatmap__cell[data-level="0"]{background:#f8fafc}
+.heatmap__cell[data-level="1"]{background:rgba(0,119,130,.12)}
+.heatmap__cell[data-level="2"]{background:rgba(0,119,130,.25)}
+.heatmap__cell[data-level="3"]{background:rgba(0,119,130,.42)}
+.heatmap__cell[data-level="4"]{background:rgba(0,119,130,.65)}
+.heatmap__cell[data-level="5"]{background:#007782}
+
+/* ========== LEGEND ========== */
+.heatmap-legend{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  margin-top:8px;
+}
+.heatmap-legend__label{
+  font-size:11px;
+  color:var(--nt-text-muted);
+  font-weight:500;
+}
+.heatmap-legend__bar{
+  display:flex;
+  gap:3px;
+}
+.heatmap-legend__swatch{
+  width:24px;
+  height:12px;
+  border-radius:3px;
+}
+
+
+/* ============================================================
+   VARIANTE E — Valeur qui apparait dans la cellule
+   Hover: scale + fade-in de la valeur au centre
+   ============================================================ */
+.ve .heatmap__cell{
+  transition:transform .2s ease, box-shadow .2s ease;
+}
+.ve .heatmap__cell:hover{
+  transform:scale(1.15);
+  z-index:10;
+}
+
+/* Overlay darken on hover */
+.ve .heatmap__cell::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0);
+  border-radius:6px;
+  transition:background .2s ease;
+  z-index:1;
+}
+.ve .heatmap__cell:hover::before{
+  background:rgba(0,0,0,.18);
+}
+/* Light cells get a lighter overlay instead */
+.ve .heatmap__cell[data-level="0"]:hover::before,
+.ve .heatmap__cell[data-level="1"]:hover::before{
+  background:rgba(0,119,130,.08);
+}
+
+/* Value text inside cell */
+.ve .heatmap__cell .cell-value{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:13px;
+  font-weight:700;
+  color:#fff;
+  opacity:0;
+  transition:opacity .2s ease;
+  z-index:2;
+  text-shadow:0 1px 3px rgba(0,0,0,.25);
+}
+.ve .heatmap__cell:hover .cell-value{
+  opacity:1;
+}
+/* Dark text for light cells */
+.ve .heatmap__cell[data-level="0"] .cell-value,
+.ve .heatmap__cell[data-level="1"] .cell-value{
+  color:var(--nt-text);
+  text-shadow:none;
+}
+
+
+/* ============================================================
+   VARIANTE F — Cellule qui s'agrandit avec details
+   Hover: scale 1.5 + elevation + value + "likes" label
+   ============================================================ */
+.vf .heatmap__cell{
+  transition:transform .2s ease, box-shadow .2s ease;
+}
+.vf .heatmap__cell:hover{
+  transform:scale(1.5);
+  z-index:20;
+  box-shadow:0 8px 24px rgba(0,119,130,.3), 0 2px 8px rgba(0,0,0,.12);
+  border-radius:8px;
+}
+
+/* Colored ring on hover matching intensity */
+.vf .heatmap__cell[data-level="0"]:hover{outline:2px solid #cbd5e1;outline-offset:1px}
+.vf .heatmap__cell[data-level="1"]:hover{outline:2px solid rgba(0,119,130,.25);outline-offset:1px}
+.vf .heatmap__cell[data-level="2"]:hover{outline:2px solid rgba(0,119,130,.4);outline-offset:1px}
+.vf .heatmap__cell[data-level="3"]:hover{outline:2px solid rgba(0,119,130,.55);outline-offset:1px}
+.vf .heatmap__cell[data-level="4"]:hover{outline:2px solid rgba(0,119,130,.75);outline-offset:1px}
+.vf .heatmap__cell[data-level="5"]:hover{outline:2px solid #005f68;outline-offset:1px}
+
+/* Darkened overlay */
+.vf .heatmap__cell::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0);
+  border-radius:6px;
+  transition:background .2s ease;
+  z-index:1;
+}
+.vf .heatmap__cell:hover::before{
+  background:rgba(0,0,0,.15);
+}
+.vf .heatmap__cell[data-level="0"]:hover::before,
+.vf .heatmap__cell[data-level="1"]:hover::before{
+  background:rgba(0,119,130,.06);
+}
+
+/* Inner content: value + likes */
+.vf .heatmap__cell .cell-detail{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  transition:opacity .2s ease;
+  z-index:2;
+}
+.vf .heatmap__cell:hover .cell-detail{
+  opacity:1;
+}
+.vf .cell-detail__value{
+  font-size:14px;
+  font-weight:800;
+  color:#fff;
+  line-height:1;
+  text-shadow:0 1px 3px rgba(0,0,0,.3);
+}
+.vf .cell-detail__label{
+  font-size:9px;
+  font-weight:500;
+  color:rgba(255,255,255,.85);
+  text-transform:uppercase;
+  letter-spacing:.5px;
+  margin-top:2px;
+  text-shadow:0 1px 2px rgba(0,0,0,.2);
+}
+/* Dark text for light cells */
+.vf .heatmap__cell[data-level="0"] .cell-detail__value,
+.vf .heatmap__cell[data-level="1"] .cell-detail__value{
+  color:var(--nt-text);
+  text-shadow:none;
+}
+.vf .heatmap__cell[data-level="0"] .cell-detail__label,
+.vf .heatmap__cell[data-level="1"] .cell-detail__label{
+  color:var(--nt-text-muted);
+  text-shadow:none;
+}
+
+
+/* ============================================================
+   VARIANTE G — Cellule flip/reveal
+   Hover: 3D flip Y revealing value + heart icon on back
+   ============================================================ */
+.vg .heatmap__cell{
+  perspective:400px;
+  overflow:visible;
+  background:transparent !important;
+}
+.vg .heatmap__cell .cell-flip{
+  position:absolute;
+  inset:0;
+  transition:transform .35s ease;
+  transform-style:preserve-3d;
+  border-radius:6px;
+}
+.vg .heatmap__cell:hover .cell-flip{
+  transform:rotateY(180deg);
+}
+.vg .heatmap__cell:hover{
+  z-index:15;
+}
+
+/* Front face */
+.vg .cell-flip__front{
+  position:absolute;
+  inset:0;
+  border-radius:6px;
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+}
+
+/* Back face */
+.vg .cell-flip__back{
+  position:absolute;
+  inset:0;
+  border-radius:6px;
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+  transform:rotateY(180deg);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+}
+.vg .cell-flip__heart{
+  font-size:11px;
+  line-height:1;
+}
+.vg .cell-flip__value{
+  font-size:13px;
+  font-weight:700;
+  line-height:1;
+}
+
+/* Front colors by level */
+.vg .heatmap__cell[data-level="0"] .cell-flip__front{background:#f8fafc}
+.vg .heatmap__cell[data-level="1"] .cell-flip__front{background:rgba(0,119,130,.12)}
+.vg .heatmap__cell[data-level="2"] .cell-flip__front{background:rgba(0,119,130,.25)}
+.vg .heatmap__cell[data-level="3"] .cell-flip__front{background:rgba(0,119,130,.42)}
+.vg .heatmap__cell[data-level="4"] .cell-flip__front{background:rgba(0,119,130,.65)}
+.vg .heatmap__cell[data-level="5"] .cell-flip__front{background:#007782}
+
+/* Back colors (slightly darker) + text colors */
+.vg .heatmap__cell[data-level="0"] .cell-flip__back{
+  background:#e2e8f0;
+}
+.vg .heatmap__cell[data-level="0"] .cell-flip__heart,
+.vg .heatmap__cell[data-level="0"] .cell-flip__value{color:var(--nt-text)}
+
+.vg .heatmap__cell[data-level="1"] .cell-flip__back{
+  background:rgba(0,119,130,.22);
+}
+.vg .heatmap__cell[data-level="1"] .cell-flip__heart,
+.vg .heatmap__cell[data-level="1"] .cell-flip__value{color:var(--nt-text)}
+
+.vg .heatmap__cell[data-level="2"] .cell-flip__back{
+  background:rgba(0,119,130,.38);
+}
+.vg .heatmap__cell[data-level="2"] .cell-flip__heart{color:#fff}
+.vg .heatmap__cell[data-level="2"] .cell-flip__value{color:#fff}
+
+.vg .heatmap__cell[data-level="3"] .cell-flip__back{
+  background:rgba(0,119,130,.58);
+}
+.vg .heatmap__cell[data-level="3"] .cell-flip__heart,
+.vg .heatmap__cell[data-level="3"] .cell-flip__value{color:#fff}
+
+.vg .heatmap__cell[data-level="4"] .cell-flip__back{
+  background:rgba(0,119,130,.8);
+}
+.vg .heatmap__cell[data-level="4"] .cell-flip__heart,
+.vg .heatmap__cell[data-level="4"] .cell-flip__value{color:#fff}
+
+.vg .heatmap__cell[data-level="5"] .cell-flip__back{
+  background:#005f68;
+}
+.vg .heatmap__cell[data-level="5"] .cell-flip__heart,
+.vg .heatmap__cell[data-level="5"] .cell-flip__value{color:#fff}
+
+
+/* ============================================================
+   VARIANTE H — Overlay glow + valeur
+   Hover: pulsing glow ring + radial gradient + value fade-in
+   ============================================================ */
+@keyframes glowPulse{
+  0%,100%{box-shadow:0 0 6px 2px rgba(0,119,130,.3)}
+  50%{box-shadow:0 0 14px 5px rgba(0,119,130,.5)}
+}
+@keyframes glowPulseLight{
+  0%,100%{box-shadow:0 0 6px 2px rgba(0,119,130,.15)}
+  50%{box-shadow:0 0 14px 5px rgba(0,119,130,.28)}
+}
+
+.vh .heatmap__cell{
+  transition:transform .2s ease;
+}
+.vh .heatmap__cell:hover{
+  transform:scale(1.12);
+  z-index:10;
+  animation:glowPulse 1.6s ease-in-out infinite;
+  border-radius:6px;
+}
+.vh .heatmap__cell[data-level="0"]:hover,
+.vh .heatmap__cell[data-level="1"]:hover{
+  animation:glowPulseLight 1.6s ease-in-out infinite;
+}
+
+/* Radial gradient overlay */
+.vh .heatmap__cell::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  border-radius:6px;
+  background:radial-gradient(circle at center, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 100%);
+  transition:background .25s ease;
+  z-index:1;
+}
+.vh .heatmap__cell:hover::before{
+  background:radial-gradient(circle at center, rgba(255,255,255,.2) 0%, rgba(255,255,255,0) 70%);
+}
+.vh .heatmap__cell[data-level="0"]:hover::before,
+.vh .heatmap__cell[data-level="1"]:hover::before{
+  background:radial-gradient(circle at center, rgba(0,119,130,.1) 0%, rgba(0,119,130,0) 70%);
+}
+
+/* Value display */
+.vh .heatmap__cell .cell-glow{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  transition:opacity .25s ease;
+  z-index:2;
+}
+.vh .heatmap__cell:hover .cell-glow{
+  opacity:1;
+}
+.vh .cell-glow__value{
+  font-size:13px;
+  font-weight:700;
+  color:#fff;
+  text-shadow:0 1px 6px rgba(0,0,0,.35), 0 0 12px rgba(0,119,130,.4);
+}
+/* Dark text for light cells */
+.vh .heatmap__cell[data-level="0"] .cell-glow__value,
+.vh .heatmap__cell[data-level="1"] .cell-glow__value{
+  color:var(--nt-text);
+  text-shadow:0 0 8px rgba(0,119,130,.2);
+}
+
+</style>
+</head>
+<body>
+
+<!-- ==================== PAGE HEADER ==================== -->
+<div class="page-title">
+  <h1>Heatmap Tooltip — Variantes In-Cell (E-H)</h1>
+  <p>4 styles de tooltip in-cell pour la heatmap NicheTrackr. Survolez les cellules pour voir l'effet.</p>
+</div>
+
+
+<!-- ============================================================
+     VARIANTE E — Valeur qui apparait dans la cellule
+     ============================================================ -->
+<div class="variant-card ve">
+  <div class="variant-card__header">
+    <div class="variant-card__label">Variante E</div>
+    <div class="variant-card__title">Valeur qui apparait dans la cellule</div>
+    <div class="variant-card__desc">
+      Au survol, la cellule grossit legerement (scale 1.15), le fond s'assombrit et la valeur
+      apparait en fondu au centre. Les cellules claires (niveau 0-1) affichent le texte en sombre.
+    </div>
+  </div>
+
+  <div class="heatmap">
+    <!-- Header row -->
+    <div class="heatmap__corner"></div>
+    <div class="heatmap__day-header">Lun</div>
+    <div class="heatmap__day-header">Mar</div>
+    <div class="heatmap__day-header">Mer</div>
+    <div class="heatmap__day-header">Jeu</div>
+    <div class="heatmap__day-header">Ven</div>
+    <div class="heatmap__day-header">Sam</div>
+    <div class="heatmap__day-header">Dim</div>
+
+    <!-- Row: Matin 9-12h -->
+    <div class="heatmap__row-label">Matin 9-12h</div>
+    <div class="heatmap__cell" data-level="2" data-value="5.8"><span class="cell-value">5.8</span></div>
+    <div class="heatmap__cell" data-level="1" data-value="3.2"><span class="cell-value">3.2</span></div>
+    <div class="heatmap__cell" data-level="3" data-value="8.1"><span class="cell-value">8.1</span></div>
+    <div class="heatmap__cell" data-level="2" data-value="6.4"><span class="cell-value">6.4</span></div>
+    <div class="heatmap__cell" data-level="1" data-value="2.9"><span class="cell-value">2.9</span></div>
+    <div class="heatmap__cell" data-level="4" data-value="11.3"><span class="cell-value">11.3</span></div>
+    <div class="heatmap__cell" data-level="3" data-value="9.7"><span class="cell-value">9.7</span></div>
+
+    <!-- Row: Midi 12-14h -->
+    <div class="heatmap__row-label">Midi 12-14h</div>
+    <div class="heatmap__cell" data-level="3" data-value="8.5"><span class="cell-value">8.5</span></div>
+    <div class="heatmap__cell" data-level="3" data-value="7.9"><span class="cell-value">7.9</span></div>
+    <div class="heatmap__cell" data-level="4" data-value="12.1"><span class="cell-value">12.1</span></div>
+    <div class="heatmap__cell" data-level="3" data-value="9.2"><span class="cell-value">9.2</span></div>
+    <div class="heatmap__cell" data-level="2" data-value="5.6"><span class="cell-value">5.6</span></div>
+    <div class="heatmap__cell" data-level="5" data-value="14.8"><span class="cell-value">14.8</span></div>
+    <div class="heatmap__cell" data-level="4" data-value="11.7"><span class="cell-value">11.7</span></div>
+
+    <!-- Row: Aprem 15-18h -->
+    <div class="heatmap__row-label">Aprem 15-18h</div>
+    <div class="heatmap__cell" data-level="1" data-value="3.4"><span class="cell-value">3.4</span></div>
+    <div class="heatmap__cell" data-level="2" data-value="4.7"><span class="cell-value">4.7</span></div>
+    <div class="heatmap__cell" data-level="2" data-value="6.0"><span class="cell-value">6.0</span></div>
+    <div class="heatmap__cell" data-level="1" data-value="3.8"><span class="cell-value">3.8</span></div>
+    <div class="heatmap__cell" data-level="0" data-value="1.2"><span class="cell-value">1.2</span></div>
+    <div class="heatmap__cell" data-level="3" data-value="8.9"><span class="cell-value">8.9</span></div>
+    <div class="heatmap__cell" data-level="2" data-value="5.5"><span class="cell-value">5.5</span></div>
+
+    <!-- Row: Soir 18-22h -->
+    <div class="heatmap__row-label">Soir 18-22h</div>
+    <div class="heatmap__cell" data-level="4" data-value="12.6"><span class="cell-value">12.6</span></div>
+    <div class="heatmap__cell" data-level="5" data-value="15.3"><span class="cell-value">15.3</span></div>
+    <div class="heatmap__cell" data-level="4" data-value="13.0"><span class="cell-value">13.0</span></div>
+    <div class="heatmap__cell" data-level="5" data-value="16.2"><span class="cell-value">16.2</span></div>
+    <div class="heatmap__cell" data-level="3" data-value="9.4"><span class="cell-value">9.4</span></div>
+    <div class="heatmap__cell" data-level="5" data-value="17.1"><span class="cell-value">17.1</span></div>
+    <div class="heatmap__cell" data-level="5" data-value="15.9"><span class="cell-value">15.9</span></div>
+  </div>
+
+  <!-- Legend -->
+  <div class="heatmap-legend">
+    <span class="heatmap-legend__label">Faible</span>
+    <div class="heatmap-legend__bar">
+      <div class="heatmap-legend__swatch" style="background:#f8fafc"></div>
+      <div class="heatmap-legend__swatch" style="background:rgba(0,119,130,.12)"></div>
+      <div class="heatmap-legend__swatch" style="background:rgba(0,119,130,.25)"></div>
+      <div class="heatmap-legend__swatch" style="background:rgba(0,119,130,.42)"></div>
+      <div class="heatmap-legend__swatch" style="background:rgba(0,119,130,.65)"></div>
+      <div class="heatmap-legend__swatch" style="background:#007782"></div>
+    </div>
+    <span class="heatmap-legend__label">Fort</span>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     VARIANTE F — Cellule qui s'agrandit avec details
+     ============================================================ -->
+<div class="variant-card vf">
+  <div class="variant-card__header">
+    <div class="variant-card__label">Variante F</div>
+    <div class="variant-card__title">Cellule qui s'agrandit avec details</div>
+    <div class="variant-card__desc">
+      Au survol, la cellule s'agrandit a 1.5x avec elevation, bordure coloree selon l'intensite,
+      et affiche la valeur en gras + le mot "likes" en dessous. z-index eleve pour passer au-dessus des voisines.
+    </div>
+  </div>
+
+  <div class="heatmap">
+    <!-- Header row -->
+    <div class="heatmap__corner"></div>
+    <div class="heatmap__day-header">Lun</div>
+    <div class="heatmap__day-header">Mar</div>
+    <div class="heatmap__day-header">Mer</div>
+    <div class="heatmap__day-header">Jeu</div>
+    <div class="heatmap__day-header">Ven</div>
+    <div class="heatmap__day-header">Sam</div>
+    <div class="heatmap__day-header">Dim</div>
+
+    <!-- Row: Matin 9-12h -->
+    <div class="heatmap__row-label">Matin 9-12h</div>
+    <div class="heatmap__cell" data-level="1" data-value="3.1">
+      <div class="cell-detail"><span class="cell-detail__value">3.1</span><span class="cell-detail__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="2" data-value="5.4">
+      <div class="cell-detail"><span class="cell-detail__value">5.4</span><span class="cell-detail__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="2" data-value="6.7">
+      <div class="cell-detail"><span class="cell-detail__value">6.7</span><span class="cell-detail__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="1" data-value="2.8">
+      <div class="cell-detail"><span class="cell-detail__value">2.8</span><span class="cell-detail__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="3" data-value="7.5">
+      <div class="cell-detail"><span class="cell-detail__value">7.5</span><span class="cell-detail__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="3" data-value="9.3">
+      <div class="cell-detail"><span class="cell-detail__value">9.3</span><span class="cell-detail__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="4" data-value="10.6">
+      <div class="cell-detail"><span class="cell-detail__value">10.6</span><span class="cell-detail__label">likes</span></div>
+    </div>
+
+    <!-- Row: Midi 12-14h -->
+    <div class="heatmap__row-label">Midi 12-14h</div>
+    <div class="heatmap__cell" data-level="3" data-value="8.2">
+      <div class="cell-detail"><span class="cell-detail__value">8.2</span><span class="cell-detail__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="4" data-value="11.0">
+      <div class="cell-detail"><span class="cell-detail__value">11.0</span><span class="cell-detail__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="3" data-value="8.8">
+      <div class="cell-detail"><span class="cell-detail__value">8.8</span><span class="cell-detail__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="4" data-value="12.3">
+      <div class="cell-detail"><span class="cell-detail__value">12.3</span><span class="cell-detail__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="2" data-value="6.1">
+      <div class="cell-detail"><span class="cell-detail__value">6.1</span><span class="cell-detail__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="5" data-value="15.4">
+      <div class="cell-detail"><span class="cell-detail__value">15.4</span><span class="cell-detail__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="4" data-value="13.2">
+      <div class="cell-detail"><span class="cell-detail__value">13.2</span><span class="cell-detail__label">likes</span></div>
+    </div>
+
+    <!-- Row: Aprem 15-18h -->
+    <div class="heatmap__row-label">Aprem 15-18h</div>
+    <div class="heatmap__cell" data-level="0" data-value="1.5">
+      <div class="cell-detail"><span class="cell-detail__value">1.5</span><span class="cell-detail__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="1" data-value="3.6">
+      <div class="cell-detail"><span class="cell-detail__value">3.6</span><span class="cell-detail__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="2" data-value="5.2">
+      <div class="cell-detail"><span class="cell-detail__value">5.2</span><span class="cell-detail__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="1" data-value="2.4">
+      <div class="cell-detail"><span class="cell-detail__value">2.4</span><span class="cell-detail__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="0" data-value="0.9">
+      <div class="cell-detail"><span class="cell-detail__value">0.9</span><span class="cell-detail__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="3" data-value="7.8">
+      <div class="cell-detail"><span class="cell-detail__value">7.8</span><span class="cell-detail__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="2" data-value="6.3">
+      <div class="cell-detail"><span class="cell-detail__value">6.3</span><span class="cell-detail__label">likes</span></div>
+    </div>
+
+    <!-- Row: Soir 18-22h -->
+    <div class="heatmap__row-label">Soir 18-22h</div>
+    <div class="heatmap__cell" data-level="5" data-value="16.7">
+      <div class="cell-detail"><span class="cell-detail__value">16.7</span><span class="cell-detail__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="4" data-value="13.5">
+      <div class="cell-detail"><span class="cell-detail__value">13.5</span><span class="cell-detail__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="5" data-value="15.8">
+      <div class="cell-detail"><span class="cell-detail__value">15.8</span><span class="cell-detail__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="4" data-value="12.9">
+      <div class="cell-detail"><span class="cell-detail__value">12.9</span><span class="cell-detail__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="3" data-value="8.6">
+      <div class="cell-detail"><span class="cell-detail__value">8.6</span><span class="cell-detail__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="5" data-value="18.2">
+      <div class="cell-detail"><span class="cell-detail__value">18.2</span><span class="cell-detail__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="5" data-value="16.4">
+      <div class="cell-detail"><span class="cell-detail__value">16.4</span><span class="cell-detail__label">likes</span></div>
+    </div>
+  </div>
+
+  <!-- Legend -->
+  <div class="heatmap-legend">
+    <span class="heatmap-legend__label">Faible</span>
+    <div class="heatmap-legend__bar">
+      <div class="heatmap-legend__swatch" style="background:#f8fafc"></div>
+      <div class="heatmap-legend__swatch" style="background:rgba(0,119,130,.12)"></div>
+      <div class="heatmap-legend__swatch" style="background:rgba(0,119,130,.25)"></div>
+      <div class="heatmap-legend__swatch" style="background:rgba(0,119,130,.42)"></div>
+      <div class="heatmap-legend__swatch" style="background:rgba(0,119,130,.65)"></div>
+      <div class="heatmap-legend__swatch" style="background:#007782"></div>
+    </div>
+    <span class="heatmap-legend__label">Fort</span>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     VARIANTE G — Cellule flip/reveal
+     ============================================================ -->
+<div class="variant-card vg">
+  <div class="variant-card__header">
+    <div class="variant-card__label">Variante G</div>
+    <div class="variant-card__title">Cellule flip/reveal</div>
+    <div class="variant-card__desc">
+      Au survol, la cellule effectue un flip 3D (rotateY 180deg). La face avant montre la couleur
+      heatmap, la face arriere revele la valeur avec une icone coeur. Transition fluide de 350ms.
+    </div>
+  </div>
+
+  <div class="heatmap">
+    <!-- Header row -->
+    <div class="heatmap__corner"></div>
+    <div class="heatmap__day-header">Lun</div>
+    <div class="heatmap__day-header">Mar</div>
+    <div class="heatmap__day-header">Mer</div>
+    <div class="heatmap__day-header">Jeu</div>
+    <div class="heatmap__day-header">Ven</div>
+    <div class="heatmap__day-header">Sam</div>
+    <div class="heatmap__day-header">Dim</div>
+
+    <!-- Row: Matin 9-12h -->
+    <div class="heatmap__row-label">Matin 9-12h</div>
+    <div class="heatmap__cell" data-level="2" data-value="6.2">
+      <div class="cell-flip">
+        <div class="cell-flip__front"></div>
+        <div class="cell-flip__back"><span class="cell-flip__heart">&hearts;</span><span class="cell-flip__value">6.2</span></div>
+      </div>
+    </div>
+    <div class="heatmap__cell" data-level="1" data-value="2.7">
+      <div class="cell-flip">
+        <div class="cell-flip__front"></div>
+        <div class="cell-flip__back"><span class="cell-flip__heart">&hearts;</span><span class="cell-flip__value">2.7</span></div>
+      </div>
+    </div>
+    <div class="heatmap__cell" data-level="3" data-value="7.4">
+      <div class="cell-flip">
+        <div class="cell-flip__front"></div>
+        <div class="cell-flip__back"><span class="cell-flip__heart">&hearts;</span><span class="cell-flip__value">7.4</span></div>
+      </div>
+    </div>
+    <div class="heatmap__cell" data-level="2" data-value="5.9">
+      <div class="cell-flip">
+        <div class="cell-flip__front"></div>
+        <div class="cell-flip__back"><span class="cell-flip__heart">&hearts;</span><span class="cell-flip__value">5.9</span></div>
+      </div>
+    </div>
+    <div class="heatmap__cell" data-level="1" data-value="3.3">
+      <div class="cell-flip">
+        <div class="cell-flip__front"></div>
+        <div class="cell-flip__back"><span class="cell-flip__heart">&hearts;</span><span class="cell-flip__value">3.3</span></div>
+      </div>
+    </div>
+    <div class="heatmap__cell" data-level="4" data-value="10.8">
+      <div class="cell-flip">
+        <div class="cell-flip__front"></div>
+        <div class="cell-flip__back"><span class="cell-flip__heart">&hearts;</span><span class="cell-flip__value">10.8</span></div>
+      </div>
+    </div>
+    <div class="heatmap__cell" data-level="3" data-value="8.5">
+      <div class="cell-flip">
+        <div class="cell-flip__front"></div>
+        <div class="cell-flip__back"><span class="cell-flip__heart">&hearts;</span><span class="cell-flip__value">8.5</span></div>
+      </div>
+    </div>
+
+    <!-- Row: Midi 12-14h -->
+    <div class="heatmap__row-label">Midi 12-14h</div>
+    <div class="heatmap__cell" data-level="4" data-value="11.5">
+      <div class="cell-flip">
+        <div class="cell-flip__front"></div>
+        <div class="cell-flip__back"><span class="cell-flip__heart">&hearts;</span><span class="cell-flip__value">11.5</span></div>
+      </div>
+    </div>
+    <div class="heatmap__cell" data-level="3" data-value="8.9">
+      <div class="cell-flip">
+        <div class="cell-flip__front"></div>
+        <div class="cell-flip__back"><span class="cell-flip__heart">&hearts;</span><span class="cell-flip__value">8.9</span></div>
+      </div>
+    </div>
+    <div class="heatmap__cell" data-level="4" data-value="12.7">
+      <div class="cell-flip">
+        <div class="cell-flip__front"></div>
+        <div class="cell-flip__back"><span class="cell-flip__heart">&hearts;</span><span class="cell-flip__value">12.7</span></div>
+      </div>
+    </div>
+    <div class="heatmap__cell" data-level="3" data-value="9.1">
+      <div class="cell-flip">
+        <div class="cell-flip__front"></div>
+        <div class="cell-flip__back"><span class="cell-flip__heart">&hearts;</span><span class="cell-flip__value">9.1</span></div>
+      </div>
+    </div>
+    <div class="heatmap__cell" data-level="2" data-value="5.0">
+      <div class="cell-flip">
+        <div class="cell-flip__front"></div>
+        <div class="cell-flip__back"><span class="cell-flip__heart">&hearts;</span><span class="cell-flip__value">5.0</span></div>
+      </div>
+    </div>
+    <div class="heatmap__cell" data-level="5" data-value="14.6">
+      <div class="cell-flip">
+        <div class="cell-flip__front"></div>
+        <div class="cell-flip__back"><span class="cell-flip__heart">&hearts;</span><span class="cell-flip__value">14.6</span></div>
+      </div>
+    </div>
+    <div class="heatmap__cell" data-level="4" data-value="12.0">
+      <div class="cell-flip">
+        <div class="cell-flip__front"></div>
+        <div class="cell-flip__back"><span class="cell-flip__heart">&hearts;</span><span class="cell-flip__value">12.0</span></div>
+      </div>
+    </div>
+
+    <!-- Row: Aprem 15-18h -->
+    <div class="heatmap__row-label">Aprem 15-18h</div>
+    <div class="heatmap__cell" data-level="1" data-value="2.1">
+      <div class="cell-flip">
+        <div class="cell-flip__front"></div>
+        <div class="cell-flip__back"><span class="cell-flip__heart">&hearts;</span><span class="cell-flip__value">2.1</span></div>
+      </div>
+    </div>
+    <div class="heatmap__cell" data-level="0" data-value="0.8">
+      <div class="cell-flip">
+        <div class="cell-flip__front"></div>
+        <div class="cell-flip__back"><span class="cell-flip__heart">&hearts;</span><span class="cell-flip__value">0.8</span></div>
+      </div>
+    </div>
+    <div class="heatmap__cell" data-level="2" data-value="4.3">
+      <div class="cell-flip">
+        <div class="cell-flip__front"></div>
+        <div class="cell-flip__back"><span class="cell-flip__heart">&hearts;</span><span class="cell-flip__value">4.3</span></div>
+      </div>
+    </div>
+    <div class="heatmap__cell" data-level="1" data-value="3.0">
+      <div class="cell-flip">
+        <div class="cell-flip__front"></div>
+        <div class="cell-flip__back"><span class="cell-flip__heart">&hearts;</span><span class="cell-flip__value">3.0</span></div>
+      </div>
+    </div>
+    <div class="heatmap__cell" data-level="0" data-value="1.1">
+      <div class="cell-flip">
+        <div class="cell-flip__front"></div>
+        <div class="cell-flip__back"><span class="cell-flip__heart">&hearts;</span><span class="cell-flip__value">1.1</span></div>
+      </div>
+    </div>
+    <div class="heatmap__cell" data-level="3" data-value="7.2">
+      <div class="cell-flip">
+        <div class="cell-flip__front"></div>
+        <div class="cell-flip__back"><span class="cell-flip__heart">&hearts;</span><span class="cell-flip__value">7.2</span></div>
+      </div>
+    </div>
+    <div class="heatmap__cell" data-level="2" data-value="4.9">
+      <div class="cell-flip">
+        <div class="cell-flip__front"></div>
+        <div class="cell-flip__back"><span class="cell-flip__heart">&hearts;</span><span class="cell-flip__value">4.9</span></div>
+      </div>
+    </div>
+
+    <!-- Row: Soir 18-22h -->
+    <div class="heatmap__row-label">Soir 18-22h</div>
+    <div class="heatmap__cell" data-level="5" data-value="16.1">
+      <div class="cell-flip">
+        <div class="cell-flip__front"></div>
+        <div class="cell-flip__back"><span class="cell-flip__heart">&hearts;</span><span class="cell-flip__value">16.1</span></div>
+      </div>
+    </div>
+    <div class="heatmap__cell" data-level="4" data-value="13.4">
+      <div class="cell-flip">
+        <div class="cell-flip__front"></div>
+        <div class="cell-flip__back"><span class="cell-flip__heart">&hearts;</span><span class="cell-flip__value">13.4</span></div>
+      </div>
+    </div>
+    <div class="heatmap__cell" data-level="5" data-value="17.0">
+      <div class="cell-flip">
+        <div class="cell-flip__front"></div>
+        <div class="cell-flip__back"><span class="cell-flip__heart">&hearts;</span><span class="cell-flip__value">17.0</span></div>
+      </div>
+    </div>
+    <div class="heatmap__cell" data-level="5" data-value="15.5">
+      <div class="cell-flip">
+        <div class="cell-flip__front"></div>
+        <div class="cell-flip__back"><span class="cell-flip__heart">&hearts;</span><span class="cell-flip__value">15.5</span></div>
+      </div>
+    </div>
+    <div class="heatmap__cell" data-level="3" data-value="9.8">
+      <div class="cell-flip">
+        <div class="cell-flip__front"></div>
+        <div class="cell-flip__back"><span class="cell-flip__heart">&hearts;</span><span class="cell-flip__value">9.8</span></div>
+      </div>
+    </div>
+    <div class="heatmap__cell" data-level="5" data-value="18.3">
+      <div class="cell-flip">
+        <div class="cell-flip__front"></div>
+        <div class="cell-flip__back"><span class="cell-flip__heart">&hearts;</span><span class="cell-flip__value">18.3</span></div>
+      </div>
+    </div>
+    <div class="heatmap__cell" data-level="4" data-value="14.2">
+      <div class="cell-flip">
+        <div class="cell-flip__front"></div>
+        <div class="cell-flip__back"><span class="cell-flip__heart">&hearts;</span><span class="cell-flip__value">14.2</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Legend -->
+  <div class="heatmap-legend">
+    <span class="heatmap-legend__label">Faible</span>
+    <div class="heatmap-legend__bar">
+      <div class="heatmap-legend__swatch" style="background:#f8fafc"></div>
+      <div class="heatmap-legend__swatch" style="background:rgba(0,119,130,.12)"></div>
+      <div class="heatmap-legend__swatch" style="background:rgba(0,119,130,.25)"></div>
+      <div class="heatmap-legend__swatch" style="background:rgba(0,119,130,.42)"></div>
+      <div class="heatmap-legend__swatch" style="background:rgba(0,119,130,.65)"></div>
+      <div class="heatmap-legend__swatch" style="background:#007782"></div>
+    </div>
+    <span class="heatmap-legend__label">Fort</span>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     VARIANTE H — Overlay glow + valeur
+     ============================================================ -->
+<div class="variant-card vh">
+  <div class="variant-card__header">
+    <div class="variant-card__label">Variante H</div>
+    <div class="variant-card__title">Overlay glow + valeur</div>
+    <div class="variant-card__desc">
+      Au survol, la cellule recoit un halo lumineux pulse (box-shadow anime), un gradient radial
+      subtil, et la valeur apparait au centre avec un text-shadow pour la lisibilite. L'animation de glow pulse en continu.
+    </div>
+  </div>
+
+  <div class="heatmap">
+    <!-- Header row -->
+    <div class="heatmap__corner"></div>
+    <div class="heatmap__day-header">Lun</div>
+    <div class="heatmap__day-header">Mar</div>
+    <div class="heatmap__day-header">Mer</div>
+    <div class="heatmap__day-header">Jeu</div>
+    <div class="heatmap__day-header">Ven</div>
+    <div class="heatmap__day-header">Sam</div>
+    <div class="heatmap__day-header">Dim</div>
+
+    <!-- Row: Matin 9-12h -->
+    <div class="heatmap__row-label">Matin 9-12h</div>
+    <div class="heatmap__cell" data-level="3" data-value="7.6">
+      <div class="cell-glow"><span class="cell-glow__value">7.6</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="1" data-value="3.5">
+      <div class="cell-glow"><span class="cell-glow__value">3.5</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="2" data-value="5.1">
+      <div class="cell-glow"><span class="cell-glow__value">5.1</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="3" data-value="8.4">
+      <div class="cell-glow"><span class="cell-glow__value">8.4</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="1" data-value="2.6">
+      <div class="cell-glow"><span class="cell-glow__value">2.6</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="4" data-value="11.9">
+      <div class="cell-glow"><span class="cell-glow__value">11.9</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="3" data-value="9.0">
+      <div class="cell-glow"><span class="cell-glow__value">9.0</span></div>
+    </div>
+
+    <!-- Row: Midi 12-14h -->
+    <div class="heatmap__row-label">Midi 12-14h</div>
+    <div class="heatmap__cell" data-level="4" data-value="12.4">
+      <div class="cell-glow"><span class="cell-glow__value">12.4</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="3" data-value="9.6">
+      <div class="cell-glow"><span class="cell-glow__value">9.6</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="3" data-value="8.3">
+      <div class="cell-glow"><span class="cell-glow__value">8.3</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="4" data-value="13.1">
+      <div class="cell-glow"><span class="cell-glow__value">13.1</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="2" data-value="5.7">
+      <div class="cell-glow"><span class="cell-glow__value">5.7</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="5" data-value="16.0">
+      <div class="cell-glow"><span class="cell-glow__value">16.0</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="5" data-value="14.5">
+      <div class="cell-glow"><span class="cell-glow__value">14.5</span></div>
+    </div>
+
+    <!-- Row: Aprem 15-18h -->
+    <div class="heatmap__row-label">Aprem 15-18h</div>
+    <div class="heatmap__cell" data-level="0" data-value="1.0">
+      <div class="cell-glow"><span class="cell-glow__value">1.0</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="1" data-value="2.3">
+      <div class="cell-glow"><span class="cell-glow__value">2.3</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="2" data-value="4.5">
+      <div class="cell-glow"><span class="cell-glow__value">4.5</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="0" data-value="0.7">
+      <div class="cell-glow"><span class="cell-glow__value">0.7</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="1" data-value="2.0">
+      <div class="cell-glow"><span class="cell-glow__value">2.0</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="3" data-value="7.1">
+      <div class="cell-glow"><span class="cell-glow__value">7.1</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="2" data-value="5.3">
+      <div class="cell-glow"><span class="cell-glow__value">5.3</span></div>
+    </div>
+
+    <!-- Row: Soir 18-22h -->
+    <div class="heatmap__row-label">Soir 18-22h</div>
+    <div class="heatmap__cell" data-level="5" data-value="17.5">
+      <div class="cell-glow"><span class="cell-glow__value">17.5</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="4" data-value="14.0">
+      <div class="cell-glow"><span class="cell-glow__value">14.0</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="5" data-value="16.8">
+      <div class="cell-glow"><span class="cell-glow__value">16.8</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="5" data-value="18.0">
+      <div class="cell-glow"><span class="cell-glow__value">18.0</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="4" data-value="11.2">
+      <div class="cell-glow"><span class="cell-glow__value">11.2</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="5" data-value="19.4">
+      <div class="cell-glow"><span class="cell-glow__value">19.4</span></div>
+    </div>
+    <div class="heatmap__cell" data-level="5" data-value="17.3">
+      <div class="cell-glow"><span class="cell-glow__value">17.3</span></div>
+    </div>
+  </div>
+
+  <!-- Legend -->
+  <div class="heatmap-legend">
+    <span class="heatmap-legend__label">Faible</span>
+    <div class="heatmap-legend__bar">
+      <div class="heatmap-legend__swatch" style="background:#f8fafc"></div>
+      <div class="heatmap-legend__swatch" style="background:rgba(0,119,130,.12)"></div>
+      <div class="heatmap-legend__swatch" style="background:rgba(0,119,130,.25)"></div>
+      <div class="heatmap-legend__swatch" style="background:rgba(0,119,130,.42)"></div>
+      <div class="heatmap-legend__swatch" style="background:rgba(0,119,130,.65)"></div>
+      <div class="heatmap-legend__swatch" style="background:#007782"></div>
+    </div>
+    <span class="heatmap-legend__label">Fort</span>
+  </div>
+</div>
+
+
+</body>
+</html>

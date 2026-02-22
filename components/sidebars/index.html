@@ -1,0 +1,2739 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sidebars — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    /* ===========================================
+       SIDEBARS — Styles locaux
+       =========================================== */
+
+    .sidebars-list {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    .sidebar-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .sidebar-section__preview {
+      padding: 0;
+      background: #0a0a0a;
+      height: 450px;
+      overflow: hidden;
+    }
+
+    .sidebar-section__info {
+      padding: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .sidebar-section__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .sidebar-section__name {
+      font-weight: 600;
+      font-size: 1.25rem;
+    }
+
+    .sidebar-section__tags {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* Preview layout: sidebar + placeholder content */
+    .sb-preview {
+      display: flex;
+      height: 100%;
+      width: 100%;
+    }
+
+    .sb-preview__content {
+      flex: 1;
+      background: #111113;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .sb-preview__content-bar {
+      height: 12px;
+      background: #1e1e22;
+      border-radius: 6px;
+    }
+
+    .sb-preview__content-bar--short {
+      width: 60%;
+    }
+
+    .sb-preview__content-bar--medium {
+      width: 80%;
+    }
+
+    .sb-preview__content-bar--long {
+      width: 100%;
+    }
+
+    .sb-preview__content-block {
+      height: 80px;
+      background: #1a1a1e;
+      border-radius: 8px;
+      border: 1px solid #27272a;
+    }
+
+    .sb-preview__content-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      flex: 1;
+    }
+
+    .sb-preview__content-card {
+      background: #1a1a1e;
+      border-radius: 8px;
+      border: 1px solid #27272a;
+    }
+
+    /* ===========================================
+       SIDEBAR 1 — DARK
+       =========================================== */
+
+    .sb-dark {
+      width: 260px;
+      height: 100%;
+      background: #0f0f0f;
+      border-right: 1px solid #1e1e22;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+    }
+
+    .sb-dark__logo {
+      padding: 24px 20px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.02em;
+      border-bottom: 1px solid #1a1a1e;
+    }
+
+    .sb-dark__logo span {
+      color: #6366f1;
+    }
+
+    .sb-dark__nav {
+      flex: 1;
+      padding: 16px 12px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .sb-dark__divider {
+      height: 1px;
+      background: #1a1a1e;
+      margin: 12px 0;
+    }
+
+    .sb-dark__label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #52525b;
+      padding: 8px 12px 4px;
+    }
+
+    .sb-dark__item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      color: #a1a1aa;
+      font-size: 0.9rem;
+      font-weight: 450;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-decoration: none;
+      border-left: 3px solid transparent;
+      position: relative;
+    }
+
+    .sb-dark__item:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: #d4d4d8;
+    }
+
+    .sb-dark__item--active {
+      background: rgba(99, 102, 241, 0.08);
+      color: #fff;
+      border-left-color: #6366f1;
+    }
+
+    .sb-dark__icon {
+      font-size: 1.1rem;
+      width: 24px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .sb-dark__user {
+      padding: 16px 16px;
+      border-top: 1px solid #1a1a1e;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .sb-dark__avatar {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .sb-dark__user-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sb-dark__user-name {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #e4e4e7;
+    }
+
+    .sb-dark__user-role {
+      font-size: 0.72rem;
+      color: #71717a;
+    }
+
+    /* ===========================================
+       SIDEBAR 2 — LIGHT
+       =========================================== */
+
+    .sb-light {
+      width: 260px;
+      height: 100%;
+      background: #ffffff;
+      border-right: 1px solid #e5e7eb;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+    }
+
+    .sb-light__logo {
+      padding: 24px 20px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #111827;
+      letter-spacing: -0.02em;
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    .sb-light__logo span {
+      color: #6366f1;
+    }
+
+    .sb-light__nav {
+      flex: 1;
+      padding: 16px 12px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .sb-light__label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #9ca3af;
+      padding: 12px 12px 4px;
+    }
+
+    .sb-light__divider {
+      height: 1px;
+      background: #f3f4f6;
+      margin: 12px 0;
+    }
+
+    .sb-light__item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      color: #6b7280;
+      font-size: 0.9rem;
+      font-weight: 450;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-decoration: none;
+      border-left: 3px solid transparent;
+    }
+
+    .sb-light__item:hover {
+      background: #f9fafb;
+      color: #374151;
+    }
+
+    .sb-light__item--active {
+      background: rgba(99, 102, 241, 0.06);
+      color: #4f46e5;
+      border-left-color: #6366f1;
+      font-weight: 500;
+    }
+
+    .sb-light__icon {
+      font-size: 1.1rem;
+      width: 24px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .sb-light__user {
+      padding: 16px;
+      border-top: 1px solid #f3f4f6;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .sb-light__avatar {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .sb-light__user-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sb-light__user-name {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #111827;
+    }
+
+    .sb-light__user-role {
+      font-size: 0.72rem;
+      color: #9ca3af;
+    }
+
+    /* Light sidebar preview needs a lighter content area */
+    .sb-preview--light .sb-preview__content {
+      background: #f9fafb;
+    }
+
+    .sb-preview--light .sb-preview__content-bar {
+      background: #e5e7eb;
+    }
+
+    .sb-preview--light .sb-preview__content-block {
+      background: #f3f4f6;
+      border-color: #e5e7eb;
+    }
+
+    .sb-preview--light .sb-preview__content-card {
+      background: #ffffff;
+      border-color: #e5e7eb;
+    }
+
+    /* ===========================================
+       SIDEBAR 3 — GRADIENT
+       =========================================== */
+
+    .sb-gradient {
+      width: 260px;
+      height: 100%;
+      background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+    }
+
+    .sb-gradient__logo {
+      padding: 24px 20px;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.02em;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      text-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+    }
+
+    .sb-gradient__logo span {
+      color: #818cf8;
+      text-shadow: 0 0 30px rgba(129, 140, 248, 0.6);
+    }
+
+    .sb-gradient__nav {
+      flex: 1;
+      padding: 16px 12px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .sb-gradient__label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(255, 255, 255, 0.3);
+      padding: 12px 12px 4px;
+    }
+
+    .sb-gradient__divider {
+      height: 1px;
+      background: rgba(255, 255, 255, 0.06);
+      margin: 12px 0;
+    }
+
+    .sb-gradient__item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      color: rgba(255, 255, 255, 0.55);
+      font-size: 0.9rem;
+      font-weight: 450;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .sb-gradient__item:hover {
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(10px);
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .sb-gradient__item--active {
+      background: rgba(99, 102, 241, 0.15);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.1);
+    }
+
+    .sb-gradient__icon {
+      font-size: 1.1rem;
+      width: 24px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .sb-gradient__user {
+      padding: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .sb-gradient__avatar {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #818cf8, #c084fc);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .sb-gradient__user-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sb-gradient__user-name {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #e0e7ff;
+    }
+
+    .sb-gradient__user-role {
+      font-size: 0.72rem;
+      color: rgba(255, 255, 255, 0.35);
+    }
+
+    /* ===========================================
+       SIDEBAR 4 — ICON ONLY (Expandable)
+       =========================================== */
+
+    .sb-icon {
+      width: 64px;
+      height: 100%;
+      background: #0f0f0f;
+      border-right: 1px solid #1e1e22;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-shrink: 0;
+      transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
+    }
+
+    .sb-icon:hover {
+      width: 240px;
+    }
+
+    .sb-icon__logo {
+      padding: 20px 0;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #6366f1;
+      border-bottom: 1px solid #1a1a1e;
+      width: 100%;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .sb-icon__nav {
+      flex: 1;
+      padding: 16px 0;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      overflow-y: auto;
+    }
+
+    .sb-icon__item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 20px;
+      color: #71717a;
+      font-size: 0.88rem;
+      font-weight: 450;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-decoration: none;
+      white-space: nowrap;
+      position: relative;
+    }
+
+    .sb-icon__item:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: #d4d4d8;
+    }
+
+    .sb-icon__item--active {
+      color: #fff;
+      background: rgba(99, 102, 241, 0.1);
+    }
+
+    .sb-icon__item--active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 3px;
+      height: 24px;
+      background: #6366f1;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .sb-icon__emoji {
+      font-size: 1.2rem;
+      width: 24px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .sb-icon__label {
+      opacity: 0;
+      transition: opacity 0.2s ease 0.1s;
+    }
+
+    .sb-icon:hover .sb-icon__label {
+      opacity: 1;
+    }
+
+    /* Tooltip for collapsed state */
+    .sb-icon__item::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      left: 68px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #27272a;
+      color: #e4e4e7;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.15s ease;
+      z-index: 10;
+    }
+
+    .sb-icon:not(:hover) .sb-icon__item:hover::after {
+      opacity: 1;
+    }
+
+    .sb-icon:hover .sb-icon__item::after {
+      opacity: 0;
+    }
+
+    /* ===========================================
+       SIDEBAR 5 — MINI WITH FLYOUT
+       =========================================== */
+
+    .sb-flyout {
+      width: 64px;
+      height: 100%;
+      background: #0f0f0f;
+      border-right: 1px solid #1e1e22;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 5;
+    }
+
+    .sb-flyout__logo {
+      padding: 20px 0;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #6366f1;
+      border-bottom: 1px solid #1a1a1e;
+      width: 100%;
+      text-align: center;
+    }
+
+    .sb-flyout__nav {
+      flex: 1;
+      padding: 12px 0;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .sb-flyout__group {
+      position: relative;
+    }
+
+    .sb-flyout__trigger {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 0;
+      width: 100%;
+      color: #71717a;
+      font-size: 1.25rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .sb-flyout__trigger:hover {
+      color: #d4d4d8;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .sb-flyout__trigger--active {
+      color: #818cf8;
+    }
+
+    .sb-flyout__panel {
+      position: absolute;
+      left: 64px;
+      top: 0;
+      width: 200px;
+      background: #18181b;
+      border: 1px solid #27272a;
+      border-radius: 0 12px 12px 0;
+      padding: 12px 0;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(-8px);
+      transition: all 0.2s ease;
+      box-shadow: 8px 0 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .sb-flyout__group:hover .sb-flyout__panel {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0);
+    }
+
+    .sb-flyout__panel-title {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #52525b;
+      padding: 4px 16px 8px;
+    }
+
+    .sb-flyout__sub-item {
+      display: block;
+      padding: 8px 16px;
+      color: #a1a1aa;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-decoration: none;
+    }
+
+    .sb-flyout__sub-item:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: #fff;
+    }
+
+    .sb-flyout__sub-item--active {
+      color: #818cf8;
+    }
+
+    /* ===========================================
+       SIDEBAR 6 — PILL NAVIGATION
+       =========================================== */
+
+    .sb-pill {
+      width: 72px;
+      height: 100%;
+      background: #0c0c0c;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 0;
+      flex-shrink: 0;
+      gap: 8px;
+    }
+
+    .sb-pill__logo {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1rem;
+      color: #fff;
+      margin-bottom: 20px;
+      flex-shrink: 0;
+    }
+
+    .sb-pill__nav {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .sb-pill__item {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      color: #52525b;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .sb-pill__item:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: #a1a1aa;
+    }
+
+    .sb-pill__item--active {
+      background: #6366f1;
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    }
+
+    .sb-pill__item--active:hover {
+      background: #6366f1;
+      color: #fff;
+    }
+
+    .sb-pill__separator {
+      width: 24px;
+      height: 1px;
+      background: #1e1e22;
+      margin: 8px 0;
+    }
+
+    .sb-pill__bottom {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      margin-top: auto;
+    }
+
+    .sb-pill__avatar {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #ec4899, #f43f5e);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    /* ===========================================
+       SIDEBAR 7 — WITH BADGES
+       =========================================== */
+
+    .sb-badges {
+      width: 260px;
+      height: 100%;
+      background: #0f0f0f;
+      border-right: 1px solid #1e1e22;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+    }
+
+    .sb-badges__logo {
+      padding: 24px 20px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.02em;
+      border-bottom: 1px solid #1a1a1e;
+    }
+
+    .sb-badges__logo span {
+      color: #6366f1;
+    }
+
+    .sb-badges__nav {
+      flex: 1;
+      padding: 16px 12px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .sb-badges__section-title {
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #52525b;
+      padding: 12px 12px 6px;
+    }
+
+    .sb-badges__item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      color: #a1a1aa;
+      font-size: 0.9rem;
+      font-weight: 450;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-decoration: none;
+    }
+
+    .sb-badges__item:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: #d4d4d8;
+    }
+
+    .sb-badges__item--active {
+      background: rgba(99, 102, 241, 0.08);
+      color: #fff;
+    }
+
+    .sb-badges__icon {
+      font-size: 1.1rem;
+      width: 24px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .sb-badges__text {
+      flex: 1;
+    }
+
+    .sb-badges__badge {
+      min-width: 20px;
+      height: 20px;
+      padding: 0 6px;
+      background: #ef4444;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .sb-badges__badge--info {
+      background: #6366f1;
+    }
+
+    .sb-badges__divider {
+      height: 1px;
+      background: #1a1a1e;
+      margin: 8px 0;
+    }
+
+    .sb-badges__banner {
+      margin: 12px;
+      padding: 14px 16px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.1));
+      border: 1px solid rgba(99, 102, 241, 0.2);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .sb-badges__banner:hover {
+      border-color: rgba(99, 102, 241, 0.4);
+    }
+
+    .sb-badges__banner-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #818cf8;
+      margin-bottom: 4px;
+    }
+
+    .sb-badges__banner-text {
+      font-size: 0.82rem;
+      color: #a1a1aa;
+      line-height: 1.4;
+    }
+
+    /* ===========================================
+       SIDEBAR 8 — MULTI-LEVEL (CSS Only)
+       =========================================== */
+
+    .sb-multi {
+      width: 260px;
+      height: 100%;
+      background: #0f0f0f;
+      border-right: 1px solid #1e1e22;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+    }
+
+    .sb-multi__logo {
+      padding: 24px 20px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.02em;
+      border-bottom: 1px solid #1a1a1e;
+    }
+
+    .sb-multi__logo span {
+      color: #6366f1;
+    }
+
+    .sb-multi__nav {
+      flex: 1;
+      padding: 12px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .sb-multi__toggle {
+      display: none;
+    }
+
+    .sb-multi__header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      color: #a1a1aa;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+
+    .sb-multi__header:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: #d4d4d8;
+    }
+
+    .sb-multi__header-icon {
+      font-size: 1.1rem;
+      width: 24px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .sb-multi__header-text {
+      flex: 1;
+    }
+
+    .sb-multi__chevron {
+      font-size: 0.7rem;
+      color: #52525b;
+      transition: transform 0.25s ease;
+    }
+
+    .sb-multi__toggle:checked + .sb-multi__header .sb-multi__chevron {
+      transform: rotate(90deg);
+      color: #818cf8;
+    }
+
+    .sb-multi__toggle:checked + .sb-multi__header {
+      color: #fff;
+    }
+
+    .sb-multi__children {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .sb-multi__toggle:checked ~ .sb-multi__children {
+      max-height: 300px;
+    }
+
+    .sb-multi__child {
+      display: block;
+      padding: 8px 12px 8px 48px;
+      color: #71717a;
+      font-size: 0.84rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-decoration: none;
+      position: relative;
+    }
+
+    .sb-multi__child::before {
+      content: '';
+      position: absolute;
+      left: 32px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 4px;
+      background: #3f3f46;
+      border-radius: 50%;
+      transition: all 0.15s ease;
+    }
+
+    .sb-multi__child:hover {
+      color: #d4d4d8;
+    }
+
+    .sb-multi__child:hover::before {
+      background: #6366f1;
+    }
+
+    .sb-multi__child--active {
+      color: #818cf8;
+    }
+
+    .sb-multi__child--active::before {
+      background: #6366f1;
+      box-shadow: 0 0 6px rgba(99, 102, 241, 0.5);
+    }
+
+    .sb-multi__divider {
+      height: 1px;
+      background: #1a1a1e;
+      margin: 8px 0;
+    }
+
+    .sb-multi__item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      color: #a1a1aa;
+      font-size: 0.9rem;
+      font-weight: 450;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-decoration: none;
+    }
+
+    .sb-multi__item:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: #d4d4d8;
+    }
+
+    .sb-multi__item-icon {
+      font-size: 1.1rem;
+      width: 24px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    /* ===========================================
+       SIDEBAR 9 — WITH SEARCH
+       =========================================== */
+
+    .sb-search {
+      width: 260px;
+      height: 100%;
+      background: #0f0f0f;
+      border-right: 1px solid #1e1e22;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+    }
+
+    .sb-search__logo {
+      padding: 24px 20px 16px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+
+    .sb-search__logo span {
+      color: #6366f1;
+    }
+
+    .sb-search__input-wrap {
+      margin: 0 12px 12px;
+      position: relative;
+    }
+
+    .sb-search__input-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.9rem;
+      pointer-events: none;
+    }
+
+    .sb-search__input {
+      width: 100%;
+      padding: 10px 12px 10px 36px;
+      background: #18181b;
+      border: 1px solid #27272a;
+      border-radius: 8px;
+      color: #e4e4e7;
+      font-size: 0.85rem;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .sb-search__input::placeholder {
+      color: #52525b;
+    }
+
+    .sb-search__input:focus {
+      border-color: #6366f1;
+    }
+
+    .sb-search__nav {
+      flex: 1;
+      padding: 4px 12px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .sb-search__label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #52525b;
+      padding: 12px 12px 6px;
+    }
+
+    .sb-search__item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 9px 12px;
+      border-radius: 8px;
+      color: #a1a1aa;
+      font-size: 0.88rem;
+      font-weight: 450;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-decoration: none;
+    }
+
+    .sb-search__item:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: #d4d4d8;
+    }
+
+    .sb-search__item--active {
+      background: rgba(99, 102, 241, 0.08);
+      color: #fff;
+    }
+
+    .sb-search__item-icon {
+      font-size: 1rem;
+      width: 22px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .sb-search__star {
+      margin-left: auto;
+      font-size: 0.85rem;
+      color: #f59e0b;
+      flex-shrink: 0;
+    }
+
+    .sb-search__divider {
+      height: 1px;
+      background: #1a1a1e;
+      margin: 8px 0;
+    }
+
+    .sb-search__recent-dot {
+      width: 6px;
+      height: 6px;
+      background: #3f3f46;
+      border-radius: 50%;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+
+    /* ===========================================
+       SIDEBAR 10 — GLASS
+       =========================================== */
+
+    .sb-glass-wrap {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460, #1a1a2e);
+      background-size: 400% 400%;
+      animation: sb-glass-bg 15s ease infinite;
+      position: relative;
+    }
+
+    @keyframes sb-glass-bg {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .sb-glass-wrap::before {
+      content: '';
+      position: absolute;
+      top: 30%;
+      left: 10%;
+      width: 200px;
+      height: 200px;
+      background: rgba(99, 102, 241, 0.15);
+      border-radius: 50%;
+      filter: blur(60px);
+    }
+
+    .sb-glass-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: 20%;
+      right: 20%;
+      width: 150px;
+      height: 150px;
+      background: rgba(236, 72, 153, 0.12);
+      border-radius: 50%;
+      filter: blur(50px);
+    }
+
+    .sb-glass {
+      width: 260px;
+      height: calc(100% - 24px);
+      margin: 12px;
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .sb-glass__logo {
+      padding: 24px 20px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.02em;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .sb-glass__logo span {
+      color: #a5b4fc;
+    }
+
+    .sb-glass__nav {
+      flex: 1;
+      padding: 16px 12px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .sb-glass__label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(255, 255, 255, 0.3);
+      padding: 12px 12px 4px;
+    }
+
+    .sb-glass__divider {
+      height: 1px;
+      background: rgba(255, 255, 255, 0.06);
+      margin: 12px 0;
+    }
+
+    .sb-glass__item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.9rem;
+      font-weight: 450;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .sb-glass__item:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .sb-glass__item--active {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    }
+
+    .sb-glass__icon {
+      font-size: 1.1rem;
+      width: 24px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .sb-glass__user {
+      padding: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .sb-glass__avatar {
+      width: 36px;
+      height: 36px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .sb-glass__user-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sb-glass__user-name {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .sb-glass__user-role {
+      font-size: 0.72rem;
+      color: rgba(255, 255, 255, 0.35);
+    }
+
+    .sb-glass-content {
+      flex: 1;
+      position: relative;
+      z-index: 1;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .sb-glass-content__bar {
+      height: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 6px;
+    }
+
+    .sb-glass-content__bar--short { width: 50%; }
+    .sb-glass-content__bar--medium { width: 70%; }
+
+    .sb-glass-content__block {
+      height: 80px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .sb-glass-content__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      flex: 1;
+    }
+
+    .sb-glass-content__card {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* ===========================================
+       SIDEBAR 11 — BORDERED (Minimal Doc Style)
+       =========================================== */
+
+    .sb-bordered {
+      width: 260px;
+      height: 100%;
+      background: transparent;
+      border-right: 1px solid #27272a;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+    }
+
+    .sb-bordered__logo {
+      padding: 24px 24px 20px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #e4e4e7;
+      letter-spacing: -0.02em;
+    }
+
+    .sb-bordered__logo span {
+      font-weight: 400;
+      color: #71717a;
+      font-size: 0.85rem;
+      margin-left: 4px;
+    }
+
+    .sb-bordered__nav {
+      flex: 1;
+      padding: 0 16px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sb-bordered__label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #e4e4e7;
+      padding: 16px 8px 8px;
+      letter-spacing: -0.01em;
+    }
+
+    .sb-bordered__item {
+      display: block;
+      padding: 10px 8px;
+      border-bottom: 1px solid #1e1e22;
+      color: #71717a;
+      font-size: 0.88rem;
+      font-weight: 400;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-decoration: none;
+      line-height: 1.4;
+    }
+
+    .sb-bordered__item:last-child {
+      border-bottom: none;
+    }
+
+    .sb-bordered__item:hover {
+      color: #d4d4d8;
+    }
+
+    .sb-bordered__item--active {
+      color: #6366f1;
+      font-weight: 500;
+    }
+
+    .sb-bordered__section {
+      margin-bottom: 8px;
+    }
+
+    .sb-bordered__footer {
+      padding: 16px 24px;
+      border-top: 1px solid #27272a;
+      font-size: 0.75rem;
+      color: #3f3f46;
+    }
+
+    /* ===========================================
+       CODE BLOCK
+       =========================================== */
+
+    .code-block {
+      background: #1a1a1a;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .code-block__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .code-block__lang {
+      font-size: 0.75rem;
+      color: #71717a;
+      text-transform: uppercase;
+    }
+
+    .code-block__copy {
+      padding: 6px 12px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: #a1a1aa;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .code-block__copy:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+    }
+
+    .code-block__content {
+      padding: 16px;
+      overflow-x: auto;
+    }
+
+    .code-block__content pre {
+      margin: 0;
+      font-family: "Fira Code", monospace;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: #e0e0e0;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      font-size: 0.75rem;
+      color: #a1a1aa;
+    }
+
+    .tag--primary {
+      background: rgba(99, 102, 241, 0.15);
+      border-color: rgba(99, 102, 241, 0.3);
+      color: #818cf8;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar__logo">
+      <a href="../../index.html">Duke<span>UI</span></a>
+    </div>
+
+    <nav class="sidebar__nav">
+      <div class="sidebar__section">
+        <div class="sidebar__title">Composants</div>
+        <a href="../accordions/index.html" class="sidebar__link">Accordions</a>
+        <a href="../buttons/index.html" class="sidebar__link">Buttons</a>
+        <a href="../cards/index.html" class="sidebar__link">Cards</a>
+        <a href="../carousels/index.html" class="sidebar__link">Carousels</a>
+        <a href="../forms/index.html" class="sidebar__link">Forms</a>
+        <a href="../loaders/index.html" class="sidebar__link">Loaders</a>
+        <a href="../modals/index.html" class="sidebar__link">Modals</a>
+        <a href="../navigation/index.html" class="sidebar__link">Navigation</a>
+        <a href="index.html" class="sidebar__link sidebar__link--active">Sidebars</a>
+        <a href="../tooltips/index.html" class="sidebar__link">Tooltips</a>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__title">Effets</div>
+        <a href="../hovers/index.html" class="sidebar__link">Hovers</a>
+        <a href="../animations/index.html" class="sidebar__link">Animations</a>
+        <a href="../backgrounds/index.html" class="sidebar__link">Backgrounds</a>
+        <a href="../mouse-effects/index.html" class="sidebar__link">Mouse Effects</a>
+        <a href="../text-effects/index.html" class="sidebar__link">Text Effects</a>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__title">Sections</div>
+        <a href="../heroes/index.html" class="sidebar__link">Heroes</a>
+        <a href="../features/index.html" class="sidebar__link">Features</a>
+        <a href="../pricing/index.html" class="sidebar__link">Pricing</a>
+        <a href="../testimonials/index.html" class="sidebar__link">Testimonials</a>
+        <a href="../footers/index.html" class="sidebar__link">Footers</a>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__title">Generateurs</div>
+        <a href="../../generators/gradient/index.html" class="sidebar__link">Gradient</a>
+        <a href="../../generators/shadow/index.html" class="sidebar__link">Shadow</a>
+        <a href="../../generators/flexbox/index.html" class="sidebar__link">Flexbox</a>
+        <a href="../../generators/grid/index.html" class="sidebar__link">Grid</a>
+      </div>
+    </nav>
+
+    <!-- Toggle Admin -->
+    <div class="admin-toggle">
+      <span class="admin-toggle__label">Mode Admin</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="admin-toggle">
+        <span class="toggle-switch__slider"></span>
+      </label>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    <header class="page-header">
+      <h1 class="page-header__title">Sidebars</h1>
+      <p class="page-header__desc">11 sidebars premium modernes - dark, light, glassmorphism, multi-level et plus</p>
+    </header>
+
+    <div class="sidebars-list">
+
+      <!-- =========================================
+           SECTION 1 — CLASSIC SIDEBARS
+           ========================================= -->
+
+      <h2 style="font-size: 1.4rem; font-weight: 600; color: #e4e4e7; margin-bottom: -24px;">Classic Sidebars</h2>
+
+      <!-- SIDEBAR 1 — DARK -->
+      <section class="sidebar-section" data-security="safe">
+        <span class="security-badge safe">SAFE</span>
+        <div class="sidebar-section__preview">
+          <div class="sb-preview">
+            <nav class="sb-dark" aria-label="Dark sidebar">
+              <div class="sb-dark__logo">Acme<span>App</span></div>
+              <div class="sb-dark__nav">
+                <div class="sb-dark__label">Main</div>
+                <a class="sb-dark__item sb-dark__item--active">
+                  <span class="sb-dark__icon">&#x1F3E0;</span>
+                  Dashboard
+                </a>
+                <a class="sb-dark__item">
+                  <span class="sb-dark__icon">&#x1F4CA;</span>
+                  Analytics
+                </a>
+                <a class="sb-dark__item">
+                  <span class="sb-dark__icon">&#x1F465;</span>
+                  Users
+                </a>
+                <a class="sb-dark__item">
+                  <span class="sb-dark__icon">&#x1F4E7;</span>
+                  Messages
+                </a>
+                <div class="sb-dark__divider"></div>
+                <div class="sb-dark__label">Settings</div>
+                <a class="sb-dark__item">
+                  <span class="sb-dark__icon">&#x2699;&#xFE0F;</span>
+                  Settings
+                </a>
+              </div>
+              <div class="sb-dark__user">
+                <div class="sb-dark__avatar">JD</div>
+                <div class="sb-dark__user-info">
+                  <span class="sb-dark__user-name">John Doe</span>
+                  <span class="sb-dark__user-role">Admin</span>
+                </div>
+              </div>
+            </nav>
+            <div class="sb-preview__content">
+              <div class="sb-preview__content-bar sb-preview__content-bar--short"></div>
+              <div class="sb-preview__content-bar sb-preview__content-bar--long"></div>
+              <div class="sb-preview__content-block"></div>
+              <div class="sb-preview__content-grid">
+                <div class="sb-preview__content-card"></div>
+                <div class="sb-preview__content-card"></div>
+                <div class="sb-preview__content-card"></div>
+                <div class="sb-preview__content-card"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sidebar-section__info">
+          <div class="sidebar-section__header">
+            <h3 class="sidebar-section__name">Dark Sidebar</h3>
+            <div class="sidebar-section__tags">
+              <span class="tag tag--primary">Essential</span>
+              <span class="tag">Dark</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">HTML</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>&lt;nav class="sb-dark"&gt;
+  &lt;div class="sb-dark__logo"&gt;Acme&lt;span&gt;App&lt;/span&gt;&lt;/div&gt;
+  &lt;div class="sb-dark__nav"&gt;
+    &lt;div class="sb-dark__label"&gt;Main&lt;/div&gt;
+    &lt;a class="sb-dark__item sb-dark__item--active"&gt;
+      &lt;span class="sb-dark__icon"&gt;&#x1F3E0;&lt;/span&gt;
+      Dashboard
+    &lt;/a&gt;
+    &lt;!-- More items... --&gt;
+  &lt;/div&gt;
+  &lt;div class="sb-dark__user"&gt;
+    &lt;div class="sb-dark__avatar"&gt;JD&lt;/div&gt;
+    &lt;div class="sb-dark__user-info"&gt;
+      &lt;span class="sb-dark__user-name"&gt;John Doe&lt;/span&gt;
+      &lt;span class="sb-dark__user-role"&gt;Admin&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SIDEBAR 2 — LIGHT -->
+      <section class="sidebar-section" data-security="safe">
+        <span class="security-badge safe">SAFE</span>
+        <div class="sidebar-section__preview">
+          <div class="sb-preview sb-preview--light">
+            <nav class="sb-light" aria-label="Light sidebar">
+              <div class="sb-light__logo">Acme<span>App</span></div>
+              <div class="sb-light__nav">
+                <div class="sb-light__label">Main</div>
+                <a class="sb-light__item sb-light__item--active">
+                  <span class="sb-light__icon">&#x1F3E0;</span>
+                  Dashboard
+                </a>
+                <a class="sb-light__item">
+                  <span class="sb-light__icon">&#x1F4CA;</span>
+                  Analytics
+                </a>
+                <a class="sb-light__item">
+                  <span class="sb-light__icon">&#x1F465;</span>
+                  Users
+                </a>
+                <a class="sb-light__item">
+                  <span class="sb-light__icon">&#x1F4E7;</span>
+                  Messages
+                </a>
+                <div class="sb-light__divider"></div>
+                <div class="sb-light__label">Settings</div>
+                <a class="sb-light__item">
+                  <span class="sb-light__icon">&#x2699;&#xFE0F;</span>
+                  Settings
+                </a>
+              </div>
+              <div class="sb-light__user">
+                <div class="sb-light__avatar">JD</div>
+                <div class="sb-light__user-info">
+                  <span class="sb-light__user-name">John Doe</span>
+                  <span class="sb-light__user-role">Admin</span>
+                </div>
+              </div>
+            </nav>
+            <div class="sb-preview__content">
+              <div class="sb-preview__content-bar sb-preview__content-bar--short"></div>
+              <div class="sb-preview__content-bar sb-preview__content-bar--long"></div>
+              <div class="sb-preview__content-block"></div>
+              <div class="sb-preview__content-grid">
+                <div class="sb-preview__content-card"></div>
+                <div class="sb-preview__content-card"></div>
+                <div class="sb-preview__content-card"></div>
+                <div class="sb-preview__content-card"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sidebar-section__info">
+          <div class="sidebar-section__header">
+            <h3 class="sidebar-section__name">Light Sidebar</h3>
+            <div class="sidebar-section__tags">
+              <span class="tag tag--primary">Essential</span>
+              <span class="tag">Light</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.sb-light {
+  width: 260px;
+  background: #ffffff;
+  border-right: 1px solid #e5e7eb;
+}
+
+.sb-light__item--active {
+  background: rgba(99, 102, 241, 0.06);
+  color: #4f46e5;
+  border-left: 3px solid #6366f1;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SIDEBAR 3 — GRADIENT -->
+      <section class="sidebar-section" data-security="safe">
+        <span class="security-badge safe">SAFE</span>
+        <div class="sidebar-section__preview">
+          <div class="sb-preview">
+            <nav class="sb-gradient" aria-label="Gradient sidebar">
+              <div class="sb-gradient__logo">Nebula<span>IO</span></div>
+              <div class="sb-gradient__nav">
+                <div class="sb-gradient__label">Platform</div>
+                <a class="sb-gradient__item sb-gradient__item--active">
+                  <span class="sb-gradient__icon">&#x1F3E0;</span>
+                  Dashboard
+                </a>
+                <a class="sb-gradient__item">
+                  <span class="sb-gradient__icon">&#x1F4CA;</span>
+                  Analytics
+                </a>
+                <a class="sb-gradient__item">
+                  <span class="sb-gradient__icon">&#x1F465;</span>
+                  Users
+                </a>
+                <a class="sb-gradient__item">
+                  <span class="sb-gradient__icon">&#x1F4E7;</span>
+                  Messages
+                </a>
+                <div class="sb-gradient__divider"></div>
+                <div class="sb-gradient__label">Account</div>
+                <a class="sb-gradient__item">
+                  <span class="sb-gradient__icon">&#x2699;&#xFE0F;</span>
+                  Settings
+                </a>
+              </div>
+              <div class="sb-gradient__user">
+                <div class="sb-gradient__avatar">JD</div>
+                <div class="sb-gradient__user-info">
+                  <span class="sb-gradient__user-name">John Doe</span>
+                  <span class="sb-gradient__user-role">Pro Member</span>
+                </div>
+              </div>
+            </nav>
+            <div class="sb-preview__content">
+              <div class="sb-preview__content-bar sb-preview__content-bar--short"></div>
+              <div class="sb-preview__content-bar sb-preview__content-bar--long"></div>
+              <div class="sb-preview__content-block"></div>
+              <div class="sb-preview__content-grid">
+                <div class="sb-preview__content-card"></div>
+                <div class="sb-preview__content-card"></div>
+                <div class="sb-preview__content-card"></div>
+                <div class="sb-preview__content-card"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sidebar-section__info">
+          <div class="sidebar-section__header">
+            <h3 class="sidebar-section__name">Gradient Sidebar</h3>
+            <div class="sidebar-section__tags">
+              <span class="tag tag--primary">Premium</span>
+              <span class="tag">Glassmorphism</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.sb-gradient {
+  background: linear-gradient(180deg, #1a1a2e, #16213e);
+}
+
+.sb-gradient__item:hover {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(10px);
+}
+
+.sb-gradient__item--active {
+  background: rgba(99, 102, 241, 0.15);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.1);
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- =========================================
+           SECTION 2 — COMPACT SIDEBARS
+           ========================================= -->
+
+      <h2 style="font-size: 1.4rem; font-weight: 600; color: #e4e4e7; margin-bottom: -24px;">Compact Sidebars</h2>
+
+      <!-- SIDEBAR 4 — ICON ONLY (Expandable) -->
+      <section class="sidebar-section" data-security="safe">
+        <span class="security-badge safe">SAFE</span>
+        <div class="sidebar-section__preview">
+          <div class="sb-preview">
+            <nav class="sb-icon" aria-label="Icon sidebar">
+              <div class="sb-icon__logo">D</div>
+              <div class="sb-icon__nav">
+                <a class="sb-icon__item sb-icon__item--active" data-tooltip="Dashboard">
+                  <span class="sb-icon__emoji">&#x1F3E0;</span>
+                  <span class="sb-icon__label">Dashboard</span>
+                </a>
+                <a class="sb-icon__item" data-tooltip="Analytics">
+                  <span class="sb-icon__emoji">&#x1F4CA;</span>
+                  <span class="sb-icon__label">Analytics</span>
+                </a>
+                <a class="sb-icon__item" data-tooltip="Users">
+                  <span class="sb-icon__emoji">&#x1F465;</span>
+                  <span class="sb-icon__label">Users</span>
+                </a>
+                <a class="sb-icon__item" data-tooltip="Messages">
+                  <span class="sb-icon__emoji">&#x1F4E7;</span>
+                  <span class="sb-icon__label">Messages</span>
+                </a>
+                <a class="sb-icon__item" data-tooltip="Calendar">
+                  <span class="sb-icon__emoji">&#x1F4C5;</span>
+                  <span class="sb-icon__label">Calendar</span>
+                </a>
+                <a class="sb-icon__item" data-tooltip="Files">
+                  <span class="sb-icon__emoji">&#x1F4C1;</span>
+                  <span class="sb-icon__label">Files</span>
+                </a>
+                <a class="sb-icon__item" data-tooltip="Settings">
+                  <span class="sb-icon__emoji">&#x2699;&#xFE0F;</span>
+                  <span class="sb-icon__label">Settings</span>
+                </a>
+              </div>
+            </nav>
+            <div class="sb-preview__content">
+              <div class="sb-preview__content-bar sb-preview__content-bar--short"></div>
+              <div class="sb-preview__content-bar sb-preview__content-bar--long"></div>
+              <div class="sb-preview__content-block"></div>
+              <div class="sb-preview__content-grid">
+                <div class="sb-preview__content-card"></div>
+                <div class="sb-preview__content-card"></div>
+                <div class="sb-preview__content-card"></div>
+                <div class="sb-preview__content-card"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sidebar-section__info">
+          <div class="sidebar-section__header">
+            <h3 class="sidebar-section__name">Icon-Only Sidebar</h3>
+            <div class="sidebar-section__tags">
+              <span class="tag tag--primary">Compact</span>
+              <span class="tag">Expandable</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.sb-icon {
+  width: 64px;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.sb-icon:hover {
+  width: 240px;
+}
+
+/* Tooltip when collapsed */
+.sb-icon__item::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 68px;
+  opacity: 0;
+}
+
+.sb-icon:not(:hover) .sb-icon__item:hover::after {
+  opacity: 1;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SIDEBAR 5 — MINI WITH FLYOUT -->
+      <section class="sidebar-section" data-security="safe">
+        <span class="security-badge safe">SAFE</span>
+        <div class="sidebar-section__preview">
+          <div class="sb-preview">
+            <nav class="sb-flyout" aria-label="Flyout sidebar">
+              <div class="sb-flyout__logo">D</div>
+              <div class="sb-flyout__nav">
+                <div class="sb-flyout__group">
+                  <div class="sb-flyout__trigger sb-flyout__trigger--active">&#x1F3E0;</div>
+                  <div class="sb-flyout__panel">
+                    <div class="sb-flyout__panel-title">Dashboard</div>
+                    <a class="sb-flyout__sub-item sb-flyout__sub-item--active">Overview</a>
+                    <a class="sb-flyout__sub-item">Activity</a>
+                    <a class="sb-flyout__sub-item">Reports</a>
+                  </div>
+                </div>
+                <div class="sb-flyout__group">
+                  <div class="sb-flyout__trigger">&#x1F4CA;</div>
+                  <div class="sb-flyout__panel">
+                    <div class="sb-flyout__panel-title">Analytics</div>
+                    <a class="sb-flyout__sub-item">Performance</a>
+                    <a class="sb-flyout__sub-item">Conversions</a>
+                    <a class="sb-flyout__sub-item">Audience</a>
+                  </div>
+                </div>
+                <div class="sb-flyout__group">
+                  <div class="sb-flyout__trigger">&#x1F465;</div>
+                  <div class="sb-flyout__panel">
+                    <div class="sb-flyout__panel-title">Users</div>
+                    <a class="sb-flyout__sub-item">All Users</a>
+                    <a class="sb-flyout__sub-item">Teams</a>
+                    <a class="sb-flyout__sub-item">Roles</a>
+                  </div>
+                </div>
+                <div class="sb-flyout__group">
+                  <div class="sb-flyout__trigger">&#x1F4E7;</div>
+                  <div class="sb-flyout__panel">
+                    <div class="sb-flyout__panel-title">Messages</div>
+                    <a class="sb-flyout__sub-item">Inbox</a>
+                    <a class="sb-flyout__sub-item">Sent</a>
+                    <a class="sb-flyout__sub-item">Drafts</a>
+                  </div>
+                </div>
+                <div class="sb-flyout__group">
+                  <div class="sb-flyout__trigger">&#x2699;&#xFE0F;</div>
+                  <div class="sb-flyout__panel">
+                    <div class="sb-flyout__panel-title">Settings</div>
+                    <a class="sb-flyout__sub-item">General</a>
+                    <a class="sb-flyout__sub-item">Security</a>
+                    <a class="sb-flyout__sub-item">Billing</a>
+                  </div>
+                </div>
+              </div>
+            </nav>
+            <div class="sb-preview__content">
+              <div class="sb-preview__content-bar sb-preview__content-bar--short"></div>
+              <div class="sb-preview__content-bar sb-preview__content-bar--long"></div>
+              <div class="sb-preview__content-block"></div>
+              <div class="sb-preview__content-grid">
+                <div class="sb-preview__content-card"></div>
+                <div class="sb-preview__content-card"></div>
+                <div class="sb-preview__content-card"></div>
+                <div class="sb-preview__content-card"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sidebar-section__info">
+          <div class="sidebar-section__header">
+            <h3 class="sidebar-section__name">Mini Sidebar with Flyout</h3>
+            <div class="sidebar-section__tags">
+              <span class="tag tag--primary">Compact</span>
+              <span class="tag">Two-Level</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.sb-flyout__panel {
+  position: absolute;
+  left: 64px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-8px);
+  transition: all 0.2s ease;
+}
+
+.sb-flyout__group:hover .sb-flyout__panel {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SIDEBAR 6 — PILL NAVIGATION -->
+      <section class="sidebar-section" data-security="safe">
+        <span class="security-badge safe">SAFE</span>
+        <div class="sidebar-section__preview">
+          <div class="sb-preview">
+            <nav class="sb-pill" aria-label="Pill sidebar">
+              <div class="sb-pill__logo">D</div>
+              <div class="sb-pill__nav">
+                <div class="sb-pill__item sb-pill__item--active">&#x1F3E0;</div>
+                <div class="sb-pill__item">&#x1F4CA;</div>
+                <div class="sb-pill__item">&#x1F465;</div>
+                <div class="sb-pill__item">&#x1F4E7;</div>
+                <div class="sb-pill__separator"></div>
+                <div class="sb-pill__item">&#x1F4C5;</div>
+                <div class="sb-pill__item">&#x1F4C1;</div>
+              </div>
+              <div class="sb-pill__bottom">
+                <div class="sb-pill__item">&#x2699;&#xFE0F;</div>
+                <div class="sb-pill__avatar">JD</div>
+              </div>
+            </nav>
+            <div class="sb-preview__content">
+              <div class="sb-preview__content-bar sb-preview__content-bar--short"></div>
+              <div class="sb-preview__content-bar sb-preview__content-bar--long"></div>
+              <div class="sb-preview__content-block"></div>
+              <div class="sb-preview__content-grid">
+                <div class="sb-preview__content-card"></div>
+                <div class="sb-preview__content-card"></div>
+                <div class="sb-preview__content-card"></div>
+                <div class="sb-preview__content-card"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sidebar-section__info">
+          <div class="sidebar-section__header">
+            <h3 class="sidebar-section__name">Pill Navigation Sidebar</h3>
+            <div class="sidebar-section__tags">
+              <span class="tag tag--primary">Minimal</span>
+              <span class="tag">Apple-Inspired</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.sb-pill__item {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #52525b;
+  transition: all 0.2s ease;
+}
+
+.sb-pill__item--active {
+  background: #6366f1;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- =========================================
+           SECTION 3 — FEATURE-RICH SIDEBARS
+           ========================================= -->
+
+      <h2 style="font-size: 1.4rem; font-weight: 600; color: #e4e4e7; margin-bottom: -24px;">Feature-Rich Sidebars</h2>
+
+      <!-- SIDEBAR 7 — WITH BADGES -->
+      <section class="sidebar-section" data-security="safe">
+        <span class="security-badge safe">SAFE</span>
+        <div class="sidebar-section__preview">
+          <div class="sb-preview">
+            <nav class="sb-badges" aria-label="Sidebar with badges">
+              <div class="sb-badges__logo">Work<span>Hub</span></div>
+              <div class="sb-badges__nav">
+                <div class="sb-badges__section-title">Main</div>
+                <a class="sb-badges__item sb-badges__item--active">
+                  <span class="sb-badges__icon">&#x1F3E0;</span>
+                  <span class="sb-badges__text">Dashboard</span>
+                </a>
+                <a class="sb-badges__item">
+                  <span class="sb-badges__icon">&#x1F4CA;</span>
+                  <span class="sb-badges__text">Analytics</span>
+                  <span class="sb-badges__badge sb-badges__badge--info">New</span>
+                </a>
+                <a class="sb-badges__item">
+                  <span class="sb-badges__icon">&#x1F465;</span>
+                  <span class="sb-badges__text">Users</span>
+                </a>
+                <a class="sb-badges__item">
+                  <span class="sb-badges__icon">&#x1F4E7;</span>
+                  <span class="sb-badges__text">Messages</span>
+                  <span class="sb-badges__badge">12</span>
+                </a>
+                <div class="sb-badges__divider"></div>
+                <div class="sb-badges__section-title">Workspace</div>
+                <a class="sb-badges__item">
+                  <span class="sb-badges__icon">&#x1F4C1;</span>
+                  <span class="sb-badges__text">Projects</span>
+                  <span class="sb-badges__badge">3</span>
+                </a>
+                <a class="sb-badges__item">
+                  <span class="sb-badges__icon">&#x1F4CB;</span>
+                  <span class="sb-badges__text">Tasks</span>
+                  <span class="sb-badges__badge">7</span>
+                </a>
+                <div class="sb-badges__divider"></div>
+                <div class="sb-badges__section-title">Settings</div>
+                <a class="sb-badges__item">
+                  <span class="sb-badges__icon">&#x2699;&#xFE0F;</span>
+                  <span class="sb-badges__text">Settings</span>
+                </a>
+              </div>
+              <div class="sb-badges__banner">
+                <div class="sb-badges__banner-label">What's New</div>
+                <div class="sb-badges__banner-text">Team workspaces are now available for all plans!</div>
+              </div>
+            </nav>
+            <div class="sb-preview__content">
+              <div class="sb-preview__content-bar sb-preview__content-bar--short"></div>
+              <div class="sb-preview__content-bar sb-preview__content-bar--long"></div>
+              <div class="sb-preview__content-block"></div>
+              <div class="sb-preview__content-grid">
+                <div class="sb-preview__content-card"></div>
+                <div class="sb-preview__content-card"></div>
+                <div class="sb-preview__content-card"></div>
+                <div class="sb-preview__content-card"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sidebar-section__info">
+          <div class="sidebar-section__header">
+            <h3 class="sidebar-section__name">Sidebar with Badges</h3>
+            <div class="sidebar-section__tags">
+              <span class="tag tag--primary">Rich</span>
+              <span class="tag">Notifications</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">HTML</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>&lt;a class="sb-badges__item"&gt;
+  &lt;span class="sb-badges__icon"&gt;&#x1F4E7;&lt;/span&gt;
+  &lt;span class="sb-badges__text"&gt;Messages&lt;/span&gt;
+  &lt;span class="sb-badges__badge"&gt;12&lt;/span&gt;
+&lt;/a&gt;
+
+&lt;div class="sb-badges__banner"&gt;
+  &lt;div class="sb-badges__banner-label"&gt;What's New&lt;/div&gt;
+  &lt;div class="sb-badges__banner-text"&gt;...&lt;/div&gt;
+&lt;/div&gt;</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SIDEBAR 8 — MULTI-LEVEL (CSS Only) -->
+      <section class="sidebar-section" data-security="safe">
+        <span class="security-badge safe">SAFE</span>
+        <div class="sidebar-section__preview">
+          <div class="sb-preview">
+            <nav class="sb-multi" aria-label="Multi-level sidebar">
+              <div class="sb-multi__logo">Dev<span>Hub</span></div>
+              <div class="sb-multi__nav">
+                <!-- Group 1 - Expanded -->
+                <div class="sb-multi__group">
+                  <input type="checkbox" id="sb-multi-1" class="sb-multi__toggle" checked>
+                  <label for="sb-multi-1" class="sb-multi__header">
+                    <span class="sb-multi__header-icon">&#x1F4C2;</span>
+                    <span class="sb-multi__header-text">Explorer</span>
+                    <span class="sb-multi__chevron">&#x25B6;</span>
+                  </label>
+                  <div class="sb-multi__children">
+                    <a class="sb-multi__child sb-multi__child--active">src/</a>
+                    <a class="sb-multi__child">components/</a>
+                    <a class="sb-multi__child">pages/</a>
+                    <a class="sb-multi__child">styles/</a>
+                  </div>
+                </div>
+
+                <!-- Group 2 -->
+                <div class="sb-multi__group">
+                  <input type="checkbox" id="sb-multi-2" class="sb-multi__toggle">
+                  <label for="sb-multi-2" class="sb-multi__header">
+                    <span class="sb-multi__header-icon">&#x1F50D;</span>
+                    <span class="sb-multi__header-text">Search</span>
+                    <span class="sb-multi__chevron">&#x25B6;</span>
+                  </label>
+                  <div class="sb-multi__children">
+                    <a class="sb-multi__child">Find in Files</a>
+                    <a class="sb-multi__child">Replace</a>
+                  </div>
+                </div>
+
+                <!-- Group 3 -->
+                <div class="sb-multi__group">
+                  <input type="checkbox" id="sb-multi-3" class="sb-multi__toggle">
+                  <label for="sb-multi-3" class="sb-multi__header">
+                    <span class="sb-multi__header-icon">&#x1F500;</span>
+                    <span class="sb-multi__header-text">Source Control</span>
+                    <span class="sb-multi__chevron">&#x25B6;</span>
+                  </label>
+                  <div class="sb-multi__children">
+                    <a class="sb-multi__child">Changes</a>
+                    <a class="sb-multi__child">Branches</a>
+                    <a class="sb-multi__child">Stashes</a>
+                  </div>
+                </div>
+
+                <div class="sb-multi__divider"></div>
+
+                <a class="sb-multi__item">
+                  <span class="sb-multi__item-icon">&#x1F4E6;</span>
+                  Extensions
+                </a>
+                <a class="sb-multi__item">
+                  <span class="sb-multi__item-icon">&#x2699;&#xFE0F;</span>
+                  Settings
+                </a>
+              </div>
+            </nav>
+            <div class="sb-preview__content">
+              <div class="sb-preview__content-bar sb-preview__content-bar--short"></div>
+              <div class="sb-preview__content-bar sb-preview__content-bar--long"></div>
+              <div class="sb-preview__content-block"></div>
+              <div class="sb-preview__content-grid">
+                <div class="sb-preview__content-card"></div>
+                <div class="sb-preview__content-card"></div>
+                <div class="sb-preview__content-card"></div>
+                <div class="sb-preview__content-card"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sidebar-section__info">
+          <div class="sidebar-section__header">
+            <h3 class="sidebar-section__name">Multi-Level Sidebar</h3>
+            <div class="sidebar-section__tags">
+              <span class="tag tag--primary">No JS</span>
+              <span class="tag">Collapsible</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>/* Checkbox hack for CSS-only toggle */
+.sb-multi__toggle { display: none; }
+
+.sb-multi__children {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.sb-multi__toggle:checked ~ .sb-multi__children {
+  max-height: 300px;
+}
+
+.sb-multi__toggle:checked + .sb-multi__header .sb-multi__chevron {
+  transform: rotate(90deg);
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SIDEBAR 9 — WITH SEARCH -->
+      <section class="sidebar-section" data-security="safe">
+        <span class="security-badge safe">SAFE</span>
+        <div class="sidebar-section__preview">
+          <div class="sb-preview">
+            <nav class="sb-search" aria-label="Sidebar with search">
+              <div class="sb-search__logo">Craft<span>Space</span></div>
+              <div class="sb-search__input-wrap">
+                <span class="sb-search__input-icon">&#x1F50D;</span>
+                <input type="text" class="sb-search__input" placeholder="Search...">
+              </div>
+              <div class="sb-search__nav">
+                <div class="sb-search__label">Favorites</div>
+                <a class="sb-search__item sb-search__item--active">
+                  <span class="sb-search__item-icon">&#x1F3E0;</span>
+                  Dashboard
+                  <span class="sb-search__star">&#x2B50;</span>
+                </a>
+                <a class="sb-search__item">
+                  <span class="sb-search__item-icon">&#x1F4CB;</span>
+                  Tasks
+                  <span class="sb-search__star">&#x2B50;</span>
+                </a>
+                <div class="sb-search__divider"></div>
+                <div class="sb-search__label">Recent</div>
+                <a class="sb-search__item">
+                  <span class="sb-search__item-icon">&#x1F4C4;</span>
+                  Q4 Report
+                  <span class="sb-search__recent-dot"></span>
+                </a>
+                <a class="sb-search__item">
+                  <span class="sb-search__item-icon">&#x1F4C4;</span>
+                  Design System
+                  <span class="sb-search__recent-dot"></span>
+                </a>
+                <div class="sb-search__divider"></div>
+                <div class="sb-search__label">Navigation</div>
+                <a class="sb-search__item">
+                  <span class="sb-search__item-icon">&#x1F4CA;</span>
+                  Analytics
+                </a>
+                <a class="sb-search__item">
+                  <span class="sb-search__item-icon">&#x1F465;</span>
+                  Team
+                </a>
+                <a class="sb-search__item">
+                  <span class="sb-search__item-icon">&#x2699;&#xFE0F;</span>
+                  Settings
+                </a>
+              </div>
+            </nav>
+            <div class="sb-preview__content">
+              <div class="sb-preview__content-bar sb-preview__content-bar--short"></div>
+              <div class="sb-preview__content-bar sb-preview__content-bar--long"></div>
+              <div class="sb-preview__content-block"></div>
+              <div class="sb-preview__content-grid">
+                <div class="sb-preview__content-card"></div>
+                <div class="sb-preview__content-card"></div>
+                <div class="sb-preview__content-card"></div>
+                <div class="sb-preview__content-card"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sidebar-section__info">
+          <div class="sidebar-section__header">
+            <h3 class="sidebar-section__name">Sidebar with Search</h3>
+            <div class="sidebar-section__tags">
+              <span class="tag tag--primary">Workspace</span>
+              <span class="tag">Search + Favorites</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.sb-search__input {
+  width: 100%;
+  padding: 10px 12px 10px 36px;
+  background: #18181b;
+  border: 1px solid #27272a;
+  border-radius: 8px;
+  color: #e4e4e7;
+  font-size: 0.85rem;
+  transition: border-color 0.2s ease;
+}
+
+.sb-search__input:focus {
+  border-color: #6366f1;
+  outline: none;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- =========================================
+           SECTION 4 — CREATIVE SIDEBARS
+           ========================================= -->
+
+      <h2 style="font-size: 1.4rem; font-weight: 600; color: #e4e4e7; margin-bottom: -24px;">Creative Sidebars</h2>
+
+      <!-- SIDEBAR 10 — GLASS -->
+      <section class="sidebar-section" data-security="safe">
+        <span class="security-badge safe">SAFE</span>
+        <div class="sidebar-section__preview">
+          <div class="sb-glass-wrap">
+            <nav class="sb-glass" aria-label="Glass sidebar">
+              <div class="sb-glass__logo">Frost<span>UI</span></div>
+              <div class="sb-glass__nav">
+                <div class="sb-glass__label">Navigation</div>
+                <a class="sb-glass__item sb-glass__item--active">
+                  <span class="sb-glass__icon">&#x1F3E0;</span>
+                  Dashboard
+                </a>
+                <a class="sb-glass__item">
+                  <span class="sb-glass__icon">&#x1F4CA;</span>
+                  Analytics
+                </a>
+                <a class="sb-glass__item">
+                  <span class="sb-glass__icon">&#x1F465;</span>
+                  Users
+                </a>
+                <a class="sb-glass__item">
+                  <span class="sb-glass__icon">&#x1F4E7;</span>
+                  Messages
+                </a>
+                <div class="sb-glass__divider"></div>
+                <div class="sb-glass__label">Account</div>
+                <a class="sb-glass__item">
+                  <span class="sb-glass__icon">&#x2699;&#xFE0F;</span>
+                  Settings
+                </a>
+              </div>
+              <div class="sb-glass__user">
+                <div class="sb-glass__avatar">JD</div>
+                <div class="sb-glass__user-info">
+                  <span class="sb-glass__user-name">John Doe</span>
+                  <span class="sb-glass__user-role">Designer</span>
+                </div>
+              </div>
+            </nav>
+            <div class="sb-glass-content">
+              <div class="sb-glass-content__bar sb-glass-content__bar--short"></div>
+              <div class="sb-glass-content__bar sb-glass-content__bar--medium"></div>
+              <div class="sb-glass-content__block"></div>
+              <div class="sb-glass-content__grid">
+                <div class="sb-glass-content__card"></div>
+                <div class="sb-glass-content__card"></div>
+                <div class="sb-glass-content__card"></div>
+                <div class="sb-glass-content__card"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sidebar-section__info">
+          <div class="sidebar-section__header">
+            <h3 class="sidebar-section__name">Glass Sidebar</h3>
+            <div class="sidebar-section__tags">
+              <span class="tag tag--primary">Glassmorphism</span>
+              <span class="tag">Creative</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.sb-glass {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+}
+
+.sb-glass__item:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.sb-glass__item--active {
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SIDEBAR 11 — BORDERED (Doc Style) -->
+      <section class="sidebar-section" data-security="safe">
+        <span class="security-badge safe">SAFE</span>
+        <div class="sidebar-section__preview">
+          <div class="sb-preview">
+            <nav class="sb-bordered" aria-label="Bordered sidebar">
+              <div class="sb-bordered__logo">Docs<span>v2.4</span></div>
+              <div class="sb-bordered__nav">
+                <div class="sb-bordered__section">
+                  <div class="sb-bordered__label">Getting Started</div>
+                  <a class="sb-bordered__item sb-bordered__item--active">Introduction</a>
+                  <a class="sb-bordered__item">Installation</a>
+                  <a class="sb-bordered__item">Quick Start</a>
+                </div>
+                <div class="sb-bordered__section">
+                  <div class="sb-bordered__label">Components</div>
+                  <a class="sb-bordered__item">Buttons</a>
+                  <a class="sb-bordered__item">Cards</a>
+                  <a class="sb-bordered__item">Forms</a>
+                  <a class="sb-bordered__item">Navigation</a>
+                  <a class="sb-bordered__item">Modals</a>
+                </div>
+                <div class="sb-bordered__section">
+                  <div class="sb-bordered__label">API Reference</div>
+                  <a class="sb-bordered__item">Configuration</a>
+                  <a class="sb-bordered__item">Theming</a>
+                  <a class="sb-bordered__item">Utilities</a>
+                </div>
+              </div>
+              <div class="sb-bordered__footer">Last updated Feb 2026</div>
+            </nav>
+            <div class="sb-preview__content">
+              <div class="sb-preview__content-bar sb-preview__content-bar--short"></div>
+              <div class="sb-preview__content-bar sb-preview__content-bar--long"></div>
+              <div class="sb-preview__content-bar sb-preview__content-bar--medium"></div>
+              <div class="sb-preview__content-block"></div>
+              <div class="sb-preview__content-bar sb-preview__content-bar--long"></div>
+              <div class="sb-preview__content-bar sb-preview__content-bar--short"></div>
+              <div class="sb-preview__content-block"></div>
+            </div>
+          </div>
+        </div>
+        <div class="sidebar-section__info">
+          <div class="sidebar-section__header">
+            <h3 class="sidebar-section__name">Bordered Sidebar</h3>
+            <div class="sidebar-section__tags">
+              <span class="tag tag--primary">Minimal</span>
+              <span class="tag">Documentation</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">CSS</span>
+              <button class="code-block__copy" onclick="copyCode(this)">Copier</button>
+            </div>
+            <div class="code-block__content">
+<pre>.sb-bordered {
+  background: transparent;
+  border-right: 1px solid #27272a;
+}
+
+.sb-bordered__item {
+  padding: 10px 8px;
+  border-bottom: 1px solid #1e1e22;
+  color: #71717a;
+  font-size: 0.88rem;
+  transition: all 0.15s ease;
+}
+
+.sb-bordered__item--active {
+  color: #6366f1;
+  font-weight: 500;
+}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+  </div>
+
+  <script src="../../assets/js/main.js"></script>
+  <script src="../../assets/js/copy-code.js"></script>
+  <script src="../../assets/js/live-editor.js"></script>
+  <script src="../../assets/js/security-system.js"></script>
+  <script src="../../assets/js/search.js"></script>
+  <script src="../../assets/js/accessibility.js"></script>
+  <script>
+    function copyCode(btn) {
+      const codeBlock = btn.closest('.code-block');
+      const code = codeBlock.querySelector('pre').textContent;
+
+      navigator.clipboard.writeText(code).then(() => {
+        const originalText = btn.textContent;
+        btn.textContent = 'Copie !';
+        btn.style.color = '#22c55e';
+
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.style.color = '';
+        }, 2000);
+      });
+    }
+  </script>
+  <script src="../../assets/js/theme-toggle.js"></script>
+</body>
+</html>

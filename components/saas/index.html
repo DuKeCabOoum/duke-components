@@ -1,0 +1,2146 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SaaS Dashboard — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+</head>
+<body>
+  <div class="app">
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+      <a href="../../index.html" class="sidebar__logo">
+        <span>Duke</span>-components
+      </a>
+
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">SaaS Dashboard</h3>
+        <ul class="sidebar__nav">
+          <li><a href="#stats" class="sidebar__link sidebar__link--active">Stats Cards</a></li>
+          <li><a href="#analytics" class="sidebar__link">Analytics</a></li>
+          <li><a href="#activity" class="sidebar__link">Activity Feed</a></li>
+          <li><a href="#widgets" class="sidebar__link">Widgets</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar__section">
+        <a href="../../index.html" class="sidebar__link">&larr; Retour</a>
+      </div>
+
+      <!-- Toggle Admin -->
+      <div class="admin-toggle">
+        <span class="admin-toggle__label">Mode Admin</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="admin-toggle">
+          <span class="toggle-switch__slider"></span>
+        </label>
+      </div>
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main">
+      <header class="main__header">
+        <h1 class="main__title">SaaS Dashboard</h1>
+        <p class="main__subtitle">Composants de tableau de bord SaaS premium — Stats, analytics, feeds et widgets.</p>
+      </header>
+
+      <!-- ========== SECTION 1 : STATS CARDS ========== -->
+      <section id="stats" class="section">
+        <h2 class="section__title">Stats Cards (KPI)</h2>
+        <p class="section__desc">Cartes de statistiques pour afficher les indicateurs clefs de performance.</p>
+
+        <div class="components-grid">
+
+          <!-- REVENUE CARD -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #0f0f1a; padding: 24px;">
+              <div class="saas-stat">
+                <div class="saas-stat__header">
+                  <span class="saas-stat__label">Total Revenue</span>
+                  <span class="saas-stat__icon saas-stat__icon--green">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+                  </span>
+                </div>
+                <div class="saas-stat__value">$48,295</div>
+                <div class="saas-stat__change saas-stat__change--positive">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+                  +12.5% from last month
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Revenue Card</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">KPI</span>
+                <span class="tag">stats</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="saas-stats-revenue-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="saas-stats-revenue-html"><code>&lt;div class="saas-stat"&gt;
+  &lt;div class="saas-stat__header"&gt;
+    &lt;span class="saas-stat__label"&gt;Total Revenue&lt;/span&gt;
+    &lt;span class="saas-stat__icon saas-stat__icon--green"&gt;...&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="saas-stat__value"&gt;$48,295&lt;/div&gt;
+  &lt;div class="saas-stat__change saas-stat__change--positive"&gt;
+    +12.5% from last month
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="saas-stats-revenue-css" style="display:none"><code>.saas-stat {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.saas-stat__value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.saas-stat__change--positive {
+  color: #10b981;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- USERS CARD -->
+          <article class="component-card" data-security="caution">
+            <span class="security-badge security-badge--caution">CAUTION</span>
+            <div class="component-card__preview" style="background: #0f0f1a; padding: 24px;">
+              <div class="saas-stat">
+                <div class="saas-stat__header">
+                  <span class="saas-stat__label">Active Users</span>
+                  <span class="saas-stat__icon saas-stat__icon--blue">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4-4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+                  </span>
+                </div>
+                <div class="saas-stat__value">2,847</div>
+                <div class="saas-stat__change saas-stat__change--positive">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+                  +8.2% from last week
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Users Card</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">KPI</span>
+                <span class="tag">users</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="saas-stats-users-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="saas-stats-users-html"><code>&lt;div class="saas-stat"&gt;
+  &lt;div class="saas-stat__header"&gt;
+    &lt;span class="saas-stat__label"&gt;Active Users&lt;/span&gt;
+    &lt;span class="saas-stat__icon saas-stat__icon--blue"&gt;...&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="saas-stat__value"&gt;2,847&lt;/div&gt;
+  &lt;div class="saas-stat__change saas-stat__change--positive"&gt;
+    +8.2% from last week
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="saas-stats-users-css" style="display:none"><code>.saas-stat__icon--blue {
+  background: rgba(59,130,246,0.15);
+  color: #3b82f6;
+}
+
+.saas-stat__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- CONVERSION RATE CARD -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #0f0f1a; padding: 24px;">
+              <div class="saas-stat saas-stat--ring">
+                <div class="saas-stat__ring-wrapper">
+                  <div class="saas-stat__ring" style="--progress: 73; --ring-color: #6366f1;">
+                    <svg viewBox="0 0 100 100">
+                      <circle cx="50" cy="50" r="40" class="saas-stat__ring-bg"/>
+                      <circle cx="50" cy="50" r="40" class="saas-stat__ring-fill"/>
+                    </svg>
+                    <span class="saas-stat__ring-value">73%</span>
+                  </div>
+                </div>
+                <div class="saas-stat__ring-info">
+                  <span class="saas-stat__label">Conversion Rate</span>
+                  <div class="saas-stat__change saas-stat__change--positive">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+                    +4.1%
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Conversion Ring</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">KPI</span>
+                <span class="tag">ring</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="saas-stats-conversion-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="saas-stats-conversion-html"><code>&lt;div class="saas-stat saas-stat--ring"&gt;
+  &lt;div class="saas-stat__ring" style="--progress:73; --ring-color:#6366f1;"&gt;
+    &lt;svg viewBox="0 0 100 100"&gt;
+      &lt;circle cx="50" cy="50" r="40" class="saas-stat__ring-bg"/&gt;
+      &lt;circle cx="50" cy="50" r="40" class="saas-stat__ring-fill"/&gt;
+    &lt;/svg&gt;
+    &lt;span class="saas-stat__ring-value"&gt;73%&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="saas-stats-conversion-css" style="display:none"><code>.saas-stat__ring svg {
+  width: 80px; height: 80px;
+  transform: rotate(-90deg);
+}
+
+.saas-stat__ring-bg {
+  fill: none;
+  stroke: rgba(255,255,255,0.06);
+  stroke-width: 8;
+}
+
+.saas-stat__ring-fill {
+  fill: none;
+  stroke: var(--ring-color);
+  stroke-width: 8;
+  stroke-linecap: round;
+  stroke-dasharray: 251.2;
+  stroke-dashoffset: calc(251.2 - (251.2 * var(--progress)) / 100);
+  transition: stroke-dashoffset 1s ease;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- ORDERS CARD WITH SPARKLINE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #0f0f1a; padding: 24px;">
+              <div class="saas-stat">
+                <div class="saas-stat__header">
+                  <span class="saas-stat__label">Total Orders</span>
+                  <span class="saas-stat__icon saas-stat__icon--purple">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5a2 2 0 01-2 2h-1M6 21a2 2 0 100-4 2 2 0 000 4zM18 21a2 2 0 100-4 2 2 0 000 4z"/></svg>
+                  </span>
+                </div>
+                <div class="saas-stat__value">1,394</div>
+                <div class="saas-stat__sparkline">
+                  <svg viewBox="0 0 120 32" preserveAspectRatio="none">
+                    <polyline points="0,28 15,22 30,25 45,14 60,18 75,8 90,12 105,4 120,10" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <linearGradient id="spark-grad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#6366f1" stop-opacity="0.3"/>
+                      <stop offset="100%" stop-color="#6366f1" stop-opacity="0"/>
+                    </linearGradient>
+                    <polyline points="0,28 15,22 30,25 45,14 60,18 75,8 90,12 105,4 120,10 120,32 0,32" fill="url(#spark-grad)" stroke="none"/>
+                  </svg>
+                </div>
+                <div class="saas-stat__change saas-stat__change--negative">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+                  -2.3% from last month
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Orders Sparkline</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">KPI</span>
+                <span class="tag">sparkline</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="saas-stats-orders-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="saas-stats-orders-html"><code>&lt;div class="saas-stat"&gt;
+  &lt;div class="saas-stat__header"&gt;...&lt;/div&gt;
+  &lt;div class="saas-stat__value"&gt;1,394&lt;/div&gt;
+  &lt;div class="saas-stat__sparkline"&gt;
+    &lt;svg viewBox="0 0 120 32"&gt;
+      &lt;polyline points="0,28 15,22 ..." /&gt;
+    &lt;/svg&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="saas-stats-orders-css" style="display:none"><code>.saas-stat__sparkline {
+  margin: 12px 0;
+  height: 32px;
+}
+
+.saas-stat__sparkline svg {
+  width: 100%;
+  height: 100%;
+}
+
+.saas-stat__change--negative {
+  color: #ef4444;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ========== SECTION 2 : ANALYTICS PANELS ========== -->
+      <section id="analytics" class="section">
+        <h2 class="section__title">Analytics Panels</h2>
+        <p class="section__desc">Panneaux d'analyse pour visualiser les donnees en temps reel.</p>
+
+        <div class="components-grid">
+
+          <!-- REVENUE OVERVIEW PANEL -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #0f0f1a; padding: 24px;">
+              <div class="saas-panel">
+                <div class="saas-panel__header">
+                  <h4 class="saas-panel__title">Revenue Overview</h4>
+                  <span class="saas-panel__period">Last 6 months</span>
+                </div>
+                <div class="saas-chart-bars">
+                  <div class="saas-chart-bars__item">
+                    <div class="saas-chart-bars__bar" style="--height: 45%;"><span class="saas-chart-bars__tooltip">$18k</span></div>
+                    <span class="saas-chart-bars__label">Jan</span>
+                  </div>
+                  <div class="saas-chart-bars__item">
+                    <div class="saas-chart-bars__bar" style="--height: 65%;"><span class="saas-chart-bars__tooltip">$26k</span></div>
+                    <span class="saas-chart-bars__label">Feb</span>
+                  </div>
+                  <div class="saas-chart-bars__item">
+                    <div class="saas-chart-bars__bar" style="--height: 55%;"><span class="saas-chart-bars__tooltip">$22k</span></div>
+                    <span class="saas-chart-bars__label">Mar</span>
+                  </div>
+                  <div class="saas-chart-bars__item">
+                    <div class="saas-chart-bars__bar" style="--height: 80%;"><span class="saas-chart-bars__tooltip">$32k</span></div>
+                    <span class="saas-chart-bars__label">Apr</span>
+                  </div>
+                  <div class="saas-chart-bars__item">
+                    <div class="saas-chart-bars__bar" style="--height: 70%;"><span class="saas-chart-bars__tooltip">$28k</span></div>
+                    <span class="saas-chart-bars__label">May</span>
+                  </div>
+                  <div class="saas-chart-bars__item">
+                    <div class="saas-chart-bars__bar saas-chart-bars__bar--active" style="--height: 95%;"><span class="saas-chart-bars__tooltip">$38k</span></div>
+                    <span class="saas-chart-bars__label">Jun</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Revenue Bars</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">chart</span>
+                <span class="tag">bars</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="saas-analytics-revenue-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="saas-analytics-revenue-html"><code>&lt;div class="saas-chart-bars"&gt;
+  &lt;div class="saas-chart-bars__item"&gt;
+    &lt;div class="saas-chart-bars__bar" style="--height: 45%;"&gt;
+      &lt;span class="saas-chart-bars__tooltip"&gt;$18k&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;span class="saas-chart-bars__label"&gt;Jan&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="saas-analytics-revenue-css" style="display:none"><code>.saas-chart-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  height: 160px;
+  padding-top: 16px;
+}
+
+.saas-chart-bars__bar {
+  width: 100%;
+  height: var(--height);
+  background: linear-gradient(180deg, #6366f1, #4f46e5);
+  border-radius: 6px 6px 0 0;
+  transition: all 0.3s ease;
+}
+
+.saas-chart-bars__bar:hover {
+  filter: brightness(1.2);
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- TRAFFIC SOURCES PANEL -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #0f0f1a; padding: 24px;">
+              <div class="saas-panel">
+                <h4 class="saas-panel__title">Traffic Sources</h4>
+                <div class="saas-hbars">
+                  <div class="saas-hbars__row">
+                    <div class="saas-hbars__info"><span class="saas-hbars__name">Direct</span><span class="saas-hbars__val">42%</span></div>
+                    <div class="saas-hbars__track"><div class="saas-hbars__fill" style="width:42%; background:#6366f1;"></div></div>
+                  </div>
+                  <div class="saas-hbars__row">
+                    <div class="saas-hbars__info"><span class="saas-hbars__name">Organic</span><span class="saas-hbars__val">28%</span></div>
+                    <div class="saas-hbars__track"><div class="saas-hbars__fill" style="width:28%; background:#10b981;"></div></div>
+                  </div>
+                  <div class="saas-hbars__row">
+                    <div class="saas-hbars__info"><span class="saas-hbars__name">Social</span><span class="saas-hbars__val">18%</span></div>
+                    <div class="saas-hbars__track"><div class="saas-hbars__fill" style="width:18%; background:#f59e0b;"></div></div>
+                  </div>
+                  <div class="saas-hbars__row">
+                    <div class="saas-hbars__info"><span class="saas-hbars__name">Referral</span><span class="saas-hbars__val">12%</span></div>
+                    <div class="saas-hbars__track"><div class="saas-hbars__fill" style="width:12%; background:#3b82f6;"></div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Traffic Sources</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">chart</span>
+                <span class="tag">horizontal</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="saas-analytics-traffic-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="saas-analytics-traffic-html"><code>&lt;div class="saas-hbars__row"&gt;
+  &lt;div class="saas-hbars__info"&gt;
+    &lt;span class="saas-hbars__name"&gt;Direct&lt;/span&gt;
+    &lt;span class="saas-hbars__val"&gt;42%&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="saas-hbars__track"&gt;
+    &lt;div class="saas-hbars__fill" style="width:42%;"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="saas-analytics-traffic-css" style="display:none"><code>.saas-hbars__track {
+  height: 8px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.saas-hbars__fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 1s ease;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- DEMOGRAPHICS DONUT -->
+          <article class="component-card" data-security="caution">
+            <span class="security-badge security-badge--caution">CAUTION</span>
+            <div class="component-card__preview" style="background: #0f0f1a; padding: 24px;">
+              <div class="saas-panel">
+                <h4 class="saas-panel__title">User Demographics</h4>
+                <div class="saas-donut-wrapper">
+                  <div class="saas-donut">
+                    <div class="saas-donut__center">
+                      <span class="saas-donut__total">8.4k</span>
+                      <span class="saas-donut__total-label">Total</span>
+                    </div>
+                  </div>
+                  <div class="saas-donut__legend">
+                    <div class="saas-donut__legend-item"><span class="saas-donut__dot" style="background:#6366f1;"></span>18-24 (35%)</div>
+                    <div class="saas-donut__legend-item"><span class="saas-donut__dot" style="background:#3b82f6;"></span>25-34 (30%)</div>
+                    <div class="saas-donut__legend-item"><span class="saas-donut__dot" style="background:#10b981;"></span>35-44 (20%)</div>
+                    <div class="saas-donut__legend-item"><span class="saas-donut__dot" style="background:#f59e0b;"></span>45+ (15%)</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Demographics Donut</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">chart</span>
+                <span class="tag">donut</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="saas-analytics-demo-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="saas-analytics-demo-html"><code>&lt;div class="saas-donut"&gt;
+  &lt;div class="saas-donut__center"&gt;
+    &lt;span class="saas-donut__total"&gt;8.4k&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="saas-donut__legend"&gt;
+  &lt;div class="saas-donut__legend-item"&gt;
+    &lt;span class="saas-donut__dot"&gt;&lt;/span&gt;18-24 (35%)
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="saas-analytics-demo-css" style="display:none"><code>.saas-donut {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: conic-gradient(
+    #6366f1 0% 35%,
+    #3b82f6 35% 65%,
+    #10b981 65% 85%,
+    #f59e0b 85% 100%
+  );
+  position: relative;
+}
+
+.saas-donut__center {
+  position: absolute;
+  inset: 15px;
+  background: #0f0f1a;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- PERFORMANCE METRICS -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #0f0f1a; padding: 24px;">
+              <div class="saas-panel">
+                <h4 class="saas-panel__title">Performance Metrics</h4>
+                <div class="saas-metrics">
+                  <div class="saas-metrics__item">
+                    <div class="saas-metrics__top"><span class="saas-metrics__name">Page Load</span><span class="saas-metrics__val">92%</span></div>
+                    <div class="saas-metrics__track"><div class="saas-metrics__fill" style="width:92%; background: linear-gradient(90deg,#6366f1,#818cf8);"></div></div>
+                  </div>
+                  <div class="saas-metrics__item">
+                    <div class="saas-metrics__top"><span class="saas-metrics__name">Uptime</span><span class="saas-metrics__val">99.9%</span></div>
+                    <div class="saas-metrics__track"><div class="saas-metrics__fill" style="width:99.9%; background: linear-gradient(90deg,#10b981,#34d399);"></div></div>
+                  </div>
+                  <div class="saas-metrics__item">
+                    <div class="saas-metrics__top"><span class="saas-metrics__name">Error Rate</span><span class="saas-metrics__val">0.8%</span></div>
+                    <div class="saas-metrics__track"><div class="saas-metrics__fill" style="width:0.8%; background: linear-gradient(90deg,#ef4444,#f87171);"></div></div>
+                  </div>
+                  <div class="saas-metrics__item">
+                    <div class="saas-metrics__top"><span class="saas-metrics__name">API Latency</span><span class="saas-metrics__val">78%</span></div>
+                    <div class="saas-metrics__track"><div class="saas-metrics__fill" style="width:78%; background: linear-gradient(90deg,#f59e0b,#fbbf24);"></div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Performance Bars</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">metrics</span>
+                <span class="tag">progress</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="saas-analytics-perf-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="saas-analytics-perf-html"><code>&lt;div class="saas-metrics__item"&gt;
+  &lt;div class="saas-metrics__top"&gt;
+    &lt;span class="saas-metrics__name"&gt;Uptime&lt;/span&gt;
+    &lt;span class="saas-metrics__val"&gt;99.9%&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="saas-metrics__track"&gt;
+    &lt;div class="saas-metrics__fill" style="width:99.9%;"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="saas-analytics-perf-css" style="display:none"><code>.saas-metrics__track {
+  height: 6px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.saas-metrics__fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ========== SECTION 3 : ACTIVITY FEED ========== -->
+      <section id="activity" class="section">
+        <h2 class="section__title">Activity Feed</h2>
+        <p class="section__desc">Flux d'activite, notifications et transactions recentes.</p>
+
+        <div class="components-grid">
+
+          <!-- ACTIVITY TIMELINE -->
+          <article class="component-card" data-security="caution">
+            <span class="security-badge security-badge--caution">CAUTION</span>
+            <div class="component-card__preview" style="background: #0f0f1a; padding: 24px;">
+              <div class="saas-timeline">
+                <div class="saas-timeline__item">
+                  <div class="saas-timeline__dot" style="background:#10b981;"></div>
+                  <div class="saas-timeline__content">
+                    <div class="saas-timeline__header">
+                      <div class="saas-timeline__avatar" style="background:linear-gradient(135deg,#6366f1,#8b5cf6);">J</div>
+                      <div><strong>Julia Martin</strong> created a new project</div>
+                    </div>
+                    <span class="saas-timeline__time">2 min ago</span>
+                  </div>
+                </div>
+                <div class="saas-timeline__item">
+                  <div class="saas-timeline__dot" style="background:#3b82f6;"></div>
+                  <div class="saas-timeline__content">
+                    <div class="saas-timeline__header">
+                      <div class="saas-timeline__avatar" style="background:linear-gradient(135deg,#f59e0b,#ef4444);">A</div>
+                      <div><strong>Alex Chen</strong> pushed 3 commits</div>
+                    </div>
+                    <span class="saas-timeline__time">15 min ago</span>
+                  </div>
+                </div>
+                <div class="saas-timeline__item">
+                  <div class="saas-timeline__dot" style="background:#f59e0b;"></div>
+                  <div class="saas-timeline__content">
+                    <div class="saas-timeline__header">
+                      <div class="saas-timeline__avatar" style="background:linear-gradient(135deg,#10b981,#3b82f6);">S</div>
+                      <div><strong>Sam Wilson</strong> updated billing info</div>
+                    </div>
+                    <span class="saas-timeline__time">1 hour ago</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Activity Timeline</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">feed</span>
+                <span class="tag">timeline</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="saas-activity-timeline-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="saas-activity-timeline-html"><code>&lt;div class="saas-timeline__item"&gt;
+  &lt;div class="saas-timeline__dot"&gt;&lt;/div&gt;
+  &lt;div class="saas-timeline__content"&gt;
+    &lt;div class="saas-timeline__header"&gt;
+      &lt;div class="saas-timeline__avatar"&gt;J&lt;/div&gt;
+      &lt;div&gt;&lt;strong&gt;Julia&lt;/strong&gt; created a project&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;span class="saas-timeline__time"&gt;2 min ago&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="saas-activity-timeline-css" style="display:none"><code>.saas-timeline__item {
+  display: flex;
+  gap: 16px;
+  padding: 12px 0;
+  position: relative;
+}
+
+.saas-timeline__item::before {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 24px;
+  bottom: -12px;
+  width: 2px;
+  background: rgba(255,255,255,0.06);
+}
+
+.saas-timeline__dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 4px;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- NOTIFICATION PANEL -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #0f0f1a; padding: 24px;">
+              <div class="saas-notifications">
+                <div class="saas-notif saas-notif--success">
+                  <div class="saas-notif__icon">&#10003;</div>
+                  <div class="saas-notif__body">
+                    <div class="saas-notif__title">Deployment successful</div>
+                    <div class="saas-notif__desc">v2.4.1 deployed to production</div>
+                  </div>
+                  <span class="saas-notif__time">2m</span>
+                </div>
+                <div class="saas-notif saas-notif--warning">
+                  <div class="saas-notif__icon">&#9888;</div>
+                  <div class="saas-notif__body">
+                    <div class="saas-notif__title">High CPU usage</div>
+                    <div class="saas-notif__desc">Server load at 89%</div>
+                  </div>
+                  <span class="saas-notif__time">10m</span>
+                </div>
+                <div class="saas-notif saas-notif--error">
+                  <div class="saas-notif__icon">&#10007;</div>
+                  <div class="saas-notif__body">
+                    <div class="saas-notif__title">Payment failed</div>
+                    <div class="saas-notif__desc">Invoice #1247 declined</div>
+                  </div>
+                  <span class="saas-notif__time">1h</span>
+                </div>
+                <div class="saas-notif saas-notif--info">
+                  <div class="saas-notif__icon">&#8505;</div>
+                  <div class="saas-notif__body">
+                    <div class="saas-notif__title">New team member</div>
+                    <div class="saas-notif__desc">Sarah joined Engineering</div>
+                  </div>
+                  <span class="saas-notif__time">3h</span>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Notification Panel</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">feed</span>
+                <span class="tag">notifications</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="saas-activity-notif-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="saas-activity-notif-html"><code>&lt;div class="saas-notif saas-notif--success"&gt;
+  &lt;div class="saas-notif__icon"&gt;&amp;#10003;&lt;/div&gt;
+  &lt;div class="saas-notif__body"&gt;
+    &lt;div class="saas-notif__title"&gt;Deployment successful&lt;/div&gt;
+    &lt;div class="saas-notif__desc"&gt;v2.4.1 deployed&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;span class="saas-notif__time"&gt;2m&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="saas-activity-notif-css" style="display:none"><code>.saas-notif {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.03);
+  border-left: 3px solid transparent;
+}
+
+.saas-notif--success { border-left-color: #10b981; }
+.saas-notif--warning { border-left-color: #f59e0b; }
+.saas-notif--error   { border-left-color: #ef4444; }
+.saas-notif--info    { border-left-color: #3b82f6; }</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- RECENT TRANSACTIONS -->
+          <article class="component-card" data-security="caution">
+            <span class="security-badge security-badge--caution">CAUTION</span>
+            <div class="component-card__preview" style="background: #0f0f1a; padding: 24px;">
+              <div class="saas-transactions">
+                <div class="saas-tx">
+                  <div class="saas-tx__info">
+                    <div class="saas-tx__name">Stripe Payment</div>
+                    <div class="saas-tx__id">#TXN-4829</div>
+                  </div>
+                  <div class="saas-tx__amount">+$2,400</div>
+                  <span class="saas-tx__badge saas-tx__badge--completed">Completed</span>
+                </div>
+                <div class="saas-tx">
+                  <div class="saas-tx__info">
+                    <div class="saas-tx__name">Invoice Refund</div>
+                    <div class="saas-tx__id">#TXN-4828</div>
+                  </div>
+                  <div class="saas-tx__amount saas-tx__amount--negative">-$340</div>
+                  <span class="saas-tx__badge saas-tx__badge--pending">Pending</span>
+                </div>
+                <div class="saas-tx">
+                  <div class="saas-tx__info">
+                    <div class="saas-tx__name">Wire Transfer</div>
+                    <div class="saas-tx__id">#TXN-4827</div>
+                  </div>
+                  <div class="saas-tx__amount">+$8,900</div>
+                  <span class="saas-tx__badge saas-tx__badge--completed">Completed</span>
+                </div>
+                <div class="saas-tx">
+                  <div class="saas-tx__info">
+                    <div class="saas-tx__name">Subscription</div>
+                    <div class="saas-tx__id">#TXN-4826</div>
+                  </div>
+                  <div class="saas-tx__amount saas-tx__amount--negative">-$99</div>
+                  <span class="saas-tx__badge saas-tx__badge--failed">Failed</span>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Recent Transactions</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">feed</span>
+                <span class="tag">transactions</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="saas-activity-tx-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="saas-activity-tx-html"><code>&lt;div class="saas-tx"&gt;
+  &lt;div class="saas-tx__info"&gt;
+    &lt;div class="saas-tx__name"&gt;Stripe Payment&lt;/div&gt;
+    &lt;div class="saas-tx__id"&gt;#TXN-4829&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="saas-tx__amount"&gt;+$2,400&lt;/div&gt;
+  &lt;span class="saas-tx__badge saas-tx__badge--completed"&gt;Completed&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="saas-activity-tx-css" style="display:none"><code>.saas-tx {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.saas-tx__badge--completed {
+  background: rgba(16,185,129,0.15);
+  color: #10b981;
+}
+
+.saas-tx__badge--pending {
+  background: rgba(245,158,11,0.15);
+  color: #f59e0b;
+}
+
+.saas-tx__badge--failed {
+  background: rgba(239,68,68,0.15);
+  color: #ef4444;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ========== SECTION 4 : WIDGETS ========== -->
+      <section id="widgets" class="section">
+        <h2 class="section__title">Quick Actions &amp; Widgets</h2>
+        <p class="section__desc">Actions rapides et widgets pour les tableaux de bord.</p>
+
+        <div class="components-grid">
+
+          <!-- QUICK ACTIONS -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #0f0f1a; padding: 24px;">
+              <div class="saas-actions">
+                <button class="saas-actions__btn">
+                  <span class="saas-actions__icon" style="background:rgba(99,102,241,0.15); color:#6366f1;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+                  </span>
+                  <span>New Project</span>
+                </button>
+                <button class="saas-actions__btn">
+                  <span class="saas-actions__icon" style="background:rgba(16,185,129,0.15); color:#10b981;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4-4v2"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+                  </span>
+                  <span>Invite Team</span>
+                </button>
+                <button class="saas-actions__btn">
+                  <span class="saas-actions__icon" style="background:rgba(245,158,11,0.15); color:#f59e0b;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+                  </span>
+                  <span>Reports</span>
+                </button>
+                <button class="saas-actions__btn">
+                  <span class="saas-actions__icon" style="background:rgba(239,68,68,0.15); color:#ef4444;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+                  </span>
+                  <span>Settings</span>
+                </button>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Quick Actions</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">widget</span>
+                <span class="tag">actions</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="saas-widget-actions-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="saas-widget-actions-html"><code>&lt;div class="saas-actions"&gt;
+  &lt;button class="saas-actions__btn"&gt;
+    &lt;span class="saas-actions__icon"&gt;...&lt;/span&gt;
+    &lt;span&gt;New Project&lt;/span&gt;
+  &lt;/button&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="saas-widget-actions-css" style="display:none"><code>.saas-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.saas-actions__btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 20px 12px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  color: #e0e0e0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.saas-actions__btn:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(99,102,241,0.4);
+  transform: translateY(-2px);
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- STATUS OVERVIEW -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #0f0f1a; padding: 24px;">
+              <div class="saas-status-widget">
+                <h4 class="saas-status-widget__title">System Status</h4>
+                <div class="saas-status-widget__list">
+                  <div class="saas-status-widget__item">
+                    <span class="saas-status-widget__dot saas-status-widget__dot--online"></span>
+                    <span class="saas-status-widget__name">API Server</span>
+                    <span class="saas-status-widget__label saas-status-widget__label--online">Online</span>
+                  </div>
+                  <div class="saas-status-widget__item">
+                    <span class="saas-status-widget__dot saas-status-widget__dot--online"></span>
+                    <span class="saas-status-widget__name">Database</span>
+                    <span class="saas-status-widget__label saas-status-widget__label--online">Online</span>
+                  </div>
+                  <div class="saas-status-widget__item">
+                    <span class="saas-status-widget__dot saas-status-widget__dot--maintenance"></span>
+                    <span class="saas-status-widget__name">CDN</span>
+                    <span class="saas-status-widget__label saas-status-widget__label--maintenance">Maintenance</span>
+                  </div>
+                  <div class="saas-status-widget__item">
+                    <span class="saas-status-widget__dot saas-status-widget__dot--offline"></span>
+                    <span class="saas-status-widget__name">Webhooks</span>
+                    <span class="saas-status-widget__label saas-status-widget__label--offline">Offline</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Status Overview</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">widget</span>
+                <span class="tag">status</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="saas-widget-status-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="saas-widget-status-html"><code>&lt;div class="saas-status-widget__item"&gt;
+  &lt;span class="saas-status-widget__dot
+    saas-status-widget__dot--online"&gt;&lt;/span&gt;
+  &lt;span class="saas-status-widget__name"&gt;API Server&lt;/span&gt;
+  &lt;span class="saas-status-widget__label
+    saas-status-widget__label--online"&gt;Online&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="saas-widget-status-css" style="display:none"><code>.saas-status-widget__dot--online {
+  background: #10b981;
+  box-shadow: 0 0 8px rgba(16,185,129,0.6);
+}
+
+.saas-status-widget__dot--maintenance {
+  background: #f59e0b;
+  animation: status-pulse 2s infinite;
+}
+
+.saas-status-widget__dot--offline {
+  background: #ef4444;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- TEAM MEMBERS -->
+          <article class="component-card" data-security="caution">
+            <span class="security-badge security-badge--caution">CAUTION</span>
+            <div class="component-card__preview" style="background: #0f0f1a; padding: 24px;">
+              <div class="saas-team">
+                <h4 class="saas-team__title">Team Members</h4>
+                <div class="saas-team__row">
+                  <div class="saas-team__member">
+                    <div class="saas-team__avatar" style="background:linear-gradient(135deg,#6366f1,#8b5cf6);">JM</div>
+                    <span class="saas-team__online"></span>
+                  </div>
+                  <div class="saas-team__member">
+                    <div class="saas-team__avatar" style="background:linear-gradient(135deg,#10b981,#34d399);">AC</div>
+                    <span class="saas-team__online"></span>
+                  </div>
+                  <div class="saas-team__member">
+                    <div class="saas-team__avatar" style="background:linear-gradient(135deg,#f59e0b,#fbbf24);">SW</div>
+                    <span class="saas-team__offline"></span>
+                  </div>
+                  <div class="saas-team__member">
+                    <div class="saas-team__avatar" style="background:linear-gradient(135deg,#ef4444,#f87171);">LP</div>
+                    <span class="saas-team__online"></span>
+                  </div>
+                  <div class="saas-team__member">
+                    <div class="saas-team__avatar saas-team__avatar--more">+5</div>
+                  </div>
+                </div>
+                <div class="saas-team__info">
+                  <span class="saas-team__count">3 online</span> &middot; 9 members total
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Team Members</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">widget</span>
+                <span class="tag">team</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="saas-widget-team-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="saas-widget-team-html"><code>&lt;div class="saas-team__member"&gt;
+  &lt;div class="saas-team__avatar"&gt;JM&lt;/div&gt;
+  &lt;span class="saas-team__online"&gt;&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="saas-widget-team-css" style="display:none"><code>.saas-team__row {
+  display: flex;
+  gap: 0;
+}
+
+.saas-team__member {
+  position: relative;
+  margin-left: -8px;
+}
+
+.saas-team__member:first-child {
+  margin-left: 0;
+}
+
+.saas-team__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: white;
+  border: 2px solid #0f0f1a;
+}
+
+.saas-team__online {
+  position: absolute;
+  bottom: 0; right: 0;
+  width: 10px; height: 10px;
+  background: #10b981;
+  border: 2px solid #0f0f1a;
+  border-radius: 50%;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- STORAGE USAGE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #0f0f1a; padding: 24px;">
+              <div class="saas-storage">
+                <div class="saas-storage__header">
+                  <h4 class="saas-storage__title">Storage Usage</h4>
+                  <span class="saas-storage__used">68.4 GB / 100 GB</span>
+                </div>
+                <div class="saas-storage__bar">
+                  <div class="saas-storage__segment saas-storage__segment--docs" style="width:30%;" title="Documents"></div>
+                  <div class="saas-storage__segment saas-storage__segment--media" style="width:25%;" title="Media"></div>
+                  <div class="saas-storage__segment saas-storage__segment--backups" style="width:10%;" title="Backups"></div>
+                  <div class="saas-storage__segment saas-storage__segment--other" style="width:3.4%;" title="Other"></div>
+                </div>
+                <div class="saas-storage__legend">
+                  <span class="saas-storage__legend-item"><span class="saas-storage__legend-dot" style="background:#6366f1;"></span>Documents (30 GB)</span>
+                  <span class="saas-storage__legend-item"><span class="saas-storage__legend-dot" style="background:#3b82f6;"></span>Media (25 GB)</span>
+                  <span class="saas-storage__legend-item"><span class="saas-storage__legend-dot" style="background:#10b981;"></span>Backups (10 GB)</span>
+                  <span class="saas-storage__legend-item"><span class="saas-storage__legend-dot" style="background:#f59e0b;"></span>Other (3.4 GB)</span>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Storage Usage</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">widget</span>
+                <span class="tag">storage</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="saas-widget-storage-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="saas-widget-storage-html"><code>&lt;div class="saas-storage__bar"&gt;
+  &lt;div class="saas-storage__segment
+    saas-storage__segment--docs"
+    style="width:30%;"&gt;&lt;/div&gt;
+  &lt;div class="saas-storage__segment
+    saas-storage__segment--media"
+    style="width:25%;"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="saas-widget-storage-css" style="display:none"><code>.saas-storage__bar {
+  display: flex;
+  height: 10px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 5px;
+  overflow: hidden;
+  margin: 16px 0;
+}
+
+.saas-storage__segment {
+  height: 100%;
+  transition: width 1s ease;
+}
+
+.saas-storage__segment--docs    { background: #6366f1; }
+.saas-storage__segment--media   { background: #3b82f6; }
+.saas-storage__segment--backups { background: #10b981; }
+.saas-storage__segment--other   { background: #f59e0b; }</code></pre>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ==================== STYLES ==================== -->
+  <style>
+    /* ===========================================
+       SAAS DASHBOARD — Styles locaux
+       =========================================== */
+
+    /* ========== STAT CARDS ========== */
+    .saas-stat {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 16px;
+      padding: 24px;
+      width: 100%;
+      transition: all 0.3s ease;
+    }
+
+    .saas-stat:hover {
+      border-color: rgba(99, 102, 241, 0.3);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    .saas-stat__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .saas-stat__label {
+      font-size: 0.875rem;
+      color: #888;
+      font-weight: 500;
+    }
+
+    .saas-stat__icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .saas-stat__icon--green {
+      background: rgba(16, 185, 129, 0.15);
+      color: #10b981;
+    }
+
+    .saas-stat__icon--blue {
+      background: rgba(59, 130, 246, 0.15);
+      color: #3b82f6;
+    }
+
+    .saas-stat__icon--purple {
+      background: rgba(99, 102, 241, 0.15);
+      color: #6366f1;
+    }
+
+    .saas-stat__value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .saas-stat__change {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .saas-stat__change--positive {
+      color: #10b981;
+    }
+
+    .saas-stat__change--negative {
+      color: #ef4444;
+    }
+
+    .saas-stat__sparkline {
+      margin: 12px 0;
+      height: 32px;
+    }
+
+    .saas-stat__sparkline svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* ========== RING / CIRCULAR PROGRESS ========== */
+    .saas-stat--ring {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .saas-stat__ring-wrapper {
+      flex-shrink: 0;
+    }
+
+    .saas-stat__ring {
+      position: relative;
+      width: 80px;
+      height: 80px;
+    }
+
+    .saas-stat__ring svg {
+      width: 100%;
+      height: 100%;
+      transform: rotate(-90deg);
+    }
+
+    .saas-stat__ring-bg {
+      fill: none;
+      stroke: rgba(255, 255, 255, 0.06);
+      stroke-width: 8;
+    }
+
+    .saas-stat__ring-fill {
+      fill: none;
+      stroke: var(--ring-color, #6366f1);
+      stroke-width: 8;
+      stroke-linecap: round;
+      stroke-dasharray: 251.2;
+      stroke-dashoffset: calc(251.2 - (251.2 * var(--progress)) / 100);
+      transition: stroke-dashoffset 1s ease;
+    }
+
+    .saas-stat__ring-value {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .saas-stat__ring-info {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    /* ========== PANELS ========== */
+    .saas-panel {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 16px;
+      padding: 24px;
+      width: 100%;
+    }
+
+    .saas-panel__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .saas-panel__title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #e0e0e0;
+      margin: 0 0 16px 0;
+    }
+
+    .saas-panel__header .saas-panel__title {
+      margin-bottom: 0;
+    }
+
+    .saas-panel__period {
+      font-size: 0.75rem;
+      color: #666;
+      padding: 4px 10px;
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 6px;
+    }
+
+    /* ========== BAR CHART ========== */
+    .saas-chart-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 12px;
+      height: 140px;
+      padding-top: 16px;
+    }
+
+    .saas-chart-bars__item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .saas-chart-bars__bar {
+      width: 100%;
+      height: var(--height);
+      background: linear-gradient(180deg, rgba(99, 102, 241, 0.8), rgba(99, 102, 241, 0.4));
+      border-radius: 6px 6px 0 0;
+      position: relative;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .saas-chart-bars__bar:hover {
+      filter: brightness(1.3);
+    }
+
+    .saas-chart-bars__bar--active {
+      background: linear-gradient(180deg, #6366f1, #4f46e5);
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+    }
+
+    .saas-chart-bars__tooltip {
+      position: absolute;
+      top: -28px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #fff;
+      background: #1e1e2e;
+      padding: 3px 8px;
+      border-radius: 4px;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .saas-chart-bars__bar:hover .saas-chart-bars__tooltip {
+      opacity: 1;
+    }
+
+    .saas-chart-bars__label {
+      font-size: 0.7rem;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* ========== HORIZONTAL BARS ========== */
+    .saas-hbars {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .saas-hbars__row {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .saas-hbars__info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .saas-hbars__name {
+      font-size: 0.8rem;
+      color: #ccc;
+    }
+
+    .saas-hbars__val {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .saas-hbars__track {
+      height: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .saas-hbars__fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ========== DONUT CHART ========== */
+    .saas-donut-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .saas-donut {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: conic-gradient(
+        #6366f1 0% 35%,
+        #3b82f6 35% 65%,
+        #10b981 65% 85%,
+        #f59e0b 85% 100%
+      );
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .saas-donut__center {
+      position: absolute;
+      inset: 15px;
+      background: #0f0f1a;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .saas-donut__total {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .saas-donut__total-label {
+      font-size: 0.65rem;
+      color: #666;
+    }
+
+    .saas-donut__legend {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .saas-donut__legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: #aaa;
+    }
+
+    .saas-donut__dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ========== PERFORMANCE METRICS ========== */
+    .saas-metrics {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .saas-metrics__item {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .saas-metrics__top {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .saas-metrics__name {
+      font-size: 0.8rem;
+      color: #aaa;
+    }
+
+    .saas-metrics__val {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .saas-metrics__track {
+      height: 6px;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .saas-metrics__fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ========== ACTIVITY TIMELINE ========== */
+    .saas-timeline {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .saas-timeline__item {
+      display: flex;
+      gap: 16px;
+      padding: 12px 0;
+      position: relative;
+    }
+
+    .saas-timeline__item:not(:last-child)::before {
+      content: '';
+      position: absolute;
+      left: 5px;
+      top: 28px;
+      bottom: -4px;
+      width: 2px;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .saas-timeline__dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+
+    .saas-timeline__content {
+      flex: 1;
+    }
+
+    .saas-timeline__header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.85rem;
+      color: #ccc;
+      margin-bottom: 4px;
+    }
+
+    .saas-timeline__header strong {
+      color: #fff;
+    }
+
+    .saas-timeline__avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .saas-timeline__time {
+      font-size: 0.75rem;
+      color: #555;
+    }
+
+    /* ========== NOTIFICATIONS ========== */
+    .saas-notifications {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .saas-notif {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.03);
+      border-left: 3px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    .saas-notif:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .saas-notif--success { border-left-color: #10b981; }
+    .saas-notif--warning { border-left-color: #f59e0b; }
+    .saas-notif--error   { border-left-color: #ef4444; }
+    .saas-notif--info    { border-left-color: #3b82f6; }
+
+    .saas-notif__icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+
+    .saas-notif--success .saas-notif__icon { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+    .saas-notif--warning .saas-notif__icon { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+    .saas-notif--error .saas-notif__icon   { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+    .saas-notif--info .saas-notif__icon    { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+
+    .saas-notif__body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .saas-notif__title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #e0e0e0;
+    }
+
+    .saas-notif__desc {
+      font-size: 0.75rem;
+      color: #888;
+    }
+
+    .saas-notif__time {
+      font-size: 0.7rem;
+      color: #555;
+      flex-shrink: 0;
+    }
+
+    /* ========== TRANSACTIONS ========== */
+    .saas-transactions {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .saas-tx {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .saas-tx:last-child {
+      border-bottom: none;
+    }
+
+    .saas-tx__info {
+      flex: 1;
+    }
+
+    .saas-tx__name {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #e0e0e0;
+    }
+
+    .saas-tx__id {
+      font-size: 0.7rem;
+      color: #555;
+      font-family: monospace;
+    }
+
+    .saas-tx__amount {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #10b981;
+    }
+
+    .saas-tx__amount--negative {
+      color: #ef4444;
+    }
+
+    .saas-tx__badge {
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .saas-tx__badge--completed {
+      background: rgba(16, 185, 129, 0.15);
+      color: #10b981;
+    }
+
+    .saas-tx__badge--pending {
+      background: rgba(245, 158, 11, 0.15);
+      color: #f59e0b;
+    }
+
+    .saas-tx__badge--failed {
+      background: rgba(239, 68, 68, 0.15);
+      color: #ef4444;
+    }
+
+    /* ========== QUICK ACTIONS ========== */
+    .saas-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .saas-actions__btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 20px 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      color: #ccc;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      font-family: inherit;
+    }
+
+    .saas-actions__btn:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(99, 102, 241, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      color: #fff;
+    }
+
+    .saas-actions__icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ========== STATUS WIDGET ========== */
+    .saas-status-widget {
+      width: 100%;
+    }
+
+    .saas-status-widget__title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #e0e0e0;
+      margin-bottom: 16px;
+    }
+
+    .saas-status-widget__list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .saas-status-widget__item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 8px;
+      transition: background 0.2s ease;
+    }
+
+    .saas-status-widget__item:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .saas-status-widget__dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .saas-status-widget__dot--online {
+      background: #10b981;
+      box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+    }
+
+    .saas-status-widget__dot--maintenance {
+      background: #f59e0b;
+      animation: saas-status-pulse 2s ease-in-out infinite;
+    }
+
+    .saas-status-widget__dot--offline {
+      background: #ef4444;
+    }
+
+    @keyframes saas-status-pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .saas-status-widget__name {
+      flex: 1;
+      font-size: 0.85rem;
+      color: #ccc;
+    }
+
+    .saas-status-widget__label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .saas-status-widget__label--online {
+      background: rgba(16, 185, 129, 0.15);
+      color: #10b981;
+    }
+
+    .saas-status-widget__label--maintenance {
+      background: rgba(245, 158, 11, 0.15);
+      color: #f59e0b;
+    }
+
+    .saas-status-widget__label--offline {
+      background: rgba(239, 68, 68, 0.15);
+      color: #ef4444;
+    }
+
+    /* ========== TEAM MEMBERS ========== */
+    .saas-team {
+      width: 100%;
+    }
+
+    .saas-team__title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #e0e0e0;
+      margin-bottom: 16px;
+    }
+
+    .saas-team__row {
+      display: flex;
+      margin-bottom: 12px;
+    }
+
+    .saas-team__member {
+      position: relative;
+      margin-left: -8px;
+    }
+
+    .saas-team__member:first-child {
+      margin-left: 0;
+    }
+
+    .saas-team__avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: white;
+      border: 3px solid #0f0f1a;
+      transition: transform 0.2s ease;
+    }
+
+    .saas-team__member:hover .saas-team__avatar {
+      transform: translateY(-4px);
+      z-index: 2;
+    }
+
+    .saas-team__avatar--more {
+      background: rgba(255, 255, 255, 0.1) !important;
+      color: #888;
+      font-size: 0.7rem;
+    }
+
+    .saas-team__online,
+    .saas-team__offline {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 12px;
+      height: 12px;
+      border: 2px solid #0f0f1a;
+      border-radius: 50%;
+    }
+
+    .saas-team__online {
+      background: #10b981;
+    }
+
+    .saas-team__offline {
+      background: #555;
+    }
+
+    .saas-team__info {
+      font-size: 0.8rem;
+      color: #888;
+    }
+
+    .saas-team__count {
+      color: #10b981;
+      font-weight: 600;
+    }
+
+    /* ========== STORAGE WIDGET ========== */
+    .saas-storage {
+      width: 100%;
+    }
+
+    .saas-storage__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+
+    .saas-storage__title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #e0e0e0;
+      margin: 0;
+    }
+
+    .saas-storage__used {
+      font-size: 0.8rem;
+      color: #888;
+    }
+
+    .saas-storage__bar {
+      display: flex;
+      height: 10px;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 5px;
+      overflow: hidden;
+      margin: 16px 0;
+    }
+
+    .saas-storage__segment {
+      height: 100%;
+      transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .saas-storage__segment--docs    { background: #6366f1; }
+    .saas-storage__segment--media   { background: #3b82f6; }
+    .saas-storage__segment--backups { background: #10b981; }
+    .saas-storage__segment--other   { background: #f59e0b; }
+
+    .saas-storage__legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .saas-storage__legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      color: #aaa;
+    }
+
+    .saas-storage__legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+  </style>
+
+  <!-- ==================== SCRIPTS ==================== -->
+  <script src="../../assets/js/copy-code.js"></script>
+  <script src="../../assets/js/live-editor.js"></script>
+  <script src="../../assets/js/security-system.js"></script>
+  <script src="../../assets/js/search.js"></script>
+  <script src="../../assets/js/accessibility.js"></script>
+  <script src="../../assets/js/theme-toggle.js"></script>
+</body>
+</html>

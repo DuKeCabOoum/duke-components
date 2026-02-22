@@ -1,0 +1,2269 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Charts & Data Visualization — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+</head>
+<body>
+  <div class="app">
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+      <a href="../../index.html" class="sidebar__logo">
+        <span>Duke</span>-components
+      </a>
+
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Charts</h3>
+        <ul class="sidebar__nav">
+          <li><a href="#bar-charts" class="sidebar__link sidebar__link--active">Bar Charts</a></li>
+          <li><a href="#donut-pie" class="sidebar__link">Donut & Pie</a></li>
+          <li><a href="#line-area" class="sidebar__link">Line & Area</a></li>
+          <li><a href="#progress-metrics" class="sidebar__link">Progress & Metrics</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar__section">
+        <a href="../../index.html" class="sidebar__link">&#8592; Retour</a>
+      </div>
+
+      <!-- Toggle Admin -->
+      <div class="admin-toggle">
+        <span class="admin-toggle__label">Mode Admin</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="admin-toggle">
+          <span class="toggle-switch__slider"></span>
+        </label>
+      </div>
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main">
+      <header class="main__header">
+        <h1 class="main__title">Charts & Data Visualization</h1>
+        <p class="main__subtitle">14 composants de visualisation de donnees — barres, donuts, lignes, jauges et metriques.</p>
+      </header>
+
+      <!-- ========== SECTION 1: BAR CHARTS ========== -->
+      <section id="bar-charts" class="section">
+        <h2 class="section__title">Bar Charts</h2>
+        <p class="section__desc">Graphiques en barres verticales, horizontales, groupees et empilees.</p>
+
+        <div class="components-grid">
+
+          <!-- VERTICAL BAR CHART -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #0a0a14; padding: 24px;">
+              <div class="chart-bar-v">
+                <div class="chart-bar-v__bars">
+                  <div class="chart-bar-v__col">
+                    <div class="chart-bar-v__tooltip">78%</div>
+                    <div class="chart-bar-v__bar" style="--bar-h: 78%;"><div class="chart-bar-v__fill chart-bar-v__fill--1"></div></div>
+                    <span class="chart-bar-v__label">Jan</span>
+                  </div>
+                  <div class="chart-bar-v__col">
+                    <div class="chart-bar-v__tooltip">92%</div>
+                    <div class="chart-bar-v__bar" style="--bar-h: 92%;"><div class="chart-bar-v__fill chart-bar-v__fill--2"></div></div>
+                    <span class="chart-bar-v__label">Fev</span>
+                  </div>
+                  <div class="chart-bar-v__col">
+                    <div class="chart-bar-v__tooltip">65%</div>
+                    <div class="chart-bar-v__bar" style="--bar-h: 65%;"><div class="chart-bar-v__fill chart-bar-v__fill--3"></div></div>
+                    <span class="chart-bar-v__label">Mar</span>
+                  </div>
+                  <div class="chart-bar-v__col">
+                    <div class="chart-bar-v__tooltip">85%</div>
+                    <div class="chart-bar-v__bar" style="--bar-h: 85%;"><div class="chart-bar-v__fill chart-bar-v__fill--4"></div></div>
+                    <span class="chart-bar-v__label">Avr</span>
+                  </div>
+                  <div class="chart-bar-v__col">
+                    <div class="chart-bar-v__tooltip">53%</div>
+                    <div class="chart-bar-v__bar" style="--bar-h: 53%;"><div class="chart-bar-v__fill chart-bar-v__fill--5"></div></div>
+                    <span class="chart-bar-v__label">Mai</span>
+                  </div>
+                  <div class="chart-bar-v__col">
+                    <div class="chart-bar-v__tooltip">71%</div>
+                    <div class="chart-bar-v__bar" style="--bar-h: 71%;"><div class="chart-bar-v__fill chart-bar-v__fill--6"></div></div>
+                    <span class="chart-bar-v__label">Jun</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Vertical Bar Chart</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">chart</span>
+                <span class="tag">gradient</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="chart-vertical-bar-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="chart-vertical-bar-html"><code>&lt;div class="chart-bar-v"&gt;
+  &lt;div class="chart-bar-v__bars"&gt;
+    &lt;div class="chart-bar-v__col"&gt;
+      &lt;div class="chart-bar-v__tooltip"&gt;78%&lt;/div&gt;
+      &lt;div class="chart-bar-v__bar" style="--bar-h: 78%;"&gt;
+        &lt;div class="chart-bar-v__fill"&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;span class="chart-bar-v__label"&gt;Jan&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;!-- Repeat for each bar --&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="chart-vertical-bar-css" style="display:none"><code>.chart-bar-v__bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  height: 180px;
+}
+
+.chart-bar-v__bar {
+  width: 36px;
+  height: var(--bar-h);
+  border-radius: 6px 6px 0 0;
+  overflow: hidden;
+}
+
+.chart-bar-v__fill {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, #6366f1, #4f46e5);
+  animation: bar-grow 1s ease forwards;
+  transform-origin: bottom;
+}
+
+@keyframes bar-grow {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- HORIZONTAL BAR CHART -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #0a0a14; padding: 24px;">
+              <div class="chart-bar-h">
+                <div class="chart-bar-h__row">
+                  <span class="chart-bar-h__label">React</span>
+                  <div class="chart-bar-h__track"><div class="chart-bar-h__fill chart-bar-h__fill--1" style="--bar-w: 92%;"></div></div>
+                  <span class="chart-bar-h__value">92%</span>
+                </div>
+                <div class="chart-bar-h__row">
+                  <span class="chart-bar-h__label">Vue</span>
+                  <div class="chart-bar-h__track"><div class="chart-bar-h__fill chart-bar-h__fill--2" style="--bar-w: 78%;"></div></div>
+                  <span class="chart-bar-h__value">78%</span>
+                </div>
+                <div class="chart-bar-h__row">
+                  <span class="chart-bar-h__label">Angular</span>
+                  <div class="chart-bar-h__track"><div class="chart-bar-h__fill chart-bar-h__fill--3" style="--bar-w: 65%;"></div></div>
+                  <span class="chart-bar-h__value">65%</span>
+                </div>
+                <div class="chart-bar-h__row">
+                  <span class="chart-bar-h__label">Svelte</span>
+                  <div class="chart-bar-h__track"><div class="chart-bar-h__fill chart-bar-h__fill--4" style="--bar-w: 54%;"></div></div>
+                  <span class="chart-bar-h__value">54%</span>
+                </div>
+                <div class="chart-bar-h__row">
+                  <span class="chart-bar-h__label">Solid</span>
+                  <div class="chart-bar-h__track"><div class="chart-bar-h__fill chart-bar-h__fill--5" style="--bar-w: 38%;"></div></div>
+                  <span class="chart-bar-h__value">38%</span>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Horizontal Bar Chart</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">chart</span>
+                <span class="tag">horizontal</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="chart-horizontal-bar-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="chart-horizontal-bar-html"><code>&lt;div class="chart-bar-h"&gt;
+  &lt;div class="chart-bar-h__row"&gt;
+    &lt;span class="chart-bar-h__label"&gt;React&lt;/span&gt;
+    &lt;div class="chart-bar-h__track"&gt;
+      &lt;div class="chart-bar-h__fill" style="--bar-w: 92%;"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;span class="chart-bar-h__value"&gt;92%&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="chart-horizontal-bar-css" style="display:none"><code>.chart-bar-h__row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.chart-bar-h__track {
+  flex: 1;
+  height: 12px;
+  background: #1e1e2e;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.chart-bar-h__fill {
+  height: 100%;
+  width: var(--bar-w);
+  border-radius: 6px;
+  background: linear-gradient(90deg, #6366f1, #3b82f6);
+  animation: bar-expand 1s ease forwards;
+  transform-origin: left;
+}
+
+@keyframes bar-expand {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- GROUPED BAR CHART -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #0a0a14; padding: 24px;">
+              <div class="chart-grouped">
+                <div class="chart-grouped__legend">
+                  <span class="chart-grouped__legend-item"><span class="chart-grouped__dot chart-grouped__dot--a"></span>2024</span>
+                  <span class="chart-grouped__legend-item"><span class="chart-grouped__dot chart-grouped__dot--b"></span>2025</span>
+                </div>
+                <div class="chart-grouped__bars">
+                  <div class="chart-grouped__group">
+                    <div class="chart-grouped__pair">
+                      <div class="chart-grouped__bar chart-grouped__bar--a" style="--bar-h: 65%;"></div>
+                      <div class="chart-grouped__bar chart-grouped__bar--b" style="--bar-h: 85%;"></div>
+                    </div>
+                    <span class="chart-grouped__label">Q1</span>
+                  </div>
+                  <div class="chart-grouped__group">
+                    <div class="chart-grouped__pair">
+                      <div class="chart-grouped__bar chart-grouped__bar--a" style="--bar-h: 72%;"></div>
+                      <div class="chart-grouped__bar chart-grouped__bar--b" style="--bar-h: 90%;"></div>
+                    </div>
+                    <span class="chart-grouped__label">Q2</span>
+                  </div>
+                  <div class="chart-grouped__group">
+                    <div class="chart-grouped__pair">
+                      <div class="chart-grouped__bar chart-grouped__bar--a" style="--bar-h: 58%;"></div>
+                      <div class="chart-grouped__bar chart-grouped__bar--b" style="--bar-h: 78%;"></div>
+                    </div>
+                    <span class="chart-grouped__label">Q3</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Grouped Bar Chart</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">chart</span>
+                <span class="tag">comparison</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="chart-grouped-bar-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="chart-grouped-bar-html"><code>&lt;div class="chart-grouped"&gt;
+  &lt;div class="chart-grouped__legend"&gt;
+    &lt;span&gt;&lt;span class="dot dot--a"&gt;&lt;/span&gt;2024&lt;/span&gt;
+    &lt;span&gt;&lt;span class="dot dot--b"&gt;&lt;/span&gt;2025&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="chart-grouped__bars"&gt;
+    &lt;div class="chart-grouped__group"&gt;
+      &lt;div class="chart-grouped__pair"&gt;
+        &lt;div class="bar bar--a" style="--bar-h: 65%;"&gt;&lt;/div&gt;
+        &lt;div class="bar bar--b" style="--bar-h: 85%;"&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;span&gt;Q1&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="chart-grouped-bar-css" style="display:none"><code>.chart-grouped__pair {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.chart-grouped__bar {
+  width: 28px;
+  height: var(--bar-h);
+  border-radius: 4px 4px 0 0;
+  animation: bar-grow 1s ease forwards;
+  transform-origin: bottom;
+}
+
+.chart-grouped__bar--a {
+  background: linear-gradient(180deg, #8b5cf6, #6d28d9);
+}
+
+.chart-grouped__bar--b {
+  background: linear-gradient(180deg, #06b6d4, #0891b2);
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- STACKED BAR CHART -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #0a0a14; padding: 24px;">
+              <div class="chart-stacked">
+                <div class="chart-stacked__legend">
+                  <span class="chart-stacked__legend-item"><span class="chart-stacked__dot" style="background:#6366f1;"></span>Design</span>
+                  <span class="chart-stacked__legend-item"><span class="chart-stacked__dot" style="background:#3b82f6;"></span>Dev</span>
+                  <span class="chart-stacked__legend-item"><span class="chart-stacked__dot" style="background:#10b981;"></span>Test</span>
+                </div>
+                <div class="chart-stacked__bars">
+                  <div class="chart-stacked__col">
+                    <div class="chart-stacked__bar" style="height: 180px;">
+                      <div class="chart-stacked__seg chart-stacked__seg--3" style="flex: 20;"></div>
+                      <div class="chart-stacked__seg chart-stacked__seg--2" style="flex: 45;"></div>
+                      <div class="chart-stacked__seg chart-stacked__seg--1" style="flex: 35;"></div>
+                    </div>
+                    <span class="chart-stacked__label">Sprint 1</span>
+                  </div>
+                  <div class="chart-stacked__col">
+                    <div class="chart-stacked__bar" style="height: 180px;">
+                      <div class="chart-stacked__seg chart-stacked__seg--3" style="flex: 30;"></div>
+                      <div class="chart-stacked__seg chart-stacked__seg--2" style="flex: 40;"></div>
+                      <div class="chart-stacked__seg chart-stacked__seg--1" style="flex: 30;"></div>
+                    </div>
+                    <span class="chart-stacked__label">Sprint 2</span>
+                  </div>
+                  <div class="chart-stacked__col">
+                    <div class="chart-stacked__bar" style="height: 180px;">
+                      <div class="chart-stacked__seg chart-stacked__seg--3" style="flex: 35;"></div>
+                      <div class="chart-stacked__seg chart-stacked__seg--2" style="flex: 35;"></div>
+                      <div class="chart-stacked__seg chart-stacked__seg--1" style="flex: 30;"></div>
+                    </div>
+                    <span class="chart-stacked__label">Sprint 3</span>
+                  </div>
+                  <div class="chart-stacked__col">
+                    <div class="chart-stacked__bar" style="height: 180px;">
+                      <div class="chart-stacked__seg chart-stacked__seg--3" style="flex: 40;"></div>
+                      <div class="chart-stacked__seg chart-stacked__seg--2" style="flex: 30;"></div>
+                      <div class="chart-stacked__seg chart-stacked__seg--1" style="flex: 30;"></div>
+                    </div>
+                    <span class="chart-stacked__label">Sprint 4</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Stacked Bar Chart</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">chart</span>
+                <span class="tag">stacked</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="chart-stacked-bar-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="chart-stacked-bar-html"><code>&lt;div class="chart-stacked__bar"&gt;
+  &lt;div class="chart-stacked__seg seg--test" style="flex: 20;"&gt;&lt;/div&gt;
+  &lt;div class="chart-stacked__seg seg--dev" style="flex: 45;"&gt;&lt;/div&gt;
+  &lt;div class="chart-stacked__seg seg--design" style="flex: 35;"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="chart-stacked-bar-css" style="display:none"><code>.chart-stacked__bar {
+  display: flex;
+  flex-direction: column;
+  width: 48px;
+  border-radius: 6px 6px 0 0;
+  overflow: hidden;
+  animation: bar-grow 1s ease forwards;
+  transform-origin: bottom;
+}
+
+.chart-stacked__seg--1 { background: #6366f1; }
+.chart-stacked__seg--2 { background: #3b82f6; }
+.chart-stacked__seg--3 { background: #10b981; }
+
+.chart-stacked__seg {
+  transition: opacity 0.3s ease;
+}
+
+.chart-stacked__seg:hover {
+  opacity: 0.8;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ========== SECTION 2: DONUT & PIE ========== -->
+      <section id="donut-pie" class="section">
+        <h2 class="section__title">Donut & Pie Charts</h2>
+        <p class="section__desc">Graphiques circulaires avec conic-gradient et SVG.</p>
+
+        <div class="components-grid">
+
+          <!-- DONUT CHART -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #0a0a14; padding: 32px; display: flex; justify-content: center;">
+              <div class="chart-donut">
+                <div class="chart-donut__ring"></div>
+                <div class="chart-donut__center">
+                  <span class="chart-donut__total">2,847</span>
+                  <span class="chart-donut__label">Total</span>
+                </div>
+                <div class="chart-donut__legend">
+                  <span class="chart-donut__legend-item"><span class="chart-donut__dot" style="background:#6366f1;"></span>Sales 40%</span>
+                  <span class="chart-donut__legend-item"><span class="chart-donut__dot" style="background:#3b82f6;"></span>Marketing 25%</span>
+                  <span class="chart-donut__legend-item"><span class="chart-donut__dot" style="background:#10b981;"></span>Dev 20%</span>
+                  <span class="chart-donut__legend-item"><span class="chart-donut__dot" style="background:#f59e0b;"></span>Design 15%</span>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Donut Chart</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">chart</span>
+                <span class="tag">conic-gradient</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="chart-donut-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="chart-donut-html"><code>&lt;div class="chart-donut"&gt;
+  &lt;div class="chart-donut__ring"&gt;&lt;/div&gt;
+  &lt;div class="chart-donut__center"&gt;
+    &lt;span class="chart-donut__total"&gt;2,847&lt;/span&gt;
+    &lt;span class="chart-donut__label"&gt;Total&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="chart-donut-css" style="display:none"><code>.chart-donut {
+  position: relative;
+  width: 180px;
+  height: 180px;
+}
+
+.chart-donut__ring {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: conic-gradient(
+    #6366f1 0deg 144deg,
+    #3b82f6 144deg 234deg,
+    #10b981 234deg 306deg,
+    #f59e0b 306deg 360deg
+  );
+  mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 24px),
+    #000 calc(100% - 24px)
+  );
+  -webkit-mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 24px),
+    #000 calc(100% - 24px)
+  );
+  animation: donut-spin 1s ease forwards;
+}
+
+@keyframes donut-spin {
+  from { transform: rotate(-90deg); opacity: 0; }
+  to { transform: rotate(0deg); opacity: 1; }
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- SEMI-CIRCLE GAUGE -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #0a0a14; padding: 32px; display: flex; justify-content: center;">
+              <div class="chart-gauge">
+                <svg class="chart-gauge__svg" viewBox="0 0 200 120" width="220" height="130">
+                  <defs>
+                    <linearGradient id="gauge-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#ef4444" />
+                      <stop offset="50%" stop-color="#f59e0b" />
+                      <stop offset="100%" stop-color="#10b981" />
+                    </linearGradient>
+                  </defs>
+                  <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#1e1e2e" stroke-width="14" stroke-linecap="round" />
+                  <path class="chart-gauge__arc" d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="url(#gauge-grad)" stroke-width="14" stroke-linecap="round" stroke-dasharray="251.33" stroke-dashoffset="75.4" />
+                </svg>
+                <div class="chart-gauge__info">
+                  <span class="chart-gauge__value">72</span>
+                  <span class="chart-gauge__label">Performance Score</span>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Semi-Circle Gauge</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">chart</span>
+                <span class="tag">gauge</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="chart-gauge-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="chart-gauge-html"><code>&lt;div class="chart-gauge"&gt;
+  &lt;svg viewBox="0 0 200 120" width="220" height="130"&gt;
+    &lt;defs&gt;
+      &lt;linearGradient id="gauge-grad"&gt;
+        &lt;stop offset="0%" stop-color="#ef4444" /&gt;
+        &lt;stop offset="50%" stop-color="#f59e0b" /&gt;
+        &lt;stop offset="100%" stop-color="#10b981" /&gt;
+      &lt;/linearGradient&gt;
+    &lt;/defs&gt;
+    &lt;path d="M 20 100 A 80 80 0 0 1 180 100"
+      fill="none" stroke="#1e1e2e" stroke-width="14"
+      stroke-linecap="round" /&gt;
+    &lt;path d="M 20 100 A 80 80 0 0 1 180 100"
+      fill="none" stroke="url(#gauge-grad)"
+      stroke-width="14" stroke-linecap="round"
+      stroke-dasharray="251.33"
+      stroke-dashoffset="75.4" /&gt;
+  &lt;/svg&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="chart-gauge-css" style="display:none"><code>.chart-gauge {
+  position: relative;
+  text-align: center;
+}
+
+.chart-gauge__arc {
+  animation: gauge-fill 1.5s ease forwards;
+}
+
+@keyframes gauge-fill {
+  from { stroke-dashoffset: 251.33; }
+  to { stroke-dashoffset: 75.4; }
+}
+
+.chart-gauge__value {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.chart-gauge__label {
+  font-size: 0.8rem;
+  color: #71717a;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- MULTI-RING CHART -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #0a0a14; padding: 32px; display: flex; justify-content: center;">
+              <div class="chart-rings">
+                <svg class="chart-rings__svg" viewBox="0 0 160 160" width="180" height="180">
+                  <!-- Ring 1 - Outer -->
+                  <circle cx="80" cy="80" r="70" fill="none" stroke="#1e1e2e" stroke-width="10" />
+                  <circle class="chart-rings__ring chart-rings__ring--1" cx="80" cy="80" r="70" fill="none" stroke="#6366f1" stroke-width="10" stroke-linecap="round" stroke-dasharray="439.82" stroke-dashoffset="109.96" transform="rotate(-90 80 80)" />
+                  <!-- Ring 2 - Middle -->
+                  <circle cx="80" cy="80" r="55" fill="none" stroke="#1e1e2e" stroke-width="10" />
+                  <circle class="chart-rings__ring chart-rings__ring--2" cx="80" cy="80" r="55" fill="none" stroke="#ec4899" stroke-width="10" stroke-linecap="round" stroke-dasharray="345.58" stroke-dashoffset="138.23" transform="rotate(-90 80 80)" />
+                  <!-- Ring 3 - Inner -->
+                  <circle cx="80" cy="80" r="40" fill="none" stroke="#1e1e2e" stroke-width="10" />
+                  <circle class="chart-rings__ring chart-rings__ring--3" cx="80" cy="80" r="40" fill="none" stroke="#10b981" stroke-width="10" stroke-linecap="round" stroke-dasharray="251.33" stroke-dashoffset="125.66" transform="rotate(-90 80 80)" />
+                </svg>
+                <div class="chart-rings__legend">
+                  <span class="chart-rings__legend-item"><span class="chart-rings__dot" style="background:#6366f1;"></span>Move 75%</span>
+                  <span class="chart-rings__legend-item"><span class="chart-rings__dot" style="background:#ec4899;"></span>Exercise 60%</span>
+                  <span class="chart-rings__legend-item"><span class="chart-rings__dot" style="background:#10b981;"></span>Stand 50%</span>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Multi-Ring Chart</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">chart</span>
+                <span class="tag">rings</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="chart-rings-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="chart-rings-html"><code>&lt;svg viewBox="0 0 160 160" width="180" height="180"&gt;
+  &lt;!-- Background ring --&gt;
+  &lt;circle cx="80" cy="80" r="70" fill="none"
+    stroke="#1e1e2e" stroke-width="10" /&gt;
+  &lt;!-- Animated ring --&gt;
+  &lt;circle cx="80" cy="80" r="70" fill="none"
+    stroke="#6366f1" stroke-width="10"
+    stroke-linecap="round"
+    stroke-dasharray="439.82"
+    stroke-dashoffset="109.96"
+    transform="rotate(-90 80 80)" /&gt;
+&lt;/svg&gt;</code></pre>
+                <pre class="code-viewer__code" id="chart-rings-css" style="display:none"><code>.chart-rings__ring {
+  animation: ring-fill 1.5s ease forwards;
+}
+
+.chart-rings__ring--1 {
+  /* 75% = circumference * 0.25 offset */
+  stroke-dashoffset: 109.96;
+}
+
+.chart-rings__ring--2 {
+  animation-delay: 0.2s;
+}
+
+.chart-rings__ring--3 {
+  animation-delay: 0.4s;
+}
+
+@keyframes ring-fill {
+  from { stroke-dashoffset: 440; }
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ========== SECTION 3: LINE & AREA ========== -->
+      <section id="line-area" class="section">
+        <h2 class="section__title">Line & Area Charts</h2>
+        <p class="section__desc">Courbes SVG, aires avec gradient et sparklines.</p>
+
+        <div class="components-grid">
+
+          <!-- SVG LINE CHART -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #0a0a14; padding: 24px;">
+              <div class="chart-line">
+                <svg class="chart-line__svg" viewBox="0 0 400 200" preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="line-fill-grad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#6366f1" stop-opacity="0.4" />
+                      <stop offset="100%" stop-color="#6366f1" stop-opacity="0" />
+                    </linearGradient>
+                  </defs>
+                  <!-- Grid lines -->
+                  <line x1="0" y1="50" x2="400" y2="50" stroke="#1e1e2e" stroke-width="1" />
+                  <line x1="0" y1="100" x2="400" y2="100" stroke="#1e1e2e" stroke-width="1" />
+                  <line x1="0" y1="150" x2="400" y2="150" stroke="#1e1e2e" stroke-width="1" />
+                  <!-- Area fill -->
+                  <path d="M 0 160 C 30 140, 60 120, 80 110 C 120 85, 140 95, 180 70 C 220 45, 240 60, 280 35 C 310 20, 340 40, 400 25 L 400 200 L 0 200 Z" fill="url(#line-fill-grad)" />
+                  <!-- Line -->
+                  <path class="chart-line__path" d="M 0 160 C 30 140, 60 120, 80 110 C 120 85, 140 95, 180 70 C 220 45, 240 60, 280 35 C 310 20, 340 40, 400 25" fill="none" stroke="#6366f1" stroke-width="3" stroke-linecap="round" />
+                  <!-- Dots -->
+                  <circle class="chart-line__dot" cx="0" cy="160" r="5" fill="#6366f1" />
+                  <circle class="chart-line__dot" cx="80" cy="110" r="5" fill="#6366f1" />
+                  <circle class="chart-line__dot" cx="180" cy="70" r="5" fill="#6366f1" />
+                  <circle class="chart-line__dot" cx="280" cy="35" r="5" fill="#6366f1" />
+                  <circle class="chart-line__dot" cx="400" cy="25" r="5" fill="#6366f1" />
+                </svg>
+                <div class="chart-line__labels">
+                  <span>Lun</span><span>Mar</span><span>Mer</span><span>Jeu</span><span>Ven</span>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">SVG Line Chart</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">chart</span>
+                <span class="tag">SVG</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="chart-line-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="chart-line-html"><code>&lt;svg viewBox="0 0 400 200"&gt;
+  &lt;defs&gt;
+    &lt;linearGradient id="fill" x1="0" y1="0" x2="0" y2="1"&gt;
+      &lt;stop offset="0%" stop-color="#6366f1" stop-opacity="0.4"/&gt;
+      &lt;stop offset="100%" stop-color="#6366f1" stop-opacity="0"/&gt;
+    &lt;/linearGradient&gt;
+  &lt;/defs&gt;
+  &lt;!-- Area --&gt;
+  &lt;path d="M 0 160 C ... L 400 200 L 0 200 Z"
+    fill="url(#fill)" /&gt;
+  &lt;!-- Line --&gt;
+  &lt;path d="M 0 160 C ..."
+    fill="none" stroke="#6366f1" stroke-width="3" /&gt;
+  &lt;!-- Dots --&gt;
+  &lt;circle cx="80" cy="110" r="5" fill="#6366f1" /&gt;
+&lt;/svg&gt;</code></pre>
+                <pre class="code-viewer__code" id="chart-line-css" style="display:none"><code>.chart-line__path {
+  stroke-dasharray: 600;
+  stroke-dashoffset: 600;
+  animation: line-draw 2s ease forwards;
+}
+
+@keyframes line-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+.chart-line__dot {
+  opacity: 0;
+  animation: dot-appear 0.3s ease forwards;
+}
+
+.chart-line__dot:nth-child(1) { animation-delay: 0.4s; }
+.chart-line__dot:nth-child(2) { animation-delay: 0.8s; }
+.chart-line__dot:nth-child(3) { animation-delay: 1.2s; }
+
+@keyframes dot-appear {
+  to { opacity: 1; }
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- SVG AREA CHART -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #0a0a14; padding: 24px;">
+              <div class="chart-area">
+                <svg class="chart-area__svg" viewBox="0 0 400 200" preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="area-grad-1" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.5" />
+                      <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.02" />
+                    </linearGradient>
+                    <linearGradient id="area-grad-2" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#ec4899" stop-opacity="0.35" />
+                      <stop offset="100%" stop-color="#ec4899" stop-opacity="0.02" />
+                    </linearGradient>
+                  </defs>
+                  <!-- Grid -->
+                  <line x1="0" y1="50" x2="400" y2="50" stroke="#1a1a2a" stroke-width="1" stroke-dasharray="4" />
+                  <line x1="0" y1="100" x2="400" y2="100" stroke="#1a1a2a" stroke-width="1" stroke-dasharray="4" />
+                  <line x1="0" y1="150" x2="400" y2="150" stroke="#1a1a2a" stroke-width="1" stroke-dasharray="4" />
+                  <!-- Area 1 -->
+                  <path class="chart-area__fill chart-area__fill--1" d="M 0 180 C 50 150, 100 120, 150 100 C 200 80, 250 110, 300 80 C 350 50, 380 60, 400 45 L 400 200 L 0 200 Z" fill="url(#area-grad-1)" />
+                  <path class="chart-area__stroke chart-area__stroke--1" d="M 0 180 C 50 150, 100 120, 150 100 C 200 80, 250 110, 300 80 C 350 50, 380 60, 400 45" fill="none" stroke="#06b6d4" stroke-width="2.5" />
+                  <!-- Area 2 -->
+                  <path class="chart-area__fill chart-area__fill--2" d="M 0 190 C 50 170, 100 150, 150 140 C 200 125, 250 145, 300 120 C 350 95, 380 105, 400 90 L 400 200 L 0 200 Z" fill="url(#area-grad-2)" />
+                  <path class="chart-area__stroke chart-area__stroke--2" d="M 0 190 C 50 170, 100 150, 150 140 C 200 125, 250 145, 300 120 C 350 95, 380 105, 400 90" fill="none" stroke="#ec4899" stroke-width="2.5" />
+                </svg>
+                <div class="chart-area__labels">
+                  <span>Jan</span><span>Fev</span><span>Mar</span><span>Avr</span><span>Mai</span>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">SVG Area Chart</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">chart</span>
+                <span class="tag">area</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="chart-area-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="chart-area-html"><code>&lt;svg viewBox="0 0 400 200"&gt;
+  &lt;defs&gt;
+    &lt;linearGradient id="area-grad" x1="0" y1="0" x2="0" y2="1"&gt;
+      &lt;stop offset="0%" stop-color="#06b6d4" stop-opacity="0.5"/&gt;
+      &lt;stop offset="100%" stop-color="#06b6d4" stop-opacity="0"/&gt;
+    &lt;/linearGradient&gt;
+  &lt;/defs&gt;
+  &lt;!-- Filled area --&gt;
+  &lt;path d="M 0 180 C ... L 400 200 L 0 200 Z"
+    fill="url(#area-grad)" /&gt;
+  &lt;!-- Stroke line --&gt;
+  &lt;path d="M 0 180 C ..."
+    fill="none" stroke="#06b6d4" stroke-width="2.5" /&gt;
+&lt;/svg&gt;</code></pre>
+                <pre class="code-viewer__code" id="chart-area-css" style="display:none"><code>.chart-area__fill {
+  opacity: 0;
+  animation: area-fade 1s ease forwards;
+}
+
+.chart-area__fill--2 {
+  animation-delay: 0.3s;
+}
+
+@keyframes area-fade {
+  to { opacity: 1; }
+}
+
+.chart-area__stroke {
+  stroke-dasharray: 600;
+  stroke-dashoffset: 600;
+  animation: line-draw 2s ease forwards;
+}
+
+@keyframes line-draw {
+  to { stroke-dashoffset: 0; }
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- SPARKLINES -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #0a0a14; padding: 24px;">
+              <div class="chart-sparklines">
+                <div class="chart-spark">
+                  <div class="chart-spark__info">
+                    <span class="chart-spark__label">Revenue</span>
+                    <span class="chart-spark__value chart-spark__value--up">+12.5%</span>
+                  </div>
+                  <svg class="chart-spark__svg" viewBox="0 0 120 40" preserveAspectRatio="none">
+                    <path class="chart-spark__line chart-spark__line--up" d="M 0 35 L 15 28 L 30 32 L 45 20 L 60 24 L 75 15 L 90 18 L 105 8 L 120 5" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" />
+                  </svg>
+                </div>
+                <div class="chart-spark">
+                  <div class="chart-spark__info">
+                    <span class="chart-spark__label">Users</span>
+                    <span class="chart-spark__value chart-spark__value--up">+8.3%</span>
+                  </div>
+                  <svg class="chart-spark__svg" viewBox="0 0 120 40" preserveAspectRatio="none">
+                    <path class="chart-spark__line chart-spark__line--primary" d="M 0 30 L 15 25 L 30 28 L 45 18 L 60 22 L 75 12 L 90 15 L 105 10 L 120 8" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" />
+                  </svg>
+                </div>
+                <div class="chart-spark">
+                  <div class="chart-spark__info">
+                    <span class="chart-spark__label">Bounce</span>
+                    <span class="chart-spark__value chart-spark__value--down">-3.2%</span>
+                  </div>
+                  <svg class="chart-spark__svg" viewBox="0 0 120 40" preserveAspectRatio="none">
+                    <path class="chart-spark__line chart-spark__line--down" d="M 0 10 L 15 15 L 30 12 L 45 20 L 60 18 L 75 28 L 90 25 L 105 32 L 120 30" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" />
+                  </svg>
+                </div>
+                <div class="chart-spark">
+                  <div class="chart-spark__info">
+                    <span class="chart-spark__label">Orders</span>
+                    <span class="chart-spark__value chart-spark__value--up">+5.7%</span>
+                  </div>
+                  <svg class="chart-spark__svg" viewBox="0 0 120 40" preserveAspectRatio="none">
+                    <path class="chart-spark__line chart-spark__line--warn" d="M 0 25 L 15 30 L 30 18 L 45 22 L 60 10 L 75 20 L 90 8 L 105 15 L 120 5" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Sparkline Set</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">chart</span>
+                <span class="tag">sparkline</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="chart-sparkline-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="chart-sparkline-html"><code>&lt;div class="chart-spark"&gt;
+  &lt;div class="chart-spark__info"&gt;
+    &lt;span class="chart-spark__label"&gt;Revenue&lt;/span&gt;
+    &lt;span class="chart-spark__value--up"&gt;+12.5%&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;svg viewBox="0 0 120 40"&gt;
+    &lt;path d="M 0 35 L 15 28 L 30 32 ..."
+      fill="none" stroke="#10b981"
+      stroke-width="2" /&gt;
+  &lt;/svg&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="chart-sparkline-css" style="display:none"><code>.chart-spark {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #1e1e2e;
+}
+
+.chart-spark__svg {
+  width: 100px;
+  height: 36px;
+}
+
+.chart-spark__line {
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  animation: spark-draw 1.5s ease forwards;
+}
+
+@keyframes spark-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+.chart-spark__value--up { color: #10b981; }
+.chart-spark__value--down { color: #ef4444; }</code></pre>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ========== SECTION 4: PROGRESS & METRICS ========== -->
+      <section id="progress-metrics" class="section">
+        <h2 class="section__title">Progress & Metrics</h2>
+        <p class="section__desc">Jauges circulaires, barres multiples et metriques de comparaison.</p>
+
+        <div class="components-grid">
+
+          <!-- CIRCULAR PROGRESS RING -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #0a0a14; padding: 32px; display: flex; justify-content: center;">
+              <div class="chart-cprog">
+                <svg class="chart-cprog__svg" viewBox="0 0 140 140" width="160" height="160">
+                  <defs>
+                    <linearGradient id="cprog-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#6366f1" />
+                      <stop offset="100%" stop-color="#06b6d4" />
+                    </linearGradient>
+                  </defs>
+                  <circle cx="70" cy="70" r="60" fill="none" stroke="#1e1e2e" stroke-width="12" />
+                  <circle class="chart-cprog__circle" cx="70" cy="70" r="60" fill="none" stroke="url(#cprog-grad)" stroke-width="12" stroke-linecap="round" stroke-dasharray="376.99" stroke-dashoffset="90.48" transform="rotate(-90 70 70)" />
+                </svg>
+                <div class="chart-cprog__text">
+                  <span class="chart-cprog__pct">76%</span>
+                  <span class="chart-cprog__label">Complete</span>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Circular Progress Ring</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">chart</span>
+                <span class="tag">progress</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="chart-cprog-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="chart-cprog-html"><code>&lt;svg viewBox="0 0 140 140" width="160" height="160"&gt;
+  &lt;circle cx="70" cy="70" r="60" fill="none"
+    stroke="#1e1e2e" stroke-width="12" /&gt;
+  &lt;circle cx="70" cy="70" r="60" fill="none"
+    stroke="url(#cprog-grad)" stroke-width="12"
+    stroke-linecap="round"
+    stroke-dasharray="376.99"
+    stroke-dashoffset="90.48"
+    transform="rotate(-90 70 70)" /&gt;
+&lt;/svg&gt;
+&lt;div class="chart-cprog__text"&gt;
+  &lt;span&gt;76%&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="chart-cprog-css" style="display:none"><code>.chart-cprog {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chart-cprog__circle {
+  animation: cprog-fill 1.5s ease forwards;
+}
+
+@keyframes cprog-fill {
+  from { stroke-dashoffset: 376.99; }
+  to { stroke-dashoffset: 90.48; }
+}
+
+/* offset = circumference * (1 - percentage)
+   376.99 * (1 - 0.76) = 90.48 */</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- MULTI PROGRESS BARS -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #0a0a14; padding: 24px;">
+              <div class="chart-mprog">
+                <div class="chart-mprog__row">
+                  <div class="chart-mprog__header">
+                    <span class="chart-mprog__name">HTML/CSS</span>
+                    <span class="chart-mprog__pct">95%</span>
+                  </div>
+                  <div class="chart-mprog__track">
+                    <div class="chart-mprog__fill" style="--w: 95%; --clr: #6366f1;"></div>
+                  </div>
+                </div>
+                <div class="chart-mprog__row">
+                  <div class="chart-mprog__header">
+                    <span class="chart-mprog__name">JavaScript</span>
+                    <span class="chart-mprog__pct">82%</span>
+                  </div>
+                  <div class="chart-mprog__track">
+                    <div class="chart-mprog__fill" style="--w: 82%; --clr: #3b82f6;"></div>
+                  </div>
+                </div>
+                <div class="chart-mprog__row">
+                  <div class="chart-mprog__header">
+                    <span class="chart-mprog__name">React</span>
+                    <span class="chart-mprog__pct">68%</span>
+                  </div>
+                  <div class="chart-mprog__track">
+                    <div class="chart-mprog__fill" style="--w: 68%; --clr: #06b6d4;"></div>
+                  </div>
+                </div>
+                <div class="chart-mprog__row">
+                  <div class="chart-mprog__header">
+                    <span class="chart-mprog__name">Python</span>
+                    <span class="chart-mprog__pct">45%</span>
+                  </div>
+                  <div class="chart-mprog__track">
+                    <div class="chart-mprog__fill" style="--w: 45%; --clr: #10b981;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Multi-Progress Bars</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">chart</span>
+                <span class="tag">skills</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="chart-mprog-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="chart-mprog-html"><code>&lt;div class="chart-mprog__row"&gt;
+  &lt;div class="chart-mprog__header"&gt;
+    &lt;span&gt;HTML/CSS&lt;/span&gt;
+    &lt;span&gt;95%&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="chart-mprog__track"&gt;
+    &lt;div class="chart-mprog__fill"
+      style="--w: 95%; --clr: #6366f1;"&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="chart-mprog-css" style="display:none"><code>.chart-mprog__track {
+  height: 8px;
+  background: #1e1e2e;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.chart-mprog__fill {
+  height: 100%;
+  width: var(--w);
+  background: var(--clr);
+  border-radius: 4px;
+  animation: bar-expand 1.2s ease forwards;
+  transform-origin: left;
+}
+
+@keyframes bar-expand {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- RADIAL BAR CHART -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #0a0a14; padding: 32px; display: flex; justify-content: center;">
+              <div class="chart-radial">
+                <svg class="chart-radial__svg" viewBox="0 0 200 200" width="200" height="200">
+                  <!-- Bar 1 -->
+                  <circle cx="100" cy="100" r="88" fill="none" stroke="#1e1e2e" stroke-width="14" />
+                  <circle class="chart-radial__bar chart-radial__bar--1" cx="100" cy="100" r="88" fill="none" stroke="#6366f1" stroke-width="14" stroke-linecap="round" stroke-dasharray="553.0" stroke-dashoffset="110.6" transform="rotate(-90 100 100)" />
+                  <!-- Bar 2 -->
+                  <circle cx="100" cy="100" r="70" fill="none" stroke="#1e1e2e" stroke-width="14" />
+                  <circle class="chart-radial__bar chart-radial__bar--2" cx="100" cy="100" r="70" fill="none" stroke="#3b82f6" stroke-width="14" stroke-linecap="round" stroke-dasharray="439.82" stroke-dashoffset="131.95" transform="rotate(-90 100 100)" />
+                  <!-- Bar 3 -->
+                  <circle cx="100" cy="100" r="52" fill="none" stroke="#1e1e2e" stroke-width="14" />
+                  <circle class="chart-radial__bar chart-radial__bar--3" cx="100" cy="100" r="52" fill="none" stroke="#10b981" stroke-width="14" stroke-linecap="round" stroke-dasharray="326.73" stroke-dashoffset="143.76" transform="rotate(-90 100 100)" />
+                  <!-- Bar 4 -->
+                  <circle cx="100" cy="100" r="34" fill="none" stroke="#1e1e2e" stroke-width="14" />
+                  <circle class="chart-radial__bar chart-radial__bar--4" cx="100" cy="100" r="34" fill="none" stroke="#f59e0b" stroke-width="14" stroke-linecap="round" stroke-dasharray="213.63" stroke-dashoffset="117.5" transform="rotate(-90 100 100)" />
+                </svg>
+                <div class="chart-radial__legend">
+                  <span><span class="chart-radial__dot" style="background:#6366f1;"></span>CSS 80%</span>
+                  <span><span class="chart-radial__dot" style="background:#3b82f6;"></span>JS 70%</span>
+                  <span><span class="chart-radial__dot" style="background:#10b981;"></span>React 56%</span>
+                  <span><span class="chart-radial__dot" style="background:#f59e0b;"></span>Vue 45%</span>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Radial Bar Chart</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">chart</span>
+                <span class="tag">radial</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="chart-radial-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="chart-radial-html"><code>&lt;svg viewBox="0 0 200 200"&gt;
+  &lt;circle cx="100" cy="100" r="88"
+    fill="none" stroke="#1e1e2e" stroke-width="14"/&gt;
+  &lt;circle cx="100" cy="100" r="88"
+    fill="none" stroke="#6366f1" stroke-width="14"
+    stroke-linecap="round"
+    stroke-dasharray="553.0"
+    stroke-dashoffset="110.6"
+    transform="rotate(-90 100 100)"/&gt;
+  &lt;!-- Repeat with smaller radius --&gt;
+&lt;/svg&gt;</code></pre>
+                <pre class="code-viewer__code" id="chart-radial-css" style="display:none"><code>.chart-radial__bar {
+  animation: radial-fill 1.5s ease forwards;
+}
+
+.chart-radial__bar--2 { animation-delay: 0.15s; }
+.chart-radial__bar--3 { animation-delay: 0.3s; }
+.chart-radial__bar--4 { animation-delay: 0.45s; }
+
+@keyframes radial-fill {
+  from { stroke-dashoffset: 553; }
+}
+
+/* offset = circumference * (1 - pct)
+   For r=88: circumference = 2*PI*88 = 553
+   80% -> offset = 553 * 0.2 = 110.6 */</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- STATS COMPARISON CARD -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview" style="background: #0a0a14; padding: 24px;">
+              <div class="chart-stats">
+                <div class="chart-stats__card">
+                  <div class="chart-stats__row">
+                    <div class="chart-stats__metric">
+                      <span class="chart-stats__label">Revenue</span>
+                      <span class="chart-stats__val">$48.2k</span>
+                    </div>
+                    <div class="chart-stats__delta chart-stats__delta--up">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3L13 9H3L8 3Z" fill="currentColor"/></svg>
+                      <span>+24.5%</span>
+                    </div>
+                  </div>
+                  <div class="chart-stats__compare">
+                    <div class="chart-stats__bar-wrap">
+                      <span class="chart-stats__bar-label">Before</span>
+                      <div class="chart-stats__bar-track"><div class="chart-stats__bar-fill" style="--w: 58%; background: #3f3f5a;"></div></div>
+                      <span class="chart-stats__bar-val">$38.7k</span>
+                    </div>
+                    <div class="chart-stats__bar-wrap">
+                      <span class="chart-stats__bar-label">After</span>
+                      <div class="chart-stats__bar-track"><div class="chart-stats__bar-fill" style="--w: 82%; background: #6366f1;"></div></div>
+                      <span class="chart-stats__bar-val">$48.2k</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="chart-stats__card">
+                  <div class="chart-stats__row">
+                    <div class="chart-stats__metric">
+                      <span class="chart-stats__label">Conversion</span>
+                      <span class="chart-stats__val">3.8%</span>
+                    </div>
+                    <div class="chart-stats__delta chart-stats__delta--down">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13L3 7H13L8 13Z" fill="currentColor"/></svg>
+                      <span>-2.1%</span>
+                    </div>
+                  </div>
+                  <div class="chart-stats__compare">
+                    <div class="chart-stats__bar-wrap">
+                      <span class="chart-stats__bar-label">Before</span>
+                      <div class="chart-stats__bar-track"><div class="chart-stats__bar-fill" style="--w: 65%; background: #3f3f5a;"></div></div>
+                      <span class="chart-stats__bar-val">3.9%</span>
+                    </div>
+                    <div class="chart-stats__bar-wrap">
+                      <span class="chart-stats__bar-label">After</span>
+                      <div class="chart-stats__bar-track"><div class="chart-stats__bar-fill" style="--w: 60%; background: #ef4444;"></div></div>
+                      <span class="chart-stats__bar-val">3.8%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Stats Comparison Card</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">chart</span>
+                <span class="tag">metrics</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="chart-stats-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="chart-stats-html"><code>&lt;div class="chart-stats__card"&gt;
+  &lt;div class="chart-stats__row"&gt;
+    &lt;div class="chart-stats__metric"&gt;
+      &lt;span&gt;Revenue&lt;/span&gt;
+      &lt;span&gt;$48.2k&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div class="chart-stats__delta--up"&gt;
+      &lt;span&gt;+24.5%&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="chart-stats__compare"&gt;
+    &lt;div class="chart-stats__bar-wrap"&gt;
+      &lt;span&gt;Before&lt;/span&gt;
+      &lt;div class="track"&gt;
+        &lt;div class="fill" style="--w: 58%;"&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;span&gt;$38.7k&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="chart-stats-css" style="display:none"><code>.chart-stats__card {
+  background: #12121e;
+  border: 1px solid #1e1e2e;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.chart-stats__delta--up { color: #10b981; }
+.chart-stats__delta--down { color: #ef4444; }
+
+.chart-stats__bar-track {
+  flex: 1;
+  height: 6px;
+  background: #1e1e2e;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.chart-stats__bar-fill {
+  height: 100%;
+  width: var(--w);
+  border-radius: 3px;
+  animation: bar-expand 1s ease forwards;
+  transform-origin: left;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ==================== STYLES ==================== -->
+  <style>
+    /* ===========================================
+       CHARTS — Global Animation Keyframes
+       =========================================== */
+
+    @keyframes bar-grow {
+      from { transform: scaleY(0); }
+      to { transform: scaleY(1); }
+    }
+
+    @keyframes bar-expand {
+      from { transform: scaleX(0); }
+      to { transform: scaleX(1); }
+    }
+
+    @keyframes line-draw {
+      to { stroke-dashoffset: 0; }
+    }
+
+    @keyframes dot-appear {
+      from { opacity: 0; transform: scale(0); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes area-fade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes donut-spin {
+      from { transform: rotate(-90deg); opacity: 0; }
+      to { transform: rotate(0deg); opacity: 1; }
+    }
+
+    /* ===========================================
+       SECTION 1: VERTICAL BAR CHART
+       =========================================== */
+
+    .chart-bar-v__bars {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 16px;
+      height: 180px;
+      padding-bottom: 8px;
+    }
+
+    .chart-bar-v__col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      position: relative;
+    }
+
+    .chart-bar-v__col:hover .chart-bar-v__tooltip {
+      opacity: 1;
+      transform: translateY(-4px);
+    }
+
+    .chart-bar-v__tooltip {
+      position: absolute;
+      top: -28px;
+      background: #fff;
+      color: #0a0a14;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      opacity: 0;
+      transition: all 0.2s ease;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .chart-bar-v__tooltip::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 4px solid #fff;
+    }
+
+    .chart-bar-v__bar {
+      width: 36px;
+      height: var(--bar-h);
+      border-radius: 6px 6px 0 0;
+      overflow: hidden;
+    }
+
+    .chart-bar-v__fill {
+      width: 100%;
+      height: 100%;
+      border-radius: 6px 6px 0 0;
+      animation: bar-grow 1s ease forwards;
+      transform-origin: bottom;
+    }
+
+    .chart-bar-v__fill--1 { background: linear-gradient(180deg, #6366f1, #4f46e5); animation-delay: 0s; }
+    .chart-bar-v__fill--2 { background: linear-gradient(180deg, #8b5cf6, #7c3aed); animation-delay: 0.1s; }
+    .chart-bar-v__fill--3 { background: linear-gradient(180deg, #3b82f6, #2563eb); animation-delay: 0.2s; }
+    .chart-bar-v__fill--4 { background: linear-gradient(180deg, #06b6d4, #0891b2); animation-delay: 0.3s; }
+    .chart-bar-v__fill--5 { background: linear-gradient(180deg, #10b981, #059669); animation-delay: 0.4s; }
+    .chart-bar-v__fill--6 { background: linear-gradient(180deg, #f59e0b, #d97706); animation-delay: 0.5s; }
+
+    .chart-bar-v__col:hover .chart-bar-v__fill {
+      filter: brightness(1.2);
+    }
+
+    .chart-bar-v__label {
+      font-size: 0.75rem;
+      color: #71717a;
+    }
+
+    /* ===========================================
+       SECTION 1: HORIZONTAL BAR CHART
+       =========================================== */
+
+    .chart-bar-h {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .chart-bar-h__row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .chart-bar-h__label {
+      width: 60px;
+      font-size: 0.8rem;
+      color: #a1a1aa;
+      text-align: right;
+    }
+
+    .chart-bar-h__track {
+      flex: 1;
+      height: 12px;
+      background: #1e1e2e;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .chart-bar-h__fill {
+      height: 100%;
+      width: var(--bar-w);
+      border-radius: 6px;
+      animation: bar-expand 1s ease forwards;
+      transform-origin: left;
+      transition: filter 0.2s ease;
+    }
+
+    .chart-bar-h__row:hover .chart-bar-h__fill {
+      filter: brightness(1.2);
+    }
+
+    .chart-bar-h__fill--1 { background: linear-gradient(90deg, #6366f1, #818cf8); animation-delay: 0s; }
+    .chart-bar-h__fill--2 { background: linear-gradient(90deg, #3b82f6, #60a5fa); animation-delay: 0.1s; }
+    .chart-bar-h__fill--3 { background: linear-gradient(90deg, #06b6d4, #22d3ee); animation-delay: 0.2s; }
+    .chart-bar-h__fill--4 { background: linear-gradient(90deg, #10b981, #34d399); animation-delay: 0.3s; }
+    .chart-bar-h__fill--5 { background: linear-gradient(90deg, #f59e0b, #fbbf24); animation-delay: 0.4s; }
+
+    .chart-bar-h__value {
+      width: 36px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    /* ===========================================
+       SECTION 1: GROUPED BAR CHART
+       =========================================== */
+
+    .chart-grouped__legend {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 16px;
+    }
+
+    .chart-grouped__legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      color: #a1a1aa;
+    }
+
+    .chart-grouped__dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+    }
+
+    .chart-grouped__dot--a { background: #8b5cf6; }
+    .chart-grouped__dot--b { background: #06b6d4; }
+
+    .chart-grouped__bars {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 32px;
+      height: 160px;
+    }
+
+    .chart-grouped__group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .chart-grouped__pair {
+      display: flex;
+      align-items: flex-end;
+      gap: 4px;
+    }
+
+    .chart-grouped__bar {
+      width: 28px;
+      height: var(--bar-h);
+      border-radius: 4px 4px 0 0;
+      animation: bar-grow 1s ease forwards;
+      transform-origin: bottom;
+      transition: filter 0.2s ease;
+    }
+
+    .chart-grouped__bar:hover {
+      filter: brightness(1.25);
+    }
+
+    .chart-grouped__bar--a {
+      background: linear-gradient(180deg, #8b5cf6, #6d28d9);
+    }
+
+    .chart-grouped__bar--b {
+      background: linear-gradient(180deg, #06b6d4, #0891b2);
+    }
+
+    .chart-grouped__label {
+      font-size: 0.75rem;
+      color: #71717a;
+    }
+
+    /* ===========================================
+       SECTION 1: STACKED BAR CHART
+       =========================================== */
+
+    .chart-stacked__legend {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 16px;
+    }
+
+    .chart-stacked__legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      color: #a1a1aa;
+    }
+
+    .chart-stacked__dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+    }
+
+    .chart-stacked__bars {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 24px;
+    }
+
+    .chart-stacked__col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .chart-stacked__bar {
+      display: flex;
+      flex-direction: column;
+      width: 48px;
+      border-radius: 6px 6px 0 0;
+      overflow: hidden;
+      animation: bar-grow 1s ease forwards;
+      transform-origin: bottom;
+    }
+
+    .chart-stacked__seg {
+      transition: opacity 0.2s ease;
+    }
+
+    .chart-stacked__seg:hover {
+      opacity: 0.75;
+    }
+
+    .chart-stacked__seg--1 { background: #6366f1; }
+    .chart-stacked__seg--2 { background: #3b82f6; }
+    .chart-stacked__seg--3 { background: #10b981; }
+
+    .chart-stacked__label {
+      font-size: 0.75rem;
+      color: #71717a;
+    }
+
+    /* ===========================================
+       SECTION 2: DONUT CHART
+       =========================================== */
+
+    .chart-donut {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .chart-donut__ring {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: conic-gradient(
+        #6366f1 0deg 144deg,
+        #3b82f6 144deg 234deg,
+        #10b981 234deg 306deg,
+        #f59e0b 306deg 360deg
+      );
+      mask: radial-gradient(farthest-side, transparent calc(100% - 24px), #000 calc(100% - 24px));
+      -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 24px), #000 calc(100% - 24px));
+      animation: donut-spin 1s ease forwards;
+      position: relative;
+    }
+
+    .chart-donut__center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, calc(-50% - 20px));
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .chart-donut__total {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .chart-donut__label {
+      font-size: 0.75rem;
+      color: #71717a;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .chart-donut__legend {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .chart-donut__legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      color: #a1a1aa;
+    }
+
+    .chart-donut__dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    /* ===========================================
+       SECTION 2: SEMI-CIRCLE GAUGE
+       =========================================== */
+
+    .chart-gauge {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .chart-gauge__svg {
+      display: block;
+    }
+
+    .chart-gauge__arc {
+      animation: gauge-fill 1.5s ease forwards;
+    }
+
+    @keyframes gauge-fill {
+      from { stroke-dashoffset: 251.33; }
+    }
+
+    .chart-gauge__info {
+      margin-top: -20px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .chart-gauge__value {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1;
+    }
+
+    .chart-gauge__label {
+      font-size: 0.8rem;
+      color: #71717a;
+    }
+
+    /* ===========================================
+       SECTION 2: MULTI-RING CHART
+       =========================================== */
+
+    .chart-rings {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .chart-rings__svg {
+      display: block;
+    }
+
+    .chart-rings__ring {
+      animation: ring-fill 1.5s ease forwards;
+    }
+
+    .chart-rings__ring--2 {
+      animation-delay: 0.2s;
+    }
+
+    .chart-rings__ring--3 {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes ring-fill {
+      from { stroke-dashoffset: 500; }
+    }
+
+    .chart-rings__legend {
+      display: flex;
+      gap: 16px;
+    }
+
+    .chart-rings__legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      color: #a1a1aa;
+    }
+
+    .chart-rings__dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    /* ===========================================
+       SECTION 3: SVG LINE CHART
+       =========================================== */
+
+    .chart-line {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .chart-line__svg {
+      width: 100%;
+      height: 180px;
+      display: block;
+    }
+
+    .chart-line__path {
+      stroke-dasharray: 600;
+      stroke-dashoffset: 600;
+      animation: line-draw 2s ease forwards;
+    }
+
+    .chart-line__dot {
+      opacity: 0;
+      animation: dot-appear 0.4s ease forwards;
+    }
+
+    .chart-line__dot:nth-of-type(1) { animation-delay: 0.4s; }
+    .chart-line__dot:nth-of-type(2) { animation-delay: 0.8s; }
+    .chart-line__dot:nth-of-type(3) { animation-delay: 1.2s; }
+    .chart-line__dot:nth-of-type(4) { animation-delay: 1.6s; }
+    .chart-line__dot:nth-of-type(5) { animation-delay: 2s; }
+
+    .chart-line__dot:hover {
+      r: 7;
+      filter: drop-shadow(0 0 6px #6366f1);
+    }
+
+    .chart-line__labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: #71717a;
+    }
+
+    /* ===========================================
+       SECTION 3: SVG AREA CHART
+       =========================================== */
+
+    .chart-area {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .chart-area__svg {
+      width: 100%;
+      height: 180px;
+      display: block;
+    }
+
+    .chart-area__fill {
+      opacity: 0;
+      animation: area-fade 1s ease forwards;
+    }
+
+    .chart-area__fill--2 {
+      animation-delay: 0.3s;
+    }
+
+    .chart-area__stroke {
+      stroke-dasharray: 600;
+      stroke-dashoffset: 600;
+      animation: line-draw 2s ease forwards;
+    }
+
+    .chart-area__stroke--2 {
+      animation-delay: 0.3s;
+    }
+
+    .chart-area__labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: #71717a;
+    }
+
+    /* ===========================================
+       SECTION 3: SPARKLINES
+       =========================================== */
+
+    .chart-sparklines {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chart-spark {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #1e1e2e;
+    }
+
+    .chart-spark:last-child {
+      border-bottom: none;
+    }
+
+    .chart-spark__info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .chart-spark__label {
+      font-size: 0.8rem;
+      color: #a1a1aa;
+    }
+
+    .chart-spark__value {
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .chart-spark__value--up { color: #10b981; }
+    .chart-spark__value--down { color: #ef4444; }
+
+    .chart-spark__svg {
+      width: 100px;
+      height: 36px;
+    }
+
+    .chart-spark__line {
+      stroke-dasharray: 200;
+      stroke-dashoffset: 200;
+      animation: line-draw 1.5s ease forwards;
+    }
+
+    /* ===========================================
+       SECTION 4: CIRCULAR PROGRESS RING
+       =========================================== */
+
+    .chart-cprog {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .chart-cprog__svg {
+      display: block;
+    }
+
+    .chart-cprog__circle {
+      animation: cprog-fill 1.5s ease forwards;
+    }
+
+    @keyframes cprog-fill {
+      from { stroke-dashoffset: 376.99; }
+    }
+
+    .chart-cprog__text {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .chart-cprog__pct {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .chart-cprog__label {
+      font-size: 0.75rem;
+      color: #71717a;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* ===========================================
+       SECTION 4: MULTI PROGRESS BARS
+       =========================================== */
+
+    .chart-mprog {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .chart-mprog__row {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .chart-mprog__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chart-mprog__name {
+      font-size: 0.85rem;
+      color: #fff;
+      font-weight: 500;
+    }
+
+    .chart-mprog__pct {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #a1a1aa;
+    }
+
+    .chart-mprog__track {
+      height: 8px;
+      background: #1e1e2e;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .chart-mprog__fill {
+      height: 100%;
+      width: var(--w);
+      background: var(--clr);
+      border-radius: 4px;
+      animation: bar-expand 1.2s ease forwards;
+      transform-origin: left;
+      position: relative;
+    }
+
+    .chart-mprog__fill::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      height: 100%;
+      width: 20px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2));
+      animation: shimmer-pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes shimmer-pulse {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }
+
+    /* ===========================================
+       SECTION 4: RADIAL BAR CHART
+       =========================================== */
+
+    .chart-radial {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .chart-radial__svg {
+      display: block;
+    }
+
+    .chart-radial__bar {
+      animation: radial-fill 1.5s ease forwards;
+    }
+
+    .chart-radial__bar--2 { animation-delay: 0.15s; }
+    .chart-radial__bar--3 { animation-delay: 0.3s; }
+    .chart-radial__bar--4 { animation-delay: 0.45s; }
+
+    @keyframes radial-fill {
+      from { stroke-dashoffset: 560; }
+    }
+
+    .chart-radial__legend {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      font-size: 0.75rem;
+      color: #a1a1aa;
+    }
+
+    .chart-radial__legend span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .chart-radial__dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    /* ===========================================
+       SECTION 4: STATS COMPARISON CARD
+       =========================================== */
+
+    .chart-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .chart-stats__card {
+      background: #12121e;
+      border: 1px solid #1e1e2e;
+      border-radius: 12px;
+      padding: 16px;
+      transition: border-color 0.3s ease;
+    }
+
+    .chart-stats__card:hover {
+      border-color: #2e2e4e;
+    }
+
+    .chart-stats__row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .chart-stats__metric {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .chart-stats__label {
+      font-size: 0.8rem;
+      color: #71717a;
+    }
+
+    .chart-stats__val {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .chart-stats__delta {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 6px;
+    }
+
+    .chart-stats__delta--up {
+      color: #10b981;
+      background: rgba(16, 185, 129, 0.1);
+    }
+
+    .chart-stats__delta--down {
+      color: #ef4444;
+      background: rgba(239, 68, 68, 0.1);
+    }
+
+    .chart-stats__compare {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .chart-stats__bar-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .chart-stats__bar-label {
+      font-size: 0.7rem;
+      color: #71717a;
+      width: 40px;
+    }
+
+    .chart-stats__bar-track {
+      flex: 1;
+      height: 6px;
+      background: #1e1e2e;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .chart-stats__bar-fill {
+      height: 100%;
+      width: var(--w);
+      border-radius: 3px;
+      animation: bar-expand 1s ease forwards;
+      transform-origin: left;
+    }
+
+    .chart-stats__bar-val {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #a1a1aa;
+      width: 44px;
+      text-align: right;
+    }
+  </style>
+
+  <!-- ==================== SCRIPTS ==================== -->
+  <script src="../../assets/js/main.js"></script>
+  <script src="../../assets/js/security-system.js"></script>
+  <script src="../../assets/js/search.js"></script>
+  <script src="../../assets/js/accessibility.js"></script>
+  <script src="../../assets/js/theme-toggle.js"></script>
+</body>
+</html>

@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NicheTrackr — Real CSS Components (Drop-in Replacements)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="nichetrackr-real.css">
+  <style>
+    /* === PAGE SHELL (not part of NicheTrackr) === */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #f0f2f4; color: #15191a; }
+
+    .page-shell { max-width: 1200px; margin: 0 auto; padding: 32px 24px; }
+    .page-shell__header { text-align: center; margin-bottom: 48px; padding: 40px 24px; background: linear-gradient(135deg, #007782, #004654); border-radius: 16px; color: #fff; }
+    .page-shell__title { font-size: 32px; font-weight: 900; margin-bottom: 8px; }
+    .page-shell__subtitle { font-size: 16px; opacity: 0.8; margin-bottom: 16px; }
+    .page-shell__stats { display: flex; justify-content: center; gap: 32px; margin-top: 20px; }
+    .page-shell__stat { text-align: center; }
+    .page-shell__stat-value { font-size: 28px; font-weight: 900; font-family: 'JetBrains Mono', monospace; }
+    .page-shell__stat-label { font-size: 12px; opacity: 0.7; }
+    .page-shell__theme-toggle { position: fixed; top: 16px; right: 16px; z-index: 99999; padding: 10px 16px; background: #1a2332; color: #fff; border: none; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; }
+
+    .section { margin-bottom: 48px; }
+    .section__title { font-size: 22px; font-weight: 800; color: #15191a; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+    .section__title-badge { font-size: 11px; padding: 2px 10px; background: #e6fafa; color: #007782; border-radius: 100px; font-weight: 700; }
+    .section__desc { font-size: 14px; color: #5a6566; margin-bottom: 20px; }
+    .section__showcase { background: #ffffff; border: 1px solid #e1e6e6; border-radius: 12px; padding: 32px; }
+    .section__showcase--dark { background: #0f1419; border-color: #2a3a4a; }
+    .section__showcase-row { display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-start; }
+    .section__showcase-col { flex: 1; min-width: 280px; }
+
+    [data-theme="dark"] .section__title { color: #e8edf2; }
+    [data-theme="dark"] .section__showcase { background: #0f1419; border-color: #2a3a4a; }
+    [data-theme="dark"] body { background: #0a0f14; color: #e8edf2; }
+
+    .section__label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #b6bebf; margin-bottom: 12px; }
+    .spacer { height: 16px; }
+    .spacer--lg { height: 32px; }
+
+    /* Sidebar showcase overrides */
+    .sidebar-demo { position: relative !important; height: 520px !important; top: auto !important; left: auto !important; bottom: auto !important; border-radius: 12px !important; overflow: hidden !important; }
+    .sidebar-demo .sidebar__rail { position: relative !important; }
+    .sidebar-demo .sidebar__panel { position: relative !important; }
+    .sidebar-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+    .sidebar-grid__item { background: var(--nt-bg, #f0f2f4); border: 1px solid var(--nt-border, #e1e6e6); border-radius: 16px; padding: 16px; }
+    .sidebar-grid__label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--nt-text-muted, #b6bebf); margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
+    .sidebar-grid__label-tag { font-size: 10px; padding: 2px 8px; background: var(--nt-primary-light, #e6fafa); color: var(--nt-primary, #007782); border-radius: 100px; text-transform: none; letter-spacing: 0; }
+    [data-theme="dark"] .sidebar-grid__item { background: var(--nt-surface-alt, #1a2332); border-color: var(--nt-border, #2a3a4a); }
+  </style>
+</head>
+<body>
+  <button class="page-shell__theme-toggle" onclick="toggleTheme()">Toggle Dark Mode</button>
+
+  <div class="page-shell">
+    <!-- HEADER -->
+    <div class="page-shell__header">
+      <h1 class="page-shell__title">NicheTrackr Real CSS</h1>
+      <p class="page-shell__subtitle">Composants drop-in avec les vrais noms de classes — Copier-coller directement dans NicheTrackr</p>
+      <div class="page-shell__stats">
+        <div class="page-shell__stat">
+          <div class="page-shell__stat-value">29</div>
+          <div class="page-shell__stat-label">Ameliorations</div>
+        </div>
+        <div class="page-shell__stat">
+          <div class="page-shell__stat-value">5,704</div>
+          <div class="page-shell__stat-label">Lignes CSS</div>
+        </div>
+        <div class="page-shell__stat">
+          <div class="page-shell__stat-value">250+</div>
+          <div class="page-shell__stat-label">Classes CSS</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== 1. NAVBAR ========== -->
+    <div class="section" id="navbar">
+      <h2 class="section__title">Navbar <span class="section__title-badge">Amelioration 11</span></h2>
+      <p class="section__desc">Navigation publique avec backdrop blur, mobile menu animee. Remplace <code>.navbar</code></p>
+      <div class="section__showcase">
+        <nav class="navbar" style="position:relative; top:auto;">
+          <div class="navbar__container">
+            <a class="navbar__brand" href="#">
+              <div class="navbar__logo-icon">NT</div>
+              <span class="navbar__logo-text">NicheTrackr</span>
+            </a>
+            <div class="navbar__links">
+              <a class="navbar__link navbar__link--active" href="#">Fonctionnalites</a>
+              <a class="navbar__link" href="#">Tarifs</a>
+              <a class="navbar__link" href="#">A propos</a>
+            </div>
+            <div class="navbar__actions">
+              <a class="navbar__action-link navbar__action-link--login" href="#">Connexion</a>
+              <a class="navbar__action-link navbar__action-link--signup" href="#">Essai gratuit</a>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+
+    <!-- ========== 2. SIDEBAR ========== -->
+    <div class="section" id="sidebar">
+      <h2 class="section__title">Sidebar <span class="section__title-badge">Amelioration 12</span></h2>
+      <p class="section__desc">Navigation authentifiee avec favoris, plan badge, dark toggle. Remplace <code>.sidebar</code></p>
+      <div class="section__showcase">
+        <div style="display:flex; height:500px; border:1px solid #e1e6e6; border-radius:12px; overflow:hidden;">
+          <aside class="sidebar" style="position:relative; height:100%;">
+            <div class="sidebar__header">
+              <a class="sidebar__logo-link" href="#">
+                <div class="sidebar__logo-icon">NT</div>
+                <span class="sidebar__logo">NicheTrackr</span>
+              </a>
+            </div>
+            <nav class="sidebar__nav">
+              <div class="sidebar__nav-section">
+                <h3 class="sidebar__nav-title">Plateforme</h3>
+                <ul class="sidebar__nav-list">
+                  <li class="sidebar__nav-item">
+                    <a class="sidebar__nav-link sidebar__nav-link--active" href="#">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="9" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="1" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="9" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/></svg>
+                      Dashboard
+                    </a>
+                  </li>
+                  <li class="sidebar__nav-item">
+                    <a class="sidebar__nav-link" href="#">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                      Setup
+                      <span class="sidebar__badge">5</span>
+                    </a>
+                  </li>
+                  <li class="sidebar__nav-item">
+                    <a class="sidebar__nav-link" href="#">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M8 5v3l2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                      Trackers
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="sidebar__nav-section">
+                <div class="sidebar__nav-header">
+                  <h3 class="sidebar__nav-title">Favoris</h3>
+                  <span class="sidebar__nav-count">3</span>
+                </div>
+                <ul class="sidebar__nav-list sidebar__favorites-list">
+                  <li class="sidebar__nav-item">
+                    <a class="sidebar__nav-link sidebar__nav-link--favorite" href="#">
+                      <span class="sidebar__score-dot sidebar__score-dot--green"></span>
+                      <span class="sidebar__favorite-name">Nike Air Max</span>
+                      <span class="sidebar__favorite-score">8.5</span>
+                    </a>
+                  </li>
+                  <li class="sidebar__nav-item">
+                    <a class="sidebar__nav-link sidebar__nav-link--favorite" href="#">
+                      <span class="sidebar__score-dot sidebar__score-dot--yellow"></span>
+                      <span class="sidebar__favorite-name">Levi's 501</span>
+                      <span class="sidebar__favorite-score">6.2</span>
+                    </a>
+                  </li>
+                  <li class="sidebar__nav-item">
+                    <a class="sidebar__nav-link sidebar__nav-link--favorite" href="#">
+                      <span class="sidebar__score-dot sidebar__score-dot--red"></span>
+                      <span class="sidebar__favorite-name">Zara Manteau</span>
+                      <span class="sidebar__favorite-score">3.1</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+            <div class="sidebar__footer">
+              <div class="sidebar__footer-section">
+                <a class="sidebar__footer-link" href="#">
+                  <span class="sidebar__plan-badge sidebar__plan-badge--pro">PRO</span>
+                  Abonnement
+                </a>
+                <button class="sidebar__footer-link sidebar__dark-toggle">
+                  <span class="sidebar__dark-icon sidebar__dark-icon--moon">&#127769;</span>
+                  <span class="sidebar__dark-icon sidebar__dark-icon--sun">&#9728;</span>
+                  Theme
+                </button>
+              </div>
+              <div class="sidebar__user">
+                <div class="sidebar__user-avatar">J</div>
+                <div class="sidebar__user-info">
+                  <p class="sidebar__user-name">Julien D.</p>
+                  <p class="sidebar__user-email">julien@nichetrackr.com</p>
+                </div>
+              </div>
+            </div>
+          </aside>
+          <div style="flex:1; padding:24px; background:#fafbfb; overflow:auto;">
+            <p style="color:#b6bebf; font-size:14px;">Contenu principal...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== 3. FLASH MESSAGES ========== -->
+    <div class="section" id="flash">
+      <h2 class="section__title">Flash Messages <span class="section__title-badge">Amelioration 13</span></h2>
+      <p class="section__desc">Notifications auto-dismiss avec slide-in et progress bar. Remplace <code>.flash</code></p>
+      <div class="section__showcase">
+        <div class="section__showcase-row" style="flex-direction:column; gap:12px;">
+          <div class="flash flash--notice" style="position:relative; right:auto; top:auto; min-width:auto; animation:none;">
+            <div class="flash__content">
+              <svg class="flash__icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>
+              <span class="flash__message">Tracker cree avec succes ! Il sera analyse lors du prochain scan.</span>
+              <button class="flash__close">&times;</button>
+            </div>
+          </div>
+          <div class="flash flash--alert" style="position:relative; right:auto; top:auto; min-width:auto; animation:none;">
+            <div class="flash__content">
+              <svg class="flash__icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"/></svg>
+              <span class="flash__message">Erreur : URL Vinted invalide. Verifiez le format.</span>
+              <button class="flash__close">&times;</button>
+            </div>
+          </div>
+          <div class="flash flash--warning" style="position:relative; right:auto; top:auto; min-width:auto; animation:none;">
+            <div class="flash__content">
+              <svg class="flash__icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"/></svg>
+              <span class="flash__message">Attention : Votre tracker expire dans 3 jours.</span>
+              <button class="flash__close">&times;</button>
+            </div>
+          </div>
+          <div class="flash flash--info" style="position:relative; right:auto; top:auto; min-width:auto; animation:none;">
+            <div class="flash__content">
+              <svg class="flash__icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"/></svg>
+              <span class="flash__message">Scan en cours... Les resultats seront disponibles sous peu.</span>
+              <button class="flash__close">&times;</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== 4. KPI CARDS ========== -->
+    <div class="section" id="kpi">
+      <h2 class="section__title">KPI Cards <span class="section__title-badge">Ameliorations 1-2 + 17</span></h2>
+      <p class="section__desc">Cards metriques avec tendances, variantes de couleur. Remplace <code>.kpi-card</code></p>
+      <div class="section__showcase">
+        <div class="dashboard__kpi-grid">
+          <div class="kpi-card kpi-card--accent">
+            <div class="kpi-card__header">
+              <h3 class="kpi-card__title">Produits suivis</h3>
+              <span class="kpi-card__icon">&#128230;</span>
+            </div>
+            <div class="kpi-card__content">
+              <div class="kpi-card__value">1,247</div>
+              <p class="kpi-card__subtitle">Depuis 5 trackers actifs</p>
+            </div>
+            <div class="kpi-card__footer">
+              <span class="kpi-card__trend kpi-card__trend--up">
+                <span class="kpi-card__trend-value">+12.5%</span>
+              </span>
+            </div>
+          </div>
+          <div class="kpi-card kpi-card--gradient-accent">
+            <div class="kpi-card__header">
+              <h3 class="kpi-card__title">Ventes detectees</h3>
+              <span class="kpi-card__icon kpi-card__icon--success">&#128176;</span>
+            </div>
+            <div class="kpi-card__content">
+              <div class="kpi-card__value">342</div>
+              <p class="kpi-card__subtitle">Cette semaine</p>
+            </div>
+            <div class="kpi-card__footer">
+              <span class="kpi-card__trend kpi-card__trend--up">
+                <span class="kpi-card__trend-value">+8.3%</span>
+              </span>
+            </div>
+          </div>
+          <div class="kpi-card kpi-card--warning-bg">
+            <div class="kpi-card__header">
+              <h3 class="kpi-card__title">Vitesse moy.</h3>
+              <span class="kpi-card__icon kpi-card__icon--warning">&#9889;</span>
+            </div>
+            <div class="kpi-card__content">
+              <div class="kpi-card__value">4.2j</div>
+              <p class="kpi-card__subtitle">Temps de vente median</p>
+            </div>
+            <div class="kpi-card__footer">
+              <span class="kpi-card__trend kpi-card__trend--down">
+                <span class="kpi-card__trend-value">-2.1%</span>
+              </span>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-card__header">
+              <h3 class="kpi-card__title">Score moyen</h3>
+              <span class="kpi-card__icon">&#11088;</span>
+            </div>
+            <div class="kpi-card__content">
+              <div class="kpi-card__value">7.4</div>
+              <p class="kpi-card__subtitle">Sur 10</p>
+            </div>
+            <div class="kpi-card__footer">
+              <span class="kpi-card__trend kpi-card__trend--neutral">
+                <span class="kpi-card__trend-value">= 0%</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== 5. DASHBOARD HIGHLIGHTS ========== -->
+    <div class="section" id="highlights">
+      <h2 class="section__title">Dashboard Highlights <span class="section__title-badge">Amelioration 17</span></h2>
+      <p class="section__desc">Cards de mise en avant (meilleure niche, vitesse). Remplace <code>.dashboard__highlight-card</code></p>
+      <div class="section__showcase">
+        <div class="dashboard__highlights-grid">
+          <div class="dashboard__highlight-card dashboard__highlight-card--best">
+            <div class="dashboard__highlight-header">
+              <div class="dashboard__highlight-icon">&#127942;</div>
+              <span class="dashboard__highlight-label">Meilleure niche</span>
+            </div>
+            <div class="dashboard__highlight-value">Nike Air Max 90</div>
+            <div class="dashboard__highlight-stats">
+              <span>Score: 9.2/10</span>
+              <span class="dashboard__highlight-sep">|</span>
+              <span>45 ventes</span>
+              <span class="dashboard__highlight-sep">|</span>
+              <span>1.8j moy.</span>
+            </div>
+          </div>
+          <div class="dashboard__highlight-card">
+            <div class="dashboard__highlight-header">
+              <div class="dashboard__highlight-icon">&#9889;</div>
+              <span class="dashboard__highlight-label">Vente la plus rapide</span>
+            </div>
+            <div class="dashboard__highlight-value">Levi's 501 W28</div>
+            <div class="dashboard__highlight-stats">
+              <span>Vendu en 2h</span>
+              <span class="dashboard__highlight-sep">|</span>
+              <span>45,00 EUR</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== 6. DASHBOARD TABLE + TABS ========== -->
+    <div class="section" id="table">
+      <h2 class="section__title">Dashboard Table + Tabs <span class="section__title-badge">Amelioration 17</span></h2>
+      <p class="section__desc">Table de performances avec tabs et recherche. Remplace <code>.dashboard__table</code>, <code>.dashboard__tab</code></p>
+      <div class="section__showcase">
+        <div class="dashboard__articles-toolbar">
+          <div class="dashboard__tabs-bar" role="tablist">
+            <button class="dashboard__tab dashboard__tab--active">+ Rapides</button>
+            <button class="dashboard__tab">+ Chers</button>
+            <button class="dashboard__tab">+ Likes</button>
+          </div>
+          <div class="dashboard__search">
+            <svg class="dashboard__search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11l3 3" stroke-linecap="round"/></svg>
+            <input class="dashboard__search-input" type="text" placeholder="Rechercher un article...">
+          </div>
+        </div>
+        <div class="dashboard__table-container">
+          <table class="dashboard__table dashboard__table--striped">
+            <thead class="dashboard__table-head">
+              <tr>
+                <th class="dashboard__table-cell">Photo</th>
+                <th class="dashboard__table-cell">Article</th>
+                <th class="dashboard__table-cell">Marque</th>
+                <th class="dashboard__table-cell">Tracker</th>
+                <th class="dashboard__table-cell">Niche</th>
+                <th class="dashboard__table-cell">Prix</th>
+                <th class="dashboard__table-cell">Vitesse</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="dashboard__table-row">
+                <td class="dashboard__table-cell"><div style="width:40px;height:40px;background:#edf2f2;border-radius:6px;"></div></td>
+                <td class="dashboard__table-cell"><a class="dashboard__article-link">Air Max 90 White</a></td>
+                <td class="dashboard__table-cell">Nike</td>
+                <td class="dashboard__table-cell"><a class="dashboard__tracker-link">Sneakers FR</a></td>
+                <td class="dashboard__table-cell"><span class="dashboard__niche-badge">Sneakers</span></td>
+                <td class="dashboard__table-cell"><span class="mono">65,00 EUR</span></td>
+                <td class="dashboard__table-cell"><span class="dashboard__sell-speed">2j</span></td>
+              </tr>
+              <tr class="dashboard__table-row">
+                <td class="dashboard__table-cell"><div style="width:40px;height:40px;background:#edf2f2;border-radius:6px;"></div></td>
+                <td class="dashboard__table-cell"><a class="dashboard__article-link">501 Original Fit</a></td>
+                <td class="dashboard__table-cell">Levi's</td>
+                <td class="dashboard__table-cell"><a class="dashboard__tracker-link">Denim Mix</a></td>
+                <td class="dashboard__table-cell"><span class="dashboard__niche-badge">Jeans</span></td>
+                <td class="dashboard__table-cell"><span class="mono">38,00 EUR</span></td>
+                <td class="dashboard__table-cell"><span class="dashboard__sell-speed">3j</span></td>
+              </tr>
+              <tr class="dashboard__table-row">
+                <td class="dashboard__table-cell"><div style="width:40px;height:40px;background:#edf2f2;border-radius:6px;"></div></td>
+                <td class="dashboard__table-cell"><a class="dashboard__article-link">Manteau long camel</a></td>
+                <td class="dashboard__table-cell">Zara</td>
+                <td class="dashboard__table-cell"><a class="dashboard__tracker-link">Manteaux</a></td>
+                <td class="dashboard__table-cell"><span class="dashboard__niche-badge">Manteaux</span></td>
+                <td class="dashboard__table-cell"><span class="mono">45,00 EUR</span></td>
+                <td class="dashboard__table-cell"><span class="dashboard__likes-count">&#10084; 23</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== 7. TRACKER LIST PANEL ========== -->
+    <div class="section" id="tracker-list">
+      <h2 class="section__title">Tracker List Panel <span class="section__title-badge">Amelioration 16</span></h2>
+      <p class="section__desc">Panneau lateral split-screen avec filtres et recherche. Remplace <code>.tracker-list</code></p>
+      <div class="section__showcase">
+        <div style="display:flex; height:400px; border:1px solid #e1e6e6; border-radius:12px; overflow:hidden;">
+          <aside class="tracker-list" style="position:relative; height:100%;">
+            <div class="tracker-list__header">
+              <h2 class="tracker-list__title">Trackers</h2>
+              <button class="btn btn--primary btn--sm">+ Nouveau</button>
+            </div>
+            <div class="tracker-list__filters">
+              <button class="tracker-list__filter tracker-list__filter--active">Tous</button>
+              <button class="tracker-list__filter">Catalogue</button>
+              <button class="tracker-list__filter">Profil</button>
+            </div>
+            <div class="tracker-list__search">
+              <svg class="tracker-list__search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11l3 3" stroke-linecap="round"/></svg>
+              <input class="tracker-list__search-input" type="text" placeholder="Rechercher...">
+            </div>
+            <div class="tracker-list__items">
+              <a class="tracker-list__item tracker-list__item--active">
+                <span class="tracker-list__status-dot tracker-list__status-dot--active"></span>
+                <div class="tracker-list__item-info">
+                  <span class="tracker-list__item-name">Sneakers FR</span>
+                  <span class="tracker-list__item-meta">247 produits</span>
+                </div>
+              </a>
+              <a class="tracker-list__item">
+                <span class="tracker-list__status-dot tracker-list__status-dot--active"></span>
+                <div class="tracker-list__item-info">
+                  <span class="tracker-list__item-name">Denim Mix</span>
+                  <span class="tracker-list__item-meta">182 produits</span>
+                </div>
+              </a>
+              <a class="tracker-list__item">
+                <span class="tracker-list__status-dot tracker-list__status-dot--paused"></span>
+                <div class="tracker-list__item-info">
+                  <span class="tracker-list__item-name">Manteaux Luxe</span>
+                  <span class="tracker-list__item-meta">En pause</span>
+                </div>
+              </a>
+              <a class="tracker-list__item">
+                <span class="tracker-list__status-dot tracker-list__status-dot--expired"></span>
+                <div class="tracker-list__item-info">
+                  <span class="tracker-list__item-name">Vintage Adidas</span>
+                  <span class="tracker-list__item-meta">Expire</span>
+                </div>
+              </a>
+            </div>
+            <div class="tracker-list__footer">
+              <span class="tracker-list__count">Suivis 4/10</span>
+            </div>
+          </aside>
+          <div style="flex:1; padding:32px; display:flex; align-items:center; justify-content:center; background:#fafbfb;">
+            <p style="color:#b6bebf; font-size:14px;">&#8592; Selectionnez un tracker</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== 8. TRACKER DETAIL ========== -->
+    <div class="section" id="tracker-detail">
+      <h2 class="section__title">Tracker Detail <span class="section__title-badge">Amelioration 18</span></h2>
+      <p class="section__desc">Page detail complete : header, tabs, KPIs, score, comparison. Remplace <code>.tracker-detail</code></p>
+      <div class="section__showcase">
+        <!-- Header -->
+        <div class="tracker-detail" style="padding:0; max-width:none;">
+          <div class="tracker-detail__header">
+            <div class="tracker-detail__title-section">
+              <h1 class="tracker-detail__title">Sneakers FR</h1>
+              <span class="badge badge--active">Actif</span>
+              <span class="tracker-detail__last-scrape">Scan il y a 2h</span>
+              <span class="tracker-detail__expiration tracker-detail__expiration--warning">Expire dans 5j</span>
+            </div>
+            <div class="tracker-detail__actions">
+              <button class="btn btn--secondary btn--sm">Modifier</button>
+              <button class="btn btn--primary btn--sm">Lancer scan</button>
+            </div>
+          </div>
+
+          <!-- Tabs -->
+          <div class="tracker-detail__tab-buttons" role="tablist">
+            <button class="tracker-detail__tab-button tracker-detail__tab-button--active">Vue d'ensemble</button>
+            <button class="tracker-detail__tab-button">Details</button>
+            <button class="tracker-detail__tab-button">Niches</button>
+            <button class="tracker-detail__tab-button">Flux</button>
+          </div>
+
+          <!-- Period -->
+          <div class="tracker-detail__period-filters">
+            <button class="tracker-detail__period-btn">24h</button>
+            <button class="tracker-detail__period-btn tracker-detail__period-btn--active">7j</button>
+            <button class="tracker-detail__period-btn">30j</button>
+            <button class="tracker-detail__period-btn">90j</button>
+          </div>
+
+          <!-- KPI Grid -->
+          <div class="tracker-detail__kpi-grid">
+            <div class="tracker-detail__kpi">
+              <div class="tracker-detail__kpi-label">Produits</div>
+              <div class="tracker-detail__kpi-value">247</div>
+              <div class="tracker-detail__kpi-sub">+18 cette semaine</div>
+            </div>
+            <div class="tracker-detail__kpi">
+              <div class="tracker-detail__kpi-label">Ventes</div>
+              <div class="tracker-detail__kpi-value tracker-detail__kpi-value--green">89</div>
+              <div class="tracker-detail__kpi-sub">Taux 36%</div>
+            </div>
+            <div class="tracker-detail__kpi">
+              <div class="tracker-detail__kpi-label">Prix moy.</div>
+              <div class="tracker-detail__kpi-value">42,50 EUR</div>
+            </div>
+            <div class="tracker-detail__kpi">
+              <div class="tracker-detail__kpi-label">Vitesse</div>
+              <div class="tracker-detail__kpi-value tracker-detail__kpi-value--green">2.1j</div>
+            </div>
+            <div class="tracker-detail__kpi">
+              <div class="tracker-detail__kpi-label">Niches</div>
+              <div class="tracker-detail__kpi-value">12</div>
+            </div>
+          </div>
+
+          <!-- Score -->
+          <div class="tracker-detail__score-section">
+            <div class="tracker-detail__score-global">
+              <div class="tracker-detail__score-number">
+                <span class="tracker-detail__score-value tracker-detail__score-value--green">8</span>
+                <span class="tracker-detail__score-max">/10</span>
+              </div>
+              <div class="tracker-detail__score-label">Score global</div>
+            </div>
+            <div class="tracker-detail__score-bars">
+              <div class="tracker-detail__score-bar">
+                <span class="tracker-detail__score-bar-label">Vitesse vente</span>
+                <div class="tracker-detail__score-bar-track">
+                  <div class="tracker-detail__score-bar-fill tracker-detail__score-bar-fill--green" style="width:85%"></div>
+                </div>
+                <span class="tracker-detail__score-bar-value">8.5/10</span>
+              </div>
+              <div class="tracker-detail__score-bar">
+                <span class="tracker-detail__score-bar-label">Volume ventes</span>
+                <div class="tracker-detail__score-bar-track">
+                  <div class="tracker-detail__score-bar-fill tracker-detail__score-bar-fill--green" style="width:72%"></div>
+                </div>
+                <span class="tracker-detail__score-bar-value">7.2/10</span>
+              </div>
+              <div class="tracker-detail__score-bar">
+                <span class="tracker-detail__score-bar-label">Prix median</span>
+                <div class="tracker-detail__score-bar-track">
+                  <div class="tracker-detail__score-bar-fill tracker-detail__score-bar-fill--yellow" style="width:60%"></div>
+                </div>
+                <span class="tracker-detail__score-bar-value">6.0/10</span>
+              </div>
+              <div class="tracker-detail__score-bar">
+                <span class="tracker-detail__score-bar-label">Diversite marques</span>
+                <div class="tracker-detail__score-bar-track">
+                  <div class="tracker-detail__score-bar-fill tracker-detail__score-bar-fill--green" style="width:90%"></div>
+                </div>
+                <span class="tracker-detail__score-bar-value">9.0/10</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Comparison -->
+          <div class="tracker-detail__comparison">
+            <div class="tracker-detail__comparison-header">
+              <h3 class="tracker-detail__section-title">Comparaison <span class="tracker-detail__section-count">vs 3 trackers</span></h3>
+              <div class="tracker-detail__global-rank">
+                <span class="tracker-detail__global-rank-badge tracker-detail__global-rank-badge--top">#1</span>
+              </div>
+            </div>
+            <div class="tracker-detail__comparison-grid">
+              <div class="tracker-detail__comparison-item">
+                <div class="tracker-detail__comparison-label">Taux de vente</div>
+                <div class="tracker-detail__comparison-rank">
+                  <span class="tracker-detail__rank tracker-detail__rank--top">#1</span>
+                  <span class="tracker-detail__comparison-rank-total">sur 3</span>
+                </div>
+                <div class="tracker-detail__comparison-row">
+                  <span class="tracker-detail__comparison-this">65%</span>
+                  <span class="tracker-detail__comparison-vs">vs</span>
+                  <span class="tracker-detail__comparison-global">52%</span>
+                </div>
+                <span class="tracker-detail__comparison-diff tracker-detail__comparison-diff--up">+13%</span>
+              </div>
+              <div class="tracker-detail__comparison-item">
+                <div class="tracker-detail__comparison-label">Vitesse moy.</div>
+                <div class="tracker-detail__comparison-rank">
+                  <span class="tracker-detail__rank tracker-detail__rank--top">#1</span>
+                  <span class="tracker-detail__comparison-rank-total">sur 3</span>
+                </div>
+                <div class="tracker-detail__comparison-row">
+                  <span class="tracker-detail__comparison-this">2.1j</span>
+                  <span class="tracker-detail__comparison-vs">vs</span>
+                  <span class="tracker-detail__comparison-global">4.5j</span>
+                </div>
+                <span class="tracker-detail__comparison-diff tracker-detail__comparison-diff--up">-2.4j</span>
+              </div>
+              <div class="tracker-detail__comparison-item">
+                <div class="tracker-detail__comparison-label">Prix median</div>
+                <div class="tracker-detail__comparison-rank">
+                  <span class="tracker-detail__rank">#2</span>
+                  <span class="tracker-detail__comparison-rank-total">sur 3</span>
+                </div>
+                <div class="tracker-detail__comparison-row">
+                  <span class="tracker-detail__comparison-this">42 EUR</span>
+                  <span class="tracker-detail__comparison-vs">vs</span>
+                  <span class="tracker-detail__comparison-global">38 EUR</span>
+                </div>
+                <span class="tracker-detail__comparison-diff tracker-detail__comparison-diff--flat">=</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== 9. SETUP CARDS ========== -->
+    <div class="section" id="setup">
+      <h2 class="section__title">Setup Cards <span class="section__title-badge">Amelioration 20</span></h2>
+      <p class="section__desc">Vue grille des trackers avec dropdown et badges. Remplace <code>.setup-card</code></p>
+      <div class="section__showcase">
+        <div class="setup__toolbar">
+          <div class="setup__search">
+            <svg class="setup__search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11l3 3" stroke-linecap="round"/></svg>
+            <input class="setup__search-input" type="text" placeholder="Rechercher un tracker...">
+          </div>
+          <div class="setup__filters">
+            <button class="setup__filter setup__filter--active">Tous</button>
+            <button class="setup__filter">Actifs</button>
+            <button class="setup__filter">Inactifs</button>
+          </div>
+        </div>
+        <div class="setup__grid">
+          <div class="setup-card">
+            <div class="setup-card__header">
+              <div class="setup-card__title-group">
+                <h3 class="setup-card__name">Sneakers FR</h3>
+                <p class="setup-card__subtitle">Catalogue - 247 produits</p>
+              </div>
+              <div class="setup-card__actions">
+                <a class="setup-card__external-link" href="#" title="Voir sur Vinted">&#8599;</a>
+                <div class="setup-card__dropdown">
+                  <button class="setup-card__dropdown-btn">&#8942;</button>
+                </div>
+              </div>
+            </div>
+            <div class="setup-card__badges">
+              <span class="setup-card__badge setup-card__badge--keyword">nike air max</span>
+              <span class="setup-card__badge setup-card__badge--category">Chaussures</span>
+              <span class="setup-card__badge setup-card__badge--price">20-80 EUR</span>
+            </div>
+            <div class="setup-card__stats">
+              <span class="setup-card__stat">&#128200; 89 ventes</span>
+              <span class="setup-card__stat">&#9201; 2.1j moy.</span>
+              <span class="setup-card__stat">&#128200; +12%</span>
+            </div>
+          </div>
+          <div class="setup-card">
+            <div class="setup-card__header">
+              <div class="setup-card__title-group">
+                <h3 class="setup-card__name">Denim Mix</h3>
+                <p class="setup-card__subtitle">Catalogue - 182 produits</p>
+              </div>
+              <div class="setup-card__actions">
+                <a class="setup-card__external-link" href="#">&#8599;</a>
+                <div class="setup-card__dropdown">
+                  <button class="setup-card__dropdown-btn">&#8942;</button>
+                </div>
+              </div>
+            </div>
+            <div class="setup-card__badges">
+              <span class="setup-card__badge setup-card__badge--keyword">levi's 501</span>
+              <span class="setup-card__badge setup-card__badge--type">Profil</span>
+            </div>
+            <div class="setup-card__stats">
+              <span class="setup-card__stat">&#128200; 56 ventes</span>
+              <span class="setup-card__stat">&#9201; 3.4j moy.</span>
+              <span class="setup-card__stat setup-card__stat-text--urgent">Expire dans 3j</span>
+            </div>
+          </div>
+          <div class="setup-card">
+            <div class="setup-card__header">
+              <div class="setup-card__title-group">
+                <h3 class="setup-card__name">Manteaux Luxe</h3>
+                <p class="setup-card__subtitle">Catalogue - En pause</p>
+              </div>
+              <div class="setup-card__actions">
+                <a class="setup-card__external-link" href="#">&#8599;</a>
+                <div class="setup-card__dropdown">
+                  <button class="setup-card__dropdown-btn">&#8942;</button>
+                </div>
+              </div>
+            </div>
+            <div class="setup-card__badges">
+              <span class="setup-card__badge setup-card__badge--keyword">manteau</span>
+              <span class="setup-card__badge setup-card__badge--category">Manteaux</span>
+            </div>
+            <div class="setup-card__stats">
+              <span class="setup-card__stat">&#128200; 12 ventes</span>
+              <span class="setup-card__stat">&#9201; 8.2j moy.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== 10. FLUX FEED ========== -->
+    <div class="section" id="flux">
+      <h2 class="section__title">Flux Feed Cards <span class="section__title-badge">Amelioration 24</span></h2>
+      <p class="section__desc">Cards produits style Vinted avec sold badge, likes, vitesse. Remplace <code>.flux-feed__card</code></p>
+      <div class="section__showcase">
+        <div class="flux-feed flux-feed--grid" style="grid-template-columns: repeat(4, 1fr);">
+          <article class="flux-feed__card">
+            <div class="flux-feed__photos">
+              <div class="flux-feed__photo-placeholder">Photo</div>
+              <div class="flux-feed__sold-badge">Vendu</div>
+              <div class="flux-feed__likes-badge">&#10084; 15</div>
+            </div>
+            <div class="flux-feed__card-body">
+              <div class="flux-feed__brand-line">
+                <span class="flux-feed__brand">Nike</span>
+                <span class="flux-feed__separator">&middot;</span>
+                <span class="flux-feed__condition-badge">Bon etat</span>
+              </div>
+              <span class="flux-feed__niche">Sneakers</span>
+              <h4 class="flux-feed__title"><a href="#">Air Max 90 White/Black</a></h4>
+              <span class="flux-feed__price">65,00 EUR</span>
+              <span class="flux-feed__sell-speed">Vendu en 2 jours</span>
+              <span class="flux-feed__sold-date">Il y a 3 jours</span>
+              <a class="flux-feed__link" href="#">Voir l'annonce &#8594;</a>
+            </div>
+          </article>
+          <article class="flux-feed__card">
+            <div class="flux-feed__photos">
+              <div class="flux-feed__photo-placeholder">Photo</div>
+              <div class="flux-feed__sold-badge">Vendu</div>
+              <div class="flux-feed__likes-badge">&#10084; 8</div>
+            </div>
+            <div class="flux-feed__card-body">
+              <div class="flux-feed__brand-line">
+                <span class="flux-feed__brand">Levi's</span>
+                <span class="flux-feed__separator">&middot;</span>
+                <span class="flux-feed__condition-badge">Tres bon</span>
+              </div>
+              <span class="flux-feed__niche">Jeans</span>
+              <h4 class="flux-feed__title"><a href="#">501 Original Fit W28</a></h4>
+              <span class="flux-feed__price">38,00 EUR</span>
+              <span class="flux-feed__sell-speed">Vendu en 1 jour</span>
+              <span class="flux-feed__sold-date">Il y a 5 jours</span>
+              <a class="flux-feed__link" href="#">Voir l'annonce &#8594;</a>
+            </div>
+          </article>
+          <article class="flux-feed__card">
+            <div class="flux-feed__photos">
+              <div class="flux-feed__photo-placeholder">Photo</div>
+              <div class="flux-feed__sold-badge">Vendu</div>
+              <div class="flux-feed__likes-badge">&#10084; 23</div>
+            </div>
+            <div class="flux-feed__card-body">
+              <div class="flux-feed__brand-line">
+                <span class="flux-feed__brand">Zara</span>
+                <span class="flux-feed__separator">&middot;</span>
+                <span class="flux-feed__condition-badge">Neuf</span>
+              </div>
+              <span class="flux-feed__niche">Manteaux</span>
+              <h4 class="flux-feed__title"><a href="#">Manteau long camel M</a></h4>
+              <span class="flux-feed__price">45,00 EUR</span>
+              <span class="flux-feed__sell-speed">Vendu en 4 jours</span>
+              <span class="flux-feed__sold-date">Il y a 1 jour</span>
+              <a class="flux-feed__link" href="#">Voir l'annonce &#8594;</a>
+            </div>
+          </article>
+          <article class="flux-feed__card">
+            <div class="flux-feed__photos">
+              <div class="flux-feed__photo-placeholder">Photo</div>
+              <div class="flux-feed__sold-badge">Vendu</div>
+            </div>
+            <div class="flux-feed__card-body">
+              <div class="flux-feed__brand-line">
+                <span class="flux-feed__brand">Adidas</span>
+                <span class="flux-feed__separator">&middot;</span>
+                <span class="flux-feed__condition-badge">Satisfaisant</span>
+              </div>
+              <span class="flux-feed__niche">Sneakers</span>
+              <h4 class="flux-feed__title"><a href="#">Stan Smith OG</a></h4>
+              <span class="flux-feed__price">28,00 EUR</span>
+              <span class="flux-feed__sell-speed">Vendu en 6 jours</span>
+              <a class="flux-feed__link" href="#">Voir l'annonce &#8594;</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== 11. AUTH ========== -->
+    <div class="section" id="auth">
+      <h2 class="section__title">Auth — Login <span class="section__title-badge">Amelioration 21</span></h2>
+      <p class="section__desc">Formulaire de connexion avec OAuth et trust badge. Remplace <code>.auth-layout</code></p>
+      <div class="section__showcase" style="padding:0; overflow:hidden;">
+        <div class="auth-layout" style="min-height:auto; padding:40px 24px;">
+          <div class="auth-container">
+            <div class="auth-header">
+              <div class="auth-logo">
+                <a class="auth-logo__link" href="#">NicheTrackr</a>
+              </div>
+              <h1 class="auth-title">Se connecter</h1>
+              <p class="auth-subtitle">Bienvenue ! Connectez-vous a votre compte.</p>
+            </div>
+            <div class="auth-form">
+              <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" class="input" placeholder="julien@example.com">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Mot de passe</label>
+                <input type="password" class="input" placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;">
+              </div>
+              <div class="form-group">
+                <label class="checkbox">
+                  <input type="checkbox">
+                  <span>Se souvenir de moi</span>
+                </label>
+              </div>
+              <div class="form-group">
+                <button class="btn btn--primary btn--block btn--lg">Se connecter</button>
+              </div>
+              <div class="form-group" style="text-align:center;">
+                <a class="auth-link" href="#">Mot de passe oublie ?</a>
+              </div>
+            </div>
+            <div class="auth-divider"><span>ou</span></div>
+            <div class="oauth-buttons">
+              <button class="oauth-button">
+                <span>Continuer avec Google</span>
+              </button>
+            </div>
+            <p class="auth-footer">
+              Pas de compte ? <a class="auth-footer__link" href="#">Creer un compte</a>
+            </p>
+            <div class="auth-trust">
+              <span class="auth-trust__text">&#128274; Connexion securisee</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== 12. BUTTONS + BADGES ========== -->
+    <div class="section" id="buttons">
+      <h2 class="section__title">Buttons & Badges <span class="section__title-badge">Ameliorations 25-26</span></h2>
+      <p class="section__desc">Systeme de boutons et badges. Remplace <code>.btn</code>, <code>.badge</code></p>
+      <div class="section__showcase">
+        <div class="section__label">Boutons</div>
+        <div class="section__showcase-row" style="align-items:center;">
+          <button class="btn btn--primary">Primaire</button>
+          <button class="btn btn--secondary">Secondaire</button>
+          <button class="btn btn--outline-primary">Outline</button>
+          <button class="btn btn--danger">Danger</button>
+          <button class="btn btn--primary btn--sm">Small</button>
+          <button class="btn btn--primary btn--xs">XS</button>
+        </div>
+        <div class="spacer--lg"></div>
+        <div class="section__label">Badges status</div>
+        <div class="section__showcase-row" style="align-items:center;">
+          <span class="badge badge--active">Actif</span>
+          <span class="badge badge--paused">En pause</span>
+          <span class="badge badge--expired">Expire</span>
+          <span class="badge badge--draft">Brouillon</span>
+          <span class="badge badge--catalogue">Catalogue</span>
+          <span class="badge badge--profile">Profil</span>
+        </div>
+        <div class="spacer--lg"></div>
+        <div class="section__label">Score badges</div>
+        <div class="section__showcase-row" style="align-items:center;">
+          <span class="score-badge score-badge--green">
+            <span class="score-badge__dot"></span>
+            <span class="score-badge__value">8.5</span>
+          </span>
+          <span class="score-badge score-badge--yellow">
+            <span class="score-badge__dot"></span>
+            <span class="score-badge__value">5.2</span>
+          </span>
+          <span class="score-badge score-badge--red">
+            <span class="score-badge__dot"></span>
+            <span class="score-badge__value">2.8</span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== 13. TRACKER FORM ========== -->
+    <div class="section" id="form">
+      <h2 class="section__title">Tracker Form <span class="section__title-badge">Amelioration 19</span></h2>
+      <p class="section__desc">Formulaire creation tracker avec chip input et filtres avances. Remplace <code>.tracker-form</code>, <code>.chip-input</code></p>
+      <div class="section__showcase">
+        <div class="tracker-form">
+          <div class="tracker-form__section">
+            <h3 class="tracker-form__section-title">Informations basiques</h3>
+            <div class="tracker-form__field">
+              <label>Nom du tracker</label>
+              <input class="form-control" type="text" placeholder="Ex: Sneakers FR Premium">
+              <span class="form-help">Donnez un nom descriptif a votre tracker</span>
+            </div>
+            <div class="tracker-form__field">
+              <label>URL Vinted</label>
+              <div class="tracker-form__url-group">
+                <input class="form-control" type="url" placeholder="https://www.vinted.fr/catalog?...">
+                <button class="url-builder__trigger" type="button">
+                  &#9881; Construire un filtre
+                  <span class="url-builder__badge">0</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="tracker-form__section">
+            <h3 class="tracker-form__section-title">Filtres avances</h3>
+            <div class="tracker-form__field">
+              <label>Marques exclues</label>
+              <div class="chip-input">
+                <input class="chip-input__field" type="text" placeholder="Tapez une marque...">
+                <div class="chip-input__chips">
+                  <span class="chip">Shein <button class="chip__remove">&times;</button></span>
+                  <span class="chip">Primark <button class="chip__remove">&times;</button></span>
+                  <span class="chip">H&M <button class="chip__remove">&times;</button></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tracker-form__actions">
+            <button class="btn btn--secondary">Annuler</button>
+            <button class="btn btn--primary">Creer le tracker</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== 14. SETTINGS ========== -->
+    <div class="section" id="settings">
+      <h2 class="section__title">Settings <span class="section__title-badge">Amelioration 22</span></h2>
+      <p class="section__desc">Page parametres avec sections et danger zone. Remplace <code>.settings</code></p>
+      <div class="section__showcase">
+        <div class="settings" style="max-width:none;">
+          <div class="settings__section">
+            <h2 class="settings__section-title">Abonnement</h2>
+            <div class="subscription-info">
+              <div class="subscription-info__item">
+                <span class="subscription-info__label">Plan actuel</span>
+                <span class="subscription-info__badge subscription-info__badge--pro">PRO</span>
+              </div>
+              <div class="subscription-info__item">
+                <span class="subscription-info__label">Trackers actifs</span>
+                <span class="subscription-info__value">5 / 10</span>
+              </div>
+              <div class="subscription-info__item">
+                <span class="subscription-info__label">Prochain paiement</span>
+                <span class="subscription-info__value">15 mars 2026</span>
+              </div>
+            </div>
+            <div class="settings__actions">
+              <button class="btn btn--primary btn--sm">Gerer l'abonnement</button>
+            </div>
+          </div>
+          <div class="settings__danger-zone">
+            <h3>Zone de danger</h3>
+            <p>La suppression de votre compte est irreversible. Toutes vos donnees seront definitivement effacees.</p>
+            <div class="form-group">
+              <label class="form-label">Tapez DELETE pour confirmer</label>
+              <input class="form-control" type="text" placeholder="DELETE" style="max-width:300px;">
+            </div>
+            <button class="btn btn--danger btn--sm">Supprimer mon compte</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== 15. COOKIE CONSENT ========== -->
+    <div class="section" id="cookie">
+      <h2 class="section__title">Cookie Consent <span class="section__title-badge">Amelioration 14</span></h2>
+      <p class="section__desc">Bandeau RGPD avec slide-up animation. Remplace <code>.cookie-consent</code></p>
+      <div class="section__showcase">
+        <div class="cookie-consent" style="position:relative; bottom:auto; animation:none;">
+          <div class="cookie-consent__content">
+            <p class="cookie-consent__text">
+              Nous utilisons des cookies pour ameliorer votre experience. En continuant, vous acceptez notre
+              <a class="cookie-consent__link" href="#">politique de confidentialite</a>.
+            </p>
+            <div class="cookie-consent__actions">
+              <button class="btn btn--secondary btn--sm">Refuser</button>
+              <button class="btn btn--primary btn--sm">Accepter</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== 16. LANDING HERO ========== -->
+    <div class="section" id="hero">
+      <h2 class="section__title">Landing Hero <span class="section__title-badge">Amelioration 28</span></h2>
+      <p class="section__desc">Section hero de la landing page. Remplace <code>.hero</code></p>
+      <div class="section__showcase" style="padding:0; overflow:hidden;">
+        <div class="hero" style="padding:48px 24px;">
+          <span class="hero__eyebrow">&#127775; Nouveau : Score de niche v2</span>
+          <h1 class="hero__headline">Trouvez les niches<br>qui se vendent vraiment</h1>
+          <p class="hero__subtitle">NicheTrackr analyse les ventes Vinted en temps reel pour identifier les meilleures opportunites de revente.</p>
+          <a class="hero__cta" href="#">Essai gratuit 7 jours &#8594;</a>
+          <p class="hero__trust-text">&#128274; Sans carte bancaire - 500+ utilisateurs actifs</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== 17. SIDEBAR VARIANTS ========== -->
+    <div class="section" id="sidebars">
+      <h2 class="section__title">Sidebar Variants <span class="section__title-badge">6 Variantes</span></h2>
+      <p class="section__desc">6 styles de sidebars distincts pour NicheTrackr. Chaque variante utilise les memes classes <code>.sidebar</code> avec un modifier BEM.</p>
+
+      <div class="sidebar-grid">
+
+        <!-- VARIANT 1 : Compact -->
+        <div class="sidebar-grid__item">
+          <div class="sidebar-grid__label">1. Compact / Icon-only <span class="sidebar-grid__label-tag">Linear, VS Code</span></div>
+          <p style="font-size:12px;color:var(--nt-text-muted,#b6bebf);margin-bottom:8px;font-style:italic;">Survolez pour replier / quittez pour ouvrir</p>
+          <div class="sidebar--compact sidebar--expanded sidebar-demo" style="width: 100%;" onmouseenter="this.classList.remove('sidebar--expanded')" onmouseleave="this.classList.add('sidebar--expanded')">
+            <div class="sidebar__header">
+              <div class="sidebar__logo-icon">NT</div>
+              <span class="sidebar__logo">NicheTrackr</span>
+            </div>
+            <nav class="sidebar__nav">
+              <div class="sidebar__nav-title">Menu</div>
+              <ul class="sidebar__nav-list" style="list-style:none; padding:0; margin:0;">
+                <li class="sidebar__nav-item">
+                  <a class="sidebar__nav-link sidebar__nav-link--active" href="#">
+                    <svg class="sidebar__nav-icon" viewBox="0 0 20 20" fill="currentColor" width="20" height="20"><rect x="2" y="2" width="7" height="7" rx="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5"/></svg>
+                    <span>Dashboard</span>
+                    <span class="sidebar__badge">3</span>
+                  </a>
+                </li>
+                <li class="sidebar__nav-item">
+                  <a class="sidebar__nav-link" href="#">
+                    <svg class="sidebar__nav-icon" viewBox="0 0 20 20" fill="currentColor" width="20" height="20"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm1 11H9v-2h2v2zm0-4H9V5h2v4z"/></svg>
+                    <span>Trackers</span>
+                    <span class="sidebar__badge">12</span>
+                  </a>
+                </li>
+                <li class="sidebar__nav-item">
+                  <a class="sidebar__nav-link" href="#">
+                    <svg class="sidebar__nav-icon" viewBox="0 0 20 20" fill="currentColor" width="20" height="20"><path d="M3 3h14a2 2 0 012 2v10a2 2 0 01-2 2H3a2 2 0 01-2-2V5a2 2 0 012-2zm0 4v8h14V7H3z"/></svg>
+                    <span>Setup</span>
+                  </a>
+                </li>
+                <li class="sidebar__nav-item">
+                  <a class="sidebar__nav-link" href="#">
+                    <svg class="sidebar__nav-icon" viewBox="0 0 20 20" fill="currentColor" width="20" height="20"><path d="M10 2L2 7l8 5 8-5-8-5zM2 13l8 5 8-5"/></svg>
+                    <span>Flux</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+            <div class="sidebar__footer">
+              <div class="sidebar__user">
+                <div class="sidebar__user-avatar" style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#007782,#86cdcf);display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;flex-shrink:0;">JD</div>
+                <div class="sidebar__user-info">
+                  <div class="sidebar__user-name" style="font-size:13px;font-weight:600;color:var(--nt-text,#15191a);">Julien D.</div>
+                  <div class="sidebar__user-email" style="font-size:11px;color:var(--nt-text-muted,#b6bebf);">julien@email.com</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VARIANT 2 : Floating -->
+        <div class="sidebar-grid__item">
+          <div class="sidebar-grid__label">2. Floating / Detachee <span class="sidebar-grid__label-tag">Vercel, Supabase</span></div>
+          <div class="sidebar--floating sidebar-demo" style="width: 100%; height: 520px !important;">
+            <div class="sidebar__header">
+              <div style="width:32px;height:32px;background:linear-gradient(135deg,#007782,#86cdcf);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:13px;flex-shrink:0;">NT</div>
+              <span style="font-size:15px;font-weight:700;color:var(--nt-text,#15191a);">NicheTrackr</span>
+            </div>
+            <nav class="sidebar__nav">
+              <div class="sidebar__nav-title">Principal</div>
+              <a class="sidebar__nav-link sidebar__nav-link--active" href="#">
+                <span>&#128200;</span> <span>Dashboard</span>
+                <span class="sidebar__badge">3</span>
+              </a>
+              <a class="sidebar__nav-link" href="#">
+                <span>&#128269;</span> <span>Trackers</span>
+                <span class="sidebar__badge">12</span>
+              </a>
+              <a class="sidebar__nav-link" href="#">
+                <span>&#9881;</span> <span>Setup</span>
+              </a>
+              <div class="sidebar__nav-title">Favoris</div>
+              <div class="sidebar__favorites-list">
+                <a class="sidebar__nav-link" href="#"><span>&#11088;</span> <span>Sneakers FR</span></a>
+                <a class="sidebar__nav-link" href="#"><span>&#11088;</span> <span>Vintage Jackets</span></a>
+              </div>
+            </nav>
+            <div class="sidebar__footer">
+              <div class="sidebar__user">
+                <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#007782,#86cdcf);display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;flex-shrink:0;">JD</div>
+                <div>
+                  <div style="font-size:13px;font-weight:600;color:var(--nt-text,#15191a);">Julien D.</div>
+                  <div style="font-size:11px;color:var(--nt-text-muted,#b6bebf);">Pro Plan</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VARIANT 3 : Gradient Premium -->
+        <div class="sidebar-grid__item">
+          <div class="sidebar-grid__label">3. Gradient Premium <span class="sidebar-grid__label-tag">Stripe, Discord</span></div>
+          <div class="sidebar--gradient sidebar-demo" style="width: 100%;">
+            <div class="sidebar__header">
+              <div class="sidebar__logo-icon">NT</div>
+              <span class="sidebar__logo">NicheTrackr</span>
+              <span class="sidebar__plan-badge--pro" style="margin-left:auto;padding:2px 8px;font-size:10px;font-weight:700;border-radius:100px;">PRO</span>
+            </div>
+            <nav class="sidebar__nav">
+              <div class="sidebar__nav-title">Navigation</div>
+              <a class="sidebar__nav-link sidebar__nav-link--active" href="#" style="position:relative;">
+                <span>&#128200;</span> <span>Dashboard</span>
+                <span class="sidebar__badge">3</span>
+              </a>
+              <a class="sidebar__nav-link" href="#">
+                <span>&#128269;</span> <span>Trackers</span>
+                <span class="sidebar__badge">12</span>
+              </a>
+              <a class="sidebar__nav-link" href="#">
+                <span>&#9881;</span> <span>Setup</span>
+              </a>
+              <a class="sidebar__nav-link" href="#">
+                <span>&#128230;</span> <span>Flux produits</span>
+              </a>
+              <div class="sidebar__nav-title">Favoris</div>
+              <a class="sidebar__nav-link" href="#">
+                <span class="sidebar__score-dot sidebar__score-dot--green"></span>
+                <span class="sidebar__favorite-name">Sneakers FR</span>
+                <span class="sidebar__favorite-score" style="margin-left:auto;">8.2</span>
+              </a>
+              <a class="sidebar__nav-link" href="#">
+                <span class="sidebar__score-dot sidebar__score-dot--yellow"></span>
+                <span class="sidebar__favorite-name">Vintage Denim</span>
+                <span class="sidebar__favorite-score" style="margin-left:auto;">5.1</span>
+              </a>
+              <a class="sidebar__nav-link" href="#">
+                <span class="sidebar__score-dot sidebar__score-dot--red"></span>
+                <span class="sidebar__favorite-name">Tech Gadgets</span>
+                <span class="sidebar__favorite-score" style="margin-left:auto;">2.8</span>
+              </a>
+            </nav>
+            <div class="sidebar__footer">
+              <div class="sidebar__user" style="display:flex;align-items:center;gap:10px;padding:8px;">
+                <div class="sidebar__user-avatar" style="width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;flex-shrink:0;">JD</div>
+                <div>
+                  <div class="sidebar__user-name">Julien D.</div>
+                  <div class="sidebar__user-email">julien@email.com</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VARIANT 4 : Minimal -->
+        <div class="sidebar-grid__item">
+          <div class="sidebar-grid__label">4. Minimal <span class="sidebar-grid__label-tag">Notion, Obsidian</span></div>
+          <div class="sidebar--minimal sidebar-demo" style="width: 100%;">
+            <div class="sidebar__header">
+              <span class="sidebar__logo">NicheTrackr</span>
+            </div>
+            <nav class="sidebar__nav">
+              <div class="sidebar__nav-section">
+                <a class="sidebar__nav-link sidebar__nav-link--active" href="#">
+                  <svg viewBox="0 0 20 20" fill="currentColor" width="18" height="18"><rect x="2" y="2" width="7" height="7" rx="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5"/></svg>
+                  Dashboard
+                  <span class="sidebar__badge" style="margin-left:auto;">3</span>
+                </a>
+                <a class="sidebar__nav-link" href="#">
+                  <svg viewBox="0 0 20 20" fill="currentColor" width="18" height="18"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm1 11H9v-2h2v2zm0-4H9V5h2v4z"/></svg>
+                  Trackers
+                  <span class="sidebar__badge" style="margin-left:auto;">12</span>
+                </a>
+                <a class="sidebar__nav-link" href="#">
+                  <svg viewBox="0 0 20 20" fill="currentColor" width="18" height="18"><path d="M3 3h14a2 2 0 012 2v10a2 2 0 01-2 2H3a2 2 0 01-2-2V5a2 2 0 012-2zm0 4v8h14V7H3z"/></svg>
+                  Setup
+                </a>
+              </div>
+              <div class="sidebar__nav-section">
+                <a class="sidebar__nav-link" href="#">
+                  <svg viewBox="0 0 20 20" fill="currentColor" width="18" height="18"><path d="M10 2L2 7l8 5 8-5-8-5zM2 13l8 5 8-5"/></svg>
+                  Flux
+                </a>
+                <a class="sidebar__nav-link" href="#">
+                  <svg viewBox="0 0 20 20" fill="currentColor" width="18" height="18"><path d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"/></svg>
+                  Parametres
+                </a>
+              </div>
+              <div class="sidebar__nav-section">
+                <div class="sidebar__favorites-list">
+                  <a class="sidebar__nav-link" href="#">&#11088; Sneakers FR</a>
+                  <a class="sidebar__nav-link" href="#">&#11088; Vintage Jackets</a>
+                  <a class="sidebar__nav-link" href="#">&#11088; Tech Gadgets</a>
+                </div>
+              </div>
+            </nav>
+            <div class="sidebar__footer">
+              <div class="sidebar__user" style="display:flex;align-items:center;gap:8px;">
+                <div class="sidebar__user-avatar">JD</div>
+                <span class="sidebar__user-name">Julien D.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VARIANT 5 : Two-Level -->
+        <div class="sidebar-grid__item">
+          <div class="sidebar-grid__label">5. Two-Level (Rail + Panel) <span class="sidebar-grid__label-tag">Slack, Discord</span></div>
+          <div class="sidebar--two-level sidebar-demo" style="width: 100%; overflow: visible !important;">
+            <div class="sidebar__rail">
+              <div class="sidebar__rail-logo">NT</div>
+              <div class="sidebar__rail-divider"></div>
+              <button class="sidebar__rail-item sidebar__rail-item--active">
+                <svg viewBox="0 0 20 20" fill="currentColor" width="20" height="20"><rect x="2" y="2" width="7" height="7" rx="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5"/></svg>
+              </button>
+              <button class="sidebar__rail-item" style="position:relative;">
+                <svg viewBox="0 0 20 20" fill="currentColor" width="20" height="20"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm1 11H9v-2h2v2zm0-4H9V5h2v4z"/></svg>
+                <span class="sidebar__rail-dot"></span>
+              </button>
+              <button class="sidebar__rail-item">
+                <svg viewBox="0 0 20 20" fill="currentColor" width="20" height="20"><path d="M3 3h14a2 2 0 012 2v10a2 2 0 01-2 2H3a2 2 0 01-2-2V5a2 2 0 012-2zm0 4v8h14V7H3z"/></svg>
+              </button>
+              <button class="sidebar__rail-item">
+                <svg viewBox="0 0 20 20" fill="currentColor" width="20" height="20"><path d="M10 2L2 7l8 5 8-5-8-5zM2 13l8 5 8-5"/></svg>
+              </button>
+              <div class="sidebar__rail-bottom">
+                <button class="sidebar__rail-item">
+                  <svg viewBox="0 0 20 20" fill="currentColor" width="20" height="20"><path d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"/></svg>
+                </button>
+                <div class="sidebar__rail-avatar">JD</div>
+              </div>
+            </div>
+            <div class="sidebar__panel" style="height: 100%;">
+              <div class="sidebar__panel-header">
+                <div class="sidebar__panel-title">Dashboard</div>
+                <div class="sidebar__panel-subtitle">Vue d'ensemble</div>
+              </div>
+              <div class="sidebar__panel-search">
+                <svg class="sidebar__panel-search-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/></svg>
+                <input class="sidebar__panel-search-input" type="text" placeholder="Rechercher..." autocomplete="off">
+              </div>
+              <div class="sidebar__panel-items">
+                <div class="sidebar__panel-section-title">Trackers actifs</div>
+                <a class="sidebar__panel-item sidebar__panel-item--active" href="#">
+                  <span style="width:8px;height:8px;border-radius:50%;background:#34d399;flex-shrink:0;"></span>
+                  Sneakers FR Premium
+                </a>
+                <a class="sidebar__panel-item" href="#">
+                  <span style="width:8px;height:8px;border-radius:50%;background:#fbbf24;flex-shrink:0;"></span>
+                  Vintage Denim EU
+                </a>
+                <a class="sidebar__panel-item" href="#">
+                  <span style="width:8px;height:8px;border-radius:50%;background:#f87171;flex-shrink:0;"></span>
+                  Tech Gadgets Global
+                </a>
+                <div class="sidebar__panel-section-title">En pause</div>
+                <a class="sidebar__panel-item" href="#">
+                  <span style="width:8px;height:8px;border-radius:50%;background:#b6bebf;flex-shrink:0;"></span>
+                  Home Decor FR
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VARIANT 6 : Tabbed -->
+        <div class="sidebar-grid__item">
+          <div class="sidebar-grid__label">6. Tabbed <span class="sidebar-grid__label-tag">Figma, GitHub</span></div>
+          <div class="sidebar--tabbed sidebar-demo" style="width: 100%;">
+            <div class="sidebar__header">
+              <div style="width:28px;height:28px;background:linear-gradient(135deg,#007782,#86cdcf);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:11px;flex-shrink:0;">NT</div>
+              <span style="font-size:15px;font-weight:700;color:var(--nt-text,#15191a);">NicheTrackr</span>
+            </div>
+            <div class="sidebar__sidebar-tabs">
+              <button class="sidebar__sidebar-tab sidebar__sidebar-tab--active" onclick="switchSidebarTab(this, 'nav')">
+                <span>&#128200;</span> Nav
+              </button>
+              <button class="sidebar__sidebar-tab" onclick="switchSidebarTab(this, 'search')">
+                <span>&#128269;</span> Search
+              </button>
+              <button class="sidebar__sidebar-tab" onclick="switchSidebarTab(this, 'favs')">
+                <span>&#11088;</span> Favoris
+                <span class="sidebar__sidebar-tab-badge">3</span>
+              </button>
+            </div>
+            <!-- Tab: Nav -->
+            <div class="sidebar__tab-panel sidebar__tab-panel--active" data-sidebar-tab="nav">
+              <a class="sidebar__nav-link sidebar__nav-link--active" href="#">&#128200; Dashboard</a>
+              <a class="sidebar__nav-link" href="#">&#128269; Trackers</a>
+              <a class="sidebar__nav-link" href="#">&#9881; Setup</a>
+              <a class="sidebar__nav-link" href="#">&#128230; Flux produits</a>
+              <a class="sidebar__nav-link" href="#">&#9881; Parametres</a>
+            </div>
+            <!-- Tab: Search -->
+            <div class="sidebar__tab-panel" data-sidebar-tab="search">
+              <input class="sidebar__search-panel-input" type="text" placeholder="Rechercher un tracker..." autocomplete="off">
+              <div class="sidebar__search-result">
+                <div class="sidebar__search-result-icon">&#128269;</div>
+                <div class="sidebar__search-result-info">
+                  <div class="sidebar__search-result-name">Sneakers FR</div>
+                  <div class="sidebar__search-result-meta">12 niches - Score 8.2</div>
+                </div>
+              </div>
+              <div class="sidebar__search-result">
+                <div class="sidebar__search-result-icon">&#128269;</div>
+                <div class="sidebar__search-result-info">
+                  <div class="sidebar__search-result-name">Vintage Jackets</div>
+                  <div class="sidebar__search-result-meta">8 niches - Score 6.1</div>
+                </div>
+              </div>
+            </div>
+            <!-- Tab: Favoris -->
+            <div class="sidebar__tab-panel" data-sidebar-tab="favs">
+              <div class="sidebar__fav-card">
+                <div class="sidebar__fav-card-header">
+                  <span class="sidebar__fav-card-name">Sneakers FR</span>
+                  <span class="sidebar__fav-card-score" style="color:#34d399;">8.2</span>
+                </div>
+                <div class="sidebar__fav-card-meta">12 niches &bull; Actif &bull; Mis a jour il y a 2h</div>
+              </div>
+              <div class="sidebar__fav-card">
+                <div class="sidebar__fav-card-header">
+                  <span class="sidebar__fav-card-name">Vintage Denim</span>
+                  <span class="sidebar__fav-card-score" style="color:#fbbf24;">5.1</span>
+                </div>
+                <div class="sidebar__fav-card-meta">8 niches &bull; Actif &bull; Mis a jour il y a 6h</div>
+              </div>
+              <div class="sidebar__fav-card">
+                <div class="sidebar__fav-card-header">
+                  <span class="sidebar__fav-card-name">Tech Gadgets</span>
+                  <span class="sidebar__fav-card-score" style="color:#f87171;">2.8</span>
+                </div>
+                <div class="sidebar__fav-card-meta">5 niches &bull; En pause</div>
+              </div>
+            </div>
+            <div class="sidebar__footer">
+              <div class="sidebar__user" style="display:flex;align-items:center;gap:10px;padding:4px;">
+                <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#007782,#86cdcf);display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;flex-shrink:0;">JD</div>
+                <div>
+                  <div style="font-size:13px;font-weight:600;color:var(--nt-text,#15191a);">Julien D.</div>
+                  <div style="font-size:11px;color:var(--nt-text-muted,#b6bebf);">Pro Plan</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      document.documentElement.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+    }
+
+    // Flash dismiss
+    document.querySelectorAll('.flash__close').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const flash = btn.closest('.flash');
+        flash.classList.add('flash--dismissing');
+        setTimeout(() => flash.remove(), 300);
+      });
+    });
+
+    // Dashboard tabs
+    document.querySelectorAll('.dashboard__tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        tab.closest('.dashboard__tabs-bar').querySelectorAll('.dashboard__tab').forEach(t => t.classList.remove('dashboard__tab--active'));
+        tab.classList.add('dashboard__tab--active');
+      });
+    });
+
+    // Tracker list items
+    document.querySelectorAll('.tracker-list__item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        item.closest('.tracker-list__items').querySelectorAll('.tracker-list__item').forEach(i => i.classList.remove('tracker-list__item--active'));
+        item.classList.add('tracker-list__item--active');
+      });
+    });
+
+    // Tracker detail tabs
+    document.querySelectorAll('.tracker-detail__tab-button').forEach(tab => {
+      tab.addEventListener('click', () => {
+        tab.closest('.tracker-detail__tab-buttons').querySelectorAll('.tracker-detail__tab-button').forEach(t => t.classList.remove('tracker-detail__tab-button--active'));
+        tab.classList.add('tracker-detail__tab-button--active');
+      });
+    });
+
+    // Period filters
+    document.querySelectorAll('.tracker-detail__period-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.closest('.tracker-detail__period-filters').querySelectorAll('.tracker-detail__period-btn').forEach(b => b.classList.remove('tracker-detail__period-btn--active'));
+        btn.classList.add('tracker-detail__period-btn--active');
+      });
+    });
+
+    // Tracker list filters
+    document.querySelectorAll('.tracker-list__filter').forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.closest('.tracker-list__filters').querySelectorAll('.tracker-list__filter').forEach(b => b.classList.remove('tracker-list__filter--active'));
+        btn.classList.add('tracker-list__filter--active');
+      });
+    });
+
+    // Setup filters
+    document.querySelectorAll('.setup__filter').forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.closest('.setup__filters').querySelectorAll('.setup__filter').forEach(b => b.classList.remove('setup__filter--active'));
+        btn.classList.add('setup__filter--active');
+      });
+    });
+
+    // Chip remove
+    document.querySelectorAll('.chip__remove').forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.closest('.chip').remove();
+      });
+    });
+
+    // Sidebar tabbed variant — tab switching
+    function switchSidebarTab(btn, tabName) {
+      const sidebar = btn.closest('.sidebar--tabbed');
+      sidebar.querySelectorAll('.sidebar__sidebar-tab').forEach(t => t.classList.remove('sidebar__sidebar-tab--active'));
+      btn.classList.add('sidebar__sidebar-tab--active');
+      sidebar.querySelectorAll('.sidebar__tab-panel').forEach(p => p.classList.remove('sidebar__tab-panel--active'));
+      sidebar.querySelector('[data-sidebar-tab="' + tabName + '"]').classList.add('sidebar__tab-panel--active');
+    }
+  </script>
+</body>
+</html>

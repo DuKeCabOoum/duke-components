@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NicheTrackr — Onglet Details : 3 Variantes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================
+       VARIABLES COMMUNES
+       ============================================ */
+    :root {
+      --nt-primary: #007782;
+      --nt-primary-dark: #005f68;
+      --nt-primary-light: rgba(0, 119, 130, 0.1);
+      --nt-green: #28865a;
+      --nt-green-light: rgba(40, 134, 90, 0.1);
+      --nt-orange: #f9bb42;
+      --nt-orange-dark: #e6a817;
+      --nt-orange-light: rgba(249, 187, 66, 0.12);
+      --nt-red: #d04555;
+      --nt-red-light: rgba(208, 69, 85, 0.1);
+      --nt-indigo: #6366f1;
+      --nt-indigo-light: rgba(99, 102, 241, 0.1);
+      --nt-bg: #f5f7f8;
+      --nt-card: #ffffff;
+      --nt-border: #e5e8eb;
+      --nt-text: #1a2332;
+      --nt-text-secondary: #5a6566;
+      --nt-text-muted: #8a9394;
+      --nt-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      --nt-shadow-md: 0 4px 12px rgba(0,0,0,0.06);
+      --nt-radius: 12px;
+      --nt-radius-sm: 8px;
+      --nt-font: 'Inter', -apple-system, sans-serif;
+      --nt-mono: 'SF Mono', 'Cascadia Code', monospace;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: var(--nt-font); background: var(--nt-bg); color: var(--nt-text); padding: 24px; line-height: 1.5; }
+
+    @keyframes barGrow { from { height: 0; } to { height: var(--bar-h); } }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes progressGrow { from { width: 0; } to { width: var(--progress); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    /* Separateur entre variantes */
+    .variant-separator {
+      margin: 48px 0 32px;
+      padding: 20px 28px;
+      background: #1a2332;
+      border-radius: 12px;
+      color: #f1f5f9;
+    }
+    .variant-separator h2 { font-size: 1.3rem; font-weight: 700; }
+    .variant-separator span { font-size: 0.8rem; color: #64748b; display: block; margin-top: 4px; }
+
+    /* ============================================
+       VARIANTE A — Dashboard Analytique Compact
+       KPIs 3-col + Tableau filtrable + Barres verticales
+       Style : Clean, compact, filtres interactifs
+       ============================================ */
+    .va { max-width: 1100px; }
+
+    /* KPIs — 3 cards avec bordure gauche coloree */
+    .va__kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
+    .va__kpi {
+      background: var(--nt-card); border: 1px solid var(--nt-border); border-radius: var(--nt-radius);
+      padding: 18px 20px; position: relative; overflow: hidden;
+      animation: slideUp 0.4s ease backwards;
+    }
+    .va__kpi::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; border-radius: 4px 0 0 4px; }
+    .va__kpi:nth-child(1)::before { background: var(--nt-primary); }
+    .va__kpi:nth-child(2)::before { background: var(--nt-green); }
+    .va__kpi:nth-child(3)::before { background: var(--nt-orange); }
+    .va__kpi:nth-child(1) { animation-delay: 0.05s; }
+    .va__kpi:nth-child(2) { animation-delay: 0.1s; }
+    .va__kpi:nth-child(3) { animation-delay: 0.15s; }
+    .va__kpi-label { font-size: 0.7rem; font-weight: 600; color: var(--nt-text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+    .va__kpi-val { font-size: 1.6rem; font-weight: 800; color: var(--nt-text); font-family: var(--nt-mono); }
+    .va__kpi-sub { font-size: 0.72rem; color: var(--nt-text-muted); margin-top: 2px; }
+    .va__kpi-trend { font-size: 0.7rem; font-weight: 600; margin-top: 4px; }
+    .va__kpi-trend--up { color: var(--nt-green); }
+    .va__kpi-trend--down { color: var(--nt-red); }
+
+    /* Tableau avec filtre dropdown */
+    .va__section { background: var(--nt-card); border: 1px solid var(--nt-border); border-radius: var(--nt-radius); padding: 20px; margin-bottom: 16px; box-shadow: var(--nt-shadow); }
+    .va__section-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .va__section-title { font-size: 0.95rem; font-weight: 700; }
+    .va__section-desc { font-size: 0.72rem; color: var(--nt-text-muted); margin-top: 2px; }
+    .va__filter {
+      display: flex; gap: 4px; background: var(--nt-bg); border: 1px solid var(--nt-border); border-radius: 6px; padding: 3px;
+    }
+    .va__filter-btn {
+      padding: 4px 12px; border-radius: 4px; font-size: 0.72rem; font-weight: 500;
+      color: var(--nt-text-secondary); background: none; border: none; cursor: pointer; transition: all 0.2s;
+    }
+    .va__filter-btn--active { background: var(--nt-primary); color: white; font-weight: 600; }
+
+    .va__table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+    .va__table thead th {
+      padding: 10px 14px; text-align: left; font-size: 0.68rem; font-weight: 600;
+      color: var(--nt-text-muted); text-transform: uppercase; letter-spacing: 0.5px;
+      border-bottom: 2px solid var(--nt-border); white-space: nowrap;
+    }
+    .va__table tbody td { padding: 11px 14px; border-bottom: 1px solid var(--nt-border); color: var(--nt-text); }
+    .va__table tbody tr:last-child td { border-bottom: none; }
+    .va__table tbody tr:hover { background: var(--nt-primary-light); }
+    .va__badge { display: inline-flex; padding: 2px 8px; border-radius: 20px; font-size: 0.68rem; font-weight: 600; }
+    .va__badge--forte { background: var(--nt-green-light); color: var(--nt-green); }
+    .va__badge--moyenne { background: var(--nt-orange-light); color: var(--nt-orange-dark); }
+    .va__badge--faible { background: var(--nt-red-light); color: var(--nt-red); }
+
+    /* Charts grid 2 colonnes */
+    .va__charts { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .va__chart { background: var(--nt-card); border: 1px solid var(--nt-border); border-radius: var(--nt-radius); padding: 20px; }
+    .va__chart-title { font-size: 0.78rem; font-weight: 600; margin-bottom: 4px; }
+    .va__chart-desc { font-size: 0.68rem; color: var(--nt-text-muted); margin-bottom: 14px; }
+
+    /* Barres verticales (reutilise le style Overview) */
+    .va__vbars { display: flex; align-items: flex-end; gap: 10px; height: 160px; padding-bottom: 24px; position: relative; }
+    .va__vbar-col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; gap: 4px; }
+    .va__vbar {
+      width: 100%; max-width: 40px; border-radius: 4px 4px 0 0; height: 0;
+      animation: barGrow 0.8s ease forwards; position: relative;
+    }
+    .va__vbar--green { background: linear-gradient(180deg, var(--nt-green), rgba(40,134,90,0.5)); }
+    .va__vbar--teal { background: linear-gradient(180deg, var(--nt-primary), rgba(0,119,130,0.5)); }
+    .va__vbar--orange { background: linear-gradient(180deg, var(--nt-orange), rgba(249,187,66,0.5)); }
+    .va__vbar--red { background: linear-gradient(180deg, var(--nt-red), rgba(208,69,85,0.5)); }
+    .va__vbar--indigo { background: linear-gradient(180deg, var(--nt-indigo), rgba(99,102,241,0.5)); }
+    .va__vbar-val { font-size: 0.72rem; font-weight: 700; color: var(--nt-text); }
+    .va__vbar-label { font-size: 0.62rem; color: var(--nt-text-muted); white-space: nowrap; }
+
+    /* Barres horizontales (pour impact factors) */
+    .va__hbar-group { display: flex; flex-direction: column; gap: 12px; }
+    .va__hbar { display: flex; align-items: center; gap: 10px; }
+    .va__hbar-label { font-size: 0.75rem; font-weight: 500; min-width: 80px; color: var(--nt-text-secondary); }
+    .va__hbar-track { flex: 1; height: 24px; background: var(--nt-bg); border-radius: 4px; overflow: hidden; position: relative; }
+    .va__hbar-fill { height: 100%; border-radius: 4px; animation: progressGrow 0.8s ease forwards; width: 0; }
+    .va__hbar-fill--teal { background: linear-gradient(90deg, var(--nt-primary), rgba(0,119,130,0.6)); }
+    .va__hbar-fill--green { background: linear-gradient(90deg, var(--nt-green), rgba(40,134,90,0.6)); }
+    .va__hbar-fill--orange { background: linear-gradient(90deg, var(--nt-orange), rgba(249,187,66,0.6)); }
+    .va__hbar-fill--pink { background: linear-gradient(90deg, #ec4899, rgba(236,72,153,0.6)); }
+    .va__hbar-pct { font-size: 0.72rem; font-weight: 700; min-width: 42px; text-align: right; }
+
+    /* Flux section (full width) — area chart placeholder */
+    .va__flux { background: var(--nt-card); border: 1px solid var(--nt-border); border-radius: var(--nt-radius); padding: 20px; margin-bottom: 16px; }
+    .va__flux-head { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 16px; }
+    .va__flux-cards { display: flex; gap: 10px; }
+    .va__flux-card { padding: 8px 14px; border-radius: 8px; border: 1px solid var(--nt-border); background: var(--nt-bg); }
+    .va__flux-card-label { font-size: 0.62rem; color: var(--nt-text-muted); text-transform: uppercase; }
+    .va__flux-card-val { font-size: 0.95rem; font-weight: 700; margin-top: 2px; }
+    .va__flux-card--winner .va__flux-card-val { color: var(--nt-green); }
+    .va__flux-card--loser .va__flux-card-val { color: var(--nt-red); }
+    .va__flux-card-sub { font-size: 0.62rem; color: var(--nt-text-muted); }
+    .va__area-placeholder { height: 160px; background: linear-gradient(180deg, rgba(0,119,130,0.08) 0%, transparent 100%); border-radius: 8px; display: flex; align-items: flex-end; padding: 0 12px; }
+    .va__area-bar { flex: 1; background: linear-gradient(180deg, var(--nt-primary), rgba(0,119,130,0.3)); border-radius: 4px 4px 0 0; margin: 0 2px; }
+
+    /* Info grid */
+    .va__info { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .va__info-item { display: flex; flex-direction: column; gap: 2px; }
+    .va__info-label { font-size: 0.68rem; font-weight: 600; color: var(--nt-text-muted); text-transform: uppercase; }
+    .va__info-val { font-size: 0.82rem; color: var(--nt-text); }
+    .va__info-link { color: var(--nt-primary); font-size: 0.82rem; text-decoration: none; }
+    .va__info-link:hover { text-decoration: underline; }
+
+
+    /* ============================================
+       VARIANTE B — Dashboard Cards Visuels
+       Cards metriques illustrees + Heatmap likes + Top recherches
+       Style : Visuel, colore, data-rich
+       ============================================ */
+    .vb { max-width: 1100px; }
+
+    /* KPIs — 6 cards en 2 rangees, bordure top coloree */
+    .vb__kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
+    .vb__kpi {
+      background: var(--nt-card); border: 1px solid var(--nt-border); border-radius: var(--nt-radius);
+      padding: 16px 18px; position: relative; overflow: hidden;
+      animation: slideUp 0.4s ease backwards;
+    }
+    .vb__kpi::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+    .vb__kpi:nth-child(1)::after { background: var(--nt-primary); }
+    .vb__kpi:nth-child(2)::after { background: var(--nt-green); }
+    .vb__kpi:nth-child(3)::after { background: var(--nt-orange); }
+    .vb__kpi:nth-child(4)::after { background: var(--nt-indigo); }
+    .vb__kpi:nth-child(5)::after { background: var(--nt-red); }
+    .vb__kpi:nth-child(6)::after { background: var(--nt-primary); }
+    .vb__kpi-top { display: flex; justify-content: space-between; align-items: flex-start; }
+    .vb__kpi-label { font-size: 0.7rem; font-weight: 600; color: var(--nt-text-muted); text-transform: uppercase; letter-spacing: 0.3px; }
+    .vb__kpi-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; }
+    .vb__kpi-icon--teal { background: var(--nt-primary-light); color: var(--nt-primary); }
+    .vb__kpi-icon--green { background: var(--nt-green-light); color: var(--nt-green); }
+    .vb__kpi-icon--orange { background: var(--nt-orange-light); color: var(--nt-orange-dark); }
+    .vb__kpi-icon--indigo { background: var(--nt-indigo-light); color: var(--nt-indigo); }
+    .vb__kpi-icon--red { background: var(--nt-red-light); color: var(--nt-red); }
+    .vb__kpi-val { font-size: 1.5rem; font-weight: 800; margin-top: 6px; font-family: var(--nt-mono); }
+    .vb__kpi-sub { font-size: 0.68rem; color: var(--nt-text-muted); margin-top: 2px; }
+    .vb__kpi-trend { font-size: 0.68rem; font-weight: 600; margin-top: 4px; display: inline-block; padding: 1px 6px; border-radius: 10px; }
+    .vb__kpi-trend--up { background: var(--nt-green-light); color: var(--nt-green); }
+    .vb__kpi-trend--down { background: var(--nt-red-light); color: var(--nt-red); }
+
+    /* Performance table avec mini progress bars */
+    .vb__perf { background: var(--nt-card); border: 1px solid var(--nt-border); border-radius: var(--nt-radius); padding: 20px; margin-bottom: 16px; }
+    .vb__perf-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 16px; }
+    .vb__perf-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
+    .vb__perf-table thead th { padding: 8px 12px; text-align: left; font-size: 0.66rem; font-weight: 600; color: var(--nt-text-muted); text-transform: uppercase; border-bottom: 2px solid var(--nt-border); }
+    .vb__perf-table tbody td { padding: 10px 12px; border-bottom: 1px solid var(--nt-border); }
+    .vb__perf-table tbody tr:last-child td { border-bottom: none; }
+    .vb__perf-table tbody tr:hover { background: var(--nt-primary-light); }
+    .vb__mini-bar { width: 60px; height: 6px; background: var(--nt-bg); border-radius: 3px; overflow: hidden; display: inline-block; vertical-align: middle; margin-left: 6px; }
+    .vb__mini-bar-fill { height: 100%; border-radius: 3px; background: var(--nt-green); }
+
+    /* 2x2 grid : Charts + Heatmap + Top */
+    .vb__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .vb__card { background: var(--nt-card); border: 1px solid var(--nt-border); border-radius: var(--nt-radius); padding: 18px; }
+    .vb__card-title { font-size: 0.82rem; font-weight: 700; margin-bottom: 4px; }
+    .vb__card-desc { font-size: 0.68rem; color: var(--nt-text-muted); margin-bottom: 14px; }
+
+    /* Heatmap likes (jours x horaires) */
+    .vb__heatmap { display: grid; grid-template-columns: 60px repeat(7, 1fr); gap: 3px; }
+    .vb__heatmap-label { font-size: 0.6rem; color: var(--nt-text-muted); display: flex; align-items: center; }
+    .vb__heatmap-day { font-size: 0.58rem; color: var(--nt-text-muted); text-align: center; padding-bottom: 4px; }
+    .vb__heatmap-cell { aspect-ratio: 1; border-radius: 3px; min-height: 20px; }
+    .vb__heatmap-cell--0 { background: var(--nt-bg); }
+    .vb__heatmap-cell--1 { background: rgba(0,119,130,0.15); }
+    .vb__heatmap-cell--2 { background: rgba(0,119,130,0.3); }
+    .vb__heatmap-cell--3 { background: rgba(0,119,130,0.5); }
+    .vb__heatmap-cell--4 { background: rgba(0,119,130,0.7); }
+    .vb__heatmap-cell--5 { background: var(--nt-primary); }
+    .vb__heatmap-legend { display: flex; align-items: center; gap: 4px; margin-top: 8px; font-size: 0.6rem; color: var(--nt-text-muted); }
+    .vb__heatmap-legend-cell { width: 12px; height: 12px; border-radius: 2px; }
+
+    /* Top recherches (barres horizontales) */
+    .vb__top-list { display: flex; flex-direction: column; gap: 10px; }
+    .vb__top-item { display: flex; align-items: center; gap: 10px; }
+    .vb__top-name { font-size: 0.75rem; font-weight: 500; min-width: 100px; color: var(--nt-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .vb__top-bar { flex: 1; height: 22px; background: var(--nt-bg); border-radius: 4px; overflow: hidden; }
+    .vb__top-bar-fill { height: 100%; border-radius: 4px; animation: progressGrow 0.8s ease forwards; width: 0; }
+    .vb__top-bar-fill--1 { background: var(--nt-green); }
+    .vb__top-bar-fill--2 { background: var(--nt-primary); }
+    .vb__top-bar-fill--3 { background: var(--nt-orange); }
+    .vb__top-bar-fill--4 { background: var(--nt-indigo); }
+    .vb__top-bar-fill--5 { background: var(--nt-red); }
+    .vb__top-count { font-size: 0.72rem; font-weight: 700; min-width: 24px; text-align: right; }
+    .vb__top-sizes { display: flex; gap: 6px; margin-top: 14px; }
+    .vb__top-size { font-size: 0.62rem; padding: 2px 8px; border-radius: 10px; background: var(--nt-bg); color: var(--nt-text-muted); }
+    .vb__top-size--active { background: var(--nt-green-light); color: var(--nt-green); font-weight: 600; }
+
+
+    /* ============================================
+       VARIANTE C — Dashboard Pro Sombre
+       Dark theme natif + glow effects + area chart hero
+       Style : Premium, dark neon (Variante M)
+       ============================================ */
+    .vc {
+      max-width: 1100px; background: #0f1419; border-radius: 16px; padding: 24px;
+      --vc-surface: #1a2332; --vc-border: #253041; --vc-text: #f1f5f9;
+      --vc-text2: #64748b; --vc-text3: #475569; --vc-text4: #94a3b8;
+      color: var(--vc-text);
+    }
+
+    .vc__kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
+    .vc__kpi {
+      background: var(--vc-surface); border: 1px solid var(--vc-border); border-radius: 10px;
+      padding: 16px 18px; transition: all 0.2s;
+      animation: slideUp 0.4s ease backwards;
+    }
+    .vc__kpi:hover { border-color: var(--nt-primary); box-shadow: 0 0 12px rgba(0,119,130,0.25); }
+    .vc__kpi-label { font-size: 0.68rem; font-weight: 500; color: var(--vc-text2); margin-bottom: 6px; }
+    .vc__kpi-val { font-size: 1.5rem; font-weight: 800; color: var(--vc-text); font-family: var(--nt-mono); }
+    .vc__kpi-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; }
+    .vc__kpi-sub { font-size: 0.66rem; color: var(--vc-text3); }
+    .vc__kpi-trend { font-size: 0.66rem; font-weight: 600; }
+    .vc__kpi-trend--up { color: var(--nt-green); }
+    .vc__kpi-trend--down { color: var(--nt-red); }
+
+    .vc__section { background: var(--vc-surface); border: 1px solid var(--vc-border); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+    .vc__section-title { font-size: 0.92rem; font-weight: 700; color: var(--vc-text); margin-bottom: 16px; }
+
+    .vc__table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
+    .vc__table thead th { padding: 8px 12px; text-align: left; font-size: 0.66rem; font-weight: 600; color: var(--vc-text3); text-transform: uppercase; border-bottom: 1px solid var(--vc-border); }
+    .vc__table tbody td { padding: 10px 12px; border-bottom: 1px solid var(--vc-border); color: var(--vc-text4); }
+    .vc__table tbody tr:last-child td { border-bottom: none; }
+    .vc__table tbody tr:hover { background: rgba(0,119,130,0.05); }
+    .vc__badge { display: inline-flex; padding: 2px 8px; border-radius: 20px; font-size: 0.66rem; font-weight: 600; }
+    .vc__badge--forte { background: rgba(40,134,90,0.15); color: #4ade80; }
+    .vc__badge--moyenne { background: rgba(249,187,66,0.12); color: var(--nt-orange); }
+    .vc__badge--faible { background: rgba(208,69,85,0.12); color: #f87171; }
+
+    .vc__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+
+    /* Barres verticales dark avec glow */
+    .vc__vbars { display: flex; align-items: flex-end; gap: 10px; height: 150px; padding-bottom: 24px; }
+    .vc__vbar-col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; gap: 4px; }
+    .vc__vbar {
+      width: 100%; max-width: 36px; border-radius: 4px 4px 0 0; height: 0;
+      animation: barGrow 0.8s ease forwards;
+    }
+    .vc__vbar--green { background: linear-gradient(180deg, var(--nt-green), rgba(40,134,90,0.3)); box-shadow: 0 0 8px rgba(40,134,90,0.3); }
+    .vc__vbar--teal { background: linear-gradient(180deg, var(--nt-primary), rgba(0,119,130,0.3)); box-shadow: 0 0 8px rgba(0,119,130,0.3); }
+    .vc__vbar--orange { background: linear-gradient(180deg, var(--nt-orange), rgba(249,187,66,0.3)); box-shadow: 0 0 8px rgba(249,187,66,0.3); }
+    .vc__vbar--red { background: linear-gradient(180deg, var(--nt-red), rgba(208,69,85,0.3)); box-shadow: 0 0 8px rgba(208,69,85,0.3); }
+    .vc__vbar--indigo { background: linear-gradient(180deg, var(--nt-indigo), rgba(99,102,241,0.3)); box-shadow: 0 0 8px rgba(99,102,241,0.3); }
+    .vc__vbar-val { font-size: 0.7rem; font-weight: 700; color: var(--vc-text4); }
+    .vc__vbar-label { font-size: 0.6rem; color: var(--vc-text3); }
+
+    /* Heatmap dark */
+    .vc__heatmap { display: grid; grid-template-columns: 55px repeat(7, 1fr); gap: 3px; }
+    .vc__heatmap-label { font-size: 0.58rem; color: var(--vc-text3); display: flex; align-items: center; }
+    .vc__heatmap-day { font-size: 0.56rem; color: var(--vc-text3); text-align: center; padding-bottom: 4px; }
+    .vc__heatmap-cell { aspect-ratio: 1; border-radius: 3px; min-height: 18px; }
+    .vc__heatmap-cell--0 { background: var(--vc-border); }
+    .vc__heatmap-cell--1 { background: rgba(0,119,130,0.2); }
+    .vc__heatmap-cell--2 { background: rgba(0,119,130,0.35); }
+    .vc__heatmap-cell--3 { background: rgba(0,119,130,0.5); box-shadow: 0 0 4px rgba(0,119,130,0.2); }
+    .vc__heatmap-cell--4 { background: rgba(0,119,130,0.7); box-shadow: 0 0 6px rgba(0,119,130,0.3); }
+    .vc__heatmap-cell--5 { background: var(--nt-primary); box-shadow: 0 0 8px rgba(0,119,130,0.5); }
+    .vc__heatmap-legend { display: flex; align-items: center; gap: 4px; margin-top: 8px; font-size: 0.58rem; color: var(--vc-text3); }
+    .vc__heatmap-legend-cell { width: 10px; height: 10px; border-radius: 2px; }
+
+    /* Flux cards + area dark */
+    .vc__flux-cards { display: flex; gap: 10px; margin-bottom: 16px; }
+    .vc__flux-card { flex: 1; padding: 12px 16px; border-radius: 8px; border: 1px solid var(--vc-border); background: #0f1419; }
+    .vc__flux-card-label { font-size: 0.6rem; color: var(--vc-text3); text-transform: uppercase; }
+    .vc__flux-card-val { font-size: 1.05rem; font-weight: 700; margin-top: 2px; }
+    .vc__flux-card--winner .vc__flux-card-val { color: #4ade80; text-shadow: 0 0 8px rgba(74,222,128,0.3); }
+    .vc__flux-card--loser .vc__flux-card-val { color: #f87171; }
+    .vc__flux-card-sub { font-size: 0.6rem; color: var(--vc-text3); }
+    .vc__area-placeholder { height: 140px; background: linear-gradient(180deg, rgba(0,119,130,0.1) 0%, transparent 100%); border-radius: 8px; display: flex; align-items: flex-end; padding: 0 8px; }
+    .vc__area-bar { flex: 1; background: linear-gradient(180deg, var(--nt-primary), rgba(0,119,130,0.2)); border-radius: 3px 3px 0 0; margin: 0 1px; box-shadow: 0 0 4px rgba(0,119,130,0.2); }
+
+    /* Top recherches dark */
+    .vc__top-list { display: flex; flex-direction: column; gap: 8px; }
+    .vc__top-item { display: flex; align-items: center; gap: 10px; }
+    .vc__top-name { font-size: 0.72rem; min-width: 90px; color: var(--vc-text4); }
+    .vc__top-bar { flex: 1; height: 20px; background: var(--vc-border); border-radius: 4px; overflow: hidden; }
+    .vc__top-bar-fill { height: 100%; border-radius: 4px; animation: progressGrow 0.8s ease forwards; width: 0; }
+    .vc__top-bar-fill--1 { background: linear-gradient(90deg, var(--nt-green), rgba(40,134,90,0.4)); box-shadow: 0 0 6px rgba(40,134,90,0.3); }
+    .vc__top-bar-fill--2 { background: linear-gradient(90deg, var(--nt-primary), rgba(0,119,130,0.4)); box-shadow: 0 0 6px rgba(0,119,130,0.3); }
+    .vc__top-bar-fill--3 { background: linear-gradient(90deg, var(--nt-orange), rgba(249,187,66,0.4)); }
+    .vc__top-bar-fill--4 { background: linear-gradient(90deg, var(--nt-indigo), rgba(99,102,241,0.4)); }
+    .vc__top-bar-fill--5 { background: linear-gradient(90deg, var(--nt-red), rgba(208,69,85,0.4)); }
+    .vc__top-count { font-size: 0.7rem; font-weight: 700; min-width: 24px; text-align: right; color: var(--vc-text4); }
+
+    /* Info dark */
+    .vc__info { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .vc__info-label { font-size: 0.62rem; font-weight: 600; color: var(--vc-text3); text-transform: uppercase; }
+    .vc__info-val { font-size: 0.8rem; color: var(--vc-text4); margin-top: 2px; }
+    .vc__info-link { color: var(--nt-primary); font-size: 0.8rem; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+  <!-- =======================================
+       VARIANTE A — Dashboard Analytique Compact
+       ======================================= -->
+  <div class="variant-separator">
+    <h2>Variante A — Dashboard Analytique Compact</h2>
+    <span>KPIs 3-col avec bordure gauche + Tableau filtrable (Etat/Taille) + Barres verticales gradient + Flux avec cards resume + Enjeux performance</span>
+  </div>
+
+  <div class="va">
+    <!-- KPIs 3 colonnes -->
+    <div class="va__kpis">
+      <div class="va__kpi">
+        <div class="va__kpi-label">Vitesse de vente</div>
+        <div class="va__kpi-val">16h</div>
+        <div class="va__kpi-sub">Temps median avant vente</div>
+      </div>
+      <div class="va__kpi">
+        <div class="va__kpi-label">Prix median vendu</div>
+        <div class="va__kpi-val">51,54&euro;</div>
+        <div class="va__kpi-sub">Produits vendus uniquement</div>
+      </div>
+      <div class="va__kpi">
+        <div class="va__kpi-label">Nouvelles / jour</div>
+        <div class="va__kpi-val">377.7/j</div>
+        <div class="va__kpi-trend va__kpi-trend--up">+125% vs semaine prec.</div>
+      </div>
+    </div>
+
+    <!-- 2e rangee KPIs -->
+    <div class="va__kpis" style="margin-top: -12px;">
+      <div class="va__kpi">
+        <div class="va__kpi-label">Articles suivis</div>
+        <div class="va__kpi-val">3 136</div>
+        <div class="va__kpi-sub">Total depuis creation</div>
+      </div>
+      <div class="va__kpi">
+        <div class="va__kpi-label">Articles vendus</div>
+        <div class="va__kpi-val">161</div>
+        <div class="va__kpi-trend va__kpi-trend--up">+29% cette semaine</div>
+      </div>
+      <div class="va__kpi">
+        <div class="va__kpi-label">Taux de vente</div>
+        <div class="va__kpi-val">5.1%</div>
+        <div class="va__kpi-sub">Vendus / Total</div>
+      </div>
+    </div>
+
+    <!-- Performance par condition AVEC filtre -->
+    <div class="va__section">
+      <div class="va__section-head">
+        <div>
+          <div class="va__section-title">Modeles & Variantes qui performent</div>
+          <div class="va__section-desc">Comparez rapidement prix, vitesse, liquidite et parts des ventes</div>
+        </div>
+        <div class="va__filter">
+          <button class="va__filter-btn va__filter-btn--active">Etat</button>
+          <button class="va__filter-btn">Taille</button>
+        </div>
+      </div>
+      <table class="va__table">
+        <thead>
+          <tr><th>Condition</th><th>Prix median</th><th>% vente</th><th>Temps median</th><th>Volume</th><th>Vendus</th><th>Liquidite</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Neuf avec etiquette</td><td>62,71&euro;</td><td>33.3%</td><td>1.8j</td><td>120</td><td>40</td><td><span class="va__badge va__badge--forte">Forte</span></td></tr>
+          <tr><td>Bon etat</td><td>57,00&euro;</td><td>29.5%</td><td>2.4j</td><td>122</td><td>36</td><td><span class="va__badge va__badge--forte">Forte</span></td></tr>
+          <tr><td>Satisfaisant</td><td>57,95&euro;</td><td>26.5%</td><td>1.4j</td><td>121</td><td>32</td><td><span class="va__badge va__badge--forte">Forte</span></td></tr>
+          <tr><td>Tres bon etat</td><td>70,56&euro;</td><td>29.1%</td><td>3.2j</td><td>103</td><td>30</td><td><span class="va__badge va__badge--forte">Forte</span></td></tr>
+          <tr><td>Neuf sans etiquette</td><td>54,90&euro;</td><td>25.8%</td><td>1.0j</td><td>89</td><td>23</td><td><span class="va__badge va__badge--forte">Forte</span></td></tr>
+          <tr><td>Tres bon etat</td><td>-</td><td>0.0%</td><td>-</td><td>1661</td><td>0</td><td><span class="va__badge va__badge--faible">Faible</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Charts 2 colonnes : Prix + Enjeux performance -->
+    <div class="va__charts">
+      <div class="va__chart">
+        <div class="va__chart-title">Repartition des prix</div>
+        <div class="va__chart-desc">Distribution des annonces vendues par tranche</div>
+        <div class="va__vbars">
+          <div class="va__vbar-col"><div class="va__vbar va__vbar--green" style="--bar-h:15%"></div><span class="va__vbar-val">110</span><span class="va__vbar-label">&lt;0&euro;</span></div>
+          <div class="va__vbar-col"><div class="va__vbar va__vbar--teal" style="--bar-h:5%"></div><span class="va__vbar-val">7</span><span class="va__vbar-label">&lt;14&euro;</span></div>
+          <div class="va__vbar-col"><div class="va__vbar va__vbar--orange" style="--bar-h:8%"></div><span class="va__vbar-val">7</span><span class="va__vbar-label">&lt;28&euro;</span></div>
+          <div class="va__vbar-col"><div class="va__vbar va__vbar--red" style="--bar-h:2%"></div><span class="va__vbar-val">1</span><span class="va__vbar-label">&lt;42&euro;</span></div>
+          <div class="va__vbar-col"><div class="va__vbar va__vbar--indigo" style="--bar-h:2%"></div><span class="va__vbar-val">1</span><span class="va__vbar-label">&lt;56&euro;</span></div>
+        </div>
+      </div>
+      <div class="va__chart">
+        <div class="va__chart-title">Enjeux de la performance</div>
+        <div class="va__chart-desc">Les elements les plus importants pour une vente</div>
+        <div class="va__hbar-group">
+          <div class="va__hbar">
+            <span class="va__hbar-label">Taille</span>
+            <div class="va__hbar-track"><div class="va__hbar-fill va__hbar-fill--teal" style="--progress: 54%"></div></div>
+            <span class="va__hbar-pct">54.6%</span>
+          </div>
+          <div class="va__hbar">
+            <span class="va__hbar-label">Etat</span>
+            <div class="va__hbar-track"><div class="va__hbar-fill va__hbar-fill--green" style="--progress: 37%"></div></div>
+            <span class="va__hbar-pct">36.7%</span>
+          </div>
+          <div class="va__hbar">
+            <span class="va__hbar-label">Promotion</span>
+            <div class="va__hbar-track"><div class="va__hbar-fill va__hbar-fill--orange" style="--progress: 9%"></div></div>
+            <span class="va__hbar-pct">8.7%</span>
+          </div>
+          <div class="va__hbar">
+            <span class="va__hbar-label">Marque</span>
+            <div class="va__hbar-track"><div class="va__hbar-fill va__hbar-fill--pink" style="--progress: 0%"></div></div>
+            <span class="va__hbar-pct">0.0%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts 2 colonnes : Rapidite + Ventes par prix -->
+    <div class="va__charts">
+      <div class="va__chart">
+        <div class="va__chart-title">Rapidite de vente</div>
+        <div class="va__chart-desc">Temps entre publication et vente</div>
+        <div class="va__vbars">
+          <div class="va__vbar-col"><div class="va__vbar va__vbar--green" style="--bar-h:90%"></div><span class="va__vbar-val">55</span><span class="va__vbar-label">&lt; 6h</span></div>
+          <div class="va__vbar-col"><div class="va__vbar va__vbar--teal" style="--bar-h:30%"></div><span class="va__vbar-val">18</span><span class="va__vbar-label">6-12h</span></div>
+          <div class="va__vbar-col"><div class="va__vbar va__vbar--teal" style="--bar-h:25%"></div><span class="va__vbar-val">14</span><span class="va__vbar-label">12-24h</span></div>
+          <div class="va__vbar-col"><div class="va__vbar va__vbar--orange" style="--bar-h:60%"></div><span class="va__vbar-val">36</span><span class="va__vbar-label">1-3j</span></div>
+          <div class="va__vbar-col"><div class="va__vbar va__vbar--red" style="--bar-h:38%"></div><span class="va__vbar-val">22</span><span class="va__vbar-label">3-7j</span></div>
+          <div class="va__vbar-col"><div class="va__vbar va__vbar--indigo" style="--bar-h:28%"></div><span class="va__vbar-val">16</span><span class="va__vbar-label">&gt; 7j</span></div>
+        </div>
+      </div>
+      <div class="va__chart">
+        <div class="va__chart-title">Ventes par tranche de prix</div>
+        <div class="va__chart-desc">Nombre de ventes par gamme de prix</div>
+        <div class="va__vbars">
+          <div class="va__vbar-col"><div class="va__vbar va__vbar--green" style="--bar-h:5%"></div><span class="va__vbar-val">0</span><span class="va__vbar-label">&lt;5&euro;</span></div>
+          <div class="va__vbar-col"><div class="va__vbar va__vbar--teal" style="--bar-h:8%"></div><span class="va__vbar-val">1</span><span class="va__vbar-label">5-10&euro;</span></div>
+          <div class="va__vbar-col"><div class="va__vbar va__vbar--orange" style="--bar-h:45%"></div><span class="va__vbar-val">67</span><span class="va__vbar-label">20-50&euro;</span></div>
+          <div class="va__vbar-col"><div class="va__vbar va__vbar--red" style="--bar-h:40%"></div><span class="va__vbar-val">62</span><span class="va__vbar-label">50-100&euro;</span></div>
+          <div class="va__vbar-col"><div class="va__vbar va__vbar--indigo" style="--bar-h:15%"></div><span class="va__vbar-val">24</span><span class="va__vbar-label">&gt;100&euro;</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Flux hebdo avec cards resume -->
+    <div class="va__flux">
+      <div class="va__flux-head">
+        <div>
+          <div class="va__chart-title">Flux des ventes</div>
+          <div class="va__chart-desc">Comparaison du rythme des nouvelles annonces et des ventes sur une semaine</div>
+        </div>
+        <div class="va__flux-cards">
+          <div class="va__flux-card va__flux-card--winner">
+            <div class="va__flux-card-label">Creneau gagnant</div>
+            <div class="va__flux-card-val">Samedi</div>
+            <div class="va__flux-card-sub">307% plus rapide</div>
+          </div>
+          <div class="va__flux-card va__flux-card--loser">
+            <div class="va__flux-card-label">Creneau a eviter</div>
+            <div class="va__flux-card-val">Lundi</div>
+            <div class="va__flux-card-sub">100% plus lent</div>
+          </div>
+          <div class="va__flux-card">
+            <div class="va__flux-card-label">Total semaine</div>
+            <div class="va__flux-card-val">67</div>
+            <div class="va__flux-card-sub">22% de plus</div>
+          </div>
+        </div>
+      </div>
+      <div class="va__area-placeholder">
+        <div class="va__area-bar" style="height: 15%"></div>
+        <div class="va__area-bar" style="height: 8%"></div>
+        <div class="va__area-bar" style="height: 22%"></div>
+        <div class="va__area-bar" style="height: 18%"></div>
+        <div class="va__area-bar" style="height: 35%"></div>
+        <div class="va__area-bar" style="height: 28%"></div>
+        <div class="va__area-bar" style="height: 45%"></div>
+        <div class="va__area-bar" style="height: 55%"></div>
+        <div class="va__area-bar" style="height: 42%"></div>
+        <div class="va__area-bar" style="height: 38%"></div>
+        <div class="va__area-bar" style="height: 65%"></div>
+        <div class="va__area-bar" style="height: 85%"></div>
+        <div class="va__area-bar" style="height: 95%"></div>
+        <div class="va__area-bar" style="height: 100%"></div>
+      </div>
+    </div>
+
+    <!-- Infos -->
+    <div class="va__section">
+      <div class="va__section-title" style="margin-bottom: 12px;">Informations</div>
+      <div class="va__info">
+        <div class="va__info-item">
+          <span class="va__info-label">URL Vinted</span>
+          <a href="#" class="va__info-link">https://www.vinted.fr/catalog?search_text=mode+femme&cata...</a>
+        </div>
+        <div class="va__info-item">
+          <span class="va__info-label">Type</span>
+          <span class="va__info-val">Catalogue</span>
+        </div>
+        <div class="va__info-item">
+          <span class="va__info-label">Cree le</span>
+          <span class="va__info-val">20/02/2026</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- =======================================
+       VARIANTE B — Dashboard Cards Visuels
+       ======================================= -->
+  <div class="variant-separator">
+    <h2>Variante B — Dashboard Cards Visuels + Heatmap</h2>
+    <span>6 KPIs avec icones + bordure top coloree + Tableau avec mini progress bars + Heatmap likes (jour x horaire) + Top recherches avec barres</span>
+  </div>
+
+  <div class="vb">
+    <!-- 6 KPIs avec icones -->
+    <div class="vb__kpis">
+      <div class="vb__kpi" style="animation-delay: 0.05s">
+        <div class="vb__kpi-top">
+          <div class="vb__kpi-label">Vitesse de vente</div>
+          <div class="vb__kpi-icon vb__kpi-icon--teal">&#9201;</div>
+        </div>
+        <div class="vb__kpi-val">16h</div>
+        <div class="vb__kpi-sub">Temps median avant vente</div>
+      </div>
+      <div class="vb__kpi" style="animation-delay: 0.1s">
+        <div class="vb__kpi-top">
+          <div class="vb__kpi-label">Prix median vendu</div>
+          <div class="vb__kpi-icon vb__kpi-icon--green">&#128176;</div>
+        </div>
+        <div class="vb__kpi-val">51,54&euro;</div>
+        <div class="vb__kpi-sub">Produits vendus uniquement</div>
+      </div>
+      <div class="vb__kpi" style="animation-delay: 0.15s">
+        <div class="vb__kpi-top">
+          <div class="vb__kpi-label">Nouvelles / jour</div>
+          <div class="vb__kpi-icon vb__kpi-icon--orange">&#128200;</div>
+        </div>
+        <div class="vb__kpi-val">377.7/j</div>
+        <div class="vb__kpi-trend vb__kpi-trend--up">+125%</div>
+      </div>
+    </div>
+    <div class="vb__kpis">
+      <div class="vb__kpi" style="animation-delay: 0.2s">
+        <div class="vb__kpi-top">
+          <div class="vb__kpi-label">Articles suivis</div>
+          <div class="vb__kpi-icon vb__kpi-icon--indigo">&#128230;</div>
+        </div>
+        <div class="vb__kpi-val">3 136</div>
+        <div class="vb__kpi-sub">Total depuis creation</div>
+      </div>
+      <div class="vb__kpi" style="animation-delay: 0.25s">
+        <div class="vb__kpi-top">
+          <div class="vb__kpi-label">Articles vendus</div>
+          <div class="vb__kpi-icon vb__kpi-icon--red">&#127942;</div>
+        </div>
+        <div class="vb__kpi-val">161</div>
+        <div class="vb__kpi-trend vb__kpi-trend--up">+29%</div>
+      </div>
+      <div class="vb__kpi" style="animation-delay: 0.3s">
+        <div class="vb__kpi-top">
+          <div class="vb__kpi-label">Taux de vente</div>
+          <div class="vb__kpi-icon vb__kpi-icon--teal">&#128202;</div>
+        </div>
+        <div class="vb__kpi-val">5.1%</div>
+        <div class="vb__kpi-sub">Vendus / Total</div>
+      </div>
+    </div>
+
+    <!-- Performance table avec mini bars -->
+    <div class="vb__perf">
+      <div class="vb__perf-title">Performance par condition</div>
+      <table class="vb__perf-table">
+        <thead>
+          <tr><th>Condition</th><th>Prix median</th><th>% vente</th><th>Temps median</th><th>Volume</th><th>Vendus</th><th>Liquidite</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Neuf avec etiquette</td><td>62,71&euro;</td>
+            <td>33.3% <span class="vb__mini-bar"><span class="vb__mini-bar-fill" style="width: 33%"></span></span></td>
+            <td>1.8j</td><td>120</td><td>40</td><td><span class="va__badge va__badge--forte">Forte</span></td>
+          </tr>
+          <tr>
+            <td>Bon etat</td><td>57,00&euro;</td>
+            <td>29.5% <span class="vb__mini-bar"><span class="vb__mini-bar-fill" style="width: 29%"></span></span></td>
+            <td>2.4j</td><td>122</td><td>36</td><td><span class="va__badge va__badge--forte">Forte</span></td>
+          </tr>
+          <tr>
+            <td>Satisfaisant</td><td>57,95&euro;</td>
+            <td>26.5% <span class="vb__mini-bar"><span class="vb__mini-bar-fill" style="width: 26%"></span></span></td>
+            <td>1.4j</td><td>121</td><td>32</td><td><span class="va__badge va__badge--forte">Forte</span></td>
+          </tr>
+          <tr>
+            <td>Tres bon etat</td><td>70,56&euro;</td>
+            <td>29.1% <span class="vb__mini-bar"><span class="vb__mini-bar-fill" style="width: 29%"></span></span></td>
+            <td>3.2j</td><td>103</td><td>30</td><td><span class="va__badge va__badge--forte">Forte</span></td>
+          </tr>
+          <tr>
+            <td>Bon etat</td><td>-</td>
+            <td>0.0% <span class="vb__mini-bar"><span class="vb__mini-bar-fill" style="width: 0%"></span></span></td>
+            <td>-</td><td>246</td><td>0</td><td><span class="va__badge va__badge--faible">Faible</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Grid 2x2 : Heatmap likes + Top recherches -->
+    <div class="vb__grid">
+      <div class="vb__card">
+        <div class="vb__card-title">Repartition des likes</div>
+        <div class="vb__card-desc">Distribution des likes par jour et tranche horaire</div>
+        <div class="vb__heatmap">
+          <div></div>
+          <div class="vb__heatmap-day">Lun</div><div class="vb__heatmap-day">Mar</div><div class="vb__heatmap-day">Mer</div>
+          <div class="vb__heatmap-day">Jeu</div><div class="vb__heatmap-day">Ven</div><div class="vb__heatmap-day">Sam</div><div class="vb__heatmap-day">Dim</div>
+
+          <div class="vb__heatmap-label">Matin 9h-12h</div>
+          <div class="vb__heatmap-cell vb__heatmap-cell--1"></div><div class="vb__heatmap-cell vb__heatmap-cell--2"></div>
+          <div class="vb__heatmap-cell vb__heatmap-cell--1"></div><div class="vb__heatmap-cell vb__heatmap-cell--2"></div>
+          <div class="vb__heatmap-cell vb__heatmap-cell--3"></div><div class="vb__heatmap-cell vb__heatmap-cell--4"></div>
+          <div class="vb__heatmap-cell vb__heatmap-cell--5"></div>
+
+          <div class="vb__heatmap-label">Midi 12h-14h</div>
+          <div class="vb__heatmap-cell vb__heatmap-cell--2"></div><div class="vb__heatmap-cell vb__heatmap-cell--3"></div>
+          <div class="vb__heatmap-cell vb__heatmap-cell--2"></div><div class="vb__heatmap-cell vb__heatmap-cell--3"></div>
+          <div class="vb__heatmap-cell vb__heatmap-cell--4"></div><div class="vb__heatmap-cell vb__heatmap-cell--5"></div>
+          <div class="vb__heatmap-cell vb__heatmap-cell--4"></div>
+
+          <div class="vb__heatmap-label">Aprem 15h-17h</div>
+          <div class="vb__heatmap-cell vb__heatmap-cell--1"></div><div class="vb__heatmap-cell vb__heatmap-cell--1"></div>
+          <div class="vb__heatmap-cell vb__heatmap-cell--2"></div><div class="vb__heatmap-cell vb__heatmap-cell--1"></div>
+          <div class="vb__heatmap-cell vb__heatmap-cell--3"></div><div class="vb__heatmap-cell vb__heatmap-cell--3"></div>
+          <div class="vb__heatmap-cell vb__heatmap-cell--2"></div>
+
+          <div class="vb__heatmap-label">Soir 18h-21h</div>
+          <div class="vb__heatmap-cell vb__heatmap-cell--3"></div><div class="vb__heatmap-cell vb__heatmap-cell--4"></div>
+          <div class="vb__heatmap-cell vb__heatmap-cell--3"></div><div class="vb__heatmap-cell vb__heatmap-cell--4"></div>
+          <div class="vb__heatmap-cell vb__heatmap-cell--5"></div><div class="vb__heatmap-cell vb__heatmap-cell--5"></div>
+          <div class="vb__heatmap-cell vb__heatmap-cell--4"></div>
+        </div>
+        <div class="vb__heatmap-legend">
+          Faible
+          <div class="vb__heatmap-legend-cell vb__heatmap-cell--0"></div>
+          <div class="vb__heatmap-legend-cell vb__heatmap-cell--1"></div>
+          <div class="vb__heatmap-legend-cell vb__heatmap-cell--2"></div>
+          <div class="vb__heatmap-legend-cell vb__heatmap-cell--3"></div>
+          <div class="vb__heatmap-legend-cell vb__heatmap-cell--4"></div>
+          <div class="vb__heatmap-legend-cell vb__heatmap-cell--5"></div>
+          Fort
+        </div>
+      </div>
+
+      <div class="vb__card">
+        <div class="vb__card-title">Le plus recherche</div>
+        <div class="vb__card-desc">Top 5 de ce qui se vend le plus</div>
+        <div class="vb__top-list">
+          <div class="vb__top-item">
+            <span class="vb__top-name">Sezane Pulls d'hiver</span>
+            <div class="vb__top-bar"><div class="vb__top-bar-fill vb__top-bar-fill--1" style="--progress: 100%"></div></div>
+            <span class="vb__top-count">18</span>
+          </div>
+          <div class="vb__top-item">
+            <span class="vb__top-name">Sezane Cardigans</span>
+            <div class="vb__top-bar"><div class="vb__top-bar-fill vb__top-bar-fill--2" style="--progress: 94%"></div></div>
+            <span class="vb__top-count">17</span>
+          </div>
+          <div class="vb__top-item">
+            <span class="vb__top-name">Zara Robes</span>
+            <div class="vb__top-bar"><div class="vb__top-bar-fill vb__top-bar-fill--3" style="--progress: 72%"></div></div>
+            <span class="vb__top-count">13</span>
+          </div>
+          <div class="vb__top-item">
+            <span class="vb__top-name">Lacoste Polos</span>
+            <div class="vb__top-bar"><div class="vb__top-bar-fill vb__top-bar-fill--4" style="--progress: 55%"></div></div>
+            <span class="vb__top-count">10</span>
+          </div>
+          <div class="vb__top-item">
+            <span class="vb__top-name">Sezane Chemises</span>
+            <div class="vb__top-bar"><div class="vb__top-bar-fill vb__top-bar-fill--5" style="--progress: 50%"></div></div>
+            <span class="vb__top-count">9</span>
+          </div>
+        </div>
+        <div class="vb__top-sizes">
+          <span class="vb__top-size vb__top-size--active">&#9679; S</span>
+          <span class="vb__top-size vb__top-size--active">&#9679; M/L</span>
+          <span class="vb__top-size">&#9679; XL</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts prix + rapidite -->
+    <div class="vb__grid">
+      <div class="vb__card">
+        <div class="vb__card-title">Repartition des prix (ventes)</div>
+        <div class="va__vbars" style="height: 140px;">
+          <div class="va__vbar-col"><div class="va__vbar va__vbar--green" style="--bar-h:5%"></div><span class="va__vbar-val">0</span><span class="va__vbar-label">&lt;5&euro;</span></div>
+          <div class="va__vbar-col"><div class="va__vbar va__vbar--teal" style="--bar-h:8%"></div><span class="va__vbar-val">1</span><span class="va__vbar-label">5-10&euro;</span></div>
+          <div class="va__vbar-col"><div class="va__vbar va__vbar--teal" style="--bar-h:12%"></div><span class="va__vbar-val">7</span><span class="va__vbar-label">10-20&euro;</span></div>
+          <div class="va__vbar-col"><div class="va__vbar va__vbar--orange" style="--bar-h:60%"></div><span class="va__vbar-val">67</span><span class="va__vbar-label">20-50&euro;</span></div>
+          <div class="va__vbar-col"><div class="va__vbar va__vbar--red" style="--bar-h:55%"></div><span class="va__vbar-val">62</span><span class="va__vbar-label">50-100&euro;</span></div>
+          <div class="va__vbar-col"><div class="va__vbar va__vbar--indigo" style="--bar-h:22%"></div><span class="va__vbar-val">24</span><span class="va__vbar-label">&gt;100&euro;</span></div>
+        </div>
+      </div>
+      <div class="vb__card">
+        <div class="vb__card-title">Rapidite de vente</div>
+        <div class="va__vbars" style="height: 140px;">
+          <div class="va__vbar-col"><div class="va__vbar va__vbar--green" style="--bar-h:90%"></div><span class="va__vbar-val">55</span><span class="va__vbar-label">&lt; 6h</span></div>
+          <div class="va__vbar-col"><div class="va__vbar va__vbar--teal" style="--bar-h:30%"></div><span class="va__vbar-val">18</span><span class="va__vbar-label">6-12h</span></div>
+          <div class="va__vbar-col"><div class="va__vbar va__vbar--teal" style="--bar-h:25%"></div><span class="va__vbar-val">14</span><span class="va__vbar-label">12-24h</span></div>
+          <div class="va__vbar-col"><div class="va__vbar va__vbar--orange" style="--bar-h:60%"></div><span class="va__vbar-val">36</span><span class="va__vbar-label">1-3j</span></div>
+          <div class="va__vbar-col"><div class="va__vbar va__vbar--red" style="--bar-h:38%"></div><span class="va__vbar-val">22</span><span class="va__vbar-label">3-7j</span></div>
+          <div class="va__vbar-col"><div class="va__vbar va__vbar--indigo" style="--bar-h:28%"></div><span class="va__vbar-val">16</span><span class="va__vbar-label">&gt; 7j</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- =======================================
+       VARIANTE C — Dashboard Pro Dark Neon
+       ======================================= -->
+  <div class="variant-separator">
+    <h2>Variante C — Dashboard Pro Dark Neon</h2>
+    <span>Theme sombre natif (Variante M) + glow effects + barres neon + heatmap dark + cards flux resume — pensee pour le dark mode de NicheTrackr</span>
+  </div>
+
+  <div class="vc">
+    <!-- KPIs dark -->
+    <div class="vc__kpis">
+      <div class="vc__kpi" style="animation-delay: 0.05s">
+        <div class="vc__kpi-label">Vitesse de vente</div>
+        <div class="vc__kpi-val">16h</div>
+        <div class="vc__kpi-foot">
+          <span class="vc__kpi-sub">Temps median</span>
+        </div>
+      </div>
+      <div class="vc__kpi" style="animation-delay: 0.1s">
+        <div class="vc__kpi-label">Prix median vendu</div>
+        <div class="vc__kpi-val">51,54&euro;</div>
+        <div class="vc__kpi-foot">
+          <span class="vc__kpi-sub">Produits vendus</span>
+        </div>
+      </div>
+      <div class="vc__kpi" style="animation-delay: 0.15s">
+        <div class="vc__kpi-label">Nouvelles / jour</div>
+        <div class="vc__kpi-val">377.7/j</div>
+        <div class="vc__kpi-foot">
+          <span class="vc__kpi-sub">Moy. derniers 7j</span>
+          <span class="vc__kpi-trend vc__kpi-trend--up">+125%</span>
+        </div>
+      </div>
+    </div>
+    <div class="vc__kpis" style="margin-top: -12px;">
+      <div class="vc__kpi" style="animation-delay: 0.2s">
+        <div class="vc__kpi-label">Articles suivis</div>
+        <div class="vc__kpi-val">3 136</div>
+        <div class="vc__kpi-foot"><span class="vc__kpi-sub">Total</span></div>
+      </div>
+      <div class="vc__kpi" style="animation-delay: 0.25s">
+        <div class="vc__kpi-label">Articles vendus</div>
+        <div class="vc__kpi-val">161</div>
+        <div class="vc__kpi-foot">
+          <span class="vc__kpi-sub">Cette semaine</span>
+          <span class="vc__kpi-trend vc__kpi-trend--up">+29%</span>
+        </div>
+      </div>
+      <div class="vc__kpi" style="animation-delay: 0.3s">
+        <div class="vc__kpi-label">Taux de vente</div>
+        <div class="vc__kpi-val">5.1%</div>
+        <div class="vc__kpi-foot"><span class="vc__kpi-sub">Vendus / Total</span></div>
+      </div>
+    </div>
+
+    <!-- Table dark -->
+    <div class="vc__section">
+      <div class="vc__section-title">Performance par condition</div>
+      <table class="vc__table">
+        <thead>
+          <tr><th>Condition</th><th>Prix median</th><th>% vente</th><th>Temps median</th><th>Volume</th><th>Vendus</th><th>Liquidite</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Neuf avec etiquette</td><td>62,71&euro;</td><td>33.3%</td><td>1.8j</td><td>120</td><td>40</td><td><span class="vc__badge vc__badge--forte">Forte</span></td></tr>
+          <tr><td>Bon etat</td><td>57,00&euro;</td><td>29.5%</td><td>2.4j</td><td>122</td><td>36</td><td><span class="vc__badge vc__badge--forte">Forte</span></td></tr>
+          <tr><td>Satisfaisant</td><td>57,95&euro;</td><td>26.5%</td><td>1.4j</td><td>121</td><td>32</td><td><span class="vc__badge vc__badge--forte">Forte</span></td></tr>
+          <tr><td>Tres bon etat</td><td>70,56&euro;</td><td>29.1%</td><td>3.2j</td><td>103</td><td>30</td><td><span class="vc__badge vc__badge--forte">Forte</span></td></tr>
+          <tr><td>Bon etat</td><td>-</td><td>0.0%</td><td>-</td><td>246</td><td>0</td><td><span class="vc__badge vc__badge--faible">Faible</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Grid : Charts + Heatmap + Top -->
+    <div class="vc__grid">
+      <div class="vc__section">
+        <div class="vc__section-title">Repartition des prix</div>
+        <div class="vc__vbars">
+          <div class="vc__vbar-col"><div class="vc__vbar vc__vbar--green" style="--bar-h:5%"></div><span class="vc__vbar-val">0</span><span class="vc__vbar-label">&lt;5&euro;</span></div>
+          <div class="vc__vbar-col"><div class="vc__vbar vc__vbar--teal" style="--bar-h:8%"></div><span class="vc__vbar-val">1</span><span class="vc__vbar-label">5-10&euro;</span></div>
+          <div class="vc__vbar-col"><div class="vc__vbar vc__vbar--teal" style="--bar-h:12%"></div><span class="vc__vbar-val">7</span><span class="vc__vbar-label">10-20&euro;</span></div>
+          <div class="vc__vbar-col"><div class="vc__vbar vc__vbar--orange" style="--bar-h:60%"></div><span class="vc__vbar-val">67</span><span class="vc__vbar-label">20-50&euro;</span></div>
+          <div class="vc__vbar-col"><div class="vc__vbar vc__vbar--red" style="--bar-h:55%"></div><span class="vc__vbar-val">62</span><span class="vc__vbar-label">50-100&euro;</span></div>
+          <div class="vc__vbar-col"><div class="vc__vbar vc__vbar--indigo" style="--bar-h:22%"></div><span class="vc__vbar-val">24</span><span class="vc__vbar-label">&gt;100&euro;</span></div>
+        </div>
+      </div>
+      <div class="vc__section">
+        <div class="vc__section-title">Rapidite de vente</div>
+        <div class="vc__vbars">
+          <div class="vc__vbar-col"><div class="vc__vbar vc__vbar--green" style="--bar-h:90%"></div><span class="vc__vbar-val">55</span><span class="vc__vbar-label">&lt; 6h</span></div>
+          <div class="vc__vbar-col"><div class="vc__vbar vc__vbar--teal" style="--bar-h:30%"></div><span class="vc__vbar-val">18</span><span class="vc__vbar-label">6-12h</span></div>
+          <div class="vc__vbar-col"><div class="vc__vbar vc__vbar--teal" style="--bar-h:25%"></div><span class="vc__vbar-val">14</span><span class="vc__vbar-label">12-24h</span></div>
+          <div class="vc__vbar-col"><div class="vc__vbar vc__vbar--orange" style="--bar-h:60%"></div><span class="vc__vbar-val">36</span><span class="vc__vbar-label">1-3j</span></div>
+          <div class="vc__vbar-col"><div class="vc__vbar vc__vbar--red" style="--bar-h:38%"></div><span class="vc__vbar-val">22</span><span class="vc__vbar-label">3-7j</span></div>
+          <div class="vc__vbar-col"><div class="vc__vbar vc__vbar--indigo" style="--bar-h:28%"></div><span class="vc__vbar-val">16</span><span class="vc__vbar-label">&gt; 7j</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="vc__grid">
+      <div class="vc__section">
+        <div class="vc__section-title">Repartition des likes</div>
+        <div class="vc__heatmap">
+          <div></div>
+          <div class="vc__heatmap-day">Lun</div><div class="vc__heatmap-day">Mar</div><div class="vc__heatmap-day">Mer</div>
+          <div class="vc__heatmap-day">Jeu</div><div class="vc__heatmap-day">Ven</div><div class="vc__heatmap-day">Sam</div><div class="vc__heatmap-day">Dim</div>
+
+          <div class="vc__heatmap-label">Matin</div>
+          <div class="vc__heatmap-cell vc__heatmap-cell--1"></div><div class="vc__heatmap-cell vc__heatmap-cell--2"></div>
+          <div class="vc__heatmap-cell vc__heatmap-cell--1"></div><div class="vc__heatmap-cell vc__heatmap-cell--2"></div>
+          <div class="vc__heatmap-cell vc__heatmap-cell--3"></div><div class="vc__heatmap-cell vc__heatmap-cell--4"></div>
+          <div class="vc__heatmap-cell vc__heatmap-cell--5"></div>
+
+          <div class="vc__heatmap-label">Midi</div>
+          <div class="vc__heatmap-cell vc__heatmap-cell--2"></div><div class="vc__heatmap-cell vc__heatmap-cell--3"></div>
+          <div class="vc__heatmap-cell vc__heatmap-cell--2"></div><div class="vc__heatmap-cell vc__heatmap-cell--3"></div>
+          <div class="vc__heatmap-cell vc__heatmap-cell--4"></div><div class="vc__heatmap-cell vc__heatmap-cell--5"></div>
+          <div class="vc__heatmap-cell vc__heatmap-cell--4"></div>
+
+          <div class="vc__heatmap-label">Aprem</div>
+          <div class="vc__heatmap-cell vc__heatmap-cell--1"></div><div class="vc__heatmap-cell vc__heatmap-cell--1"></div>
+          <div class="vc__heatmap-cell vc__heatmap-cell--2"></div><div class="vc__heatmap-cell vc__heatmap-cell--1"></div>
+          <div class="vc__heatmap-cell vc__heatmap-cell--3"></div><div class="vc__heatmap-cell vc__heatmap-cell--3"></div>
+          <div class="vc__heatmap-cell vc__heatmap-cell--2"></div>
+
+          <div class="vc__heatmap-label">Soir</div>
+          <div class="vc__heatmap-cell vc__heatmap-cell--3"></div><div class="vc__heatmap-cell vc__heatmap-cell--4"></div>
+          <div class="vc__heatmap-cell vc__heatmap-cell--3"></div><div class="vc__heatmap-cell vc__heatmap-cell--4"></div>
+          <div class="vc__heatmap-cell vc__heatmap-cell--5"></div><div class="vc__heatmap-cell vc__heatmap-cell--5"></div>
+          <div class="vc__heatmap-cell vc__heatmap-cell--4"></div>
+        </div>
+        <div class="vc__heatmap-legend">
+          Faible
+          <div class="vc__heatmap-legend-cell vc__heatmap-cell--0"></div>
+          <div class="vc__heatmap-legend-cell vc__heatmap-cell--1"></div>
+          <div class="vc__heatmap-legend-cell vc__heatmap-cell--2"></div>
+          <div class="vc__heatmap-legend-cell vc__heatmap-cell--3"></div>
+          <div class="vc__heatmap-legend-cell vc__heatmap-cell--4"></div>
+          <div class="vc__heatmap-legend-cell vc__heatmap-cell--5"></div>
+          Fort
+        </div>
+      </div>
+
+      <div class="vc__section">
+        <div class="vc__section-title">Top recherches</div>
+        <div class="vc__top-list">
+          <div class="vc__top-item">
+            <span class="vc__top-name">Sezane Pulls</span>
+            <div class="vc__top-bar"><div class="vc__top-bar-fill vc__top-bar-fill--1" style="--progress: 100%"></div></div>
+            <span class="vc__top-count">18</span>
+          </div>
+          <div class="vc__top-item">
+            <span class="vc__top-name">Sezane Cardigans</span>
+            <div class="vc__top-bar"><div class="vc__top-bar-fill vc__top-bar-fill--2" style="--progress: 94%"></div></div>
+            <span class="vc__top-count">17</span>
+          </div>
+          <div class="vc__top-item">
+            <span class="vc__top-name">Zara Robes</span>
+            <div class="vc__top-bar"><div class="vc__top-bar-fill vc__top-bar-fill--3" style="--progress: 72%"></div></div>
+            <span class="vc__top-count">13</span>
+          </div>
+          <div class="vc__top-item">
+            <span class="vc__top-name">Lacoste Polos</span>
+            <div class="vc__top-bar"><div class="vc__top-bar-fill vc__top-bar-fill--4" style="--progress: 55%"></div></div>
+            <span class="vc__top-count">10</span>
+          </div>
+          <div class="vc__top-item">
+            <span class="vc__top-name">Sezane Chemises</span>
+            <div class="vc__top-bar"><div class="vc__top-bar-fill vc__top-bar-fill--5" style="--progress: 50%"></div></div>
+            <span class="vc__top-count">9</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Flux dark avec cards resume -->
+    <div class="vc__section">
+      <div class="vc__section-title">Flux des ventes</div>
+      <div class="vc__flux-cards">
+        <div class="vc__flux-card vc__flux-card--winner">
+          <div class="vc__flux-card-label">Creneau gagnant</div>
+          <div class="vc__flux-card-val">Samedi</div>
+          <div class="vc__flux-card-sub">307% plus rapide</div>
+        </div>
+        <div class="vc__flux-card vc__flux-card--loser">
+          <div class="vc__flux-card-label">Creneau a eviter</div>
+          <div class="vc__flux-card-val">Lundi</div>
+          <div class="vc__flux-card-sub">100% plus lent</div>
+        </div>
+        <div class="vc__flux-card">
+          <div class="vc__flux-card-label">Total semaine</div>
+          <div class="vc__flux-card-val" style="color: var(--vc-text)">67</div>
+          <div class="vc__flux-card-sub">22% de plus</div>
+        </div>
+      </div>
+      <div class="vc__area-placeholder">
+        <div class="vc__area-bar" style="height: 15%"></div>
+        <div class="vc__area-bar" style="height: 8%"></div>
+        <div class="vc__area-bar" style="height: 22%"></div>
+        <div class="vc__area-bar" style="height: 18%"></div>
+        <div class="vc__area-bar" style="height: 35%"></div>
+        <div class="vc__area-bar" style="height: 28%"></div>
+        <div class="vc__area-bar" style="height: 45%"></div>
+        <div class="vc__area-bar" style="height: 55%"></div>
+        <div class="vc__area-bar" style="height: 42%"></div>
+        <div class="vc__area-bar" style="height: 38%"></div>
+        <div class="vc__area-bar" style="height: 65%"></div>
+        <div class="vc__area-bar" style="height: 85%"></div>
+        <div class="vc__area-bar" style="height: 95%"></div>
+        <div class="vc__area-bar" style="height: 100%"></div>
+      </div>
+    </div>
+
+    <!-- Info dark -->
+    <div class="vc__section">
+      <div class="vc__section-title">Informations</div>
+      <div class="vc__info">
+        <div>
+          <div class="vc__info-label">URL Vinted</div>
+          <a href="#" class="vc__info-link">https://www.vinted.fr/catalog?search_text=mode+femme...</a>
+        </div>
+        <div>
+          <div class="vc__info-label">Type</div>
+          <div class="vc__info-val">Catalogue</div>
+        </div>
+        <div>
+          <div class="vc__info-label">Cree le</div>
+          <div class="vc__info-val">20/02/2026</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

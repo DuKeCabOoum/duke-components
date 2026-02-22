@@ -1,0 +1,2421 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Grids — Duke-components</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+</head>
+<body>
+  <div class="app">
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+      <a href="../../index.html" class="sidebar__logo">
+        <span>Duke</span>-components
+      </a>
+
+      <div class="sidebar__section">
+        <h3 class="sidebar__title">Data Grids</h3>
+        <ul class="sidebar__nav">
+          <li><a href="#basic-tables" class="sidebar__link sidebar__link--active">Basic Tables</a></li>
+          <li><a href="#enhanced-tables" class="sidebar__link">Enhanced Tables</a></li>
+          <li><a href="#advanced-grids" class="sidebar__link">Advanced Grids</a></li>
+          <li><a href="#compact-specialized" class="sidebar__link">Compact & Specialized</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar__section">
+        <a href="../../index.html" class="sidebar__link">&larr; Retour</a>
+      </div>
+
+      <!-- Toggle Admin -->
+      <div class="admin-toggle">
+        <span class="admin-toggle__label">Mode Admin</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="admin-toggle">
+          <span class="toggle-switch__slider"></span>
+        </label>
+      </div>
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main">
+      <header class="main__header">
+        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 8px;">
+          <h1 class="main__title" style="margin-bottom: 0;">Data Grids</h1>
+          <div class="admin-mode-indicator">Admin Mode</div>
+        </div>
+        <p class="main__subtitle">Tableaux de donnees professionnels — Basic, Enhanced, Advanced, Compact</p>
+      </header>
+
+      <!-- ========== BASIC TABLES ========== -->
+      <section id="basic-tables" class="section">
+        <h2 class="section__title">Basic Tables</h2>
+        <p class="section__desc">Tableaux simples et lisibles pour afficher des donnees structurees.</p>
+
+        <div class="components-grid">
+
+          <!-- 1. Clean Table -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="dg-scroll-wrap">
+                <table class="dg-table dg-table--clean">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Role</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Alex Martin</td>
+                      <td>alex@company.com</td>
+                      <td>Admin</td>
+                      <td>Active</td>
+                      <td>Edit</td>
+                    </tr>
+                    <tr>
+                      <td>Sarah Chen</td>
+                      <td>sarah@company.com</td>
+                      <td>Editor</td>
+                      <td>Active</td>
+                      <td>Edit</td>
+                    </tr>
+                    <tr>
+                      <td>Marco Rossi</td>
+                      <td>marco@company.com</td>
+                      <td>Viewer</td>
+                      <td>Inactive</td>
+                      <td>Edit</td>
+                    </tr>
+                    <tr>
+                      <td>Emma Wilson</td>
+                      <td>emma@company.com</td>
+                      <td>Manager</td>
+                      <td>Active</td>
+                      <td>Edit</td>
+                    </tr>
+                    <tr>
+                      <td>Leo Dupont</td>
+                      <td>leo@company.com</td>
+                      <td>Editor</td>
+                      <td>Pending</td>
+                      <td>Edit</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Clean Table</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">basic</span>
+                <span class="tag">clean</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="dg-clean-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="dg-clean-html"><code>&lt;div class="dg-scroll-wrap"&gt;
+  &lt;table class="dg-table dg-table--clean"&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;
+        &lt;th&gt;Name&lt;/th&gt;
+        &lt;th&gt;Email&lt;/th&gt;
+        &lt;th&gt;Role&lt;/th&gt;
+        &lt;th&gt;Status&lt;/th&gt;
+        &lt;th&gt;Actions&lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;
+        &lt;td&gt;Alex Martin&lt;/td&gt;
+        &lt;td&gt;alex@company.com&lt;/td&gt;
+        &lt;td&gt;Admin&lt;/td&gt;
+        &lt;td&gt;Active&lt;/td&gt;
+        &lt;td&gt;Edit&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="dg-clean-css" style="display:none"><code>.dg-table--clean {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.dg-table--clean th {
+  background: var(--bg-secondary);
+  border-bottom: 2px solid var(--border);
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.dg-table--clean td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- 2. Striped Table -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="dg-scroll-wrap">
+                <table class="dg-table dg-table--striped">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Role</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Alex Martin</td>
+                      <td>alex@company.com</td>
+                      <td>Admin</td>
+                      <td>Active</td>
+                      <td>Edit</td>
+                    </tr>
+                    <tr>
+                      <td>Sarah Chen</td>
+                      <td>sarah@company.com</td>
+                      <td>Editor</td>
+                      <td>Active</td>
+                      <td>Edit</td>
+                    </tr>
+                    <tr>
+                      <td>Marco Rossi</td>
+                      <td>marco@company.com</td>
+                      <td>Viewer</td>
+                      <td>Inactive</td>
+                      <td>Edit</td>
+                    </tr>
+                    <tr>
+                      <td>Emma Wilson</td>
+                      <td>emma@company.com</td>
+                      <td>Manager</td>
+                      <td>Active</td>
+                      <td>Edit</td>
+                    </tr>
+                    <tr>
+                      <td>Leo Dupont</td>
+                      <td>leo@company.com</td>
+                      <td>Editor</td>
+                      <td>Pending</td>
+                      <td>Edit</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Striped Table</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">basic</span>
+                <span class="tag">zebra</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="dg-striped-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="dg-striped-html"><code>&lt;table class="dg-table dg-table--striped"&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Name&lt;/th&gt;
+      &lt;th&gt;Email&lt;/th&gt;
+      &lt;th&gt;Role&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;&lt;td&gt;Alex Martin&lt;/td&gt;&lt;td&gt;alex@company.com&lt;/td&gt;&lt;td&gt;Admin&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Sarah Chen&lt;/td&gt;&lt;td&gt;sarah@company.com&lt;/td&gt;&lt;td&gt;Editor&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+                <pre class="code-viewer__code" id="dg-striped-css" style="display:none"><code>.dg-table--striped th {
+  background: var(--bg-secondary);
+  border-bottom: 2px solid var(--border);
+}
+
+.dg-table--striped tbody tr:nth-child(odd) {
+  background: var(--bg-card);
+}
+
+.dg-table--striped tbody tr:nth-child(even) {
+  background: var(--bg-secondary);
+}
+
+.dg-table--striped tbody tr:hover {
+  background: rgba(99, 102, 241, 0.08);
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- 3. Bordered Table -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="dg-scroll-wrap">
+                <table class="dg-table dg-table--bordered">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Role</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Alex Martin</td>
+                      <td>alex@company.com</td>
+                      <td>Admin</td>
+                      <td>Active</td>
+                      <td>Edit</td>
+                    </tr>
+                    <tr>
+                      <td>Sarah Chen</td>
+                      <td>sarah@company.com</td>
+                      <td>Editor</td>
+                      <td>Active</td>
+                      <td>Edit</td>
+                    </tr>
+                    <tr>
+                      <td>Marco Rossi</td>
+                      <td>marco@company.com</td>
+                      <td>Viewer</td>
+                      <td>Inactive</td>
+                      <td>Edit</td>
+                    </tr>
+                    <tr>
+                      <td>Emma Wilson</td>
+                      <td>emma@company.com</td>
+                      <td>Manager</td>
+                      <td>Active</td>
+                      <td>Edit</td>
+                    </tr>
+                    <tr>
+                      <td>Leo Dupont</td>
+                      <td>leo@company.com</td>
+                      <td>Editor</td>
+                      <td>Pending</td>
+                      <td>Edit</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Bordered Table</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">basic</span>
+                <span class="tag">grid</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="dg-bordered-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="dg-bordered-html"><code>&lt;table class="dg-table dg-table--bordered"&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Name&lt;/th&gt;
+      &lt;th&gt;Email&lt;/th&gt;
+      &lt;th&gt;Role&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Alex Martin&lt;/td&gt;
+      &lt;td&gt;alex@company.com&lt;/td&gt;
+      &lt;td&gt;Admin&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+                <pre class="code-viewer__code" id="dg-bordered-css" style="display:none"><code>.dg-table--bordered {
+  border: 1px solid var(--border);
+}
+
+.dg-table--bordered th,
+.dg-table--bordered td {
+  border: 1px solid var(--border);
+}
+
+.dg-table--bordered th {
+  background: var(--bg-secondary);
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ========== ENHANCED TABLES ========== -->
+      <section id="enhanced-tables" class="section">
+        <h2 class="section__title">Enhanced Tables</h2>
+        <p class="section__desc">Tableaux avec statuts, actions et tri visuel.</p>
+
+        <div class="components-grid">
+
+          <!-- 4. Status Table -->
+          <article class="component-card" data-security="caution">
+            <span class="security-badge security-badge--caution">CAUTION</span>
+            <div class="component-card__preview">
+              <div class="dg-scroll-wrap">
+                <table class="dg-table dg-table--status">
+                  <thead>
+                    <tr>
+                      <th>User</th>
+                      <th>Email</th>
+                      <th>Status</th>
+                      <th>Joined</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div class="dg-user">
+                          <div class="dg-user__avatar" style="background: #6366f1;">AM</div>
+                          <span class="dg-user__name">Alex Martin</span>
+                        </div>
+                      </td>
+                      <td>alex@company.com</td>
+                      <td><span class="dg-badge dg-badge--active"><span class="dg-badge__dot"></span>Active</span></td>
+                      <td>Jan 12, 2026</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="dg-user">
+                          <div class="dg-user__avatar" style="background: #ec4899;">SC</div>
+                          <span class="dg-user__name">Sarah Chen</span>
+                        </div>
+                      </td>
+                      <td>sarah@company.com</td>
+                      <td><span class="dg-badge dg-badge--active"><span class="dg-badge__dot"></span>Active</span></td>
+                      <td>Feb 03, 2026</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="dg-user">
+                          <div class="dg-user__avatar" style="background: #f59e0b;">MR</div>
+                          <span class="dg-user__name">Marco Rossi</span>
+                        </div>
+                      </td>
+                      <td>marco@company.com</td>
+                      <td><span class="dg-badge dg-badge--inactive"><span class="dg-badge__dot"></span>Inactive</span></td>
+                      <td>Nov 18, 2025</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="dg-user">
+                          <div class="dg-user__avatar" style="background: #10b981;">EW</div>
+                          <span class="dg-user__name">Emma Wilson</span>
+                        </div>
+                      </td>
+                      <td>emma@company.com</td>
+                      <td><span class="dg-badge dg-badge--pending"><span class="dg-badge__dot"></span>Pending</span></td>
+                      <td>Feb 14, 2026</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="dg-user">
+                          <div class="dg-user__avatar" style="background: #3b82f6;">LD</div>
+                          <span class="dg-user__name">Leo Dupont</span>
+                        </div>
+                      </td>
+                      <td>leo@company.com</td>
+                      <td><span class="dg-badge dg-badge--active"><span class="dg-badge__dot"></span>Active</span></td>
+                      <td>Dec 01, 2025</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Status Table</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">enhanced</span>
+                <span class="tag">badges</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="dg-status-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="dg-status-html"><code>&lt;td&gt;
+  &lt;div class="dg-user"&gt;
+    &lt;div class="dg-user__avatar"&gt;AM&lt;/div&gt;
+    &lt;span class="dg-user__name"&gt;Alex Martin&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/td&gt;
+&lt;td&gt;
+  &lt;span class="dg-badge dg-badge--active"&gt;
+    &lt;span class="dg-badge__dot"&gt;&lt;/span&gt;Active
+  &lt;/span&gt;
+&lt;/td&gt;</code></pre>
+                <pre class="code-viewer__code" id="dg-status-css" style="display:none"><code>.dg-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dg-user__avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.dg-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.dg-badge__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.dg-badge--active {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.dg-badge--inactive {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.dg-badge--pending {
+  background: rgba(245, 158, 11, 0.1);
+  color: #f59e0b;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- 5. Action Table -->
+          <article class="component-card" data-security="caution">
+            <span class="security-badge security-badge--caution">CAUTION</span>
+            <div class="component-card__preview">
+              <div class="dg-scroll-wrap">
+                <table class="dg-table dg-table--action">
+                  <thead>
+                    <tr>
+                      <th><input type="checkbox" class="dg-checkbox"></th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Role</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><input type="checkbox" class="dg-checkbox" checked></td>
+                      <td>Alex Martin</td>
+                      <td>alex@company.com</td>
+                      <td>Admin</td>
+                      <td>
+                        <div class="dg-actions">
+                          <button class="dg-action-btn dg-action-btn--view" title="View">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                          </button>
+                          <button class="dg-action-btn dg-action-btn--edit" title="Edit">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                          </button>
+                          <button class="dg-action-btn dg-action-btn--delete" title="Delete">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" class="dg-checkbox"></td>
+                      <td>Sarah Chen</td>
+                      <td>sarah@company.com</td>
+                      <td>Editor</td>
+                      <td>
+                        <div class="dg-actions">
+                          <button class="dg-action-btn dg-action-btn--view" title="View">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                          </button>
+                          <button class="dg-action-btn dg-action-btn--edit" title="Edit">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                          </button>
+                          <button class="dg-action-btn dg-action-btn--delete" title="Delete">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" class="dg-checkbox"></td>
+                      <td>Marco Rossi</td>
+                      <td>marco@company.com</td>
+                      <td>Viewer</td>
+                      <td>
+                        <div class="dg-actions">
+                          <button class="dg-action-btn dg-action-btn--view" title="View">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                          </button>
+                          <button class="dg-action-btn dg-action-btn--edit" title="Edit">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                          </button>
+                          <button class="dg-action-btn dg-action-btn--delete" title="Delete">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" class="dg-checkbox" checked></td>
+                      <td>Emma Wilson</td>
+                      <td>emma@company.com</td>
+                      <td>Manager</td>
+                      <td>
+                        <div class="dg-actions">
+                          <button class="dg-action-btn dg-action-btn--view" title="View">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                          </button>
+                          <button class="dg-action-btn dg-action-btn--edit" title="Edit">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                          </button>
+                          <button class="dg-action-btn dg-action-btn--delete" title="Delete">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Action Table</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">enhanced</span>
+                <span class="tag">actions</span>
+                <span class="tag">bulk</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="dg-action-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="dg-action-html"><code>&lt;th&gt;&lt;input type="checkbox" class="dg-checkbox"&gt;&lt;/th&gt;
+...
+&lt;td&gt;
+  &lt;div class="dg-actions"&gt;
+    &lt;button class="dg-action-btn dg-action-btn--view"&gt;View&lt;/button&gt;
+    &lt;button class="dg-action-btn dg-action-btn--edit"&gt;Edit&lt;/button&gt;
+    &lt;button class="dg-action-btn dg-action-btn--delete"&gt;Delete&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/td&gt;</code></pre>
+                <pre class="code-viewer__code" id="dg-action-css" style="display:none"><code>.dg-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.dg-action-btn {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dg-action-btn--view {
+  background: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+}
+
+.dg-action-btn--edit {
+  background: rgba(99, 102, 241, 0.1);
+  color: #6366f1;
+}
+
+.dg-action-btn--delete {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.dg-checkbox {
+  width: 16px;
+  height: 16px;
+  accent-color: #6366f1;
+  cursor: pointer;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- 6. Sortable Table -->
+          <article class="component-card" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="dg-scroll-wrap">
+                <table class="dg-table dg-table--sortable">
+                  <thead>
+                    <tr>
+                      <th class="dg-sortable dg-sortable--asc">
+                        Name
+                        <span class="dg-sort-icon"><span>&#9650;</span><span>&#9660;</span></span>
+                      </th>
+                      <th class="dg-sortable">
+                        Email
+                        <span class="dg-sort-icon"><span>&#9650;</span><span>&#9660;</span></span>
+                      </th>
+                      <th class="dg-sortable dg-sortable--desc">
+                        Role
+                        <span class="dg-sort-icon"><span>&#9650;</span><span>&#9660;</span></span>
+                      </th>
+                      <th class="dg-sortable">
+                        Joined
+                        <span class="dg-sort-icon"><span>&#9650;</span><span>&#9660;</span></span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Alex Martin</td>
+                      <td>alex@company.com</td>
+                      <td>Admin</td>
+                      <td>Jan 12, 2026</td>
+                    </tr>
+                    <tr>
+                      <td>Emma Wilson</td>
+                      <td>emma@company.com</td>
+                      <td>Manager</td>
+                      <td>Feb 14, 2026</td>
+                    </tr>
+                    <tr>
+                      <td>Leo Dupont</td>
+                      <td>leo@company.com</td>
+                      <td>Editor</td>
+                      <td>Dec 01, 2025</td>
+                    </tr>
+                    <tr>
+                      <td>Marco Rossi</td>
+                      <td>marco@company.com</td>
+                      <td>Viewer</td>
+                      <td>Nov 18, 2025</td>
+                    </tr>
+                    <tr>
+                      <td>Sarah Chen</td>
+                      <td>sarah@company.com</td>
+                      <td>Editor</td>
+                      <td>Feb 03, 2026</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Sortable Table</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">enhanced</span>
+                <span class="tag">sort</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="dg-sortable-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="dg-sortable-html"><code>&lt;th class="dg-sortable dg-sortable--asc"&gt;
+  Name
+  &lt;span class="dg-sort-icon"&gt;
+    &lt;span&gt;&amp;#9650;&lt;/span&gt;
+    &lt;span&gt;&amp;#9660;&lt;/span&gt;
+  &lt;/span&gt;
+&lt;/th&gt;
+
+&lt;!-- Add --asc or --desc modifier for active sort --&gt;</code></pre>
+                <pre class="code-viewer__code" id="dg-sortable-css" style="display:none"><code>.dg-sortable {
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.2s ease;
+}
+
+.dg-sortable:hover {
+  color: #6366f1;
+}
+
+.dg-sort-icon {
+  display: inline-flex;
+  flex-direction: column;
+  margin-left: 4px;
+  font-size: 8px;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.dg-sort-icon span {
+  opacity: 0.3;
+  transition: opacity 0.2s ease;
+}
+
+.dg-sortable--asc .dg-sort-icon span:first-child,
+.dg-sortable--desc .dg-sort-icon span:last-child {
+  opacity: 1;
+  color: #6366f1;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ========== ADVANCED DATA GRIDS ========== -->
+      <section id="advanced-grids" class="section">
+        <h2 class="section__title">Advanced Data Grids</h2>
+        <p class="section__desc">Grilles completes avec recherche, pagination et mises en page avancees.</p>
+
+        <div class="components-list">
+
+          <!-- 7. Dashboard Data Grid -->
+          <article class="component-card component-card--wide" data-security="caution">
+            <span class="security-badge security-badge--caution">CAUTION</span>
+            <div class="component-card__preview">
+              <div class="dg-dashboard">
+                <div class="dg-dashboard__toolbar">
+                  <div class="dg-dashboard__search">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    <input type="text" placeholder="Search users..." class="dg-dashboard__search-input">
+                  </div>
+                  <div class="dg-dashboard__filters">
+                    <select class="dg-dashboard__select">
+                      <option>All Roles</option>
+                      <option>Admin</option>
+                      <option>Editor</option>
+                      <option>Viewer</option>
+                    </select>
+                    <select class="dg-dashboard__select">
+                      <option>All Status</option>
+                      <option>Active</option>
+                      <option>Inactive</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="dg-scroll-wrap">
+                  <table class="dg-table dg-table--dashboard">
+                    <thead>
+                      <tr>
+                        <th><input type="checkbox" class="dg-checkbox"></th>
+                        <th>User</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Last Active</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><input type="checkbox" class="dg-checkbox"></td>
+                        <td>
+                          <div class="dg-user">
+                            <div class="dg-user__avatar" style="background: #6366f1;">AM</div>
+                            <span class="dg-user__name">Alex Martin</span>
+                          </div>
+                        </td>
+                        <td>alex@company.com</td>
+                        <td><span class="dg-role-tag">Admin</span></td>
+                        <td><span class="dg-badge dg-badge--active"><span class="dg-badge__dot"></span>Active</span></td>
+                        <td class="dg-mono">2 min ago</td>
+                        <td><button class="dg-action-btn dg-action-btn--more">...</button></td>
+                      </tr>
+                      <tr>
+                        <td><input type="checkbox" class="dg-checkbox"></td>
+                        <td>
+                          <div class="dg-user">
+                            <div class="dg-user__avatar" style="background: #ec4899;">SC</div>
+                            <span class="dg-user__name">Sarah Chen</span>
+                          </div>
+                        </td>
+                        <td>sarah@company.com</td>
+                        <td><span class="dg-role-tag">Editor</span></td>
+                        <td><span class="dg-badge dg-badge--active"><span class="dg-badge__dot"></span>Active</span></td>
+                        <td class="dg-mono">15 min ago</td>
+                        <td><button class="dg-action-btn dg-action-btn--more">...</button></td>
+                      </tr>
+                      <tr>
+                        <td><input type="checkbox" class="dg-checkbox"></td>
+                        <td>
+                          <div class="dg-user">
+                            <div class="dg-user__avatar" style="background: #f59e0b;">MR</div>
+                            <span class="dg-user__name">Marco Rossi</span>
+                          </div>
+                        </td>
+                        <td>marco@company.com</td>
+                        <td><span class="dg-role-tag">Viewer</span></td>
+                        <td><span class="dg-badge dg-badge--inactive"><span class="dg-badge__dot"></span>Inactive</span></td>
+                        <td class="dg-mono">3 days ago</td>
+                        <td><button class="dg-action-btn dg-action-btn--more">...</button></td>
+                      </tr>
+                      <tr>
+                        <td><input type="checkbox" class="dg-checkbox"></td>
+                        <td>
+                          <div class="dg-user">
+                            <div class="dg-user__avatar" style="background: #10b981;">EW</div>
+                            <span class="dg-user__name">Emma Wilson</span>
+                          </div>
+                        </td>
+                        <td>emma@company.com</td>
+                        <td><span class="dg-role-tag">Manager</span></td>
+                        <td><span class="dg-badge dg-badge--active"><span class="dg-badge__dot"></span>Active</span></td>
+                        <td class="dg-mono">1 hr ago</td>
+                        <td><button class="dg-action-btn dg-action-btn--more">...</button></td>
+                      </tr>
+                      <tr>
+                        <td><input type="checkbox" class="dg-checkbox"></td>
+                        <td>
+                          <div class="dg-user">
+                            <div class="dg-user__avatar" style="background: #3b82f6;">LD</div>
+                            <span class="dg-user__name">Leo Dupont</span>
+                          </div>
+                        </td>
+                        <td>leo@company.com</td>
+                        <td><span class="dg-role-tag">Editor</span></td>
+                        <td><span class="dg-badge dg-badge--pending"><span class="dg-badge__dot"></span>Pending</span></td>
+                        <td class="dg-mono">5 hr ago</td>
+                        <td><button class="dg-action-btn dg-action-btn--more">...</button></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="dg-dashboard__footer">
+                  <div class="dg-dashboard__info">
+                    <span>Showing</span>
+                    <select class="dg-dashboard__select dg-dashboard__select--sm">
+                      <option>10</option>
+                      <option>25</option>
+                      <option>50</option>
+                    </select>
+                    <span>of 156 results</span>
+                  </div>
+                  <div class="dg-pagination">
+                    <button class="dg-pagination__btn" disabled>&laquo;</button>
+                    <button class="dg-pagination__btn dg-pagination__btn--active">1</button>
+                    <button class="dg-pagination__btn">2</button>
+                    <button class="dg-pagination__btn">3</button>
+                    <span class="dg-pagination__dots">...</span>
+                    <button class="dg-pagination__btn">16</button>
+                    <button class="dg-pagination__btn">&raquo;</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Dashboard Data Grid</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">advanced</span>
+                <span class="tag">search</span>
+                <span class="tag">pagination</span>
+                <span class="tag">SaaS</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="dg-dashboard-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="dg-dashboard-html"><code>&lt;div class="dg-dashboard"&gt;
+  &lt;div class="dg-dashboard__toolbar"&gt;
+    &lt;div class="dg-dashboard__search"&gt;
+      &lt;input type="text" placeholder="Search..."&gt;
+    &lt;/div&gt;
+    &lt;div class="dg-dashboard__filters"&gt;
+      &lt;select&gt;&lt;option&gt;All Roles&lt;/option&gt;&lt;/select&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;table class="dg-table dg-table--dashboard"&gt;...&lt;/table&gt;
+  &lt;div class="dg-dashboard__footer"&gt;
+    &lt;span&gt;Showing 10 of 156&lt;/span&gt;
+    &lt;div class="dg-pagination"&gt;...&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="dg-dashboard-css" style="display:none"><code>.dg-dashboard {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.dg-dashboard__toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  gap: 12px;
+}
+
+.dg-dashboard__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  border-top: 1px solid var(--border);
+}
+
+.dg-pagination {
+  display: flex;
+  gap: 4px;
+}
+
+.dg-pagination__btn {
+  min-width: 32px;
+  height: 32px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.dg-pagination__btn--active {
+  background: #6366f1;
+  color: white;
+  border-color: #6366f1;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- 8. Financial Data Grid -->
+          <article class="component-card component-card--wide" data-security="caution">
+            <span class="security-badge security-badge--caution">CAUTION</span>
+            <div class="component-card__preview">
+              <div class="dg-financial">
+                <div class="dg-financial__header">
+                  <h4 class="dg-financial__title">Transaction History</h4>
+                  <span class="dg-financial__period">Feb 2026</span>
+                </div>
+                <div class="dg-scroll-wrap">
+                  <table class="dg-table dg-table--financial">
+                    <thead>
+                      <tr>
+                        <th>Transaction ID</th>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th class="dg-align-right">Amount</th>
+                        <th class="dg-align-right">Balance</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="dg-mono">#TXN-00421</td>
+                        <td>Feb 18, 2026</td>
+                        <td>Client payment - Project Alpha</td>
+                        <td class="dg-align-right dg-amount dg-amount--positive">+$4,250.00</td>
+                        <td class="dg-align-right dg-mono">$12,847.56</td>
+                      </tr>
+                      <tr>
+                        <td class="dg-mono">#TXN-00420</td>
+                        <td>Feb 15, 2026</td>
+                        <td>AWS hosting - Monthly</td>
+                        <td class="dg-align-right dg-amount dg-amount--negative">-$189.00</td>
+                        <td class="dg-align-right dg-mono">$8,597.56</td>
+                      </tr>
+                      <tr>
+                        <td class="dg-mono">#TXN-00419</td>
+                        <td>Feb 12, 2026</td>
+                        <td>Freelancer payment - Sarah Chen</td>
+                        <td class="dg-align-right dg-amount dg-amount--negative">-$1,500.00</td>
+                        <td class="dg-align-right dg-mono">$8,786.56</td>
+                      </tr>
+                      <tr>
+                        <td class="dg-mono">#TXN-00418</td>
+                        <td>Feb 10, 2026</td>
+                        <td>Client payment - Project Beta</td>
+                        <td class="dg-align-right dg-amount dg-amount--positive">+$2,800.00</td>
+                        <td class="dg-align-right dg-mono">$10,286.56</td>
+                      </tr>
+                      <tr>
+                        <td class="dg-mono">#TXN-00417</td>
+                        <td>Feb 08, 2026</td>
+                        <td>Software license - Figma</td>
+                        <td class="dg-align-right dg-amount dg-amount--negative">-$15.00</td>
+                        <td class="dg-align-right dg-mono">$7,486.56</td>
+                      </tr>
+                      <tr>
+                        <td class="dg-mono">#TXN-00416</td>
+                        <td>Feb 05, 2026</td>
+                        <td>Client payment - Retainer</td>
+                        <td class="dg-align-right dg-amount dg-amount--positive">+$1,200.00</td>
+                        <td class="dg-align-right dg-mono">$7,501.56</td>
+                      </tr>
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <td colspan="3" class="dg-financial__total-label">Net Total</td>
+                        <td class="dg-align-right dg-amount dg-amount--positive dg-financial__total">+$6,546.00</td>
+                        <td></td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Financial Data Grid</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">advanced</span>
+                <span class="tag">financial</span>
+                <span class="tag">monospace</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="dg-financial-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="dg-financial-html"><code>&lt;table class="dg-table dg-table--financial"&gt;
+  &lt;thead&gt;...&lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td class="dg-mono"&gt;#TXN-00421&lt;/td&gt;
+      &lt;td&gt;Feb 18, 2026&lt;/td&gt;
+      &lt;td&gt;Client payment&lt;/td&gt;
+      &lt;td class="dg-amount dg-amount--positive"&gt;+$4,250.00&lt;/td&gt;
+      &lt;td class="dg-mono"&gt;$12,847.56&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+  &lt;tfoot&gt;
+    &lt;tr&gt;&lt;td colspan="3"&gt;Net Total&lt;/td&gt;&lt;td&gt;+$6,546.00&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tfoot&gt;
+&lt;/table&gt;</code></pre>
+                <pre class="code-viewer__code" id="dg-financial-css" style="display:none"><code>.dg-mono {
+  font-family: 'Fira Code', 'JetBrains Mono', monospace;
+  font-size: 13px;
+}
+
+.dg-amount--positive {
+  color: #10b981;
+  font-weight: 600;
+}
+
+.dg-amount--negative {
+  color: #ef4444;
+  font-weight: 600;
+}
+
+.dg-align-right {
+  text-align: right;
+}
+
+.dg-table--financial tfoot td {
+  border-top: 2px solid var(--border);
+  font-weight: 700;
+  padding-top: 16px;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- 9. Kanban-style Grid -->
+          <article class="component-card component-card--wide" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="dg-kanban-grid">
+                <div class="dg-kanban-card">
+                  <div class="dg-kanban-card__thumb" style="background: linear-gradient(135deg, #6366f1, #8b5cf6);"></div>
+                  <div class="dg-kanban-card__body">
+                    <h4 class="dg-kanban-card__title">Landing Page Redesign</h4>
+                    <p class="dg-kanban-card__desc">Update hero section and CTA for Q1 campaign launch.</p>
+                    <div class="dg-kanban-card__meta">
+                      <span class="dg-badge dg-badge--active"><span class="dg-badge__dot"></span>Active</span>
+                      <div class="dg-kanban-card__footer">
+                        <div class="dg-user__avatar dg-user__avatar--sm" style="background: #6366f1;">AM</div>
+                        <span class="dg-kanban-card__date">Feb 18</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="dg-kanban-card">
+                  <div class="dg-kanban-card__thumb" style="background: linear-gradient(135deg, #ec4899, #f43f5e);"></div>
+                  <div class="dg-kanban-card__body">
+                    <h4 class="dg-kanban-card__title">Mobile App Onboarding</h4>
+                    <p class="dg-kanban-card__desc">Design new user onboarding flow with 3 steps.</p>
+                    <div class="dg-kanban-card__meta">
+                      <span class="dg-badge dg-badge--pending"><span class="dg-badge__dot"></span>Pending</span>
+                      <div class="dg-kanban-card__footer">
+                        <div class="dg-user__avatar dg-user__avatar--sm" style="background: #ec4899;">SC</div>
+                        <span class="dg-kanban-card__date">Feb 20</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="dg-kanban-card">
+                  <div class="dg-kanban-card__thumb" style="background: linear-gradient(135deg, #10b981, #059669);"></div>
+                  <div class="dg-kanban-card__body">
+                    <h4 class="dg-kanban-card__title">API Documentation</h4>
+                    <p class="dg-kanban-card__desc">Write endpoint docs for v2 REST API with examples.</p>
+                    <div class="dg-kanban-card__meta">
+                      <span class="dg-badge dg-badge--active"><span class="dg-badge__dot"></span>Active</span>
+                      <div class="dg-kanban-card__footer">
+                        <div class="dg-user__avatar dg-user__avatar--sm" style="background: #f59e0b;">MR</div>
+                        <span class="dg-kanban-card__date">Feb 15</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="dg-kanban-card">
+                  <div class="dg-kanban-card__thumb" style="background: linear-gradient(135deg, #3b82f6, #2563eb);"></div>
+                  <div class="dg-kanban-card__body">
+                    <h4 class="dg-kanban-card__title">Dashboard Analytics</h4>
+                    <p class="dg-kanban-card__desc">Build real-time charts for user engagement metrics.</p>
+                    <div class="dg-kanban-card__meta">
+                      <span class="dg-badge dg-badge--inactive"><span class="dg-badge__dot"></span>Blocked</span>
+                      <div class="dg-kanban-card__footer">
+                        <div class="dg-user__avatar dg-user__avatar--sm" style="background: #10b981;">EW</div>
+                        <span class="dg-kanban-card__date">Feb 12</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="dg-kanban-card">
+                  <div class="dg-kanban-card__thumb" style="background: linear-gradient(135deg, #f59e0b, #d97706);"></div>
+                  <div class="dg-kanban-card__body">
+                    <h4 class="dg-kanban-card__title">Email Templates</h4>
+                    <p class="dg-kanban-card__desc">Create responsive email templates for transactional emails.</p>
+                    <div class="dg-kanban-card__meta">
+                      <span class="dg-badge dg-badge--pending"><span class="dg-badge__dot"></span>Pending</span>
+                      <div class="dg-kanban-card__footer">
+                        <div class="dg-user__avatar dg-user__avatar--sm" style="background: #3b82f6;">LD</div>
+                        <span class="dg-kanban-card__date">Feb 22</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="dg-kanban-card">
+                  <div class="dg-kanban-card__thumb" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);"></div>
+                  <div class="dg-kanban-card__body">
+                    <h4 class="dg-kanban-card__title">Design System v2</h4>
+                    <p class="dg-kanban-card__desc">Migrate components to new token-based design system.</p>
+                    <div class="dg-kanban-card__meta">
+                      <span class="dg-badge dg-badge--active"><span class="dg-badge__dot"></span>Active</span>
+                      <div class="dg-kanban-card__footer">
+                        <div class="dg-user__avatar dg-user__avatar--sm" style="background: #6366f1;">AM</div>
+                        <span class="dg-kanban-card__date">Feb 10</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Kanban-style Grid</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">advanced</span>
+                <span class="tag">cards</span>
+                <span class="tag">CMS</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="dg-kanban-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="dg-kanban-html"><code>&lt;div class="dg-kanban-grid"&gt;
+  &lt;div class="dg-kanban-card"&gt;
+    &lt;div class="dg-kanban-card__thumb"&gt;&lt;/div&gt;
+    &lt;div class="dg-kanban-card__body"&gt;
+      &lt;h4 class="dg-kanban-card__title"&gt;Project Name&lt;/h4&gt;
+      &lt;p class="dg-kanban-card__desc"&gt;Description...&lt;/p&gt;
+      &lt;div class="dg-kanban-card__meta"&gt;
+        &lt;span class="dg-badge dg-badge--active"&gt;Active&lt;/span&gt;
+        &lt;div class="dg-user__avatar"&gt;AM&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="dg-kanban-css" style="display:none"><code>.dg-kanban-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.dg-kanban-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.dg-kanban-card:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.dg-kanban-card__thumb {
+  height: 100px;
+}
+
+.dg-kanban-card__body {
+  padding: 16px;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ========== COMPACT & SPECIALIZED ========== -->
+      <section id="compact-specialized" class="section">
+        <h2 class="section__title">Compact & Specialized</h2>
+        <p class="section__desc">Listes denses et tableaux extensibles pour les interfaces pro.</p>
+
+        <div class="components-list">
+
+          <!-- 10. Compact List -->
+          <article class="component-card component-card--wide" data-security="caution">
+            <span class="security-badge security-badge--caution">CAUTION</span>
+            <div class="component-card__preview">
+              <div class="dg-compact">
+                <div class="dg-compact__item">
+                  <input type="checkbox" class="dg-checkbox">
+                  <div class="dg-user__avatar dg-user__avatar--sm" style="background: #6366f1;">AM</div>
+                  <div class="dg-compact__content">
+                    <span class="dg-compact__name">Alex Martin</span>
+                    <span class="dg-compact__desc">Update authentication flow for SSO integration</span>
+                  </div>
+                  <span class="dg-compact__time">2m ago</span>
+                  <button class="dg-action-btn dg-action-btn--more">...</button>
+                </div>
+                <div class="dg-compact__item">
+                  <input type="checkbox" class="dg-checkbox">
+                  <div class="dg-user__avatar dg-user__avatar--sm" style="background: #ec4899;">SC</div>
+                  <div class="dg-compact__content">
+                    <span class="dg-compact__name">Sarah Chen</span>
+                    <span class="dg-compact__desc">Fix responsive layout issues on pricing page</span>
+                  </div>
+                  <span class="dg-compact__time">15m ago</span>
+                  <button class="dg-action-btn dg-action-btn--more">...</button>
+                </div>
+                <div class="dg-compact__item">
+                  <input type="checkbox" class="dg-checkbox" checked>
+                  <div class="dg-user__avatar dg-user__avatar--sm" style="background: #f59e0b;">MR</div>
+                  <div class="dg-compact__content">
+                    <span class="dg-compact__name">Marco Rossi</span>
+                    <span class="dg-compact__desc">Add unit tests for payment processing module</span>
+                  </div>
+                  <span class="dg-compact__time">1h ago</span>
+                  <button class="dg-action-btn dg-action-btn--more">...</button>
+                </div>
+                <div class="dg-compact__item">
+                  <input type="checkbox" class="dg-checkbox">
+                  <div class="dg-user__avatar dg-user__avatar--sm" style="background: #10b981;">EW</div>
+                  <div class="dg-compact__content">
+                    <span class="dg-compact__name">Emma Wilson</span>
+                    <span class="dg-compact__desc">Review and merge pull request #342 for new API</span>
+                  </div>
+                  <span class="dg-compact__time">3h ago</span>
+                  <button class="dg-action-btn dg-action-btn--more">...</button>
+                </div>
+                <div class="dg-compact__item">
+                  <input type="checkbox" class="dg-checkbox">
+                  <div class="dg-user__avatar dg-user__avatar--sm" style="background: #3b82f6;">LD</div>
+                  <div class="dg-compact__content">
+                    <span class="dg-compact__name">Leo Dupont</span>
+                    <span class="dg-compact__desc">Deploy staging environment for client demo</span>
+                  </div>
+                  <span class="dg-compact__time">5h ago</span>
+                  <button class="dg-action-btn dg-action-btn--more">...</button>
+                </div>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Compact List</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">compact</span>
+                <span class="tag">dense</span>
+                <span class="tag">tasks</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="dg-compact-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="dg-compact-html"><code>&lt;div class="dg-compact"&gt;
+  &lt;div class="dg-compact__item"&gt;
+    &lt;input type="checkbox" class="dg-checkbox"&gt;
+    &lt;div class="dg-user__avatar"&gt;AM&lt;/div&gt;
+    &lt;div class="dg-compact__content"&gt;
+      &lt;span class="dg-compact__name"&gt;Alex Martin&lt;/span&gt;
+      &lt;span class="dg-compact__desc"&gt;Task description...&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;span class="dg-compact__time"&gt;2m ago&lt;/span&gt;
+    &lt;button class="dg-action-btn"&gt;...&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre class="code-viewer__code" id="dg-compact-css" style="display:none"><code>.dg-compact {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.dg-compact__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s ease;
+}
+
+.dg-compact__item:last-child {
+  border-bottom: none;
+}
+
+.dg-compact__item:hover {
+  background: rgba(99, 102, 241, 0.04);
+}
+
+.dg-compact__content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  gap: 8px;
+}
+
+.dg-compact__name {
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  font-size: 13px;
+}
+
+.dg-compact__desc {
+  color: var(--text-secondary);
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dg-compact__time {
+  color: var(--text-muted);
+  font-size: 12px;
+  white-space: nowrap;
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- 11. Expandable Rows -->
+          <article class="component-card component-card--wide" data-security="safe">
+            <span class="security-badge security-badge--safe">SAFE</span>
+            <div class="component-card__preview">
+              <div class="dg-scroll-wrap">
+                <table class="dg-table dg-table--expandable">
+                  <thead>
+                    <tr>
+                      <th style="width: 40px;"></th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Role</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <label class="dg-expand-toggle">
+                          <input type="checkbox" class="dg-expand-checkbox">
+                          <span class="dg-expand-chevron">&#9654;</span>
+                        </label>
+                      </td>
+                      <td>Alex Martin</td>
+                      <td>alex@company.com</td>
+                      <td>Admin</td>
+                      <td><span class="dg-badge dg-badge--active"><span class="dg-badge__dot"></span>Active</span></td>
+                    </tr>
+                    <tr class="dg-expanded-row">
+                      <td colspan="5">
+                        <div class="dg-expanded-content">
+                          <div class="dg-expanded-content__grid">
+                            <div><strong>Department:</strong> Engineering</div>
+                            <div><strong>Location:</strong> Paris, France</div>
+                            <div><strong>Joined:</strong> Jan 12, 2026</div>
+                            <div><strong>Last Login:</strong> 2 minutes ago</div>
+                            <div><strong>Projects:</strong> 8 active, 23 completed</div>
+                            <div><strong>Phone:</strong> +33 6 12 34 56 78</div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label class="dg-expand-toggle">
+                          <input type="checkbox" class="dg-expand-checkbox">
+                          <span class="dg-expand-chevron">&#9654;</span>
+                        </label>
+                      </td>
+                      <td>Sarah Chen</td>
+                      <td>sarah@company.com</td>
+                      <td>Editor</td>
+                      <td><span class="dg-badge dg-badge--active"><span class="dg-badge__dot"></span>Active</span></td>
+                    </tr>
+                    <tr class="dg-expanded-row">
+                      <td colspan="5">
+                        <div class="dg-expanded-content">
+                          <div class="dg-expanded-content__grid">
+                            <div><strong>Department:</strong> Design</div>
+                            <div><strong>Location:</strong> London, UK</div>
+                            <div><strong>Joined:</strong> Feb 03, 2026</div>
+                            <div><strong>Last Login:</strong> 15 minutes ago</div>
+                            <div><strong>Projects:</strong> 5 active, 12 completed</div>
+                            <div><strong>Phone:</strong> +44 20 7946 0958</div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label class="dg-expand-toggle">
+                          <input type="checkbox" class="dg-expand-checkbox">
+                          <span class="dg-expand-chevron">&#9654;</span>
+                        </label>
+                      </td>
+                      <td>Marco Rossi</td>
+                      <td>marco@company.com</td>
+                      <td>Viewer</td>
+                      <td><span class="dg-badge dg-badge--inactive"><span class="dg-badge__dot"></span>Inactive</span></td>
+                    </tr>
+                    <tr class="dg-expanded-row">
+                      <td colspan="5">
+                        <div class="dg-expanded-content">
+                          <div class="dg-expanded-content__grid">
+                            <div><strong>Department:</strong> Marketing</div>
+                            <div><strong>Location:</strong> Milan, Italy</div>
+                            <div><strong>Joined:</strong> Nov 18, 2025</div>
+                            <div><strong>Last Login:</strong> 3 days ago</div>
+                            <div><strong>Projects:</strong> 2 active, 7 completed</div>
+                            <div><strong>Phone:</strong> +39 02 1234 5678</div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="component-card__info">
+              <h3 class="component-card__name">Expandable Rows</h3>
+              <div class="component-card__tags">
+                <span class="tag tag--primary">compact</span>
+                <span class="tag">expandable</span>
+                <span class="tag">CSS-only</span>
+              </div>
+            </div>
+            <div class="code-viewer">
+              <div class="code-viewer__header">
+                <div class="code-viewer__tabs">
+                  <button class="code-viewer__tab code-viewer__tab--active">HTML</button>
+                  <button class="code-viewer__tab">CSS</button>
+                </div>
+                <button class="copy-btn" data-target="dg-expandable-html">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+              <div class="code-viewer__content">
+                <pre class="code-viewer__code" id="dg-expandable-html"><code>&lt;tr&gt;
+  &lt;td&gt;
+    &lt;label class="dg-expand-toggle"&gt;
+      &lt;input type="checkbox" class="dg-expand-checkbox"&gt;
+      &lt;span class="dg-expand-chevron"&gt;&amp;#9654;&lt;/span&gt;
+    &lt;/label&gt;
+  &lt;/td&gt;
+  &lt;td&gt;Alex Martin&lt;/td&gt;
+  ...
+&lt;/tr&gt;
+&lt;tr class="dg-expanded-row"&gt;
+  &lt;td colspan="5"&gt;
+    &lt;div class="dg-expanded-content"&gt;
+      Detail info here...
+    &lt;/div&gt;
+  &lt;/td&gt;
+&lt;/tr&gt;</code></pre>
+                <pre class="code-viewer__code" id="dg-expandable-css" style="display:none"><code>/* CSS-only expand with checkbox hack */
+.dg-expand-checkbox {
+  display: none;
+}
+
+.dg-expand-chevron {
+  display: inline-block;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.dg-expanded-row {
+  display: none;
+}
+
+.dg-expand-checkbox:checked ~ .dg-expand-chevron {
+  transform: rotate(90deg);
+  color: #6366f1;
+}
+
+/* Use JS or :has() to toggle the expanded row */
+.dg-expand-toggle:has(.dg-expand-checkbox:checked) {
+  /* chevron rotates via sibling selector above */
+}
+
+.dg-expanded-content__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  padding: 16px 40px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}</code></pre>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Component Styles (inline for demo) -->
+  <style>
+    /* ========== DATA GRIDS BASE ========== */
+    .dg-scroll-wrap {
+      width: 100%;
+      overflow-x: auto;
+      border-radius: 8px;
+    }
+
+    .dg-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .dg-table th,
+    .dg-table td {
+      padding: 12px 16px;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    .dg-table th {
+      font-weight: 600;
+      color: var(--text-primary);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .dg-table td {
+      color: var(--text-secondary);
+    }
+
+    .dg-table tbody tr {
+      transition: background 0.15s ease;
+    }
+
+    .dg-table tbody tr:hover {
+      background: rgba(99, 102, 241, 0.04);
+    }
+
+    /* ========== 1. CLEAN TABLE ========== */
+    .dg-table--clean th {
+      background: var(--bg-secondary);
+      border-bottom: 2px solid var(--border);
+    }
+
+    .dg-table--clean td {
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ========== 2. STRIPED TABLE ========== */
+    .dg-table--striped th {
+      background: var(--bg-secondary);
+      border-bottom: 2px solid var(--border);
+    }
+
+    .dg-table--striped tbody tr:nth-child(odd) {
+      background: var(--bg-card);
+    }
+
+    .dg-table--striped tbody tr:nth-child(even) {
+      background: var(--bg-secondary);
+    }
+
+    .dg-table--striped tbody tr:hover {
+      background: rgba(99, 102, 241, 0.08);
+    }
+
+    /* ========== 3. BORDERED TABLE ========== */
+    .dg-table--bordered {
+      border: 1px solid var(--border);
+    }
+
+    .dg-table--bordered th,
+    .dg-table--bordered td {
+      border: 1px solid var(--border);
+    }
+
+    .dg-table--bordered th {
+      background: var(--bg-secondary);
+    }
+
+    /* ========== 4. STATUS TABLE ========== */
+    .dg-table--status th {
+      background: var(--bg-secondary);
+      border-bottom: 2px solid var(--border);
+    }
+
+    .dg-table--status td {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dg-user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .dg-user__avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 12px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .dg-user__avatar--sm {
+      width: 24px;
+      height: 24px;
+      font-size: 10px;
+    }
+
+    .dg-user__name {
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .dg-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .dg-badge__dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .dg-badge--active {
+      background: rgba(16, 185, 129, 0.1);
+      color: #10b981;
+    }
+
+    .dg-badge--inactive {
+      background: rgba(239, 68, 68, 0.1);
+      color: #ef4444;
+    }
+
+    .dg-badge--pending {
+      background: rgba(245, 158, 11, 0.1);
+      color: #f59e0b;
+    }
+
+    /* ========== 5. ACTION TABLE ========== */
+    .dg-table--action th {
+      background: var(--bg-secondary);
+      border-bottom: 2px solid var(--border);
+    }
+
+    .dg-table--action td {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dg-actions {
+      display: flex;
+      gap: 6px;
+    }
+
+    .dg-action-btn {
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: transparent;
+    }
+
+    .dg-action-btn--view {
+      background: rgba(59, 130, 246, 0.1);
+      color: #3b82f6;
+    }
+
+    .dg-action-btn--view:hover {
+      background: #3b82f6;
+      color: white;
+    }
+
+    .dg-action-btn--edit {
+      background: rgba(99, 102, 241, 0.1);
+      color: #6366f1;
+    }
+
+    .dg-action-btn--edit:hover {
+      background: #6366f1;
+      color: white;
+    }
+
+    .dg-action-btn--delete {
+      background: rgba(239, 68, 68, 0.1);
+      color: #ef4444;
+    }
+
+    .dg-action-btn--delete:hover {
+      background: #ef4444;
+      color: white;
+    }
+
+    .dg-action-btn--more {
+      color: var(--text-secondary);
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .dg-action-btn--more:hover {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+    }
+
+    .dg-checkbox {
+      width: 16px;
+      height: 16px;
+      accent-color: #6366f1;
+      cursor: pointer;
+    }
+
+    /* ========== 6. SORTABLE TABLE ========== */
+    .dg-table--sortable th {
+      background: var(--bg-secondary);
+      border-bottom: 2px solid var(--border);
+    }
+
+    .dg-table--sortable td {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dg-sortable {
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.2s ease;
+    }
+
+    .dg-sortable:hover {
+      color: #6366f1;
+    }
+
+    .dg-sort-icon {
+      display: inline-flex;
+      flex-direction: column;
+      margin-left: 4px;
+      font-size: 8px;
+      line-height: 1;
+      vertical-align: middle;
+    }
+
+    .dg-sort-icon span {
+      opacity: 0.3;
+      transition: opacity 0.2s ease;
+    }
+
+    .dg-sortable--asc .dg-sort-icon span:first-child,
+    .dg-sortable--desc .dg-sort-icon span:last-child {
+      opacity: 1;
+      color: #6366f1;
+    }
+
+    /* ========== 7. DASHBOARD DATA GRID ========== */
+    .dg-dashboard {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .dg-dashboard__toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .dg-dashboard__search {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 12px;
+      flex: 1;
+      max-width: 320px;
+      color: var(--text-muted);
+    }
+
+    .dg-dashboard__search-input {
+      border: none;
+      background: transparent;
+      color: var(--text-primary);
+      font-size: 14px;
+      outline: none;
+      width: 100%;
+    }
+
+    .dg-dashboard__search-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .dg-dashboard__filters {
+      display: flex;
+      gap: 8px;
+    }
+
+    .dg-dashboard__select {
+      padding: 8px 12px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-secondary);
+      font-size: 13px;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .dg-dashboard__select--sm {
+      padding: 4px 8px;
+      font-size: 12px;
+      border-radius: 6px;
+    }
+
+    .dg-table--dashboard th {
+      background: transparent;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dg-table--dashboard td {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dg-role-tag {
+      padding: 2px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      background: var(--bg-secondary);
+      color: var(--text-secondary);
+    }
+
+    .dg-dashboard__footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .dg-dashboard__info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dg-pagination {
+      display: flex;
+      gap: 4px;
+    }
+
+    .dg-pagination__btn {
+      min-width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .dg-pagination__btn:hover:not(:disabled) {
+      border-color: #6366f1;
+      color: #6366f1;
+    }
+
+    .dg-pagination__btn--active {
+      background: #6366f1;
+      color: white;
+      border-color: #6366f1;
+    }
+
+    .dg-pagination__btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .dg-pagination__dots {
+      display: flex;
+      align-items: center;
+      padding: 0 4px;
+      color: var(--text-muted);
+    }
+
+    .dg-mono {
+      font-family: var(--font-mono);
+      font-size: 13px;
+    }
+
+    /* ========== 8. FINANCIAL DATA GRID ========== */
+    .dg-financial {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .dg-financial__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dg-financial__title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .dg-financial__period {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .dg-table--financial th {
+      background: transparent;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dg-table--financial td {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dg-align-right {
+      text-align: right;
+    }
+
+    .dg-amount {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .dg-amount--positive {
+      color: #10b981;
+    }
+
+    .dg-amount--negative {
+      color: #ef4444;
+    }
+
+    .dg-financial__total-label {
+      font-weight: 700;
+      color: var(--text-primary);
+      text-align: right;
+    }
+
+    .dg-financial__total {
+      font-size: 14px;
+    }
+
+    .dg-table--financial tfoot td {
+      border-top: 2px solid var(--border);
+      border-bottom: none;
+      padding-top: 16px;
+    }
+
+    /* ========== 9. KANBAN GRID ========== */
+    .dg-kanban-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .dg-kanban-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+
+    .dg-kanban-card:hover {
+      border-color: rgba(99, 102, 241, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    }
+
+    .dg-kanban-card__thumb {
+      height: 100px;
+    }
+
+    .dg-kanban-card__body {
+      padding: 16px;
+    }
+
+    .dg-kanban-card__title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+
+    .dg-kanban-card__desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 12px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .dg-kanban-card__meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .dg-kanban-card__footer {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dg-kanban-card__date {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* ========== 10. COMPACT LIST ========== */
+    .dg-compact {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .dg-compact__item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s ease;
+    }
+
+    .dg-compact__item:last-child {
+      border-bottom: none;
+    }
+
+    .dg-compact__item:hover {
+      background: rgba(99, 102, 241, 0.04);
+    }
+
+    .dg-compact__content {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      gap: 8px;
+      align-items: baseline;
+    }
+
+    .dg-compact__name {
+      font-weight: 600;
+      color: var(--text-primary);
+      white-space: nowrap;
+      font-size: 13px;
+    }
+
+    .dg-compact__desc {
+      color: var(--text-secondary);
+      font-size: 13px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .dg-compact__time {
+      color: var(--text-muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    /* ========== 11. EXPANDABLE ROWS ========== */
+    .dg-table--expandable th {
+      background: var(--bg-secondary);
+      border-bottom: 2px solid var(--border);
+    }
+
+    .dg-table--expandable td {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dg-expand-toggle {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .dg-expand-checkbox {
+      display: none;
+    }
+
+    .dg-expand-chevron {
+      display: inline-block;
+      font-size: 12px;
+      color: var(--text-secondary);
+      transition: transform 0.2s ease;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+    }
+
+    .dg-expand-chevron:hover {
+      background: var(--bg-secondary);
+      color: #6366f1;
+    }
+
+    .dg-expand-checkbox:checked ~ .dg-expand-chevron {
+      transform: rotate(90deg);
+      color: #6366f1;
+    }
+
+    .dg-expanded-row {
+      display: none;
+      background: var(--bg-secondary);
+    }
+
+    .dg-expand-checkbox:checked ~ .dg-expand-chevron {
+      transform: rotate(90deg);
+    }
+
+    .dg-expanded-content {
+      padding: 0;
+    }
+
+    .dg-expanded-content__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      padding: 16px 40px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .dg-expanded-content__grid strong {
+      color: var(--text-primary);
+    }
+
+    /* ========== WIDE CARD LIST LAYOUT ========== */
+    .components-list {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .component-card--wide {
+      width: 100%;
+    }
+  </style>
+
+  <script src="../../assets/js/copy-code.js"></script>
+  <script src="../../assets/js/live-editor.js"></script>
+  <script src="../../assets/js/security-system.js"></script>
+  <script src="../../assets/js/search.js"></script>
+  <script src="../../assets/js/accessibility.js"></script>
+  <script src="../../assets/js/theme-toggle.js"></script>
+</body>
+</html>

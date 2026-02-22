@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heatmap Tooltip — 4 Variantes | Duke-components</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ========== RESET + VARIABLES ========== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --nt-primary:#007782;
+  --nt-primary-dark:#005f68;
+  --nt-primary-light:#e0f2f1;
+  --nt-success:#28865a;
+  --nt-warning:#f9bb42;
+  --nt-error:#d04555;
+  --nt-surface:#ffffff;
+  --nt-text:#1e293b;
+  --nt-text-muted:#64748b;
+  --nt-border:#e2e8f0;
+  --nt-radius:12px;
+  --nt-radius-sm:8px;
+  --nt-shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+  --nt-shadow-lg:0 10px 30px rgba(0,0,0,.12),0 4px 12px rgba(0,0,0,.06);
+  --page-bg:#0f172a;
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+}
+body{background:var(--page-bg);color:var(--nt-text);line-height:1.5;padding:40px 32px 80px}
+
+/* ========== PAGE HEADER ========== */
+.page-title{
+  text-align:center;
+  margin-bottom:48px;
+}
+.page-title h1{
+  font-size:28px;
+  font-weight:800;
+  color:#f8fafc;
+  letter-spacing:-.5px;
+}
+.page-title p{
+  font-size:14px;
+  color:#94a3b8;
+  margin-top:6px;
+}
+
+/* ========== VARIANT CARD (white card container) ========== */
+.variant-card{
+  max-width:900px;
+  margin:0 auto 40px;
+  background:var(--nt-surface);
+  border-radius:16px;
+  padding:32px;
+  box-shadow:var(--nt-shadow-lg);
+}
+.variant-card__header{
+  margin-bottom:24px;
+}
+.variant-card__label{
+  display:inline-block;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:var(--nt-primary);
+  background:var(--nt-primary-light);
+  padding:4px 12px;
+  border-radius:20px;
+  margin-bottom:8px;
+}
+.variant-card__title{
+  font-size:18px;
+  font-weight:700;
+  color:var(--nt-text);
+}
+.variant-card__desc{
+  font-size:13px;
+  color:var(--nt-text-muted);
+  margin-top:4px;
+  line-height:1.6;
+}
+
+/* ========== HEATMAP GRID (shared) ========== */
+.heatmap{
+  display:grid;
+  grid-template-columns:110px repeat(7,1fr);
+  gap:3px;
+  margin-bottom:20px;
+}
+.heatmap__corner{
+  /* empty top-left cell */
+}
+.heatmap__day-header{
+  text-align:center;
+  font-size:12px;
+  font-weight:600;
+  color:var(--nt-text-muted);
+  padding:6px 0 10px;
+}
+.heatmap__row-label{
+  display:flex;
+  align-items:center;
+  font-size:12px;
+  font-weight:500;
+  color:var(--nt-text);
+  padding-right:12px;
+}
+.heatmap__cell{
+  position:relative;
+  width:100%;
+  aspect-ratio:1.6;
+  border-radius:6px;
+  cursor:pointer;
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.heatmap__cell:hover{
+  transform:scale(1.12);
+  z-index:10;
+  box-shadow:0 4px 14px rgba(0,119,130,.25);
+}
+
+/* Cell intensity colors (teal scale 0-5) */
+.heatmap__cell--0{background:#f1f5f9;}
+.heatmap__cell--1{background:#ccf0f3;}
+.heatmap__cell--2{background:#99dfe5;}
+.heatmap__cell--3{background:#4dbdc7;}
+.heatmap__cell--4{background:#1a9aa6;}
+.heatmap__cell--5{background:#007782;}
+
+/* ========== LEGEND ========== */
+.heatmap-legend{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  margin-top:8px;
+}
+.heatmap-legend__label{
+  font-size:11px;
+  color:var(--nt-text-muted);
+  font-weight:500;
+}
+.heatmap-legend__bar{
+  display:flex;
+  gap:3px;
+}
+.heatmap-legend__swatch{
+  width:24px;
+  height:12px;
+  border-radius:3px;
+}
+
+/* ============================================================
+   VARIANTE A — Card Riche (Glassmorphism)
+   ============================================================ */
+.va .heatmap__cell .tooltip-rich{
+  position:absolute;
+  bottom:calc(100% + 12px);
+  left:50%;
+  transform:translateX(-50%) scale(.95);
+  width:180px;
+  background:rgba(255,255,255,.88);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border:1px solid rgba(0,119,130,.15);
+  border-radius:12px;
+  padding:14px;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .2s ease, transform .2s ease;
+  box-shadow:0 8px 32px rgba(0,0,0,.12);
+  z-index:20;
+}
+/* Arrow */
+.va .heatmap__cell .tooltip-rich::after{
+  content:'';
+  position:absolute;
+  top:100%;
+  left:50%;
+  transform:translateX(-50%);
+  border:7px solid transparent;
+  border-top-color:rgba(255,255,255,.88);
+}
+.va .heatmap__cell:hover .tooltip-rich{
+  opacity:1;
+  transform:translateX(-50%) scale(1);
+  pointer-events:auto;
+}
+.tooltip-rich__value{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:20px;
+  font-weight:800;
+  color:var(--nt-text);
+  margin-bottom:8px;
+}
+.tooltip-rich__heart{
+  color:var(--nt-error);
+  font-size:16px;
+}
+.tooltip-rich__subtitle{
+  font-size:11px;
+  color:var(--nt-text-muted);
+  margin-bottom:10px;
+}
+.tooltip-rich__bar{
+  height:5px;
+  border-radius:3px;
+  background:#e2e8f0;
+  overflow:hidden;
+  margin-bottom:10px;
+}
+.tooltip-rich__bar-fill{
+  height:100%;
+  border-radius:3px;
+  transition:width .3s ease;
+}
+.tooltip-rich__bar-fill--1{width:20%;background:#99dfe5}
+.tooltip-rich__bar-fill--2{width:40%;background:#66ccd4}
+.tooltip-rich__bar-fill--3{width:60%;background:#33b9c3}
+.tooltip-rich__bar-fill--4{width:80%;background:#1a9aa6}
+.tooltip-rich__bar-fill--5{width:100%;background:#007782}
+.tooltip-rich__meta{
+  font-size:10px;
+  color:var(--nt-text-muted);
+  font-weight:500;
+}
+/* Level 0 special */
+.tooltip-rich__empty{
+  font-size:12px;
+  color:var(--nt-text-muted);
+  font-style:italic;
+  text-align:center;
+  padding:4px 0;
+}
+
+/* ============================================================
+   VARIANTE B — Bulle avec valeur XL
+   ============================================================ */
+.vb .heatmap__cell::before{
+  content:attr(data-tooltip);
+  position:absolute;
+  bottom:calc(100% + 12px);
+  left:50%;
+  transform:translateX(-50%) translateY(6px);
+  background:var(--nt-primary);
+  color:#ffffff;
+  padding:10px 16px;
+  border-radius:12px;
+  text-align:center;
+  white-space:nowrap;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .2s ease, transform .2s ease;
+  box-shadow:0 6px 20px rgba(0,119,130,.35);
+  z-index:20;
+  font-size:1.4rem;
+  font-weight:800;
+  line-height:1.2;
+}
+/* Subtitle via ::after */
+.vb .heatmap__cell::after{
+  content:attr(data-tooltip-sub);
+  position:absolute;
+  bottom:calc(100% + 44px);
+  left:50%;
+  transform:translateX(-50%) translateY(6px);
+  color:rgba(255,255,255,.75);
+  font-size:11px;
+  font-weight:500;
+  white-space:nowrap;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .2s ease, transform .2s ease;
+  z-index:21;
+}
+/* Arrow — we use a separate inner span trick, but for pure CSS we reposition ::before to include arrow via box-shadow hack */
+/* Instead, we use outline trick — simpler: add a triangle via border on a wrapper */
+.vb .heatmap__cell-wrap{
+  position:relative;
+  width:100%;
+  aspect-ratio:1.6;
+}
+/* Arrow triangle for variant B */
+.vb .heatmap__cell .vb-arrow{
+  position:absolute;
+  bottom:calc(100% + 5px);
+  left:50%;
+  transform:translateX(-50%) translateY(6px);
+  width:0;height:0;
+  border:7px solid transparent;
+  border-top-color:var(--nt-primary);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .2s ease, transform .2s ease;
+  z-index:20;
+}
+.vb .heatmap__cell:hover::before,
+.vb .heatmap__cell:hover::after,
+.vb .heatmap__cell:hover .vb-arrow{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+/* Level 0 for vb */
+.vb .heatmap__cell--0::before{
+  font-size:.75rem;
+  font-weight:500;
+  padding:8px 14px;
+  font-style:italic;
+}
+.vb .heatmap__cell--0::after{
+  display:none;
+}
+
+/* ============================================================
+   VARIANTE C — Popup Circulaire
+   ============================================================ */
+.vc .heatmap__cell .tooltip-circle{
+  position:absolute;
+  bottom:calc(100% + 20px);
+  left:50%;
+  transform:translateX(-50%) scale(.6);
+  width:64px;
+  height:64px;
+  border-radius:50%;
+  background:var(--nt-surface);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .25s ease, transform .25s ease;
+  box-shadow:0 4px 20px rgba(0,0,0,.12);
+  z-index:20;
+  border:3px solid #e2e8f0;
+}
+.vc .heatmap__cell--1 .tooltip-circle{border-color:#99dfe5}
+.vc .heatmap__cell--2 .tooltip-circle{border-color:#66ccd4}
+.vc .heatmap__cell--3 .tooltip-circle{border-color:#33b9c3}
+.vc .heatmap__cell--4 .tooltip-circle{border-color:#1a9aa6}
+.vc .heatmap__cell--5 .tooltip-circle{border-color:#007782}
+.tooltip-circle__value{
+  font-size:18px;
+  font-weight:800;
+  color:var(--nt-text);
+  line-height:1;
+}
+.tooltip-circle__label{
+  font-size:9px;
+  color:var(--nt-text-muted);
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+  margin-top:2px;
+}
+/* Connecting line */
+.vc .heatmap__cell .tooltip-line{
+  position:absolute;
+  bottom:calc(100% + 2px);
+  left:50%;
+  transform:translateX(-50%);
+  width:1px;
+  height:18px;
+  background:var(--nt-border);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .25s ease;
+  z-index:19;
+}
+/* Pulse animation */
+@keyframes pulse-circle{
+  0%{box-shadow:0 4px 20px rgba(0,0,0,.12)}
+  50%{box-shadow:0 4px 20px rgba(0,119,130,.25)}
+  100%{box-shadow:0 4px 20px rgba(0,0,0,.12)}
+}
+.vc .heatmap__cell:hover .tooltip-circle{
+  opacity:1;
+  transform:translateX(-50%) scale(1);
+  pointer-events:auto;
+  animation:pulse-circle 1.5s ease infinite;
+}
+.vc .heatmap__cell:hover .tooltip-line{
+  opacity:1;
+}
+/* Level 0 circle */
+.vc .heatmap__cell--0 .tooltip-circle{
+  border-color:#e2e8f0;
+}
+.vc .heatmap__cell--0 .tooltip-circle__value{
+  font-size:10px;
+  font-weight:500;
+  color:var(--nt-text-muted);
+}
+.vc .heatmap__cell--0 .tooltip-circle__label{
+  display:none;
+}
+
+/* ============================================================
+   VARIANTE D — Badge Flottant Compact
+   ============================================================ */
+.vd .heatmap__cell::before{
+  content:attr(data-tooltip);
+  position:absolute;
+  bottom:calc(100% + 8px);
+  left:50%;
+  transform:translateX(-50%) translateY(4px);
+  padding:5px 12px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:600;
+  color:#ffffff;
+  white-space:nowrap;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .2s ease, transform .2s ease;
+  z-index:20;
+}
+/* Badge background matches cell intensity */
+.vd .heatmap__cell--0::before{background:#94a3b8;color:#f1f5f9;font-style:italic;font-weight:400;font-size:11px}
+.vd .heatmap__cell--1::before{background:#99dfe5;color:#064e55}
+.vd .heatmap__cell--2::before{background:#66ccd4;color:#064e55}
+.vd .heatmap__cell--3::before{background:#33b9c3;color:#ffffff}
+.vd .heatmap__cell--4::before{background:#1a9aa6;color:#ffffff}
+.vd .heatmap__cell--5::before{background:#007782;color:#ffffff}
+.vd .heatmap__cell::before{
+  box-shadow:0 4px 12px rgba(0,0,0,.15);
+}
+.vd .heatmap__cell:hover::before{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+
+/* ========== UTILITY ========== */
+.sr-only{
+  position:absolute;width:1px;height:1px;
+  padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0,0,0,0);white-space:nowrap;border:0;
+}
+</style>
+</head>
+<body>
+
+<!-- ==================== PAGE TITLE ==================== -->
+<div class="page-title">
+  <h1>Heatmap Tooltip &mdash; 4 Variantes</h1>
+  <p>NicheTrackr &middot; Likes moyens par creneau horaire &middot; Survol pour voir les tooltips</p>
+</div>
+
+<!-- ============================================================
+     VARIANTE A — Card Riche (Glassmorphism)
+     ============================================================ -->
+<section class="variant-card va" aria-label="Variante A">
+  <div class="variant-card__header">
+    <span class="variant-card__label">Variante A</span>
+    <h2 class="variant-card__title">Card Riche &mdash; Glassmorphism</h2>
+    <p class="variant-card__desc">Tooltip riche avec fond semi-transparent (backdrop-filter: blur), icone coeur + valeur en gras, barre de progression coloree par intensite, label jour + creneau en bas, fleche pointant vers la cellule, animation fade + scale.</p>
+  </div>
+
+  <div class="heatmap" role="grid" aria-label="Heatmap likes moyens - Variante A">
+    <!-- Header row -->
+    <div class="heatmap__corner"></div>
+    <div class="heatmap__day-header">Lun</div>
+    <div class="heatmap__day-header">Mar</div>
+    <div class="heatmap__day-header">Mer</div>
+    <div class="heatmap__day-header">Jeu</div>
+    <div class="heatmap__day-header">Ven</div>
+    <div class="heatmap__day-header">Sam</div>
+    <div class="heatmap__day-header">Dim</div>
+
+    <!-- Row: Matin 9-12h -->
+    <div class="heatmap__row-label">Matin 9-12h</div>
+    <div class="heatmap__cell heatmap__cell--2" role="gridcell" aria-label="Lundi Matin: 4.7 likes moy.">
+      <div class="tooltip-rich">
+        <div class="tooltip-rich__value"><span class="tooltip-rich__heart">&#9829;</span> 4.7</div>
+        <div class="tooltip-rich__subtitle">likes moy.</div>
+        <div class="tooltip-rich__bar"><div class="tooltip-rich__bar-fill tooltip-rich__bar-fill--2"></div></div>
+        <div class="tooltip-rich__meta">Lundi &middot; Matin 9-12h</div>
+      </div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--1" role="gridcell" aria-label="Mardi Matin: 2.1 likes moy.">
+      <div class="tooltip-rich">
+        <div class="tooltip-rich__value"><span class="tooltip-rich__heart">&#9829;</span> 2.1</div>
+        <div class="tooltip-rich__subtitle">likes moy.</div>
+        <div class="tooltip-rich__bar"><div class="tooltip-rich__bar-fill tooltip-rich__bar-fill--1"></div></div>
+        <div class="tooltip-rich__meta">Mardi &middot; Matin 9-12h</div>
+      </div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--3" role="gridcell" aria-label="Mercredi Matin: 7.3 likes moy.">
+      <div class="tooltip-rich">
+        <div class="tooltip-rich__value"><span class="tooltip-rich__heart">&#9829;</span> 7.3</div>
+        <div class="tooltip-rich__subtitle">likes moy.</div>
+        <div class="tooltip-rich__bar"><div class="tooltip-rich__bar-fill tooltip-rich__bar-fill--3"></div></div>
+        <div class="tooltip-rich__meta">Mercredi &middot; Matin 9-12h</div>
+      </div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--1" role="gridcell" aria-label="Jeudi Matin: 2.1 likes moy.">
+      <div class="tooltip-rich">
+        <div class="tooltip-rich__value"><span class="tooltip-rich__heart">&#9829;</span> 2.1</div>
+        <div class="tooltip-rich__subtitle">likes moy.</div>
+        <div class="tooltip-rich__bar"><div class="tooltip-rich__bar-fill tooltip-rich__bar-fill--1"></div></div>
+        <div class="tooltip-rich__meta">Jeudi &middot; Matin 9-12h</div>
+      </div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--2" role="gridcell" aria-label="Vendredi Matin: 4.7 likes moy.">
+      <div class="tooltip-rich">
+        <div class="tooltip-rich__value"><span class="tooltip-rich__heart">&#9829;</span> 4.7</div>
+        <div class="tooltip-rich__subtitle">likes moy.</div>
+        <div class="tooltip-rich__bar"><div class="tooltip-rich__bar-fill tooltip-rich__bar-fill--2"></div></div>
+        <div class="tooltip-rich__meta">Vendredi &middot; Matin 9-12h</div>
+      </div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--4" role="gridcell" aria-label="Samedi Matin: 11.3 likes moy.">
+      <div class="tooltip-rich">
+        <div class="tooltip-rich__value"><span class="tooltip-rich__heart">&#9829;</span> 11.3</div>
+        <div class="tooltip-rich__subtitle">likes moy.</div>
+        <div class="tooltip-rich__bar"><div class="tooltip-rich__bar-fill tooltip-rich__bar-fill--4"></div></div>
+        <div class="tooltip-rich__meta">Samedi &middot; Matin 9-12h</div>
+      </div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--3" role="gridcell" aria-label="Dimanche Matin: 7.3 likes moy.">
+      <div class="tooltip-rich">
+        <div class="tooltip-rich__value"><span class="tooltip-rich__heart">&#9829;</span> 7.3</div>
+        <div class="tooltip-rich__subtitle">likes moy.</div>
+        <div class="tooltip-rich__bar"><div class="tooltip-rich__bar-fill tooltip-rich__bar-fill--3"></div></div>
+        <div class="tooltip-rich__meta">Dimanche &middot; Matin 9-12h</div>
+      </div>
+    </div>
+
+    <!-- Row: Midi 12-14h -->
+    <div class="heatmap__row-label">Midi 12-14h</div>
+    <div class="heatmap__cell heatmap__cell--3" role="gridcell" aria-label="Lundi Midi: 7.3 likes moy.">
+      <div class="tooltip-rich">
+        <div class="tooltip-rich__value"><span class="tooltip-rich__heart">&#9829;</span> 7.3</div>
+        <div class="tooltip-rich__subtitle">likes moy.</div>
+        <div class="tooltip-rich__bar"><div class="tooltip-rich__bar-fill tooltip-rich__bar-fill--3"></div></div>
+        <div class="tooltip-rich__meta">Lundi &middot; Midi 12-14h</div>
+      </div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--4" role="gridcell" aria-label="Mardi Midi: 11.3 likes moy.">
+      <div class="tooltip-rich">
+        <div class="tooltip-rich__value"><span class="tooltip-rich__heart">&#9829;</span> 11.3</div>
+        <div class="tooltip-rich__subtitle">likes moy.</div>
+        <div class="tooltip-rich__bar"><div class="tooltip-rich__bar-fill tooltip-rich__bar-fill--4"></div></div>
+        <div class="tooltip-rich__meta">Mardi &middot; Midi 12-14h</div>
+      </div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--2" role="gridcell" aria-label="Mercredi Midi: 4.7 likes moy.">
+      <div class="tooltip-rich">
+        <div class="tooltip-rich__value"><span class="tooltip-rich__heart">&#9829;</span> 4.7</div>
+        <div class="tooltip-rich__subtitle">likes moy.</div>
+        <div class="tooltip-rich__bar"><div class="tooltip-rich__bar-fill tooltip-rich__bar-fill--2"></div></div>
+        <div class="tooltip-rich__meta">Mercredi &middot; Midi 12-14h</div>
+      </div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--5" role="gridcell" aria-label="Jeudi Midi: 18.5 likes moy.">
+      <div class="tooltip-rich">
+        <div class="tooltip-rich__value"><span class="tooltip-rich__heart">&#9829;</span> 18.5</div>
+        <div class="tooltip-rich__subtitle">likes moy.</div>
+        <div class="tooltip-rich__bar"><div class="tooltip-rich__bar-fill tooltip-rich__bar-fill--5"></div></div>
+        <div class="tooltip-rich__meta">Jeudi &middot; Midi 12-14h</div>
+      </div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--3" role="gridcell" aria-label="Vendredi Midi: 7.3 likes moy.">
+      <div class="tooltip-rich">
+        <div class="tooltip-rich__value"><span class="tooltip-rich__heart">&#9829;</span> 7.3</div>
+        <div class="tooltip-rich__subtitle">likes moy.</div>
+        <div class="tooltip-rich__bar"><div class="tooltip-rich__bar-fill tooltip-rich__bar-fill--3"></div></div>
+        <div class="tooltip-rich__meta">Vendredi &middot; Midi 12-14h</div>
+      </div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--5" role="gridcell" aria-label="Samedi Midi: 18.5 likes moy.">
+      <div class="tooltip-rich">
+        <div class="tooltip-rich__value"><span class="tooltip-rich__heart">&#9829;</span> 18.5</div>
+        <div class="tooltip-rich__subtitle">likes moy.</div>
+        <div class="tooltip-rich__bar"><div class="tooltip-rich__bar-fill tooltip-rich__bar-fill--5"></div></div>
+        <div class="tooltip-rich__meta">Samedi &middot; Midi 12-14h</div>
+      </div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--4" role="gridcell" aria-label="Dimanche Midi: 11.3 likes moy.">
+      <div class="tooltip-rich">
+        <div class="tooltip-rich__value"><span class="tooltip-rich__heart">&#9829;</span> 11.3</div>
+        <div class="tooltip-rich__subtitle">likes moy.</div>
+        <div class="tooltip-rich__bar"><div class="tooltip-rich__bar-fill tooltip-rich__bar-fill--4"></div></div>
+        <div class="tooltip-rich__meta">Dimanche &middot; Midi 12-14h</div>
+      </div>
+    </div>
+
+    <!-- Row: Aprem 15-18h -->
+    <div class="heatmap__row-label">Aprem 15-18h</div>
+    <div class="heatmap__cell heatmap__cell--1" role="gridcell" aria-label="Lundi Aprem: 2.1 likes moy.">
+      <div class="tooltip-rich">
+        <div class="tooltip-rich__value"><span class="tooltip-rich__heart">&#9829;</span> 2.1</div>
+        <div class="tooltip-rich__subtitle">likes moy.</div>
+        <div class="tooltip-rich__bar"><div class="tooltip-rich__bar-fill tooltip-rich__bar-fill--1"></div></div>
+        <div class="tooltip-rich__meta">Lundi &middot; Aprem 15-18h</div>
+      </div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--0" role="gridcell" aria-label="Mardi Aprem: Pas de donnees">
+      <div class="tooltip-rich">
+        <div class="tooltip-rich__empty">Pas de donn&eacute;es</div>
+        <div class="tooltip-rich__meta">Mardi &middot; Aprem 15-18h</div>
+      </div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--2" role="gridcell" aria-label="Mercredi Aprem: 4.7 likes moy.">
+      <div class="tooltip-rich">
+        <div class="tooltip-rich__value"><span class="tooltip-rich__heart">&#9829;</span> 4.7</div>
+        <div class="tooltip-rich__subtitle">likes moy.</div>
+        <div class="tooltip-rich__bar"><div class="tooltip-rich__bar-fill tooltip-rich__bar-fill--2"></div></div>
+        <div class="tooltip-rich__meta">Mercredi &middot; Aprem 15-18h</div>
+      </div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--1" role="gridcell" aria-label="Jeudi Aprem: 2.1 likes moy.">
+      <div class="tooltip-rich">
+        <div class="tooltip-rich__value"><span class="tooltip-rich__heart">&#9829;</span> 2.1</div>
+        <div class="tooltip-rich__subtitle">likes moy.</div>
+        <div class="tooltip-rich__bar"><div class="tooltip-rich__bar-fill tooltip-rich__bar-fill--1"></div></div>
+        <div class="tooltip-rich__meta">Jeudi &middot; Aprem 15-18h</div>
+      </div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--3" role="gridcell" aria-label="Vendredi Aprem: 7.3 likes moy.">
+      <div class="tooltip-rich">
+        <div class="tooltip-rich__value"><span class="tooltip-rich__heart">&#9829;</span> 7.3</div>
+        <div class="tooltip-rich__subtitle">likes moy.</div>
+        <div class="tooltip-rich__bar"><div class="tooltip-rich__bar-fill tooltip-rich__bar-fill--3"></div></div>
+        <div class="tooltip-rich__meta">Vendredi &middot; Aprem 15-18h</div>
+      </div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--4" role="gridcell" aria-label="Samedi Aprem: 11.3 likes moy.">
+      <div class="tooltip-rich">
+        <div class="tooltip-rich__value"><span class="tooltip-rich__heart">&#9829;</span> 11.3</div>
+        <div class="tooltip-rich__subtitle">likes moy.</div>
+        <div class="tooltip-rich__bar"><div class="tooltip-rich__bar-fill tooltip-rich__bar-fill--4"></div></div>
+        <div class="tooltip-rich__meta">Samedi &middot; Aprem 15-18h</div>
+      </div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--2" role="gridcell" aria-label="Dimanche Aprem: 4.7 likes moy.">
+      <div class="tooltip-rich">
+        <div class="tooltip-rich__value"><span class="tooltip-rich__heart">&#9829;</span> 4.7</div>
+        <div class="tooltip-rich__subtitle">likes moy.</div>
+        <div class="tooltip-rich__bar"><div class="tooltip-rich__bar-fill tooltip-rich__bar-fill--2"></div></div>
+        <div class="tooltip-rich__meta">Dimanche &middot; Aprem 15-18h</div>
+      </div>
+    </div>
+
+    <!-- Row: Soir 18-22h -->
+    <div class="heatmap__row-label">Soir 18-22h</div>
+    <div class="heatmap__cell heatmap__cell--5" role="gridcell" aria-label="Lundi Soir: 18.5 likes moy.">
+      <div class="tooltip-rich">
+        <div class="tooltip-rich__value"><span class="tooltip-rich__heart">&#9829;</span> 18.5</div>
+        <div class="tooltip-rich__subtitle">likes moy.</div>
+        <div class="tooltip-rich__bar"><div class="tooltip-rich__bar-fill tooltip-rich__bar-fill--5"></div></div>
+        <div class="tooltip-rich__meta">Lundi &middot; Soir 18-22h</div>
+      </div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--4" role="gridcell" aria-label="Mardi Soir: 11.3 likes moy.">
+      <div class="tooltip-rich">
+        <div class="tooltip-rich__value"><span class="tooltip-rich__heart">&#9829;</span> 11.3</div>
+        <div class="tooltip-rich__subtitle">likes moy.</div>
+        <div class="tooltip-rich__bar"><div class="tooltip-rich__bar-fill tooltip-rich__bar-fill--4"></div></div>
+        <div class="tooltip-rich__meta">Mardi &middot; Soir 18-22h</div>
+      </div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--5" role="gridcell" aria-label="Mercredi Soir: 18.5 likes moy.">
+      <div class="tooltip-rich">
+        <div class="tooltip-rich__value"><span class="tooltip-rich__heart">&#9829;</span> 18.5</div>
+        <div class="tooltip-rich__subtitle">likes moy.</div>
+        <div class="tooltip-rich__bar"><div class="tooltip-rich__bar-fill tooltip-rich__bar-fill--5"></div></div>
+        <div class="tooltip-rich__meta">Mercredi &middot; Soir 18-22h</div>
+      </div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--3" role="gridcell" aria-label="Jeudi Soir: 7.3 likes moy.">
+      <div class="tooltip-rich">
+        <div class="tooltip-rich__value"><span class="tooltip-rich__heart">&#9829;</span> 7.3</div>
+        <div class="tooltip-rich__subtitle">likes moy.</div>
+        <div class="tooltip-rich__bar"><div class="tooltip-rich__bar-fill tooltip-rich__bar-fill--3"></div></div>
+        <div class="tooltip-rich__meta">Jeudi &middot; Soir 18-22h</div>
+      </div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--5" role="gridcell" aria-label="Vendredi Soir: 18.5 likes moy.">
+      <div class="tooltip-rich">
+        <div class="tooltip-rich__value"><span class="tooltip-rich__heart">&#9829;</span> 18.5</div>
+        <div class="tooltip-rich__subtitle">likes moy.</div>
+        <div class="tooltip-rich__bar"><div class="tooltip-rich__bar-fill tooltip-rich__bar-fill--5"></div></div>
+        <div class="tooltip-rich__meta">Vendredi &middot; Soir 18-22h</div>
+      </div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--4" role="gridcell" aria-label="Samedi Soir: 11.3 likes moy.">
+      <div class="tooltip-rich">
+        <div class="tooltip-rich__value"><span class="tooltip-rich__heart">&#9829;</span> 11.3</div>
+        <div class="tooltip-rich__subtitle">likes moy.</div>
+        <div class="tooltip-rich__bar"><div class="tooltip-rich__bar-fill tooltip-rich__bar-fill--4"></div></div>
+        <div class="tooltip-rich__meta">Samedi &middot; Soir 18-22h</div>
+      </div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--3" role="gridcell" aria-label="Dimanche Soir: 7.3 likes moy.">
+      <div class="tooltip-rich">
+        <div class="tooltip-rich__value"><span class="tooltip-rich__heart">&#9829;</span> 7.3</div>
+        <div class="tooltip-rich__subtitle">likes moy.</div>
+        <div class="tooltip-rich__bar"><div class="tooltip-rich__bar-fill tooltip-rich__bar-fill--3"></div></div>
+        <div class="tooltip-rich__meta">Dimanche &middot; Soir 18-22h</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Legend -->
+  <div class="heatmap-legend">
+    <span class="heatmap-legend__label">Faible</span>
+    <div class="heatmap-legend__bar">
+      <div class="heatmap-legend__swatch" style="background:#f1f5f9"></div>
+      <div class="heatmap-legend__swatch" style="background:#ccf0f3"></div>
+      <div class="heatmap-legend__swatch" style="background:#99dfe5"></div>
+      <div class="heatmap-legend__swatch" style="background:#4dbdc7"></div>
+      <div class="heatmap-legend__swatch" style="background:#1a9aa6"></div>
+      <div class="heatmap-legend__swatch" style="background:#007782"></div>
+    </div>
+    <span class="heatmap-legend__label">Fort</span>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     VARIANTE B — Bulle avec valeur XL
+     ============================================================ -->
+<section class="variant-card vb" aria-label="Variante B">
+  <div class="variant-card__header">
+    <span class="variant-card__label">Variante B</span>
+    <h2 class="variant-card__title">Bulle avec valeur XL</h2>
+    <p class="variant-card__desc">Grande bulle teal avec valeur affichee en XL (1.4rem) en blanc gras, sous-titre "likes moy." en texte blanc plus petit, border-radius 12px, fleche triangulaire vers le bas, ombre subtile.</p>
+  </div>
+
+  <div class="heatmap" role="grid" aria-label="Heatmap likes moyens - Variante B">
+    <!-- Header row -->
+    <div class="heatmap__corner"></div>
+    <div class="heatmap__day-header">Lun</div>
+    <div class="heatmap__day-header">Mar</div>
+    <div class="heatmap__day-header">Mer</div>
+    <div class="heatmap__day-header">Jeu</div>
+    <div class="heatmap__day-header">Ven</div>
+    <div class="heatmap__day-header">Sam</div>
+    <div class="heatmap__day-header">Dim</div>
+
+    <!-- Row: Matin 9-12h -->
+    <div class="heatmap__row-label">Matin 9-12h</div>
+    <div class="heatmap__cell heatmap__cell--3" data-tooltip="7.3" data-tooltip-sub="likes moy." role="gridcell" aria-label="Lundi Matin: 7.3 likes moy."><span class="vb-arrow"></span></div>
+    <div class="heatmap__cell heatmap__cell--2" data-tooltip="4.7" data-tooltip-sub="likes moy." role="gridcell" aria-label="Mardi Matin: 4.7 likes moy."><span class="vb-arrow"></span></div>
+    <div class="heatmap__cell heatmap__cell--4" data-tooltip="11.3" data-tooltip-sub="likes moy." role="gridcell" aria-label="Mercredi Matin: 11.3 likes moy."><span class="vb-arrow"></span></div>
+    <div class="heatmap__cell heatmap__cell--1" data-tooltip="2.1" data-tooltip-sub="likes moy." role="gridcell" aria-label="Jeudi Matin: 2.1 likes moy."><span class="vb-arrow"></span></div>
+    <div class="heatmap__cell heatmap__cell--3" data-tooltip="7.3" data-tooltip-sub="likes moy." role="gridcell" aria-label="Vendredi Matin: 7.3 likes moy."><span class="vb-arrow"></span></div>
+    <div class="heatmap__cell heatmap__cell--5" data-tooltip="18.5" data-tooltip-sub="likes moy." role="gridcell" aria-label="Samedi Matin: 18.5 likes moy."><span class="vb-arrow"></span></div>
+    <div class="heatmap__cell heatmap__cell--2" data-tooltip="4.7" data-tooltip-sub="likes moy." role="gridcell" aria-label="Dimanche Matin: 4.7 likes moy."><span class="vb-arrow"></span></div>
+
+    <!-- Row: Midi 12-14h -->
+    <div class="heatmap__row-label">Midi 12-14h</div>
+    <div class="heatmap__cell heatmap__cell--4" data-tooltip="11.3" data-tooltip-sub="likes moy." role="gridcell" aria-label="Lundi Midi: 11.3 likes moy."><span class="vb-arrow"></span></div>
+    <div class="heatmap__cell heatmap__cell--5" data-tooltip="18.5" data-tooltip-sub="likes moy." role="gridcell" aria-label="Mardi Midi: 18.5 likes moy."><span class="vb-arrow"></span></div>
+    <div class="heatmap__cell heatmap__cell--3" data-tooltip="7.3" data-tooltip-sub="likes moy." role="gridcell" aria-label="Mercredi Midi: 7.3 likes moy."><span class="vb-arrow"></span></div>
+    <div class="heatmap__cell heatmap__cell--4" data-tooltip="11.3" data-tooltip-sub="likes moy." role="gridcell" aria-label="Jeudi Midi: 11.3 likes moy."><span class="vb-arrow"></span></div>
+    <div class="heatmap__cell heatmap__cell--2" data-tooltip="4.7" data-tooltip-sub="likes moy." role="gridcell" aria-label="Vendredi Midi: 4.7 likes moy."><span class="vb-arrow"></span></div>
+    <div class="heatmap__cell heatmap__cell--5" data-tooltip="18.5" data-tooltip-sub="likes moy." role="gridcell" aria-label="Samedi Midi: 18.5 likes moy."><span class="vb-arrow"></span></div>
+    <div class="heatmap__cell heatmap__cell--3" data-tooltip="7.3" data-tooltip-sub="likes moy." role="gridcell" aria-label="Dimanche Midi: 7.3 likes moy."><span class="vb-arrow"></span></div>
+
+    <!-- Row: Aprem 15-18h -->
+    <div class="heatmap__row-label">Aprem 15-18h</div>
+    <div class="heatmap__cell heatmap__cell--2" data-tooltip="4.7" data-tooltip-sub="likes moy." role="gridcell" aria-label="Lundi Aprem: 4.7 likes moy."><span class="vb-arrow"></span></div>
+    <div class="heatmap__cell heatmap__cell--1" data-tooltip="2.1" data-tooltip-sub="likes moy." role="gridcell" aria-label="Mardi Aprem: 2.1 likes moy."><span class="vb-arrow"></span></div>
+    <div class="heatmap__cell heatmap__cell--0" data-tooltip="Pas de donn&eacute;es" role="gridcell" aria-label="Mercredi Aprem: Pas de donnees"><span class="vb-arrow"></span></div>
+    <div class="heatmap__cell heatmap__cell--2" data-tooltip="4.7" data-tooltip-sub="likes moy." role="gridcell" aria-label="Jeudi Aprem: 4.7 likes moy."><span class="vb-arrow"></span></div>
+    <div class="heatmap__cell heatmap__cell--3" data-tooltip="7.3" data-tooltip-sub="likes moy." role="gridcell" aria-label="Vendredi Aprem: 7.3 likes moy."><span class="vb-arrow"></span></div>
+    <div class="heatmap__cell heatmap__cell--3" data-tooltip="7.3" data-tooltip-sub="likes moy." role="gridcell" aria-label="Samedi Aprem: 7.3 likes moy."><span class="vb-arrow"></span></div>
+    <div class="heatmap__cell heatmap__cell--1" data-tooltip="2.1" data-tooltip-sub="likes moy." role="gridcell" aria-label="Dimanche Aprem: 2.1 likes moy."><span class="vb-arrow"></span></div>
+
+    <!-- Row: Soir 18-22h -->
+    <div class="heatmap__row-label">Soir 18-22h</div>
+    <div class="heatmap__cell heatmap__cell--5" data-tooltip="18.5" data-tooltip-sub="likes moy." role="gridcell" aria-label="Lundi Soir: 18.5 likes moy."><span class="vb-arrow"></span></div>
+    <div class="heatmap__cell heatmap__cell--4" data-tooltip="11.3" data-tooltip-sub="likes moy." role="gridcell" aria-label="Mardi Soir: 11.3 likes moy."><span class="vb-arrow"></span></div>
+    <div class="heatmap__cell heatmap__cell--4" data-tooltip="11.3" data-tooltip-sub="likes moy." role="gridcell" aria-label="Mercredi Soir: 11.3 likes moy."><span class="vb-arrow"></span></div>
+    <div class="heatmap__cell heatmap__cell--5" data-tooltip="18.5" data-tooltip-sub="likes moy." role="gridcell" aria-label="Jeudi Soir: 18.5 likes moy."><span class="vb-arrow"></span></div>
+    <div class="heatmap__cell heatmap__cell--4" data-tooltip="11.3" data-tooltip-sub="likes moy." role="gridcell" aria-label="Vendredi Soir: 11.3 likes moy."><span class="vb-arrow"></span></div>
+    <div class="heatmap__cell heatmap__cell--5" data-tooltip="18.5" data-tooltip-sub="likes moy." role="gridcell" aria-label="Samedi Soir: 18.5 likes moy."><span class="vb-arrow"></span></div>
+    <div class="heatmap__cell heatmap__cell--3" data-tooltip="7.3" data-tooltip-sub="likes moy." role="gridcell" aria-label="Dimanche Soir: 7.3 likes moy."><span class="vb-arrow"></span></div>
+  </div>
+
+  <!-- Legend -->
+  <div class="heatmap-legend">
+    <span class="heatmap-legend__label">Faible</span>
+    <div class="heatmap-legend__bar">
+      <div class="heatmap-legend__swatch" style="background:#f1f5f9"></div>
+      <div class="heatmap-legend__swatch" style="background:#ccf0f3"></div>
+      <div class="heatmap-legend__swatch" style="background:#99dfe5"></div>
+      <div class="heatmap-legend__swatch" style="background:#4dbdc7"></div>
+      <div class="heatmap-legend__swatch" style="background:#1a9aa6"></div>
+      <div class="heatmap-legend__swatch" style="background:#007782"></div>
+    </div>
+    <span class="heatmap-legend__label">Fort</span>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     VARIANTE C — Popup Circulaire
+     ============================================================ -->
+<section class="variant-card vc" aria-label="Variante C">
+  <div class="variant-card__header">
+    <span class="variant-card__label">Variante C</span>
+    <h2 class="variant-card__title">Popup Circulaire</h2>
+    <p class="variant-card__desc">Forme circulaire parfaite avec la valeur centree, bordure coloree selon l'intensite de la cellule (du teal clair au teal fonce), texte "likes" sous le nombre, animation pulse a l'apparition, trait de connexion fin vers la cellule.</p>
+  </div>
+
+  <div class="heatmap" role="grid" aria-label="Heatmap likes moyens - Variante C">
+    <!-- Header row -->
+    <div class="heatmap__corner"></div>
+    <div class="heatmap__day-header">Lun</div>
+    <div class="heatmap__day-header">Mar</div>
+    <div class="heatmap__day-header">Mer</div>
+    <div class="heatmap__day-header">Jeu</div>
+    <div class="heatmap__day-header">Ven</div>
+    <div class="heatmap__day-header">Sam</div>
+    <div class="heatmap__day-header">Dim</div>
+
+    <!-- Row: Matin 9-12h -->
+    <div class="heatmap__row-label">Matin 9-12h</div>
+    <div class="heatmap__cell heatmap__cell--1" role="gridcell" aria-label="Lundi Matin: 2.1 likes moy.">
+      <div class="tooltip-line"></div>
+      <div class="tooltip-circle"><span class="tooltip-circle__value">2.1</span><span class="tooltip-circle__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--3" role="gridcell" aria-label="Mardi Matin: 7.3 likes moy.">
+      <div class="tooltip-line"></div>
+      <div class="tooltip-circle"><span class="tooltip-circle__value">7.3</span><span class="tooltip-circle__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--2" role="gridcell" aria-label="Mercredi Matin: 4.7 likes moy.">
+      <div class="tooltip-line"></div>
+      <div class="tooltip-circle"><span class="tooltip-circle__value">4.7</span><span class="tooltip-circle__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--4" role="gridcell" aria-label="Jeudi Matin: 11.3 likes moy.">
+      <div class="tooltip-line"></div>
+      <div class="tooltip-circle"><span class="tooltip-circle__value">11.3</span><span class="tooltip-circle__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--1" role="gridcell" aria-label="Vendredi Matin: 2.1 likes moy.">
+      <div class="tooltip-line"></div>
+      <div class="tooltip-circle"><span class="tooltip-circle__value">2.1</span><span class="tooltip-circle__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--3" role="gridcell" aria-label="Samedi Matin: 7.3 likes moy.">
+      <div class="tooltip-line"></div>
+      <div class="tooltip-circle"><span class="tooltip-circle__value">7.3</span><span class="tooltip-circle__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--2" role="gridcell" aria-label="Dimanche Matin: 4.7 likes moy.">
+      <div class="tooltip-line"></div>
+      <div class="tooltip-circle"><span class="tooltip-circle__value">4.7</span><span class="tooltip-circle__label">likes</span></div>
+    </div>
+
+    <!-- Row: Midi 12-14h -->
+    <div class="heatmap__row-label">Midi 12-14h</div>
+    <div class="heatmap__cell heatmap__cell--4" role="gridcell" aria-label="Lundi Midi: 11.3 likes moy.">
+      <div class="tooltip-line"></div>
+      <div class="tooltip-circle"><span class="tooltip-circle__value">11.3</span><span class="tooltip-circle__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--5" role="gridcell" aria-label="Mardi Midi: 18.5 likes moy.">
+      <div class="tooltip-line"></div>
+      <div class="tooltip-circle"><span class="tooltip-circle__value">18.5</span><span class="tooltip-circle__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--3" role="gridcell" aria-label="Mercredi Midi: 7.3 likes moy.">
+      <div class="tooltip-line"></div>
+      <div class="tooltip-circle"><span class="tooltip-circle__value">7.3</span><span class="tooltip-circle__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--5" role="gridcell" aria-label="Jeudi Midi: 18.5 likes moy.">
+      <div class="tooltip-line"></div>
+      <div class="tooltip-circle"><span class="tooltip-circle__value">18.5</span><span class="tooltip-circle__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--4" role="gridcell" aria-label="Vendredi Midi: 11.3 likes moy.">
+      <div class="tooltip-line"></div>
+      <div class="tooltip-circle"><span class="tooltip-circle__value">11.3</span><span class="tooltip-circle__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--5" role="gridcell" aria-label="Samedi Midi: 18.5 likes moy.">
+      <div class="tooltip-line"></div>
+      <div class="tooltip-circle"><span class="tooltip-circle__value">18.5</span><span class="tooltip-circle__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--4" role="gridcell" aria-label="Dimanche Midi: 11.3 likes moy.">
+      <div class="tooltip-line"></div>
+      <div class="tooltip-circle"><span class="tooltip-circle__value">11.3</span><span class="tooltip-circle__label">likes</span></div>
+    </div>
+
+    <!-- Row: Aprem 15-18h -->
+    <div class="heatmap__row-label">Aprem 15-18h</div>
+    <div class="heatmap__cell heatmap__cell--2" role="gridcell" aria-label="Lundi Aprem: 4.7 likes moy.">
+      <div class="tooltip-line"></div>
+      <div class="tooltip-circle"><span class="tooltip-circle__value">4.7</span><span class="tooltip-circle__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--0" role="gridcell" aria-label="Mardi Aprem: Pas de donnees">
+      <div class="tooltip-line"></div>
+      <div class="tooltip-circle"><span class="tooltip-circle__value">--</span><span class="tooltip-circle__label"></span></div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--1" role="gridcell" aria-label="Mercredi Aprem: 2.1 likes moy.">
+      <div class="tooltip-line"></div>
+      <div class="tooltip-circle"><span class="tooltip-circle__value">2.1</span><span class="tooltip-circle__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--3" role="gridcell" aria-label="Jeudi Aprem: 7.3 likes moy.">
+      <div class="tooltip-line"></div>
+      <div class="tooltip-circle"><span class="tooltip-circle__value">7.3</span><span class="tooltip-circle__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--2" role="gridcell" aria-label="Vendredi Aprem: 4.7 likes moy.">
+      <div class="tooltip-line"></div>
+      <div class="tooltip-circle"><span class="tooltip-circle__value">4.7</span><span class="tooltip-circle__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--4" role="gridcell" aria-label="Samedi Aprem: 11.3 likes moy.">
+      <div class="tooltip-line"></div>
+      <div class="tooltip-circle"><span class="tooltip-circle__value">11.3</span><span class="tooltip-circle__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--1" role="gridcell" aria-label="Dimanche Aprem: 2.1 likes moy.">
+      <div class="tooltip-line"></div>
+      <div class="tooltip-circle"><span class="tooltip-circle__value">2.1</span><span class="tooltip-circle__label">likes</span></div>
+    </div>
+
+    <!-- Row: Soir 18-22h -->
+    <div class="heatmap__row-label">Soir 18-22h</div>
+    <div class="heatmap__cell heatmap__cell--5" role="gridcell" aria-label="Lundi Soir: 18.5 likes moy.">
+      <div class="tooltip-line"></div>
+      <div class="tooltip-circle"><span class="tooltip-circle__value">18.5</span><span class="tooltip-circle__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--3" role="gridcell" aria-label="Mardi Soir: 7.3 likes moy.">
+      <div class="tooltip-line"></div>
+      <div class="tooltip-circle"><span class="tooltip-circle__value">7.3</span><span class="tooltip-circle__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--5" role="gridcell" aria-label="Mercredi Soir: 18.5 likes moy.">
+      <div class="tooltip-line"></div>
+      <div class="tooltip-circle"><span class="tooltip-circle__value">18.5</span><span class="tooltip-circle__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--4" role="gridcell" aria-label="Jeudi Soir: 11.3 likes moy.">
+      <div class="tooltip-line"></div>
+      <div class="tooltip-circle"><span class="tooltip-circle__value">11.3</span><span class="tooltip-circle__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--5" role="gridcell" aria-label="Vendredi Soir: 18.5 likes moy.">
+      <div class="tooltip-line"></div>
+      <div class="tooltip-circle"><span class="tooltip-circle__value">18.5</span><span class="tooltip-circle__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--4" role="gridcell" aria-label="Samedi Soir: 11.3 likes moy.">
+      <div class="tooltip-line"></div>
+      <div class="tooltip-circle"><span class="tooltip-circle__value">11.3</span><span class="tooltip-circle__label">likes</span></div>
+    </div>
+    <div class="heatmap__cell heatmap__cell--2" role="gridcell" aria-label="Dimanche Soir: 4.7 likes moy.">
+      <div class="tooltip-line"></div>
+      <div class="tooltip-circle"><span class="tooltip-circle__value">4.7</span><span class="tooltip-circle__label">likes</span></div>
+    </div>
+  </div>
+
+  <!-- Legend -->
+  <div class="heatmap-legend">
+    <span class="heatmap-legend__label">Faible</span>
+    <div class="heatmap-legend__bar">
+      <div class="heatmap-legend__swatch" style="background:#f1f5f9"></div>
+      <div class="heatmap-legend__swatch" style="background:#ccf0f3"></div>
+      <div class="heatmap-legend__swatch" style="background:#99dfe5"></div>
+      <div class="heatmap-legend__swatch" style="background:#4dbdc7"></div>
+      <div class="heatmap-legend__swatch" style="background:#1a9aa6"></div>
+      <div class="heatmap-legend__swatch" style="background:#007782"></div>
+    </div>
+    <span class="heatmap-legend__label">Fort</span>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     VARIANTE D — Badge Flottant Compact
+     ============================================================ -->
+<section class="variant-card vd" aria-label="Variante D">
+  <div class="variant-card__header">
+    <span class="variant-card__label">Variante D</span>
+    <h2 class="variant-card__title">Badge Flottant Compact</h2>
+    <p class="variant-card__desc">Forme pilule (border-radius full), fond = meme couleur que la cellule survolee (varie selon l'intensite), texte blanc avec icone coeur + valeur + "moy.", ombre douce, animation slide-up, tres compact et minimal.</p>
+  </div>
+
+  <div class="heatmap" role="grid" aria-label="Heatmap likes moyens - Variante D">
+    <!-- Header row -->
+    <div class="heatmap__corner"></div>
+    <div class="heatmap__day-header">Lun</div>
+    <div class="heatmap__day-header">Mar</div>
+    <div class="heatmap__day-header">Mer</div>
+    <div class="heatmap__day-header">Jeu</div>
+    <div class="heatmap__day-header">Ven</div>
+    <div class="heatmap__day-header">Sam</div>
+    <div class="heatmap__day-header">Dim</div>
+
+    <!-- Row: Matin 9-12h -->
+    <div class="heatmap__row-label">Matin 9-12h</div>
+    <div class="heatmap__cell heatmap__cell--2" data-tooltip="&#9829; 4.7 moy." role="gridcell" aria-label="Lundi Matin: 4.7 likes moy."></div>
+    <div class="heatmap__cell heatmap__cell--3" data-tooltip="&#9829; 7.3 moy." role="gridcell" aria-label="Mardi Matin: 7.3 likes moy."></div>
+    <div class="heatmap__cell heatmap__cell--1" data-tooltip="&#9829; 2.1 moy." role="gridcell" aria-label="Mercredi Matin: 2.1 likes moy."></div>
+    <div class="heatmap__cell heatmap__cell--4" data-tooltip="&#9829; 11.3 moy." role="gridcell" aria-label="Jeudi Matin: 11.3 likes moy."></div>
+    <div class="heatmap__cell heatmap__cell--2" data-tooltip="&#9829; 4.7 moy." role="gridcell" aria-label="Vendredi Matin: 4.7 likes moy."></div>
+    <div class="heatmap__cell heatmap__cell--5" data-tooltip="&#9829; 18.5 moy." role="gridcell" aria-label="Samedi Matin: 18.5 likes moy."></div>
+    <div class="heatmap__cell heatmap__cell--3" data-tooltip="&#9829; 7.3 moy." role="gridcell" aria-label="Dimanche Matin: 7.3 likes moy."></div>
+
+    <!-- Row: Midi 12-14h -->
+    <div class="heatmap__row-label">Midi 12-14h</div>
+    <div class="heatmap__cell heatmap__cell--5" data-tooltip="&#9829; 18.5 moy." role="gridcell" aria-label="Lundi Midi: 18.5 likes moy."></div>
+    <div class="heatmap__cell heatmap__cell--4" data-tooltip="&#9829; 11.3 moy." role="gridcell" aria-label="Mardi Midi: 11.3 likes moy."></div>
+    <div class="heatmap__cell heatmap__cell--3" data-tooltip="&#9829; 7.3 moy." role="gridcell" aria-label="Mercredi Midi: 7.3 likes moy."></div>
+    <div class="heatmap__cell heatmap__cell--5" data-tooltip="&#9829; 18.5 moy." role="gridcell" aria-label="Jeudi Midi: 18.5 likes moy."></div>
+    <div class="heatmap__cell heatmap__cell--4" data-tooltip="&#9829; 11.3 moy." role="gridcell" aria-label="Vendredi Midi: 11.3 likes moy."></div>
+    <div class="heatmap__cell heatmap__cell--5" data-tooltip="&#9829; 18.5 moy." role="gridcell" aria-label="Samedi Midi: 18.5 likes moy."></div>
+    <div class="heatmap__cell heatmap__cell--4" data-tooltip="&#9829; 11.3 moy." role="gridcell" aria-label="Dimanche Midi: 11.3 likes moy."></div>
+
+    <!-- Row: Aprem 15-18h -->
+    <div class="heatmap__row-label">Aprem 15-18h</div>
+    <div class="heatmap__cell heatmap__cell--1" data-tooltip="&#9829; 2.1 moy." role="gridcell" aria-label="Lundi Aprem: 2.1 likes moy."></div>
+    <div class="heatmap__cell heatmap__cell--2" data-tooltip="&#9829; 4.7 moy." role="gridcell" aria-label="Mardi Aprem: 4.7 likes moy."></div>
+    <div class="heatmap__cell heatmap__cell--0" data-tooltip="Pas de donn&eacute;es" role="gridcell" aria-label="Mercredi Aprem: Pas de donnees"></div>
+    <div class="heatmap__cell heatmap__cell--1" data-tooltip="&#9829; 2.1 moy." role="gridcell" aria-label="Jeudi Aprem: 2.1 likes moy."></div>
+    <div class="heatmap__cell heatmap__cell--3" data-tooltip="&#9829; 7.3 moy." role="gridcell" aria-label="Vendredi Aprem: 7.3 likes moy."></div>
+    <div class="heatmap__cell heatmap__cell--4" data-tooltip="&#9829; 11.3 moy." role="gridcell" aria-label="Samedi Aprem: 11.3 likes moy."></div>
+    <div class="heatmap__cell heatmap__cell--2" data-tooltip="&#9829; 4.7 moy." role="gridcell" aria-label="Dimanche Aprem: 4.7 likes moy."></div>
+
+    <!-- Row: Soir 18-22h -->
+    <div class="heatmap__row-label">Soir 18-22h</div>
+    <div class="heatmap__cell heatmap__cell--5" data-tooltip="&#9829; 18.5 moy." role="gridcell" aria-label="Lundi Soir: 18.5 likes moy."></div>
+    <div class="heatmap__cell heatmap__cell--4" data-tooltip="&#9829; 11.3 moy." role="gridcell" aria-label="Mardi Soir: 11.3 likes moy."></div>
+    <div class="heatmap__cell heatmap__cell--5" data-tooltip="&#9829; 18.5 moy." role="gridcell" aria-label="Mercredi Soir: 18.5 likes moy."></div>
+    <div class="heatmap__cell heatmap__cell--3" data-tooltip="&#9829; 7.3 moy." role="gridcell" aria-label="Jeudi Soir: 7.3 likes moy."></div>
+    <div class="heatmap__cell heatmap__cell--5" data-tooltip="&#9829; 18.5 moy." role="gridcell" aria-label="Vendredi Soir: 18.5 likes moy."></div>
+    <div class="heatmap__cell heatmap__cell--4" data-tooltip="&#9829; 11.3 moy." role="gridcell" aria-label="Samedi Soir: 11.3 likes moy."></div>
+    <div class="heatmap__cell heatmap__cell--3" data-tooltip="&#9829; 7.3 moy." role="gridcell" aria-label="Dimanche Soir: 7.3 likes moy."></div>
+  </div>
+
+  <!-- Legend -->
+  <div class="heatmap-legend">
+    <span class="heatmap-legend__label">Faible</span>
+    <div class="heatmap-legend__bar">
+      <div class="heatmap-legend__swatch" style="background:#f1f5f9"></div>
+      <div class="heatmap-legend__swatch" style="background:#ccf0f3"></div>
+      <div class="heatmap-legend__swatch" style="background:#99dfe5"></div>
+      <div class="heatmap-legend__swatch" style="background:#4dbdc7"></div>
+      <div class="heatmap-legend__swatch" style="background:#1a9aa6"></div>
+      <div class="heatmap-legend__swatch" style="background:#007782"></div>
+    </div>
+    <span class="heatmap-legend__label">Fort</span>
+  </div>
+</section>
+
+</body>
+</html>

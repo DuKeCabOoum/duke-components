@@ -1,0 +1,1614 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NicheTrackr — Variante Q : Version Finale</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================
+       VARIANTE Q — VERSION FINALE
+       Best of NicheTrackr design + Resell Track data
+       Structure : Header → KPIs → Score+Comparaison
+       → Top Niches → Charts → Top Marques
+       ============================================ */
+
+    :root {
+      --nt-primary: #009688;
+      --nt-primary-dark: #00796b;
+      --nt-primary-light: rgba(0, 150, 136, 0.12);
+      --nt-primary-lighter: rgba(0, 150, 136, 0.06);
+      --nt-green: #43a047;
+      --nt-green-light: rgba(67, 160, 71, 0.12);
+      --nt-orange: #fb8c00;
+      --nt-orange-light: rgba(251, 140, 0, 0.12);
+      --nt-red: #e53935;
+      --nt-red-light: rgba(229, 57, 53, 0.12);
+      --nt-indigo: #5c6bc0;
+      --nt-indigo-light: rgba(92, 107, 192, 0.12);
+      --nt-bg: #f5f7fa;
+      --nt-card: #ffffff;
+      --nt-border: #e8ecf1;
+      --nt-text: #1a2332;
+      --nt-text-secondary: #64748b;
+      --nt-text-muted: #94a3b8;
+      --nt-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.03);
+      --nt-shadow-md: 0 4px 12px rgba(0,0,0,0.07);
+      --nt-radius: 12px;
+      --nt-radius-sm: 8px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--nt-bg);
+      color: var(--nt-text);
+      padding: 28px 32px;
+      line-height: 1.5;
+      max-width: 1100px;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes sparkDraw { to { stroke-dashoffset: 0; } }
+    @keyframes sparkFade { to { opacity: 1; } }
+    @keyframes gaugeFill { to { stroke-dashoffset: var(--gauge-offset); } }
+    @keyframes circFill { to { stroke-dashoffset: var(--circ-offset); } }
+    @keyframes barGrow { to { height: var(--bar-h); } }
+    @keyframes progressGrow { to { width: var(--progress); } }
+    @keyframes areaFade { to { opacity: 1; } }
+    @keyframes areaDraw { to { stroke-dashoffset: 0; } }
+    @keyframes liquidWave { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    @keyframes statusBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    /* ── HEADER ── */
+    .q-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .q-header__left h1 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--nt-text);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .q-header__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      background: var(--nt-green-light);
+      color: var(--nt-green);
+    }
+
+    .q-header__badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--nt-green);
+      animation: statusBlink 2s infinite;
+    }
+
+    .q-header__meta {
+      font-size: 0.8rem;
+      color: var(--nt-text-secondary);
+      margin-top: 4px;
+    }
+
+    .q-header__actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .q-btn {
+      padding: 8px 16px;
+      border-radius: var(--nt-radius-sm);
+      font-size: 0.78rem;
+      font-weight: 600;
+      border: 1px solid var(--nt-border);
+      background: var(--nt-card);
+      color: var(--nt-text-secondary);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .q-btn:hover { border-color: var(--nt-primary); color: var(--nt-primary); }
+
+    .q-btn--primary {
+      background: var(--nt-primary);
+      color: white;
+      border-color: var(--nt-primary);
+    }
+
+    .q-btn--primary:hover { background: var(--nt-primary-dark); color: white; }
+
+    .q-btn--danger {
+      border-color: var(--nt-red);
+      color: var(--nt-red);
+      background: var(--nt-red-light);
+    }
+
+    /* ── TABS + PERIOD FILTER ── */
+    .q-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .q-tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 2px solid var(--nt-border);
+    }
+
+    .q-tab {
+      padding: 9px 18px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--nt-text-secondary);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .q-tab:hover { color: var(--nt-primary); }
+    .q-tab--active { color: var(--nt-primary); border-bottom-color: var(--nt-primary); font-weight: 600; }
+
+    /* Period pills (inspire Resell Track) */
+    .q-period {
+      display: flex;
+      gap: 3px;
+      background: white;
+      border: 1px solid var(--nt-border);
+      border-radius: 8px;
+      padding: 3px;
+    }
+
+    .q-period__btn {
+      padding: 5px 14px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--nt-text-secondary);
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .q-period__btn--active {
+      background: var(--nt-primary);
+      color: white;
+      font-weight: 600;
+    }
+
+    .q-period__btn:hover:not(.q-period__btn--active) {
+      background: var(--nt-primary-lighter);
+    }
+
+    /* ── CARD GENERIQUE ── */
+    .q-card {
+      background: var(--nt-card);
+      border-radius: var(--nt-radius);
+      border: 1px solid var(--nt-border);
+      box-shadow: var(--nt-shadow);
+      padding: 20px;
+      animation: slideUp 0.4s ease forwards;
+      opacity: 0;
+    }
+
+    .q-card--delay1 { animation-delay: 0.05s; }
+    .q-card--delay2 { animation-delay: 0.1s; }
+    .q-card--delay3 { animation-delay: 0.15s; }
+    .q-card--delay4 { animation-delay: 0.2s; }
+
+    .q-card-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--nt-text);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .q-card-title a {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--nt-primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .q-card-title a:hover { text-decoration: underline; }
+
+    .q-section-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--nt-text-muted);
+    }
+
+    /* ── SECTION 1 : KPIs (5 colonnes comme Resell Track, mais modernes) ── */
+    .q-kpis {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .q-kpi {
+      background: var(--nt-card);
+      border-radius: var(--nt-radius);
+      border: 1px solid var(--nt-border);
+      box-shadow: var(--nt-shadow);
+      padding: 14px 16px;
+      animation: slideUp 0.4s ease forwards;
+      opacity: 0;
+    }
+
+    .q-kpi:nth-child(1) { animation-delay: 0.05s; }
+    .q-kpi:nth-child(2) { animation-delay: 0.1s; }
+    .q-kpi:nth-child(3) { animation-delay: 0.15s; }
+    .q-kpi:nth-child(4) { animation-delay: 0.2s; }
+    .q-kpi:nth-child(5) { animation-delay: 0.25s; }
+
+    .q-kpi__label {
+      font-size: 0.72rem;
+      color: var(--nt-text-muted);
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+
+    .q-kpi__value {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--nt-text);
+      line-height: 1;
+    }
+
+    .q-kpi__sub {
+      font-size: 0.68rem;
+      color: var(--nt-text-muted);
+      margin-top: 2px;
+    }
+
+    .q-kpi__spark {
+      height: 28px;
+      margin-top: 6px;
+    }
+
+    .q-kpi__spark svg { width: 100%; height: 100%; }
+
+    .q-kpi__footer {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 6px;
+      font-size: 0.7rem;
+    }
+
+    .q-trend { font-weight: 600; display: inline-flex; align-items: center; gap: 2px; }
+    .q-trend--up { color: var(--nt-green); }
+    .q-trend--down { color: var(--nt-red); }
+    .q-trend--neutral { color: var(--nt-text-muted); }
+    .q-period-label { color: var(--nt-text-muted); }
+
+    .q-spark-line {
+      stroke-dasharray: 200;
+      stroke-dashoffset: 200;
+      animation: sparkDraw 1.5s ease forwards;
+    }
+
+    .q-spark-area {
+      opacity: 0;
+      animation: sparkFade 0.8s ease 0.5s forwards;
+    }
+
+    /* ── SECTION 2 : SCORE GLOBAL + COMPARAISON (2 colonnes) ── */
+    .q-score-row {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    /* Gauge + sous-scores */
+    .q-gauge-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .q-gauge {
+      position: relative;
+    }
+
+    .q-gauge-bg {
+      fill: none;
+      stroke: var(--nt-border);
+      stroke-width: 14;
+      stroke-linecap: round;
+    }
+
+    .q-gauge-fill {
+      fill: none;
+      stroke-width: 14;
+      stroke-linecap: round;
+      stroke-dasharray: 251.33;
+      stroke-dashoffset: 251.33;
+      animation: gaugeFill 2s ease forwards;
+    }
+
+    .q-gauge-val {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+    }
+
+    .q-gauge-val__number {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--nt-text);
+      line-height: 1;
+    }
+
+    .q-gauge-val__unit {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--nt-text-muted);
+    }
+
+    .q-gauge-badge {
+      display: inline-flex;
+      padding: 3px 12px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    .q-gauge-badge--bon { background: var(--nt-green-light); color: var(--nt-green); }
+    .q-gauge-badge--moyen { background: var(--nt-orange-light); color: var(--nt-orange); }
+    .q-gauge-badge--faible { background: var(--nt-red-light); color: var(--nt-red); }
+
+    /* Sub-scores barres (inspire Resell Track mais modernise) */
+    .q-subscores {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .q-subscore {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .q-subscore__name {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--nt-text-secondary);
+      width: 110px;
+      flex-shrink: 0;
+    }
+
+    .q-subscore__track {
+      flex: 1;
+      height: 8px;
+      background: var(--nt-bg);
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .q-subscore__fill {
+      height: 100%;
+      border-radius: 4px;
+      width: 0;
+      animation: progressGrow 1.2s ease forwards;
+      position: relative;
+    }
+
+    .q-subscore__val {
+      font-size: 0.78rem;
+      font-weight: 700;
+      width: 42px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    /* Comparaison section (inspire Resell Track) */
+    .q-compare__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .q-compare__item {
+      text-align: center;
+      padding: 12px 8px;
+      background: var(--nt-bg);
+      border-radius: var(--nt-radius-sm);
+    }
+
+    .q-compare__label {
+      font-size: 0.68rem;
+      color: var(--nt-text-muted);
+      margin-bottom: 6px;
+    }
+
+    .q-compare__value {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--nt-text);
+    }
+
+    .q-compare__rank {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      margin-top: 6px;
+      font-size: 0.68rem;
+      color: var(--nt-text-muted);
+    }
+
+    .q-compare__dots {
+      display: flex;
+      gap: 3px;
+    }
+
+    .q-compare__dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #d4d9e1;
+    }
+
+    .q-compare__dot--active {
+      background: var(--nt-primary);
+    }
+
+    .q-compare__dot--good { background: var(--nt-green); }
+    .q-compare__dot--avg { background: var(--nt-orange); }
+    .q-compare__dot--bad { background: var(--nt-red); }
+
+    .q-compare__pos {
+      font-size: 0.65rem;
+      color: var(--nt-text-muted);
+      margin-top: 4px;
+    }
+
+    /* ── SECTION 3 : AREA CHART + LIQUID (2 colonnes) ── */
+    .q-chart-row {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    /* Area chart */
+    .q-area svg { width: 100%; height: 180px; }
+    .q-area-grid { stroke: #f0f2f5; stroke-width: 1; }
+    .q-area-fill { opacity: 0; animation: areaFade 1s ease 0.3s forwards; }
+    .q-area-stroke { stroke-dasharray: 600; stroke-dashoffset: 600; animation: areaDraw 2s ease forwards; }
+
+    .q-area-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 6px;
+      font-size: 0.65rem;
+      color: #c2c9d6;
+    }
+
+    .q-area-legend {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 10px;
+    }
+
+    .q-area-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.72rem;
+      color: var(--nt-text-muted);
+    }
+
+    .q-area-legend-dot {
+      width: 10px;
+      height: 3px;
+      border-radius: 2px;
+    }
+
+    /* Liquid + circular group */
+    .q-metrics-col {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .q-liquid-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px;
+      background: var(--nt-primary-lighter);
+      border-radius: var(--nt-radius-sm);
+    }
+
+    .q-liquid {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      position: relative;
+      overflow: hidden;
+      background: white;
+      border: 2px solid var(--nt-primary-light);
+      flex-shrink: 0;
+    }
+
+    .q-liquid__level {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--nt-primary);
+      opacity: 0.25;
+    }
+
+    .q-liquid__wave {
+      position: absolute;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: var(--nt-primary);
+      opacity: 0.15;
+      border-radius: 40%;
+      animation: liquidWave 3s linear infinite;
+    }
+
+    .q-liquid__wave--2 {
+      opacity: 0.1;
+      animation-duration: 4s;
+      animation-direction: reverse;
+    }
+
+    .q-liquid__txt {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--nt-primary-dark);
+      z-index: 2;
+    }
+
+    .q-liquid-info h4 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--nt-text);
+    }
+
+    .q-liquid-info p {
+      font-size: 0.72rem;
+      color: var(--nt-text-secondary);
+      margin-top: 2px;
+    }
+
+    .q-liquid-info .q-trend {
+      font-size: 0.72rem;
+      margin-top: 2px;
+    }
+
+    /* Circular row */
+    .q-circ-row {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .q-circ {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .q-circ__ring {
+      position: relative;
+      width: 60px;
+      height: 60px;
+    }
+
+    .q-circ__ring svg { transform: rotate(-90deg); }
+
+    .q-circ-bg { fill: none; stroke: var(--nt-border); stroke-width: 6; }
+
+    .q-circ-fill {
+      fill: none;
+      stroke-width: 6;
+      stroke-linecap: round;
+      stroke-dasharray: 157;
+      stroke-dashoffset: 157;
+      animation: circFill 1.5s ease forwards;
+    }
+
+    .q-circ__val {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--nt-text);
+    }
+
+    .q-circ__label {
+      font-size: 0.68rem;
+      color: var(--nt-text-muted);
+      font-weight: 500;
+    }
+
+    /* ── SECTION 4 : TOP NICHES TABLE ── */
+    .q-section { margin-bottom: 20px; }
+
+    .q-table-wrap {
+      overflow-x: auto;
+    }
+
+    .q-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+    }
+
+    .q-table thead th {
+      text-align: left;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--nt-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      padding: 0 12px 12px;
+      border-bottom: 2px solid var(--nt-border);
+    }
+
+    .q-table tbody tr {
+      border-bottom: 1px solid var(--nt-border);
+      transition: background 0.15s;
+    }
+
+    .q-table tbody tr:hover { background: var(--nt-primary-lighter); }
+
+    .q-table td {
+      padding: 11px 12px;
+      vertical-align: middle;
+    }
+
+    .q-table__rank {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: white;
+    }
+
+    .q-table__rank--1 { background: var(--nt-primary); }
+    .q-table__rank--2 { background: var(--nt-green); }
+    .q-table__rank--3 { background: var(--nt-orange); }
+    .q-table__rank--default { background: #cbd5e1; color: #475569; }
+
+    .q-table__name { font-weight: 600; color: var(--nt-text); }
+
+    .q-table__highlight {
+      font-weight: 700;
+      color: var(--nt-primary);
+    }
+
+    .q-table__spark {
+      width: 50px;
+      height: 20px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .q-table__spark svg { width: 100%; height: 100%; }
+
+    /* ── SECTION 5 : CHARTS BARRES (2 colonnes) ── */
+    .q-charts-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .q-vbars {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      height: 140px;
+      padding-top: 8px;
+    }
+
+    .q-vbar-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      height: 100%;
+      gap: 3px;
+    }
+
+    .q-vbar {
+      width: 100%;
+      max-width: 36px;
+      border-radius: 6px 6px 0 0;
+      height: 0;
+      animation: barGrow 0.8s ease forwards;
+      position: relative;
+      cursor: pointer;
+      transition: filter 0.2s;
+    }
+
+    .q-vbar:hover { filter: brightness(1.1); }
+
+    .q-vbar--teal { background: linear-gradient(180deg, var(--nt-primary), var(--nt-primary-dark)); }
+    .q-vbar--green { background: linear-gradient(180deg, var(--nt-green), #2e7d32); }
+    .q-vbar--orange { background: linear-gradient(180deg, var(--nt-orange), #e65100); }
+    .q-vbar--indigo { background: linear-gradient(180deg, var(--nt-indigo), #3949ab); }
+    .q-vbar--red { background: linear-gradient(180deg, var(--nt-red), #c62828); }
+
+    .q-vbar__tooltip {
+      position: absolute;
+      top: -26px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--nt-text);
+      color: white;
+      font-size: 0.65rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+
+    .q-vbar:hover .q-vbar__tooltip { opacity: 1; }
+
+    .q-vbar__val { font-size: 0.68rem; font-weight: 600; color: var(--nt-text); }
+    .q-vbar__lbl { font-size: 0.65rem; color: var(--nt-text-muted); }
+
+    /* ── SECTION 6 : TOP MARQUES ── */
+    .q-brand-rank {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .q-brand-rank--1 { background: #fbbf24; color: #78350f; }
+    .q-brand-rank--2 { background: #94a3b8; color: white; }
+    .q-brand-rank--3 { background: #d97706; color: white; }
+    .q-brand-rank--default { background: #e2e8f0; color: #64748b; }
+
+    /* ── BADGES ── */
+    .q-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 10px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    .q-badge-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+    }
+
+    .q-badge--active { background: var(--nt-green-light); color: var(--nt-green); }
+    .q-badge--active .q-badge-dot { background: var(--nt-green); animation: statusBlink 2s infinite; }
+    .q-badge--paused { background: var(--nt-orange-light); color: var(--nt-orange); }
+    .q-badge--paused .q-badge-dot { background: var(--nt-orange); }
+
+    /* ── TABLE ACTIONS ── */
+    .q-table-btn {
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      border: 1px solid var(--nt-border);
+      background: white;
+      color: var(--nt-text-secondary);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .q-table-btn:hover { border-color: var(--nt-primary); color: var(--nt-primary); }
+
+    .q-table-btn--primary {
+      background: var(--nt-primary);
+      color: white;
+      border-color: var(--nt-primary);
+    }
+
+    .q-table-btn--primary:hover { background: var(--nt-primary-dark); }
+
+    /* ── SPARKLINE SET (bas de page) ── */
+    .q-sparks {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .q-spark-card {
+      background: var(--nt-card);
+      border-radius: var(--nt-radius);
+      border: 1px solid var(--nt-border);
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .q-spark-card__info {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .q-spark-card__label { font-size: 0.68rem; color: var(--nt-text-muted); }
+    .q-spark-card__val { font-size: 0.82rem; font-weight: 700; }
+
+    .q-spark-card__chart {
+      width: 65px;
+      height: 24px;
+    }
+
+    .q-spark-card__chart svg { width: 100%; height: 100%; }
+  </style>
+</head>
+<body>
+
+  <!-- ============ HEADER ============ -->
+  <div class="q-header">
+    <div class="q-header__left">
+      <h1>
+        Casquette +25 Reselltrack
+        <span class="q-header__badge"><span class="q-header__badge-dot"></span> En cours</span>
+      </h1>
+      <p class="q-header__meta">Vue d'ensemble du tracker &middot; volumes, vitesse de vente et modeles qui performent</p>
+    </div>
+    <div class="q-header__actions">
+      <button class="q-btn">Editer</button>
+      <button class="q-btn q-btn--danger">Pause</button>
+      <button class="q-btn q-btn--primary">Booster</button>
+    </div>
+  </div>
+
+  <!-- ============ TABS + PERIOD ============ -->
+  <div class="q-nav">
+    <div class="q-tabs">
+      <button class="q-tab q-tab--active">Overview</button>
+      <button class="q-tab">Details</button>
+      <button class="q-tab">Niche</button>
+      <button class="q-tab">Flux</button>
+    </div>
+    <div class="q-period">
+      <button class="q-period__btn">7 jours</button>
+      <button class="q-period__btn q-period__btn--active">30 jours</button>
+      <button class="q-period__btn">90 jours</button>
+    </div>
+  </div>
+
+  <!-- ============ SECTION 1 : KPIs (5 colonnes) ============ -->
+  <div class="q-kpis">
+    <div class="q-kpi">
+      <div class="q-kpi__label">Articles vendus</div>
+      <div class="q-kpi__value">19</div>
+      <div class="q-kpi__sub">Sur 593 trackes (3.2%)</div>
+      <div class="q-kpi__spark">
+        <svg viewBox="0 0 100 28" preserveAspectRatio="none">
+          <path class="q-spark-area" d="M0,22 L15,18 L30,20 L45,14 L60,16 L75,10 L100,6 L100,28 L0,28Z" fill="var(--nt-primary-light)"/>
+          <polyline class="q-spark-line" points="0,22 15,18 30,20 45,14 60,16 75,10 100,6" fill="none" stroke="var(--nt-primary)" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="q-kpi__footer">
+        <span class="q-trend q-trend--up">+12.4%</span>
+        <span class="q-period-label">vs 30j</span>
+      </div>
+    </div>
+
+    <div class="q-kpi">
+      <div class="q-kpi__label">Taux de conversion</div>
+      <div class="q-kpi__value">3.2%</div>
+      <div class="q-kpi__sub">Articles &rarr; Ventes</div>
+      <div class="q-kpi__spark">
+        <svg viewBox="0 0 100 28" preserveAspectRatio="none">
+          <path class="q-spark-area" d="M0,20 L15,18 L30,22 L45,12 L60,15 L75,8 L100,5 L100,28 L0,28Z" fill="var(--nt-green-light)"/>
+          <polyline class="q-spark-line" points="0,20 15,18 30,22 45,12 60,15 75,8 100,5" fill="none" stroke="var(--nt-green)" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="q-kpi__footer">
+        <span class="q-trend q-trend--up">+0.8%</span>
+        <span class="q-period-label">vs 30j</span>
+      </div>
+    </div>
+
+    <div class="q-kpi">
+      <div class="q-kpi__label">Panier moyen vendu</div>
+      <div class="q-kpi__value">46,68&euro;</div>
+      <div class="q-kpi__sub">Mediane disponible</div>
+      <div class="q-kpi__spark">
+        <svg viewBox="0 0 100 28" preserveAspectRatio="none">
+          <path class="q-spark-area" d="M0,14 L15,18 L30,12 L45,20 L60,15 L75,18 L100,14 L100,28 L0,28Z" fill="var(--nt-orange-light)"/>
+          <polyline class="q-spark-line" points="0,14 15,18 30,12 45,20 60,15 75,18 100,14" fill="none" stroke="var(--nt-orange)" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="q-kpi__footer">
+        <span class="q-trend q-trend--down">-2.1%</span>
+        <span class="q-period-label">vs 30j</span>
+      </div>
+    </div>
+
+    <div class="q-kpi">
+      <div class="q-kpi__label">Delai moyen vente</div>
+      <div class="q-kpi__value">9h 2m</div>
+      <div class="q-kpi__sub">Articles vendus</div>
+      <div class="q-kpi__spark">
+        <svg viewBox="0 0 100 28" preserveAspectRatio="none">
+          <path class="q-spark-area" d="M0,8 L15,12 L30,10 L45,15 L60,12 L75,18 L100,20 L100,28 L0,28Z" fill="var(--nt-indigo-light)"/>
+          <polyline class="q-spark-line" points="0,8 15,12 30,10 45,15 60,12 75,18 100,20" fill="none" stroke="var(--nt-indigo)" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="q-kpi__footer">
+        <span class="q-trend q-trend--down">-15min</span>
+        <span class="q-period-label">vs 30j</span>
+      </div>
+    </div>
+
+    <div class="q-kpi">
+      <div class="q-kpi__label">Nouvelles mises en ligne</div>
+      <div class="q-kpi__value">19.8/j</div>
+      <div class="q-kpi__sub">Moyenne derniers 30j</div>
+      <div class="q-kpi__spark">
+        <svg viewBox="0 0 100 28" preserveAspectRatio="none">
+          <path class="q-spark-area" d="M0,18 L15,14 L30,16 L45,10 L60,13 L75,8 L100,6 L100,28 L0,28Z" fill="var(--nt-primary-light)"/>
+          <polyline class="q-spark-line" points="0,18 15,14 30,16 45,10 60,13 75,8 100,6" fill="none" stroke="var(--nt-primary)" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="q-kpi__footer">
+        <span class="q-trend q-trend--up">+3.2/j</span>
+        <span class="q-period-label">vs 30j</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SECTION 2 : SCORE + COMPARAISON ============ -->
+  <div class="q-score-row">
+
+    <!-- Evaluation du potentiel -->
+    <div class="q-card q-card--delay1">
+      <div class="q-card-title">Evaluation du Potentiel</div>
+      <div class="q-gauge-wrap">
+        <div class="q-gauge">
+          <svg viewBox="0 0 200 120" width="220" height="130">
+            <defs>
+              <linearGradient id="q-gg" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#e53935"/>
+                <stop offset="35%" stop-color="#fb8c00"/>
+                <stop offset="65%" stop-color="#009688"/>
+                <stop offset="100%" stop-color="#43a047"/>
+              </linearGradient>
+            </defs>
+            <path d="M 20 100 A 80 80 0 0 1 180 100" class="q-gauge-bg"/>
+            <path d="M 20 100 A 80 80 0 0 1 180 100" class="q-gauge-fill" stroke="url(#q-gg)" style="--gauge-offset: 133"/>
+          </svg>
+          <div class="q-gauge-val">
+            <span class="q-gauge-val__number">4.7</span><span class="q-gauge-val__unit">/10</span>
+          </div>
+        </div>
+        <span class="q-gauge-badge q-gauge-badge--moyen">Moyen</span>
+      </div>
+
+      <!-- Sub-scores -->
+      <div class="q-subscores">
+        <div class="q-subscore">
+          <span class="q-subscore__name">Taux de vente</span>
+          <div class="q-subscore__track">
+            <div class="q-subscore__fill" style="--progress:5%;background:var(--nt-red)"></div>
+          </div>
+          <span class="q-subscore__val" style="color:var(--nt-red)">0.5/10</span>
+        </div>
+        <div class="q-subscore">
+          <span class="q-subscore__name">Rapidite</span>
+          <div class="q-subscore__track">
+            <div class="q-subscore__fill" style="--progress:99%;background:var(--nt-green)"></div>
+          </div>
+          <span class="q-subscore__val" style="color:var(--nt-green)">9.9/10</span>
+        </div>
+        <div class="q-subscore">
+          <span class="q-subscore__name">Panier moyen</span>
+          <div class="q-subscore__track">
+            <div class="q-subscore__fill" style="--progress:93%;background:var(--nt-green)"></div>
+          </div>
+          <span class="q-subscore__val" style="color:var(--nt-green)">9.3/10</span>
+        </div>
+        <div class="q-subscore">
+          <span class="q-subscore__name">Volume marche</span>
+          <div class="q-subscore__track">
+            <div class="q-subscore__fill" style="--progress:9%;background:var(--nt-red)"></div>
+          </div>
+          <span class="q-subscore__val" style="color:var(--nt-red)">0.9/10</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comparaison avec autres trackers -->
+    <div class="q-card q-card--delay2">
+      <div class="q-card-title">Comparaison avec les autres trackers</div>
+      <div class="q-compare__grid">
+        <div class="q-compare__item">
+          <div class="q-compare__label">Taux de conversion</div>
+          <div class="q-compare__value">3.2%</div>
+          <div class="q-compare__dots" style="justify-content:center;margin-top:8px;">
+            <span class="q-compare__dot"></span>
+            <span class="q-compare__dot"></span>
+            <span class="q-compare__dot"></span>
+            <span class="q-compare__dot"></span>
+            <span class="q-compare__dot q-compare__dot--active q-compare__dot--avg"></span>
+            <span class="q-compare__dot"></span>
+            <span class="q-compare__dot"></span>
+            <span class="q-compare__dot"></span>
+            <span class="q-compare__dot"></span>
+          </div>
+          <div class="q-compare__pos">5eme sur 9</div>
+        </div>
+        <div class="q-compare__item">
+          <div class="q-compare__label">Panier moyen</div>
+          <div class="q-compare__value">46,68&euro;</div>
+          <div class="q-compare__dots" style="justify-content:center;margin-top:8px;">
+            <span class="q-compare__dot"></span>
+            <span class="q-compare__dot"></span>
+            <span class="q-compare__dot"></span>
+            <span class="q-compare__dot q-compare__dot--active q-compare__dot--good"></span>
+            <span class="q-compare__dot"></span>
+            <span class="q-compare__dot"></span>
+            <span class="q-compare__dot"></span>
+            <span class="q-compare__dot"></span>
+            <span class="q-compare__dot"></span>
+          </div>
+          <div class="q-compare__pos">4eme sur 9</div>
+        </div>
+        <div class="q-compare__item">
+          <div class="q-compare__label">Rapidite vente</div>
+          <div class="q-compare__value">9h 2m</div>
+          <div class="q-compare__dots" style="justify-content:center;margin-top:8px;">
+            <span class="q-compare__dot"></span>
+            <span class="q-compare__dot q-compare__dot--active q-compare__dot--good"></span>
+            <span class="q-compare__dot"></span>
+            <span class="q-compare__dot"></span>
+            <span class="q-compare__dot"></span>
+            <span class="q-compare__dot"></span>
+            <span class="q-compare__dot"></span>
+            <span class="q-compare__dot"></span>
+            <span class="q-compare__dot"></span>
+          </div>
+          <div class="q-compare__pos">2eme sur 9</div>
+        </div>
+        <div class="q-compare__item">
+          <div class="q-compare__label">Volume marche</div>
+          <div class="q-compare__value">593</div>
+          <div class="q-compare__dots" style="justify-content:center;margin-top:8px;">
+            <span class="q-compare__dot"></span>
+            <span class="q-compare__dot"></span>
+            <span class="q-compare__dot"></span>
+            <span class="q-compare__dot"></span>
+            <span class="q-compare__dot"></span>
+            <span class="q-compare__dot"></span>
+            <span class="q-compare__dot"></span>
+            <span class="q-compare__dot"></span>
+            <span class="q-compare__dot q-compare__dot--active q-compare__dot--bad"></span>
+          </div>
+          <div class="q-compare__pos">9eme sur 9</div>
+        </div>
+      </div>
+
+      <!-- Circular scores rapides -->
+      <div style="margin-top:20px;">
+        <div class="q-section-label" style="margin-bottom:12px;">Scores rapides</div>
+        <div class="q-circ-row">
+          <div class="q-circ">
+            <div class="q-circ__ring">
+              <svg width="60" height="60" viewBox="0 0 60 60">
+                <circle class="q-circ-bg" cx="30" cy="30" r="25"/>
+                <circle class="q-circ-fill" cx="30" cy="30" r="25" stroke="var(--nt-red)" style="--circ-offset:149"/>
+              </svg>
+              <span class="q-circ__val" style="color:var(--nt-red)">0.5</span>
+            </div>
+            <span class="q-circ__label">Taux vente</span>
+          </div>
+          <div class="q-circ">
+            <div class="q-circ__ring">
+              <svg width="60" height="60" viewBox="0 0 60 60">
+                <circle class="q-circ-bg" cx="30" cy="30" r="25"/>
+                <circle class="q-circ-fill" cx="30" cy="30" r="25" stroke="var(--nt-green)" style="--circ-offset:2"/>
+              </svg>
+              <span class="q-circ__val" style="color:var(--nt-green)">9.9</span>
+            </div>
+            <span class="q-circ__label">Rapidite</span>
+          </div>
+          <div class="q-circ">
+            <div class="q-circ__ring">
+              <svg width="60" height="60" viewBox="0 0 60 60">
+                <circle class="q-circ-bg" cx="30" cy="30" r="25"/>
+                <circle class="q-circ-fill" cx="30" cy="30" r="25" stroke="var(--nt-green)" style="--circ-offset:11"/>
+              </svg>
+              <span class="q-circ__val" style="color:var(--nt-green)">9.3</span>
+            </div>
+            <span class="q-circ__label">Panier</span>
+          </div>
+          <div class="q-circ">
+            <div class="q-circ__ring">
+              <svg width="60" height="60" viewBox="0 0 60 60">
+                <circle class="q-circ-bg" cx="30" cy="30" r="25"/>
+                <circle class="q-circ-fill" cx="30" cy="30" r="25" stroke="var(--nt-red)" style="--circ-offset:143"/>
+              </svg>
+              <span class="q-circ__val" style="color:var(--nt-red)">0.9</span>
+            </div>
+            <span class="q-circ__label">Volume</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SECTION 3 : AREA CHART + LIQUID/CIRCULAR ============ -->
+  <div class="q-chart-row">
+    <div class="q-card q-card--delay3">
+      <div class="q-card-title">Tendance des prix (30 jours)</div>
+      <div class="q-area-legend">
+        <div class="q-area-legend-item">
+          <span class="q-area-legend-dot" style="background:var(--nt-primary)"></span> Prix median niche
+        </div>
+        <div class="q-area-legend-item">
+          <span class="q-area-legend-dot" style="background:var(--nt-orange)"></span> Moyenne marche
+        </div>
+      </div>
+      <div class="q-area">
+        <svg viewBox="0 0 450 180">
+          <defs>
+            <linearGradient id="q-ag" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="var(--nt-primary)" stop-opacity="0.25"/>
+              <stop offset="100%" stop-color="var(--nt-primary)" stop-opacity="0.01"/>
+            </linearGradient>
+          </defs>
+          <line x1="0" y1="45" x2="450" y2="45" class="q-area-grid"/>
+          <line x1="0" y1="90" x2="450" y2="90" class="q-area-grid"/>
+          <line x1="0" y1="135" x2="450" y2="135" class="q-area-grid"/>
+          <path class="q-area-fill" d="M0,120 C50,115 100,95 150,100 C200,105 250,80 300,70 C350,60 400,65 450,48 L450,180 L0,180Z" fill="url(#q-ag)"/>
+          <path class="q-area-stroke" d="M0,120 C50,115 100,95 150,100 C200,105 250,80 300,70 C350,60 400,65 450,48" fill="none" stroke="var(--nt-primary)" stroke-width="2.5" stroke-linecap="round"/>
+          <path class="q-area-stroke" style="animation-delay:0.3s" d="M0,105 C50,102 100,110 150,115 C200,118 250,112 300,108 C350,105 400,110 450,105" fill="none" stroke="var(--nt-orange)" stroke-width="1.5" stroke-dasharray="6,3"/>
+          <circle cx="450" cy="48" r="4" fill="var(--nt-primary)"/>
+        </svg>
+      </div>
+      <div class="q-area-labels">
+        <span>1 fev</span><span>8 fev</span><span>15 fev</span><span>21 fev</span>
+      </div>
+    </div>
+
+    <div class="q-metrics-col">
+      <!-- Liquid fill -->
+      <div class="q-card q-card--delay3" style="padding:16px;">
+        <div class="q-section-label" style="margin-bottom:10px;">Taux de vente rapide</div>
+        <div class="q-liquid-card">
+          <div class="q-liquid">
+            <div class="q-liquid__level" style="height:65%"></div>
+            <div class="q-liquid__wave" style="bottom:60%"></div>
+            <div class="q-liquid__wave q-liquid__wave--2" style="bottom:58%"></div>
+            <span class="q-liquid__txt">65%</span>
+          </div>
+          <div class="q-liquid-info">
+            <h4>65% vendus en &lt;9h</h4>
+            <p>Rapidite superieure a la moyenne</p>
+            <span class="q-trend q-trend--up">+4.2% vs mois dern.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Circular progress -->
+      <div class="q-card q-card--delay4" style="padding:16px;">
+        <div class="q-section-label" style="margin-bottom:10px;">Repartition ventes</div>
+        <div class="q-circ-row">
+          <div class="q-circ">
+            <div class="q-circ__ring">
+              <svg width="60" height="60" viewBox="0 0 60 60">
+                <circle class="q-circ-bg" cx="30" cy="30" r="25"/>
+                <circle class="q-circ-fill" cx="30" cy="30" r="25" stroke="var(--nt-primary)" style="--circ-offset:60"/>
+              </svg>
+              <span class="q-circ__val">62%</span>
+            </div>
+            <span class="q-circ__label">Catalogue</span>
+          </div>
+          <div class="q-circ">
+            <div class="q-circ__ring">
+              <svg width="60" height="60" viewBox="0 0 60 60">
+                <circle class="q-circ-bg" cx="30" cy="30" r="25"/>
+                <circle class="q-circ-fill" cx="30" cy="30" r="25" stroke="var(--nt-green)" style="--circ-offset:97"/>
+              </svg>
+              <span class="q-circ__val">38%</span>
+            </div>
+            <span class="q-circ__label">Profil</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SECTION 4 : TOP NICHES PAR PERFORMANCE ============ -->
+  <div class="q-card q-section q-card--delay2">
+    <div class="q-card-title">
+      Top 5 Niches par Performance
+      <a href="#">Voir toutes les niches &rarr;</a>
+    </div>
+    <div class="q-table-wrap">
+      <table class="q-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Niche</th>
+            <th>En ligne</th>
+            <th>Vendus</th>
+            <th>Panier moy.</th>
+            <th>Delai vente</th>
+            <th>Taux vente</th>
+            <th>Tendance</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="q-table__rank q-table__rank--1">1</span></td>
+            <td class="q-table__name">Norse Projects Casquettes</td>
+            <td>1</td>
+            <td>1</td>
+            <td>50&euro;</td>
+            <td>0.4j</td>
+            <td class="q-table__highlight">100.0%</td>
+            <td>
+              <span class="q-table__spark">
+                <svg viewBox="0 0 50 20" preserveAspectRatio="none">
+                  <polyline class="q-spark-line" points="0,16 8,14 16,15 24,10 32,8 40,6 50,3" fill="none" stroke="var(--nt-green)" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td><span class="q-table__rank q-table__rank--2">2</span></td>
+            <td class="q-table__name">Customized Casquettes</td>
+            <td>1</td>
+            <td>1</td>
+            <td>40&euro;</td>
+            <td>0.5j</td>
+            <td class="q-table__highlight">100.0%</td>
+            <td>
+              <span class="q-table__spark">
+                <svg viewBox="0 0 50 20" preserveAspectRatio="none">
+                  <polyline class="q-spark-line" points="0,15 8,13 16,14 24,9 32,7 40,5 50,4" fill="none" stroke="var(--nt-green)" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td><span class="q-table__rank q-table__rank--3">3</span></td>
+            <td class="q-table__name">Our Legacy Casquettes</td>
+            <td>1</td>
+            <td>1</td>
+            <td>29&euro;</td>
+            <td>0.4j</td>
+            <td class="q-table__highlight">100.0%</td>
+            <td>
+              <span class="q-table__spark">
+                <svg viewBox="0 0 50 20" preserveAspectRatio="none">
+                  <polyline class="q-spark-line" points="0,14 8,12 16,14 24,8 32,10 40,6 50,3" fill="none" stroke="var(--nt-green)" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td><span class="q-table__rank q-table__rank--default">4</span></td>
+            <td class="q-table__name">On Running Casquettes</td>
+            <td>1</td>
+            <td>1</td>
+            <td>30&euro;</td>
+            <td>0.4j</td>
+            <td class="q-table__highlight">100.0%</td>
+            <td>
+              <span class="q-table__spark">
+                <svg viewBox="0 0 50 20" preserveAspectRatio="none">
+                  <polyline class="q-spark-line" points="0,12 8,14 16,10 24,12 32,8 40,6 50,5" fill="none" stroke="var(--nt-primary)" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td><span class="q-table__rank q-table__rank--default">5</span></td>
+            <td class="q-table__name">MBL Casquettes</td>
+            <td>1</td>
+            <td>1</td>
+            <td>28&euro;</td>
+            <td>0.4j</td>
+            <td class="q-table__highlight">100.0%</td>
+            <td>
+              <span class="q-table__spark">
+                <svg viewBox="0 0 50 20" preserveAspectRatio="none">
+                  <polyline class="q-spark-line" points="0,14 8,12 16,16 24,10 32,12 40,8 50,6" fill="none" stroke="var(--nt-primary)" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ============ SECTION 5 : CHARTS BARRES (2 colonnes) ============ -->
+  <div class="q-charts-row">
+    <!-- Ventes par tranche de prix -->
+    <div class="q-card q-card--delay3">
+      <div class="q-card-title">Ventes par Tranche de Prix</div>
+      <div class="q-vbars">
+        <div class="q-vbar-col">
+          <div class="q-vbar q-vbar--red" style="--bar-h:50%">
+            <span class="q-vbar__tooltip">3 ventes</span>
+          </div>
+          <span class="q-vbar__val">3</span>
+          <span class="q-vbar__lbl">25-27&euro;</span>
+        </div>
+        <div class="q-vbar-col">
+          <div class="q-vbar q-vbar--orange" style="--bar-h:65%">
+            <span class="q-vbar__tooltip">4 ventes</span>
+          </div>
+          <span class="q-vbar__val">4</span>
+          <span class="q-vbar__lbl">27-30&euro;</span>
+        </div>
+        <div class="q-vbar-col">
+          <div class="q-vbar q-vbar--teal" style="--bar-h:82%">
+            <span class="q-vbar__tooltip">5 ventes</span>
+          </div>
+          <span class="q-vbar__val">5</span>
+          <span class="q-vbar__lbl">30-40&euro;</span>
+        </div>
+        <div class="q-vbar-col">
+          <div class="q-vbar q-vbar--green" style="--bar-h:100%">
+            <span class="q-vbar__tooltip">6 ventes</span>
+          </div>
+          <span class="q-vbar__val">6</span>
+          <span class="q-vbar__lbl">40-50&euro;</span>
+        </div>
+        <div class="q-vbar-col">
+          <div class="q-vbar q-vbar--indigo" style="--bar-h:18%">
+            <span class="q-vbar__tooltip">1 vente</span>
+          </div>
+          <span class="q-vbar__val">1</span>
+          <span class="q-vbar__lbl">50-230&euro;</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rapidite de vente -->
+    <div class="q-card q-card--delay4">
+      <div class="q-card-title">Rapidite de Vente</div>
+      <div class="q-vbars">
+        <div class="q-vbar-col">
+          <div class="q-vbar q-vbar--green" style="--bar-h:100%">
+            <span class="q-vbar__tooltip">8 ventes</span>
+          </div>
+          <span class="q-vbar__val">8</span>
+          <span class="q-vbar__lbl">&lt; 9h</span>
+        </div>
+        <div class="q-vbar-col">
+          <div class="q-vbar q-vbar--teal" style="--bar-h:75%">
+            <span class="q-vbar__tooltip">6 ventes</span>
+          </div>
+          <span class="q-vbar__val">6</span>
+          <span class="q-vbar__lbl">9h-9h</span>
+        </div>
+        <div class="q-vbar-col">
+          <div class="q-vbar q-vbar--orange" style="--bar-h:62%">
+            <span class="q-vbar__tooltip">5 ventes</span>
+          </div>
+          <span class="q-vbar__val">5</span>
+          <span class="q-vbar__lbl">9h-9h</span>
+        </div>
+        <div class="q-vbar-col">
+          <div class="q-vbar q-vbar--red" style="--bar-h:12%">
+            <span class="q-vbar__tooltip">1 vente</span>
+          </div>
+          <span class="q-vbar__val">1</span>
+          <span class="q-vbar__lbl">&gt; 9h</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SECTION 6 : TOP MARQUES ============ -->
+  <div class="q-card q-section q-card--delay3">
+    <div class="q-card-title">
+      Top Marques Decouvertes
+      <a href="#">Voir toutes &rarr;</a>
+    </div>
+    <div class="q-table-wrap">
+      <table class="q-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>#</th>
+            <th>Marque</th>
+            <th>En ligne</th>
+            <th>Vendus</th>
+            <th>Taux vente</th>
+            <th>Panier moy.</th>
+            <th>Delai vente</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>&rsaquo;</td>
+            <td><span class="q-brand-rank q-brand-rank--1">1</span></td>
+            <td class="q-table__name">SATISFY</td>
+            <td>1</td><td>1</td>
+            <td class="q-table__highlight">100.0%</td>
+            <td>65&euro;</td><td>9h 5m</td>
+          </tr>
+          <tr>
+            <td>&rsaquo;</td>
+            <td><span class="q-brand-rank q-brand-rank--2">2</span></td>
+            <td class="q-table__name">Norse Projects</td>
+            <td>1</td><td>1</td>
+            <td class="q-table__highlight">100.0%</td>
+            <td>50&euro;</td><td>8h 45m</td>
+          </tr>
+          <tr>
+            <td>&rsaquo;</td>
+            <td><span class="q-brand-rank q-brand-rank--3">3</span></td>
+            <td class="q-table__name">On Running</td>
+            <td>1</td><td>1</td>
+            <td class="q-table__highlight">100.0%</td>
+            <td>30&euro;</td><td>9h 33m</td>
+          </tr>
+          <tr>
+            <td>&rsaquo;</td>
+            <td><span class="q-brand-rank q-brand-rank--default">4</span></td>
+            <td class="q-table__name">Our Legacy</td>
+            <td>1</td><td>1</td>
+            <td class="q-table__highlight">100.0%</td>
+            <td>29&euro;</td><td>9h 6m</td>
+          </tr>
+          <tr>
+            <td>&rsaquo;</td>
+            <td><span class="q-brand-rank q-brand-rank--default">5</span></td>
+            <td class="q-table__name">Kangol</td>
+            <td>4</td><td>2</td>
+            <td>50.0%</td>
+            <td>35&euro;</td><td>9h 45m</td>
+          </tr>
+          <tr>
+            <td>&rsaquo;</td>
+            <td><span class="q-brand-rank q-brand-rank--default">6</span></td>
+            <td class="q-table__name">MBL</td>
+            <td>2</td><td>1</td>
+            <td>50.0%</td>
+            <td>28&euro;</td><td>9h 8m</td>
+          </tr>
+          <tr>
+            <td>&rsaquo;</td>
+            <td><span class="q-brand-rank q-brand-rank--default">7</span></td>
+            <td class="q-table__name">Palace</td>
+            <td>3</td><td>1</td>
+            <td>33.3%</td>
+            <td>50&euro;</td><td>8h 45m</td>
+          </tr>
+          <tr>
+            <td>&rsaquo;</td>
+            <td><span class="q-brand-rank q-brand-rank--default">8</span></td>
+            <td class="q-table__name">Customized</td>
+            <td>4</td><td>1</td>
+            <td>25.0%</td>
+            <td>40&euro;</td><td>8h</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ============ SECTION 7 : SPARKLINE SET (resume) ============ -->
+  <div class="q-sparks">
+    <div class="q-spark-card">
+      <div class="q-spark-card__info">
+        <span class="q-spark-card__label">Revenue est.</span>
+        <span class="q-spark-card__val q-trend--up">+18.3%</span>
+      </div>
+      <div class="q-spark-card__chart">
+        <svg viewBox="0 0 65 24" preserveAspectRatio="none">
+          <polyline class="q-spark-line" points="0,20 8,18 16,20 24,14 32,16 40,10 48,12 56,6 65,4" fill="none" stroke="var(--nt-green)" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+    <div class="q-spark-card">
+      <div class="q-spark-card__info">
+        <span class="q-spark-card__label">Taux conversion</span>
+        <span class="q-spark-card__val q-trend--up">+0.8%</span>
+      </div>
+      <div class="q-spark-card__chart">
+        <svg viewBox="0 0 65 24" preserveAspectRatio="none">
+          <polyline class="q-spark-line" style="animation-delay:0.2s" points="0,18 8,16 16,19 24,12 32,15 40,8 48,11 56,6 65,5" fill="none" stroke="var(--nt-primary)" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+    <div class="q-spark-card">
+      <div class="q-spark-card__info">
+        <span class="q-spark-card__label">Delai moyen</span>
+        <span class="q-spark-card__val q-trend--down">-15min</span>
+      </div>
+      <div class="q-spark-card__chart">
+        <svg viewBox="0 0 65 24" preserveAspectRatio="none">
+          <polyline class="q-spark-line" style="animation-delay:0.4s" points="0,6 8,10 16,8 24,14 32,10 40,16 48,12 56,18 65,20" fill="none" stroke="var(--nt-red)" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+    <div class="q-spark-card">
+      <div class="q-spark-card__info">
+        <span class="q-spark-card__label">Nouvelles MeL</span>
+        <span class="q-spark-card__val q-trend--up">+3.2/j</span>
+      </div>
+      <div class="q-spark-card__chart">
+        <svg viewBox="0 0 65 24" preserveAspectRatio="none">
+          <polyline class="q-spark-line" style="animation-delay:0.6s" points="0,16 8,14 16,18 24,10 32,13 40,8 48,10 56,6 65,5" fill="none" stroke="var(--nt-indigo)" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

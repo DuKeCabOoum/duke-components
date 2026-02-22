@@ -1,0 +1,2034 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NicheTrackr — Variantes L, M, N</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================
+       SHARED BASE STYLES
+       ============================================ */
+
+    :root {
+      --nt-primary: #009688;
+      --nt-primary-dark: #00796b;
+      --nt-primary-light: rgba(0, 150, 136, 0.12);
+      --nt-primary-lighter: rgba(0, 150, 136, 0.06);
+      --nt-green: #43a047;
+      --nt-green-light: rgba(67, 160, 71, 0.12);
+      --nt-orange: #fb8c00;
+      --nt-orange-light: rgba(251, 140, 0, 0.12);
+      --nt-red: #e53935;
+      --nt-red-light: rgba(229, 57, 53, 0.12);
+      --nt-indigo: #5c6bc0;
+      --nt-indigo-light: rgba(92, 107, 192, 0.12);
+      --nt-purple: #7c4dff;
+      --nt-purple-light: rgba(124, 77, 255, 0.12);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: #eef1f5;
+      line-height: 1.5;
+    }
+
+    .variant-separator {
+      padding: 40px 32px 16px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .variant-separator h2 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #1a2332;
+      white-space: nowrap;
+    }
+
+    .variant-separator::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #cbd5e1;
+    }
+
+    .variant-separator span {
+      font-size: 0.8rem;
+      color: #64748b;
+      white-space: nowrap;
+    }
+
+    /* Shared animation keyframes */
+    @keyframes sparkDraw { to { stroke-dashoffset: 0; } }
+    @keyframes sparkFade { to { opacity: 1; } }
+    @keyframes gaugeFill { to { stroke-dashoffset: var(--gauge-offset); } }
+    @keyframes circFill { to { stroke-dashoffset: var(--circ-offset); } }
+    @keyframes barGrow { to { height: var(--bar-h); } }
+    @keyframes progressGrow { to { width: var(--progress); } }
+    @keyframes areaFade { to { opacity: 1; } }
+    @keyframes areaDraw { to { stroke-dashoffset: 0; } }
+    @keyframes liquidWave { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    @keyframes statusBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+    @keyframes countUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ============================================
+       VARIANTE L — COMPACT BENTO
+       Layout bento grid, tout visible en un ecran
+       Focus : densite d'info, cards compactes
+       ============================================ */
+
+    .vl {
+      padding: 24px 32px;
+      max-width: 1200px;
+    }
+
+    /* Header inline */
+    .vl__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .vl__title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #1a2332;
+    }
+
+    .vl__meta {
+      font-size: 0.78rem;
+      color: #64748b;
+      margin-left: 12px;
+    }
+
+    .vl__tabs {
+      display: flex;
+      gap: 2px;
+      background: #e8ecf1;
+      border-radius: 8px;
+      padding: 3px;
+    }
+
+    .vl__tab {
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: #64748b;
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .vl__tab--active {
+      background: white;
+      color: var(--nt-primary);
+      font-weight: 600;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    /* Bento Grid */
+    .vl__bento {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: auto;
+      gap: 12px;
+    }
+
+    .vl__card {
+      background: white;
+      border-radius: 12px;
+      border: 1px solid #e8ecf1;
+      padding: 16px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    }
+
+    .vl__card--span2 { grid-column: span 2; }
+    .vl__card--span3 { grid-column: span 3; }
+    .vl__card--span4 { grid-column: span 4; }
+
+    .vl__card-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #94a3b8;
+      margin-bottom: 10px;
+    }
+
+    /* KPI mini */
+    .vl__kpi-val {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #1a2332;
+      line-height: 1;
+    }
+
+    .vl__kpi-trend {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      margin-left: 8px;
+    }
+
+    .vl__kpi-trend--up { color: var(--nt-green); }
+    .vl__kpi-trend--down { color: var(--nt-red); }
+
+    /* Sparkline inline */
+    .vl__spark-inline {
+      height: 28px;
+      margin-top: 8px;
+    }
+
+    .vl__spark-inline svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .vl__spark-line {
+      stroke-dasharray: 200;
+      stroke-dashoffset: 200;
+      animation: sparkDraw 1.5s ease forwards;
+    }
+
+    .vl__spark-area {
+      opacity: 0;
+      animation: sparkFade 1s ease 0.3s forwards;
+    }
+
+    /* Gauge compact */
+    .vl__gauge-wrap {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .vl__gauge {
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .vl__gauge-bg {
+      fill: none;
+      stroke: #e8ecf1;
+      stroke-width: 12;
+      stroke-linecap: round;
+    }
+
+    .vl__gauge-fill {
+      fill: none;
+      stroke-width: 12;
+      stroke-linecap: round;
+      stroke-dasharray: 251.33;
+      stroke-dashoffset: 251.33;
+      animation: gaugeFill 1.8s ease forwards;
+    }
+
+    .vl__gauge-val {
+      position: absolute;
+      bottom: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #1a2332;
+    }
+
+    .vl__gauge-details {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .vl__gauge-detail {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      color: #64748b;
+    }
+
+    .vl__gauge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .vl__gauge-score {
+      font-weight: 700;
+      margin-left: auto;
+    }
+
+    /* Vertical bars compact */
+    .vl__bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+      height: 100px;
+    }
+
+    .vl__bar-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      height: 100%;
+      gap: 3px;
+    }
+
+    .vl__bar {
+      width: 100%;
+      max-width: 24px;
+      border-radius: 4px 4px 0 0;
+      background: var(--nt-primary);
+      height: 0;
+      animation: barGrow 0.8s ease forwards;
+    }
+
+    .vl__bar--highlight {
+      background: linear-gradient(180deg, var(--nt-green), #2e7d32);
+    }
+
+    .vl__bar-lbl {
+      font-size: 0.6rem;
+      color: #94a3b8;
+    }
+
+    /* Progress mini */
+    .vl__prog-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .vl__prog-row:last-child { margin-bottom: 0; }
+
+    .vl__prog-name {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #1a2332;
+      width: 80px;
+      flex-shrink: 0;
+    }
+
+    .vl__prog-track {
+      flex: 1;
+      height: 5px;
+      background: #f0f2f5;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .vl__prog-fill {
+      height: 100%;
+      border-radius: 3px;
+      width: 0;
+      animation: progressGrow 1.2s ease forwards;
+    }
+
+    .vl__prog-val {
+      font-size: 0.72rem;
+      font-weight: 700;
+      width: 35px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    /* Circular compact */
+    .vl__circ-row {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .vl__circ {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .vl__circ-ring {
+      position: relative;
+      width: 64px;
+      height: 64px;
+    }
+
+    .vl__circ-ring svg {
+      transform: rotate(-90deg);
+    }
+
+    .vl__circ-bg {
+      fill: none;
+      stroke: #e8ecf1;
+      stroke-width: 6;
+    }
+
+    .vl__circ-fill {
+      fill: none;
+      stroke-width: 6;
+      stroke-linecap: round;
+      stroke-dasharray: 163;
+      stroke-dashoffset: 163;
+      animation: circFill 1.5s ease forwards;
+    }
+
+    .vl__circ-val {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #1a2332;
+    }
+
+    .vl__circ-lbl {
+      font-size: 0.65rem;
+      color: #94a3b8;
+      font-weight: 500;
+    }
+
+    /* Table compact */
+    .vl__table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.75rem;
+    }
+
+    .vl__table th {
+      text-align: left;
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 0 8px 8px;
+      border-bottom: 1px solid #e8ecf1;
+    }
+
+    .vl__table td {
+      padding: 8px;
+      border-bottom: 1px solid #f0f2f5;
+    }
+
+    .vl__table tr:hover { background: var(--nt-primary-lighter); }
+
+    .vl__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.68rem;
+      font-weight: 600;
+    }
+
+    .vl__badge-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      animation: statusBlink 2s ease-in-out infinite;
+    }
+
+    .vl__badge--ok { background: var(--nt-green-light); color: var(--nt-green); }
+    .vl__badge--ok .vl__badge-dot { background: var(--nt-green); }
+    .vl__badge--warn { background: var(--nt-orange-light); color: var(--nt-orange); }
+    .vl__badge--warn .vl__badge-dot { background: var(--nt-orange); animation: none; }
+
+    .vl__score {
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .vl__score-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+
+    /* Liquid mini */
+    .vl__liquid-wrap {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .vl__liquid {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      position: relative;
+      overflow: hidden;
+      background: var(--nt-primary-lighter);
+      border: 2px solid var(--nt-primary-light);
+      flex-shrink: 0;
+    }
+
+    .vl__liquid-level {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--nt-primary);
+      opacity: 0.25;
+    }
+
+    .vl__liquid-wave {
+      position: absolute;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: var(--nt-primary);
+      opacity: 0.15;
+      border-radius: 40%;
+      animation: liquidWave 3s linear infinite;
+    }
+
+    .vl__liquid-txt {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: var(--nt-primary-dark);
+      z-index: 2;
+    }
+
+    .vl__liquid-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .vl__liquid-title {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #1a2332;
+    }
+
+    .vl__liquid-desc {
+      font-size: 0.7rem;
+      color: #94a3b8;
+    }
+
+    /* ============================================
+       VARIANTE M — DASHBOARD SOMBRE EPURE
+       Theme sombre avec accents neon teal
+       Focus : area chart hero + gauges larges
+       ============================================ */
+
+    .vm {
+      padding: 24px 32px;
+      max-width: 1200px;
+      background: #0f1419;
+      border-radius: 16px;
+      margin: 0 32px;
+    }
+
+    .vm__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .vm__title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #f1f5f9;
+    }
+
+    .vm__subtitle {
+      font-size: 0.78rem;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    .vm__tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid #1e293b;
+      margin-bottom: 24px;
+    }
+
+    .vm__tab {
+      padding: 8px 18px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #64748b;
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .vm__tab--active {
+      color: var(--nt-primary);
+      border-bottom-color: var(--nt-primary);
+    }
+
+    /* KPI row dark */
+    .vm__kpi-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .vm__kpi {
+      background: #1a2332;
+      border-radius: 10px;
+      border: 1px solid #253041;
+      padding: 14px 16px;
+    }
+
+    .vm__kpi-label {
+      font-size: 0.72rem;
+      color: #64748b;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+
+    .vm__kpi-row-inner {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+
+    .vm__kpi-val {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #f1f5f9;
+      line-height: 1;
+    }
+
+    .vm__kpi-spark {
+      width: 60px;
+      height: 24px;
+    }
+
+    .vm__kpi-spark svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .vm__kpi-trend {
+      font-size: 0.7rem;
+      font-weight: 600;
+      margin-top: 6px;
+    }
+
+    .vm__kpi-trend--up { color: var(--nt-green); }
+    .vm__kpi-trend--down { color: var(--nt-red); }
+
+    .vm__spark-line {
+      stroke-dasharray: 200;
+      stroke-dashoffset: 200;
+      animation: sparkDraw 1.5s ease forwards;
+    }
+
+    /* Main grid dark */
+    .vm__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .vm__card {
+      background: #1a2332;
+      border-radius: 10px;
+      border: 1px solid #253041;
+      padding: 18px;
+    }
+
+    .vm__card-title {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #64748b;
+      margin-bottom: 14px;
+    }
+
+    /* Area chart dark */
+    .vm__area svg { width: 100%; height: 160px; }
+
+    .vm__area-grid {
+      stroke: #253041;
+      stroke-width: 1;
+      stroke-dasharray: 4;
+    }
+
+    .vm__area-fill {
+      opacity: 0;
+      animation: areaFade 1s ease 0.3s forwards;
+    }
+
+    .vm__area-stroke {
+      stroke-dasharray: 600;
+      stroke-dashoffset: 600;
+      animation: areaDraw 2s ease forwards;
+    }
+
+    .vm__area-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+      font-size: 0.65rem;
+      color: #475569;
+    }
+
+    /* Gauge dark */
+    .vm__gauge-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .vm__gauge {
+      position: relative;
+    }
+
+    .vm__gauge-bg {
+      fill: none;
+      stroke: #253041;
+      stroke-width: 14;
+      stroke-linecap: round;
+    }
+
+    .vm__gauge-fill {
+      fill: none;
+      stroke-width: 14;
+      stroke-linecap: round;
+      stroke-dasharray: 251.33;
+      stroke-dashoffset: 251.33;
+      animation: gaugeFill 1.8s ease forwards;
+    }
+
+    .vm__gauge-val {
+      position: absolute;
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #f1f5f9;
+    }
+
+    .vm__gauge-sub {
+      font-size: 0.78rem;
+      color: #64748b;
+      margin-top: 4px;
+    }
+
+    /* Circular scores dark */
+    .vm__circ-row {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 16px;
+    }
+
+    .vm__circ {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .vm__circ-ring {
+      position: relative;
+      width: 56px;
+      height: 56px;
+    }
+
+    .vm__circ-ring svg { transform: rotate(-90deg); }
+
+    .vm__circ-bg {
+      fill: none;
+      stroke: #253041;
+      stroke-width: 5;
+    }
+
+    .vm__circ-fill {
+      fill: none;
+      stroke-width: 5;
+      stroke-linecap: round;
+      stroke-dasharray: 150;
+      stroke-dashoffset: 150;
+      animation: circFill 1.5s ease forwards;
+    }
+
+    .vm__circ-val {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #f1f5f9;
+    }
+
+    .vm__circ-lbl {
+      font-size: 0.6rem;
+      color: #64748b;
+    }
+
+    /* Bottom grid dark */
+    .vm__bottom {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 16px;
+    }
+
+    /* Bars dark */
+    .vm__bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      height: 120px;
+    }
+
+    .vm__bar-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      height: 100%;
+      gap: 4px;
+    }
+
+    .vm__bar {
+      width: 100%;
+      max-width: 28px;
+      border-radius: 4px 4px 0 0;
+      height: 0;
+      animation: barGrow 0.8s ease forwards;
+    }
+
+    .vm__bar--teal {
+      background: linear-gradient(180deg, var(--nt-primary), rgba(0,150,136,0.4));
+      box-shadow: 0 0 8px rgba(0,150,136,0.3);
+    }
+
+    .vm__bar--green {
+      background: linear-gradient(180deg, var(--nt-green), rgba(67,160,71,0.4));
+      box-shadow: 0 0 8px rgba(67,160,71,0.3);
+    }
+
+    .vm__bar-lbl {
+      font-size: 0.6rem;
+      color: #475569;
+    }
+
+    /* Table dark */
+    .vm__table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.75rem;
+    }
+
+    .vm__table th {
+      text-align: left;
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: #475569;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 0 8px 10px;
+      border-bottom: 1px solid #253041;
+    }
+
+    .vm__table td {
+      padding: 8px;
+      color: #cbd5e1;
+      border-bottom: 1px solid #1e293b;
+    }
+
+    .vm__table tr:hover { background: rgba(0,150,136,0.05); }
+
+    .vm__table-name { font-weight: 600; color: #f1f5f9; }
+
+    .vm__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.68rem;
+      font-weight: 600;
+    }
+
+    .vm__badge-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+    }
+
+    .vm__badge--ok {
+      background: rgba(67,160,71,0.15);
+      color: var(--nt-green);
+    }
+
+    .vm__badge--ok .vm__badge-dot {
+      background: var(--nt-green);
+      animation: statusBlink 2s ease-in-out infinite;
+    }
+
+    .vm__badge--warn {
+      background: rgba(251,140,0,0.15);
+      color: var(--nt-orange);
+    }
+
+    .vm__badge--warn .vm__badge-dot { background: var(--nt-orange); }
+
+    .vm__score { font-weight: 700; }
+    .vm__score--high { color: var(--nt-green); }
+    .vm__score--med { color: var(--nt-orange); }
+
+    /* ============================================
+       VARIANTE N — SPLIT HERO + METRICS
+       Grande area chart en hero, metriques en dessous
+       Style Stripe/Linear : blanc lumineux, ombres fines
+       ============================================ */
+
+    .vn {
+      padding: 24px 32px;
+      max-width: 1200px;
+    }
+
+    .vn__header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .vn__title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #1a2332;
+    }
+
+    .vn__period {
+      font-size: 0.78rem;
+      color: #94a3b8;
+      padding-bottom: 3px;
+    }
+
+    .vn__tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 2px solid #e8ecf1;
+      margin-bottom: 20px;
+    }
+
+    .vn__tab {
+      padding: 10px 20px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: #64748b;
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .vn__tab--active {
+      color: var(--nt-primary);
+      border-bottom-color: var(--nt-primary);
+      font-weight: 600;
+    }
+
+    /* Hero area chart card */
+    .vn__hero {
+      background: white;
+      border-radius: 14px;
+      border: 1px solid #e8ecf1;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      padding: 20px 24px;
+      margin-bottom: 16px;
+    }
+
+    .vn__hero-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .vn__hero-kpis {
+      display: flex;
+      gap: 32px;
+    }
+
+    .vn__hero-kpi {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .vn__hero-kpi-label {
+      font-size: 0.72rem;
+      color: #94a3b8;
+      font-weight: 500;
+    }
+
+    .vn__hero-kpi-val {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #1a2332;
+    }
+
+    .vn__hero-kpi-trend {
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+
+    .vn__hero-kpi-trend--up { color: var(--nt-green); }
+    .vn__hero-kpi-trend--down { color: var(--nt-red); }
+
+    .vn__hero-legend {
+      display: flex;
+      gap: 14px;
+      font-size: 0.72rem;
+      color: #94a3b8;
+    }
+
+    .vn__hero-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .vn__hero-legend-dot {
+      width: 8px;
+      height: 3px;
+      border-radius: 2px;
+    }
+
+    .vn__hero-chart svg {
+      width: 100%;
+      height: 200px;
+    }
+
+    .vn__area-grid {
+      stroke: #f0f2f5;
+      stroke-width: 1;
+    }
+
+    .vn__area-fill {
+      opacity: 0;
+      animation: areaFade 1s ease 0.3s forwards;
+    }
+
+    .vn__area-stroke {
+      stroke-dasharray: 800;
+      stroke-dashoffset: 800;
+      animation: areaDraw 2s ease forwards;
+    }
+
+    .vn__hero-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+      font-size: 0.68rem;
+      color: #c2c9d6;
+    }
+
+    /* Metrics grid */
+    .vn__metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .vn__metric {
+      background: white;
+      border-radius: 12px;
+      border: 1px solid #e8ecf1;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+      padding: 16px;
+    }
+
+    .vn__metric-label {
+      font-size: 0.72rem;
+      color: #94a3b8;
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+
+    /* Gauge in metric card */
+    .vn__gauge-wrap {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .vn__gauge {
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .vn__gauge-bg {
+      fill: none;
+      stroke: #e8ecf1;
+      stroke-width: 10;
+      stroke-linecap: round;
+    }
+
+    .vn__gauge-fill {
+      fill: none;
+      stroke-width: 10;
+      stroke-linecap: round;
+      stroke-dasharray: 157;
+      stroke-dashoffset: 157;
+      animation: gaugeFill 1.8s ease forwards;
+    }
+
+    .vn__gauge-val {
+      position: absolute;
+      bottom: 4px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #1a2332;
+    }
+
+    .vn__gauge-details {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .vn__gauge-line {
+      font-size: 0.72rem;
+      color: #64748b;
+    }
+
+    .vn__gauge-line strong {
+      color: #1a2332;
+    }
+
+    /* Circular trio in metric */
+    .vn__circ-trio {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .vn__circ {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .vn__circ-ring {
+      position: relative;
+      width: 56px;
+      height: 56px;
+    }
+
+    .vn__circ-ring svg { transform: rotate(-90deg); }
+
+    .vn__circ-bg {
+      fill: none;
+      stroke: #e8ecf1;
+      stroke-width: 5;
+    }
+
+    .vn__circ-fill {
+      fill: none;
+      stroke-width: 5;
+      stroke-linecap: round;
+      stroke-dasharray: 138;
+      stroke-dashoffset: 138;
+      animation: circFill 1.5s ease forwards;
+    }
+
+    .vn__circ-val {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: #1a2332;
+    }
+
+    .vn__circ-lbl {
+      font-size: 0.65rem;
+      color: #94a3b8;
+    }
+
+    /* Liquid in metric */
+    .vn__liquid-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .vn__liquid {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      position: relative;
+      overflow: hidden;
+      background: var(--nt-primary-lighter);
+      border: 2px solid var(--nt-primary-light);
+      flex-shrink: 0;
+    }
+
+    .vn__liquid-level {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--nt-primary);
+      opacity: 0.25;
+    }
+
+    .vn__liquid-wave {
+      position: absolute;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: var(--nt-primary);
+      opacity: 0.12;
+      border-radius: 40%;
+      animation: liquidWave 3s linear infinite;
+    }
+
+    .vn__liquid-txt {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: var(--nt-primary-dark);
+      z-index: 2;
+    }
+
+    .vn__liquid-details {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .vn__liquid-main {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #1a2332;
+    }
+
+    .vn__liquid-sub {
+      font-size: 0.72rem;
+      color: #94a3b8;
+    }
+
+    /* Bottom : bars + table */
+    .vn__bottom {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 14px;
+    }
+
+    .vn__card {
+      background: white;
+      border-radius: 12px;
+      border: 1px solid #e8ecf1;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+      padding: 16px;
+    }
+
+    .vn__card-title {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #94a3b8;
+      margin-bottom: 12px;
+    }
+
+    .vn__bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      height: 110px;
+    }
+
+    .vn__bar-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      height: 100%;
+      gap: 3px;
+    }
+
+    .vn__bar {
+      width: 100%;
+      max-width: 26px;
+      border-radius: 5px 5px 0 0;
+      height: 0;
+      animation: barGrow 0.8s ease forwards;
+    }
+
+    .vn__bar--teal { background: var(--nt-primary); }
+    .vn__bar--green { background: var(--nt-green); }
+
+    .vn__bar-val {
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: #1a2332;
+    }
+
+    .vn__bar-lbl {
+      font-size: 0.6rem;
+      color: #94a3b8;
+    }
+
+    /* Table N */
+    .vn__table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.75rem;
+    }
+
+    .vn__table th {
+      text-align: left;
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      padding: 0 10px 10px;
+      border-bottom: 2px solid #e8ecf1;
+    }
+
+    .vn__table td {
+      padding: 9px 10px;
+      border-bottom: 1px solid #f0f2f5;
+      color: #475569;
+    }
+
+    .vn__table tr:hover { background: var(--nt-primary-lighter); }
+
+    .vn__table-name { font-weight: 600; color: #1a2332; }
+
+    .vn__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.68rem;
+      font-weight: 600;
+    }
+
+    .vn__badge-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+    }
+
+    .vn__badge--ok { background: var(--nt-green-light); color: var(--nt-green); }
+    .vn__badge--ok .vn__badge-dot { background: var(--nt-green); animation: statusBlink 2s infinite; }
+    .vn__badge--warn { background: var(--nt-orange-light); color: var(--nt-orange); }
+    .vn__badge--warn .vn__badge-dot { background: var(--nt-orange); }
+
+    .vn__score { font-weight: 700; }
+    .vn__score--hi { color: var(--nt-green); }
+    .vn__score--md { color: var(--nt-orange); }
+
+    .vn__table-btn {
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      border: 1px solid #e8ecf1;
+      background: white;
+      color: #64748b;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .vn__table-btn:hover {
+      border-color: var(--nt-primary);
+      color: var(--nt-primary);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =======================================
+       VARIANTE L — COMPACT BENTO
+       ======================================= -->
+  <div class="variant-separator">
+    <h2>Variante L — Compact Bento</h2>
+    <span>Grille bento dense, tout visible en un ecran, ideal petit ecran</span>
+  </div>
+
+  <div class="vl">
+    <div class="vl__header">
+      <div style="display:flex;align-items:baseline;">
+        <h1 class="vl__title">Sneakers Nike Vintage</h1>
+        <span class="vl__meta">1 247 articles &middot; MaJ 3 min</span>
+      </div>
+      <div class="vl__tabs">
+        <button class="vl__tab vl__tab--active">Overview</button>
+        <button class="vl__tab">Produits</button>
+        <button class="vl__tab">Prix</button>
+        <button class="vl__tab">Historique</button>
+      </div>
+    </div>
+
+    <div class="vl__bento">
+
+      <!-- KPI 1 -->
+      <div class="vl__card">
+        <div class="vl__card-label">Articles</div>
+        <div style="display:flex;align-items:baseline;">
+          <span class="vl__kpi-val">1 247</span>
+          <span class="vl__kpi-trend vl__kpi-trend--up">+12.4%</span>
+        </div>
+        <div class="vl__spark-inline">
+          <svg viewBox="0 0 100 28" preserveAspectRatio="none">
+            <path class="vl__spark-area" d="M0,24 L15,20 L30,22 L45,15 L60,18 L75,10 L100,6 L100,28 L0,28Z" fill="var(--nt-primary-light)"/>
+            <polyline class="vl__spark-line" points="0,24 15,20 30,22 45,15 60,18 75,10 100,6" fill="none" stroke="var(--nt-primary)" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- KPI 2 -->
+      <div class="vl__card">
+        <div class="vl__card-label">Ventes/jour</div>
+        <div style="display:flex;align-items:baseline;">
+          <span class="vl__kpi-val">34</span>
+          <span class="vl__kpi-trend vl__kpi-trend--up">+8.2%</span>
+        </div>
+        <div class="vl__spark-inline">
+          <svg viewBox="0 0 100 28" preserveAspectRatio="none">
+            <path class="vl__spark-area" d="M0,20 L15,18 L30,22 L45,12 L60,15 L75,8 L100,4 L100,28 L0,28Z" fill="var(--nt-green-light)"/>
+            <polyline class="vl__spark-line" points="0,20 15,18 30,22 45,12 60,15 75,8 100,4" fill="none" stroke="var(--nt-green)" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- KPI 3 -->
+      <div class="vl__card">
+        <div class="vl__card-label">Prix median</div>
+        <div style="display:flex;align-items:baseline;">
+          <span class="vl__kpi-val">45,00&euro;</span>
+          <span class="vl__kpi-trend vl__kpi-trend--down">-2.1%</span>
+        </div>
+        <div class="vl__spark-inline">
+          <svg viewBox="0 0 100 28" preserveAspectRatio="none">
+            <path class="vl__spark-area" d="M0,14 L15,18 L30,12 L45,20 L60,16 L75,22 L100,18 L100,28 L0,28Z" fill="var(--nt-orange-light)"/>
+            <polyline class="vl__spark-line" points="0,14 15,18 30,12 45,20 60,16 75,22 100,18" fill="none" stroke="var(--nt-orange)" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- KPI 4 -->
+      <div class="vl__card">
+        <div class="vl__card-label">Concurrence</div>
+        <div style="display:flex;align-items:baseline;">
+          <span class="vl__kpi-val">89</span>
+          <span class="vl__kpi-trend vl__kpi-trend--up">+5</span>
+        </div>
+        <div class="vl__spark-inline">
+          <svg viewBox="0 0 100 28" preserveAspectRatio="none">
+            <path class="vl__spark-area" d="M0,22 L15,18 L30,20 L45,14 L60,17 L75,12 L100,10 L100,28 L0,28Z" fill="var(--nt-indigo-light)"/>
+            <polyline class="vl__spark-line" points="0,22 15,18 30,20 45,14 60,17 75,12 100,10" fill="none" stroke="var(--nt-indigo)" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Gauge + details — span 2 -->
+      <div class="vl__card vl__card--span2">
+        <div class="vl__card-label">Score Global</div>
+        <div class="vl__gauge-wrap">
+          <div class="vl__gauge">
+            <svg viewBox="0 0 160 95" width="160" height="95">
+              <defs>
+                <linearGradient id="vl-gg" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#e53935"/>
+                  <stop offset="40%" stop-color="#fb8c00"/>
+                  <stop offset="70%" stop-color="#009688"/>
+                  <stop offset="100%" stop-color="#43a047"/>
+                </linearGradient>
+              </defs>
+              <path d="M 15 80 A 65 65 0 0 1 145 80" class="vl__gauge-bg"/>
+              <path d="M 15 80 A 65 65 0 0 1 145 80" class="vl__gauge-fill" stroke="url(#vl-gg)" style="--gauge-offset: 65"/>
+            </svg>
+            <span class="vl__gauge-val">7.4</span>
+          </div>
+          <div class="vl__gauge-details">
+            <div class="vl__gauge-detail">
+              <span class="vl__gauge-dot" style="background:var(--nt-primary)"></span>
+              Demande <span class="vl__gauge-score" style="color:var(--nt-primary)">8.1</span>
+            </div>
+            <div class="vl__gauge-detail">
+              <span class="vl__gauge-dot" style="background:var(--nt-green)"></span>
+              Volume <span class="vl__gauge-score" style="color:var(--nt-green)">7.8</span>
+            </div>
+            <div class="vl__gauge-detail">
+              <span class="vl__gauge-dot" style="background:var(--nt-orange)"></span>
+              Marge <span class="vl__gauge-score" style="color:var(--nt-orange)">6.8</span>
+            </div>
+            <div class="vl__gauge-detail">
+              <span class="vl__gauge-dot" style="background:var(--nt-indigo)"></span>
+              Concurrence <span class="vl__gauge-score" style="color:var(--nt-indigo)">6.2</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bars ventes — span 1 -->
+      <div class="vl__card">
+        <div class="vl__card-label">Ventes / jour</div>
+        <div class="vl__bars">
+          <div class="vl__bar-col"><div class="vl__bar" style="--bar-h:55%"></div><span class="vl__bar-lbl">L</span></div>
+          <div class="vl__bar-col"><div class="vl__bar" style="--bar-h:72%"></div><span class="vl__bar-lbl">M</span></div>
+          <div class="vl__bar-col"><div class="vl__bar" style="--bar-h:48%"></div><span class="vl__bar-lbl">Me</span></div>
+          <div class="vl__bar-col"><div class="vl__bar vl__bar--highlight" style="--bar-h:95%"></div><span class="vl__bar-lbl">J</span></div>
+          <div class="vl__bar-col"><div class="vl__bar" style="--bar-h:82%"></div><span class="vl__bar-lbl">V</span></div>
+          <div class="vl__bar-col"><div class="vl__bar" style="--bar-h:100%"></div><span class="vl__bar-lbl">S</span></div>
+          <div class="vl__bar-col"><div class="vl__bar" style="--bar-h:60%"></div><span class="vl__bar-lbl">D</span></div>
+        </div>
+      </div>
+
+      <!-- Liquid + circular — span 1 -->
+      <div class="vl__card">
+        <div class="vl__card-label">Metriques</div>
+        <div class="vl__liquid-wrap" style="margin-bottom:14px;">
+          <div class="vl__liquid">
+            <div class="vl__liquid-level" style="height:65%"></div>
+            <div class="vl__liquid-wave" style="bottom:60%"></div>
+            <span class="vl__liquid-txt">65%</span>
+          </div>
+          <div class="vl__liquid-info">
+            <span class="vl__liquid-title">Taux de vente</span>
+            <span class="vl__liquid-desc">Vendus en &lt; 7j</span>
+          </div>
+        </div>
+        <div class="vl__circ-row">
+          <div class="vl__circ">
+            <div class="vl__circ-ring">
+              <svg width="64" height="64" viewBox="0 0 64 64">
+                <circle class="vl__circ-bg" cx="32" cy="32" r="26"/>
+                <circle class="vl__circ-fill" cx="32" cy="32" r="26" stroke="var(--nt-primary)" style="--circ-offset:31"/>
+              </svg>
+              <span class="vl__circ-val">81%</span>
+            </div>
+            <span class="vl__circ-lbl">Demande</span>
+          </div>
+          <div class="vl__circ">
+            <div class="vl__circ-ring">
+              <svg width="64" height="64" viewBox="0 0 64 64">
+                <circle class="vl__circ-bg" cx="32" cy="32" r="26"/>
+                <circle class="vl__circ-fill" cx="32" cy="32" r="26" stroke="var(--nt-orange)" style="--circ-offset:52"/>
+              </svg>
+              <span class="vl__circ-val">68%</span>
+            </div>
+            <span class="vl__circ-lbl">Marge</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Progress bars — span 2 -->
+      <div class="vl__card vl__card--span2">
+        <div class="vl__card-label">Repartition categories</div>
+        <div class="vl__prog-row">
+          <span class="vl__prog-name">Air Max 90</span>
+          <div class="vl__prog-track"><div class="vl__prog-fill" style="--progress:38%;background:var(--nt-primary)"></div></div>
+          <span class="vl__prog-val" style="color:var(--nt-primary)">38%</span>
+        </div>
+        <div class="vl__prog-row">
+          <span class="vl__prog-name">Air Force 1</span>
+          <div class="vl__prog-track"><div class="vl__prog-fill" style="--progress:27%;background:var(--nt-green)"></div></div>
+          <span class="vl__prog-val" style="color:var(--nt-green)">27%</span>
+        </div>
+        <div class="vl__prog-row">
+          <span class="vl__prog-name">Dunk Low</span>
+          <div class="vl__prog-track"><div class="vl__prog-fill" style="--progress:20%;background:var(--nt-orange)"></div></div>
+          <span class="vl__prog-val" style="color:var(--nt-orange)">20%</span>
+        </div>
+        <div class="vl__prog-row">
+          <span class="vl__prog-name">Jordan 1</span>
+          <div class="vl__prog-track"><div class="vl__prog-fill" style="--progress:15%;background:var(--nt-indigo)"></div></div>
+          <span class="vl__prog-val" style="color:var(--nt-indigo)">15%</span>
+        </div>
+      </div>
+
+      <!-- Table — span 2 -->
+      <div class="vl__card vl__card--span2" style="padding:12px 16px;">
+        <div class="vl__card-label">Niches similaires</div>
+        <table class="vl__table">
+          <thead>
+            <tr><th>Niche</th><th>Articles</th><th>Prix</th><th>Score</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="vl__table-name" style="font-weight:600;color:#1a2332">Sneakers Nike</td>
+              <td>1 247</td><td>45&euro;</td>
+              <td><span class="vl__score" style="color:var(--nt-green)"><span class="vl__score-dot" style="background:var(--nt-green)"></span> 8.2</span></td>
+              <td><span class="vl__badge vl__badge--ok"><span class="vl__badge-dot"></span>Actif</span></td>
+            </tr>
+            <tr>
+              <td style="font-weight:600;color:#1a2332">Sneakers Adidas</td>
+              <td>893</td><td>38&euro;</td>
+              <td><span class="vl__score" style="color:var(--nt-green)"><span class="vl__score-dot" style="background:var(--nt-green)"></span> 7.6</span></td>
+              <td><span class="vl__badge vl__badge--ok"><span class="vl__badge-dot"></span>Actif</span></td>
+            </tr>
+            <tr>
+              <td style="font-weight:600;color:#1a2332">NB 550</td>
+              <td>412</td><td>62&euro;</td>
+              <td><span class="vl__score" style="color:var(--nt-orange)"><span class="vl__score-dot" style="background:var(--nt-orange)"></span> 6.1</span></td>
+              <td><span class="vl__badge vl__badge--warn"><span class="vl__badge-dot"></span>Pause</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- =======================================
+       VARIANTE M — DASHBOARD SOMBRE EPURE
+       ======================================= -->
+  <div class="variant-separator">
+    <h2>Variante M — Dark Neon Dashboard</h2>
+    <span>Theme sombre, accents neon teal + vert, area chart prominent</span>
+  </div>
+
+  <div class="vm">
+    <div class="vm__header">
+      <div>
+        <h1 class="vm__title">Sneakers Nike Vintage</h1>
+        <p class="vm__subtitle">Catalogue &middot; 1 247 articles &middot; MaJ 3 min</p>
+      </div>
+    </div>
+
+    <div class="vm__tabs">
+      <button class="vm__tab vm__tab--active">Overview</button>
+      <button class="vm__tab">Produits</button>
+      <button class="vm__tab">Analyse</button>
+      <button class="vm__tab">Historique</button>
+    </div>
+
+    <!-- KPIs dark -->
+    <div class="vm__kpi-row">
+      <div class="vm__kpi">
+        <div class="vm__kpi-label">Articles</div>
+        <div class="vm__kpi-row-inner">
+          <span class="vm__kpi-val">1 247</span>
+          <div class="vm__kpi-spark">
+            <svg viewBox="0 0 60 24" preserveAspectRatio="none">
+              <polyline class="vm__spark-line" points="0,20 8,17 16,19 24,13 32,15 40,9 48,11 60,5" fill="none" stroke="var(--nt-primary)" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+        <div class="vm__kpi-trend vm__kpi-trend--up">+12.4%</div>
+      </div>
+      <div class="vm__kpi">
+        <div class="vm__kpi-label">Ventes/jour</div>
+        <div class="vm__kpi-row-inner">
+          <span class="vm__kpi-val">34</span>
+          <div class="vm__kpi-spark">
+            <svg viewBox="0 0 60 24" preserveAspectRatio="none">
+              <polyline class="vm__spark-line" points="0,18 8,16 16,20 24,10 32,14 40,6 48,10 60,3" fill="none" stroke="var(--nt-green)" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+        <div class="vm__kpi-trend vm__kpi-trend--up">+8.2%</div>
+      </div>
+      <div class="vm__kpi">
+        <div class="vm__kpi-label">Prix median</div>
+        <div class="vm__kpi-row-inner">
+          <span class="vm__kpi-val">45&euro;</span>
+          <div class="vm__kpi-spark">
+            <svg viewBox="0 0 60 24" preserveAspectRatio="none">
+              <polyline class="vm__spark-line" points="0,12 8,15 16,10 24,18 32,14 40,16 48,20 60,17" fill="none" stroke="var(--nt-orange)" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+        <div class="vm__kpi-trend vm__kpi-trend--down">-2.1%</div>
+      </div>
+      <div class="vm__kpi">
+        <div class="vm__kpi-label">Concurrence</div>
+        <div class="vm__kpi-row-inner">
+          <span class="vm__kpi-val">89</span>
+          <div class="vm__kpi-spark">
+            <svg viewBox="0 0 60 24" preserveAspectRatio="none">
+              <polyline class="vm__spark-line" points="0,20 8,16 16,18 24,12 32,15 40,10 48,12 60,8" fill="none" stroke="var(--nt-indigo)" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+        <div class="vm__kpi-trend vm__kpi-trend--up">+5</div>
+      </div>
+    </div>
+
+    <!-- Area chart + Gauge -->
+    <div class="vm__grid">
+      <div class="vm__card">
+        <div class="vm__card-title">Tendance prix (30j)</div>
+        <div class="vm__area">
+          <svg viewBox="0 0 400 160">
+            <defs>
+              <linearGradient id="vm-area-g" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="var(--nt-primary)" stop-opacity="0.4"/>
+                <stop offset="100%" stop-color="var(--nt-primary)" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <line x1="0" y1="40" x2="400" y2="40" class="vm__area-grid"/>
+            <line x1="0" y1="80" x2="400" y2="80" class="vm__area-grid"/>
+            <line x1="0" y1="120" x2="400" y2="120" class="vm__area-grid"/>
+            <path class="vm__area-fill" d="M0,110 C50,100 100,80 150,85 C200,90 250,65 300,55 C350,45 380,50 400,40 L400,160 L0,160Z" fill="url(#vm-area-g)"/>
+            <path class="vm__area-stroke" d="M0,110 C50,100 100,80 150,85 C200,90 250,65 300,55 C350,45 380,50 400,40" fill="none" stroke="var(--nt-primary)" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="400" cy="40" r="4" fill="var(--nt-primary)" filter="drop-shadow(0 0 4px rgba(0,150,136,0.5))"/>
+          </svg>
+        </div>
+        <div class="vm__area-labels">
+          <span>1 fev</span><span>8 fev</span><span>15 fev</span><span>21 fev</span>
+        </div>
+      </div>
+
+      <div class="vm__card">
+        <div class="vm__card-title">Score Global</div>
+        <div class="vm__gauge-center">
+          <div class="vm__gauge">
+            <svg viewBox="0 0 200 120" width="200" height="120">
+              <defs>
+                <linearGradient id="vm-gg" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#e53935"/>
+                  <stop offset="50%" stop-color="#fb8c00"/>
+                  <stop offset="100%" stop-color="var(--nt-primary)"/>
+                </linearGradient>
+              </defs>
+              <path d="M 20 100 A 80 80 0 0 1 180 100" class="vm__gauge-bg"/>
+              <path d="M 20 100 A 80 80 0 0 1 180 100" class="vm__gauge-fill" stroke="url(#vm-gg)" style="--gauge-offset:65"/>
+            </svg>
+            <span class="vm__gauge-val">7.4</span>
+          </div>
+          <span class="vm__gauge-sub">Bonne niche</span>
+        </div>
+        <div class="vm__circ-row">
+          <div class="vm__circ">
+            <div class="vm__circ-ring">
+              <svg width="56" height="56" viewBox="0 0 56 56">
+                <circle class="vm__circ-bg" cx="28" cy="28" r="24"/>
+                <circle class="vm__circ-fill" cx="28" cy="28" r="24" stroke="var(--nt-primary)" style="--circ-offset:29"/>
+              </svg>
+              <span class="vm__circ-val">8.1</span>
+            </div>
+            <span class="vm__circ-lbl">Demande</span>
+          </div>
+          <div class="vm__circ">
+            <div class="vm__circ-ring">
+              <svg width="56" height="56" viewBox="0 0 56 56">
+                <circle class="vm__circ-bg" cx="28" cy="28" r="24"/>
+                <circle class="vm__circ-fill" cx="28" cy="28" r="24" stroke="var(--nt-green)" style="--circ-offset:33"/>
+              </svg>
+              <span class="vm__circ-val">7.8</span>
+            </div>
+            <span class="vm__circ-lbl">Volume</span>
+          </div>
+          <div class="vm__circ">
+            <div class="vm__circ-ring">
+              <svg width="56" height="56" viewBox="0 0 56 56">
+                <circle class="vm__circ-bg" cx="28" cy="28" r="24"/>
+                <circle class="vm__circ-fill" cx="28" cy="28" r="24" stroke="var(--nt-orange)" style="--circ-offset:48"/>
+              </svg>
+              <span class="vm__circ-val">6.8</span>
+            </div>
+            <span class="vm__circ-lbl">Marge</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom : bars + table -->
+    <div class="vm__bottom">
+      <div class="vm__card">
+        <div class="vm__card-title">Ventes / jour</div>
+        <div class="vm__bars">
+          <div class="vm__bar-col"><div class="vm__bar vm__bar--teal" style="--bar-h:55%"></div><span class="vm__bar-lbl">L</span></div>
+          <div class="vm__bar-col"><div class="vm__bar vm__bar--teal" style="--bar-h:72%"></div><span class="vm__bar-lbl">M</span></div>
+          <div class="vm__bar-col"><div class="vm__bar vm__bar--teal" style="--bar-h:48%"></div><span class="vm__bar-lbl">Me</span></div>
+          <div class="vm__bar-col"><div class="vm__bar vm__bar--green" style="--bar-h:95%"></div><span class="vm__bar-lbl">J</span></div>
+          <div class="vm__bar-col"><div class="vm__bar vm__bar--teal" style="--bar-h:82%"></div><span class="vm__bar-lbl">V</span></div>
+          <div class="vm__bar-col"><div class="vm__bar vm__bar--teal" style="--bar-h:100%"></div><span class="vm__bar-lbl">S</span></div>
+          <div class="vm__bar-col"><div class="vm__bar vm__bar--teal" style="--bar-h:60%"></div><span class="vm__bar-lbl">D</span></div>
+        </div>
+      </div>
+      <div class="vm__card" style="padding:14px;">
+        <div class="vm__card-title" style="padding:0 8px;">Niches similaires</div>
+        <table class="vm__table">
+          <thead>
+            <tr><th>Niche</th><th>Articles</th><th>Prix</th><th>Score</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="vm__table-name">Sneakers Nike</td><td>1 247</td><td>45&euro;</td>
+              <td><span class="vm__score vm__score--high">8.2</span></td>
+              <td><span class="vm__badge vm__badge--ok"><span class="vm__badge-dot"></span>Actif</span></td>
+            </tr>
+            <tr>
+              <td class="vm__table-name">Sneakers Adidas</td><td>893</td><td>38&euro;</td>
+              <td><span class="vm__score vm__score--high">7.6</span></td>
+              <td><span class="vm__badge vm__badge--ok"><span class="vm__badge-dot"></span>Actif</span></td>
+            </tr>
+            <tr>
+              <td class="vm__table-name">NB 550</td><td>412</td><td>62&euro;</td>
+              <td><span class="vm__score vm__score--med">6.1</span></td>
+              <td><span class="vm__badge vm__badge--warn"><span class="vm__badge-dot"></span>Pause</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- =======================================
+       VARIANTE N — SPLIT HERO + METRICS
+       ======================================= -->
+  <div class="variant-separator">
+    <h2>Variante N — Hero Chart + Metrics</h2>
+    <span>Grande area chart en hero, metriques compactes en dessous, style Stripe/Linear</span>
+  </div>
+
+  <div class="vn">
+    <div class="vn__header">
+      <h1 class="vn__title">Sneakers Nike Vintage</h1>
+      <span class="vn__period">30 derniers jours</span>
+    </div>
+
+    <div class="vn__tabs">
+      <button class="vn__tab vn__tab--active">Overview</button>
+      <button class="vn__tab">Produits</button>
+      <button class="vn__tab">Prix</button>
+      <button class="vn__tab">Historique</button>
+    </div>
+
+    <!-- Hero area chart -->
+    <div class="vn__hero">
+      <div class="vn__hero-header">
+        <div class="vn__hero-kpis">
+          <div class="vn__hero-kpi">
+            <span class="vn__hero-kpi-label">Articles</span>
+            <span class="vn__hero-kpi-val">1 247</span>
+            <span class="vn__hero-kpi-trend vn__hero-kpi-trend--up">+12.4%</span>
+          </div>
+          <div class="vn__hero-kpi">
+            <span class="vn__hero-kpi-label">Ventes/jour</span>
+            <span class="vn__hero-kpi-val">34</span>
+            <span class="vn__hero-kpi-trend vn__hero-kpi-trend--up">+8.2%</span>
+          </div>
+          <div class="vn__hero-kpi">
+            <span class="vn__hero-kpi-label">Prix median</span>
+            <span class="vn__hero-kpi-val">45,00&euro;</span>
+            <span class="vn__hero-kpi-trend vn__hero-kpi-trend--down">-2.1%</span>
+          </div>
+        </div>
+        <div class="vn__hero-legend">
+          <div class="vn__hero-legend-item">
+            <span class="vn__hero-legend-dot" style="background:var(--nt-primary)"></span> Prix niche
+          </div>
+          <div class="vn__hero-legend-item">
+            <span class="vn__hero-legend-dot" style="background:var(--nt-orange)"></span> Moy. marche
+          </div>
+        </div>
+      </div>
+      <div class="vn__hero-chart">
+        <svg viewBox="0 0 500 200">
+          <defs>
+            <linearGradient id="vn-area-g" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="var(--nt-primary)" stop-opacity="0.25"/>
+              <stop offset="100%" stop-color="var(--nt-primary)" stop-opacity="0.01"/>
+            </linearGradient>
+          </defs>
+          <line x1="0" y1="50" x2="500" y2="50" class="vn__area-grid"/>
+          <line x1="0" y1="100" x2="500" y2="100" class="vn__area-grid"/>
+          <line x1="0" y1="150" x2="500" y2="150" class="vn__area-grid"/>
+          <!-- Area teal -->
+          <path class="vn__area-fill" d="M0,140 C60,130 120,105 180,110 C240,115 300,85 360,70 C420,55 460,60 500,45 L500,200 L0,200Z" fill="url(#vn-area-g)"/>
+          <path class="vn__area-stroke" d="M0,140 C60,130 120,105 180,110 C240,115 300,85 360,70 C420,55 460,60 500,45" fill="none" stroke="var(--nt-primary)" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- Moy marche dashed -->
+          <path class="vn__area-stroke" style="animation-delay:0.3s" d="M0,120 C60,118 120,125 180,130 C240,132 300,125 360,120 C420,118 460,122 500,115" fill="none" stroke="var(--nt-orange)" stroke-width="1.5" stroke-dasharray="6,3"/>
+          <circle cx="500" cy="45" r="4" fill="var(--nt-primary)"/>
+        </svg>
+      </div>
+      <div class="vn__hero-labels">
+        <span>22 jan</span><span>29 jan</span><span>5 fev</span><span>12 fev</span><span>19 fev</span><span>21 fev</span>
+      </div>
+    </div>
+
+    <!-- 3 metric cards -->
+    <div class="vn__metrics">
+      <!-- Gauge -->
+      <div class="vn__metric">
+        <div class="vn__metric-label">Score Global</div>
+        <div class="vn__gauge-wrap">
+          <div class="vn__gauge">
+            <svg viewBox="0 0 120 75" width="120" height="75">
+              <defs>
+                <linearGradient id="vn-gg" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#e53935"/>
+                  <stop offset="50%" stop-color="#fb8c00"/>
+                  <stop offset="100%" stop-color="#009688"/>
+                </linearGradient>
+              </defs>
+              <path d="M 10 60 A 50 50 0 0 1 110 60" class="vn__gauge-bg"/>
+              <path d="M 10 60 A 50 50 0 0 1 110 60" class="vn__gauge-fill" stroke="url(#vn-gg)" style="--gauge-offset:40"/>
+            </svg>
+            <span class="vn__gauge-val">7.4</span>
+          </div>
+          <div class="vn__gauge-details">
+            <span class="vn__gauge-line"><strong>Demande</strong> 8.1</span>
+            <span class="vn__gauge-line"><strong>Volume</strong> 7.8</span>
+            <span class="vn__gauge-line"><strong>Marge</strong> 6.8</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Circular trio -->
+      <div class="vn__metric">
+        <div class="vn__metric-label">Scores detailles</div>
+        <div class="vn__circ-trio">
+          <div class="vn__circ">
+            <div class="vn__circ-ring">
+              <svg width="56" height="56" viewBox="0 0 56 56">
+                <circle class="vn__circ-bg" cx="28" cy="28" r="22"/>
+                <circle class="vn__circ-fill" cx="28" cy="28" r="22" stroke="var(--nt-primary)" style="--circ-offset:26"/>
+              </svg>
+              <span class="vn__circ-val">8.1</span>
+            </div>
+            <span class="vn__circ-lbl">Demande</span>
+          </div>
+          <div class="vn__circ">
+            <div class="vn__circ-ring">
+              <svg width="56" height="56" viewBox="0 0 56 56">
+                <circle class="vn__circ-bg" cx="28" cy="28" r="22"/>
+                <circle class="vn__circ-fill" cx="28" cy="28" r="22" stroke="var(--nt-green)" style="--circ-offset:30"/>
+              </svg>
+              <span class="vn__circ-val">7.8</span>
+            </div>
+            <span class="vn__circ-lbl">Volume</span>
+          </div>
+          <div class="vn__circ">
+            <div class="vn__circ-ring">
+              <svg width="56" height="56" viewBox="0 0 56 56">
+                <circle class="vn__circ-bg" cx="28" cy="28" r="22"/>
+                <circle class="vn__circ-fill" cx="28" cy="28" r="22" stroke="var(--nt-orange)" style="--circ-offset:44"/>
+              </svg>
+              <span class="vn__circ-val">6.8</span>
+            </div>
+            <span class="vn__circ-lbl">Marge</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Liquid -->
+      <div class="vn__metric">
+        <div class="vn__metric-label">Taux de vente</div>
+        <div class="vn__liquid-row">
+          <div class="vn__liquid">
+            <div class="vn__liquid-level" style="height:65%"></div>
+            <div class="vn__liquid-wave" style="bottom:60%"></div>
+            <span class="vn__liquid-txt">65%</span>
+          </div>
+          <div class="vn__liquid-details">
+            <span class="vn__liquid-main">65%</span>
+            <span class="vn__liquid-sub">Vendus en moins de 7 jours</span>
+            <span class="vn__liquid-sub" style="color:var(--nt-green);font-weight:600;">+4.2% vs mois dern.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom : bars + table -->
+    <div class="vn__bottom">
+      <div class="vn__card">
+        <div class="vn__card-title">Ventes / jour</div>
+        <div class="vn__bars">
+          <div class="vn__bar-col"><div class="vn__bar vn__bar--teal" style="--bar-h:55%"></div><span class="vn__bar-val">18</span><span class="vn__bar-lbl">Lun</span></div>
+          <div class="vn__bar-col"><div class="vn__bar vn__bar--teal" style="--bar-h:72%"></div><span class="vn__bar-val">23</span><span class="vn__bar-lbl">Mar</span></div>
+          <div class="vn__bar-col"><div class="vn__bar vn__bar--teal" style="--bar-h:48%"></div><span class="vn__bar-val">15</span><span class="vn__bar-lbl">Mer</span></div>
+          <div class="vn__bar-col"><div class="vn__bar vn__bar--green" style="--bar-h:95%"></div><span class="vn__bar-val">31</span><span class="vn__bar-lbl">Jeu</span></div>
+          <div class="vn__bar-col"><div class="vn__bar vn__bar--teal" style="--bar-h:82%"></div><span class="vn__bar-val">26</span><span class="vn__bar-lbl">Ven</span></div>
+          <div class="vn__bar-col"><div class="vn__bar vn__bar--teal" style="--bar-h:100%"></div><span class="vn__bar-val">34</span><span class="vn__bar-lbl">Sam</span></div>
+          <div class="vn__bar-col"><div class="vn__bar vn__bar--teal" style="--bar-h:60%"></div><span class="vn__bar-val">20</span><span class="vn__bar-lbl">Dim</span></div>
+        </div>
+      </div>
+      <div class="vn__card" style="padding:14px;">
+        <div class="vn__card-title" style="padding:0 10px;">Niches similaires</div>
+        <table class="vn__table">
+          <thead>
+            <tr><th>Niche</th><th>Articles</th><th>Prix</th><th>Score</th><th>Status</th><th></th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="vn__table-name">Sneakers Nike</td><td>1 247</td><td>45&euro;</td>
+              <td><span class="vn__score vn__score--hi">8.2</span></td>
+              <td><span class="vn__badge vn__badge--ok"><span class="vn__badge-dot"></span>Actif</span></td>
+              <td><button class="vn__table-btn">Boost</button></td>
+            </tr>
+            <tr>
+              <td class="vn__table-name">Sneakers Adidas</td><td>893</td><td>38&euro;</td>
+              <td><span class="vn__score vn__score--hi">7.6</span></td>
+              <td><span class="vn__badge vn__badge--ok"><span class="vn__badge-dot"></span>Actif</span></td>
+              <td><button class="vn__table-btn">Voir</button></td>
+            </tr>
+            <tr>
+              <td class="vn__table-name">NB 550</td><td>412</td><td>62&euro;</td>
+              <td><span class="vn__score vn__score--md">6.1</span></td>
+              <td><span class="vn__badge vn__badge--warn"><span class="vn__badge-dot"></span>Pause</span></td>
+              <td><button class="vn__table-btn">Voir</button></td>
+            </tr>
+            <tr>
+              <td class="vn__table-name">Puma Suede</td><td>287</td><td>28&euro;</td>
+              <td><span class="vn__score vn__score--md">4.3</span></td>
+              <td><span class="vn__badge vn__badge--warn"><span class="vn__badge-dot"></span>Draft</span></td>
+              <td><button class="vn__table-btn">Voir</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div style="height:60px;"></div>
+
+</body>
+</html>

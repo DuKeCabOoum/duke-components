@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NicheTrackr — Variantes O, P</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --nt-primary: #009688;
+      --nt-primary-dark: #00796b;
+      --nt-primary-light: rgba(0, 150, 136, 0.12);
+      --nt-primary-lighter: rgba(0, 150, 136, 0.06);
+      --nt-green: #43a047;
+      --nt-green-light: rgba(67, 160, 71, 0.12);
+      --nt-orange: #fb8c00;
+      --nt-orange-light: rgba(251, 140, 0, 0.12);
+      --nt-red: #e53935;
+      --nt-red-light: rgba(229, 57, 53, 0.12);
+      --nt-indigo: #5c6bc0;
+      --nt-indigo-light: rgba(92, 107, 192, 0.12);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: #eef1f5;
+      line-height: 1.5;
+    }
+
+    .variant-separator {
+      padding: 40px 32px 16px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .variant-separator h2 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #1a2332;
+      white-space: nowrap;
+    }
+
+    .variant-separator::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #cbd5e1;
+    }
+
+    .variant-separator span {
+      font-size: 0.8rem;
+      color: #64748b;
+      white-space: nowrap;
+    }
+
+    /* Shared animations */
+    @keyframes sparkDraw { to { stroke-dashoffset: 0; } }
+    @keyframes sparkFade { to { opacity: 1; } }
+    @keyframes gaugeFill { to { stroke-dashoffset: var(--gauge-offset); } }
+    @keyframes circFill { to { stroke-dashoffset: var(--circ-offset); } }
+    @keyframes barGrow { to { height: var(--bar-h); } }
+    @keyframes progressGrow { to { width: var(--progress); } }
+    @keyframes areaFade { to { opacity: 1; } }
+    @keyframes areaDraw { to { stroke-dashoffset: 0; } }
+    @keyframes liquidWave { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    @keyframes statusBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ============================================
+       VARIANTE O — SIDEBAR STATS + MAIN CONTENT
+       Layout 2 colonnes : sidebar stats a gauche,
+       contenu principal a droite
+       Style : Notion meets Linear
+       ============================================ */
+
+    .vo {
+      padding: 24px 32px;
+      max-width: 1200px;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 20px;
+    }
+
+    /* Sidebar stats */
+    .vo__sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .vo__card {
+      background: white;
+      border-radius: 12px;
+      border: 1px solid #e8ecf1;
+      padding: 16px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    }
+
+    .vo__card-title {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #94a3b8;
+      margin-bottom: 12px;
+    }
+
+    /* Tracker name header */
+    .vo__name-card {
+      text-align: center;
+      padding: 20px 16px;
+    }
+
+    .vo__name-card h1 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #1a2332;
+      margin-bottom: 4px;
+    }
+
+    .vo__name-card p {
+      font-size: 0.75rem;
+      color: #94a3b8;
+    }
+
+    .vo__name-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      margin-top: 8px;
+      background: var(--nt-green-light);
+      color: var(--nt-green);
+    }
+
+    .vo__name-badge-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--nt-green);
+      animation: statusBlink 2s infinite;
+    }
+
+    /* Gauge in sidebar */
+    .vo__gauge-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .vo__gauge {
+      position: relative;
+    }
+
+    .vo__gauge-bg {
+      fill: none;
+      stroke: #e8ecf1;
+      stroke-width: 12;
+      stroke-linecap: round;
+    }
+
+    .vo__gauge-fill {
+      fill: none;
+      stroke-width: 12;
+      stroke-linecap: round;
+      stroke-dasharray: 188.5;
+      stroke-dashoffset: 188.5;
+      animation: gaugeFill 1.8s ease forwards;
+    }
+
+    .vo__gauge-val {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #1a2332;
+    }
+
+    .vo__gauge-label {
+      font-size: 0.75rem;
+      color: #64748b;
+      margin-top: 4px;
+    }
+
+    /* Score list */
+    .vo__score-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .vo__score-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .vo__score-ring {
+      position: relative;
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+    }
+
+    .vo__score-ring svg { transform: rotate(-90deg); }
+
+    .vo__score-ring-bg {
+      fill: none;
+      stroke: #e8ecf1;
+      stroke-width: 4;
+    }
+
+    .vo__score-ring-fill {
+      fill: none;
+      stroke-width: 4;
+      stroke-linecap: round;
+      stroke-dasharray: 94;
+      stroke-dashoffset: 94;
+      animation: circFill 1.5s ease forwards;
+    }
+
+    .vo__score-ring-val {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      font-weight: 800;
+      color: #1a2332;
+    }
+
+    .vo__score-name {
+      font-size: 0.78rem;
+      color: #475569;
+      flex: 1;
+    }
+
+    .vo__score-val {
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    /* Liquid sidebar */
+    .vo__liquid-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .vo__liquid {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      position: relative;
+      overflow: hidden;
+      background: var(--nt-primary-lighter);
+      border: 2px solid var(--nt-primary-light);
+      flex-shrink: 0;
+    }
+
+    .vo__liquid-level {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--nt-primary);
+      opacity: 0.25;
+    }
+
+    .vo__liquid-wave {
+      position: absolute;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: var(--nt-primary);
+      opacity: 0.12;
+      border-radius: 40%;
+      animation: liquidWave 3s linear infinite;
+    }
+
+    .vo__liquid-txt {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--nt-primary-dark);
+      z-index: 2;
+    }
+
+    .vo__liquid-info h4 {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #1a2332;
+    }
+
+    .vo__liquid-info p {
+      font-size: 0.68rem;
+      color: #94a3b8;
+    }
+
+    /* Progress in sidebar */
+    .vo__prog-item {
+      margin-bottom: 10px;
+    }
+
+    .vo__prog-item:last-child { margin-bottom: 0; }
+
+    .vo__prog-top {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+
+    .vo__prog-name {
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: #475569;
+    }
+
+    .vo__prog-val {
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+
+    .vo__prog-track {
+      height: 4px;
+      background: #f0f2f5;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .vo__prog-fill {
+      height: 100%;
+      border-radius: 2px;
+      width: 0;
+      animation: progressGrow 1.2s ease forwards;
+    }
+
+    /* Main content */
+    .vo__main {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Main header */
+    .vo__main-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .vo__tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 2px solid #e8ecf1;
+    }
+
+    .vo__tab {
+      padding: 8px 18px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #64748b;
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .vo__tab--active {
+      color: var(--nt-primary);
+      border-bottom-color: var(--nt-primary);
+      font-weight: 600;
+    }
+
+    .vo__btn {
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      border: 1px solid var(--nt-primary);
+      background: var(--nt-primary);
+      color: white;
+      cursor: pointer;
+    }
+
+    /* KPI strip */
+    .vo__kpi-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .vo__kpi {
+      background: white;
+      border-radius: 10px;
+      border: 1px solid #e8ecf1;
+      padding: 14px 16px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    }
+
+    .vo__kpi-label {
+      font-size: 0.72rem;
+      color: #94a3b8;
+      font-weight: 500;
+    }
+
+    .vo__kpi-bottom {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-top: 6px;
+    }
+
+    .vo__kpi-val {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #1a2332;
+      line-height: 1;
+    }
+
+    .vo__kpi-spark {
+      width: 70px;
+      height: 24px;
+    }
+
+    .vo__kpi-spark svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .vo__kpi-trend {
+      font-size: 0.7rem;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    .vo__kpi-trend--up { color: var(--nt-green); }
+    .vo__kpi-trend--down { color: var(--nt-red); }
+
+    .vo__spark-line {
+      stroke-dasharray: 200;
+      stroke-dashoffset: 200;
+      animation: sparkDraw 1.5s ease forwards;
+    }
+
+    /* Area chart main */
+    .vo__area-chart svg {
+      width: 100%;
+      height: 180px;
+    }
+
+    .vo__area-grid {
+      stroke: #f0f2f5;
+      stroke-width: 1;
+    }
+
+    .vo__area-fill {
+      opacity: 0;
+      animation: areaFade 1s ease 0.3s forwards;
+    }
+
+    .vo__area-stroke {
+      stroke-dasharray: 600;
+      stroke-dashoffset: 600;
+      animation: areaDraw 2s ease forwards;
+    }
+
+    .vo__area-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 6px;
+      font-size: 0.65rem;
+      color: #c2c9d6;
+    }
+
+    /* Bottom : bars + table */
+    .vo__bottom {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 14px;
+    }
+
+    .vo__bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 7px;
+      height: 120px;
+    }
+
+    .vo__bar-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      height: 100%;
+      gap: 3px;
+    }
+
+    .vo__bar {
+      width: 100%;
+      max-width: 26px;
+      border-radius: 4px 4px 0 0;
+      height: 0;
+      animation: barGrow 0.8s ease forwards;
+    }
+
+    .vo__bar--teal { background: var(--nt-primary); }
+    .vo__bar--green { background: var(--nt-green); }
+
+    .vo__bar-val {
+      font-size: 0.6rem;
+      font-weight: 600;
+      color: #1a2332;
+    }
+
+    .vo__bar-lbl {
+      font-size: 0.6rem;
+      color: #94a3b8;
+    }
+
+    /* Table */
+    .vo__table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.75rem;
+    }
+
+    .vo__table th {
+      text-align: left;
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      padding: 0 8px 10px;
+      border-bottom: 2px solid #e8ecf1;
+    }
+
+    .vo__table td {
+      padding: 8px;
+      border-bottom: 1px solid #f0f2f5;
+      color: #475569;
+    }
+
+    .vo__table tr:hover { background: var(--nt-primary-lighter); }
+
+    .vo__table-name { font-weight: 600; color: #1a2332; }
+
+    .vo__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.68rem;
+      font-weight: 600;
+    }
+
+    .vo__badge-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+    }
+
+    .vo__badge--ok { background: var(--nt-green-light); color: var(--nt-green); }
+    .vo__badge--ok .vo__badge-dot { background: var(--nt-green); animation: statusBlink 2s infinite; }
+    .vo__badge--warn { background: var(--nt-orange-light); color: var(--nt-orange); }
+    .vo__badge--warn .vo__badge-dot { background: var(--nt-orange); }
+
+    .vo__score { font-weight: 700; }
+    .vo__score--hi { color: var(--nt-green); }
+    .vo__score--md { color: var(--nt-orange); }
+
+    /* ============================================
+       VARIANTE P — FULL WIDTH FLOW
+       Layout vertical fluide, sections pleine largeur
+       Grande gauge centree, area chart full width
+       Style : Apple Health / Fitness
+       ============================================ */
+
+    .vp {
+      padding: 24px 32px;
+      max-width: 1200px;
+    }
+
+    .vp__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+
+    .vp__title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #1a2332;
+    }
+
+    .vp__meta {
+      font-size: 0.78rem;
+      color: #94a3b8;
+    }
+
+    .vp__tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 20px;
+    }
+
+    .vp__tab {
+      padding: 7px 16px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: #64748b;
+      background: white;
+      border: 1px solid #e8ecf1;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .vp__tab--active {
+      background: var(--nt-primary);
+      color: white;
+      border-color: var(--nt-primary);
+      font-weight: 600;
+    }
+
+    /* Score hero section */
+    .vp__hero {
+      background: white;
+      border-radius: 16px;
+      border: 1px solid #e8ecf1;
+      padding: 24px;
+      margin-bottom: 16px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 24px;
+      align-items: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    /* Gauge hero */
+    .vp__gauge-hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .vp__gauge {
+      position: relative;
+    }
+
+    .vp__gauge-bg {
+      fill: none;
+      stroke: #e8ecf1;
+      stroke-width: 16;
+      stroke-linecap: round;
+    }
+
+    .vp__gauge-fill {
+      fill: none;
+      stroke-width: 16;
+      stroke-linecap: round;
+      stroke-dasharray: 251.33;
+      stroke-dashoffset: 251.33;
+      animation: gaugeFill 2s ease forwards;
+    }
+
+    .vp__gauge-val {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #1a2332;
+    }
+
+    .vp__gauge-sub {
+      font-size: 0.85rem;
+      color: #64748b;
+      margin-top: 6px;
+      font-weight: 500;
+    }
+
+    /* Circular rings column */
+    .vp__rings {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .vp__ring-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .vp__ring {
+      position: relative;
+      width: 50px;
+      height: 50px;
+      flex-shrink: 0;
+    }
+
+    .vp__ring svg { transform: rotate(-90deg); }
+
+    .vp__ring-bg {
+      fill: none;
+      stroke: #e8ecf1;
+      stroke-width: 5;
+    }
+
+    .vp__ring-fill {
+      fill: none;
+      stroke-width: 5;
+      stroke-linecap: round;
+      stroke-dasharray: 126;
+      stroke-dashoffset: 126;
+      animation: circFill 1.5s ease forwards;
+    }
+
+    .vp__ring-val {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #1a2332;
+    }
+
+    .vp__ring-info h4 {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #1a2332;
+    }
+
+    .vp__ring-info p {
+      font-size: 0.68rem;
+      color: #94a3b8;
+    }
+
+    /* Liquid hero */
+    .vp__liquid-hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .vp__liquid {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      position: relative;
+      overflow: hidden;
+      background: var(--nt-primary-lighter);
+      border: 3px solid var(--nt-primary-light);
+    }
+
+    .vp__liquid-level {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--nt-primary);
+      opacity: 0.25;
+    }
+
+    .vp__liquid-wave {
+      position: absolute;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: var(--nt-primary);
+      opacity: 0.15;
+      border-radius: 40%;
+      animation: liquidWave 3s linear infinite;
+    }
+
+    .vp__liquid-wave--2 {
+      opacity: 0.1;
+      animation-duration: 4s;
+      animation-direction: reverse;
+    }
+
+    .vp__liquid-txt {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--nt-primary-dark);
+      z-index: 2;
+    }
+
+    .vp__liquid-label {
+      font-size: 0.78rem;
+      color: #64748b;
+      font-weight: 500;
+    }
+
+    .vp__liquid-trend {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--nt-green);
+    }
+
+    /* KPI row */
+    .vp__kpi-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .vp__kpi {
+      background: white;
+      border-radius: 12px;
+      border: 1px solid #e8ecf1;
+      padding: 14px 16px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+      animation: slideUp 0.5s ease forwards;
+      opacity: 0;
+    }
+
+    .vp__kpi:nth-child(1) { animation-delay: 0.1s; }
+    .vp__kpi:nth-child(2) { animation-delay: 0.2s; }
+    .vp__kpi:nth-child(3) { animation-delay: 0.3s; }
+    .vp__kpi:nth-child(4) { animation-delay: 0.4s; }
+
+    .vp__kpi-label {
+      font-size: 0.72rem;
+      color: #94a3b8;
+      font-weight: 500;
+    }
+
+    .vp__kpi-main {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .vp__kpi-val {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #1a2332;
+    }
+
+    .vp__kpi-trend {
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    .vp__kpi-trend--up { color: var(--nt-green); }
+    .vp__kpi-trend--down { color: var(--nt-red); }
+
+    .vp__kpi-bar {
+      margin-top: 8px;
+      height: 4px;
+      background: #f0f2f5;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .vp__kpi-bar-fill {
+      height: 100%;
+      border-radius: 2px;
+      width: 0;
+      animation: progressGrow 1.2s ease 0.5s forwards;
+    }
+
+    /* Full width area chart */
+    .vp__chart-card {
+      background: white;
+      border-radius: 14px;
+      border: 1px solid #e8ecf1;
+      padding: 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    }
+
+    .vp__chart-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .vp__chart-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #1a2332;
+    }
+
+    .vp__chart-legend {
+      display: flex;
+      gap: 14px;
+      font-size: 0.72rem;
+      color: #94a3b8;
+    }
+
+    .vp__chart-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .vp__chart-legend-dot {
+      width: 8px;
+      height: 3px;
+      border-radius: 2px;
+    }
+
+    .vp__chart svg {
+      width: 100%;
+      height: 200px;
+    }
+
+    .vp__area-grid { stroke: #f0f2f5; stroke-width: 1; }
+    .vp__area-fill { opacity: 0; animation: areaFade 1s ease 0.3s forwards; }
+    .vp__area-stroke { stroke-dasharray: 800; stroke-dashoffset: 800; animation: areaDraw 2s ease forwards; }
+
+    .vp__chart-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+      font-size: 0.65rem;
+      color: #c2c9d6;
+    }
+
+    /* Bottom grid */
+    .vp__bottom {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .vp__card {
+      background: white;
+      border-radius: 12px;
+      border: 1px solid #e8ecf1;
+      padding: 16px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    }
+
+    .vp__card-title {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #94a3b8;
+      margin-bottom: 12px;
+    }
+
+    /* Bars */
+    .vp__bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      height: 110px;
+    }
+
+    .vp__bar-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      height: 100%;
+      gap: 3px;
+    }
+
+    .vp__bar {
+      width: 100%;
+      max-width: 30px;
+      border-radius: 6px 6px 0 0;
+      height: 0;
+      animation: barGrow 0.8s ease forwards;
+    }
+
+    .vp__bar--teal { background: linear-gradient(180deg, var(--nt-primary), var(--nt-primary-dark)); }
+    .vp__bar--green { background: linear-gradient(180deg, var(--nt-green), #2e7d32); }
+
+    .vp__bar-val { font-size: 0.65rem; font-weight: 600; color: #1a2332; }
+    .vp__bar-lbl { font-size: 0.6rem; color: #94a3b8; }
+
+    /* Categories progress */
+    .vp__cat-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .vp__cat-item:last-child { margin-bottom: 0; }
+
+    .vp__cat-name {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: #475569;
+      width: 90px;
+      flex-shrink: 0;
+    }
+
+    .vp__cat-track {
+      flex: 1;
+      height: 8px;
+      background: #f0f2f5;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .vp__cat-fill {
+      height: 100%;
+      border-radius: 4px;
+      width: 0;
+      animation: progressGrow 1.2s ease forwards;
+    }
+
+    .vp__cat-val {
+      font-size: 0.78rem;
+      font-weight: 700;
+      width: 40px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =======================================
+       VARIANTE O — SIDEBAR STATS + MAIN
+       ======================================= -->
+  <div class="variant-separator">
+    <h2>Variante O — Sidebar Stats + Main</h2>
+    <span>Stats a gauche (gauge, scores, liquid), contenu principal a droite</span>
+  </div>
+
+  <div class="vo">
+    <!-- Sidebar gauche -->
+    <div class="vo__sidebar">
+
+      <!-- Nom tracker -->
+      <div class="vo__card vo__name-card">
+        <h1>Sneakers Nike Vintage</h1>
+        <p>Catalogue &middot; 1 247 articles</p>
+        <span class="vo__name-badge"><span class="vo__name-badge-dot"></span> Actif</span>
+      </div>
+
+      <!-- Gauge -->
+      <div class="vo__card">
+        <div class="vo__card-title">Score global</div>
+        <div class="vo__gauge-center">
+          <div class="vo__gauge">
+            <svg viewBox="0 0 150 90" width="150" height="90">
+              <defs>
+                <linearGradient id="vo-gg" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#e53935"/>
+                  <stop offset="50%" stop-color="#fb8c00"/>
+                  <stop offset="100%" stop-color="#009688"/>
+                </linearGradient>
+              </defs>
+              <path d="M 15 75 A 60 60 0 0 1 135 75" class="vo__gauge-bg"/>
+              <path d="M 15 75 A 60 60 0 0 1 135 75" class="vo__gauge-fill" stroke="url(#vo-gg)" style="--gauge-offset:49"/>
+            </svg>
+            <span class="vo__gauge-val">7.4</span>
+          </div>
+          <span class="vo__gauge-label">Bonne niche</span>
+        </div>
+      </div>
+
+      <!-- Scores circulaires -->
+      <div class="vo__card">
+        <div class="vo__card-title">Scores</div>
+        <div class="vo__score-list">
+          <div class="vo__score-item">
+            <div class="vo__score-ring">
+              <svg width="40" height="40" viewBox="0 0 40 40">
+                <circle class="vo__score-ring-bg" cx="20" cy="20" r="15"/>
+                <circle class="vo__score-ring-fill" cx="20" cy="20" r="15" stroke="var(--nt-primary)" style="--circ-offset:18"/>
+              </svg>
+              <span class="vo__score-ring-val">8.1</span>
+            </div>
+            <span class="vo__score-name">Demande</span>
+            <span class="vo__score-val" style="color:var(--nt-primary)">8.1</span>
+          </div>
+          <div class="vo__score-item">
+            <div class="vo__score-ring">
+              <svg width="40" height="40" viewBox="0 0 40 40">
+                <circle class="vo__score-ring-bg" cx="20" cy="20" r="15"/>
+                <circle class="vo__score-ring-fill" cx="20" cy="20" r="15" stroke="var(--nt-green)" style="--circ-offset:21"/>
+              </svg>
+              <span class="vo__score-ring-val">7.8</span>
+            </div>
+            <span class="vo__score-name">Volume</span>
+            <span class="vo__score-val" style="color:var(--nt-green)">7.8</span>
+          </div>
+          <div class="vo__score-item">
+            <div class="vo__score-ring">
+              <svg width="40" height="40" viewBox="0 0 40 40">
+                <circle class="vo__score-ring-bg" cx="20" cy="20" r="15"/>
+                <circle class="vo__score-ring-fill" cx="20" cy="20" r="15" stroke="var(--nt-orange)" style="--circ-offset:30"/>
+              </svg>
+              <span class="vo__score-ring-val">6.8</span>
+            </div>
+            <span class="vo__score-name">Marge</span>
+            <span class="vo__score-val" style="color:var(--nt-orange)">6.8</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Liquid fill -->
+      <div class="vo__card">
+        <div class="vo__card-title">Taux de vente</div>
+        <div class="vo__liquid-card">
+          <div class="vo__liquid">
+            <div class="vo__liquid-level" style="height:65%"></div>
+            <div class="vo__liquid-wave" style="bottom:60%"></div>
+            <span class="vo__liquid-txt">65%</span>
+          </div>
+          <div class="vo__liquid-info">
+            <h4>65% vendu</h4>
+            <p>en moins de 7 jours</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Categories progress -->
+      <div class="vo__card">
+        <div class="vo__card-title">Categories</div>
+        <div class="vo__prog-item">
+          <div class="vo__prog-top">
+            <span class="vo__prog-name">Air Max 90</span>
+            <span class="vo__prog-val" style="color:var(--nt-primary)">38%</span>
+          </div>
+          <div class="vo__prog-track"><div class="vo__prog-fill" style="--progress:38%;background:var(--nt-primary)"></div></div>
+        </div>
+        <div class="vo__prog-item">
+          <div class="vo__prog-top">
+            <span class="vo__prog-name">Air Force 1</span>
+            <span class="vo__prog-val" style="color:var(--nt-green)">27%</span>
+          </div>
+          <div class="vo__prog-track"><div class="vo__prog-fill" style="--progress:27%;background:var(--nt-green)"></div></div>
+        </div>
+        <div class="vo__prog-item">
+          <div class="vo__prog-top">
+            <span class="vo__prog-name">Dunk Low</span>
+            <span class="vo__prog-val" style="color:var(--nt-orange)">20%</span>
+          </div>
+          <div class="vo__prog-track"><div class="vo__prog-fill" style="--progress:20%;background:var(--nt-orange)"></div></div>
+        </div>
+        <div class="vo__prog-item">
+          <div class="vo__prog-top">
+            <span class="vo__prog-name">Jordan 1</span>
+            <span class="vo__prog-val" style="color:var(--nt-indigo)">15%</span>
+          </div>
+          <div class="vo__prog-track"><div class="vo__prog-fill" style="--progress:15%;background:var(--nt-indigo)"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main content -->
+    <div class="vo__main">
+      <div class="vo__main-header">
+        <div class="vo__tabs">
+          <button class="vo__tab vo__tab--active">Overview</button>
+          <button class="vo__tab">Produits</button>
+          <button class="vo__tab">Prix</button>
+          <button class="vo__tab">Historique</button>
+        </div>
+        <button class="vo__btn">Booster</button>
+      </div>
+
+      <!-- KPIs -->
+      <div class="vo__kpi-strip">
+        <div class="vo__kpi">
+          <div class="vo__kpi-label">Articles</div>
+          <div class="vo__kpi-bottom">
+            <span class="vo__kpi-val">1 247</span>
+            <div class="vo__kpi-spark">
+              <svg viewBox="0 0 70 24" preserveAspectRatio="none">
+                <polyline class="vo__spark-line" points="0,20 10,17 20,19 30,12 40,15 50,8 60,11 70,5" fill="none" stroke="var(--nt-primary)" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+          </div>
+          <div class="vo__kpi-trend vo__kpi-trend--up">+12.4%</div>
+        </div>
+        <div class="vo__kpi">
+          <div class="vo__kpi-label">Ventes/jour</div>
+          <div class="vo__kpi-bottom">
+            <span class="vo__kpi-val">34</span>
+            <div class="vo__kpi-spark">
+              <svg viewBox="0 0 70 24" preserveAspectRatio="none">
+                <polyline class="vo__spark-line" points="0,18 10,16 20,20 30,10 40,13 50,6 60,10 70,3" fill="none" stroke="var(--nt-green)" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+          </div>
+          <div class="vo__kpi-trend vo__kpi-trend--up">+8.2%</div>
+        </div>
+        <div class="vo__kpi">
+          <div class="vo__kpi-label">Prix median</div>
+          <div class="vo__kpi-bottom">
+            <span class="vo__kpi-val">45&euro;</span>
+            <div class="vo__kpi-spark">
+              <svg viewBox="0 0 70 24" preserveAspectRatio="none">
+                <polyline class="vo__spark-line" points="0,10 10,14 20,8 30,16 40,12 50,18 60,14 70,16" fill="none" stroke="var(--nt-orange)" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+          </div>
+          <div class="vo__kpi-trend vo__kpi-trend--down">-2.1%</div>
+        </div>
+      </div>
+
+      <!-- Area chart -->
+      <div class="vo__card">
+        <div class="vo__card-title">Tendance prix (30j)</div>
+        <div class="vo__area-chart">
+          <svg viewBox="0 0 500 180">
+            <defs>
+              <linearGradient id="vo-ag" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="var(--nt-primary)" stop-opacity="0.25"/>
+                <stop offset="100%" stop-color="var(--nt-primary)" stop-opacity="0.01"/>
+              </linearGradient>
+            </defs>
+            <line x1="0" y1="45" x2="500" y2="45" class="vo__area-grid"/>
+            <line x1="0" y1="90" x2="500" y2="90" class="vo__area-grid"/>
+            <line x1="0" y1="135" x2="500" y2="135" class="vo__area-grid"/>
+            <path class="vo__area-fill" d="M0,130 C60,120 120,100 180,105 C240,110 300,80 360,65 C420,50 460,55 500,40 L500,180 L0,180Z" fill="url(#vo-ag)"/>
+            <path class="vo__area-stroke" d="M0,130 C60,120 120,100 180,105 C240,110 300,80 360,65 C420,50 460,55 500,40" fill="none" stroke="var(--nt-primary)" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="500" cy="40" r="4" fill="var(--nt-primary)"/>
+          </svg>
+        </div>
+        <div class="vo__area-labels">
+          <span>22 jan</span><span>29 jan</span><span>5 fev</span><span>12 fev</span><span>21 fev</span>
+        </div>
+      </div>
+
+      <!-- Bottom : bars + table -->
+      <div class="vo__bottom">
+        <div class="vo__card">
+          <div class="vo__card-title">Ventes / jour</div>
+          <div class="vo__bars">
+            <div class="vo__bar-col"><div class="vo__bar vo__bar--teal" style="--bar-h:55%"></div><span class="vo__bar-val">18</span><span class="vo__bar-lbl">L</span></div>
+            <div class="vo__bar-col"><div class="vo__bar vo__bar--teal" style="--bar-h:72%"></div><span class="vo__bar-val">23</span><span class="vo__bar-lbl">M</span></div>
+            <div class="vo__bar-col"><div class="vo__bar vo__bar--teal" style="--bar-h:48%"></div><span class="vo__bar-val">15</span><span class="vo__bar-lbl">Me</span></div>
+            <div class="vo__bar-col"><div class="vo__bar vo__bar--green" style="--bar-h:95%"></div><span class="vo__bar-val">31</span><span class="vo__bar-lbl">J</span></div>
+            <div class="vo__bar-col"><div class="vo__bar vo__bar--teal" style="--bar-h:82%"></div><span class="vo__bar-val">26</span><span class="vo__bar-lbl">V</span></div>
+            <div class="vo__bar-col"><div class="vo__bar vo__bar--teal" style="--bar-h:100%"></div><span class="vo__bar-val">34</span><span class="vo__bar-lbl">S</span></div>
+            <div class="vo__bar-col"><div class="vo__bar vo__bar--teal" style="--bar-h:60%"></div><span class="vo__bar-val">20</span><span class="vo__bar-lbl">D</span></div>
+          </div>
+        </div>
+        <div class="vo__card" style="padding:14px;">
+          <div class="vo__card-title" style="padding:0 8px;">Niches similaires</div>
+          <table class="vo__table">
+            <thead><tr><th>Niche</th><th>Articles</th><th>Score</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="vo__table-name">Sneakers Nike</td><td>1 247</td>
+                <td><span class="vo__score vo__score--hi">8.2</span></td>
+                <td><span class="vo__badge vo__badge--ok"><span class="vo__badge-dot"></span>Actif</span></td>
+              </tr>
+              <tr>
+                <td class="vo__table-name">Sneakers Adidas</td><td>893</td>
+                <td><span class="vo__score vo__score--hi">7.6</span></td>
+                <td><span class="vo__badge vo__badge--ok"><span class="vo__badge-dot"></span>Actif</span></td>
+              </tr>
+              <tr>
+                <td class="vo__table-name">NB 550</td><td>412</td>
+                <td><span class="vo__score vo__score--md">6.1</span></td>
+                <td><span class="vo__badge vo__badge--warn"><span class="vo__badge-dot"></span>Pause</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- =======================================
+       VARIANTE P — FULL WIDTH FLOW
+       ======================================= -->
+  <div class="variant-separator">
+    <h2>Variante P — Full Width Flow</h2>
+    <span>Hero avec gauge + rings + liquid, KPIs avec progress bars, area chart pleine largeur</span>
+  </div>
+
+  <div class="vp">
+    <div class="vp__header">
+      <h1 class="vp__title">Sneakers Nike Vintage</h1>
+      <span class="vp__meta">1 247 articles &middot; MaJ 3 min</span>
+    </div>
+
+    <div class="vp__tabs">
+      <button class="vp__tab vp__tab--active">Overview</button>
+      <button class="vp__tab">Produits</button>
+      <button class="vp__tab">Analyse prix</button>
+      <button class="vp__tab">Historique</button>
+      <button class="vp__tab">Alertes</button>
+    </div>
+
+    <!-- Hero : Gauge + Rings + Liquid -->
+    <div class="vp__hero">
+      <!-- Gauge -->
+      <div class="vp__gauge-hero">
+        <div class="vp__gauge">
+          <svg viewBox="0 0 200 120" width="220" height="130">
+            <defs>
+              <linearGradient id="vp-gg" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#e53935"/>
+                <stop offset="40%" stop-color="#fb8c00"/>
+                <stop offset="70%" stop-color="#009688"/>
+                <stop offset="100%" stop-color="#43a047"/>
+              </linearGradient>
+            </defs>
+            <path d="M 20 100 A 80 80 0 0 1 180 100" class="vp__gauge-bg"/>
+            <path d="M 20 100 A 80 80 0 0 1 180 100" class="vp__gauge-fill" stroke="url(#vp-gg)" style="--gauge-offset:65"/>
+          </svg>
+          <span class="vp__gauge-val">7.4</span>
+        </div>
+        <span class="vp__gauge-sub">Score Global — Bonne niche</span>
+      </div>
+
+      <!-- Circular rings -->
+      <div class="vp__rings">
+        <div class="vp__ring-row">
+          <div class="vp__ring">
+            <svg width="50" height="50" viewBox="0 0 50 50">
+              <circle class="vp__ring-bg" cx="25" cy="25" r="20"/>
+              <circle class="vp__ring-fill" cx="25" cy="25" r="20" stroke="var(--nt-primary)" style="--circ-offset:24"/>
+            </svg>
+            <span class="vp__ring-val">8.1</span>
+          </div>
+          <div class="vp__ring-info">
+            <h4>Demande</h4>
+            <p>Forte demande actuelle</p>
+          </div>
+        </div>
+        <div class="vp__ring-row">
+          <div class="vp__ring">
+            <svg width="50" height="50" viewBox="0 0 50 50">
+              <circle class="vp__ring-bg" cx="25" cy="25" r="20"/>
+              <circle class="vp__ring-fill" cx="25" cy="25" r="20" stroke="var(--nt-green)" style="--circ-offset:28"/>
+            </svg>
+            <span class="vp__ring-val">7.8</span>
+          </div>
+          <div class="vp__ring-info">
+            <h4>Volume</h4>
+            <p>1 247 articles actifs</p>
+          </div>
+        </div>
+        <div class="vp__ring-row">
+          <div class="vp__ring">
+            <svg width="50" height="50" viewBox="0 0 50 50">
+              <circle class="vp__ring-bg" cx="25" cy="25" r="20"/>
+              <circle class="vp__ring-fill" cx="25" cy="25" r="20" stroke="var(--nt-orange)" style="--circ-offset:40"/>
+            </svg>
+            <span class="vp__ring-val">6.8</span>
+          </div>
+          <div class="vp__ring-info">
+            <h4>Marge</h4>
+            <p>Marge correcte</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Liquid -->
+      <div class="vp__liquid-hero">
+        <div class="vp__liquid">
+          <div class="vp__liquid-level" style="height:65%"></div>
+          <div class="vp__liquid-wave" style="bottom:60%"></div>
+          <div class="vp__liquid-wave vp__liquid-wave--2" style="bottom:58%"></div>
+          <span class="vp__liquid-txt">65%</span>
+        </div>
+        <span class="vp__liquid-label">Taux de vente (&lt;7j)</span>
+        <span class="vp__liquid-trend">+4.2% vs mois dern.</span>
+      </div>
+    </div>
+
+    <!-- KPI row with progress bars -->
+    <div class="vp__kpi-row">
+      <div class="vp__kpi">
+        <span class="vp__kpi-label">Articles trouves</span>
+        <div class="vp__kpi-main">
+          <span class="vp__kpi-val">1 247</span>
+          <span class="vp__kpi-trend vp__kpi-trend--up">+12.4%</span>
+        </div>
+        <div class="vp__kpi-bar"><div class="vp__kpi-bar-fill" style="--progress:78%;background:var(--nt-primary)"></div></div>
+      </div>
+      <div class="vp__kpi">
+        <span class="vp__kpi-label">Ventes / jour</span>
+        <div class="vp__kpi-main">
+          <span class="vp__kpi-val">34</span>
+          <span class="vp__kpi-trend vp__kpi-trend--up">+8.2%</span>
+        </div>
+        <div class="vp__kpi-bar"><div class="vp__kpi-bar-fill" style="--progress:68%;background:var(--nt-green)"></div></div>
+      </div>
+      <div class="vp__kpi">
+        <span class="vp__kpi-label">Prix median</span>
+        <div class="vp__kpi-main">
+          <span class="vp__kpi-val">45&euro;</span>
+          <span class="vp__kpi-trend vp__kpi-trend--down">-2.1%</span>
+        </div>
+        <div class="vp__kpi-bar"><div class="vp__kpi-bar-fill" style="--progress:55%;background:var(--nt-orange)"></div></div>
+      </div>
+      <div class="vp__kpi">
+        <span class="vp__kpi-label">Concurrence</span>
+        <div class="vp__kpi-main">
+          <span class="vp__kpi-val">89</span>
+          <span class="vp__kpi-trend vp__kpi-trend--up">+5</span>
+        </div>
+        <div class="vp__kpi-bar"><div class="vp__kpi-bar-fill" style="--progress:42%;background:var(--nt-indigo)"></div></div>
+      </div>
+    </div>
+
+    <!-- Full width area chart -->
+    <div class="vp__chart-card">
+      <div class="vp__chart-header">
+        <span class="vp__chart-title">Evolution des prix (30 jours)</span>
+        <div class="vp__chart-legend">
+          <div class="vp__chart-legend-item">
+            <span class="vp__chart-legend-dot" style="background:var(--nt-primary)"></span> Prix niche
+          </div>
+          <div class="vp__chart-legend-item">
+            <span class="vp__chart-legend-dot" style="background:var(--nt-orange)"></span> Moy. marche
+          </div>
+        </div>
+      </div>
+      <div class="vp__chart">
+        <svg viewBox="0 0 600 200">
+          <defs>
+            <linearGradient id="vp-ag" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="var(--nt-primary)" stop-opacity="0.2"/>
+              <stop offset="100%" stop-color="var(--nt-primary)" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <line x1="0" y1="50" x2="600" y2="50" class="vp__area-grid"/>
+          <line x1="0" y1="100" x2="600" y2="100" class="vp__area-grid"/>
+          <line x1="0" y1="150" x2="600" y2="150" class="vp__area-grid"/>
+          <path class="vp__area-fill" d="M0,145 C80,135 160,110 240,115 C320,120 400,85 480,65 C540,50 570,55 600,40 L600,200 L0,200Z" fill="url(#vp-ag)"/>
+          <path class="vp__area-stroke" d="M0,145 C80,135 160,110 240,115 C320,120 400,85 480,65 C540,50 570,55 600,40" fill="none" stroke="var(--nt-primary)" stroke-width="2.5" stroke-linecap="round"/>
+          <path class="vp__area-stroke" style="animation-delay:0.3s" d="M0,125 C80,122 160,130 240,135 C320,138 400,130 480,122 C540,118 570,124 600,118" fill="none" stroke="var(--nt-orange)" stroke-width="1.5" stroke-dasharray="6,3"/>
+          <circle cx="600" cy="40" r="4" fill="var(--nt-primary)"/>
+        </svg>
+      </div>
+      <div class="vp__chart-labels">
+        <span>22 jan</span><span>29 jan</span><span>5 fev</span><span>12 fev</span><span>19 fev</span><span>21 fev</span>
+      </div>
+    </div>
+
+    <!-- Bottom : bars + categories -->
+    <div class="vp__bottom">
+      <div class="vp__card">
+        <div class="vp__card-title">Ventes par jour</div>
+        <div class="vp__bars">
+          <div class="vp__bar-col"><div class="vp__bar vp__bar--teal" style="--bar-h:55%"></div><span class="vp__bar-val">18</span><span class="vp__bar-lbl">Lun</span></div>
+          <div class="vp__bar-col"><div class="vp__bar vp__bar--teal" style="--bar-h:72%"></div><span class="vp__bar-val">23</span><span class="vp__bar-lbl">Mar</span></div>
+          <div class="vp__bar-col"><div class="vp__bar vp__bar--teal" style="--bar-h:48%"></div><span class="vp__bar-val">15</span><span class="vp__bar-lbl">Mer</span></div>
+          <div class="vp__bar-col"><div class="vp__bar vp__bar--green" style="--bar-h:95%"></div><span class="vp__bar-val">31</span><span class="vp__bar-lbl">Jeu</span></div>
+          <div class="vp__bar-col"><div class="vp__bar vp__bar--teal" style="--bar-h:82%"></div><span class="vp__bar-val">26</span><span class="vp__bar-lbl">Ven</span></div>
+          <div class="vp__bar-col"><div class="vp__bar vp__bar--teal" style="--bar-h:100%"></div><span class="vp__bar-val">34</span><span class="vp__bar-lbl">Sam</span></div>
+          <div class="vp__bar-col"><div class="vp__bar vp__bar--teal" style="--bar-h:60%"></div><span class="vp__bar-val">20</span><span class="vp__bar-lbl">Dim</span></div>
+        </div>
+      </div>
+      <div class="vp__card">
+        <div class="vp__card-title">Repartition categories</div>
+        <div class="vp__cat-item">
+          <span class="vp__cat-name">Air Max 90</span>
+          <div class="vp__cat-track"><div class="vp__cat-fill" style="--progress:38%;background:var(--nt-primary)"></div></div>
+          <span class="vp__cat-val" style="color:var(--nt-primary)">38%</span>
+        </div>
+        <div class="vp__cat-item">
+          <span class="vp__cat-name">Air Force 1</span>
+          <div class="vp__cat-track"><div class="vp__cat-fill" style="--progress:27%;background:var(--nt-green)"></div></div>
+          <span class="vp__cat-val" style="color:var(--nt-green)">27%</span>
+        </div>
+        <div class="vp__cat-item">
+          <span class="vp__cat-name">Dunk Low</span>
+          <div class="vp__cat-track"><div class="vp__cat-fill" style="--progress:20%;background:var(--nt-orange)"></div></div>
+          <span class="vp__cat-val" style="color:var(--nt-orange)">20%</span>
+        </div>
+        <div class="vp__cat-item">
+          <span class="vp__cat-name">Jordan 1</span>
+          <div class="vp__cat-track"><div class="vp__cat-fill" style="--progress:15%;background:var(--nt-indigo)"></div></div>
+          <span class="vp__cat-val" style="color:var(--nt-indigo)">15%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="height:60px;"></div>
+
+</body>
+</html>

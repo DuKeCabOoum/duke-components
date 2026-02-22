@@ -1,0 +1,2312 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tracker Overview — 3 Variantes Design | Duke-components</title>
+  <style>
+    /* ============================================================================
+       RESET + BASE
+       ============================================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      /* Palette Vinted Teal */
+      --primary: #007782;
+      --primary-hover: #004654;
+      --primary-light: #e6fafa;
+      --primary-medium: #86cdcf;
+      --primary-dark: #112e33;
+
+      /* Backgrounds */
+      --bg: #fafbfb;
+      --surface: #ffffff;
+      --surface-alt: #edf2f2;
+
+      /* Textes */
+      --text: #15191a;
+      --text-secondary: #5a6566;
+      --text-muted: #b6bebf;
+
+      /* Status */
+      --success: #28865a;
+      --success-light: #e8f5ef;
+      --warning: #f9bb42;
+      --warning-light: #fef5e0;
+      --error: #d04555;
+      --error-light: #fce8eb;
+
+      /* Borders */
+      --border: #e1e6e6;
+      --border-hover: #b6bebf;
+
+      /* Grays */
+      --gray-50: #f7f9f9;
+      --gray-100: #edf2f2;
+      --gray-200: #e1e6e6;
+      --gray-300: #b6bebf;
+      --gray-400: #8a9394;
+      --gray-500: #5a6566;
+      --gray-600: #3d4849;
+      --gray-700: #2a3233;
+      --gray-800: #1f2627;
+      --gray-900: #15191a;
+
+      /* Spacing */
+      --sp-xs: 4px;
+      --sp-sm: 8px;
+      --sp-md: 12px;
+      --sp-base: 16px;
+      --sp-lg: 24px;
+      --sp-xl: 32px;
+      --sp-2xl: 48px;
+
+      /* Radius */
+      --r-sm: 4px;
+      --r-md: 6px;
+      --r-lg: 12px;
+      --r-xl: 16px;
+      --r-full: 3996px;
+
+      /* Shadows */
+      --shadow-sm: 0 1px 3px rgba(21,25,26,0.06);
+      --shadow-md: 0 4px 12px rgba(21,25,26,0.12);
+      --shadow-lg: 0 8px 24px rgba(21,25,26,0.12);
+
+      /* Fonts */
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--gray-100);
+      color: var(--text);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ============================================================================
+       PAGE LAYOUT — Switcher de variantes
+       ============================================================================ */
+    .page-header {
+      background: var(--primary-dark);
+      color: #fff;
+      padding: var(--sp-lg) var(--sp-xl);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .page-header__title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: var(--sp-xs);
+    }
+
+    .page-header__subtitle {
+      font-size: 0.8rem;
+      color: var(--primary-medium);
+      margin-bottom: var(--sp-base);
+    }
+
+    .variant-tabs {
+      display: flex;
+      gap: var(--sp-sm);
+    }
+
+    .variant-tab {
+      padding: var(--sp-sm) var(--sp-base);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: var(--r-md);
+      background: transparent;
+      color: rgba(255,255,255,0.6);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 150ms;
+      font-family: var(--font);
+    }
+
+    .variant-tab:hover {
+      color: #fff;
+      border-color: rgba(255,255,255,0.4);
+    }
+
+    .variant-tab--active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    /* Sections de variantes */
+    .variant-section {
+      display: none;
+      padding: var(--sp-xl);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .variant-section--active {
+      display: block;
+    }
+
+    .variant-label {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--sp-sm);
+      background: var(--primary-light);
+      color: var(--primary);
+      padding: var(--sp-xs) var(--sp-md);
+      border-radius: var(--r-full);
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: var(--sp-lg);
+    }
+
+    /* ============================================================================
+       COMPOSANTS PARTAGES (structure commune aux 3 variantes)
+       ============================================================================ */
+
+    /* Header tracker */
+    .tracker-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--sp-lg);
+      flex-wrap: wrap;
+      gap: var(--sp-md);
+    }
+
+    .tracker-header__left {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-md);
+      flex-wrap: wrap;
+    }
+
+    .tracker-header__name {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .tracker-header__actions {
+      display: flex;
+      gap: var(--sp-sm);
+    }
+
+    /* Tabs generiques */
+    .overview-tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: var(--sp-lg);
+    }
+
+    /* Period pills generiques */
+    .period-pills {
+      display: flex;
+      gap: var(--sp-xs);
+      margin-bottom: var(--sp-lg);
+    }
+
+    /* Grid pour les sections */
+    .overview-grid {
+      display: grid;
+      gap: var(--sp-lg);
+      margin-bottom: var(--sp-lg);
+    }
+
+    .overview-grid--5 { grid-template-columns: repeat(5, 1fr); }
+    .overview-grid--3 { grid-template-columns: repeat(3, 1fr); }
+    .overview-grid--2 { grid-template-columns: repeat(2, 1fr); }
+
+    @media (max-width: 900px) {
+      .overview-grid--5 { grid-template-columns: repeat(3, 1fr); }
+      .overview-grid--3 { grid-template-columns: 1fr; }
+      .overview-grid--2 { grid-template-columns: 1fr; }
+    }
+
+    /* Section card wrapper */
+    .section-card {
+      background: var(--surface);
+      border-radius: var(--r-lg);
+      border: 1px solid var(--border);
+      padding: var(--sp-lg);
+      margin-bottom: var(--sp-lg);
+    }
+
+    .section-card__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--sp-base);
+    }
+
+    .section-card__title {
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .section-card__link {
+      font-size: 0.75rem;
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .section-card__link:hover { text-decoration: underline; }
+
+    /* ============================================================================
+       VARIANTE A — "Clean SaaS" (Stripe / Linear)
+       Minimaliste, espaces blancs, ombres douces, accents subtils
+       ============================================================================ */
+
+    /* --- Badges & Status --- */
+    .va-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: var(--r-full);
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    .va-badge--active {
+      background: var(--success-light);
+      color: var(--success);
+    }
+
+    .va-badge--scan {
+      background: var(--gray-100);
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .va-badge--expiry {
+      background: var(--warning-light);
+      color: #8a6d1b;
+    }
+
+    .va-badge__dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    /* --- Buttons --- */
+    .va-btn {
+      padding: 6px 14px;
+      border-radius: var(--r-md);
+      font-size: 0.75rem;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 150ms;
+      font-family: var(--font);
+    }
+
+    .va-btn:hover {
+      border-color: var(--border-hover);
+      background: var(--gray-50);
+    }
+
+    .va-btn--primary {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    .va-btn--primary:hover {
+      background: var(--primary-hover);
+      border-color: var(--primary-hover);
+    }
+
+    .va-btn--danger {
+      color: var(--error);
+      border-color: rgba(208,69,85,0.3);
+    }
+
+    .va-btn--danger:hover {
+      background: var(--error-light);
+    }
+
+    /* --- Tabs --- */
+    .va-tabs {
+      border-bottom: 2px solid var(--border);
+    }
+
+    .va-tab {
+      padding: var(--sp-sm) var(--sp-base);
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      border: none;
+      background: none;
+      cursor: pointer;
+      position: relative;
+      font-family: var(--font);
+      transition: color 150ms;
+    }
+
+    .va-tab:hover { color: var(--text-secondary); }
+
+    .va-tab--active {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .va-tab--active::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--primary);
+      border-radius: 1px 1px 0 0;
+    }
+
+    /* --- Period Pills --- */
+    .va-pill {
+      padding: 4px 14px;
+      border-radius: var(--r-full);
+      font-size: 0.75rem;
+      font-weight: 500;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-family: var(--font);
+      transition: all 150ms;
+    }
+
+    .va-pill--active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    /* --- KPI Cards (Variante A = epurees, ombre douce) --- */
+    .va-kpi {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: var(--sp-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-xs);
+      transition: box-shadow 200ms;
+    }
+
+    .va-kpi:hover {
+      box-shadow: var(--shadow-md);
+    }
+
+    .va-kpi__label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .va-kpi__value {
+      font-size: 1.75rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      line-height: 1.1;
+    }
+
+    .va-kpi__sub {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .va-kpi--warning .va-kpi__value { color: var(--error); }
+    .va-kpi--warning {
+      border-color: rgba(208,69,85,0.2);
+      background: rgba(208,69,85,0.02);
+    }
+
+    /* --- Score Section (A = barres horizontales minimalistes) --- */
+    .va-score {
+      display: flex;
+      gap: var(--sp-xl);
+      align-items: flex-start;
+    }
+
+    .va-score__big {
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .va-score__number {
+      font-size: 3rem;
+      font-weight: 800;
+      line-height: 1;
+      font-family: var(--font-mono);
+    }
+
+    .va-score__max {
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    .va-score__quality {
+      display: inline-block;
+      margin-top: var(--sp-sm);
+      padding: 2px 10px;
+      border-radius: var(--r-full);
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+
+    .va-score__quality--low {
+      background: var(--error-light);
+      color: var(--error);
+    }
+
+    .va-score__quality--medium {
+      background: var(--warning-light);
+      color: #8a6d1b;
+    }
+
+    .va-score__quality--high {
+      background: var(--success-light);
+      color: var(--success);
+    }
+
+    .va-score__bars {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-md);
+    }
+
+    .va-score-bar {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-md);
+    }
+
+    .va-score-bar__label {
+      width: 120px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      flex-shrink: 0;
+    }
+
+    .va-score-bar__track {
+      flex: 1;
+      height: 8px;
+      background: var(--gray-100);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .va-score-bar__fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 600ms ease-out;
+    }
+
+    .va-score-bar__fill--green { background: var(--success); }
+    .va-score-bar__fill--yellow { background: var(--warning); }
+    .va-score-bar__fill--red { background: var(--error); }
+    .va-score-bar__fill--teal { background: var(--primary); }
+
+    .va-score-bar__value {
+      width: 50px;
+      text-align: right;
+      font-size: 0.8rem;
+      font-weight: 600;
+      font-family: var(--font-mono);
+      color: var(--text);
+    }
+
+    /* --- Comparison (A = cards avec fleches) --- */
+    .va-comparison {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: var(--sp-lg);
+      text-align: center;
+    }
+
+    .va-comparison__rank {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: var(--sp-xs);
+    }
+
+    .va-comparison__rank strong {
+      color: var(--primary);
+      font-size: 0.85rem;
+    }
+
+    .va-comparison__label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: var(--sp-sm);
+    }
+
+    .va-comparison__values {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: var(--sp-sm);
+    }
+
+    .va-comparison__current {
+      font-size: 1.25rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+    }
+
+    .va-comparison__arrow {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+
+    .va-comparison__avg {
+      font-size: 1rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    .va-comparison__diff {
+      margin-top: var(--sp-sm);
+      font-size: 0.75rem;
+      font-weight: 600;
+      font-family: var(--font-mono);
+    }
+
+    .va-comparison__diff--up { color: var(--success); }
+    .va-comparison__diff--down { color: var(--error); }
+
+    /* --- Table (A = clean, arrondie, hover subtil) --- */
+    .va-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+    }
+
+    .va-table th {
+      padding: var(--sp-sm) var(--sp-md);
+      text-align: left;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      color: var(--text-muted);
+      border-bottom: 2px solid var(--border);
+    }
+
+    .va-table td {
+      padding: var(--sp-sm) var(--sp-md);
+      border-bottom: 1px solid var(--gray-100);
+      vertical-align: middle;
+    }
+
+    .va-table tr:last-child td { border-bottom: none; }
+
+    .va-table tr:hover td {
+      background: var(--gray-50);
+    }
+
+    .va-table__rank {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+    }
+
+    .va-table__rank--1 { background: var(--primary-light); color: var(--primary); }
+    .va-table__rank--2 { background: var(--primary-light); color: var(--primary); }
+    .va-table__rank--3 { background: var(--primary-light); color: var(--primary); }
+    .va-table__rank--default { background: var(--gray-100); color: var(--text-muted); }
+
+    .va-table__mono {
+      font-family: var(--font-mono);
+      font-weight: 600;
+    }
+
+    .va-table__highlight--green { color: var(--success); font-weight: 700; }
+    .va-table__highlight--red { color: var(--error); font-weight: 700; }
+    .va-table__highlight--yellow { color: #8a6d1b; font-weight: 700; }
+
+    /* --- Chart placeholder (A = gradient doux) --- */
+    .va-chart-placeholder {
+      height: 200px;
+      background: linear-gradient(180deg, var(--gray-50) 0%, var(--surface) 100%);
+      border: 1px dashed var(--border);
+      border-radius: var(--r-lg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      gap: var(--sp-sm);
+    }
+
+    .va-chart-placeholder svg {
+      width: 32px;
+      height: 32px;
+      opacity: 0.4;
+    }
+
+    /* --- Mini bar chart CSS (A) --- */
+    .va-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      height: 160px;
+      padding: var(--sp-base) 0;
+    }
+
+    .va-bars__col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--sp-xs);
+      height: 100%;
+      justify-content: flex-end;
+    }
+
+    .va-bars__bar {
+      width: 100%;
+      max-width: 40px;
+      border-radius: 4px 4px 0 0;
+      transition: height 600ms ease-out;
+    }
+
+    .va-bars__bar--teal { background: linear-gradient(180deg, var(--primary), var(--primary-hover)); }
+    .va-bars__bar--light { background: var(--primary-medium); opacity: 0.6; }
+
+    .va-bars__label {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .va-bars__value {
+      font-size: 0.65rem;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    /* ============================================================================
+       VARIANTE B — "Bold Dashboard" (Vercel / Supabase)
+       Bordures colorees, contrastes forts, icones, badges dynamiques
+       ============================================================================ */
+
+    /* --- Badges --- */
+    .vb-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 12px;
+      border-radius: var(--r-md);
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .vb-badge--active { background: var(--success); color: #fff; }
+    .vb-badge--scan { background: var(--gray-800); color: var(--gray-300); }
+    .vb-badge--expiry { background: var(--warning); color: var(--gray-900); }
+
+    /* --- Buttons --- */
+    .vb-btn {
+      padding: 8px 16px;
+      border-radius: var(--r-lg);
+      font-size: 0.8rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 150ms;
+      font-family: var(--font);
+      display: inline-flex;
+      align-items: center;
+      gap: var(--sp-sm);
+    }
+
+    .vb-btn--secondary {
+      background: var(--gray-100);
+      color: var(--text);
+    }
+
+    .vb-btn--secondary:hover { background: var(--gray-200); }
+
+    .vb-btn--primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .vb-btn--primary:hover { background: var(--primary-hover); }
+
+    .vb-btn--danger {
+      background: var(--error-light);
+      color: var(--error);
+    }
+
+    .vb-btn--danger:hover { background: rgba(208,69,85,0.15); }
+
+    /* --- Tabs --- */
+    .vb-tabs {
+      background: var(--gray-100);
+      border-radius: var(--r-lg);
+      padding: 4px;
+      display: inline-flex;
+    }
+
+    .vb-tab {
+      padding: var(--sp-sm) var(--sp-base);
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      border: none;
+      background: none;
+      cursor: pointer;
+      border-radius: var(--r-md);
+      font-family: var(--font);
+      transition: all 150ms;
+    }
+
+    .vb-tab:hover { color: var(--text); }
+
+    .vb-tab--active {
+      background: var(--surface);
+      color: var(--text);
+      font-weight: 600;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* --- Period Pills --- */
+    .vb-pill {
+      padding: 6px 16px;
+      border-radius: var(--r-lg);
+      font-size: 0.8rem;
+      font-weight: 600;
+      border: 2px solid transparent;
+      background: var(--gray-100);
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-family: var(--font);
+      transition: all 150ms;
+    }
+
+    .vb-pill--active {
+      background: var(--primary-light);
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+
+    /* --- KPI Cards (B = bordure gauche coloree, bold) --- */
+    .vb-kpi {
+      background: var(--surface);
+      border-radius: var(--r-lg);
+      padding: var(--sp-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-sm);
+      border-left: 4px solid var(--primary);
+      box-shadow: var(--shadow-sm);
+      transition: transform 150ms, box-shadow 150ms;
+    }
+
+    .vb-kpi:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .vb-kpi__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .vb-kpi__label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .vb-kpi__icon {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--r-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .vb-kpi__icon--teal { background: var(--primary-light); color: var(--primary); }
+    .vb-kpi__icon--green { background: var(--success-light); color: var(--success); }
+    .vb-kpi__icon--yellow { background: var(--warning-light); color: #8a6d1b; }
+
+    .vb-kpi__icon svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .vb-kpi__value {
+      font-size: 1.75rem;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      line-height: 1;
+    }
+
+    .vb-kpi__footer {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-sm);
+    }
+
+    .vb-kpi__trend {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: var(--r-full);
+    }
+
+    .vb-kpi__trend--up { background: var(--success-light); color: var(--success); }
+    .vb-kpi__trend--down { background: var(--error-light); color: var(--error); }
+
+    .vb-kpi__sub {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .vb-kpi--warning {
+      border-left-color: var(--error);
+    }
+
+    /* --- Score Section (B = Donut/Gauge + barres) --- */
+    .vb-score {
+      display: flex;
+      gap: var(--sp-2xl);
+      align-items: center;
+    }
+
+    .vb-gauge {
+      position: relative;
+      width: 160px;
+      height: 160px;
+      flex-shrink: 0;
+    }
+
+    .vb-gauge__circle {
+      width: 100%;
+      height: 100%;
+      transform: rotate(-90deg);
+    }
+
+    .vb-gauge__bg {
+      fill: none;
+      stroke: var(--gray-100);
+      stroke-width: 10;
+    }
+
+    .vb-gauge__fill {
+      fill: none;
+      stroke-width: 10;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 1s ease-out;
+    }
+
+    .vb-gauge__center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    .vb-gauge__value {
+      font-size: 2rem;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      line-height: 1;
+    }
+
+    .vb-gauge__label {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .vb-score__bars {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-base);
+    }
+
+    .vb-bar {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-md);
+    }
+
+    .vb-bar__label {
+      width: 130px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      flex-shrink: 0;
+    }
+
+    .vb-bar__track {
+      flex: 1;
+      height: 10px;
+      background: var(--gray-100);
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .vb-bar__fill {
+      height: 100%;
+      border-radius: 5px;
+      transition: width 600ms ease-out;
+    }
+
+    .vb-bar__fill--gradient-green {
+      background: linear-gradient(90deg, var(--success), #34d399);
+    }
+
+    .vb-bar__fill--gradient-yellow {
+      background: linear-gradient(90deg, var(--warning), #fbbf24);
+    }
+
+    .vb-bar__fill--gradient-teal {
+      background: linear-gradient(90deg, var(--primary), var(--primary-medium));
+    }
+
+    .vb-bar__value {
+      width: 50px;
+      text-align: right;
+      font-size: 0.85rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+    }
+
+    /* --- Comparison (B = bold avec rang prominent) --- */
+    .vb-comparison {
+      background: var(--surface);
+      border-radius: var(--r-lg);
+      padding: var(--sp-lg);
+      box-shadow: var(--shadow-sm);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .vb-comparison__ribbon {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--primary-medium));
+    }
+
+    .vb-comparison__rank-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      margin-bottom: var(--sp-sm);
+    }
+
+    .vb-comparison__label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: var(--sp-md);
+    }
+
+    .vb-comparison__value {
+      font-size: 1.5rem;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      margin-bottom: var(--sp-xs);
+    }
+
+    .vb-comparison__context {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .vb-comparison__diff {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: var(--sp-sm);
+      padding: 3px 10px;
+      border-radius: var(--r-full);
+      font-size: 0.7rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+    }
+
+    .vb-comparison__diff--up { background: var(--success-light); color: var(--success); }
+    .vb-comparison__diff--down { background: var(--error-light); color: var(--error); }
+
+    /* --- Table (B = dark header, striped) --- */
+    .vb-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+    }
+
+    .vb-table th {
+      padding: var(--sp-md);
+      text-align: left;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #fff;
+      background: var(--gray-800);
+    }
+
+    .vb-table th:first-child { border-radius: var(--r-md) 0 0 0; }
+    .vb-table th:last-child { border-radius: 0 var(--r-md) 0 0; }
+
+    .vb-table td {
+      padding: var(--sp-sm) var(--sp-md);
+      vertical-align: middle;
+    }
+
+    .vb-table tr:nth-child(even) td { background: var(--gray-50); }
+    .vb-table tr:hover td { background: var(--primary-light); }
+
+    /* ============================================================================
+       VARIANTE C — "Vinted Native" (Teal / Compact / Commercial)
+       Ultra-fidele a la palette Vinted, compact, professionnel
+       ============================================================================ */
+
+    /* --- Badges --- */
+    .vc-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: var(--r-sm);
+      font-size: 0.65rem;
+      font-weight: 600;
+    }
+
+    .vc-badge--active {
+      background: var(--success-light);
+      color: #1a5a3a;
+    }
+
+    .vc-badge--scan {
+      background: var(--gray-100);
+      color: var(--text-secondary);
+    }
+
+    .vc-badge--expiry {
+      background: var(--warning-light);
+      color: #8a6d1b;
+    }
+
+    .vc-badge__dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    /* --- Buttons --- */
+    .vc-btn {
+      padding: 6px 12px;
+      border-radius: var(--r-md);
+      font-size: 0.75rem;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+      font-family: var(--font);
+      transition: all 150ms;
+    }
+
+    .vc-btn--primary {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    .vc-btn--primary:hover { background: var(--primary-hover); }
+
+    .vc-btn--ghost {
+      background: transparent;
+      border-color: transparent;
+      color: var(--text-secondary);
+    }
+
+    .vc-btn--ghost:hover {
+      background: var(--gray-100);
+    }
+
+    /* --- Tabs (C = Vinted style, underline teal) --- */
+    .vc-tabs {
+      display: flex;
+      gap: var(--sp-lg);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .vc-tab {
+      padding: var(--sp-md) 0;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      border: none;
+      background: none;
+      cursor: pointer;
+      position: relative;
+      font-family: var(--font);
+      transition: color 150ms;
+    }
+
+    .vc-tab:hover { color: var(--text); }
+
+    .vc-tab--active {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .vc-tab--active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--primary);
+      border-radius: 2px 2px 0 0;
+    }
+
+    /* --- Period Pills (C = Vinted chip-style) --- */
+    .vc-pill {
+      padding: 4px 12px;
+      border-radius: var(--r-full);
+      font-size: 0.7rem;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-family: var(--font);
+      transition: all 150ms;
+    }
+
+    .vc-pill:hover { border-color: var(--primary); color: var(--primary); }
+
+    .vc-pill--active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    /* --- KPI Cards (C = compactes, grille serree, accent teal) --- */
+    .vc-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      background: var(--surface);
+    }
+
+    .vc-kpi {
+      padding: var(--sp-base) var(--sp-md);
+      text-align: center;
+      border-right: 1px solid var(--border);
+      transition: background 150ms;
+    }
+
+    .vc-kpi:last-child { border-right: none; }
+    .vc-kpi:hover { background: var(--gray-50); }
+
+    .vc-kpi__value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      line-height: 1.2;
+    }
+
+    .vc-kpi__label {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .vc-kpi__sub {
+      font-size: 0.6rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .vc-kpi--warning .vc-kpi__value { color: var(--error); }
+
+    /* --- Score Section (C = radial compacte + barres fines teal) --- */
+    .vc-score {
+      display: flex;
+      gap: var(--sp-xl);
+      align-items: center;
+    }
+
+    .vc-score__donut {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      flex-shrink: 0;
+    }
+
+    .vc-score__donut svg {
+      width: 100%;
+      height: 100%;
+      transform: rotate(-90deg);
+    }
+
+    .vc-score__donut-bg {
+      fill: none;
+      stroke: var(--gray-100);
+      stroke-width: 8;
+    }
+
+    .vc-score__donut-fill {
+      fill: none;
+      stroke-width: 8;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 1s ease-out;
+    }
+
+    .vc-score__donut-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    .vc-score__donut-value {
+      font-size: 1.5rem;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      line-height: 1;
+    }
+
+    .vc-score__donut-label {
+      font-size: 0.6rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .vc-score__details {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-sm);
+    }
+
+    .vc-score-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--sp-sm);
+    }
+
+    .vc-score-row__label {
+      width: 110px;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      flex-shrink: 0;
+    }
+
+    .vc-score-row__track {
+      flex: 1;
+      height: 6px;
+      background: var(--gray-100);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .vc-score-row__fill {
+      height: 100%;
+      border-radius: 3px;
+    }
+
+    .vc-score-row__fill--teal { background: var(--primary); }
+    .vc-score-row__fill--green { background: var(--success); }
+    .vc-score-row__fill--yellow { background: var(--warning); }
+    .vc-score-row__fill--red { background: var(--error); }
+
+    .vc-score-row__value {
+      width: 40px;
+      text-align: right;
+      font-size: 0.75rem;
+      font-weight: 600;
+      font-family: var(--font-mono);
+    }
+
+    /* --- Comparison (C = ultra-compact, tableau inline) --- */
+    .vc-comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+    }
+
+    .vc-comparison-table th {
+      padding: var(--sp-sm) var(--sp-md);
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .vc-comparison-table th:first-child { text-align: left; }
+
+    .vc-comparison-table td {
+      padding: var(--sp-sm) var(--sp-md);
+      text-align: center;
+      font-family: var(--font-mono);
+      font-weight: 600;
+    }
+
+    .vc-comparison-table td:first-child {
+      text-align: left;
+      font-family: var(--font);
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    .vc-rank-chip {
+      display: inline-flex;
+      padding: 1px 8px;
+      border-radius: var(--r-full);
+      font-size: 0.65rem;
+      font-weight: 700;
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .vc-diff--up { color: var(--success); }
+    .vc-diff--down { color: var(--error); }
+
+    /* --- Table (C = Vinted native, compact, teal accents) --- */
+    .vc-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+    }
+
+    .vc-table th {
+      padding: var(--sp-sm) var(--sp-md);
+      text-align: left;
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .vc-table td {
+      padding: 6px var(--sp-md);
+      border-bottom: 1px solid var(--gray-100);
+      vertical-align: middle;
+    }
+
+    .vc-table tr:last-child td { border-bottom: none; }
+    .vc-table tr:hover td { background: rgba(0,119,130,0.03); }
+
+    .vc-table__rank {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+    }
+
+    .vc-table__rank--top3 { background: var(--primary); color: #fff; }
+    .vc-table__rank--default { background: transparent; color: var(--text-muted); }
+  </style>
+</head>
+<body>
+
+  <!-- ========== HEADER PAGE ========== -->
+  <header class="page-header">
+    <h1 class="page-header__title">Tracker Overview — 3 Variantes Design</h1>
+    <p class="page-header__subtitle">Compare les 3 approches visuelles pour choisir celle qui te plait le plus.</p>
+    <nav class="variant-tabs">
+      <button class="variant-tab variant-tab--active" onclick="showVariant('a')">A — Clean SaaS</button>
+      <button class="variant-tab" onclick="showVariant('b')">B — Bold Dashboard</button>
+      <button class="variant-tab" onclick="showVariant('c')">C — Vinted Native</button>
+    </nav>
+  </header>
+
+  <!-- ============================================================================
+       VARIANTE A — "Clean SaaS" (Stripe / Linear)
+       ============================================================================ -->
+  <section id="variant-a" class="variant-section variant-section--active">
+    <div class="variant-label">Variante A — Clean SaaS (Stripe / Linear)</div>
+
+    <!-- Header -->
+    <div class="tracker-header">
+      <div class="tracker-header__left">
+        <h1 class="tracker-header__name">SHOWCASE Mode Femme</h1>
+        <span class="va-badge va-badge--active"><span class="va-badge__dot"></span> Actif</span>
+        <span class="va-badge va-badge--scan">Dernier scan : 21 minutes</span>
+        <span class="va-badge va-badge--expiry">30 jours restants</span>
+      </div>
+      <div class="tracker-header__actions">
+        <button class="va-btn">Editer</button>
+        <button class="va-btn va-btn--primary">Rescraper</button>
+        <button class="va-btn va-btn--danger">Pause</button>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <nav class="overview-tabs va-tabs">
+      <button class="va-tab va-tab--active">Overview</button>
+      <button class="va-tab">Details</button>
+      <button class="va-tab">Niches</button>
+      <button class="va-tab">Flux</button>
+    </nav>
+
+    <!-- Period -->
+    <div class="period-pills" style="margin-top: var(--sp-lg);">
+      <button class="va-pill va-pill--active">7j</button>
+      <button class="va-pill">30j</button>
+      <button class="va-pill">90j</button>
+    </div>
+
+    <!-- KPIs -->
+    <div class="overview-grid overview-grid--5">
+      <div class="va-kpi">
+        <span class="va-kpi__label">Articles vendus</span>
+        <span class="va-kpi__value">161</span>
+        <span class="va-kpi__sub">Sur 1392 (11.6%)</span>
+      </div>
+      <div class="va-kpi">
+        <span class="va-kpi__label">Taux de conversion</span>
+        <span class="va-kpi__value">11.6%</span>
+        <span class="va-kpi__sub">Articles &rarr; Ventes</span>
+      </div>
+      <div class="va-kpi">
+        <span class="va-kpi__label">Prix median</span>
+        <span class="va-kpi__value">20,92&euro;</span>
+        <span class="va-kpi__sub">Tous les produits</span>
+      </div>
+      <div class="va-kpi va-kpi--warning">
+        <span class="va-kpi__label">Delai moyen vente</span>
+        <span class="va-kpi__value">2.0j</span>
+        <span class="va-kpi__sub">Articles vendus</span>
+      </div>
+      <div class="va-kpi">
+        <span class="va-kpi__label">Nouvelles / jour</span>
+        <span class="va-kpi__value">129.0/j</span>
+        <span class="va-kpi__sub">Moyenne 7 derniers jours</span>
+      </div>
+    </div>
+
+    <!-- Score -->
+    <div class="section-card">
+      <div class="va-score">
+        <div class="va-score__big">
+          <div class="va-score__number">1.1<span class="va-score__max">/10</span></div>
+          <span class="va-score__quality va-score__quality--low">Faible</span>
+        </div>
+        <div class="va-score__bars">
+          <div class="va-score-bar">
+            <span class="va-score-bar__label">Taux de vente</span>
+            <div class="va-score-bar__track"><div class="va-score-bar__fill va-score-bar__fill--green" style="width: 100%;"></div></div>
+            <span class="va-score-bar__value">10/10</span>
+          </div>
+          <div class="va-score-bar">
+            <span class="va-score-bar__label">Rapidite</span>
+            <div class="va-score-bar__track"><div class="va-score-bar__fill va-score-bar__fill--green" style="width: 93%;"></div></div>
+            <span class="va-score-bar__value">9.3/10</span>
+          </div>
+          <div class="va-score-bar">
+            <span class="va-score-bar__label">Panier moyen</span>
+            <div class="va-score-bar__track"><div class="va-score-bar__fill va-score-bar__fill--yellow" style="width: 50%;"></div></div>
+            <span class="va-score-bar__value">5.0/10</span>
+          </div>
+          <div class="va-score-bar">
+            <span class="va-score-bar__label">Volume marche</span>
+            <div class="va-score-bar__track"><div class="va-score-bar__fill va-score-bar__fill--teal" style="width: 100%;"></div></div>
+            <span class="va-score-bar__value">10.0/10</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comparison -->
+    <div class="section-card">
+      <div class="section-card__header">
+        <h3 class="section-card__title">Comparaison <span style="color: var(--text-muted); font-weight: 400; font-size: 0.8rem;">16 trackers</span></h3>
+        <span style="font-size: 0.8rem; color: var(--text-secondary); font-weight: 600;">#12 <span style="font-weight: 400; color: var(--text-muted);">Classement global sur 16</span></span>
+      </div>
+      <div class="overview-grid overview-grid--3">
+        <div class="va-comparison">
+          <div class="va-comparison__label">Taux de vente</div>
+          <div class="va-comparison__rank"><strong>#1</strong> sur 16</div>
+          <div class="va-comparison__values">
+            <span class="va-comparison__current">11.6%</span>
+            <span class="va-comparison__arrow">&rarr;</span>
+            <span class="va-comparison__avg">1.6%</span>
+          </div>
+          <div class="va-comparison__diff va-comparison__diff--up">+10.0%</div>
+        </div>
+        <div class="va-comparison">
+          <div class="va-comparison__label">Prix median</div>
+          <div class="va-comparison__rank"><strong>#14</strong> sur 16</div>
+          <div class="va-comparison__values">
+            <span class="va-comparison__current">20,92&euro;</span>
+            <span class="va-comparison__arrow">&rarr;</span>
+            <span class="va-comparison__avg">50,00&euro;</span>
+          </div>
+          <div class="va-comparison__diff va-comparison__diff--down">-29&euro;</div>
+        </div>
+        <div class="va-comparison">
+          <div class="va-comparison__label">Delai de vente</div>
+          <div class="va-comparison__rank"><strong>#11</strong> sur 16</div>
+          <div class="va-comparison__values">
+            <span class="va-comparison__current">2.0j</span>
+            <span class="va-comparison__arrow">&rarr;</span>
+            <span class="va-comparison__avg">1.8j</span>
+          </div>
+          <div class="va-comparison__diff va-comparison__diff--down">+6h</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top 5 Niches -->
+    <div class="section-card">
+      <div class="section-card__header">
+        <h3 class="section-card__title">Top 5 Niches par Performance</h3>
+        <a href="#" class="section-card__link">Voir toutes les niches &rarr;</a>
+      </div>
+      <table class="va-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Niche</th>
+            <th>En ligne</th>
+            <th>Vendus</th>
+            <th>Panier moy.</th>
+            <th>Delai vente</th>
+            <th>Taux vente</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="va-table__rank va-table__rank--1">1</span></td>
+            <td style="font-weight: 600;">Sezane Manteaux</td>
+            <td class="va-table__mono">7</td>
+            <td class="va-table__mono">5</td>
+            <td class="va-table__mono">165,82&euro;</td>
+            <td class="va-table__mono">1.8j</td>
+            <td class="va-table__highlight--green">41.7%</td>
+          </tr>
+          <tr>
+            <td><span class="va-table__rank va-table__rank--2">2</span></td>
+            <td style="font-weight: 600;">Lacoste Chaussures</td>
+            <td class="va-table__mono">4</td>
+            <td class="va-table__mono">6</td>
+            <td class="va-table__mono">64,17&euro;</td>
+            <td class="va-table__mono">4.0j</td>
+            <td class="va-table__highlight--green">60.0%</td>
+          </tr>
+          <tr>
+            <td><span class="va-table__rank va-table__rank--3">3</span></td>
+            <td style="font-weight: 600;">Isabel Marant Bottes</td>
+            <td class="va-table__mono">8</td>
+            <td class="va-table__mono">2</td>
+            <td class="va-table__mono">150,74&euro;</td>
+            <td class="va-table__mono">3h</td>
+            <td class="va-table__highlight--yellow">20.0%</td>
+          </tr>
+          <tr>
+            <td><span class="va-table__rank va-table__rank--default">4</span></td>
+            <td style="font-weight: 600;">Lacoste Polos</td>
+            <td class="va-table__mono">5</td>
+            <td class="va-table__mono">7</td>
+            <td class="va-table__mono">33,11&euro;</td>
+            <td class="va-table__mono">15h</td>
+            <td class="va-table__highlight--green">58.3%</td>
+          </tr>
+          <tr>
+            <td><span class="va-table__rank va-table__rank--default">5</span></td>
+            <td style="font-weight: 600;">Ralph Lauren Pulls</td>
+            <td class="va-table__mono">8</td>
+            <td class="va-table__mono">6</td>
+            <td class="va-table__mono">63,24&euro;</td>
+            <td class="va-table__mono">1.1j</td>
+            <td class="va-table__highlight--green">42.9%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Charts -->
+    <div class="overview-grid overview-grid--2">
+      <div class="section-card">
+        <h3 class="section-card__title" style="margin-bottom: var(--sp-base);">Ventes par Tranche de Prix</h3>
+        <div class="va-bars">
+          <div class="va-bars__col">
+            <div class="va-bars__value">3</div>
+            <div class="va-bars__bar va-bars__bar--light" style="height: 5%;"></div>
+            <span class="va-bars__label">&lt;5&euro;</span>
+          </div>
+          <div class="va-bars__col">
+            <div class="va-bars__value">8</div>
+            <div class="va-bars__bar va-bars__bar--light" style="height: 10%;"></div>
+            <span class="va-bars__label">5-10&euro;</span>
+          </div>
+          <div class="va-bars__col">
+            <div class="va-bars__value">25</div>
+            <div class="va-bars__bar va-bars__bar--teal" style="height: 30%;"></div>
+            <span class="va-bars__label">10-20&euro;</span>
+          </div>
+          <div class="va-bars__col">
+            <div class="va-bars__value">85</div>
+            <div class="va-bars__bar va-bars__bar--teal" style="height: 85%;"></div>
+            <span class="va-bars__label">20-50&euro;</span>
+          </div>
+          <div class="va-bars__col">
+            <div class="va-bars__value">70</div>
+            <div class="va-bars__bar va-bars__bar--teal" style="height: 70%;"></div>
+            <span class="va-bars__label">50-100&euro;</span>
+          </div>
+          <div class="va-bars__col">
+            <div class="va-bars__value">22</div>
+            <div class="va-bars__bar va-bars__bar--teal" style="height: 25%;"></div>
+            <span class="va-bars__label">&gt;100&euro;</span>
+          </div>
+        </div>
+      </div>
+      <div class="section-card">
+        <h3 class="section-card__title" style="margin-bottom: var(--sp-base);">Rapidite de Vente</h3>
+        <div class="va-bars">
+          <div class="va-bars__col">
+            <div class="va-bars__value">52</div>
+            <div class="va-bars__bar va-bars__bar--teal" style="height: 90%;"></div>
+            <span class="va-bars__label">&lt; 6h</span>
+          </div>
+          <div class="va-bars__col">
+            <div class="va-bars__value">12</div>
+            <div class="va-bars__bar va-bars__bar--teal" style="height: 20%;"></div>
+            <span class="va-bars__label">6-12h</span>
+          </div>
+          <div class="va-bars__col">
+            <div class="va-bars__value">18</div>
+            <div class="va-bars__bar va-bars__bar--teal" style="height: 30%;"></div>
+            <span class="va-bars__label">12-24h</span>
+          </div>
+          <div class="va-bars__col">
+            <div class="va-bars__value">8</div>
+            <div class="va-bars__bar va-bars__bar--light" style="height: 13%;"></div>
+            <span class="va-bars__label">1-3j</span>
+          </div>
+          <div class="va-bars__col">
+            <div class="va-bars__value">25</div>
+            <div class="va-bars__bar va-bars__bar--teal" style="height: 42%;"></div>
+            <span class="va-bars__label">3-7j</span>
+          </div>
+          <div class="va-bars__col">
+            <div class="va-bars__value">15</div>
+            <div class="va-bars__bar va-bars__bar--light" style="height: 25%;"></div>
+            <span class="va-bars__label">&gt; 7j</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Evolution placeholder -->
+    <div class="section-card">
+      <div class="section-card__header">
+        <h3 class="section-card__title">Evolution dans le temps</h3>
+      </div>
+      <div class="overview-grid overview-grid--2">
+        <div class="va-chart-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12l5-5 4 4 9-9M21 3h-6m6 0v6"/></svg>
+          <span>Produits &amp; Ventes (Chartkick)</span>
+        </div>
+        <div class="va-chart-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12l5-5 4 4 9-9M21 3h-6m6 0v6"/></svg>
+          <span>Score global /10 (Chartkick)</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================================
+       VARIANTE B — "Bold Dashboard" (Vercel / Supabase)
+       ============================================================================ -->
+  <section id="variant-b" class="variant-section">
+    <div class="variant-label">Variante B — Bold Dashboard (Vercel / Supabase)</div>
+
+    <!-- Header -->
+    <div class="tracker-header">
+      <div class="tracker-header__left">
+        <h1 class="tracker-header__name">SHOWCASE Mode Femme</h1>
+        <span class="vb-badge vb-badge--active">Actif</span>
+        <span class="vb-badge vb-badge--scan">Scan : 21 min</span>
+        <span class="vb-badge vb-badge--expiry">30j restants</span>
+      </div>
+      <div class="tracker-header__actions">
+        <button class="vb-btn vb-btn--secondary">Editer</button>
+        <button class="vb-btn vb-btn--primary">Rescraper</button>
+        <button class="vb-btn vb-btn--danger">Pause</button>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <nav class="overview-tabs" style="margin-bottom: var(--sp-lg);">
+      <div class="vb-tabs">
+        <button class="vb-tab vb-tab--active">Overview</button>
+        <button class="vb-tab">Details</button>
+        <button class="vb-tab">Niches</button>
+        <button class="vb-tab">Flux</button>
+      </div>
+    </nav>
+
+    <!-- Period -->
+    <div class="period-pills">
+      <button class="vb-pill vb-pill--active">7j</button>
+      <button class="vb-pill">30j</button>
+      <button class="vb-pill">90j</button>
+    </div>
+
+    <!-- KPIs -->
+    <div class="overview-grid overview-grid--5">
+      <div class="vb-kpi">
+        <div class="vb-kpi__header">
+          <span class="vb-kpi__label">Articles vendus</span>
+          <span class="vb-kpi__icon vb-kpi__icon--teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg></span>
+        </div>
+        <span class="vb-kpi__value">161</span>
+        <div class="vb-kpi__footer">
+          <span class="vb-kpi__trend vb-kpi__trend--up">+12%</span>
+          <span class="vb-kpi__sub">vs semaine prec.</span>
+        </div>
+      </div>
+      <div class="vb-kpi">
+        <div class="vb-kpi__header">
+          <span class="vb-kpi__label">Taux conversion</span>
+          <span class="vb-kpi__icon vb-kpi__icon--green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>
+        </div>
+        <span class="vb-kpi__value">11.6%</span>
+        <div class="vb-kpi__footer">
+          <span class="vb-kpi__trend vb-kpi__trend--up">+2.1%</span>
+          <span class="vb-kpi__sub">Articles &rarr; Ventes</span>
+        </div>
+      </div>
+      <div class="vb-kpi">
+        <div class="vb-kpi__header">
+          <span class="vb-kpi__label">Prix median</span>
+          <span class="vb-kpi__icon vb-kpi__icon--teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></span>
+        </div>
+        <span class="vb-kpi__value">20,92&euro;</span>
+        <div class="vb-kpi__footer">
+          <span class="vb-kpi__trend vb-kpi__trend--down">-3&euro;</span>
+          <span class="vb-kpi__sub">Tous produits</span>
+        </div>
+      </div>
+      <div class="vb-kpi vb-kpi--warning">
+        <div class="vb-kpi__header">
+          <span class="vb-kpi__label">Delai moyen</span>
+          <span class="vb-kpi__icon vb-kpi__icon--yellow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+        </div>
+        <span class="vb-kpi__value" style="color: var(--error);">2.0j</span>
+        <div class="vb-kpi__footer">
+          <span class="vb-kpi__trend vb-kpi__trend--down">+0.5j</span>
+          <span class="vb-kpi__sub">Articles vendus</span>
+        </div>
+      </div>
+      <div class="vb-kpi">
+        <div class="vb-kpi__header">
+          <span class="vb-kpi__label">Nouvelles / jour</span>
+          <span class="vb-kpi__icon vb-kpi__icon--green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg></span>
+        </div>
+        <span class="vb-kpi__value">129/j</span>
+        <div class="vb-kpi__footer">
+          <span class="vb-kpi__trend vb-kpi__trend--up">+18%</span>
+          <span class="vb-kpi__sub">Moy. 7 derniers jours</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Score (Gauge) -->
+    <div class="section-card">
+      <div class="vb-score">
+        <div class="vb-gauge">
+          <svg class="vb-gauge__circle" viewBox="0 0 120 120">
+            <circle class="vb-gauge__bg" cx="60" cy="60" r="50"/>
+            <!-- 11% du cercle (1.1/10) — circumference = 314, dasharray = 314, offset = 314 - (314 * 0.11) = 279.5 -->
+            <circle class="vb-gauge__fill" cx="60" cy="60" r="50"
+              stroke="var(--error)"
+              stroke-dasharray="314"
+              stroke-dashoffset="279.5"/>
+          </svg>
+          <div class="vb-gauge__center">
+            <div class="vb-gauge__value" style="color: var(--error);">1.1</div>
+            <div class="vb-gauge__label">sur 10</div>
+          </div>
+        </div>
+        <div class="vb-score__bars">
+          <div class="vb-bar">
+            <span class="vb-bar__label">Taux de vente</span>
+            <div class="vb-bar__track"><div class="vb-bar__fill vb-bar__fill--gradient-green" style="width: 100%;"></div></div>
+            <span class="vb-bar__value">10/10</span>
+          </div>
+          <div class="vb-bar">
+            <span class="vb-bar__label">Rapidite</span>
+            <div class="vb-bar__track"><div class="vb-bar__fill vb-bar__fill--gradient-green" style="width: 93%;"></div></div>
+            <span class="vb-bar__value">9.3/10</span>
+          </div>
+          <div class="vb-bar">
+            <span class="vb-bar__label">Panier moyen</span>
+            <div class="vb-bar__track"><div class="vb-bar__fill vb-bar__fill--gradient-yellow" style="width: 50%;"></div></div>
+            <span class="vb-bar__value">5.0/10</span>
+          </div>
+          <div class="vb-bar">
+            <span class="vb-bar__label">Volume marche</span>
+            <div class="vb-bar__track"><div class="vb-bar__fill vb-bar__fill--gradient-teal" style="width: 100%;"></div></div>
+            <span class="vb-bar__value">10/10</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comparison -->
+    <div class="overview-grid overview-grid--3">
+      <div class="vb-comparison">
+        <div class="vb-comparison__ribbon"></div>
+        <div class="vb-comparison__rank-badge">#1</div>
+        <div class="vb-comparison__label">Taux de vente</div>
+        <div class="vb-comparison__value">11.6%</div>
+        <div class="vb-comparison__context">vs moy. 1.6%</div>
+        <div class="vb-comparison__diff vb-comparison__diff--up">&#9650; +10.0%</div>
+      </div>
+      <div class="vb-comparison">
+        <div class="vb-comparison__ribbon"></div>
+        <div class="vb-comparison__rank-badge">#14</div>
+        <div class="vb-comparison__label">Prix median</div>
+        <div class="vb-comparison__value">20,92&euro;</div>
+        <div class="vb-comparison__context">vs moy. 50,00&euro;</div>
+        <div class="vb-comparison__diff vb-comparison__diff--down">&#9660; -29&euro;</div>
+      </div>
+      <div class="vb-comparison">
+        <div class="vb-comparison__ribbon"></div>
+        <div class="vb-comparison__rank-badge">#11</div>
+        <div class="vb-comparison__label">Delai de vente</div>
+        <div class="vb-comparison__value">2.0j</div>
+        <div class="vb-comparison__context">vs moy. 1.8j</div>
+        <div class="vb-comparison__diff vb-comparison__diff--down">&#9660; +6h</div>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="section-card" style="padding: 0; overflow: hidden;">
+      <div style="padding: var(--sp-lg); padding-bottom: 0;">
+        <div class="section-card__header">
+          <h3 class="section-card__title">Top 5 Niches par Performance</h3>
+          <a href="#" class="section-card__link">Voir tout &rarr;</a>
+        </div>
+      </div>
+      <table class="vb-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Niche</th>
+            <th>En ligne</th>
+            <th>Vendus</th>
+            <th>Panier moy.</th>
+            <th>Delai vente</th>
+            <th>Taux vente</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="va-table__rank va-table__rank--1">1</span></td>
+            <td style="font-weight: 700;">Sezane Manteaux</td>
+            <td style="font-family: var(--font-mono);">7</td>
+            <td style="font-family: var(--font-mono);">5</td>
+            <td style="font-family: var(--font-mono);">165,82&euro;</td>
+            <td style="font-family: var(--font-mono);">1.8j</td>
+            <td style="font-family: var(--font-mono); color: var(--success); font-weight: 700;">41.7%</td>
+          </tr>
+          <tr>
+            <td><span class="va-table__rank va-table__rank--2">2</span></td>
+            <td style="font-weight: 700;">Lacoste Chaussures</td>
+            <td style="font-family: var(--font-mono);">4</td>
+            <td style="font-family: var(--font-mono);">6</td>
+            <td style="font-family: var(--font-mono);">64,17&euro;</td>
+            <td style="font-family: var(--font-mono);">4.0j</td>
+            <td style="font-family: var(--font-mono); color: var(--success); font-weight: 700;">60.0%</td>
+          </tr>
+          <tr>
+            <td><span class="va-table__rank va-table__rank--3">3</span></td>
+            <td style="font-weight: 700;">Isabel Marant Bottes</td>
+            <td style="font-family: var(--font-mono);">8</td>
+            <td style="font-family: var(--font-mono);">2</td>
+            <td style="font-family: var(--font-mono);">150,74&euro;</td>
+            <td style="font-family: var(--font-mono);">3h</td>
+            <td style="font-family: var(--font-mono); color: #8a6d1b; font-weight: 700;">20.0%</td>
+          </tr>
+          <tr>
+            <td><span class="va-table__rank va-table__rank--default">4</span></td>
+            <td style="font-weight: 600;">Lacoste Polos</td>
+            <td style="font-family: var(--font-mono);">5</td>
+            <td style="font-family: var(--font-mono);">7</td>
+            <td style="font-family: var(--font-mono);">33,11&euro;</td>
+            <td style="font-family: var(--font-mono);">15h</td>
+            <td style="font-family: var(--font-mono); color: var(--success); font-weight: 700;">58.3%</td>
+          </tr>
+          <tr>
+            <td><span class="va-table__rank va-table__rank--default">5</span></td>
+            <td style="font-weight: 600;">Ralph Lauren Pulls</td>
+            <td style="font-family: var(--font-mono);">8</td>
+            <td style="font-family: var(--font-mono);">6</td>
+            <td style="font-family: var(--font-mono);">63,24&euro;</td>
+            <td style="font-family: var(--font-mono);">1.1j</td>
+            <td style="font-family: var(--font-mono); color: var(--success); font-weight: 700;">42.9%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Charts -->
+    <div class="overview-grid overview-grid--2">
+      <div class="section-card">
+        <h3 class="section-card__title" style="margin-bottom: var(--sp-base);">Ventes par Tranche de Prix</h3>
+        <div class="va-bars">
+          <div class="va-bars__col"><div class="va-bars__value">3</div><div class="va-bars__bar va-bars__bar--light" style="height: 5%;"></div><span class="va-bars__label">&lt;5&euro;</span></div>
+          <div class="va-bars__col"><div class="va-bars__value">8</div><div class="va-bars__bar va-bars__bar--light" style="height: 10%;"></div><span class="va-bars__label">5-10&euro;</span></div>
+          <div class="va-bars__col"><div class="va-bars__value">25</div><div class="va-bars__bar va-bars__bar--teal" style="height: 30%;"></div><span class="va-bars__label">10-20&euro;</span></div>
+          <div class="va-bars__col"><div class="va-bars__value">85</div><div class="va-bars__bar va-bars__bar--teal" style="height: 85%;"></div><span class="va-bars__label">20-50&euro;</span></div>
+          <div class="va-bars__col"><div class="va-bars__value">70</div><div class="va-bars__bar va-bars__bar--teal" style="height: 70%;"></div><span class="va-bars__label">50-100&euro;</span></div>
+          <div class="va-bars__col"><div class="va-bars__value">22</div><div class="va-bars__bar va-bars__bar--teal" style="height: 25%;"></div><span class="va-bars__label">&gt;100&euro;</span></div>
+        </div>
+      </div>
+      <div class="section-card">
+        <h3 class="section-card__title" style="margin-bottom: var(--sp-base);">Rapidite de Vente</h3>
+        <div class="va-bars">
+          <div class="va-bars__col"><div class="va-bars__value">52</div><div class="va-bars__bar va-bars__bar--teal" style="height: 90%;"></div><span class="va-bars__label">&lt; 6h</span></div>
+          <div class="va-bars__col"><div class="va-bars__value">12</div><div class="va-bars__bar va-bars__bar--teal" style="height: 20%;"></div><span class="va-bars__label">6-12h</span></div>
+          <div class="va-bars__col"><div class="va-bars__value">18</div><div class="va-bars__bar va-bars__bar--teal" style="height: 30%;"></div><span class="va-bars__label">12-24h</span></div>
+          <div class="va-bars__col"><div class="va-bars__value">8</div><div class="va-bars__bar va-bars__bar--light" style="height: 13%;"></div><span class="va-bars__label">1-3j</span></div>
+          <div class="va-bars__col"><div class="va-bars__value">25</div><div class="va-bars__bar va-bars__bar--teal" style="height: 42%;"></div><span class="va-bars__label">3-7j</span></div>
+          <div class="va-bars__col"><div class="va-bars__value">15</div><div class="va-bars__bar va-bars__bar--light" style="height: 25%;"></div><span class="va-bars__label">&gt; 7j</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================================
+       VARIANTE C — "Vinted Native" (Teal / Compact)
+       ============================================================================ -->
+  <section id="variant-c" class="variant-section">
+    <div class="variant-label">Variante C — Vinted Native (Compact / Teal)</div>
+
+    <!-- Header -->
+    <div class="tracker-header">
+      <div class="tracker-header__left">
+        <h1 class="tracker-header__name" style="font-size: 1.3rem;">SHOWCASE Mode Femme</h1>
+        <span class="vc-badge vc-badge--active"><span class="vc-badge__dot"></span> Actif</span>
+        <span class="vc-badge vc-badge--scan">Scan : 21 min</span>
+        <span class="vc-badge vc-badge--expiry">30j</span>
+      </div>
+      <div class="tracker-header__actions">
+        <button class="vc-btn">Editer</button>
+        <button class="vc-btn vc-btn--primary">Rescraper</button>
+        <button class="vc-btn vc-btn--ghost" style="color: var(--error);">Pause</button>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <nav class="overview-tabs vc-tabs" style="margin-bottom: var(--sp-lg);">
+      <button class="vc-tab vc-tab--active">Overview</button>
+      <button class="vc-tab">Details</button>
+      <button class="vc-tab">Niches</button>
+      <button class="vc-tab">Flux</button>
+    </nav>
+
+    <!-- Period -->
+    <div class="period-pills">
+      <button class="vc-pill vc-pill--active">7j</button>
+      <button class="vc-pill">30j</button>
+      <button class="vc-pill">90j</button>
+    </div>
+
+    <!-- KPIs (C = grille unifiee) -->
+    <div style="margin-bottom: var(--sp-lg);">
+      <div class="vc-kpi-grid">
+        <div class="vc-kpi">
+          <span class="vc-kpi__value">161</span>
+          <span class="vc-kpi__label">Articles vendus</span>
+          <span class="vc-kpi__sub">Sur 1392 (11.6%)</span>
+        </div>
+        <div class="vc-kpi">
+          <span class="vc-kpi__value">11.6%</span>
+          <span class="vc-kpi__label">Taux de conversion</span>
+          <span class="vc-kpi__sub">Articles &rarr; Ventes</span>
+        </div>
+        <div class="vc-kpi">
+          <span class="vc-kpi__value">20,92&euro;</span>
+          <span class="vc-kpi__label">Prix median</span>
+          <span class="vc-kpi__sub">Tous les produits</span>
+        </div>
+        <div class="vc-kpi vc-kpi--warning">
+          <span class="vc-kpi__value">2.0j</span>
+          <span class="vc-kpi__label">Delai moyen vente</span>
+          <span class="vc-kpi__sub">Articles vendus</span>
+        </div>
+        <div class="vc-kpi">
+          <span class="vc-kpi__value">129.0/j</span>
+          <span class="vc-kpi__label">Nouvelles / jour</span>
+          <span class="vc-kpi__sub">Moy. 7 derniers jours</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Score (C = donut compact + barres fines) -->
+    <div class="section-card">
+      <div class="vc-score">
+        <div class="vc-score__donut">
+          <svg viewBox="0 0 120 120">
+            <circle class="vc-score__donut-bg" cx="60" cy="60" r="50"/>
+            <circle class="vc-score__donut-fill" cx="60" cy="60" r="50"
+              stroke="var(--error)"
+              stroke-dasharray="314"
+              stroke-dashoffset="279.5"/>
+          </svg>
+          <div class="vc-score__donut-center">
+            <div class="vc-score__donut-value" style="color: var(--error);">1.1</div>
+            <div class="vc-score__donut-label">Faible</div>
+          </div>
+        </div>
+        <div class="vc-score__details">
+          <div class="vc-score-row">
+            <span class="vc-score-row__label">Taux de vente</span>
+            <div class="vc-score-row__track"><div class="vc-score-row__fill vc-score-row__fill--green" style="width: 100%;"></div></div>
+            <span class="vc-score-row__value">10/10</span>
+          </div>
+          <div class="vc-score-row">
+            <span class="vc-score-row__label">Rapidite</span>
+            <div class="vc-score-row__track"><div class="vc-score-row__fill vc-score-row__fill--green" style="width: 93%;"></div></div>
+            <span class="vc-score-row__value">9.3/10</span>
+          </div>
+          <div class="vc-score-row">
+            <span class="vc-score-row__label">Panier moyen</span>
+            <div class="vc-score-row__track"><div class="vc-score-row__fill vc-score-row__fill--yellow" style="width: 50%;"></div></div>
+            <span class="vc-score-row__value">5.0/10</span>
+          </div>
+          <div class="vc-score-row">
+            <span class="vc-score-row__label">Volume marche</span>
+            <div class="vc-score-row__track"><div class="vc-score-row__fill vc-score-row__fill--teal" style="width: 100%;"></div></div>
+            <span class="vc-score-row__value">10/10</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comparison (C = tableau compact) -->
+    <div class="section-card">
+      <div class="section-card__header">
+        <h3 class="section-card__title">Comparaison <span style="color: var(--text-muted); font-weight: 400; font-size: 0.75rem;">16 trackers &bull; #12 global</span></h3>
+      </div>
+      <table class="vc-comparison-table">
+        <thead>
+          <tr>
+            <th>Metrique</th>
+            <th>Rang</th>
+            <th>Valeur</th>
+            <th>Moyenne</th>
+            <th>Diff</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Taux de vente</td>
+            <td><span class="vc-rank-chip">#1</span></td>
+            <td>11.6%</td>
+            <td style="color: var(--text-muted);">1.6%</td>
+            <td class="vc-diff--up">+10.0%</td>
+          </tr>
+          <tr>
+            <td>Prix median</td>
+            <td><span class="vc-rank-chip">#14</span></td>
+            <td>20,92&euro;</td>
+            <td style="color: var(--text-muted);">50,00&euro;</td>
+            <td class="vc-diff--down">-29&euro;</td>
+          </tr>
+          <tr>
+            <td>Delai de vente</td>
+            <td><span class="vc-rank-chip">#11</span></td>
+            <td>2.0j</td>
+            <td style="color: var(--text-muted);">1.8j</td>
+            <td class="vc-diff--down">+6h</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Table -->
+    <div class="section-card" style="padding: 0; overflow: hidden; padding-top: var(--sp-lg);">
+      <div style="padding: 0 var(--sp-lg); margin-bottom: var(--sp-md);">
+        <div class="section-card__header" style="margin-bottom: 0;">
+          <h3 class="section-card__title">Top 5 Niches par Performance</h3>
+          <a href="#" class="section-card__link">Voir tout &rarr;</a>
+        </div>
+      </div>
+      <table class="vc-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Niche</th>
+            <th>En ligne</th>
+            <th>Vendus</th>
+            <th>Panier moy.</th>
+            <th>Delai vente</th>
+            <th>Taux vente</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="vc-table__rank vc-table__rank--top3">1</span></td>
+            <td style="font-weight: 600;">Sezane Manteaux</td>
+            <td style="font-family: var(--font-mono); text-align: center;">7</td>
+            <td style="font-family: var(--font-mono); text-align: center;">5</td>
+            <td style="font-family: var(--font-mono);">165,82&euro;</td>
+            <td style="font-family: var(--font-mono);">1.8j</td>
+            <td style="font-family: var(--font-mono); color: var(--success); font-weight: 700;">41.7%</td>
+          </tr>
+          <tr>
+            <td><span class="vc-table__rank vc-table__rank--top3">2</span></td>
+            <td style="font-weight: 600;">Lacoste Chaussures</td>
+            <td style="font-family: var(--font-mono); text-align: center;">4</td>
+            <td style="font-family: var(--font-mono); text-align: center;">6</td>
+            <td style="font-family: var(--font-mono);">64,17&euro;</td>
+            <td style="font-family: var(--font-mono);">4.0j</td>
+            <td style="font-family: var(--font-mono); color: var(--success); font-weight: 700;">60.0%</td>
+          </tr>
+          <tr>
+            <td><span class="vc-table__rank vc-table__rank--top3">3</span></td>
+            <td style="font-weight: 600;">Isabel Marant Bottes</td>
+            <td style="font-family: var(--font-mono); text-align: center;">8</td>
+            <td style="font-family: var(--font-mono); text-align: center;">2</td>
+            <td style="font-family: var(--font-mono);">150,74&euro;</td>
+            <td style="font-family: var(--font-mono);">3h</td>
+            <td style="font-family: var(--font-mono); color: #8a6d1b; font-weight: 700;">20.0%</td>
+          </tr>
+          <tr>
+            <td><span class="vc-table__rank vc-table__rank--default">4</span></td>
+            <td style="font-weight: 500;">Lacoste Polos</td>
+            <td style="font-family: var(--font-mono); text-align: center;">5</td>
+            <td style="font-family: var(--font-mono); text-align: center;">7</td>
+            <td style="font-family: var(--font-mono);">33,11&euro;</td>
+            <td style="font-family: var(--font-mono);">15h</td>
+            <td style="font-family: var(--font-mono); color: var(--success); font-weight: 700;">58.3%</td>
+          </tr>
+          <tr>
+            <td><span class="vc-table__rank vc-table__rank--default">5</span></td>
+            <td style="font-weight: 500;">Ralph Lauren Pulls</td>
+            <td style="font-family: var(--font-mono); text-align: center;">8</td>
+            <td style="font-family: var(--font-mono); text-align: center;">6</td>
+            <td style="font-family: var(--font-mono);">63,24&euro;</td>
+            <td style="font-family: var(--font-mono);">1.1j</td>
+            <td style="font-family: var(--font-mono); color: var(--success); font-weight: 700;">42.9%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Charts -->
+    <div class="overview-grid overview-grid--2">
+      <div class="section-card">
+        <h3 class="section-card__title" style="margin-bottom: var(--sp-base);">Ventes par Tranche de Prix</h3>
+        <div class="va-bars">
+          <div class="va-bars__col"><div class="va-bars__value">3</div><div class="va-bars__bar va-bars__bar--light" style="height: 5%;"></div><span class="va-bars__label">&lt;5&euro;</span></div>
+          <div class="va-bars__col"><div class="va-bars__value">8</div><div class="va-bars__bar va-bars__bar--light" style="height: 10%;"></div><span class="va-bars__label">5-10&euro;</span></div>
+          <div class="va-bars__col"><div class="va-bars__value">25</div><div class="va-bars__bar va-bars__bar--teal" style="height: 30%;"></div><span class="va-bars__label">10-20&euro;</span></div>
+          <div class="va-bars__col"><div class="va-bars__value">85</div><div class="va-bars__bar va-bars__bar--teal" style="height: 85%;"></div><span class="va-bars__label">20-50&euro;</span></div>
+          <div class="va-bars__col"><div class="va-bars__value">70</div><div class="va-bars__bar va-bars__bar--teal" style="height: 70%;"></div><span class="va-bars__label">50-100&euro;</span></div>
+          <div class="va-bars__col"><div class="va-bars__value">22</div><div class="va-bars__bar va-bars__bar--teal" style="height: 25%;"></div><span class="va-bars__label">&gt;100&euro;</span></div>
+        </div>
+      </div>
+      <div class="section-card">
+        <h3 class="section-card__title" style="margin-bottom: var(--sp-base);">Rapidite de Vente</h3>
+        <div class="va-bars">
+          <div class="va-bars__col"><div class="va-bars__value">52</div><div class="va-bars__bar va-bars__bar--teal" style="height: 90%;"></div><span class="va-bars__label">&lt; 6h</span></div>
+          <div class="va-bars__col"><div class="va-bars__value">12</div><div class="va-bars__bar va-bars__bar--teal" style="height: 20%;"></div><span class="va-bars__label">6-12h</span></div>
+          <div class="va-bars__col"><div class="va-bars__value">18</div><div class="va-bars__bar va-bars__bar--teal" style="height: 30%;"></div><span class="va-bars__label">12-24h</span></div>
+          <div class="va-bars__col"><div class="va-bars__value">8</div><div class="va-bars__bar va-bars__bar--light" style="height: 13%;"></div><span class="va-bars__label">1-3j</span></div>
+          <div class="va-bars__col"><div class="va-bars__value">25</div><div class="va-bars__bar va-bars__bar--teal" style="height: 42%;"></div><span class="va-bars__label">3-7j</span></div>
+          <div class="va-bars__col"><div class="va-bars__value">15</div><div class="va-bars__bar va-bars__bar--light" style="height: 25%;"></div><span class="va-bars__label">&gt; 7j</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SCRIPT SWITCH ========== -->
+  <script>
+    function showVariant(id) {
+      // CACHE toutes les sections
+      document.querySelectorAll('.variant-section').forEach(s => s.classList.remove('variant-section--active'));
+      // DESACTIVE tous les onglets
+      document.querySelectorAll('.variant-tab').forEach(t => t.classList.remove('variant-tab--active'));
+      // AFFICHE la section ciblee
+      document.getElementById('variant-' + id).classList.add('variant-section--active');
+      // ACTIVE l'onglet clique
+      event.target.classList.add('variant-tab--active');
+    }
+  </script>
+
+</body>
+</html>

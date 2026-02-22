@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sidebar Flyout — NicheTrackr UI Demo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================================ */
+    /* RESET + BASE                                                  */
+    /* ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #fafbfb;
+      color: #15191a;
+      min-height: 100vh;
+    }
+    a { text-decoration: none; color: inherit; }
+
+    /* ============================================================ */
+    /* MODE TOGGLE BAR (haut de page)                                */
+    /* ============================================================ */
+    .demo-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 48px;
+      background: #15191a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      z-index: 1000;
+      padding: 0 24px;
+    }
+    .demo-bar__label {
+      color: #b6bebf;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .demo-bar__btn {
+      padding: 6px 16px;
+      border-radius: 6px;
+      border: 1px solid #3d4849;
+      background: transparent;
+      color: #b6bebf;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      font-family: inherit;
+    }
+    .demo-bar__btn:hover { background: #2a3233; color: #fff; }
+    .demo-bar__btn--active {
+      background: #007782;
+      color: #fff;
+      border-color: #007782;
+    }
+    .demo-bar__separator {
+      width: 1px;
+      height: 24px;
+      background: #3d4849;
+    }
+    .demo-bar__theme-btn {
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid #3d4849;
+      background: transparent;
+      color: #b6bebf;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .demo-bar__theme-btn:hover { background: #2a3233; }
+
+    /* ============================================================ */
+    /* APP LAYOUT                                                    */
+    /* ============================================================ */
+    .app {
+      margin-top: 48px;
+      display: flex;
+      min-height: calc(100vh - 48px);
+      transition: all 0.3s ease;
+    }
+
+    /* ============================================================ */
+    /* RAIL — Colonne icones sombre (64px, toujours visible)         */
+    /* ============================================================ */
+    .rail {
+      width: 64px;
+      min-width: 64px;
+      height: calc(100vh - 48px);
+      position: fixed;
+      left: 0;
+      top: 48px;
+      background: #112e33;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 0 16px;
+      z-index: 50;
+    }
+
+    .rail__logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #007782, #004654);
+      color: #fff;
+      font-weight: 800;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.15s ease;
+      cursor: pointer;
+    }
+    .rail__logo:hover { transform: scale(1.08); }
+
+    .rail__divider {
+      width: 32px;
+      height: 2px;
+      background: rgba(255,255,255,0.12);
+      border-radius: 1px;
+      margin: 12px 0;
+    }
+
+    .rail__nav {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      width: 100%;
+      padding: 0 10px;
+    }
+
+    .rail__item {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.45);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      position: relative;
+    }
+    .rail__item svg { width: 20px; height: 20px; }
+    .rail__item:hover {
+      color: #fff;
+      background: rgba(255,255,255,0.1);
+    }
+    .rail__item--active {
+      color: #fff;
+      background: #007782;
+    }
+    .rail__item--active::before {
+      content: '';
+      position: absolute;
+      left: -10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 3px;
+      height: 20px;
+      background: #fff;
+      border-radius: 0 2px 2px 0;
+    }
+    /* Notification dot */
+    .rail__dot {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 8px;
+      height: 8px;
+      background: #d04555;
+      border-radius: 50%;
+      border: 2px solid #112e33;
+    }
+
+    .rail__bottom {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 0 10px;
+    }
+
+    .rail__avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #007782, #86cdcf);
+      color: #fff;
+      font-weight: 700;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ============================================================ */
+    /* FLYOUT PANEL (~240px, apparait au clic)                       */
+    /* ============================================================ */
+    .flyout {
+      position: fixed;
+      left: 64px;
+      top: 48px;
+      width: 240px;
+      height: calc(100vh - 48px);
+      background: #ffffff;
+      border-right: 1px solid #e1e6e6;
+      display: flex;
+      flex-direction: column;
+      z-index: 40;
+      transform: translateX(-100%);
+      opacity: 0;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+      box-shadow: 4px 0 24px rgba(0,0,0,0.08);
+    }
+    .flyout--open {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .flyout__header {
+      padding: 16px;
+      border-bottom: 1px solid #e1e6e6;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 56px;
+    }
+    .flyout__title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #15191a;
+    }
+    .flyout__close {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      border: none;
+      background: transparent;
+      color: #b6bebf;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+    }
+    .flyout__close:hover { background: #edf2f2; color: #15191a; }
+    .flyout__close svg { width: 16px; height: 16px; }
+
+    .flyout__content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px 0;
+    }
+    .flyout__content::-webkit-scrollbar { width: 4px; }
+    .flyout__content::-webkit-scrollbar-thumb { background: #e1e6e6; border-radius: 2px; }
+
+    .flyout__section-title {
+      font-size: 10px;
+      font-weight: 600;
+      color: #b6bebf;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 8px 16px 4px;
+    }
+
+    /* Item generique dans le flyout */
+    .flyout__item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      color: #5a6566;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.15s;
+      cursor: pointer;
+    }
+    .flyout__item:hover {
+      background: #edf2f2;
+      color: #15191a;
+    }
+    .flyout__item--active {
+      background: #e6fafa;
+      color: #007782;
+      font-weight: 600;
+    }
+
+    .flyout__item-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .flyout__item-dot--green { background: #28865a; }
+    .flyout__item-dot--yellow { background: #f9bb42; }
+    .flyout__item-dot--red { background: #d04555; }
+
+    .flyout__item-name {
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .flyout__item-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      color: #b6bebf;
+      flex-shrink: 0;
+    }
+
+    /* Search dans le flyout */
+    .flyout__search {
+      padding: 8px 16px;
+    }
+    .flyout__search-input {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #e1e6e6;
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: inherit;
+      color: #15191a;
+      background: #f7f9f9;
+      transition: all 0.15s;
+    }
+    .flyout__search-input:focus {
+      outline: none;
+      border-color: #007782;
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(0,119,130,0.1);
+    }
+    .flyout__search-input::placeholder { color: #b6bebf; }
+
+    /* Footer dans le flyout */
+    .flyout__footer {
+      padding: 8px 16px 16px;
+      border-top: 1px solid #e1e6e6;
+    }
+    .flyout__footer-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 8px;
+      color: #5a6566;
+      font-size: 12px;
+      border-radius: 6px;
+      transition: all 0.15s;
+      cursor: pointer;
+    }
+    .flyout__footer-item:hover { background: #edf2f2; color: #15191a; }
+    .flyout__footer-item svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+    /* Badges */
+    .flyout__badge {
+      display: inline-flex;
+      padding: 2px 8px;
+      background: #e6fafa;
+      color: #007782;
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-radius: 4px;
+    }
+    .flyout__badge--pro {
+      background: linear-gradient(135deg, #007782, #004654);
+      color: #fff;
+    }
+    .flyout__count {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      font-weight: 700;
+      color: #b6bebf;
+      background: #edf2f2;
+      padding: 1px 6px;
+      border-radius: 999px;
+    }
+
+    /* User section dans le flyout */
+    .flyout__user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border-top: 1px solid #e1e6e6;
+    }
+    .flyout__user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: #e6fafa;
+      color: #007782;
+      font-weight: 700;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .flyout__user-info { flex: 1; min-width: 0; }
+    .flyout__user-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: #15191a;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .flyout__user-email {
+      font-size: 10px;
+      color: #b6bebf;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .flyout__user-logout {
+      color: #b6bebf;
+      padding: 4px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .flyout__user-logout:hover { background: rgba(208,69,85,0.08); color: #d04555; }
+    .flyout__user-logout svg { width: 16px; height: 16px; }
+
+    /* ============================================================ */
+    /* OVERLAY (fond semi-transparent quand flyout ouvert)            */
+    /* ============================================================ */
+    .flyout-overlay {
+      display: none;
+      position: fixed;
+      inset: 48px 0 0 64px;
+      background: rgba(0,0,0,0.08);
+      z-index: 30;
+      cursor: pointer;
+    }
+    .flyout-overlay--visible { display: block; }
+
+    /* ============================================================ */
+    /* MAIN CONTENT                                                  */
+    /* ============================================================ */
+    .main {
+      margin-left: 64px;
+      flex: 1;
+      min-height: calc(100vh - 48px);
+      transition: margin-left 0.25s ease;
+      background: #fafbfb;
+    }
+
+    /* Mode PUSH : le main se decale quand le flyout est ouvert */
+    .app--push .main--shifted {
+      margin-left: 304px; /* 64 + 240 */
+    }
+
+    /* Mode OVERLAY : ombre plus marquee sur le flyout */
+    .app--overlay .flyout--open {
+      box-shadow: 8px 0 32px rgba(0,0,0,0.15);
+    }
+
+    /* Fake page content */
+    .page {
+      padding: 32px;
+    }
+    .page__title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #15191a;
+      margin-bottom: 8px;
+    }
+    .page__subtitle {
+      font-size: 14px;
+      color: #5a6566;
+      margin-bottom: 32px;
+    }
+    .page__cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .page__card {
+      background: #fff;
+      border: 1px solid #e1e6e6;
+      border-radius: 12px;
+      padding: 24px;
+      transition: all 0.2s;
+    }
+    .page__card:hover { box-shadow: 0 4px 12px rgba(21,25,26,0.08); }
+    .page__card-title { font-size: 14px; font-weight: 600; color: #15191a; margin-bottom: 4px; }
+    .page__card-value { font-size: 28px; font-weight: 700; color: #007782; font-family: 'JetBrains Mono', monospace; }
+    .page__card-label { font-size: 12px; color: #b6bebf; margin-top: 4px; }
+
+    /* Panel de statut (setup cards placeholder) */
+    .setup-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+    .setup-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      cursor: pointer;
+      transition: all 0.15s;
+      color: #5a6566;
+      font-size: 13px;
+    }
+    .setup-item:hover { background: #edf2f2; color: #15191a; }
+    .setup-item__icon { width: 32px; height: 32px; border-radius: 8px; background: #e6fafa; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .setup-item__icon svg { width: 16px; height: 16px; color: #007782; }
+    .setup-item__info { flex: 1; }
+    .setup-item__name { font-weight: 600; color: #15191a; font-size: 13px; }
+    .setup-item__desc { font-size: 11px; color: #b6bebf; }
+    .setup-item__badge {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 999px;
+    }
+    .setup-item__badge--active { background: #e8f5ef; color: #28865a; }
+    .setup-item__badge--paused { background: #fef5e0; color: #8a6d1b; }
+    .setup-item__badge--expired { background: #fce8eb; color: #d04555; }
+
+    /* ============================================================ */
+    /* DARK MODE                                                     */
+    /* ============================================================ */
+    [data-theme="dark"] body { background: #15191a; color: #edf2f2; }
+    [data-theme="dark"] .rail { background: #0d2227; }
+    [data-theme="dark"] .rail__logo { background: linear-gradient(135deg, #007782, #004654); }
+    [data-theme="dark"] .rail__dot { border-color: #0d2227; }
+
+    [data-theme="dark"] .flyout {
+      background: #1f2627;
+      border-right-color: #2a3233;
+      box-shadow: 4px 0 24px rgba(0,0,0,0.3);
+    }
+    [data-theme="dark"] .flyout__header { border-bottom-color: #2a3233; }
+    [data-theme="dark"] .flyout__title { color: #edf2f2; }
+    [data-theme="dark"] .flyout__close { color: #5a6566; }
+    [data-theme="dark"] .flyout__close:hover { background: #2a3233; color: #edf2f2; }
+
+    [data-theme="dark"] .flyout__item { color: #b6bebf; }
+    [data-theme="dark"] .flyout__item:hover { background: #2a3233; color: #edf2f2; }
+    [data-theme="dark"] .flyout__item--active { background: rgba(0,119,130,0.15); color: #86cdcf; }
+
+    [data-theme="dark"] .flyout__search-input {
+      background: #2a3233;
+      border-color: #3d4849;
+      color: #edf2f2;
+    }
+    [data-theme="dark"] .flyout__search-input:focus {
+      border-color: #007782;
+      background: #15191a;
+    }
+    [data-theme="dark"] .flyout__section-title { color: #5a6566; }
+    [data-theme="dark"] .flyout__footer { border-top-color: #2a3233; }
+    [data-theme="dark"] .flyout__footer-item { color: #b6bebf; }
+    [data-theme="dark"] .flyout__footer-item:hover { background: #2a3233; color: #edf2f2; }
+
+    [data-theme="dark"] .flyout__badge { background: rgba(0,119,130,0.15); color: #86cdcf; }
+    [data-theme="dark"] .flyout__count { background: #2a3233; color: #5a6566; }
+
+    [data-theme="dark"] .flyout__user { border-top-color: #2a3233; }
+    [data-theme="dark"] .flyout__user-avatar { background: rgba(0,119,130,0.15); color: #86cdcf; }
+    [data-theme="dark"] .flyout__user-name { color: #edf2f2; }
+    [data-theme="dark"] .flyout__user-email { color: #5a6566; }
+    [data-theme="dark"] .flyout__user-logout { color: #5a6566; }
+    [data-theme="dark"] .flyout__user-logout:hover { color: #d04555; }
+
+    [data-theme="dark"] .flyout-overlay { background: rgba(0,0,0,0.25); }
+
+    [data-theme="dark"] .main { background: #15191a; }
+    [data-theme="dark"] .page__title { color: #edf2f2; }
+    [data-theme="dark"] .page__subtitle { color: #5a6566; }
+    [data-theme="dark"] .page__card { background: #1f2627; border-color: #2a3233; }
+    [data-theme="dark"] .page__card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+    [data-theme="dark"] .page__card-title { color: #edf2f2; }
+    [data-theme="dark"] .page__card-label { color: #5a6566; }
+
+    [data-theme="dark"] .setup-item:hover { background: #2a3233; color: #edf2f2; }
+    [data-theme="dark"] .setup-item__icon { background: rgba(0,119,130,0.15); }
+    [data-theme="dark"] .setup-item__icon svg { color: #86cdcf; }
+    [data-theme="dark"] .setup-item__name { color: #edf2f2; }
+    [data-theme="dark"] .setup-item__desc { color: #5a6566; }
+  </style>
+</head>
+
+<body>
+  <!-- ============================================================ -->
+  <!-- BARRE DE DEMO (toggle overlay/push + dark mode)               -->
+  <!-- ============================================================ -->
+  <div class="demo-bar">
+    <span class="demo-bar__label">Mode flyout :</span>
+    <button class="demo-bar__btn demo-bar__btn--active" onclick="setMode('overlay')" id="btn-overlay">Overlay</button>
+    <button class="demo-bar__btn" onclick="setMode('push')" id="btn-push">Push</button>
+    <div class="demo-bar__separator"></div>
+    <button class="demo-bar__theme-btn" onclick="toggleTheme()" id="btn-theme" title="Dark mode">&#9789;</button>
+    <div class="demo-bar__separator"></div>
+    <span class="demo-bar__label" id="mode-label" style="color: #86cdcf; font-family: 'JetBrains Mono', monospace; font-size: 11px;">
+      OVERLAY — le flyout passe par-dessus le contenu
+    </span>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- APP CONTAINER                                                 -->
+  <!-- ============================================================ -->
+  <div class="app app--overlay" id="app">
+
+    <!-- ======== RAIL (64px, toujours visible) ======== -->
+    <div class="rail">
+      <div class="rail__logo" title="NicheTrackr">NT</div>
+      <div class="rail__divider"></div>
+
+      <div class="rail__nav">
+        <!-- Dashboard — navigation directe (pas de flyout) -->
+        <button class="rail__item rail__item--active" data-nav="dashboard" onclick="navigateTo('dashboard')" title="Tableau de bord">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+          </svg>
+        </button>
+
+        <!-- Trackers — flyout avec liste trackers -->
+        <button class="rail__item" data-flyout="trackers" onclick="toggleFlyout('trackers')" title="Trackers">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 20V10"></path>
+            <path d="M18 20V4"></path>
+            <path d="M6 20v-4"></path>
+          </svg>
+          <span class="rail__dot"></span>
+        </button>
+
+        <!-- Setup — flyout avec configuration -->
+        <button class="rail__item" data-flyout="setup" onclick="toggleFlyout('setup')" title="Setup">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+        </button>
+
+        <!-- Favoris — flyout avec niches boostees -->
+        <button class="rail__item" data-flyout="favoris" onclick="toggleFlyout('favoris')" title="Favoris">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+          </svg>
+        </button>
+
+        <!-- Monitoring — flyout admin -->
+        <button class="rail__item" data-flyout="monitoring" onclick="toggleFlyout('monitoring')" title="Monitoring">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+          </svg>
+        </button>
+      </div>
+
+      <div class="rail__bottom">
+        <!-- Parametres — flyout -->
+        <button class="rail__item" data-flyout="settings" onclick="toggleFlyout('settings')" title="Parametres">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+        </button>
+        <div class="rail__avatar" title="Julien D.">JD</div>
+      </div>
+    </div>
+
+    <!-- ======== FLYOUT PANELS ======== -->
+
+    <!-- Flyout: TRACKERS -->
+    <div class="flyout" id="flyout-trackers">
+      <div class="flyout__header">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span class="flyout__title">Trackers</span>
+          <span class="flyout__count">16</span>
+        </div>
+        <button class="flyout__close" onclick="closeFlyout()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="flyout__search">
+        <input type="text" class="flyout__search-input" placeholder="Rechercher un tracker..." autocomplete="off">
+      </div>
+      <div class="flyout__content">
+        <div class="flyout__section-title">Actifs (11)</div>
+        <a class="flyout__item flyout__item--active">
+          <span class="flyout__item-dot flyout__item-dot--green"></span>
+          <span class="flyout__item-name">Sezane Manteaux</span>
+          <span class="flyout__item-meta">1392</span>
+        </a>
+        <a class="flyout__item">
+          <span class="flyout__item-dot flyout__item-dot--green"></span>
+          <span class="flyout__item-name">SHOWCASE Mode Femme</span>
+          <span class="flyout__item-meta">1392</span>
+        </a>
+        <a class="flyout__item">
+          <span class="flyout__item-dot flyout__item-dot--green"></span>
+          <span class="flyout__item-name">sezanne reselltrack</span>
+          <span class="flyout__item-meta">458</span>
+        </a>
+        <a class="flyout__item">
+          <span class="flyout__item-dot flyout__item-dot--green"></span>
+          <span class="flyout__item-name">Casquette +25 reseltrack</span>
+          <span class="flyout__item-meta">265</span>
+        </a>
+        <a class="flyout__item">
+          <span class="flyout__item-dot flyout__item-dot--yellow"></span>
+          <span class="flyout__item-name">Vetements Ba&sh</span>
+          <span class="flyout__item-meta">188</span>
+        </a>
+        <a class="flyout__item">
+          <span class="flyout__item-dot flyout__item-dot--green"></span>
+          <span class="flyout__item-name">selle velo +30</span>
+          <span class="flyout__item-meta">498</span>
+        </a>
+        <a class="flyout__item">
+          <span class="flyout__item-dot flyout__item-dot--yellow"></span>
+          <span class="flyout__item-name">Casquette +25</span>
+          <span class="flyout__item-meta">471</span>
+        </a>
+        <a class="flyout__item">
+          <span class="flyout__item-dot flyout__item-dot--green"></span>
+          <span class="flyout__item-name">sweet homme +30</span>
+          <span class="flyout__item-meta">3783</span>
+        </a>
+        <a class="flyout__item">
+          <span class="flyout__item-dot flyout__item-dot--yellow"></span>
+          <span class="flyout__item-name">pull a capuche femme +30</span>
+          <span class="flyout__item-meta">1281</span>
+        </a>
+        <a class="flyout__item">
+          <span class="flyout__item-dot flyout__item-dot--green"></span>
+          <span class="flyout__item-name">robe 50&euro; min</span>
+          <span class="flyout__item-meta">5982</span>
+        </a>
+        <a class="flyout__item">
+          <span class="flyout__item-dot flyout__item-dot--yellow"></span>
+          <span class="flyout__item-name">maillot bain 20&euro; min</span>
+          <span class="flyout__item-meta">475</span>
+        </a>
+
+        <div class="flyout__section-title" style="margin-top:8px;">En pause (5)</div>
+        <a class="flyout__item">
+          <span class="flyout__item-dot flyout__item-dot--red"></span>
+          <span class="flyout__item-name">Test multi-tri catalog 79</span>
+          <span class="flyout__item-meta">0</span>
+        </a>
+        <a class="flyout__item">
+          <span class="flyout__item-dot flyout__item-dot--red"></span>
+          <span class="flyout__item-name">sezanne test</span>
+          <span class="flyout__item-meta">814</span>
+        </a>
+        <a class="flyout__item">
+          <span class="flyout__item-dot flyout__item-dot--red"></span>
+          <span class="flyout__item-name">test rl</span>
+          <span class="flyout__item-meta">1714</span>
+        </a>
+        <a class="flyout__item">
+          <span class="flyout__item-dot flyout__item-dot--red"></span>
+          <span class="flyout__item-name">carhartt sans manche</span>
+          <span class="flyout__item-meta">225</span>
+        </a>
+        <a class="flyout__item">
+          <span class="flyout__item-dot flyout__item-dot--red"></span>
+          <span class="flyout__item-name">Blouson carhart</span>
+          <span class="flyout__item-meta">135</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Flyout: FAVORIS -->
+    <div class="flyout" id="flyout-favoris">
+      <div class="flyout__header">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span class="flyout__title">Favoris</span>
+          <span class="flyout__count">5</span>
+        </div>
+        <button class="flyout__close" onclick="closeFlyout()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="flyout__content">
+        <div class="flyout__section-title">Niches boostees</div>
+        <a class="flyout__item">
+          <span class="flyout__item-dot flyout__item-dot--green"></span>
+          <span class="flyout__item-name">Sezane Manteaux</span>
+          <span class="flyout__item-meta">78.96</span>
+        </a>
+        <a class="flyout__item">
+          <span class="flyout__item-dot flyout__item-dot--yellow"></span>
+          <span class="flyout__item-name">Ralph Lauren Polos</span>
+          <span class="flyout__item-meta">59.5</span>
+        </a>
+        <a class="flyout__item">
+          <span class="flyout__item-dot flyout__item-dot--yellow"></span>
+          <span class="flyout__item-name">Ralph Lauren Pulls</span>
+          <span class="flyout__item-meta">64.42</span>
+        </a>
+        <a class="flyout__item">
+          <span class="flyout__item-dot flyout__item-dot--yellow"></span>
+          <span class="flyout__item-name">Lacoste Polos</span>
+          <span class="flyout__item-meta">64.47</span>
+        </a>
+        <a class="flyout__item">
+          <span class="flyout__item-dot flyout__item-dot--yellow"></span>
+          <span class="flyout__item-name">Adidas Sweats</span>
+          <span class="flyout__item-meta">60.75</span>
+        </a>
+      </div>
+      <div class="flyout__user">
+        <div class="flyout__user-avatar">J</div>
+        <div class="flyout__user-info">
+          <div class="flyout__user-name">Julien</div>
+          <div class="flyout__user-email">admin@nichetrackr.com</div>
+        </div>
+        <div class="flyout__user-logout" title="Deconnexion">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Flyout: SETUP -->
+    <div class="flyout" id="flyout-setup">
+      <div class="flyout__header">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span class="flyout__title">Setup</span>
+          <span class="flyout__badge flyout__badge--pro">PRO</span>
+        </div>
+        <button class="flyout__close" onclick="closeFlyout()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="flyout__search">
+        <input type="text" class="flyout__search-input" placeholder="Filtrer les trackers..." autocomplete="off">
+      </div>
+      <div class="flyout__content">
+        <div class="setup-grid">
+          <div class="setup-item">
+            <div class="setup-item__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+            </div>
+            <div class="setup-item__info">
+              <div class="setup-item__name">Sezane Manteaux</div>
+              <div class="setup-item__desc">Toutes les 6h &middot; Catalogue</div>
+            </div>
+            <span class="setup-item__badge setup-item__badge--active">Actif</span>
+          </div>
+          <div class="setup-item">
+            <div class="setup-item__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+            </div>
+            <div class="setup-item__info">
+              <div class="setup-item__name">SHOWCASE Mode Femme</div>
+              <div class="setup-item__desc">Toutes les 12h &middot; Catalogue</div>
+            </div>
+            <span class="setup-item__badge setup-item__badge--active">Actif</span>
+          </div>
+          <div class="setup-item">
+            <div class="setup-item__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+            </div>
+            <div class="setup-item__info">
+              <div class="setup-item__name">selle velo +30</div>
+              <div class="setup-item__desc">Toutes les 6h &middot; Profil</div>
+            </div>
+            <span class="setup-item__badge setup-item__badge--paused">Pause</span>
+          </div>
+          <div class="setup-item">
+            <div class="setup-item__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+            </div>
+            <div class="setup-item__info">
+              <div class="setup-item__name">carhartt sans manche</div>
+              <div class="setup-item__desc">Toutes les 24h &middot; Catalogue</div>
+            </div>
+            <span class="setup-item__badge setup-item__badge--expired">Expire</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Flyout: MONITORING -->
+    <div class="flyout" id="flyout-monitoring">
+      <div class="flyout__header">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span class="flyout__title">Monitoring</span>
+          <span class="flyout__badge">ADMIN</span>
+        </div>
+        <button class="flyout__close" onclick="closeFlyout()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="flyout__content">
+        <div class="flyout__section-title">Sante des scrapes</div>
+        <div class="flyout__item">
+          <span class="flyout__item-dot flyout__item-dot--green"></span>
+          <span class="flyout__item-name">Scrape Engine</span>
+          <span class="flyout__item-meta" style="color:#28865a;">OK</span>
+        </div>
+        <div class="flyout__item">
+          <span class="flyout__item-dot flyout__item-dot--green"></span>
+          <span class="flyout__item-name">Sidekiq Workers</span>
+          <span class="flyout__item-meta" style="color:#28865a;">3/3</span>
+        </div>
+        <div class="flyout__item">
+          <span class="flyout__item-dot flyout__item-dot--yellow"></span>
+          <span class="flyout__item-name">Queue en attente</span>
+          <span class="flyout__item-meta" style="color:#8a6d1b;">12</span>
+        </div>
+        <div class="flyout__item">
+          <span class="flyout__item-dot flyout__item-dot--green"></span>
+          <span class="flyout__item-name">Dernier scrape</span>
+          <span class="flyout__item-meta">il y a 8min</span>
+        </div>
+
+        <div class="flyout__section-title" style="margin-top:12px;">Erreurs recentes</div>
+        <div class="flyout__item">
+          <span class="flyout__item-dot flyout__item-dot--red"></span>
+          <span class="flyout__item-name">Timeout Vinted API</span>
+          <span class="flyout__item-meta">14:23</span>
+        </div>
+        <div class="flyout__item">
+          <span class="flyout__item-dot flyout__item-dot--yellow"></span>
+          <span class="flyout__item-name">Rate limit (429)</span>
+          <span class="flyout__item-meta">13:45</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Flyout: SETTINGS -->
+    <div class="flyout" id="flyout-settings">
+      <div class="flyout__header">
+        <span class="flyout__title">Parametres</span>
+        <button class="flyout__close" onclick="closeFlyout()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="flyout__content">
+        <div class="flyout__footer-item" style="padding:10px 16px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+            <line x1="1" y1="10" x2="23" y2="10"></line>
+          </svg>
+          <span>Abonnement</span>
+          <span class="flyout__badge flyout__badge--pro" style="margin-left:auto;">PRO</span>
+        </div>
+        <div class="flyout__footer-item" style="padding:10px 16px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="8.5" cy="7" r="4"></circle>
+            <line x1="20" y1="8" x2="20" y2="14"></line>
+            <line x1="23" y1="11" x2="17" y2="11"></line>
+          </svg>
+          <span>Affiliation</span>
+        </div>
+        <div class="flyout__footer-item" style="padding:10px 16px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+          <span>Parametres generaux</span>
+        </div>
+        <div class="flyout__footer-item" style="padding:10px 16px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+          <span>Securite</span>
+        </div>
+      </div>
+      <div class="flyout__user">
+        <div class="flyout__user-avatar">J</div>
+        <div class="flyout__user-info">
+          <div class="flyout__user-name">Julien</div>
+          <div class="flyout__user-email">admin@nichetrackr.com</div>
+        </div>
+        <div class="flyout__user-logout" title="Deconnexion">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======== OVERLAY ======== -->
+    <div class="flyout-overlay" id="flyout-overlay" onclick="closeFlyout()"></div>
+
+    <!-- ======== MAIN CONTENT ======== -->
+    <div class="main" id="main-content">
+      <div class="page">
+        <h1 class="page__title">Tableau de bord</h1>
+        <p class="page__subtitle">Vue d'ensemble de vos trackers et performances</p>
+        <div class="page__cards">
+          <div class="page__card">
+            <div class="page__card-title">Trackers actifs</div>
+            <div class="page__card-value">11</div>
+            <div class="page__card-label">sur 16 trackers au total</div>
+          </div>
+          <div class="page__card">
+            <div class="page__card-title">Produits suivis</div>
+            <div class="page__card-value">18,203</div>
+            <div class="page__card-label">+324 depuis hier</div>
+          </div>
+          <div class="page__card">
+            <div class="page__card-title">Score moyen</div>
+            <div class="page__card-value">65.4</div>
+            <div class="page__card-label">sur l'ensemble des niches</div>
+          </div>
+          <div class="page__card">
+            <div class="page__card-title">Niches boostees</div>
+            <div class="page__card-value">5</div>
+            <div class="page__card-label">sur 24 niches detectees</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- JAVASCRIPT                                                    -->
+  <!-- ============================================================ -->
+  <script>
+    let currentFlyout = null;
+    let currentMode = 'overlay'; // 'overlay' ou 'push'
+
+    // OUVRE ou FERME un flyout (toggle)
+    function toggleFlyout(name) {
+      if (currentFlyout === name) {
+        closeFlyout();
+        return;
+      }
+      // Ferme l'ancien
+      closeFlyout(false);
+      // Ouvre le nouveau
+      currentFlyout = name;
+      const panel = document.getElementById('flyout-' + name);
+      if (panel) {
+        panel.classList.add('flyout--open');
+      }
+      // Active l'icone dans le rail
+      updateRailActive(name);
+      // Overlay
+      document.getElementById('flyout-overlay').classList.add('flyout-overlay--visible');
+      // Push mode : decale le main
+      if (currentMode === 'push') {
+        document.getElementById('main-content').classList.add('main--shifted');
+      }
+    }
+
+    // FERME le flyout actif
+    function closeFlyout(resetNav = true) {
+      if (currentFlyout) {
+        const panel = document.getElementById('flyout-' + currentFlyout);
+        if (panel) panel.classList.remove('flyout--open');
+      }
+      currentFlyout = null;
+      document.getElementById('flyout-overlay').classList.remove('flyout-overlay--visible');
+      document.getElementById('main-content').classList.remove('main--shifted');
+      if (resetNav) {
+        updateRailActive('dashboard');
+      }
+    }
+
+    // NAVIGATION directe (sans flyout)
+    function navigateTo(page) {
+      closeFlyout(false);
+      updateRailActive(page);
+    }
+
+    // MET A JOUR l'icone active dans le rail
+    function updateRailActive(name) {
+      document.querySelectorAll('.rail__item').forEach(btn => {
+        btn.classList.remove('rail__item--active');
+      });
+      // Active par data-flyout ou data-nav
+      const target = document.querySelector('[data-flyout="' + name + '"]')
+                  || document.querySelector('[data-nav="' + name + '"]');
+      if (target) target.classList.add('rail__item--active');
+    }
+
+    // CHANGE le mode (overlay / push)
+    function setMode(mode) {
+      currentMode = mode;
+      const app = document.getElementById('app');
+      app.classList.remove('app--overlay', 'app--push');
+      app.classList.add('app--' + mode);
+
+      document.getElementById('btn-overlay').classList.toggle('demo-bar__btn--active', mode === 'overlay');
+      document.getElementById('btn-push').classList.toggle('demo-bar__btn--active', mode === 'push');
+
+      const label = document.getElementById('mode-label');
+      if (mode === 'overlay') {
+        label.textContent = 'OVERLAY — le flyout passe par-dessus le contenu';
+      } else {
+        label.textContent = 'PUSH — le flyout pousse le contenu a droite';
+      }
+
+      // Si un flyout est ouvert, applique le mode
+      if (currentFlyout) {
+        if (mode === 'push') {
+          document.getElementById('main-content').classList.add('main--shifted');
+        } else {
+          document.getElementById('main-content').classList.remove('main--shifted');
+        }
+      }
+    }
+
+    // DARK MODE
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      document.getElementById('btn-theme').textContent = isDark ? '\u263D' : '\u2600';
+    }
+
+    // Ferme le flyout avec Escape
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && currentFlyout) {
+        closeFlyout();
+      }
+    });
+  </script>
+</body>
+</html>
